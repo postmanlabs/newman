@@ -1,0 +1,15 @@
+{
+    "name": "Newman",
+    "version": "0.0.1",
+    "author": "Postman",
+    "description": "Command-line utility for Postman",
+    "keywords": ["postman", "api", "rest-client", "rest"],
+    "dependencies": {
+        "colors": "*",
+        "abstract-http-request": "2.x.x",
+        "commander": "2.x.x",
+        "underscore": "1.x.x",
+        "jsface": "2.2.x"
+    },
+    "license": "Apache"
+}
