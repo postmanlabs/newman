@@ -6,7 +6,7 @@
     "keywords": ["postman", "api", "rest-client", "rest"],
     "dependencies": {
         "colors": "*",
-        "abstract-http-request": "2.x.x",
+        "ahr2": "*",
         "commander": "2.x.x",
         "underscore": "1.x.x",
         "jsface": "2.2.x"
