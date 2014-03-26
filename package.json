@@ -5,7 +5,9 @@
     "description": "Command-line utility for Postman",
     "keywords": ["postman", "api", "rest-client", "rest"],
     "dependencies": {
-        "colors": "*",
+        "cli-color": "*",
+        "json5": "*",
+        "commander": "*",
         "ahr2": "*",
         "commander": "2.x.x",
         "underscore": "1.x.x",
