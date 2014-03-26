@@ -6,8 +6,8 @@
 var jsface = require("jsface");
 
 var AbstractRunner = jsface.Class({
-	constructor: function() {
-
+	constructor: function(collection) {
+		this.collection = collection || [];
 	},
 
 	/**
