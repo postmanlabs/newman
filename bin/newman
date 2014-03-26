@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * @Authors Arjun Variar & Prakhar Srivastav.
  * @Purpose Integerates POSTMAN Collection runner/tests with CI systems.
@@ -23,7 +25,7 @@ function parseArguments()
 	{
 	  console.log('  Examples:');
 	  console.log('');
-	  console.log('    node app.js -c POSTMAN_COLLECTION');
+	  console.log('    newman -c POSTMAN_COLLECTION');
 	});
 
 	program.parse(process.argv);
