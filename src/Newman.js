@@ -1,12 +1,13 @@
 var jsface = require("jsface"),
-	CollectionRunner = require("./runners/CollectionRunner");
+	CollectionRunner = require("./runners/CollectionRunner"),
+	RequestMarshaller = require("./marshallers/RequestMarshaller");
 
 var Newman = jsface.Class({
 	$singleton: true,
 
 	execute: function(requestJSON) {
 		// TODO: Marshall the JSON request array.
-		var marshalledRequestCollection = [];
+		var marshalledRequestCollection = new RequestMarshaller(requestJSON).getCollections() || [];
 
 		var runner = new CollectionRunner(marshalledRequestCollection);
 
