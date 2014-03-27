@@ -1,16 +1,15 @@
-var jsface = require('jsface');
+var jsface = require('jsface'),
+    ParentModel = require('./ParentModel.js');
 
-var RequestModel = jsface.Class({
+var RequestModel = jsface.Class(ParentModel, {
     constructor: function(requestJson) {
-        this.id            = requestJson.id;
+        this.$class.$super.call(this, requestJson);
         this.headers       = requestJson.headers;
         this.url           = requestJson.url;
         this.method        = requestJson.method;
         this.pathVariables = requestJson.pathVariables;
         this.data          = requestJson.data;
         this.dataMode      = requestJson.dataMode;
-        this.name          = requestJson.name;
-        this.description   = requestJson.description;
         this.responses     = requestJson.responses;
         this.tests         = requestJson.tests;
     },
