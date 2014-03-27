@@ -18,7 +18,7 @@ var RequestModel = jsface.Class({
         return "Request: [" + this.method + "]: " + this.url;
     },
     hasTemplate: function() {
-        return !(this.url.match(/{\w+}/) === null);
+        return this.url.match(/{\w+}/) !== null;
     }
 });
 
