@@ -7,41 +7,62 @@
  * Main file which parses the command line arguments and runs Newman, Supports JSON5.
  */
 
-var color = require('cli-color')
-,	program = require('commander')
-,	path = require('path')
-,	fs = require('fs')
-,	JSON5 = require('json5')
-,	Newman = require('../src/Newman');
+var color   = require('cli-color'),
+	program = require('commander'),
+	path    = require('path'),
+    request = require('ahr2'),
+	fs      = require('fs'),
+    Helpers = require('../src/utilities/Helpers.js'),
+	JSON5   = require('json5'),
+	Newman  = require('../src/Newman');
 
-function parseArguments()
-{
+function parseArguments() {
 	program
 	  .version('0.0.1')
 	  .usage('[options] file')
-	  .option('-c, --collection [file]', 'Specify your Postman Collection [file]', 'file');
+	  .option('-c, --collection [file]', 'Specify your Postman Collection [file]', null)
+	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null);
 
-	program.on('--help', function()
-	{
+	program.on('--help', function() {
 	  console.log('  Examples:');
 	  console.log('');
 	  console.log('    newman -c POSTMAN_COLLECTION');
 	});
 
 	program.parse(process.argv);
-
-	if (!fs.existsSync(program.collection))
-	{
-		console.warn(color.red('Please Specify a Postman Collection.'));
-		process.exit(1);
+    
+	if (!fs.existsSync(program.collection) && !(program.url)) {
+		terminateWithError('Please specify a Postman Collection either as a file or a URL');
 	}
+
+    if (program.url && !Helpers.isValidUrl(program.url)) {
+		terminateWithError('Please specify a valid URL');
+    }
 }
 
-function main()
-{
+function terminateWithError(msg) {
+    console.warn(color.red(msg));
+    process.exit(1);
+}
+
+function main() {
 	parseArguments();
-	var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
-	Newman.execute(collectionJson);
+    if (program.collection) {
+        var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
+        Newman.execute(collectionJson);
+
+    } else {
+        request({href: program.url}).when(function(err, ahr, data){
+            if (err) {
+                terminateWithError('Unable to fetch a valid response. Error: ' + err.code);
+            }
+            if (ahr.headers["content-type"] !== "application/json") { 
+                // TODO: Is this check thorough enough?
+                terminateWithError("Error: The response is not in json format.");
+            }
+            Newman.execute(data);
+        });
+    }
 }
 
 main();
