@@ -11,7 +11,6 @@ var CollectionModel = jsface.Class({
         this.order       = collectionJson.order;
         this.requests    = this.initModel(RequestModel, collectionJson.requests);
         this.folders     = this.initModel(FolderModel, collectionJson.folders);
-        return this;
     },
     initModel: function(Model, modelsJson) {
         // initializes a Model object with the modelsJson as 
