@@ -1,7 +1,8 @@
 {
     "name": "Newman",
     "version": "0.0.1",
-    "author": "Postman",
+    "author": "Arjun Variar & Prakhar Srivastav",
+    "main": "Newman",
     "description": "Command-line utility for Postman",
     "keywords": ["postman", "api", "rest-client", "rest"],
     "dependencies": {
