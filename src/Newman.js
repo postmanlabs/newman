@@ -13,7 +13,7 @@ var Newman = jsface.Class({
 
 		// This will execute the collection & and report the approriate responses,
 		// run the test cases & do the error reporting.
-		runner.execute();
+		// runner.execute();
 	}
 });
 
