@@ -7,7 +7,7 @@ var Newman = jsface.Class({
 
 	execute: function(requestJSON) {
 		// TODO: Marshall the JSON request array.
-		var marshalledRequestCollection = new RequestMarshaller(requestJSON).getCollections() || [];
+		var marshalledRequestCollection = new RequestMarshaller(requestJSON).getCollection() || [];
 
 		var runner = new CollectionRunner(marshalledRequestCollection);
 

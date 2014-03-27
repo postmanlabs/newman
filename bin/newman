@@ -46,7 +46,7 @@ function terminateWithError(msg) {
 }
 
 function main() {
-	parseArguments();
+    parseArguments();
     if (program.collection) {
         var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
         Newman.execute(collectionJson);

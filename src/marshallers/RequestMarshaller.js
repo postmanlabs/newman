@@ -5,7 +5,7 @@ var RequestMarshaller = jsface.Class({
 	constructor: function(collectionJson) {
         this.collection = new CollectionModel(collectionJson);
 	},
-	getCollections: function() {
+	getCollection: function() {
 		return this.collection;
 	}
 });
