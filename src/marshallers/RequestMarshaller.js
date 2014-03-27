@@ -1,12 +1,12 @@
-var jsface = require("jsface");
+var jsface = require("jsface"),
+    CollectionModel = require('../models/CollectionModel.js');
 
 var RequestMarshaller = jsface.Class({
 	constructor: function(collectionJson) {
-		// TODO: Generate Marshalled Requests from the exportred Postman Collection.
-		return this;
+        this.collection = new CollectionModel(collectionJson);
 	},
-	getCollections: function() {
-		return this.collections;
+	getCollection: function() {
+		return this.collection;
 	}
 });
 
