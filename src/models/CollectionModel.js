@@ -23,27 +23,27 @@ var CollectionModel = jsface.Class(ParentModel, {
         });
         return models;
     },
-    /** Returns the total order of requests in the collection as an array
+    /** Returns the total order of request IDs in the collection as an array
      *  Order - 
      *  1. Folders (order as per the collection)
      *  2. Collection level order
      */
-    getOrder: function() {
+    getOrderOfIds: function() {
         var totalOrder = _und.map(this.folders, function(folder) {
             return folder.order
         });
         totalOrder.push(this.order);
         return _und.flatten(totalOrder);
     },
-    /** Returns the request with the given id if exists null otherwise */
+    /** Returns the request with the given request ID if exists null otherwise */
     getRequestWithId: function(id) {
-        return _und.find(this.requests, function(request){
+        return _und.find(this.requests, function(request) {
             return request.id === id;
         });
     },
-    /** Returns an array of request objects as ordered as per the getOrder method */
+    /** Returns an array of request objects as ordered as per the getOrderIds method */
     getOrderedRequests: function() {
-        var orderedIds = this.getOrder();
+        var orderedIds = this.getOrderOfIds();
         var orderedRequests = [];
         _und.each(orderedIds, function(id) {
             orderedRequests.push(this.getRequestWithId(id));

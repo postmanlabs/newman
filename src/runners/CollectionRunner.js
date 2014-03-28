@@ -1,7 +1,7 @@
 var jsface = require("jsface"),
 	AbstractRunner = require("./AbstractRunner"),
 	request = require('ahr2'),
-    _und = require('underscore');
+	_und = require('underscore');
 
 var CollectionRunner = jsface.Class(AbstractRunner, {
 	constructor: function(collection) {
@@ -9,7 +9,7 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 	},
 	execute: function() {
 		_und.each(this.collection, function(postmanRequest) {
-            postmanRequest.execute();
+			postmanRequest.execute();
 
 			/*
 			 * If Success send the Response to approriate module
