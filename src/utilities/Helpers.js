@@ -1,9 +1,9 @@
-/** 
- * Helper module with useful methods used throughout Newman
- */
-
 var jsface = require('jsface');
 
+/** 
+ * @class Helpers
+ * Helper class with useful methods used throughout Newman
+ */
 var Helpers = jsface.Class({
     $singleton: true,
     isValidUrl: function(url) {
