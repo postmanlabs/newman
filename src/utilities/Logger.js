@@ -2,7 +2,8 @@ var jsface = require("jsface"),
 	color  = require("cli-color");
 
 /**
- * Logger Class, used for logging.
+ * @class Logger 
+ * Logger class, used for all logging inside newman
  */
 var Logger = jsface.Class({
 	$singleton: true,
