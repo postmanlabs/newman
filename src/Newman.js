@@ -6,9 +6,9 @@ var Newman = jsface.Class({
 	$singleton: true,
 
 	execute: function(requestJSON) {
-		var marshalledRequestCollection = new RequestMarshaller(requestJSON).getCollection() || [];
+		var marshalledCollection = new RequestMarshaller(requestJSON).getMarshalledCollection();
 
-		var runner = new CollectionRunner(marshalledRequestCollection);
+		var runner = new CollectionRunner(marshalledCollection);
 		runner.execute();
 	}
 });
