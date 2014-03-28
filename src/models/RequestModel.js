@@ -1,6 +1,11 @@
 var jsface = require('jsface'),
     ParentModel = require('./ParentModel.js');
 
+/** 
+ * @class RequestModel 
+ * Request class that inherits from ParentModel representing
+ * a postman request object.
+ */
 var RequestModel = jsface.Class(ParentModel, {
     constructor: function(requestJson) {
         this.$class.$super.call(this, requestJson);
@@ -16,6 +21,7 @@ var RequestModel = jsface.Class(ParentModel, {
     toString: function() {
         return "Request: [" + this.method + "]: " + this.url;
     },
+    /** Function that returns a boolean to indicate if the url has template */
     hasTemplate: function() {
         return this.url.match(/{\w+}/) !== null;
     },
