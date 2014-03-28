@@ -1,6 +1,7 @@
 var jsface = require("jsface"),
 	AbstractRunner = require("./AbstractRunner"),
-	request = require('ahr2');
+	request = require('ahr2'),
+    _und = require('underscore');
 
 var CollectionRunner = jsface.Class(AbstractRunner, {
 	constructor: function(collection) {
@@ -12,7 +13,7 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 	 * @return {[Class]}            [Return Itself]
 	 */
 	execute: function() {
-		this.collection.forEach(function(postmanRequest) {
+		_und.each(this.collection, function(postmanRequest) {
 			// TODO: Run the postmanRequest using ahr2 and handle the reponse.
 
 			/*
