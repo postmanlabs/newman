@@ -1,22 +1,18 @@
 var jsface = require("jsface"),
 	AbstractRunner = require("./AbstractRunner"),
-	request = require('ahr2');
+	request = require('ahr2'),
+    _und = require('underscore');
 
 var CollectionRunner = jsface.Class(AbstractRunner, {
 	constructor: function(collection) {
 		this.$class.$super.call(this, collection);
 	},
-	/**
-	 * [execute Execute the Postman Collection]
-	 * @param  {[Object]} collection [Collection of Postman Requests]
-	 * @return {[Class]}            [Return Itself]
-	 */
 	execute: function() {
-		this.collection.forEach(function(postmanRequest) {
-			// TODO: Run the postmanRequest using ahr2 and handle the reponse.
+		_und.each(this.collection, function(postmanRequest) {
+            postmanRequest.execute();
 
 			/*
-			 * If Sucess send the Response to approriate module
+			 * If Success send the Response to approriate module
 			 * 	1) DefaultResponseHandler.
 			 *  2) TestReponseHandler.
 			 * Else
