@@ -14,10 +14,10 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 	 */
 	execute: function() {
 		_und.each(this.collection, function(postmanRequest) {
-			// TODO: Run the postmanRequest using ahr2 and handle the reponse.
+            postmanRequest.execute();
 
 			/*
-			 * If Sucess send the Response to approriate module
+			 * If Success send the Response to approriate module
 			 * 	1) DefaultResponseHandler.
 			 *  2) TestReponseHandler.
 			 * Else

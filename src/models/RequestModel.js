@@ -18,6 +18,18 @@ var RequestModel = jsface.Class(ParentModel, {
     },
     hasTemplate: function() {
         return this.url.match(/{\w+}/) !== null;
+    },
+    execute: function() {
+        /* The request is made using AHR here
+         * Steps before the XHR call - 
+         * - Do variable replacement
+         * - get XHR headers
+         * - set the request method
+         * - set a response timeout?
+         * - return success or failure
+         * - what else?
+         */
+        console.log("Running:", this.url);
     }
 });
 
