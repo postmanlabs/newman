@@ -7,11 +7,6 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 	constructor: function(collection) {
 		this.$class.$super.call(this, collection);
 	},
-	/**
-	 * [execute Execute the Postman Collection]
-	 * @param  {[Object]} collection [Collection of Postman Requests]
-	 * @return {[Class]}            [Return Itself]
-	 */
 	execute: function() {
 		_und.each(this.collection, function(postmanRequest) {
             postmanRequest.execute();

@@ -1,8 +1,3 @@
-/**
- * [Abstract Runner Class]
- * @author {Arjun Variar}
- */
-
 var jsface = require("jsface");
 
 var AbstractRunner = jsface.Class({
@@ -10,10 +5,6 @@ var AbstractRunner = jsface.Class({
 		this.collection = collection || [];
 	},
 
-	/**
-	 * [execute Main Method which is called when executing the Runner Class]
-	 * @return {[AbstractRunner]} [Returns itself for function chaining.]
-	 */
 	execute: function() {
 		return this;
 	}
