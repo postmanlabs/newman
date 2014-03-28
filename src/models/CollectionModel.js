@@ -28,7 +28,7 @@ var CollectionModel = jsface.Class(ParentModel, {
      *  1. Folders (order as per the collection)
      *  2. Collection level order
      */
-    getOrderIds: function() {
+    getOrderOfIds: function() {
         var totalOrder = _und.map(this.folders, function(folder) {
             return folder.order
         });
@@ -43,7 +43,7 @@ var CollectionModel = jsface.Class(ParentModel, {
     },
     /** Returns an array of request objects as ordered as per the getOrderIds method */
     getOrderedRequests: function() {
-        var orderedIds = this.getOrderIds();
+        var orderedIds = this.getOrderOfIds();
         var orderedRequests = [];
         _und.each(orderedIds, function(id) {
             orderedRequests.push(this.getRequestWithId(id));
