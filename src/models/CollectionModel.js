@@ -6,8 +6,10 @@ var jsface = require('jsface'),
 
 /** 
  * @class CollectionModel 
- * Collection class that inherits from ParentModel representing
+ * @classdesc Collection class that inherits from ParentModel representing
  * a postman collection object.
+ * @extends ParentModel
+ * @param collectionJson {JSON} Takes the Postman Collection as the input.
  */
 var CollectionModel = jsface.Class(ParentModel, {
     constructor: function(collectionJson) {
@@ -16,17 +18,28 @@ var CollectionModel = jsface.Class(ParentModel, {
         this.requests    = this.initModel(RequestModel, collectionJson.requests);
         this.folders     = this.initModel(FolderModel, collectionJson.folders);
     },
-    /** Initializes a Model object with the modelsJson as the initial data */
+    /** 
+     * Initializes a Model object with the modelsJson as the initial data
+     * @param  {ParentModel} Model      Type of Model
+     * @param  {Array} modelsJson Array of JSON objets
+     * @return {Model}
+     * @memberOf CollectionModel
+     */
     initModel: function(Model, modelsJson) {
         var models = _und.map(modelsJson, function(model) {
             return new Model(model);
         });
         return models;
     },
-    /** Returns the total order of request IDs in the collection as an array
+    /** 
+     * 
+     * @function getOrderOfIds
+     * @desc Returns the total order of request IDs in the collection as an array
      *  Order - 
      *  1. Folders (order as per the collection)
      *  2. Collection level order
+     *  @memberOf CollectionModel
+     *  @return {Array} Flattens array of request Id's.
      */
     getOrderOfIds: function() {
         var totalOrder = _und.map(this.folders, function(folder) {
@@ -35,13 +48,22 @@ var CollectionModel = jsface.Class(ParentModel, {
         totalOrder.push(this.order);
         return _und.flatten(totalOrder);
     },
-    /** Returns the request with the given request ID if exists null otherwise */
+    /** 
+     * Returns the request with the given request ID if exists null otherwise
+     * @param  {String} id RequestId
+     * @return {RequestModel} The RequestModel with the given id.
+     * @memberOf CollectionModel
+     */
     getRequestWithId: function(id) {
         return _und.find(this.requests, function(request) {
             return request.id === id;
         });
     },
-    /** Returns an array of request objects as ordered as per the getOrderIds method */
+    /** 
+     * Returns an array of request objects as ordered as per the getOrderIds method
+     * @return {Array} Array with RequestModel ordered occording to the right id's.
+     * @memberOf CollectionModel
+     */
     getOrderedRequests: function() {
         var orderedIds = this.getOrderOfIds();
         var orderedRequests = [];
