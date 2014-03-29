@@ -3,8 +3,10 @@ var jsface = require('jsface'),
 
 /** 
  * @class RequestModel 
- * Request class that inherits from ParentModel representing
+ * @classdef Request class that inherits from ParentModel representing
  * a postman request object.
+ * @param requestJson {JSON} Takes the Postman Request JSON as the input.
+ * @extends ParentModel
  */
 var RequestModel = jsface.Class(ParentModel, {
     constructor: function(requestJson) {
@@ -21,21 +23,13 @@ var RequestModel = jsface.Class(ParentModel, {
     toString: function() {
         return "Request: [" + this.method + "]: " + this.url;
     },
-    /** Function that returns a boolean to indicate if the url has template */
+    /** 
+     * @function Function that returns a boolean to indicate if the url has template
+     * @memberOf RequestModel
+     * @return {Boolean}
+     */
     hasTemplate: function() {
         return this.url.match(/{\w+}/) !== null;
-    },
-    execute: function() {
-        /* The request is made using AHR here
-         * Steps before the XHR call - 
-         * - Do variable replacement
-         * - get XHR headers
-         * - set the request method
-         * - set a response timeout?
-         * - return success or failure
-         * - what else?
-         */
-        console.log("Running:", this.url);
     }
 });
 
