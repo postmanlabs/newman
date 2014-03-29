@@ -3,8 +3,10 @@ var jsface = require('jsface'),
 
 /** 
  * @class FolderModel 
- * FolderModel class that inherits from ParentModel representing
+ * @classdesc FolderModel class that inherits from ParentModel representing
  * a postman folder object.
+ * @extends ParentModel
+ * @param folderJson {JSON} Folder JSON object from Postman.
  */
 var FolderModel = jsface.Class(ParentModel, {
     constructor: function(folderJson) {

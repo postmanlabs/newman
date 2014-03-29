@@ -1,16 +1,24 @@
 var jsface = require("jsface"),
 	AbstractRunner = require("./AbstractRunner"),
-	request = require('ahr2'),
+	RequestRunner = require("./RequestRunner"),
 	_und = require('underscore');
 
+/**
+ * @class CollectionRunner
+ * @param {CollectionModel} collection Takes a Collection of RequestModel
+ * as a input and executes the RequestRunner on them.
+ * @extends AbstractRunner
+ */
 var CollectionRunner = jsface.Class(AbstractRunner, {
 	constructor: function(collection) {
 		this.$class.$super.call(this, collection);
 	},
+	/**
+	 * @function
+	 * @memberOf CollectionRunner
+	 */
 	execute: function() {
 		_und.each(this.collection, function(postmanRequest) {
-			postmanRequest.execute();
-
 			/*
 			 * If Success send the Response to approriate module
 			 * 	1) DefaultResponseHandler.
@@ -19,6 +27,8 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 			 * 	Handler the errors in ErrorHandler module.
 			 * Use Logger Class for all logging.
 			 */
+			var requestRunner = new RequestRunner(postmanRequest);
+			requestRunner.execute();
 		});
 		this.$class.$superp.execute.call(this);
 	}

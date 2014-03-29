@@ -1,5 +1,9 @@
 var jsface = require('jsface');
 
+/**
+ * @class ParentModel
+ * @param modelJson {JSON} Takes a JSON as the input 
+ */
 var ParentModel = jsface.Class({
     constructor: function(modelJson) {
         this.id          = modelJson.id;
