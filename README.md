@@ -9,3 +9,6 @@ Newman
 
 # Docs
     grunt jsdoc
+
+# Tests
+	mocha tests
