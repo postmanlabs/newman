@@ -8,9 +8,19 @@ var jsface = require("jsface"),
  */
 var Logger = jsface.Class({
 	$singleton: true,
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs success.
+	 * @memberOf Logger
+	 */
 	success: function(log) {
 		console.log(color.green("✔ " + log));
 	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs errors.
+	 * @memberOf Logger
+	 */
 	error: function(log) {
 		console.log(color.red("✗ " + log));
 	}
