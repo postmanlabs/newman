@@ -24,7 +24,7 @@ var RequestModel = jsface.Class(ParentModel, {
         return "Request: [" + this.method + "]: " + this.url;
     },
     /** 
-     * @function Function that returns a boolean to indicate if the url has template
+     * Function that returns a boolean to indicate if the url has template
      * @memberOf RequestModel
      * @return {Boolean}
      */
