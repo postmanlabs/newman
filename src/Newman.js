@@ -1,6 +1,6 @@
-var jsface = require("jsface"),
+var jsface           = require("jsface"),
 	CollectionRunner = require("./runners/CollectionRunner"),
-	CollectionModel = require('./models/CollectionModel.js');
+	CollectionModel  = require('./models/CollectionModel.js');
 
 /**
  * @name Newman
@@ -13,8 +13,7 @@ var Newman = jsface.Class({
 	/**
 	 * Executes XHR Requests for the Postman request, and logs the responses 
 	 * & runs tests on them.
-	 * @param  {JSON} requestJSON Takes the Postman Collection JSON from a file
-	 * or url.
+	 * @param  {JSON} requestJSON Takes the Postman Collection JSON from a file or url.
 	 * @memberOf Newman
 	 */
 	execute: function(requestJSON) {

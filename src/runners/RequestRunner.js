@@ -1,6 +1,6 @@
-var jsface = require('jsface'),
+var jsface  = require('jsface'),
 	request = require('ahr2'),
-	log = require('../utilities/Logger');
+	log     = require('../utilities/Logger');
 
 /**
  * @class RequestRunner
