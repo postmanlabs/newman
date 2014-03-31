@@ -17,10 +17,10 @@ describe("Newman", function() {
 		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
 		var url = "https://www.getpostman.com/collections/fc3f0598daaa5271e4f7";
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
+		var stub = sinon.stub(RequestRunner, 'execute');
 	});
 	
 	it("should call requestRunner execute for each request", function() {
-		var stub = sinon.stub(RequestRunner, 'execute');
 		Newman.execute(this.collectionJson);
 		assert(stub.called);
 		assert.equal(stub.callCount, this.collectionJson.requests.length);
