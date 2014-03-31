@@ -22,7 +22,6 @@ describe("Newman", function() {
 	
 	it("should call requestRunner execute for each request", function() {
 		Newman.execute(this.collectionJson);
-		assert(this.stub.called);
 		assert.equal(this.stub.callCount, this.collectionJson.requests.length);
 	});
 
