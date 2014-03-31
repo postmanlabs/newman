@@ -1,22 +1,20 @@
-var jsface = require('jsface'),
+var jsface  = require('jsface'),
 	request = require('ahr2'),
-	log = require('../utilities/Logger');
+	log     = require('../utilities/Logger');
 
 /**
  * @class RequestRunner
- * @classdesc RequestRunner is the class which fires the XHR and takes the
+ * @classdesc RequestRunner is a singleton object which fires the XHR and takes the
  * appropriate action on the response.
- * @param {RequestModel} request Takes a RequestModel Object.
  */
 var RequestRunner = jsface.Class({
-	constructor: function(request) {
-		this.request = request;
-	},
+	$singleton: true,
 	/**
 	 * @function
 	 * @memberOf RequestRunner
+	 * @param {RequestModel} request Takes a RequestModel Object.
 	 */
-	execute: function() {
+	execute: function(request) {
 		/* The request is made using AHR here
 		 * Steps before the XHR call - 
 		 * - Do variable replacement
@@ -26,7 +24,7 @@ var RequestRunner = jsface.Class({
 		 * - return success or failure
 		 * - what else?
 		 */
-		log.success("Running:" + this.request.url);
+		log.success("Running:" + request.url);
 	}
 });
 

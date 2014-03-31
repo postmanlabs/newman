@@ -1,24 +1,30 @@
 {
-    "name": "Newman",
-    "version": "0.0.1",
-    "author": "Arjun Variar & Prakhar Srivastav",
-    "main": "Newman",
-    "description": "Command-line utility for Postman",
-    "keywords": ["postman", "api", "rest-client", "rest"],
-    "dependencies": {
-        "cli-color": "*",
-        "json5": "*",
-        "commander": "*",
-        "ahr2": "*",
-        "commander": "2.x.x",
-        "underscore": "1.x.x",
-        "jsface": "2.2.x"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.2",
-        "grunt-contrib-jshint": "~0.6.3",
-        "grunt-contrib-nodeunit": "~0.2.0",
-        "grunt-jsdoc": "*"
-    },
-    "license": "Apache"
+  "name": "Newman",
+  "version": "0.0.1",
+  "author": "Arjun Variar & Prakhar Srivastav",
+  "main": "Newman",
+  "description": "Command-line utility for Postman",
+  "keywords": [
+    "postman",
+    "api",
+    "rest-client",
+    "rest"
+  ],
+  "dependencies": {
+    "cli-color": "*",
+    "json5": "*",
+    "commander": "2.x.x",
+    "ahr2": "*",
+    "underscore": "1.x.x",
+    "jsface": "2.2.x"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-jsdoc": "*",
+    "sinon": "*",
+    "grunt-mocha-test": "~0.10.0"
+  },
+  "license": "Apache"
 }

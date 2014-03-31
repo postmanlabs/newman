@@ -27,9 +27,8 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 			 * 	Handler the errors in ErrorHandler module.
 			 * Use Logger Class for all logging.
 			 */
-			var requestRunner = new RequestRunner(postmanRequest);
-			requestRunner.execute();
-		});
+			RequestRunner.execute(postmanRequest);
+		}, this);
 		this.$class.$superp.execute.call(this);
 	}
 });
