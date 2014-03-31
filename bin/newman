@@ -21,12 +21,14 @@ function parseArguments() {
 	  .version('0.0.1')
 	  .usage('[options] file')
 	  .option('-c, --collection [file]', 'Specify your Postman Collection [file]', null)
-	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null);
+	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null)
+	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null);
 
 	program.on('--help', function() {
 	  console.log('  Examples:');
 	  console.log('');
 	  console.log('    newman -c POSTMAN_COLLECTION');
+	  console.log('    newman -u POSTMAN_COLLECTION -e POSTMAN_ENVIRONMENT');
 	});
 
 	program.parse(process.argv);
@@ -47,16 +49,25 @@ function terminateWithError(msg) {
 
 function main() {
 	parseArguments();
+	
+	newmanOptions = {};
+
+	if (program.environment) {
+		// in case of environment variable set the envJson property 
+ 		// on the options object
+		newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
+	}
+
 	if (program.collection) {
 		var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
-		Newman.execute(collectionJson);
+		Newman.execute(collectionJson, newmanOptions);
 
 	} else {
 		request.get(program.url).type('json').end(function(data) {
 			if (data.error) {
 				terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
 			}
-			Newman.execute(data.body);
+			Newman.execute(data.body, newmanOptions);
 		});
 	}
 }

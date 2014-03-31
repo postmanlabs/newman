@@ -4,7 +4,7 @@
     "values": [
         {
             "key": "url",
-            "value": "http://dump.getpostman.com/",
+            "value": "http://dump.getpostman.com",
             "type": "text",
             "name": "url"
         },
@@ -13,6 +13,18 @@
             "value": "1",
             "type": "text",
             "name": "user_id"
+        },
+        {
+            "key": "id",
+            "value": "1",
+            "type": "text",
+            "name": "id"
+        },
+		{
+            "key": "token_id",
+            "value": "12312321323",
+            "type": "text",
+            "name": "id"
         }
     ],
     "timestamp": 1396006402112,

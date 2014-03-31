@@ -15,9 +15,11 @@ var Newman = jsface.Class({
 	 * & runs tests on them.
 	 * @param  {JSON} requestJSON Takes the Postman Collection JSON from a file or url.
 	 * @memberOf Newman
+	 * @param {object} Newman options
 	 */
-	execute: function(requestJSON) {
-		var marshalledCollection = new CollectionModel(requestJSON).getOrderedRequests();
+	execute: function(requestJSON, options) {
+		var collectionModel = new CollectionModel(requestJSON);
+		var marshalledCollection = collectionModel.getMarshalledRequests(options);
 
 		var runner = new CollectionRunner(marshalledCollection);
 		runner.execute();

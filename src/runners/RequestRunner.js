@@ -15,19 +15,9 @@ var RequestRunner = jsface.Class({
 	 * @param {RequestModel} request Takes a RequestModel Object.
 	 */
 	execute: function(request) {
-		/* The request is made using AHR here
-		 * Steps before the XHR call - 
-		 * - Do variable replacement
-		 * - get XHR headers
-		 * - set the request method
-		 * - set a response timeout?
-		 * - return success or failure
-		 * - what else?
-		 */
 
-		// TODO: Remove the hardcoded URL when @prakhar1989 completes the VariableProccesor.
 		unirest.request({
-			url: request.url.replace(/\{\{url\}\}/g,'http://httpbin.org'),
+			url: request.url,
 			method: request.method,
 			headers: this._generateHeaders(request.headers),
 			body: this._setData(request)
@@ -35,7 +25,7 @@ var RequestRunner = jsface.Class({
 				if (error) {
 					log.error(request.id + " terminated with the error " + error.code);
 				} else {
-					log.success(request.id + " succeded with response.");
+					log.success(request.url + " succeded with response.");
 				}
 		});
 	},
