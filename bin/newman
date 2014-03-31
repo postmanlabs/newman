@@ -10,9 +10,9 @@
 var color   = require('cli-color'),
 	program = require('commander'),
 	path    = require('path'),
-    request = require('ahr2'),
+	request = require('unirest'),
 	fs      = require('fs'),
-    Helpers = require('../src/utilities/Helpers.js'),
+	Helpers = require('../src/utilities/Helpers.js'),
 	JSON5   = require('json5'),
 	Newman  = require('../src/Newman');
 
@@ -30,39 +30,35 @@ function parseArguments() {
 	});
 
 	program.parse(process.argv);
-    
+
 	if (!fs.existsSync(program.collection) && !(program.url)) {
 		terminateWithError('Please specify a Postman Collection either as a file or a URL');
 	}
 
-    if (program.url && !Helpers.isValidUrl(program.url)) {
+	if (program.url && !Helpers.isValidUrl(program.url)) {
 		terminateWithError('Please specify a valid URL');
-    }
+	}
 }
 
 function terminateWithError(msg) {
-    console.warn(color.red(msg));
-    process.exit(1);
+	console.warn(color.red(msg));
+	process.exit(1);
 }
 
 function main() {
-    parseArguments();
-    if (program.collection) {
-        var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
-        Newman.execute(collectionJson);
+	parseArguments();
+	if (program.collection) {
+		var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
+		Newman.execute(collectionJson);
 
-    } else {
-        request({href: program.url}).when(function(err, ahr, data){
-            if (err) {
-                terminateWithError('Unable to fetch a valid response. Error: ' + err.code);
-            }
-            if (ahr.headers["content-type"] !== "application/json") { 
-                // TODO: Is this check thorough enough?
-                terminateWithError("Error: The response is not in json format.");
-            }
-            Newman.execute(data);
-        });
-    }
+	} else {
+		request.get(program.url).type('json').end(function(data) {
+			if (data.error) {
+				terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
+			}
+			Newman.execute(data.body);
+		});
+	}
 }
 
 main();

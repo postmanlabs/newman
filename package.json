@@ -14,9 +14,9 @@
     "cli-color": "*",
     "json5": "*",
     "commander": "2.x.x",
-    "ahr2": "*",
     "underscore": "1.x.x",
-    "jsface": "2.2.x"
+    "jsface": "2.2.x",
+    "unirest": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

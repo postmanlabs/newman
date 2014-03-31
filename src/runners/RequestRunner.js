@@ -1,5 +1,5 @@
 var jsface  = require('jsface'),
-	request = require('ahr2'),
+	unirest = require('unirest'),
 	log     = require('../utilities/Logger');
 
 /**
@@ -24,7 +24,46 @@ var RequestRunner = jsface.Class({
 		 * - return success or failure
 		 * - what else?
 		 */
-		log.success("Running:" + request.url);
+
+		// TODO: Remove the hardcoded URL when @prakhar1989 completes the VariableProccesor.
+		unirest.request({
+			url: request.url.replace(/\{\{url\}\}/g,'http://httpbin.org'),
+			method: request.method,
+			headers: this._generateHeaders(request.headers),
+			body: this._setData(request)
+		}, function(error, response, body) {
+				if (error) {
+					log.error(request.id + " terminated with the error " + error.code);
+				} else {
+					log.success(request.id + " succeded with response.");
+				}
+		});
+	},
+
+	_setData: function(request) {
+		var data = '';
+		if (request.dataMode === "raw") {
+			data = request.data;
+		} else if (request.dataMode === "params") {
+			request.data.forEach(function(obj) {
+				Object.keys(obj).forEach(function(key) {
+					data[key] = obj[key];
+				});
+			});
+			data = JSON.stringify(data);
+		}
+		return data;
+	},
+
+	_generateHeaders: function(headers) {
+		var headerObj = {}
+		headers.split('\n').forEach(function(str) {
+			if (str) {
+				var splitIndex = str.indexOf(':');
+				headerObj[str.substr(0,splitIndex)] = str.substr(splitIndex + 1).trim();
+			}
+		});
+		return headerObj;
 	}
 });
 
