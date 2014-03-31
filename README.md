@@ -11,4 +11,4 @@ Newman
     grunt jsdoc
 
 # Tests
-	mocha tests
+	grunt test

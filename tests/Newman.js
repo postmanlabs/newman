@@ -13,7 +13,7 @@ var Newman           = require('../src/Newman.js'),
 
 describe("Newman", function() {
 
-	beforeEach(function(){
+	beforeEach(function() {
 		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
 		var url = "https://www.getpostman.com/collections/fc3f0598daaa5271e4f7";
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
