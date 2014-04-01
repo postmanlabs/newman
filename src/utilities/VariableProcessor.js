@@ -34,7 +34,7 @@ var VariableProcessor = jsface.Class({
 	_processFunctionVariable: function(request) {
 	},
 
-	_findReplace: function(source, findKey, replaceVal, regex) {
+	_findReplace: function(source, replaceVal, regex) {
 		return source.replace(regex, replaceVal);
 	},
 
@@ -47,12 +47,14 @@ var VariableProcessor = jsface.Class({
 		}
 
 		// TODO: Add processing code for each of these properties
-		properties = ["url", "data", "headers"];
+		var properties = ["url", "data", "headers"];
 
 		_und.each(kvpairs, function(pair) {
-			request.url =  this._findReplace(request.url, pair["key"], 
+			request.url =  this._findReplace(request.url, 
 					pair["value"], this.ENV_REGEX(pair["key"]));
 		}, this);
+
+		return true;
 	},
 
 	_processDataVariable: function(request) {
