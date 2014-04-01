@@ -75,10 +75,10 @@ var CollectionModel = jsface.Class(ParentModel, {
     },
 	
 	/**
-     * Returns an array of request objects as ordered as per the getOrderIds method 
+	 * Returns an array of request objects as ordered as per the getOrderIds method 
 	 * but with the variables processed.
 	 * @param Takes the newman options as a parameter
-     * @return {Array} Array with RequestModel ordered occording to the right id's and processed variables.
+	 * @return {Array} Array with RequestModel ordered occording to the right id's and processed variables.
 	 * @memberOf CollectionModel
 	 */
 	getMarshalledRequests: function(newmanOptions) {
