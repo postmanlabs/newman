@@ -88,7 +88,7 @@ var CollectionModel = jsface.Class(ParentModel, {
 		// processing for environment variables
 		if (newmanOptions["envJson"] !== undefined) {
 			_und.each(orderedRequests, function(request) {
-				VariableProcessor.getProcessedRequest(request, {
+				VariableProcessor.processRequestVariables(request, {
 					envJson: newmanOptions["envJson"]
 				});
 			});

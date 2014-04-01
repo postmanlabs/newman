@@ -23,7 +23,7 @@ describe("Variable Processor", function() {
 		sampleReq.url = "{{url}}/blog/edit";
 		this.environmentJson.values[0] = {"key": "url", "value": "http://localhost"};
 
-		VariableProcessor.getProcessedRequest(sampleReq, { 
+		VariableProcessor.processRequestVariables(sampleReq, { 
 			envJson: this.environmentJson 
 		});
 
@@ -36,7 +36,7 @@ describe("Variable Processor", function() {
 		sampleReq.url = "http://localhost/blog/post/{{id}}/user/{{id}}";
 		this.environmentJson.values[0] = {"key": "id", "value": "1"};
 
-		VariableProcessor.getProcessedRequest(sampleReq, {
+		VariableProcessor.processRequestVariables(sampleReq, {
 			envJson: this.environmentJson
 		});
 
@@ -50,7 +50,7 @@ describe("Variable Processor", function() {
 		sampleReq.url = "{{url}}/blog/edit";
 		this.environmentJson.values[0] = {"key": "noturl", "value": "http://localhost"};
 
-		VariableProcessor.getProcessedRequest(sampleReq, { 
+		VariableProcessor.processRequestVariables(sampleReq, { 
 			envJson: this.environmentJson 
 		});
 
@@ -64,7 +64,7 @@ describe("Variable Processor", function() {
 		this.environmentJson.values[0] = {"key": "url", "value": "http://localhost"};
 		this.environmentJson.values[1] = {"key": "post_id", "value": "1"};
 
-		VariableProcessor.getProcessedRequest(sampleReq, { 
+		VariableProcessor.processRequestVariables(sampleReq, { 
 			envJson: this.environmentJson 
 		});
 

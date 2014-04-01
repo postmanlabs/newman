@@ -19,13 +19,10 @@ var VariableProcessor = jsface.Class({
 	},
 
 	getFunctionVariables: {
-		"$guid": function() {
-			return "secret";
-		},
+		"$guid": function() {},
 		"$timestamp": (function() {
 			return Math.round(new Date().getTime() / 1000) })(),
-		"$randomint": (function() {
-			return 4; })()
+		"$randomint": (function() { return 4; })()
 	},
 
 	_processPathVariable: function(request) {
@@ -60,7 +57,7 @@ var VariableProcessor = jsface.Class({
 	_processDataVariable: function(request) {
 	},
 
-	getProcessedRequest: function(request, options) {
+	processRequestVariables: function(request, options) {
 		this._processEnvVariable(request, options["envJson"]);
 	}
 });
