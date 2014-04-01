@@ -82,7 +82,6 @@ var CollectionModel = jsface.Class(ParentModel, {
 	 * @memberOf CollectionModel
 	 */
 	getMarshalledRequests: function(newmanOptions) {
-		// TODO: @viig99: reading the newman options doesnt feel right here. Got a better idea?
 		var orderedRequests = this.getOrderedRequests();
 
 		// processing for environment variables

@@ -1,13 +1,14 @@
 var jsface           = require("jsface"),
 	CollectionRunner = require("./runners/CollectionRunner"),
-	CollectionModel  = require('./models/CollectionModel.js');
+	CollectionModel  = require('./models/CollectionModel.js'),
+	Options          = require('./utilities/Options.js');
 
 /**
  * @name Newman
- * @classdesc Bootstrap Newman class
+ * @classdesc Bootstrap Newman class, mixin from Options class
  * @namespace
  */
-var Newman = jsface.Class({
+var Newman = jsface.Class([Options], {
 	$singleton: true,
 
 	/**
@@ -18,8 +19,10 @@ var Newman = jsface.Class({
 	 * @param {object} Newman options
 	 */
 	execute: function(requestJSON, options) {
+		this.setOptions(options);
+
 		var collectionModel = new CollectionModel(requestJSON);
-		var marshalledCollection = collectionModel.getMarshalledRequests(options);
+		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
 		var runner = new CollectionRunner(marshalledCollection);
 		runner.execute();
