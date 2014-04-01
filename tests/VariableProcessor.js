@@ -17,17 +17,25 @@ describe("Variable Processor", function() {
 		this.environmentJson = JSON5.parse(fs.readFileSync(envFile, 'utf8'));
 	});
 
-	it("should replace correct env variable once", function() {
+	it("should replace correct env variable", function() {
 		var sampleReq = this.collectionJson.requests[0];
+		var anotherReq = this.collectionJson.requests[1];
 
 		sampleReq.url = "{{url}}/blog/edit";
+		anotherReq.url = "http://localhost/blog/post/{{id}}/user/{{id}}";
 		this.environmentJson.values[0] = {"key": "url", "value": "http://localhost"};
+		this.environmentJson.values[1] = {"key": "id", "value": "1"};
 
 		VariableProcessor.getProcessedRequest(sampleReq, { 
 			envJson: this.environmentJson 
 		});
 
+		VariableProcessor.getProcessedRequest(anotherReq, {
+			envJson: this.environmentJson
+		});
+
 		assert.equal(sampleReq.url, "http://localhost/blog/edit");
+		assert.equal(anotherReq.url, "http://localhost/blog/post/1/user/1");
 	});
 
 	it("should not replace incorrect env variable", function() {
