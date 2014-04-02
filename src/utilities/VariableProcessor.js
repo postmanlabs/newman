@@ -13,16 +13,13 @@ var VariableProcessor = jsface.Class({
 	$statics: {
 		PATH_REGEX     : new RegExp(),
 		FUNCTION_REGEX : new RegExp(),
-		ENV_REGEX      : function(key) {
-			return new RegExp("\{\{" + key + "\}\}", 'g');
-		}
+		MATCH_REGEX: /\{\{[a-z1-9\-._]+\}\}/i
 	},
 
 	getFunctionVariables: {
 		"$guid": function() {},
-		"$timestamp": (function() {
-			return Math.round(new Date().getTime() / 1000) })(),
-		"$randomint": (function() { return 4; })()
+		"$timestamp": _und.now(),
+		"$randomint": _und.random(0, 1000)
 	},
 
 	_processPathVariable: function(request) {
@@ -31,10 +28,26 @@ var VariableProcessor = jsface.Class({
 	_processFunctionVariable: function(request) {
 	},
 
-	_findReplace: function(source, replaceVal, regex) {
-		return source.replace(regex, replaceVal);
+	// replaces a string with {{ }} like templates with the key, value as 
+	// found in the source object.
+	// example: _findReplace("{{url}}/post/{{id}}, { url: "http://localhost", id: 1})
+	_findReplace: function(stringSource, sourceObject) {
+		function getKey(match){
+			if (match === null) return null;
+			var m = match[0];
+			var key = m.substring(2, m.length-2);
+			return sourceObject[key] === undefined ? key : sourceObject[key];
+		}
+		var key = getKey(stringSource.match(this.MATCH_REGEX));
+		stringSource = stringSource.replace(this.MATCH_REGEX, key);  
+
+		if (stringSource.match(this.MATCH_REGEX)){
+			return this._findReplace(stringSource, sourceObject);
+		} 
+		return stringSource;
 	},
 
+	// transforms the request as per the environment json data passed
 	_processEnvVariable: function(request, envJson) {
 		var kvpairs = envJson["values"];
 		
@@ -43,15 +56,16 @@ var VariableProcessor = jsface.Class({
 			return false;
 		}
 
-		// TODO: Add processing code for each of these properties
-		var properties = ["url", "data", "headers"];
-
-		_und.each(kvpairs, function(pair) {
-			request.url =  this._findReplace(request.url, 
-					pair["value"], this.ENV_REGEX(pair["key"]));
-		}, this);
-
+		var pairObject = this._transformPairs(kvpairs);
+		request.url = this._findReplace(request.url, pairObject);
 		return true;
+	},
+
+	// transforms an array of 
+	// [{"key": "id", "value": "20"}, { "key": "name", "value": "joe" }] 
+	// into an object {"id": "20", "name": "joe"}
+	_transformPairs: function(kvpairs) {
+		return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
 	},
 
 	_processDataVariable: function(request) {

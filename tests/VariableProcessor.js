@@ -21,6 +21,7 @@ describe("Variable Processor", function() {
 		var sampleReq = this.collectionJson.requests[0];
 
 		sampleReq.url = "{{url}}/blog/edit";
+		//sampleReq.headers = "Authorization: Basic YTg1OmJsYWhibGFoMTI= From: {{url}} Max-Forwards: 19";
 		this.environmentJson.values[0] = {"key": "url", "value": "http://localhost"};
 
 		VariableProcessor.processRequestVariables(sampleReq, { 
@@ -43,7 +44,6 @@ describe("Variable Processor", function() {
 		assert.equal(sampleReq.url, "http://localhost/blog/post/1/user/1");
 	});
 
-
 	it("should not replace incorrect env variable", function() {
 		var sampleReq = this.collectionJson.requests[0];
 
@@ -54,7 +54,7 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson 
 		});
 
-		assert.equal(sampleReq.url, "{{url}}/blog/edit");
+		assert.equal(sampleReq.url, "url/blog/edit");
 	});
 
 	it("should replace multiple correct env variable", function() {
@@ -69,5 +69,20 @@ describe("Variable Processor", function() {
 		});
 
 		assert.equal(sampleReq.url, "http://localhost/blog/edit/1");
+	});
+
+	it("should recursively resolve environment variables", function() {
+		var sampleReq = this.collectionJson.requests[0];
+
+		sampleReq.url = "http://localhost/blog/edit/posts/{{id}}";
+		this.environmentJson.values = []; // avoid clashes
+		this.environmentJson.values[0] = { "key": "id", "value": "{{post_id}}" }
+		this.environmentJson.values[1] = { "key": "post_id", "value": "10" }
+
+		VariableProcessor.processRequestVariables(sampleReq, {
+			envJson: this.environmentJson
+		});
+
+		assert.equal(sampleReq.url, "http://localhost/blog/edit/posts/10");
 	});
 });
