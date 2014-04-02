@@ -86,4 +86,19 @@ describe("Variable Processor", function() {
 
 		assert.equal(sampleReq.url, "http://localhost/blog/edit/posts/10");
 	});
+
+	it("should replace env variable of an object property", function() {
+		var sampleReq = this.collectionJson.requests[0];
+
+		sampleReq.form = {"msg" : "Hello, {{name}}"};
+		sampleReq.data = {"{{name}}" : "password"};
+		this.environmentJson.values[0] = { "key": "name", "value": "Foobar" };
+
+		VariableProcessor.processRequestVariables(sampleReq, {
+			envJson: this.environmentJson
+		});
+
+		assert.equal(sampleReq.form.msg, "Hello, Foobar");
+		assert.equal(sampleReq.data["Foobar"], "password");
+	});
 });

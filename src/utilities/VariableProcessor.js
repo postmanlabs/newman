@@ -56,17 +56,30 @@ var VariableProcessor = jsface.Class({
 			return false;
 		}
 
-		var pairObject = this._transformPairs(kvpairs);
+		var properties = ["url", "headers", "form", "data"];
 
-		var properties = ["url", "headers"];
+		var pairObject = this._transformPairs(kvpairs);
 		_und.each(properties, function(prop) {
-			request[prop] = this._findReplace(request[prop], pairObject);
+
+			// check if the prop exists
+			if (request[prop] !== undefined)  {
+				if (typeof request[prop] === "string") {
+					// if string, use directly
+					request[prop] = this._findReplace(request[prop], pairObject);
+				} else {
+					// if not string, stringify it
+					// findReplace, unstringify it and set it
+					var jsonifiedProp = JSON.stringify(request[prop]);
+					var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, pairObject));
+					request[prop] = parsedJsonProp;
+				}
+			}
 		}, this);
 		return true;
 	},
 
 	// transforms an array of 
-	// [{"key": "id", "value": "20"}, { "key": "name", "value": "joe" }] 
+	// [{ "key": "id", "value": "20" }, { "key": "name", "value": "joe" }] 
 	// into an object {"id": "20", "name": "joe"}
 	_transformPairs: function(kvpairs) {
 		return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
