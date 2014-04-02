@@ -57,7 +57,11 @@ var VariableProcessor = jsface.Class({
 		}
 
 		var pairObject = this._transformPairs(kvpairs);
-		request.url = this._findReplace(request.url, pairObject);
+
+		var properties = ["url", "headers"];
+		_und.each(properties, function(prop) {
+			request[prop] = this._findReplace(request[prop], pairObject);
+		}, this);
 		return true;
 	},
 

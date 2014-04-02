@@ -21,7 +21,7 @@ describe("Variable Processor", function() {
 		var sampleReq = this.collectionJson.requests[0];
 
 		sampleReq.url = "{{url}}/blog/edit";
-		//sampleReq.headers = "Authorization: Basic YTg1OmJsYWhibGFoMTI= From: {{url}} Max-Forwards: 19";
+		sampleReq.headers = "Authorization: Basic YTg1OmJsYWhibGFoMTI= From: {{url}} Max-Forwards: 19";
 		this.environmentJson.values[0] = {"key": "url", "value": "http://localhost"};
 
 		VariableProcessor.processRequestVariables(sampleReq, { 
@@ -29,6 +29,7 @@ describe("Variable Processor", function() {
 		});
 
 		assert.equal(sampleReq.url, "http://localhost/blog/edit");
+		assert.equal(sampleReq.headers, "Authorization: Basic YTg1OmJsYWhibGFoMTI= From: http://localhost Max-Forwards: 19");
 	});
 
 	it("should replace correct env variable multiple times", function() {
