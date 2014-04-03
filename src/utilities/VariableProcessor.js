@@ -11,9 +11,9 @@ var VariableProcessor = jsface.Class({
 	$singleton: true,
 
 	$statics: {
-		PATH_REGEX     : new RegExp(),
-		FUNCTION_REGEX : new RegExp(),
-		MATCH_REGEX: /\{\{[a-z1-9\-._]+\}\}/i
+		ENV_REGEX: /\{\{([a-z1-9\-._]+)\}\}/ig,
+		PATH_REGEX: /:([a-z1-9\-._]+)/ig,
+		FUNCTION_REGEX: /\$([a-z1-9\-._]+)/ig
 	},
 
 	getFunctionVariables: {
@@ -28,23 +28,17 @@ var VariableProcessor = jsface.Class({
 	_processFunctionVariable: function(request) {
 	},
 
-	// replaces a string with {{ }} like templates with the key, value as 
-	// found in the source object.
-	// example: _findReplace("{{url}}/post/{{id}}, { url: "http://localhost", id: 1})
-	_findReplace: function(stringSource, sourceObject) {
-		function getKey(match){
-			if (match === null) return null;
-			var m = match[0];
-			var key = m.substring(2, m.length-2);
-			return sourceObject[key] === undefined ? key : sourceObject[key];
+	_findReplace: function(stringSource, sourceObject, REGEX) {
+		function getKey(match, key){
+			return sourceObject[key];
 		}
-		var key = getKey(stringSource.match(this.MATCH_REGEX));
-		stringSource = stringSource.replace(this.MATCH_REGEX, key);  
+		stringSource = stringSource.replace(REGEX, getKey);  
 
-		if (stringSource.match(this.MATCH_REGEX)){
-			return this._findReplace(stringSource, sourceObject);
-		} 
-		return stringSource;
+		if (stringSource.match(REGEX)){
+			return this._findReplace(stringSource, sourceObject, REGEX);
+		} else {
+			return stringSource;
+		}
 	},
 
 	// transforms the request as per the environment json data passed
@@ -52,7 +46,7 @@ var VariableProcessor = jsface.Class({
 		var kvpairs = envJson["values"];
 		
 		if (kvpairs === undefined) {
-			log.error("Incorrect environemnt JSON file.");
+			log.error("Incorrect environment JSON file.");
 			return false;
 		}
 
@@ -65,12 +59,12 @@ var VariableProcessor = jsface.Class({
 			if (request[prop] !== undefined)  {
 				if (typeof request[prop] === "string") {
 					// if string, use directly
-					request[prop] = this._findReplace(request[prop], pairObject);
+					request[prop] = this._findReplace(request[prop], pairObject, this.ENV_REGEX);
 				} else {
 					// if not string, stringify it
 					// findReplace, unstringify it and set it
 					var jsonifiedProp = JSON.stringify(request[prop]);
-					var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, pairObject));
+					var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, pairObject, this.ENV_REGEX));
 					request[prop] = parsedJsonProp;
 				}
 			}

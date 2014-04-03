@@ -55,7 +55,7 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson 
 		});
 
-		assert.equal(sampleReq.url, "url/blog/edit");
+		assert.equal(sampleReq.url, "undefined/blog/edit");
 	});
 
 	it("should replace multiple correct env variable", function() {
