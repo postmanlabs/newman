@@ -28,6 +28,10 @@ var VariableProcessor = jsface.Class({
 	_processFunctionVariable: function(request) {
 	},
 
+	// replaces a string based on keys in the sourceObject as matched by a 
+	// regex. Supports recursive replacement
+	// usage: _findReplace("{{url}}/blog/posts/{{id}}", {url: "http://localhost", id: 2}, this.ENV_REGEX)
+	// Note: The regex provided should capture the key to be replaced (use parenthesis)
 	_findReplace: function(stringSource, sourceObject, REGEX) {
 		function getKey(match, key){
 			return sourceObject[key];
