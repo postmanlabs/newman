@@ -101,4 +101,29 @@ describe("Variable Processor", function() {
 		assert.equal(sampleReq.form.msg, "Hello, Foobar");
 		assert.equal(sampleReq.data["Foobar"], "password");
 	});
+
+	it("should replace available path variables correctly", function() {
+		var sampleReq = this.collectionJson.requests[0];
+
+		sampleReq.url = "http://localhost/blog/:user/posts/:post_id";
+		sampleReq.pathVariables = {user: "foo", post_id: 10};
+
+		VariableProcessor.processRequestVariables(sampleReq, {
+			envJson: this.environmentJson
+		});
+
+		assert.equal(sampleReq.url, "http://localhost/blog/foo/posts/10");
+	});
+
+	it("should replace function variables correctly", function() {
+		var sampleReq = this.collectionJson.requests[0];
+
+		sampleReq.url = "http://localhost/blog/posts/$testconst";
+
+		VariableProcessor.processRequestVariables(sampleReq, {
+			envJson: this.environmentJson
+		});
+
+		assert.equal(sampleReq.url, "http://localhost/blog/posts/10");
+	});
 });
