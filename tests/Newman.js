@@ -3,13 +3,15 @@ var assert = require('assert'),
 	sinon  = require('sinon'),
 	fs     = require('fs'),
 	JSON5  = require('JSON5'),
-	path   = require('path');
+	path   = require('path'),
+	_und   = require('underscore');
 
 // importing newman modules
-var Newman           = require('../src/Newman.js'),
-	CollectionModel  = require('../src/models/CollectionModel.js'),
-	CollectionRunner = require('../src/runners/CollectionRunner.js'),
-	RequestRunner    = require('../src/runners/RequestRunner.js');
+var Newman            = require('../src/Newman.js'),
+	CollectionModel   = require('../src/models/CollectionModel.js'),
+	CollectionRunner  = require('../src/runners/CollectionRunner.js'),
+	RequestRunner     = require('../src/runners/RequestRunner.js'),
+	VariableProcessor = require('../src/utilities/VariableProcessor.js');
 
 describe("Newman", function() {
 
@@ -21,7 +23,7 @@ describe("Newman", function() {
 	});
 	
 	it("should call requestRunner execute for each request", function() {
-		Newman.execute(this.collectionJson);
+		Newman.execute(this.collectionJson, {});
 		assert.equal(this.stub.callCount, this.collectionJson.requests.length);
 	});
 
