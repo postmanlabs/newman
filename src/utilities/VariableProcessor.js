@@ -17,6 +17,7 @@ var VariableProcessor = jsface.Class({
 		FUNCTION_REGEX: /\$([a-z1-9\-._]+)/ig
 	},
 
+	// placeholders to define function variables
 	getFunctionVariables: {
 		guid: function() {},
 		timestamp: _und.now(),
@@ -24,10 +25,14 @@ var VariableProcessor = jsface.Class({
 		testconst: (function() { return 10; })()
 	},
 
+	// updates request url by the replacing it with pathVariables
 	_processPathVariable: function(request) {
-		request.url = this._findReplace(request.url, request.pathVariables, this.PATH_REGEX);
+		if (typeof request.pathVariables !== undefined) {
+			request.url = this._findReplace(request.url, request.pathVariables, this.PATH_REGEX);
+		}
 	},
-
+	
+	// updates request properties by the replacing them with function variables
 	_processFunctionVariable: function(request) {
 		var properties = ["url", "headers", "form", "data"];
 		_und.each(properties, function(prop) {
@@ -99,14 +104,15 @@ var VariableProcessor = jsface.Class({
 		return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
 	},
 
-	_processDataVariable: function(request) {
-	},
-
+	/** 
+	 * Modifies request by processing all the variables
+	 * @param {RequestModel} request
+	 * @memberof VariableProcessor
+	 * @param {JSON} options passed to Newman runner
+	 */
 	processRequestVariables: function(request, options) {
 		this._processEnvVariable(request, options["envJson"]);
-		if (request.pathVariables !== undefined) {
-			this._processPathVariable(request);
-		}
+		this._processPathVariable(request);
 		this._processFunctionVariable(request);
 	}
 });
