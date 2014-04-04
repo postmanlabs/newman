@@ -21,8 +21,7 @@ var VariableProcessor = jsface.Class({
 	getFunctionVariables: {
 		guid: function() {},
 		timestamp: _und.now(),
-		randomint: _und.random(0, 1000),
-		testconst: (function() { return 10; })()
+		randomint: _und.random(0, 1000)
 	},
 
 	// updates request url by the replacing it with pathVariables

@@ -118,6 +118,8 @@ describe("Variable Processor", function() {
 	it("should replace function variables correctly", function() {
 		var sampleReq = this.collectionJson.requests[0];
 
+		VariableProcessor.getFunctionVariables["testconst"] = (function() { return 10; })();
+
 		sampleReq.url = "http://localhost/blog/posts/$testconst";
 
 		VariableProcessor.processRequestVariables(sampleReq, {
