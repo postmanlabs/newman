@@ -18,19 +18,36 @@ var VariableProcessor = jsface.Class({
 	},
 
 	getFunctionVariables: {
-		"$guid": function() {},
-		"$timestamp": _und.now(),
-		"$randomint": _und.random(0, 1000)
+		guid: function() {},
+		timestamp: _und.now(),
+		randomint: _und.random(0, 1000),
+		testconst: (function() { return 10; })()
 	},
 
 	_processPathVariable: function(request) {
+		request.url = this._findReplace(request.url, request.pathVariables, this.PATH_REGEX);
 	},
 
 	_processFunctionVariable: function(request) {
+		var properties = ["url", "headers", "form", "data"];
+		_und.each(properties, function(prop) {
+			// check if the prop exists
+			if (request[prop] !== undefined)  {
+				if (typeof request[prop] === "string") {
+					// if string, use directly
+					request[prop] = this._findReplace(request[prop], this.getFunctionVariables, this.FUNCTION_REGEX);
+				} else {
+					// if not string, stringify it
+					// findReplace, unstringify it and set it
+					var jsonifiedProp = JSON.stringify(request[prop]);
+					var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, this.getFunctionVariables, this.FUNCTION_REGEX));
+					request[prop] = parsedJsonProp;
+				}
+			}
+		}, this);
 	},
 
-	// replaces a string based on keys in the sourceObject as matched by a 
-	// regex. Supports recursive replacement
+	// replaces a string based on keys in the sourceObject as matched by a regex. Supports recursive replacement
 	// usage: _findReplace("{{url}}/blog/posts/{{id}}", {url: "http://localhost", id: 2}, this.ENV_REGEX)
 	// Note: The regex provided should capture the key to be replaced (use parenthesis)
 	_findReplace: function(stringSource, sourceObject, REGEX) {
@@ -41,9 +58,8 @@ var VariableProcessor = jsface.Class({
 
 		if (stringSource.match(REGEX)){
 			return this._findReplace(stringSource, sourceObject, REGEX);
-		} else {
-			return stringSource;
 		}
+		return stringSource;
 	},
 
 	// transforms the request as per the environment json data passed
@@ -59,7 +75,6 @@ var VariableProcessor = jsface.Class({
 
 		var pairObject = this._transformPairs(kvpairs);
 		_und.each(properties, function(prop) {
-
 			// check if the prop exists
 			if (request[prop] !== undefined)  {
 				if (typeof request[prop] === "string") {
@@ -89,6 +104,10 @@ var VariableProcessor = jsface.Class({
 
 	processRequestVariables: function(request, options) {
 		this._processEnvVariable(request, options["envJson"]);
+		if (request.pathVariables !== undefined) {
+			this._processPathVariable(request);
+		}
+		this._processFunctionVariable(request);
 	}
 });
 
