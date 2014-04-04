@@ -1,6 +1,9 @@
 module.exports = function(grunt) {
 	// defining tasks
 	grunt.initConfig({
+		jshint: {
+			all: ['src/*.js', 'src/**/*.js', "tests/*.js"]
+		},
 		jsdoc: {
 			dist: {
 				src: ['src/*.js', 'tests/*.js', 'src/errors/*.js','src/runners/*.js',
@@ -24,6 +27,8 @@ module.exports = function(grunt) {
 
 	// register tasks
 	grunt.registerTask('prepare_release', ['lint', 'mochaTest', 'jsdoc']);
-	grunt.registerTask('default', ['mochaTest', 'jsdoc']);
+	grunt.registerTask('default', ['mochaTest', 'jsdoc', 'jshint']);
+	grunt.registerTask('hint', ['jshint']);
 	grunt.registerTask('test', 'mochaTest');
+	grunt.registerTask('docs', 'jsdoc');
 }

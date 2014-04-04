@@ -68,7 +68,7 @@ var VariableProcessor = jsface.Class({
 
 	// transforms the request as per the environment json data passed
 	_processEnvVariable: function(request, envJson) {
-		var kvpairs = envJson["values"];
+		var kvpairs = envJson.values;
 		
 		if (kvpairs === undefined) {
 			log.error("Incorrect environment JSON file.");
@@ -110,7 +110,7 @@ var VariableProcessor = jsface.Class({
 	 * @param {JSON} options passed to Newman runner
 	 */
 	processRequestVariables: function(request, options) {
-		this._processEnvVariable(request, options["envJson"]);
+		this._processEnvVariable(request, options.envJson);
 		this._processPathVariable(request);
 		this._processFunctionVariable(request);
 	}

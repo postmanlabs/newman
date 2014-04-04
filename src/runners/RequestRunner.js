@@ -46,7 +46,7 @@ var RequestRunner = jsface.Class({
 	},
 
 	_generateHeaders: function(headers) {
-		var headerObj = {}
+		var headerObj = {};
 		headers.split('\n').forEach(function(str) {
 			if (str) {
 				var splitIndex = str.indexOf(':');
