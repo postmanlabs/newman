@@ -19,15 +19,15 @@ describe("Newman", function() {
 		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
 		var url = "https://www.getpostman.com/collections/fc3f0598daaa5271e4f7";
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
-		this.stub = sinon.stub(RequestRunner, 'execute');
+		this.stub = sinon.stub(RequestRunner, 'addRequest');
 	});
 	
-	it("should call requestRunner execute for each request", function() {
+	it("should call requestRunner addRequest for each request", function() {
 		Newman.execute(this.collectionJson, {});
 		assert.equal(this.stub.callCount, this.collectionJson.requests.length);
 	});
 
 	afterEach(function() {
-		RequestRunner.execute.restore();
+		RequestRunner.addRequest.restore();
 	});
 });

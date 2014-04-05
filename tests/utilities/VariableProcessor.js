@@ -6,12 +6,12 @@ var assert = require('assert'),
 	path   = require('path'),
 	_und   = require('underscore');
 
-var VariableProcessor = require('../src/utilities/VariableProcessor.js');
+var VariableProcessor = require('../../src/utilities/VariableProcessor.js');
 
 describe("Variable Processor", function() {
 	beforeEach(function() {
-		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
-		var envFile = path.join(__dirname, 'data', 'Environment.js');
+		var filePath = path.join(__dirname, '../data', 'PostmanCollection.json');
+		var envFile = path.join(__dirname, '../data', 'Environment.json');
 
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.environmentJson = JSON5.parse(fs.readFileSync(envFile, 'utf8'));

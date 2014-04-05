@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		jsdoc: {
 			dist: {
-				src: ['src/*.js', 'tests/*.js', 'src/errors/*.js','src/runners/*.js',
+				src: ['src/*.js', 'tests/**/*.js', 'src/errors/*.js','src/runners/*.js',
 					  'src/utilities/*.js', 'src/models/*.js', 'src/responseHandlers/*.js'],
 				options: {
 					destination: 'docs'
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 		},
 		mochaTest: {
 			test: {
-				src: ["tests/*.js"]
+				src: ["tests/**/*.js"]
 			}
 		}
 	});
