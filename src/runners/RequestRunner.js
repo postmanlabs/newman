@@ -24,7 +24,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	/**
-	 * Adds the Request to the RequestRunner's queue.
+	 * Starts the RequestRunner going to each request in the queue.
 	 * @memberOf RequestRunner
 	 */
 	start: function() {
@@ -43,6 +43,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		}
 	},
 
+	// Generates and returns the request Options to be used by unirest.
 	_getRequestOptions: function(request) {
 		var RequestOptions = {};
 		RequestOptions.url = request.url;
