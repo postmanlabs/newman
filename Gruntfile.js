@@ -2,11 +2,11 @@ module.exports = function(grunt) {
 	// defining tasks
 	grunt.initConfig({
 		jshint: {
-			all: ['src/*.js', 'src/**/*.js', "tests/*.js"]
+			all: ['src/*.js', 'src/**/*.js', "tests/**/*.js"]
 		},
 		jsdoc: {
 			dist: {
-				src: ['src/*.js', 'src/**/*.js'],
+				src: ['src/*.js', 'src/**/*.js', 'tests/**/*.js'],
 				options: {
 					destination: 'docs'
 				}
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 		},
 		mochaTest: {
 			test: {
-				src: ["tests/*.js"]
+				src: ["tests/**/*.js"]
 			}
 		}
 	});
