@@ -2,7 +2,7 @@
 var assert = require('assert'),
 	sinon  = require('sinon'),
 	fs     = require('fs'),
-	JSON5  = require('JSON5'),
+	JSON5  = require('json5'),
 	path   = require('path'),
 	_und   = require('underscore');
 
@@ -11,7 +11,7 @@ var VariableProcessor = require('../../src/utilities/VariableProcessor.js');
 describe("Variable Processor", function() {
 	beforeEach(function() {
 		var filePath = path.join(__dirname, '../data', 'PostmanCollection.json');
-		var envFile = path.join(__dirname, '../data', 'Environment.json');
+		var envFile = path.join(__dirname, '../data', 'environment.json');
 
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.environmentJson = JSON5.parse(fs.readFileSync(envFile, 'utf8'));

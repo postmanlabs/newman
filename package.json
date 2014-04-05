@@ -26,5 +26,8 @@
     "sinon": "*",
     "grunt-mocha-test": "~0.10.0"
   },
+  "scripts": {
+    "test": "grunt test"
+  },
   "license": "Apache"
 }
