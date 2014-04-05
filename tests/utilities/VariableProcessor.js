@@ -2,7 +2,7 @@
 var assert = require('assert'),
 	sinon  = require('sinon'),
 	fs     = require('fs'),
-	JSON5  = require('JSON5'),
+	JSON5  = require('json5'),
 	path   = require('path'),
 	_und   = require('underscore');
 
