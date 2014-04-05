@@ -21,10 +21,10 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 		_und.each(this.collection, function(postmanRequest) {
 			/*
 			 * If Success send the Response to approriate module
-			 * 	1) DefaultResponseHandler.
-			 *  2) TestReponseHandler.
+			 * 1) DefaultResponseHandler.
+			 * 2) TestReponseHandler.
 			 * Else
-			 * 	Handler the errors in ErrorHandler module.
+			 * Handler the errors in ErrorHandler module.
 			 * Use Logger Class for all logging.
 			 */
 			RequestRunner.execute(postmanRequest);

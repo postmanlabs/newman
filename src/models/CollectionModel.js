@@ -44,7 +44,7 @@ var CollectionModel = jsface.Class(ParentModel, {
      */
     getOrderOfIds: function() {
         var totalOrder = _und.map(this.folders, function(folder) {
-            return folder.order
+            return folder.order;
         });
         totalOrder.push(this.order);
         return _und.flatten(totalOrder);
@@ -85,10 +85,10 @@ var CollectionModel = jsface.Class(ParentModel, {
 		var orderedRequests = this.getOrderedRequests();
 
 		// processing for environment variables
-		if (newmanOptions["envJson"] !== undefined) {
+		if (newmanOptions.envJson !== undefined) {
 			_und.each(orderedRequests, function(request) {
 				VariableProcessor.processRequestVariables(request, {
-					envJson: newmanOptions["envJson"]
+					envJson: newmanOptions.envJson
 				});
 			});
 		}
