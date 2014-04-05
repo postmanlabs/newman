@@ -10,7 +10,7 @@ var jsface = require('jsface'),
 var VariableProcessor = jsface.Class({
 	$singleton: true,
 
-	// TODO: Make {{}} configurable
+	// TODO: Make {{}} configurable 
 	$statics: {
 		ENV_REGEX: /\{\{([a-z1-9\-._]+)\}\}/ig,
 		PATH_REGEX: /:([a-z1-9\-._]+)/ig,
@@ -18,6 +18,7 @@ var VariableProcessor = jsface.Class({
 	},
 
 	// placeholders to define function variables
+	// TODO: Make guid function configurable
 	getFunctionVariables: {
 		guid: function() {},
 		timestamp: _und.now(),
