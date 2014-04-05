@@ -6,7 +6,6 @@ var assert = require('assert'),
 describe("Queue", function() {
 	beforeEach(function() {
 		this.Q = new Queue();
-		this.Q.purgeAllItemsInQueue();
 	});
 
 	it("Should add items to the queue", function() {
