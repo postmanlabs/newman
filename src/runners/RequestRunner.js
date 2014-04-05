@@ -9,12 +9,12 @@ var jsface  = require('jsface'),
  * @class RequestRunner
  * @classdesc RequestRunner is a singleton object which fires the XHR and takes the
  * appropriate action on the response.
+ * @mixes EventEmitter , Queue
  */
 var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	$singleton: true,
 
 	/**
-	 * @function
 	 * Adds the Request to the RequestRunner's queue.
 	 * @memberOf RequestRunner
 	 * @param {RequestModel} request Takes a RequestModel Object.
@@ -24,21 +24,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	/**
-	 * @function
 	 * Adds the Request to the RequestRunner's queue.
 	 * @memberOf RequestRunner
-	 * @param {RequestModel} request Takes a RequestModel Object.
 	 */
 	start: function() {
 		this._execute();
 		this.addEventListener('requestExecuted', this._onRequestExecuted.bind(this));
 	},
 
-	/**
-	 * @function
-	 * @memberOf RequestRunner
-	 * @param {RequestModel} request Takes a RequestModel Object.
-	 */
 	_execute: function() {
 		var request = this.getFromQueue();
 		if (request) {
@@ -60,6 +53,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		return RequestOptions;
 	},
 
+	// Takes request as the input, parses it for different types and
+	// sets it as the request body for the unirest request.
 	_setBodyData: function(RequestOptions, request) {
 		if (request.method === 'POST') {
 			if (request.dataMode === "raw") {
@@ -71,6 +66,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		}
 	},
 
+	// Request Mumbo jumbo for `multipart/form-data`.
 	_setFormDataIfParamsInRequest: function(unireq, request) {
 		if (request.method === 'POST' && request.dataMode === "params") {
 			var form = unireq.form();
