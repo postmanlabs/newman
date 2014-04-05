@@ -10,5 +10,5 @@ Newman
 # Docs
 	grunt jsdoc
 
-# Tests
-	[![Build Status](https://travis-ci.org/a85/Newman.svg?branch=master)](https://travis-ci.org/a85/Newman) grunt test
+# Tests [![Build Status](https://travis-ci.org/a85/Newman.svg?branch=master)](https://travis-ci.org/a85/Newman)
+	grunt test
