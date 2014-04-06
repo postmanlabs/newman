@@ -1,4 +1,3 @@
-// Set of prilimnary tests for newman
 var assert = require('assert'),
 	sinon  = require('sinon'),
 	fs     = require('fs'),
@@ -13,7 +12,7 @@ var Newman            = require('../src/Newman.js'),
 	RequestRunner     = require('../src/runners/RequestRunner.js'),
 	VariableProcessor = require('../src/utilities/VariableProcessor.js');
 
-describe("Newman", function() {
+describe("CollectionRunner", function() {
 
 	beforeEach(function() {
 		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');

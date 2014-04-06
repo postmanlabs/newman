@@ -1,6 +1,8 @@
 var jsface                  = require('jsface'),
 	DefaultResponseHandler  = require('./DefaultResponseHandler'),
-	AbstractResponseHandler = require('./AbstractResponseHandler');
+	AbstractResponseHandler = require('./AbstractResponseHandler'),
+	path                    = require('path'),
+	fs                      = require('fs');
 
 /**
  * @class ResponseHandlerFactory
@@ -22,7 +24,12 @@ var ResponseHandlerFactory = jsface.Class({
 		} else {
 			// TODO: How to return a new object?
 			// TODO: Check if the file exists else error?
-			return require('./' + options.responseHandler);
+			var filePath = path.join(__dirname, options.responseHandler);
+			if (!fs.existsSync(filePath)) {
+				return false;
+			} else {
+				return require(filePath);
+			}
 		}
 	}
 });

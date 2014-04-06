@@ -7,15 +7,15 @@ var assert = require('assert'),
 
 var Newman            = require('../src/Newman.js'),
 	RequestRunner     = require('../src/runners/RequestRunner.js'),
-	DefaultResponseHandler = require('../src/responseHandlers/DefaultResponseHandler.js'),
+	AbstractResponseHandler = require('../src/responseHandlers/AbstractResponseHandler.js'),
 	Emitter = require('../src/utilities/EventEmitter');
 
-describe("Response Handler", function() {
+describe("Response Handlers", function() {
 
 	beforeEach(function() {
 		this.emitter = new Emitter();
-		this.stub = sinon.stub(DefaultResponseHandler, '_onRequestExecuted');
-		DefaultResponseHandler.initialize();
+		this.stub = sinon.stub(AbstractResponseHandler, '_onRequestExecuted');
+		AbstractResponseHandler.initialize();
 	});
 	
 	it("should have _onRequestExecuted called for each request", function() {
@@ -24,6 +24,6 @@ describe("Response Handler", function() {
 	});
 
 	afterEach(function() {
-		DefaultResponseHandler._onRequestExecuted.restore();
+		AbstractResponseHandler._onRequestExecuted.restore();
 	});
 });
