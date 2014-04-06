@@ -13,14 +13,14 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 	/**
 	 * Sets up the event listener for the request executed event emitted on each 
 	 * request execution
-	 * @memberOf DefaultResponseHandler
+	 * @memberOf AbstractResponseHandler
 	 */
 	initialize: function() {
-		this.addEventListener('requestExecuted', this.onRequestExecuted.bind(this));
+		this.addEventListener('requestExecuted', this._onRequestExecuted.bind(this));
 	},
 
 	// method to be over-ridden by the inheriting classes
-	onRequestExecuted: function(error, response, body, request) {
+	_onRequestExecuted: function(error, response, body, request) {
 	}
 });
 

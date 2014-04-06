@@ -1,7 +1,7 @@
 var jsface           = require("jsface"),
 	CollectionRunner = require("./runners/CollectionRunner"),
-	CollectionModel  = require('./models/CollectionModel.js'),
-	Options          = require('./utilities/Options.js');
+	CollectionModel  = require('./models/CollectionModel'),
+	Options          = require('./utilities/Options');
 
 /**
  * @name Newman

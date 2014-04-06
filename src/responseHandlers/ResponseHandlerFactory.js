@@ -5,20 +5,24 @@ var jsface                  = require('jsface'),
 /**
  * @class ResponseHandlerFactory
  * @classdesc 
- * @mixes EventEmitter
  */
 var ResponseHandlerFactory = jsface.Class({
 	$singleton: true,
 
 	/**
-	 * returns a requestHandler that inherits from the 
+	 * @function
+	 * @memberOf ResponseHandlerFactory
+	 * @param {JSON} options
+	 * returns a responseHandler that inherits from the 
 	 * AbstractRequestHandler class
 	 */
-	createRequestHandler: function(options) {
-		if (options.customRequestHandler === undefined) {
+	createResponseHandler: function(options) {
+		if (options.responseHandler === undefined) {
 			return DefaultResponseHandler;
 		} else {
 			// TODO: How to return a new object?
+			// TODO: Check if the file exists else error?
+			return require('./' + options.responseHandler);
 		}
 	}
 });

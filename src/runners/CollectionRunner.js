@@ -1,19 +1,22 @@
 var jsface          = require("jsface"),
 	AbstractRunner  = require("./AbstractRunner"),
 	RequestRunner   = require("./RequestRunner"),
-	ResponseHandlerFactory = require('../responseHandlers/ResponseHandlerFactory.js'),
-	_und            = require('underscore');
+	ResponseHandlerFactory = require('../responseHandlers/ResponseHandlerFactory'),
+	_und = require('underscore'),
+	Options = require('../utilities/Options');
+
 
 /**
  * @class CollectionRunner
  * @param {CollectionModel} collection Takes a Collection of RequestModel
  * as a input and executes the RequestRunner on them.
  * @extends AbstractRunner
+ * @mixes Options
  */
-var CollectionRunner = jsface.Class(AbstractRunner, {
+var CollectionRunner = jsface.Class([AbstractRunner, Options], {
 	constructor: function(collection, options) {
 		this.$class.$super.call(this, collection);
-		this.options = options;
+		this.setOptions(options);
 	},
 	/**
 	 * @function
@@ -25,7 +28,7 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 		}, this);
 
 		// Initialize the response handler using a factory
-		ResponseHandler = ResponseHandlerFactory.createRequestHandler(this.options);
+		ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
 		ResponseHandler.initialize();
 
 		// Start the runner 
