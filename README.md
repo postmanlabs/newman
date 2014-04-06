@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/a85/Newman.svg?branch=master)](https://travis-ci.org/a85/Newman)
-
-Newman
+Newman [![Build Status](https://travis-ci.org/a85/Newman.svg?branch=master)](https://travis-ci.org/a85/Newman)
 ======
 
 > Command line based Postman collection runner

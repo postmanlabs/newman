@@ -24,7 +24,7 @@ var Newman = jsface.Class([Options], {
 		var collectionModel = new CollectionModel(requestJSON);
 		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
-		var runner = new CollectionRunner(marshalledCollection);
+		var runner = new CollectionRunner(marshalledCollection, this.getOptions());
 		runner.execute();
 	}
 });

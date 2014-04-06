@@ -14,7 +14,7 @@ describe("Response Handler", function() {
 
 	beforeEach(function() {
 		this.emitter = new Emitter();
-		this.stub = sinon.stub(DefaultResponseHandler, '_onRequestExecuted');
+		this.stub = sinon.stub(DefaultResponseHandler, 'onRequestExecuted');
 		DefaultResponseHandler.initialize();
 	});
 	
@@ -24,6 +24,6 @@ describe("Response Handler", function() {
 	});
 
 	afterEach(function() {
-		DefaultResponseHandler._onRequestExecuted.restore();
+		DefaultResponseHandler.onRequestExecuted.restore();
 	});
 });
