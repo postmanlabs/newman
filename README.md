@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/a85/Newman.svg?branch=master)](https://travis-ci.org/a85/Newman)
+
 Newman
 ======
 
@@ -10,5 +12,5 @@ Newman
 # Docs
 	grunt jsdoc
 
-# Tests [![Build Status](https://travis-ci.org/a85/Newman.svg?branch=master)](https://travis-ci.org/a85/Newman)
+# Tests 
 	grunt test
