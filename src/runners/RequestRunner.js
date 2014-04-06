@@ -103,7 +103,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	_appendStatsToReponse: function(req, res) {
-		res.stats = {}
+		res.stats = {};
 		res.stats.timeTaken = new Date().getTime() - req.startTime;
 	}
 });
