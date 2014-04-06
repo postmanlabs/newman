@@ -15,7 +15,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	$singleton: true,
 
 	$statics: {
-		METHODS_WHICH_ALLOW_BODY: ['POST','PUT']
+		METHODS_WHICH_ALLOW_BODY: ['POST','PUT','PATCH','DELETE','LINK','UNLINK','LOCK','PROPFIND']
 	},
 
 	/**
