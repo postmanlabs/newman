@@ -22,8 +22,8 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 		_und.each(this.collection, function(postmanRequest) {
 			RequestRunner.addRequest(postmanRequest);
 		}, this);
-		RequestRunner.start();
 		ResponseHandler.initialize();
+		RequestRunner.start();
 		this.$class.$superp.execute.call(this);
 	}
 });

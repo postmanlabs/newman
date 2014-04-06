@@ -15,10 +15,11 @@ describe("Response Handler", function() {
 	beforeEach(function() {
 		this.emitter = new Emitter();
 		this.stub = sinon.stub(DefaultResponseHandler, '_onRequestExecuted');
+		DefaultResponseHandler.initialize();
 	});
 	
 	it("should have _onRequestExecuted called for each request", function() {
-		//this.emitter.emit('requestExecuted');
+		this.emitter.emit('requestExecuted');
 		assert(this.stub.called);
 	});
 
