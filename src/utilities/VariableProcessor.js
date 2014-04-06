@@ -72,7 +72,7 @@ var VariableProcessor = jsface.Class({
 		var kvpairs = envJson.values;
 		
 		if (kvpairs === undefined) {
-			log.error("Incorrect environment JSON file.");
+			log.error("Incorrect environment JSON file.\n");
 			return false;
 		}
 

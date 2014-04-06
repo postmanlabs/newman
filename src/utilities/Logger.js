@@ -14,7 +14,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	success: function(log) {
-		console.log(color.green("✔ " + log));
+		process.stdout.write(color.green("✔ " + log));
 	},
 	/**
 	 * Logger Method
@@ -22,7 +22,39 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	error: function(log) {
-		console.log(color.red("✗ " + log));
+		process.stdout.write(color.red("✗ " + log));
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs notice messages.
+	 * @memberOf Logger
+	 */
+	notice: function(log) {
+		process.stdout.write(color.cyan(log));
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs warning messages.
+	 * @memberOf Logger
+	 */
+	warn: function(log) {
+		process.stdout.write(color.yellow(log));
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs normal messages.
+	 * @memberOf Logger
+	 */
+	normal: function(log) {
+		process.stdout.write(color.black(log));
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs light grey messages.
+	 * @memberOf Logger
+	 */
+	light: function(log) {
+		process.stdout.write(color.xterm(245)(log));
 	}
 });
 
