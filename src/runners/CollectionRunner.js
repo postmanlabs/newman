@@ -1,7 +1,8 @@
-var jsface = require("jsface"),
-	AbstractRunner = require("./AbstractRunner"),
-	RequestRunner = require("./RequestRunner"),
-	_und = require('underscore');
+var jsface          = require("jsface"),
+	AbstractRunner  = require("./AbstractRunner"),
+	RequestRunner   = require("./RequestRunner"),
+	ResponseHandler = require('../responseHandlers/DefaultResponseHandler.js'),
+	_und            = require('underscore');
 
 /**
  * @class CollectionRunner
@@ -19,17 +20,10 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 	 */
 	execute: function() {
 		_und.each(this.collection, function(postmanRequest) {
-			/*
-			 * If Success send the Response to approriate module
-			 * 1) DefaultResponseHandler.
-			 * 2) TestReponseHandler.
-			 * Else
-			 * Handler the errors in ErrorHandler module.
-			 * Use Logger Class for all logging.
-			 */
 			RequestRunner.addRequest(postmanRequest);
 		}, this);
 		RequestRunner.start();
+		ResponseHandler.initialize();
 		this.$class.$superp.execute.call(this);
 	}
 });
