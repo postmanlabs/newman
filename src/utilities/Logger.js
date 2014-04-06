@@ -64,6 +64,7 @@ var Logger = jsface.Class({
 	throwError: function(msg) {
 		var err = new Error(msg);
 		process.stdout.write(color.red(err.message));
+		throw err;
 	}
 });
 
