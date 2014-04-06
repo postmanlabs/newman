@@ -36,7 +36,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		var request = this.getFromQueue();
 		if (request) {
 			var RequestOptions = this._getRequestOptions(request);
+			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
+				this._appendStatsToReponse(request, response);
 				this.emit('requestExecuted', error, response, body, request);
 			}.bind(this));
 			this._setFormDataIfParamsInRequest(unireq, request);
@@ -95,9 +97,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		if (error) {
 			log.error(request.id + " terminated with the error " + error.code);
 		} else {
-			log.success(request.url + " succeded with response.");
+			log.success(response.statusCode + " " + response.stats.timeTaken + "ms " + request.url);
 		}
 		this._execute();
+	},
+
+	_appendStatsToReponse: function(req, res) {
+		res.stats = {};
+		res.stats.timeTaken = new Date().getTime() - req.startTime;
 	}
 });
 
