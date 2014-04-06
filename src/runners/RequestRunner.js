@@ -92,11 +92,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	_onRequestExecuted: function(error, response, body, request) {
-		if (error) {
-			log.error(request.id + " terminated with the error " + error.code);
-		} else {
-			log.success(request.url + " succeded with response.");
-		}
+		// Call the next request to execute
 		this._execute();
 	}
 });
