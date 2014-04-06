@@ -14,6 +14,10 @@ var jsface  = require('jsface'),
 var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	$singleton: true,
 
+	$statics: {
+		METHODS_WHICH_ALLOW_BODY: ['POST','PUT','PATCH','DELETE','LINK','UNLINK','LOCK','PROPFIND']
+	},
+
 	/**
 	 * Adds the Request to the RequestRunner's queue.
 	 * @memberOf RequestRunner
@@ -59,9 +63,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	// Takes request as the input, parses it for different types and
 	// sets it as the request body for the unirest request.
 	_setBodyData: function(RequestOptions, request) {
-		if (request.method === 'POST') {
+		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1) {
 			if (request.dataMode === "raw") {
-				RequestOptions.data = request.data;
+				RequestOptions.body = request.data;
 			} else if (request.dataMode === "urlencoded") {
 				var reqData = request.data;
 				RequestOptions.form = _und.object(_und.pluck(reqData, "key"), _und.pluck(reqData, "value"));
@@ -71,7 +75,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
 	// Request Mumbo jumbo for `multipart/form-data`.
 	_setFormDataIfParamsInRequest: function(unireq, request) {
-		if (request.method === 'POST' && request.dataMode === "params") {
+		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1 && request.dataMode === "params" && request.data.length > 0) {
 			var form = unireq.form();
 			_und.each(request.data, function(dataObj) {
 				// TODO: @viig99 add other types like File Stream, Blob, Buffer.
