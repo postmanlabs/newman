@@ -1,7 +1,7 @@
 var jsface           = require("jsface"),
 	CollectionRunner = require("./runners/CollectionRunner"),
-	CollectionModel  = require('./models/CollectionModel.js'),
-	Options          = require('./utilities/Options.js');
+	CollectionModel  = require('./models/CollectionModel'),
+	Options          = require('./utilities/Options');
 
 /**
  * @name Newman
@@ -24,7 +24,7 @@ var Newman = jsface.Class([Options], {
 		var collectionModel = new CollectionModel(requestJSON);
 		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
-		var runner = new CollectionRunner(marshalledCollection);
+		var runner = new CollectionRunner(marshalledCollection, this.getOptions());
 		runner.execute();
 	}
 });

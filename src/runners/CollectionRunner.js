@@ -1,17 +1,23 @@
-var jsface = require("jsface"),
-	AbstractRunner = require("./AbstractRunner"),
-	RequestRunner = require("./RequestRunner"),
-	_und = require('underscore');
+var jsface          = require("jsface"),
+	AbstractRunner  = require("./AbstractRunner"),
+	RequestRunner   = require("./RequestRunner"),
+	ResponseHandlerFactory = require('../responseHandlers/ResponseHandlerFactory'),
+	_und = require('underscore'),
+	log = require('../utilities/Logger'),
+	Options = require('../utilities/Options');
+
 
 /**
  * @class CollectionRunner
  * @param {CollectionModel} collection Takes a Collection of RequestModel
  * as a input and executes the RequestRunner on them.
  * @extends AbstractRunner
+ * @mixes Options
  */
-var CollectionRunner = jsface.Class(AbstractRunner, {
-	constructor: function(collection) {
+var CollectionRunner = jsface.Class([AbstractRunner, Options], {
+	constructor: function(collection, options) {
 		this.$class.$super.call(this, collection);
+		this.setOptions(options);
 	},
 	/**
 	 * @function
@@ -19,16 +25,17 @@ var CollectionRunner = jsface.Class(AbstractRunner, {
 	 */
 	execute: function() {
 		_und.each(this.collection, function(postmanRequest) {
-			/*
-			 * If Success send the Response to approriate module
-			 * 1) DefaultResponseHandler.
-			 * 2) TestReponseHandler.
-			 * Else
-			 * Handler the errors in ErrorHandler module.
-			 * Use Logger Class for all logging.
-			 */
 			RequestRunner.addRequest(postmanRequest);
 		}, this);
+
+		// Initialize the response handler using a factory
+		var ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
+		if (!ResponseHandler) {
+			log.throwError('The module provided does not exist.');
+		}
+		ResponseHandler.initialize();
+
+		// Start the runner 
 		RequestRunner.start();
 		this.$class.$superp.execute.call(this);
 	}

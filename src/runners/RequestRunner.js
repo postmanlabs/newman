@@ -98,19 +98,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	_onRequestExecuted: function(error, response, body, request) {
-		if (error) {
-			log.error(request.id + " terminated with the error " + error.code + "\n");
-		} else {
-			// TODO, @prakhar1989 can you please refactor this into your Response handler.
-			if (response.statusCode >= 200 && response.statusCode < 300) {
-				log.success(response.statusCode);
-			} else {
-				log.error(response.statusCode);
-			}
-			log.notice(" " + response.stats.timeTaken + "ms");
-			log.normal(" " + request.name);
-			log.light(" " + request.description + "\n");
-		}
+		// Call the next request to execute
 		this._execute();
 	},
 
