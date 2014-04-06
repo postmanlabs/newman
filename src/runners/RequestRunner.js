@@ -111,6 +111,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			log.normal(" " + request.name);
 			log.light(" " + request.description + "\n");
 		}
+		// Call the next request to execute
 		this._execute();
 	},
 
