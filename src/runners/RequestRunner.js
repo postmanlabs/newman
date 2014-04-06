@@ -38,6 +38,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			var RequestOptions = this._getRequestOptions(request);
 			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
+				this._appendStatsToReponse(request, response);
 				this.emit('requestExecuted', error, response, body, request);
 			}.bind(this));
 			this._setFormDataIfParamsInRequest(unireq, request);
@@ -93,7 +94,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	_onRequestExecuted: function(error, response, body, request) {
-		this._appendStatsToReponse(request, response);
 		if (error) {
 			log.error(request.id + " terminated with the error " + error.code);
 		} else {
