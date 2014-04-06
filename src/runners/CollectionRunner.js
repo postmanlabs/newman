@@ -3,6 +3,7 @@ var jsface          = require("jsface"),
 	RequestRunner   = require("./RequestRunner"),
 	ResponseHandlerFactory = require('../responseHandlers/ResponseHandlerFactory'),
 	_und = require('underscore'),
+	log = require('../utilities/Logger'),
 	Options = require('../utilities/Options');
 
 
@@ -29,6 +30,9 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options], {
 
 		// Initialize the response handler using a factory
 		var ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
+		if (!ResponseHandler) {
+			log.throwError('The module provided does not exist.');
+		}
 		ResponseHandler.initialize();
 
 		// Start the runner 
