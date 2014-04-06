@@ -12,9 +12,6 @@ var ResponseHandlerFactory = require('../src/responseHandlers/ResponseHandlerFac
 describe("ResponseHandlerFactory", function() {
 
 	beforeEach(function() {
-		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
-		var url = "https://www.getpostman.com/collections/fc3f0598daaa5271e4f7";
-		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.factory = ResponseHandlerFactory;
 	});
 	
@@ -31,8 +28,5 @@ describe("ResponseHandlerFactory", function() {
 	it("should return correct module when passed existing module", function() {
 		var handler = this.factory.createResponseHandler({responseHandler: "DefaultResponseHandler.js"});
 		assert(handler);
-	});
-
-	afterEach(function() {
 	});
 });

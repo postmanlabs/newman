@@ -1,6 +1,5 @@
 var jsface                  = require('jsface'),
 	DefaultResponseHandler  = require('./DefaultResponseHandler'),
-	AbstractResponseHandler = require('./AbstractResponseHandler'),
 	path                    = require('path'),
 	fs                      = require('fs');
 
@@ -22,8 +21,6 @@ var ResponseHandlerFactory = jsface.Class({
 		if (options.responseHandler === undefined) {
 			return DefaultResponseHandler;
 		} else {
-			// TODO: How to return a new object?
-			// TODO: Check if the file exists else error?
 			var filePath = path.join(__dirname, options.responseHandler);
 			if (!fs.existsSync(filePath)) {
 				return false;

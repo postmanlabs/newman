@@ -1,6 +1,5 @@
 var jsface       = require('jsface'),
-	log          = require('../utilities/Logger'),
-	EventEmitter = require('../utilities/EventEmitter.js');
+	EventEmitter = require('../utilities/EventEmitter');
 
 /**
  * @class AbstractResponseHandler
