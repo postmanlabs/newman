@@ -29,7 +29,7 @@ describe("ResponseHandlerFactory", function() {
 	
 	it("should return false for request for no test cases", function() {
 		this.request.tests = 'tests["statuscode is 200"] = responseCode === 200;' + 
-							 '\n\ntests["response has content-type"] = responseHeaders["content-type"] == "application/json";';
+							'\n\ntests["response has content-type"] = responseHeaders["content-type"] == "application/json";';
 		TestResponseHandler.execute(this.request, this.response);
 	});
 });

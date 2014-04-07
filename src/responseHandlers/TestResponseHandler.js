@@ -1,6 +1,7 @@
 var jsface = require('jsface'),
 	log    = require('../utilities/Logger'),
-	_und   = require('underscore');
+	_und   = require('underscore'),
+	vm = require('vm');
 
 /**
  * @class TestResponseHandler
@@ -33,7 +34,7 @@ var TestResponseHandler = jsface.Class({
 	},
 
 	getTestResults: function() {
-		var tests = {}
+		var tests = {};
 		var testCases = this._getValidTestCases();
 		_und.each(testCases, function(testCase) {
 			_und.extend(tests, this._evalutate(testCase));
@@ -43,14 +44,15 @@ var TestResponseHandler = jsface.Class({
 
 	_evalutate: function(testCase) {
 		// sets the environment
-		var tests = {};
-		var responseCode = this.response.statusCode;
-		var responseHeaders = this.response.headers;
-		var responseTime = parseInt(this.response.stats.timeTaken);
-		
-		// call eval
-		eval(testCase);
-		return tests;
+		var sandbox = {
+			tests: {},
+			responseCode: this.response.statusCode,
+			responseHeaders: this.response.headers,
+			responseTime: parseInt(this.response.stats.timeTaken, 10)
+		};
+
+		vm.runInNewContext(testCase, sandbox);
+		return sandbox.tests;
 	},
 
 	_logTestResults: function(tests) {
