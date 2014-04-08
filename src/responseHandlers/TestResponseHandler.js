@@ -3,7 +3,13 @@ var jsface = require('jsface'),
 	helper    = require('../utilities/Helpers'),
 	_und   = require('underscore'),
 	vm = require('vm'),
-	AbstractResponseHandler = require('./AbstractResponseHandler');
+	AbstractResponseHandler = require('./AbstractResponseHandler'),
+	$jq = require("jquery"),
+	_lod = require("lodash"),
+	Backbone = require("backbone"),
+	sugar = require("sugar"),
+	xmlToJson = require("xml2js"),
+	tv4 = require("tv4");
 
 /**
  * @class TestResponseHandler
@@ -83,12 +89,11 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			iteration: 0,
 			environment: {},
 			globals: {},
-			$: require("jquery"),
-			_: require("lodash"),
-			Backbone: require("backbone"),
-			sugar: require("sugar"),
-			xmlToJson: require("xml2js"),
-			tv4: require("tv4"),
+			$: $jq,
+			_: _lod,
+			Backbone: Backbone,
+			xmlToJson: xmlToJson,
+			tv4: tv4,
 			console: {log: function(){}}
 		};
 	},
