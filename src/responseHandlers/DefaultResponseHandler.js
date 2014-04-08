@@ -20,9 +20,10 @@ var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 			} else {
 				log.error(response.statusCode);
 			}
-			log.notice(" " + response.stats.timeTaken + "ms");
-			log.normal(" " + request.name);
-			log.light(" " + request.description + "\n");
+			log
+			.notice(" " + response.stats.timeTaken + "ms")
+			.normal(" " + request.name)
+			.light(" " + request.description + "\n");
 		}
 	}
 });

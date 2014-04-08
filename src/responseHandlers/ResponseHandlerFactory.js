@@ -21,7 +21,7 @@ var ResponseHandlerFactory = jsface.Class({
 		if (options.responseHandler === undefined) {
 			return DefaultResponseHandler;
 		} else {
-			var filePath = path.join(__dirname, options.responseHandler);
+			var filePath = path.join(__dirname, options.responseHandler.split(".")[0] + '.js');
 			if (!fs.existsSync(filePath)) {
 				return false;
 			} else {

@@ -15,6 +15,7 @@ var Logger = jsface.Class({
 	 */
 	success: function(log) {
 		process.stdout.write(color.green("✔ " + log));
+		return this;
 	},
 	/**
 	 * Logger Method
@@ -23,6 +24,7 @@ var Logger = jsface.Class({
 	 */
 	error: function(log) {
 		process.stdout.write(color.red("✗ " + log));
+		return this;
 	},
 	/**
 	 * Logger Method
@@ -31,6 +33,7 @@ var Logger = jsface.Class({
 	 */
 	notice: function(log) {
 		process.stdout.write(color.cyan(log));
+		return this;
 	},
 	/**
 	 * Logger Method
@@ -39,6 +42,7 @@ var Logger = jsface.Class({
 	 */
 	warn: function(log) {
 		process.stdout.write(color.yellow(log));
+		return this;
 	},
 	/**
 	 * Logger Method
@@ -47,6 +51,7 @@ var Logger = jsface.Class({
 	 */
 	normal: function(log) {
 		process.stdout.write(color.black(log));
+		return this;
 	},
 	/**
 	 * Logger Method
@@ -55,6 +60,16 @@ var Logger = jsface.Class({
 	 */
 	light: function(log) {
 		process.stdout.write(color.xterm(245)(log));
+		return this;
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs orange notes.
+	 * @memberOf Logger
+	 */
+	note: function(log) {
+		process.stdout.write(color.xterm(202)(log));
+		return this;
 	},
 	/**
 	 * Logger Method
