@@ -24,8 +24,8 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			}
 			log
 			.notice(" " + response.stats.timeTaken + "ms")
-			.normal(" " + request.name)
-			.light(" " + request.description + "\n");
+			.normal(" " + request.name + " ")
+			.light(request.url + "\n");
 			this._runAndLogTestCases(error, response, body, request);
 		}
 	},
@@ -40,7 +40,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	},
 
 	_hasTestCases: function(request) {
-		return (request.tests !== undefined);
+		return !!request.tests;
 	},
 
 	_getValidTestCases: function(tests) {
@@ -59,13 +59,16 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
 	_evaluateInSandboxedEnvironment: function(testCase, sandbox) {
 		testCase = 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + testCase.join(";");
-		vm.runInNewContext(testCase, sandbox);
+		try {
+			vm.runInNewContext(testCase, sandbox);
+		} catch (err) {
+			log.exceptionError(err);
+		}
 		return sandbox.tests;
 	},
 
 	_createSandboxedEnvironment: function(error, response, body, request) {
 		// TODO: @prakhar1989, figure out how to load the environment & globals here.
-		// Also figure how this data comes in, probably its a enviornment variable.
 		return {
 			tests: {},
 			responseHeaders: response.headers,
@@ -93,9 +96,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	_logTestResults: function(results) {
 		_und.each(_und.keys(results), function(key) {
 			if (results[key]) {
-				log.success("	" + key + '\n');
+				log.testCaseSuccess(key);
 			} else {
-				log.error("	" + key + '\n');
+				log.testCaseError(key);
 			}
 		});
 	}

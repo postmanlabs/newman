@@ -22,8 +22,8 @@ var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 			}
 			log
 			.notice(" " + response.stats.timeTaken + "ms")
-			.normal(" " + request.name)
-			.light(" " + request.description + "\n");
+			.normal(" " + request.name + " ")
+			.light(request.url + "\n");
 		}
 	}
 });

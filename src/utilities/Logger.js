@@ -14,7 +14,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	success: function(log) {
-		process.stdout.write(color.green("✔ " + log));
+		process.stdout.write(color.green(log));
 		return this;
 	},
 	/**
@@ -23,7 +23,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	error: function(log) {
-		process.stdout.write(color.red("✗ " + log));
+		process.stdout.write(color.red(log));
 		return this;
 	},
 	/**
@@ -32,7 +32,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	notice: function(log) {
-		process.stdout.write(color.cyan(log));
+		process.stdout.write(color.yellow(log));
 		return this;
 	},
 	/**
@@ -50,7 +50,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	normal: function(log) {
-		process.stdout.write(color.black(log));
+		process.stdout.write(color.cyan(log));
 		return this;
 	},
 	/**
@@ -59,7 +59,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	light: function(log) {
-		process.stdout.write(color.xterm(245)(log));
+		process.stdout.write(color.underline.xterm(245)(log));
 		return this;
 	},
 	/**
@@ -73,13 +73,39 @@ var Logger = jsface.Class({
 	},
 	/**
 	 * Logger Method
+	 * @param  {String} log Logs a test case success
+	 * @memberOf Logger
+	 */
+	testCaseSuccess: function(log) {
+		this.success("    " + color.green("✔ " + log) + "\n");
+		return this;
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs a test case error
+	 * @memberOf Logger
+	 */
+	testCaseError: function(log) {
+		process.stdout.write("    " + color.red("✗ " + log) + "\n");
+		return this;
+	},
+	/**
+	 * Logger Method
 	 * @param  {String} log Logs a node error in red
 	 * @memberOf Logger
 	 */
 	throwError: function(msg) {
 		var err = new Error(msg);
-		process.stdout.write(color.red(err.message));
+		this.error(color.red(err.message));
 		throw err;
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs a node exception error in red
+	 * @memberOf Logger
+	 */
+	exceptionError: function(err) {
+		this.error("    " + color.bold.red("EXCEPTION - " + err) + "\n");
 	}
 });
 
