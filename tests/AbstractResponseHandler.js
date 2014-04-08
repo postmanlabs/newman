@@ -17,7 +17,7 @@ describe("Response Handlers", function() {
 		this.stub = sinon.stub(AbstractResponseHandler, '_onRequestExecuted');
 		AbstractResponseHandler.initialize();
 	});
-	
+
 	it("should have _onRequestExecuted called for each request", function() {
 		this.emitter.emit('requestExecuted');
 		assert(this.stub.called);

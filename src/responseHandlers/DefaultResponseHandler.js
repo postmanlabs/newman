@@ -4,12 +4,12 @@ var jsface                 = require('jsface'),
 
 /**
  * @class DefaultResponseHandler
- * @classdesc 
+ * @classdesc
  * @extends AbstractResponseHandler
  */
 var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 	$singleton: true,
-	
+
 	// function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
 	_onRequestExecuted: function(error, response, body, request) {
 		if (error) {

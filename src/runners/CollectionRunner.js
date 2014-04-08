@@ -35,7 +35,7 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options], {
 		}
 		ResponseHandler.initialize();
 
-		// Start the runner 
+		// Start the runner
 		RequestRunner.start();
 		this.$class.$superp.execute.call(this);
 	}

@@ -3,14 +3,14 @@ var jsface       = require('jsface'),
 
 /**
  * @class AbstractResponseHandler
- * @classdesc 
+ * @classdesc
  * @mixes EventEmitter
  */
 var AbstractResponseHandler = jsface.Class([EventEmitter], {
 	$singleton: true,
-	
+
 	/**
-	 * Sets up the event listener for the request executed event emitted on each 
+	 * Sets up the event listener for the request executed event emitted on each
 	 * request execution
 	 * @memberOf AbstractResponseHandler
 	 */

@@ -20,7 +20,7 @@ describe("CollectionRunner", function() {
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.stub = sinon.stub(RequestRunner, 'addRequest');
 	});
-	
+
 	it("should call requestRunner addRequest for each request", function() {
 		Newman.execute(this.collectionJson, {});
 		assert.equal(this.stub.callCount, this.collectionJson.requests.length);

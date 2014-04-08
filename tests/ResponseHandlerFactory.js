@@ -14,7 +14,7 @@ describe("ResponseHandlerFactory", function() {
 	beforeEach(function() {
 		this.factory = ResponseHandlerFactory;
 	});
-	
+
 	it("should return DefaultResponseHandler by default", function() {
 		var handler = this.factory.createResponseHandler({});
 		assert.equal(handler, DefaultResponseHandler);
