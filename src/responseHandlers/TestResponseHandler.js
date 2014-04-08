@@ -40,7 +40,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	},
 
 	_hasTestCases: function(request) {
-		return (request.tests !== "");
+		return !!request.tests;
 	},
 
 	_getValidTestCases: function(tests) {
