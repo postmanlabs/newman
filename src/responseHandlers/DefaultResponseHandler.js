@@ -1,7 +1,6 @@
 var jsface                 = require('jsface'),
 	log                    = require('../utilities/Logger'),
-	AbstractResponseHandler = require('./AbstractResponseHandler'),
-	TestResponseHandler = require('./TestResponseHandler');
+	AbstractResponseHandler = require('./AbstractResponseHandler');
 
 /**
  * @class DefaultResponseHandler
@@ -18,9 +17,6 @@ var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 		} else {
 			if (response.statusCode >= 200 && response.statusCode < 300) {
 				log.success(response.statusCode);
-				
-				// Run the testcases
-				TestResponseHandler.execute(request, response);
 			} else {
 				log.error(response.statusCode);
 			}

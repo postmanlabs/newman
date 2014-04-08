@@ -16,7 +16,13 @@
     "commander": "2.x.x",
     "underscore": "1.x.x",
     "jsface": "2.2.x",
-    "unirest": "*"
+    "unirest": "*",
+    "jquery": "*",
+    "backbone": "*",
+    "lodash": "*",
+    "sugar": "*",
+    "xml2js": "*",
+    "tv4": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

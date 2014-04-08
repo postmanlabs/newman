@@ -22,7 +22,9 @@ function parseArguments() {
 	  .usage('[options] file')
 	  .option('-c, --collection [file]', 'Specify your Postman Collection [file]', null)
 	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null)
-	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null);
+	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null)
+	  .option('-t, --test', 'Run the Test Cases.', null)
+	  .option('-r, --runner', 'Define Which runner to pick.', null);
 
 	program.on('--help', function() {
 	  console.log('  Examples:');
@@ -56,6 +58,14 @@ function main() {
 		// in case of environment variable set the envJson property 
  		// on the options object
 		newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
+	}
+
+	if (program.runner) {
+		newmanOptions.responseHandler = program.runner;
+	}
+
+	if (program.test) {
+		newmanOptions.responseHandler = 'TestResponseHandler';
 	}
 
 	if (program.collection) {
