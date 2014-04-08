@@ -40,7 +40,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	},
 
 	_hasTestCases: function(request) {
-		return (request.tests !== undefined);
+		return (request.tests !== "");
 	},
 
 	_getValidTestCases: function(tests) {
@@ -69,7 +69,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
 	_createSandboxedEnvironment: function(error, response, body, request) {
 		// TODO: @prakhar1989, figure out how to load the environment & globals here.
-		// Also figure how this data comes in, probably its a enviornment variable.
 		return {
 			tests: {},
 			responseHeaders: response.headers,
