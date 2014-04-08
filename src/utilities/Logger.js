@@ -32,7 +32,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	notice: function(log) {
-		process.stdout.write(color.yellow(log));
+		process.stdout.write(color.cyan(log));
 		return this;
 	},
 	/**
@@ -50,7 +50,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	normal: function(log) {
-		process.stdout.write(color.cyan(log));
+		process.stdout.write(color.black(log));
 		return this;
 	},
 	/**
