@@ -14,7 +14,7 @@ var ResponseHandlerFactory = jsface.Class({
 	 * @function
 	 * @memberOf ResponseHandlerFactory
 	 * @param {JSON} options
-	 * returns a responseHandler that inherits from the 
+	 * returns a responseHandler that inherits from the
 	 * AbstractRequestHandler class
 	 */
 	createResponseHandler: function(options) {
