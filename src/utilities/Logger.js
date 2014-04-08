@@ -77,7 +77,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	testCaseSuccess: function(log) {
-		process.stdout.write("    " + color.green("✔ " + log) + "\n");
+		this.success("    " + color.green("✔ " + log) + "\n");
 		return this;
 	},
 	/**
@@ -96,7 +96,7 @@ var Logger = jsface.Class({
 	 */
 	throwError: function(msg) {
 		var err = new Error(msg);
-		process.stdout.write(color.red(err.message));
+		this.error(color.red(err.message));
 		throw err;
 	},
 	/**
@@ -105,7 +105,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	exceptionError: function(err) {
-		process.stdout.write("    " + color.bold.red("EXCEPTION: " + err) + "\n");
+		this.error("    " + color.bold.red("EXCEPTION - " + err) + "\n");
 	}
 });
 
