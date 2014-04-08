@@ -24,8 +24,8 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			}
 			log
 			.notice(" " + response.stats.timeTaken + "ms")
-			.normal(" " + request.name)
-			.light(" " + request.description + "\n");
+			.normal(" " + request.name + " ")
+			.light(request.url + "\n");
 			this._runAndLogTestCases(error, response, body, request);
 		}
 	},
@@ -93,9 +93,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	_logTestResults: function(results) {
 		_und.each(_und.keys(results), function(key) {
 			if (results[key]) {
-				log.success("	" + key + '\n');
+				log.testCaseSuccess(key);
 			} else {
-				log.error("	" + key + '\n');
+				log.testCaseError(key);
 			}
 		});
 	}

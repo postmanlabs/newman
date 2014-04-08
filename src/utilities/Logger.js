@@ -14,7 +14,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	success: function(log) {
-		process.stdout.write(color.green("✔ " + log));
+		process.stdout.write(color.green(log));
 		return this;
 	},
 	/**
@@ -23,7 +23,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	error: function(log) {
-		process.stdout.write(color.red("✗ " + log));
+		process.stdout.write(color.red(log));
 		return this;
 	},
 	/**
@@ -32,7 +32,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	notice: function(log) {
-		process.stdout.write(color.cyan(log));
+		process.stdout.write(color.yellow(log));
 		return this;
 	},
 	/**
@@ -50,7 +50,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	normal: function(log) {
-		process.stdout.write(color.black(log));
+		process.stdout.write(color.cyan(log));
 		return this;
 	},
 	/**
@@ -59,7 +59,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	light: function(log) {
-		process.stdout.write(color.xterm(245)(log));
+		process.stdout.write(color.underline.xterm(245)(log));
 		return this;
 	},
 	/**
@@ -69,6 +69,14 @@ var Logger = jsface.Class({
 	 */
 	note: function(log) {
 		process.stdout.write(color.xterm(202)(log));
+		return this;
+	},
+	testCaseSuccess: function(log) {
+		process.stdout.write("    " + color.green("✔ " + log) + "\n");
+		return this;
+	},
+	testCaseError: function(log) {
+		process.stdout.write("    " + color.red("✗ " + log) + "\n");
 		return this;
 	},
 	/**
