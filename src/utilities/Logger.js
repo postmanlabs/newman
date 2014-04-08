@@ -71,10 +71,20 @@ var Logger = jsface.Class({
 		process.stdout.write(color.xterm(202)(log));
 		return this;
 	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs a test case success
+	 * @memberOf Logger
+	 */
 	testCaseSuccess: function(log) {
 		process.stdout.write("    " + color.green("✔ " + log) + "\n");
 		return this;
 	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs a test case error
+	 * @memberOf Logger
+	 */
 	testCaseError: function(log) {
 		process.stdout.write("    " + color.red("✗ " + log) + "\n");
 		return this;
@@ -88,6 +98,14 @@ var Logger = jsface.Class({
 		var err = new Error(msg);
 		process.stdout.write(color.red(err.message));
 		throw err;
+	},
+	/**
+	 * Logger Method
+	 * @param  {String} log Logs a node exception error in red
+	 * @memberOf Logger
+	 */
+	exceptionError: function(err) {
+		process.stdout.write("    " + color.bold.red("EXCEPTION: " + err) + "\n");
 	}
 });
 

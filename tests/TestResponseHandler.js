@@ -4,7 +4,8 @@ var assert = require('assert'),
 	JSON5  = require('json5'),
 	path   = require('path');
 
-var TestResponseHandler = require('../src/responseHandlers/TestResponseHandler');
+var TestResponseHandler = require('../src/responseHandlers/TestResponseHandler'),
+	Logger = require('../src/utilities/Logger');
 
 describe("TestResponseHandler", function() {
 
@@ -25,6 +26,7 @@ describe("TestResponseHandler", function() {
 			body: "{\"lol\": \"jhingalalal\"}"
 		};
 		this.stub = sinon.stub(TestResponseHandler, '_logTestResults');
+		this.loggerStub = sinon.stub(Logger, 'exceptionError');
 	});
 	
 	it("should run the test cases properly", function() {
@@ -34,7 +36,14 @@ describe("TestResponseHandler", function() {
 		assert(TestResponseHandler._logTestResults.calledWith(parsedResult));
 	});
 
+	it("should catch exception for invalid code / test cases", function() {
+		this.request.tests = 'tests["throws exception"] = undefinedValue === 200;'; // this should throw an exception
+		TestResponseHandler._runAndLogTestCases(null, this.response, this.response.body, this.request);
+		assert(this.loggerStub.called);
+	});
+
 	afterEach(function() {
 		TestResponseHandler._logTestResults.restore();
+		Logger.exceptionError.restore();
 	});
 });

@@ -190,7 +190,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "",
+			"tests": "tests[\"Status code is 200\"] = UndefinedValue === 200;",
 			"time": 1396961125819,
 			"name": "Cookies/Delete",
 			"description": "Similar to httpbin.org/cookies. Delete a cookie.",
