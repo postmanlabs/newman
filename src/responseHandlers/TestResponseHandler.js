@@ -58,7 +58,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	},
 
 	_evaluateInSandboxedEnvironment: function(testCase, sandbox) {
-		testCase = 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + testCase;
+		testCase = 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + testCase.join(";");
 		vm.runInNewContext(testCase, sandbox);
 		return sandbox.tests;
 	},
