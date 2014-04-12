@@ -56,6 +56,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		RequestOptions.method = request.method;
 		RequestOptions.headers = this._generateHeaders(request.headers);
 		RequestOptions.followAllRedirects = true;
+		RequestOptions.jar = true;
 		this._setBodyData(RequestOptions,request);
 		return RequestOptions;
 	},
