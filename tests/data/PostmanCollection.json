@@ -33,8 +33,8 @@
 				"9f37b86d-48b1-d57d-a3a1-e28773c6072f",
 				"3941be82-4d38-ff56-af1d-ac2e30417fa3",
 				"fdc4ca0d-70ae-2c44-c12f-482616431881",
-				"dd3064e0-968c-fb2c-89a5-308da6ce6397",
 				"e2170db7-3261-0194-b320-bf90b781844a",
+				"dd3064e0-968c-fb2c-89a5-308da6ce6397",
 				"94a4ea5a-eb8b-0e02-1e6f-54f7bb133ee3",
 				"fd2c3334-194b-70b2-187f-a08b687ffde2"
 			],
@@ -309,7 +309,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "",
+			"tests": "tests[\"Cookies are set\"] = JSON.parse(responseBody).cookies.name === 'value';",
 			"time": 1396961112193,
 			"name": "Cookies",
 			"description": "Similar to httpbin.org/cookies. Return cookies set in the domain.",
