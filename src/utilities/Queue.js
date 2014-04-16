@@ -15,6 +15,9 @@ var Queue = jsface.Class({
 	},
 	purgeAllItemsInQueue: function() {
 		this._queue.splice(0, this._queue.length);
+	},
+	isEmptyQueue: function() {
+		return !this._queue.length;
 	}
 });
 

@@ -24,7 +24,9 @@ function parseArguments() {
 	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null)
 	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null)
 	  .option('-t, --test', 'Run the Test Cases.', null)
-	  .option('-r, --runner', 'Define Which runner to pick.', null);
+	  .option('-r, --runner', 'Define Which runner to pick.', null)
+	  .option('-n, --number [number]', 'Define the number of iterations to run.', null);
+	
 
 	program.on('--help', function() {
 	  console.log('  Examples:');
@@ -68,11 +70,17 @@ function main() {
 		newmanOptions.responseHandler = 'TestResponseHandler';
 	}
 
+	if (program.number) {
+		newmanOptions.iterationCount = program.number;
+	}
+
 	if (program.collection) {
+		// read collection from the filesystem
 		var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
 		Newman.execute(collectionJson, newmanOptions);
 
 	} else {
+		// get collection from url
 		request.get(program.url).type('json').end(function(data) {
 			if (data.error) {
 				terminateWithError('Unable to fetch a valid response. Error: ' + data.code);

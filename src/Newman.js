@@ -1,14 +1,15 @@
 var jsface           = require("jsface"),
 	CollectionRunner = require("./runners/CollectionRunner"),
 	CollectionModel  = require('./models/CollectionModel'),
-	Options          = require('./utilities/Options');
+	Options          = require('./utilities/Options'),
+	EventEmitter     = require('./utilities/EventEmitter');
 
 /**
  * @name Newman
  * @classdesc Bootstrap Newman class, mixin from Options class
  * @namespace
  */
-var Newman = jsface.Class([Options], {
+var Newman = jsface.Class([Options, EventEmitter], {
 	$singleton: true,
 
 	/**
@@ -20,10 +21,27 @@ var Newman = jsface.Class([Options], {
 	 */
 	execute: function(requestJSON, options) {
 		this.setOptions(options);
+		this.iterationCount = this.getOptions().iterationCount || 1;
 
+		// initialize the collection model from raw json
 		var collectionModel = new CollectionModel(requestJSON);
+
+		// refers to the collection of processed requests
 		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
+		this.addEventListener('collectionRunnerOver', function() {
+			console.log("request over \n\n\n");
+			if (this.iterationCount) {
+				this.iterationCount -= 1;
+				this.runIteration(marshalledCollection);
+			}
+		}.bind(this));
+		
+		this.runIteration(marshalledCollection);
+	}, 
+
+	// can go into a new class later on
+	runIteration: function(marshalledCollection) {
 		var runner = new CollectionRunner(marshalledCollection, this.getOptions());
 		runner.execute();
 	}

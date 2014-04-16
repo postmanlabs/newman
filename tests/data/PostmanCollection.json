@@ -184,7 +184,7 @@
 		{
 			"id": "94a4ea5a-eb8b-0e02-1e6f-54f7bb133ee3",
 			"headers": "",
-			"url": "{{url}}/cookies/delete?name",
+			"url": "{{url}}/cookies/delete?key=name",
 			"pathVariables": {},
 			"method": "GET",
 			"data": [],
@@ -343,7 +343,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "",
+			"tests": "tests[\"Resp Time is > 3\"] = \nresponseTime > 3000;",
 			"time": 1396961132032,
 			"name": "Delay",
 			"description": "Return response after a few seconds",
