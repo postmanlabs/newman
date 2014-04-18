@@ -44,8 +44,13 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			var RequestOptions = this._getRequestOptions(request);
 			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
-				// save some stats
-				this._appendStatsToReponse(request, response);
+				if (response === undefined) {
+					// if no response
+					log.error("Invalid response for url: " + request.url + " - ");
+				} else {
+					// save some stats
+					this._appendStatsToReponse(request, response);
+				}
 
 				// emit event to signal request has been executed
 				this.emit('requestExecuted', error, response, body, request);

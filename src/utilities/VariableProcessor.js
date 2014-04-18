@@ -13,7 +13,10 @@ var VariableProcessor = jsface.Class({
 	// TODO: Make {{}} configurable 
 	$statics: {
 		ENV_REGEX: /\{\{([a-z0-9\-._]+)\}\}/ig,
-		PATH_REGEX: /\:([a-z0-9\-._]+)/ig,
+
+		// does to match 4 digit nos to weed out port number matches
+		PATH_REGEX: /\:(?![0-9]{4})+(([a-z0-9\-._]+))/, 
+
 		FUNCTION_REGEX: /\$([a-z0-9\-._]+)/ig
 	},
 
