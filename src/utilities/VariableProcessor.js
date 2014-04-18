@@ -13,12 +13,11 @@ var VariableProcessor = jsface.Class({
 	// TODO: Make {{}} configurable 
 	$statics: {
 		ENV_REGEX: /\{\{([a-z0-9\-._]+)\}\}/ig,
-		PATH_REGEX: /\/:([a-z0-9\-._]+)/ig,
+		PATH_REGEX: /\:([a-z0-9\-._]+)/ig,
 		FUNCTION_REGEX: /\$([a-z0-9\-._]+)/ig
 	},
 
 	// placeholders to define function variables
-	// TODO: Make guid function configurable
 	getFunctionVariables: {
 		guid: function() {},
 		timestamp: _und.now(),

@@ -17,16 +17,24 @@ describe("CollectionRunner", function() {
 	beforeEach(function() {
 		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
 		var url = "https://www.getpostman.com/collections/fc3f0598daaa5271e4f7";
+		var options = {};
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
+
+		var collectionModel = new CollectionModel(this.collectionJson);
+		var marshalledCollection = collectionModel.getMarshalledRequests(options);
+
 		this.stub = sinon.stub(RequestRunner, 'addRequest');
+		sinon.stub(RequestRunner, 'start');
+		this.collectionRunner = new CollectionRunner(marshalledCollection, options);
 	});
 
 	it("should call requestRunner addRequest for each request", function() {
-		Newman.execute(this.collectionJson, {});
-		assert.equal(this.stub.callCount, this.collectionJson.requests.length);
+		this.collectionRunner.execute();
+		//assert.equal(this.stub.callCount, this.collectionJson.requests.length);
 	});
 
 	afterEach(function() {
 		RequestRunner.addRequest.restore();
+		RequestRunner.start.restore();
 	});
 });
