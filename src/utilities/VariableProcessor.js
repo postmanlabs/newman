@@ -1,6 +1,7 @@
-var jsface = require('jsface'),
-	log    = require('./Logger.js'),
-	_und   = require('underscore');
+var jsface       = require('jsface'),
+	log          = require('./Logger.js'),
+	ErrorHandler = require('./ErrorHandler'),
+	_und         = require('underscore');
 
 /** 
  * @name VariableProcessor
@@ -14,7 +15,7 @@ var VariableProcessor = jsface.Class({
 	$statics: {
 		ENV_REGEX: /\{\{([a-z0-9\-._]+)\}\}/ig,
 
-		// does to match 4 digit nos to weed out port number matches
+		// negative match for 4 digit numbers to weed out port number matches
 		PATH_REGEX: /\:(?![0-9]{4})+(([a-z0-9\-._]+))/, 
 
 		FUNCTION_REGEX: /\$([a-z0-9\-._]+)/ig
@@ -74,7 +75,7 @@ var VariableProcessor = jsface.Class({
 		var kvpairs = envJson.values;
 		
 		if (kvpairs === undefined) {
-			log.error("Incorrect environment JSON file.\n");
+			ErrorHandler.parseError("Incorrect environment JSON file.\n");
 			return false;
 		}
 

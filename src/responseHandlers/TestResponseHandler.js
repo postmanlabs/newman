@@ -3,6 +3,7 @@ var jsface                  = require('jsface'),
 	helper                  = require('../utilities/Helpers'),
 	_und                    = require('underscore'),
 	vm                      = require('vm'),
+	ErrorHandler            = require('../utilities/ErrorHandler'),
 	AbstractResponseHandler = require('./AbstractResponseHandler'),
 	$jq                     = require("jquery"),
 	_lod                    = require("lodash"),
@@ -21,12 +22,12 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	// function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
 	_onRequestExecuted: function(error, response, body, request) {
 		if (error) {
-			log.error(request.id + " terminated with the error " + error.code + "\n");
+			ErrorHandler.requestError(request, error);
 		} else {
 			if (response.statusCode >= 200 && response.statusCode < 300) {
 				log.success(response.statusCode);
 			} else {
-				log.error(response.statusCode);
+				ErrorHandler.responseError(response);
 			}
 			log
 			.notice(" " + response.stats.timeTaken + "ms")
@@ -71,7 +72,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 		try {
 			vm.runInNewContext(testCase, sandbox);
 		} catch (err) {
-			log.exceptionError(err);
+			ErrorHandler.exceptionError(err);
 		}
 		return sandbox.tests;
 	},
@@ -107,7 +108,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			if (results[key]) {
 				log.testCaseSuccess(key);
 			} else {
-				log.testCaseError(key);
+				ErrorHandler.testCaseError(key);
 			}
 		});
 	}

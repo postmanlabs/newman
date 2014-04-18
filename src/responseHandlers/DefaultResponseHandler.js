@@ -1,5 +1,6 @@
 var jsface                 = require('jsface'),
 	log                    = require('../utilities/Logger'),
+	ErrorHandler           = require('../utilities/ErrorHandler'),
 	AbstractResponseHandler = require('./AbstractResponseHandler');
 
 /**
@@ -13,12 +14,12 @@ var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 	// function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
 	_onRequestExecuted: function(error, response, body, request) {
 		if (error) {
-			log.error(request.id + " terminated with the error " + error.code + "\n");
+			ErrorHandler.requestError(request, error);
 		} else {
 			if (response.statusCode >= 200 && response.statusCode < 300) {
 				log.success(response.statusCode);
 			} else {
-				log.error(response.statusCode);
+				ErrorHandler.responseError(response);
 			}
 			log
 			.notice(" " + response.stats.timeTaken + "ms")

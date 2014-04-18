@@ -44,11 +44,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			var RequestOptions = this._getRequestOptions(request);
 			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
-				if (response === undefined) {
-					// if no response
-					log.error("Invalid response for url: " + request.url + " - ");
-				} else {
-					// save some stats
+				if(response) {
+					// save some stats, only if response exists
 					this._appendStatsToReponse(request, response);
 				}
 
@@ -122,7 +119,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		return headerObj;
 	},
 
-	// placeholder functiont to append stats to response
+	// placeholder function to append stats to response
 	_appendStatsToReponse: function(req, res) {
 		res.stats = {};
 		res.stats.timeTaken = new Date().getTime() - req.startTime;
