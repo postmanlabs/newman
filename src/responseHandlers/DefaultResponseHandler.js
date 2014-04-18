@@ -13,19 +13,17 @@ var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 
 	// function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
 	_onRequestExecuted: function(error, response, body, request) {
-		if (error) {
+		if (error){ 
 			ErrorHandler.requestError(request, error);
-		} else {
-			if (response.statusCode >= 200 && response.statusCode < 300) {
-				log.success(response.statusCode);
-			} else {
-				ErrorHandler.responseError(response);
-			}
-			log
-			.notice(" " + response.stats.timeTaken + "ms")
-			.normal(" " + request.name + " ")
-			.light(request.url + "\n");
+		} else  {
+			this._printResponse(error, response, body, request);
 		}
+	},
+	
+	_printResponse: function(error, response, body, request) {
+		//@viig99: this.$class.$super.call(this); - $super object is not available inside 
+		//this function. Any clue why?
+		AbstractResponseHandler._printResponse(error, response, body, request);
 	}
 });
 
