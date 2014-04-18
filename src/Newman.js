@@ -1,15 +1,14 @@
 var jsface           = require("jsface"),
 	IterationRunner = require("./runners/IterationRunner"),
 	CollectionModel  = require('./models/CollectionModel'),
-	Options          = require('./utilities/Options'),
-	EventEmitter     = require('./utilities/EventEmitter');
+	Options          = require('./utilities/Options');
 
 /**
  * @name Newman
  * @classdesc Bootstrap Newman class, mixin from Options class
  * @namespace
  */
-var Newman = jsface.Class([Options, EventEmitter], {
+var Newman = jsface.Class([Options], {
 	$singleton: true,
 
 	/**
@@ -30,19 +29,12 @@ var Newman = jsface.Class([Options, EventEmitter], {
 		// refers to the collection of processed requests
 		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
+		// setup the iteration runner with processed collection, options and 
+		// the number of times it has to run
 		this.iterationRunner = new IterationRunner(marshalledCollection, 
 									this.getOptions(), maxCount);
 
-		this.addEventListener('collectionRunnerOver', this._runIteration.bind(this));
-
-		this._runIteration();
-	},
-
-	_runIteration: function() {
-		if (this.iterationCount) {
-			this.iterationCount -= 1;
-			this.iterationRunner.execute(this.iterationCount, this.maxCount);
-		}
+		this.iterationRunner.execute();
 	}
 });
 
