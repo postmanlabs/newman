@@ -15,13 +15,18 @@ var IterationRunner = jsface.Class([Options], {
 		this.collection = collection || [];
 	},
 
-	logStatus: function(count) {
+	// logs the iteration count
+	_logStatus: function(count) {
 		var index = this.maxCount - count;
 		log.note("\nIteration " + index + " of " + this.maxCount + "\n");
 	},
 
+	/**
+	 * Runs the iteration. Instatiates a new CollectionRunner and 
+	 * executes it
+	 */
 	execute: function(count) {
-		this.logStatus(count);
+		this._logStatus(count);
 		var runner = new CollectionRunner(this.collection, this.getOptions());
 		runner.execute();
 	}

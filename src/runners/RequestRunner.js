@@ -122,6 +122,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		return headerObj;
 	},
 
+	// placeholder functiont to append stats to response
 	_appendStatsToReponse: function(req, res) {
 		res.stats = {};
 		res.stats.timeTaken = new Date().getTime() - req.startTime;
