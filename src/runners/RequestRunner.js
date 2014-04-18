@@ -33,7 +33,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	 */
 	start: function() {
 		this._execute();
-		this.addEventListener('requestExecuted', this._onRequestExecuted.bind(this));
+		this._bindedOnRequestExecuted = this._onRequestExecuted.bind(this);
+		this.addEventListener('requestExecuted', this._bindedOnRequestExecuted);
 	},
 
 	// Gets a request from the queue and executes it.
@@ -43,7 +44,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			var RequestOptions = this._getRequestOptions(request);
 			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
-				// save some stats 
+				// save some stats
 				this._appendStatsToReponse(request, response);
 
 				// emit event to signal request has been executed
@@ -58,8 +59,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
 	// clean up the requestrunner
 	_destroy: function() {
-		this.removeEventListener('requestExecuted', this._onRequestExecuted.bind(this));
-		this.purgeAllItemsInQueue();
+		this.removeEventListener('requestExecuted', this._bindedOnRequestExecuted);
 		this.emit('requestRunnerOver');
 	},
 

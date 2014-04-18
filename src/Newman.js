@@ -21,7 +21,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
 	 */
 	execute: function(requestJSON, options) {
 		this.setOptions(options);
-		this.iterationCount = this.getOptions().iterationCount || 1;
+		this.iterationCount = this.getOptions().iterationCount - 1 || 0;
 
 		// initialize the collection model from raw json
 		var collectionModel = new CollectionModel(requestJSON);
@@ -30,7 +30,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
 		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
 		this.addEventListener('collectionRunnerOver', function() {
-			console.log("request over \n\n\n");
+			console.log("request over \n");
 			if (this.iterationCount) {
 				this.iterationCount -= 1;
 				this.runIteration(marshalledCollection);

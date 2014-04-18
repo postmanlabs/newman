@@ -28,18 +28,15 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 	execute: function() {
 
 		// Initialize the response handler using a factory
-		var ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
-		if (!ResponseHandler) {
+		this.ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
+		if (!this.ResponseHandler) {
 			log.throwError('The module provided does not exist.');
 		}
 
-		this.addEventListener('requestRunnerOver', function() {
-			ResponseHandler.clear();
-			this.emit('collectionRunnerOver');
-		}.bind(this));
+		this._addEventListeners();
 
 		// Sets up the response handler to respond to the requestExecuted event
-		ResponseHandler.initialize();
+		this.ResponseHandler.initialize();
 
 		_und.each(this.collection, function(postmanRequest) {
 			RequestRunner.addRequest(postmanRequest);
@@ -49,6 +46,21 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 		RequestRunner.start();
 
 		this.$class.$superp.execute.call(this);
+	},
+
+	_addEventListeners: function() {
+		this._onRequestRunnerOverBinded = this._onRequestRunnerOver.bind(this);
+		this.addEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
+		this.addEventListener('collectionRunnerOver', this._onCollectionRunnerOver.bind(this));
+	},
+
+	_onRequestRunnerOver: function() {
+		this.ResponseHandler.clear();
+		this.emit('collectionRunnerOver');
+	},
+
+	_onCollectionRunnerOver: function() {
+		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
 	}
 });
 

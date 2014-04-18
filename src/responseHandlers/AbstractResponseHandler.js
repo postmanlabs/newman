@@ -15,7 +15,8 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 	 * @memberOf AbstractResponseHandler
 	 */
 	initialize: function() {
-		this.addEventListener('requestExecuted', this._onRequestExecuted.bind(this));
+		this._bindedOnRequestExecuted = this._onRequestExecuted.bind(this);
+		this.addEventListener('requestExecuted', this._bindedOnRequestExecuted);
 	},
 
 	// method to be over-ridden by the inheriting classes
@@ -24,7 +25,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 
 	// clears up the set event
 	clear: function() {
-		this.removeEventListener('requestExecuted', this._onRequestExecuted.bind(this));
+		this.removeEventListener('requestExecuted', this._bindedOnRequestExecuted);
 	}
 });
 
