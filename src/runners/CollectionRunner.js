@@ -48,17 +48,20 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 		this.$class.$superp.execute.call(this);
 	},
 
+	// adding event listeners to signal end of requestRunner and collectionRunner
 	_addEventListeners: function() {
 		this._onRequestRunnerOverBinded = this._onRequestRunnerOver.bind(this);
 		this.addEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
 		this.addEventListener('collectionRunnerOver', this._onCollectionRunnerOver.bind(this));
 	},
 
+	// run when requestRunner runs over the ordered requests in this collection
 	_onRequestRunnerOver: function() {
 		this.ResponseHandler.clear();
 		this.emit('collectionRunnerOver');
 	},
 
+	// removes the event listener when one collection gets over
 	_onCollectionRunnerOver: function() {
 		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
 	}

@@ -1,15 +1,15 @@
-var jsface = require('jsface'),
-	log    = require('../utilities/Logger'),
-	helper    = require('../utilities/Helpers'),
-	_und   = require('underscore'),
-	vm = require('vm'),
+var jsface                  = require('jsface'),
+	log                     = require('../utilities/Logger'),
+	helper                  = require('../utilities/Helpers'),
+	_und                    = require('underscore'),
+	vm                      = require('vm'),
 	AbstractResponseHandler = require('./AbstractResponseHandler'),
-	$jq = require("jquery"),
-	_lod = require("lodash"),
-	Backbone = require("backbone"),
-	sugar = require("sugar"),
-	xmlToJson = require("xml2js"),
-	tv4 = require("tv4");
+	$jq                     = require("jquery"),
+	_lod                    = require("lodash"),
+	Backbone                = require("backbone"),
+	sugar                   = require("sugar"),
+	xmlToJson               = require("xml2js"),
+	tv4                     = require("tv4");
 
 /**
  * @class TestResponseHandler

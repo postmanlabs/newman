@@ -1,5 +1,5 @@
 var jsface           = require("jsface"),
-	CollectionRunner = require("./runners/CollectionRunner"),
+	IterationRunner = require("./runners/IterationRunner"),
 	CollectionModel  = require('./models/CollectionModel'),
 	Options          = require('./utilities/Options'),
 	EventEmitter     = require('./utilities/EventEmitter');
@@ -21,7 +21,8 @@ var Newman = jsface.Class([Options, EventEmitter], {
 	 */
 	execute: function(requestJSON, options) {
 		this.setOptions(options);
-		this.iterationCount = this.getOptions().iterationCount - 1 || 0;
+		this.iterationCount = this.getOptions().iterationCount || 1;
+		var maxCount = this.getOptions().iterationCount || 1;
 
 		// initialize the collection model from raw json
 		var collectionModel = new CollectionModel(requestJSON);
@@ -29,21 +30,19 @@ var Newman = jsface.Class([Options, EventEmitter], {
 		// refers to the collection of processed requests
 		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
-		this.addEventListener('collectionRunnerOver', function() {
-			console.log("request over \n");
-			if (this.iterationCount) {
-				this.iterationCount -= 1;
-				this.runIteration(marshalledCollection);
-			}
-		}.bind(this));
-		
-		this.runIteration(marshalledCollection);
-	}, 
+		this.iterationRunner = new IterationRunner(marshalledCollection, 
+									this.getOptions(), maxCount);
 
-	// can go into a new class later on
-	runIteration: function(marshalledCollection) {
-		var runner = new CollectionRunner(marshalledCollection, this.getOptions());
-		runner.execute();
+		this.addEventListener('collectionRunnerOver', this._runIteration.bind(this));
+
+		this._runIteration();
+	},
+
+	_runIteration: function() {
+		if (this.iterationCount) {
+			this.iterationCount -= 1;
+			this.iterationRunner.execute(this.iterationCount, this.maxCount);
+		}
 	}
 });
 
