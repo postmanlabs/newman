@@ -25,8 +25,8 @@ function parseArguments() {
 	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null)
 	  .option('-t, --test', 'Run the Test Cases.', null)
 	  .option('-r, --runner', 'Define Which runner to pick.', null)
-	  .option('-n, --number [number]', 'Define the number of iterations to run.', null);
-	
+	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
+	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
 
 	program.on('--help', function() {
 	  console.log('  Examples:');
@@ -72,6 +72,10 @@ function main() {
 
 	if (program.number) {
 		newmanOptions.iterationCount = program.number;
+	}
+
+	if (program.outputFile) {
+		newmanOptions.outputFile = program.outputFile;
 	}
 
 	if (program.collection) {
