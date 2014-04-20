@@ -18,12 +18,6 @@ var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 		} else  {
 			this._printResponse(error, response, body, request);
 		}
-	},
-	
-	_printResponse: function(error, response, body, request) {
-		//@viig99: this.$class.$super.call(this); - $super object is not available inside 
-		//this function. Any clue why?
-		AbstractResponseHandler._printResponse(error, response, body, request);
 	}
 });
 

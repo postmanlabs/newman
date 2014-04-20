@@ -20,8 +20,6 @@ var Newman = jsface.Class([Options], {
 	 */
 	execute: function(requestJSON, options) {
 		this.setOptions(options);
-		this.iterationCount = this.getOptions().iterationCount || 1;
-		var maxCount = this.getOptions().iterationCount || 1;
 
 		// initialize the collection model from raw json
 		var collectionModel = new CollectionModel(requestJSON);
@@ -29,10 +27,8 @@ var Newman = jsface.Class([Options], {
 		// refers to the collection of processed requests
 		var marshalledCollection = collectionModel.getMarshalledRequests(this.getOptions());
 
-		// setup the iteration runner with processed collection, options and 
-		// the number of times it has to run
-		this.iterationRunner = new IterationRunner(marshalledCollection, 
-									this.getOptions(), maxCount);
+		// setup the iteration runner with processed collection and options
+		this.iterationRunner = new IterationRunner(marshalledCollection, this.getOptions());
 
 		this.iterationRunner.execute();
 	}

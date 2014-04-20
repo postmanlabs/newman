@@ -29,11 +29,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 		}
 	},
 
-	_printResponse: function(error, response, body, request) {
-		// @viig99: this.$class.$super is not available. Any clue why?
-		AbstractResponseHandler._printResponse(error, response, body, request);
-	},
-
 	_runAndLogTestCases: function(error, response, body, request) {
 		if (this._hasTestCases(request)) {
 			var tests = this._getValidTestCases(request.tests);
