@@ -1,7 +1,7 @@
-var jsface           = require("jsface"),
+var jsface          = require("jsface"),
 	IterationRunner = require("./runners/IterationRunner"),
-	CollectionModel  = require('./models/CollectionModel'),
-	Options          = require('./utilities/Options');
+	CollectionModel = require('./models/CollectionModel'),
+	Options         = require('./utilities/Options');
 
 /**
  * @name Newman

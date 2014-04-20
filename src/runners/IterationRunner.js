@@ -13,7 +13,7 @@ var jsface           = require("jsface"),
 var IterationRunner = jsface.Class([Options, EventEmitter], {
 	constructor: function(collection, options) {
 		this.setOptions(options);
-		this.numOfIterations = this.getOptions().iterationCount || 1
+		this.numOfIterations = this.getOptions().iterationCount || 1;
 		this.collection = collection || [];
 		this.iteration = 1;
 

@@ -1,9 +1,9 @@
-var jsface  = require('jsface'),
-	unirest = require('unirest'),
-	log     = require('../utilities/Logger'),
-	Queue   = require('../utilities/Queue'),
+var jsface       = require('jsface'),
+	unirest      = require('unirest'),
+	log          = require('../utilities/Logger'),
+	Queue        = require('../utilities/Queue'),
 	EventEmitter = require('../utilities/EventEmitter'),
-	_und    = require('underscore');
+	_und         = require('underscore');
 
 /**
  * @class RequestRunner
