@@ -1,6 +1,7 @@
-var jsface = require('jsface'),
-	log    = require('./Logger.js'),
-	_und   = require('underscore');
+var jsface       = require('jsface'),
+	log          = require('./Logger.js'),
+	ErrorHandler = require('./ErrorHandler'),
+	_und         = require('underscore');
 
 /** 
  * @name VariableProcessor
@@ -12,13 +13,15 @@ var VariableProcessor = jsface.Class({
 
 	// TODO: Make {{}} configurable 
 	$statics: {
-		ENV_REGEX: /\{\{([a-z1-9\-._]+)\}\}/ig,
-		PATH_REGEX: /:([a-z1-9\-._]+)/ig,
-		FUNCTION_REGEX: /\$([a-z1-9\-._]+)/ig
+		ENV_REGEX: /\{\{([a-z0-9\-._]+)\}\}/ig,
+
+		// negative match for 4 digit numbers to weed out port number matches
+		PATH_REGEX: /\:(?![0-9]{4})+(([a-z0-9\-._]+))/, 
+
+		FUNCTION_REGEX: /\$([a-z0-9\-._]+)/ig
 	},
 
 	// placeholders to define function variables
-	// TODO: Make guid function configurable
 	getFunctionVariables: {
 		guid: function() {},
 		timestamp: _und.now(),
@@ -72,7 +75,7 @@ var VariableProcessor = jsface.Class({
 		var kvpairs = envJson.values;
 		
 		if (kvpairs === undefined) {
-			log.error("Incorrect environment JSON file.\n");
+			ErrorHandler.parseError("Incorrect environment JSON file.\n");
 			return false;
 		}
 

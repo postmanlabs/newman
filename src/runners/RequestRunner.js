@@ -1,9 +1,9 @@
-var jsface  = require('jsface'),
-	unirest = require('unirest'),
-	log     = require('../utilities/Logger'),
-	Queue   = require('../utilities/Queue'),
+var jsface       = require('jsface'),
+	unirest      = require('unirest'),
+	log          = require('../utilities/Logger'),
+	Queue        = require('../utilities/Queue'),
 	EventEmitter = require('../utilities/EventEmitter'),
-	_und    = require('underscore');
+	_und         = require('underscore');
 
 /**
  * @class RequestRunner
@@ -33,20 +33,41 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	 */
 	start: function() {
 		this._execute();
-		this.addEventListener('requestExecuted', this._onRequestExecuted.bind(this));
+		this._bindedOnRequestExecuted = this._onRequestExecuted.bind(this);
+		this.addEventListener('requestExecuted', this._bindedOnRequestExecuted);
 	},
 
+	// Gets a request from the queue and executes it.
 	_execute: function() {
 		var request = this.getFromQueue();
 		if (request) {
 			var RequestOptions = this._getRequestOptions(request);
 			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
-				this._appendStatsToReponse(request, response);
+				if(response) {
+					// save some stats, only if response exists
+					this._appendStatsToReponse(request, response);
+				}
+
+				// emit event to signal request has been executed
 				this.emit('requestExecuted', error, response, body, request);
 			}.bind(this));
+
 			this._setFormDataIfParamsInRequest(unireq, request);
+		} else {
+			this._destroy();
 		}
+	},
+
+	// clean up the requestrunner
+	_destroy: function() {
+		this.removeEventListener('requestExecuted', this._bindedOnRequestExecuted);
+		this.emit('requestRunnerOver');
+	},
+
+	_onRequestExecuted: function(error, response, body, request) {
+		// Call the next request to execute
+		this._execute();
 	},
 
 	// Generates and returns the request Options to be used by unirest.
@@ -98,11 +119,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		return headerObj;
 	},
 
-	_onRequestExecuted: function(error, response, body, request) {
-		// Call the next request to execute
-		this._execute();
-	},
-
+	// placeholder function to append stats to response
 	_appendStatsToReponse: function(req, res) {
 		res.stats = {};
 		res.stats.timeTaken = new Date().getTime() - req.startTime;

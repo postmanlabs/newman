@@ -105,14 +105,14 @@ describe("Variable Processor", function() {
 	it("should replace available path variables correctly", function() {
 		var sampleReq = this.collectionJson.requests[0];
 
-		sampleReq.url = "http://localhost/blog/:user/posts/:post_id";
+		sampleReq.url = "http://localhost:3000/blog/:user/posts/:post_id";
 		sampleReq.pathVariables = {user: "foo", post_id: 10};
 
 		VariableProcessor.processRequestVariables(sampleReq, {
 			envJson: this.environmentJson
 		});
 
-		assert.equal(sampleReq.url, "http://localhost/blog/foo/posts/10");
+		assert.equal(sampleReq.url, "http://localhost:3000/blog/foo/posts/10");
 	});
 
 	it("should replace function variables correctly", function() {

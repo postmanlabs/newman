@@ -68,7 +68,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	note: function(log) {
-		process.stdout.write(color.xterm(202)(log));
+		process.stdout.write(color.xterm(33)(log));
 		return this;
 	},
 	/**

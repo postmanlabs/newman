@@ -9,6 +9,10 @@ var AbstractRunner = jsface.Class({
 		this.collection = collection || [];
 	},
 
+	/** 
+	 * Executes the runner
+	 * All runners override this function
+	 */
 	execute: function() {
 		return this;
 	}
