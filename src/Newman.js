@@ -1,6 +1,5 @@
 var jsface          = require("jsface"),
 	IterationRunner = require("./runners/IterationRunner"),
-	CollectionModel = require('./models/CollectionModel'),
 	Globals          = require('./utilities/Globals'),
 	Options          = require('./utilities/Options');
 
