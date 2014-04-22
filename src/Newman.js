@@ -27,10 +27,10 @@ var Newman = jsface.Class([Options], {
 		var collectionModel = new CollectionModel(requestJSON);
 
 		// refers to the collection of processed requests
-		var marshalledCollection = collectionModel.getOrderedRequests(this.getOptions());
+		var orderedCollection = collectionModel.getOrderedRequests(this.getOptions());
 
 		// setup the iteration runner with processed collection and options
-		this.iterationRunner = new IterationRunner(marshalledCollection, this.getOptions());
+		this.iterationRunner = new IterationRunner(orderedCollection, this.getOptions());
 
 		this.iterationRunner.execute();
 	}

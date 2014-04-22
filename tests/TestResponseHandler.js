@@ -45,7 +45,7 @@ describe("TestResponseHandler", function() {
 
 	it("should set env variable properly", function() {
 		Globals.envJson = {};
-		this.request.tests = 'postman.setEnvironmentVariable("log", "gg")'; // this should throw an exception
+		this.request.tests = 'postman.setEnvironmentVariable("log", "gg")';
 		var tests = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert.strictEqual(Globals.envJson.log, "gg");
 	});
