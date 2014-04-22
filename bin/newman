@@ -24,6 +24,7 @@ function parseArguments() {
 	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null)
 	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null)
 	  .option('-t, --test', 'Run the Test Cases.', null)
+	  .option('-d, --data [file]', 'Specify a data file to use', null)
 	  .option('-r, --runner', 'Define Which runner to pick.', null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
@@ -43,6 +44,12 @@ function parseArguments() {
 
 	if (program.url && !Helpers.isValidUrl(program.url)) {
 		terminateWithError('Please specify a valid URL');
+	}
+	
+	if (program.data) {
+		if (!fs.existsSync(program.data)) {
+			terminateWithError("The data file passed is not a valid json / csv file");
+		}
 	}
 }
 
@@ -76,6 +83,10 @@ function main() {
 
 	if (program.outputFile) {
 		newmanOptions.outputFile = program.outputFile;
+	}
+
+	if (program.data) {
+		newmanOptions.datafile = program.data;
 	}
 
 	if (program.collection) {
