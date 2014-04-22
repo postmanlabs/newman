@@ -2,7 +2,9 @@ var jsface       = require('jsface'),
 	unirest      = require('unirest'),
 	log          = require('../utilities/Logger'),
 	Queue        = require('../utilities/Queue'),
+	Globals        = require('../utilities/Globals'),
 	EventEmitter = require('../utilities/EventEmitter'),
+	VariableProcessor = require('../utilities/VariableProcessor.js'),
 	_und         = require('underscore');
 
 /**
@@ -41,6 +43,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	_execute: function() {
 		var request = this.getFromQueue();
 		if (request) {
+			this._processUrlUsingEnvVariables(request);
 			var RequestOptions = this._getRequestOptions(request);
 			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
@@ -123,6 +126,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	_appendStatsToReponse: function(req, res) {
 		res.stats = {};
 		res.stats.timeTaken = new Date().getTime() - req.startTime;
+	},
+
+	_processUrlUsingEnvVariables: function(request) {
+		VariableProcessor.processRequestVariables(request, {
+			envJson: Globals.envJson
+		});
 	}
 });
 

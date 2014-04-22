@@ -2,8 +2,7 @@ var jsface            = require('jsface'),
 	_und              = require('underscore'),
 	FolderModel       = require('./FolderModel.js'),
 	RequestModel      = require('./RequestModel.js'),
-	ParentModel       = require('./ParentModel.js'),
-	VariableProcessor = require('../utilities/VariableProcessor.js');
+	ParentModel       = require('./ParentModel.js');
 
 /** 
  * @class CollectionModel 
@@ -72,29 +71,7 @@ var CollectionModel = jsface.Class(ParentModel, {
             orderedRequests.push(this.getRequestWithId(id));
         }, this);
         return orderedRequests;
-    },
-	
-	/**
-	 * Returns an array of request objects as ordered as per the getOrderIds method 
-	 * but with the variables processed.
-	 * @param Takes the newman options as a parameter
-	 * @return {Array} Array with RequestModel ordered occording to the right id's and processed variables.
-	 * @memberOf CollectionModel
-	 */
-	getMarshalledRequests: function(newmanOptions) {
-		var orderedRequests = this.getOrderedRequests();
-
-		// processing for environment variables
-		if (newmanOptions.envJson !== undefined) {
-			_und.each(orderedRequests, function(request) {
-				VariableProcessor.processRequestVariables(request, {
-					envJson: newmanOptions.envJson
-				});
-			});
-		}
-
-		return orderedRequests;
-	}
+    }
 });
 
 module.exports = CollectionModel;
