@@ -3,7 +3,11 @@ var jsface           = require("jsface"),
 	log              = require('../utilities/Logger'),
 	Globals          = require('../utilities/Globals'),
 	EventEmitter     = require('../utilities/EventEmitter'),
+	CollectionModel  = require('../models/CollectionModel'),
 	CollectionRunner = require("../runners/CollectionRunner"),
+	fs               = require('fs'),
+	JSON5            = require('json5'),
+	_und             = require('underscore'),
 	ResponseExporter = require("../utilities/ResponseExporter");
 
 /**
@@ -13,15 +17,48 @@ var jsface           = require("jsface"),
  * @param numOfIterations {int} Number of times the iteration has to run
  */
 var IterationRunner = jsface.Class([Options, EventEmitter], {
-	constructor: function(collection, options) {
+	constructor: function(requestJSON, options) {
 		this.setOptions(options);
-		this.numOfIterations = this.getOptions().iterationCount || 1;
-		this.collection = collection || [];
+		this.collection = this._getOrderedCollection(requestJSON);
+
+		this.envJsons = this._getJsonArraysFromFile() || [];
+
+		this.numOfIterations = this.envJsons.length || this.getOptions().iterationCount || 1;
 		this.iteration = 1;
 
 		// run the next iteration when the collection run is over
 		this.addEventListener('collectionRunnerOver', this._runNextIteration.bind(this));
 		this.addEventListener('iterationRunnerOver', this._exportResponses.bind(this));
+	},
+
+	_getOrderedCollection: function(requestJSON) {
+		var collectionModel = new CollectionModel(requestJSON);
+		var orderedCollection = collectionModel.getOrderedRequests(this.getOptions());
+		return orderedCollection;
+	},
+
+	_setGlobalEnvJson: function() {
+		if (this.envJsons.length) {
+			var envJson = { values: this.envJsons[this.iteration - 1] };
+			Globals.envJson = envJson;
+		}
+	},
+
+	_getJsonArraysFromFile: function() {
+		var dataFile = this.getOptions().dataFile;
+		if (dataFile) {
+			var jsonArray = JSON5.parse(fs.readFileSync(dataFile, 'utf8'));
+			var envJsonArray = _und.map(jsonArray, function(rawJson) {
+				return this._getTransformedEnv(rawJson);
+			}, this);
+			return envJsonArray;
+		}
+	},
+
+	_getTransformedEnv: function(rawJson) {
+		return _und.map(_und.pairs(rawJson), function(pair){
+			return {key: pair[0], value: pair[1]}
+		}, []);
 	},
 
 	// logs the iteration count
@@ -32,6 +69,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 	// runs the next iteration
 	_runNextIteration: function() {
 		if (this.iteration <= this.numOfIterations) {
+			this._setGlobalEnvJson();
 			this._logStatus();
 			var runner = new CollectionRunner(this.collection, this.getOptions());
 			runner.execute();

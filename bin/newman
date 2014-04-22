@@ -86,7 +86,7 @@ function main() {
 	}
 
 	if (program.data) {
-		newmanOptions.datafile = program.data;
+		newmanOptions.dataFile = program.data;
 	}
 
 	if (program.collection) {
