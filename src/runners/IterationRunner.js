@@ -2,7 +2,8 @@ var jsface           = require("jsface"),
 	Options          = require('../utilities/Options'),
 	log              = require('../utilities/Logger'),
 	EventEmitter     = require('../utilities/EventEmitter'),
-	CollectionRunner = require("../runners/CollectionRunner");
+	CollectionRunner = require("../runners/CollectionRunner"),
+	ResponseExporter = require("../utilities/ResponseExporter");
 
 /**
  * @class IterationRunner
@@ -19,6 +20,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 		// run the next iteration when the collection run is over
 		this.addEventListener('collectionRunnerOver', this._runNextIteration.bind(this));
+		this.addEventListener('iterationRunnerOver', this._exportResponses.bind(this));
 	},
 
 	// logs the iteration count
@@ -33,7 +35,13 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 			var runner = new CollectionRunner(this.collection, this.getOptions());
 			runner.execute();
 			this.iteration++;
+		} else {
+			this.emit('iterationRunnerOver');
 		}
+	},
+
+	_exportResponses: function() {
+		ResponseExporter.exportResults();
 	},
 
 	/**

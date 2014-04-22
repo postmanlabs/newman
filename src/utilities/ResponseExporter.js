@@ -1,5 +1,6 @@
 var jsface       = require('jsface'),
 	Globals      = require('./Globals'),
+	log          = require('./Logger'),
 	_und         = require('underscore'),
 	path         = require('path'),
 	fs           = require('fs');
@@ -64,7 +65,7 @@ var ResponseExporter = jsface.Class({
 		var newResultObject = this._createResultObject(request, response, tests);
 		newResultObject.totalTime += result.totalTime;
 		newResultObject.allTests = newResultObject.allTests.concat(result.allTests);
-		result = newResultObject;
+		this._results[this._results.indexOf(result)] = newResultObject;
 	},
 
 	// Creates a pass, fail object for a given test.
@@ -86,7 +87,9 @@ var ResponseExporter = jsface.Class({
 		var exportVariable = this._createExportVariable();
 
 		if (Globals.outputFile) {
-			fs.writeFileSync(path.resolve(Globals.outputFile) , JSON.stringify(exportVariable, null, 4));
+			var filepath = path.resolve(Globals.outputFile);
+			fs.writeFileSync(filepath , JSON.stringify(exportVariable, null, 4));
+			log.note("\n\n Output Log: " + filepath + "\n");
 		}
 	},
 
