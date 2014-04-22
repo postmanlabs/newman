@@ -5,7 +5,8 @@ var assert = require('assert'),
 	path   = require('path');
 
 var TestResponseHandler = require('../src/responseHandlers/TestResponseHandler'),
-	Logger = require('../src/utilities/Logger');
+	Logger = require('../src/utilities/Logger'),
+	Globals = require('../src/utilities/Globals');
 
 describe("TestResponseHandler", function() {
 
@@ -40,6 +41,13 @@ describe("TestResponseHandler", function() {
 		this.request.tests = 'tests["throws exception"] = undefinedValue === 200;'; // this should throw an exception
 		TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert(this.loggerStub.called);
+	});
+
+	it("should set env variable properly", function() {
+		Globals.envJson = {};
+		this.request.tests = 'postman.setEnvironmentVariable("log", "gg")';
+		var tests = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.strictEqual(Globals.envJson.log, "gg");
 	});
 
 	afterEach(function() {

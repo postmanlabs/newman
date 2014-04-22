@@ -1,6 +1,7 @@
 var jsface           = require("jsface"),
 	Options          = require('../utilities/Options'),
 	log              = require('../utilities/Logger'),
+	Globals          = require('../utilities/Globals'),
 	EventEmitter     = require('../utilities/EventEmitter'),
 	CollectionRunner = require("../runners/CollectionRunner"),
 	ResponseExporter = require("../utilities/ResponseExporter");
@@ -34,7 +35,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 			this._logStatus();
 			var runner = new CollectionRunner(this.collection, this.getOptions());
 			runner.execute();
-			this.iteration++;
+			Globals.iterationNumber = ++this.iteration;
 		} else {
 			this.emit('iterationRunnerOver');
 		}

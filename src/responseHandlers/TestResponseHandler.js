@@ -10,6 +10,7 @@ var jsface                  = require('jsface'),
 	Backbone                = require("backbone"),
 	sugar                   = require("sugar"),
 	xmlToJson               = require("xml2js"),
+	Globals                 = require("../utilities/Globals"),
 	tv4                     = require("tv4");
 
 /**
@@ -79,15 +80,23 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 				detail: request.description
 			},
 			data: {},
-			iteration: 0,
-			environment: {},
+			iteration: Globals.iterationNumber,
+			environment: Globals.envJson,
 			globals: {},
 			$: $jq,
 			_: _lod,
 			Backbone: Backbone,
 			xmlToJson: xmlToJson,
 			tv4: tv4,
-			console: {log: function(){}}
+			console: {log: function(){}},
+			postman: {
+				setEnvironmentVariable: function(key, value) {
+					Globals.envJson[key] = value;
+				},
+				setGlobalVariable: function(key, value) {
+					// Set this guy up when we setup globals.
+				}
+			}
 		};
 	},
 

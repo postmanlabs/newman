@@ -23,7 +23,7 @@ describe("CollectionRunner", function() {
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 
 		var collectionModel = new CollectionModel(this.collectionJson);
-		var marshalledCollection = collectionModel.getMarshalledRequests(options);
+		var marshalledCollection = collectionModel.getOrderedRequests(options);
 
 		this.stub = sinon.stub(RequestRunner, 'addRequest');
 		sinon.stub(RequestRunner, '_execute');
