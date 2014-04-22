@@ -32,13 +32,13 @@ describe("TestResponseHandler", function() {
 	it("should run the test cases properly", function() {
 		this.request.tests = 'tests["statuscode is 200"] = responseCode.code === 200;\n\ntests["Content type is correct"] = responseHeaders["content-type"].has("application/json")';
 		var parsedResult = {"statuscode is 200": true,"Content type is correct": true};
-		TestResponseHandler._runAndLogTestCases(null, this.response, this.response.body, this.request);
-		assert(TestResponseHandler._logTestResults.calledWith(parsedResult));
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
 	});
 
 	it("should catch exception for invalid code / test cases", function() {
 		this.request.tests = 'tests["throws exception"] = undefinedValue === 200;'; // this should throw an exception
-		TestResponseHandler._runAndLogTestCases(null, this.response, this.response.body, this.request);
+		TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert(this.loggerStub.called);
 	});
 

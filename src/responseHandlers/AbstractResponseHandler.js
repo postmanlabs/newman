@@ -1,7 +1,8 @@
 var jsface       = require('jsface'),
 	log                    = require('../utilities/Logger'),
 	ErrorHandler           = require('../utilities/ErrorHandler'),
-	EventEmitter = require('../utilities/EventEmitter');
+	EventEmitter = require('../utilities/EventEmitter'),
+	ResponseExporter = require('../utilities/ResponseExporter');
 
 /**
  * @class AbstractResponseHandler
@@ -22,12 +23,13 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 	},
 
 	// method to be over-ridden by the inheriting classes
-	_onRequestExecuted: function(error, response, body, request) {
-		if (error){ 
+	_onRequestExecuted: function(error, response, body, request, tests) {
+		if (error) {
 			ErrorHandler.requestError(request, error);
 		} else  {
 			this._printResponse(error, response, body, request);
 		}
+		ResponseExporter.addResult(request, response, tests);
 	},
 
 	_printResponse: function(error, response, body, request) {

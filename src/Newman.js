@@ -1,7 +1,8 @@
 var jsface          = require("jsface"),
 	IterationRunner = require("./runners/IterationRunner"),
 	CollectionModel = require('./models/CollectionModel'),
-	Options         = require('./utilities/Options');
+	Globals          = require('./utilities/Globals'),
+	Options          = require('./utilities/Options');
 
 /**
  * @name Newman
@@ -19,6 +20,7 @@ var Newman = jsface.Class([Options], {
 	 * @param {object} Newman options
 	 */
 	execute: function(requestJSON, options) {
+		Globals.addEnvironmentGlobals(requestJSON, options);
 		this.setOptions(options);
 
 		// initialize the collection model from raw json

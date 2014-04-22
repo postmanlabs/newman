@@ -13,11 +13,7 @@ var DefaultResponseHandler = jsface.Class(AbstractResponseHandler, {
 
 	// function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
 	_onRequestExecuted: function(error, response, body, request) {
-		if (error){ 
-			ErrorHandler.requestError(request, error);
-		} else  {
-			this._printResponse(error, response, body, request);
-		}
+		AbstractResponseHandler._onRequestExecuted.call(this, error, response, body, request);
 	}
 });
 
