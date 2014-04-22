@@ -79,6 +79,8 @@ var VariableProcessor = jsface.Class({
 			return false;
 		}
 
+		request.transformed = {};
+
 		var properties = ["url", "headers", "form", "data"];
 
 		var pairObject = this._transformPairs(kvpairs);
@@ -87,13 +89,13 @@ var VariableProcessor = jsface.Class({
 			if (request[prop] !== undefined)  {
 				if (typeof request[prop] === "string") {
 					// if string, use directly
-					request[prop] = this._findReplace(request[prop], pairObject, this.ENV_REGEX);
+					request.transformed[prop] = this._findReplace(request[prop], pairObject, this.ENV_REGEX);
 				} else {
 					// if not string, stringify it
 					// findReplace, unstringify it and set it
 					var jsonifiedProp = JSON.stringify(request[prop]);
 					var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, pairObject, this.ENV_REGEX));
-					request[prop] = parsedJsonProp;
+					request.transformed[prop] = parsedJsonProp;
 				}
 			}
 		}, this);
@@ -114,9 +116,9 @@ var VariableProcessor = jsface.Class({
 	 * @param {JSON} options passed to Newman runner
 	 */
 	processRequestVariables: function(request, options) {
-		this._processEnvVariable(request, options.envJson);
 		this._processPathVariable(request);
 		this._processFunctionVariable(request);
+		this._processEnvVariable(request, options.envJson);
 	}
 });
 

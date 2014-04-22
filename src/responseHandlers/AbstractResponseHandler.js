@@ -41,7 +41,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 		log
 		.notice(" " + response.stats.timeTaken + "ms")
 		.normal(" " + request.name + " ")
-		.light(request.url + "\n");
+		.light(request.transformed.url + "\n");
 	},
 
 	// clears up the set event

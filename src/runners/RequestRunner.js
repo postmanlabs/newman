@@ -1,11 +1,11 @@
-var jsface       = require('jsface'),
-	unirest      = require('unirest'),
-	log          = require('../utilities/Logger'),
-	Queue        = require('../utilities/Queue'),
-	Globals        = require('../utilities/Globals'),
-	EventEmitter = require('../utilities/EventEmitter'),
+var jsface            = require('jsface'),
+	unirest           = require('unirest'),
+	log               = require('../utilities/Logger'),
+	Queue             = require('../utilities/Queue'),
+	Globals           = require('../utilities/Globals'),
+	EventEmitter      = require('../utilities/EventEmitter'),
 	VariableProcessor = require('../utilities/VariableProcessor.js'),
-	_und         = require('underscore');
+	_und              = require('underscore');
 
 /**
  * @class RequestRunner
@@ -76,7 +76,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	// Generates and returns the request Options to be used by unirest.
 	_getRequestOptions: function(request) {
 		var RequestOptions = {};
-		RequestOptions.url = request.url;
+		//TODO: @Viig99 - Not yet complete. Need your help to identify possible request properties
+		//that need to be replaced here by their tranformed values
+		RequestOptions.url = request.transformed.url;
 		RequestOptions.method = request.method;
 		RequestOptions.headers = this._generateHeaders(request.headers);
 		RequestOptions.followAllRedirects = true;
