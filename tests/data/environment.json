@@ -4,7 +4,7 @@
     "values": [
         {
             "key": "url",
-            "value": "http://dump.getpostman.com",
+            "value": "http://127.0.0.1:5000",
             "type": "text",
             "name": "url"
         },
