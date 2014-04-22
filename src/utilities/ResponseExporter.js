@@ -15,8 +15,10 @@ var ResponseExporter = jsface.Class({
 
 	/**
 	 * Adds the Reponse to the Result Array.
+	 * @param {Object} request Request we got from Newman.
 	 * @param {Object} response Response we got from Newman.
 	 * @param {Object} tests Test Results.
+	 * @memberOf ResponseExporter
 	 */
 	addResult: function(request, response, tests) {
 		var result = this._findResultObject(request);
@@ -28,6 +30,7 @@ var ResponseExporter = jsface.Class({
 		}
 	},
 
+	// Used to create a first result object, to be used while exporting the results.
 	_createResultObject: function(request, response, tests) {
 		if (!tests) {
 			tests = {};
@@ -64,6 +67,7 @@ var ResponseExporter = jsface.Class({
 		result = newResultObject;
 	},
 
+	// Creates a pass, fail object for a given test.
 	_extractPassFailCountFromTests: function(tests) {
 		return _und.reduce(_und.keys(tests), function(results, key) {
 			results[key] = {
@@ -74,6 +78,10 @@ var ResponseExporter = jsface.Class({
 		}, {});
 	},
 
+	/**
+	 * This function when called creates a file with the JSON of the results.
+	 * @memberOf ResponseExporter
+	 */
 	exportResults: function() {
 		var exportVariable = this._createExportVariable();
 
