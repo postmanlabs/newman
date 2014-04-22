@@ -47,12 +47,13 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 	_getJsonArraysFromFile: function() {
 		var dataFile = this.getOptions().dataFile;
 		if (dataFile) {
+			var jsonArray = [];
 			if (dataFile.indexOf("json") > 0) {
 				// json file
-				var jsonArray = JSON5.parse(fs.readFileSync(dataFile, 'utf8'));
+				jsonArray = JSON5.parse(fs.readFileSync(dataFile, 'utf8'));
 			} else {
 				// assumed csv file
-				var jsonArray = [];
+				jsonArray = [];
 				var headers;
 				var strContents = fs.readFileSync(dataFile, 'utf-8').toString();
 
@@ -81,7 +82,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 	_getTransformedEnv: function(rawJson) {
 		return _und.map(_und.pairs(rawJson), function(pair){
-			return {key: pair[0], value: pair[1]}
+			return { key: pair[0], value: pair[1] };
 		}, []);
 	},
 
