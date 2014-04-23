@@ -1,5 +1,4 @@
 var jsface       = require('jsface'),
-	log          = require('./Logger.js'),
 	ErrorHandler = require('./ErrorHandler'),
 	_und         = require('underscore');
 
@@ -16,7 +15,7 @@ var VariableProcessor = jsface.Class({
 		ENV_REGEX: /\{\{([a-z0-9\-._]+)\}\}/ig,
 
 		// negative match for 4 digit numbers to weed out port number matches
-		PATH_REGEX: /\:(?![0-9]{4})+(([a-z0-9\-._]+))/, 
+		PATH_REGEX: /\:(?![0-9]{4})+(([a-z0-9\-._]+))/,
 
 		FUNCTION_REGEX: /\$([a-z0-9\-._]+)/ig
 	},
@@ -62,7 +61,7 @@ var VariableProcessor = jsface.Class({
 		function getKey(match, key){
 			return sourceObject[key];
 		}
-		stringSource = stringSource.replace(REGEX, getKey);  
+		stringSource = stringSource.replace(REGEX, getKey);
 
 		if (stringSource.match(REGEX)){
 			return this._findReplace(stringSource, sourceObject, REGEX);

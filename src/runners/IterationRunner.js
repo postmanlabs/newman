@@ -64,10 +64,10 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 								return key.trim();
 							});
 						} else {
-							vals = _und.map(row.split(','), function(val) {
+							var vals = _und.map(row.split(','), function(val) {
 								return val.trim();
 							});
-							jsonArray.push(_und.object(headers,vals));
+							jsonArray.push(_und.object(headers, vals));
 						}
 					}
 				});

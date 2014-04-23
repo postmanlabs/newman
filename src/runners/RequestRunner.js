@@ -1,6 +1,5 @@
 var jsface            = require('jsface'),
 	unirest           = require('unirest'),
-	log               = require('../utilities/Logger'),
 	Queue             = require('../utilities/Queue'),
 	Globals           = require('../utilities/Globals'),
 	EventEmitter      = require('../utilities/EventEmitter'),

@@ -2,7 +2,10 @@ module.exports = function(grunt) {
 	// defining tasks
 	grunt.initConfig({
 		jshint: {
-			all: ['src/*.js', 'src/**/*.js', "tests/**/*.js"]
+			all: ['src/*.js', 'src/**/*.js'],
+			options: {
+				jshintrc: '.jshintrc'
+			}
 		},
 		jsdoc: {
 			dist: {
