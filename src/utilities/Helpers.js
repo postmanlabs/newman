@@ -1,4 +1,6 @@
-var jsface = require('jsface');
+var jsface = require('jsface'),
+	fs     = require('fs'),
+	Errors = require('./ErrorHandler');
 
 /** 
  * @name Helpers
@@ -13,11 +15,24 @@ var Helpers = jsface.Class({
      * @param  {String}  url [Takes a URL as an input]
      * @return {Boolean}     [Returns is the url is valid or not.]
      */
-    isValidUrl: function(url) {
-        // basic sanity check to validate url structure 
-        var result = url.match(/(https|http):\/\/([_a-z\d\-]+(\.[_a-z\d\-]+)+)(([_a-z\d\-\\\.\/]+[_a-z\d\-\\\/])+)*/);
-        return result !== null;
-    }
+    validateCollectionUrl: function(url) {
+		var result = url.match(/(https|http):\/\/([_a-z\d\-]+(\.[_a-z\d\-]+)+)(([_a-z\d\-\\\.\/]+[_a-z\d\-\\\/])+)*/);
+		if (!result)  {
+			Errors.terminateWithError("Please specify a valid URL");
+		}
+    },
+
+	validateDataFile: function(file) {
+		if (!fs.existsSync(file)) {
+			Errors.terminateWithError("The data file passed is not a valid json / csv file");
+		}
+	},
+
+	validateCollectionFile: function(file) {
+		if (!fs.existsSync(file)) {
+			Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
+		}
+	}
 });
 
 module.exports = Helpers;

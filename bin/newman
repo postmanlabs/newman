@@ -12,7 +12,7 @@ var color   = require('cli-color'),
 	path    = require('path'),
 	request = require('unirest'),
 	fs      = require('fs'),
-	Helpers = require('../src/utilities/Helpers.js'),
+	Helpers = require('../src/utilities/Helpers'),
 	JSON5   = require('json5'),
 	Newman  = require('../src/Newman');
 
@@ -38,18 +38,16 @@ function parseArguments() {
 
 	program.parse(process.argv);
 
-	if (!fs.existsSync(program.collection) && !(program.url)) {
-		terminateWithError('Please specify a Postman Collection either as a file or a URL');
+	if (program.collection) {
+		Helpers.validateCollectionFile(program.collection);
 	}
 
-	if (program.url && !Helpers.isValidUrl(program.url)) {
-		terminateWithError('Please specify a valid URL');
+	if (program.url) {
+		Helpers.validateCollectionUrl(program.url);
 	}
 	
 	if (program.data) {
-		if (!fs.existsSync(program.data)) {
-			terminateWithError("The data file passed is not a valid json / csv file");
-		}
+		Helpers.validateDataFile(program.data);
 	}
 }
 
