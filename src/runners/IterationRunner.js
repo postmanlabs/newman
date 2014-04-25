@@ -23,6 +23,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		this.setOptions(options);
 		this.collection = this._getOrderedCollection(requestJSON);
 
+		// collection of environment jsons passed from datafile
 		this.envJsons = this._getJsonArraysFromFile();
 
 		this.numOfIterations = this.envJsons.length || this.getOptions().iterationCount || 1;
@@ -39,6 +40,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		return orderedCollection;
 	},
 
+	// sets the global environment object property as the current data json
 	_setGlobalEnvJson: function() {
 		if (this.envJsons.length) {
 			var envJson = { values: this.envJsons[this.iteration - 1] };
@@ -46,6 +48,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		}
 	},
 
+	// parses the json from data file and sends it for transformation
 	_getJsonArraysFromFile: function() {
 		var dataFile = this.getOptions().dataFile;
 		var jsonArray = [];
@@ -80,6 +83,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 			}, this);
 			return envJsonArray;
 		}
+		return jsonArray;
 	},
 
 	// logs the iteration count
@@ -87,7 +91,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		log.note("\nIteration " + this.iteration + " of " + this.numOfIterations + "\n");
 	},
 
-	// runs the next iteration
+	// set the global envjson and then run the next iteration
 	_runNextIteration: function() {
 		if (this.iteration <= this.numOfIterations) {
 			this._setGlobalEnvJson();

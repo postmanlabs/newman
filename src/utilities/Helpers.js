@@ -35,10 +35,20 @@ var Helpers = jsface.Class({
 		}
 	},
 
+	// transforms an array of 
+	// [{"id": 1, "name":"foo"}, { .. }, ..] 
+	// into an object {"key": "id", "value": "foo"}]
 	transformToKeyValue: function(json) {
 		return _und.map(_und.pairs(json), function(pair){
 			return { key: pair[0], value: pair[1] };
 		}, []);
+	},
+
+	// transforms an array of 
+	// [{ "key": "id", "value": "20" }, { "key": "name", "value": "joe" }] 
+	// into an object {"id": "20", "name": "joe"}
+	transformFromKeyValue: function(kvpairs) {
+		return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
 	}
 });
 

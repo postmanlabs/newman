@@ -1,5 +1,6 @@
 var jsface       = require('jsface'),
 	ErrorHandler = require('./ErrorHandler'),
+	Helpers      = require('./Helpers'),
 	_und         = require('underscore');
 
 /** 
@@ -82,7 +83,7 @@ var VariableProcessor = jsface.Class({
 
 		var properties = ["url", "headers", "form", "data"];
 
-		var pairObject = this._transformPairs(kvpairs);
+		var pairObject = Helpers.transformFromKeyValue(kvpairs);
 		_und.each(properties, function(prop) {
 			// check if the prop exists
 			if (request[prop] !== undefined)  {
@@ -101,12 +102,6 @@ var VariableProcessor = jsface.Class({
 		return true;
 	},
 
-	// transforms an array of 
-	// [{ "key": "id", "value": "20" }, { "key": "name", "value": "joe" }] 
-	// into an object {"id": "20", "name": "joe"}
-	_transformPairs: function(kvpairs) {
-		return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
-	},
 
 	/** 
 	 * Modifies request by processing all the variables
