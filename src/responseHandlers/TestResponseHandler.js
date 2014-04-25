@@ -66,7 +66,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	},
 
 	_createSandboxedEnvironment: function(error, response, body, request) {
-		// TODO: @prakhar1989, figure out how to load the environment & globals here.
 		return {
 			tests: {},
 			responseHeaders: response.headers,

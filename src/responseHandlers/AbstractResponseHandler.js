@@ -1,7 +1,7 @@
-var jsface       = require('jsface'),
-	log                    = require('../utilities/Logger'),
-	ErrorHandler           = require('../utilities/ErrorHandler'),
-	EventEmitter = require('../utilities/EventEmitter'),
+var jsface           = require('jsface'),
+	log              = require('../utilities/Logger'),
+	ErrorHandler     = require('../utilities/ErrorHandler'),
+	EventEmitter     = require('../utilities/EventEmitter'),
 	ResponseExporter = require('../utilities/ResponseExporter');
 
 /**

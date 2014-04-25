@@ -23,9 +23,8 @@ function parseArguments() {
 	  .option('-c, --collection [file]', 'Specify your Postman Collection [file]', null)
 	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null)
 	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null)
-	  .option('-t, --test', 'Run the Test Cases.', null)
 	  .option('-d, --data [file]', 'Specify a data file to use', null)
-	  .option('-r, --runner', 'Define Which runner to pick.', null)
+	  .option('-r, --responseHandler', 'Pick a repsonse Handler to run.', null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
 
@@ -67,13 +66,7 @@ function main() {
 		newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
 	}
 
-	if (program.runner) {
-		newmanOptions.responseHandler = program.runner;
-	}
-
-	if (program.test) {
-		newmanOptions.responseHandler = 'TestResponseHandler';
-	}
+	newmanOptions.responseHandler = 'TestResponseHandler';
 
 	if (program.number) {
 		newmanOptions.iterationCount = program.number;

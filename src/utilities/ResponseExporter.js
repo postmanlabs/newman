@@ -44,8 +44,8 @@ var ResponseExporter = jsface.Class({
 			"totalTime": response.stats.timeTaken,
 			"responseCode": {
 				"code": response.statusCode,
-				"name": "",       // Fill these guys later on
-				"detail": ""	// This guy too.
+				"name": "",       // TODO: Fill these guys later on
+				"detail": ""
 			},
 			"tests": tests,
 			"testPassFailCounts": this._extractPassFailCountFromTests(tests),
