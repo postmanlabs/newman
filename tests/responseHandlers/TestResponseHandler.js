@@ -4,14 +4,14 @@ var assert = require('assert'),
 	JSON5  = require('json5'),
 	path   = require('path');
 
-var TestResponseHandler = require('../src/responseHandlers/TestResponseHandler'),
-	Logger = require('../src/utilities/Logger'),
-	Globals = require('../src/utilities/Globals');
+var TestResponseHandler = require('../../src/responseHandlers/TestResponseHandler'),
+	Logger              = require('../../src/utilities/Logger'),
+	Globals             = require('../../src/utilities/Globals');
 
 describe("TestResponseHandler", function() {
 
 	beforeEach(function() {
-		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
+		var filePath = path.join(__dirname, '../', 'data', 'PostmanCollection.json');
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.request = this.collectionJson.requests[0];
 		this.response = {

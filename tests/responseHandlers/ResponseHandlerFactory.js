@@ -5,9 +5,9 @@ var assert = require('assert'),
 	path   = require('path'),
 	_und   = require('underscore');
 
-var ResponseHandlerFactory = require('../src/responseHandlers/ResponseHandlerFactory'),
-	DefaultResponseHandler = require('../src/responseHandlers/DefaultResponseHandler'),
-	AbstractRequestHandler = require('../src/responseHandlers/AbstractResponseHandler');
+var ResponseHandlerFactory = require('../../src/responseHandlers/ResponseHandlerFactory'),
+	DefaultResponseHandler = require('../../src/responseHandlers/DefaultResponseHandler'),
+	AbstractRequestHandler = require('../../src/responseHandlers/AbstractResponseHandler');
 
 describe("ResponseHandlerFactory", function() {
 
