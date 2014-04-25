@@ -17,14 +17,14 @@ var VariableProcessor = jsface.Class({
 		// negative match for 4 digit numbers to weed out port number matches
 		PATH_REGEX: /\:(?![0-9]{4})+(([a-z0-9\-._]+))/,
 
-		FUNCTION_REGEX: /\$([a-z0-9\-._]+)/ig
+		FUNCTION_REGEX: /\{\{\$([a-z0-9\-._]+)\}\}/ig
 	},
 
 	// placeholders to define function variables
 	getFunctionVariables: {
 		guid: function() {},
 		timestamp: _und.now(),
-		randomint: _und.random(0, 1000)
+		randomInt: _und.random(0, 1000)
 	},
 
 	// updates request url by the replacing it with pathVariables

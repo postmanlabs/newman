@@ -120,7 +120,7 @@ describe("Variable Processor", function() {
 
 		VariableProcessor.getFunctionVariables.testconst = (function() { return 10; })();
 
-		sampleReq.url = "http://localhost/blog/posts/$testconst";
+		sampleReq.url = "http://localhost/blog/posts/{{$testconst}}";
 
 		VariableProcessor.processRequestVariables(sampleReq, {
 			envJson: this.environmentJson
