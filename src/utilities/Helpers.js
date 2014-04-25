@@ -1,6 +1,7 @@
 var jsface = require('jsface'),
 	fs     = require('fs'),
-	Errors = require('./ErrorHandler');
+	Errors = require('./ErrorHandler'),
+	_und   = require('underscore');
 
 /** 
  * @name Helpers
@@ -32,6 +33,12 @@ var Helpers = jsface.Class({
 		if (!fs.existsSync(file)) {
 			Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
 		}
+	},
+
+	transformToKeyValue: function(json) {
+		return _und.map(_und.pairs(json), function(pair){
+			return { key: pair[0], value: pair[1] };
+		}, []);
 	}
 });
 

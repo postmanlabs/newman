@@ -1,11 +1,13 @@
 var jsface           = require("jsface"),
 	Options          = require('../utilities/Options'),
 	log              = require('../utilities/Logger'),
+	Helpers          = require('../utilities/Helpers'),
 	Globals          = require('../utilities/Globals'),
 	EventEmitter     = require('../utilities/EventEmitter'),
 	CollectionModel  = require('../models/CollectionModel'),
 	CollectionRunner = require("../runners/CollectionRunner"),
 	fs               = require('fs'),
+	path             = require('path'),
 	JSON5            = require('json5'),
 	_und             = require('underscore'),
 	ResponseExporter = require("../utilities/ResponseExporter");
@@ -21,7 +23,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		this.setOptions(options);
 		this.collection = this._getOrderedCollection(requestJSON);
 
-		this.envJsons = this._getJsonArraysFromFile() || [];
+		this.envJsons = this._getJsonArraysFromFile();
 
 		this.numOfIterations = this.envJsons.length || this.getOptions().iterationCount || 1;
 		this.iteration = 1;
@@ -46,16 +48,16 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 	_getJsonArraysFromFile: function() {
 		var dataFile = this.getOptions().dataFile;
+		var jsonArray = [];
 		if (dataFile) {
-			var jsonArray = [];
-			if (dataFile.indexOf("json") > 0) {
+			if (path.extname(dataFile) === ".json") {
 				// json file
 				jsonArray = JSON5.parse(fs.readFileSync(dataFile, 'utf8'));
 			} else {
 				// assumed csv file
 				jsonArray = [];
 				var headers;
-				var strContents = fs.readFileSync(dataFile, 'utf-8').toString();
+				var strContents = fs.readFileSync(dataFile, 'utf-8');
 
 				_und.each(strContents.split('\n'), function(row, i) {
 					if (row.length) { // since node reads a blank line as well
@@ -74,16 +76,10 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 			}
 
 			var envJsonArray = _und.map(jsonArray, function(rawJson) {
-				return this._getTransformedEnv(rawJson);
+				return Helpers.transformToKeyValue(rawJson);
 			}, this);
 			return envJsonArray;
 		}
-	},
-
-	_getTransformedEnv: function(rawJson) {
-		return _und.map(_und.pairs(rawJson), function(pair){
-			return { key: pair[0], value: pair[1] };
-		}, []);
 	},
 
 	// logs the iteration count
