@@ -1,6 +1,5 @@
 var jsface          = require("jsface"),
 	IterationRunner = require("./runners/IterationRunner"),
-	CollectionModel = require('./models/CollectionModel'),
 	Globals          = require('./utilities/Globals'),
 	Options          = require('./utilities/Options');
 
@@ -23,14 +22,8 @@ var Newman = jsface.Class([Options], {
 		Globals.addEnvironmentGlobals(requestJSON, options);
 		this.setOptions(options);
 
-		// initialize the collection model from raw json
-		var collectionModel = new CollectionModel(requestJSON);
-
-		// refers to the collection of processed requests
-		var orderedCollection = collectionModel.getOrderedRequests(this.getOptions());
-
-		// setup the iteration runner with processed collection and options
-		this.iterationRunner = new IterationRunner(orderedCollection, this.getOptions());
+		// setup the iteration runner with requestJSON passed and options
+		this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
 
 		this.iterationRunner.execute();
 	}

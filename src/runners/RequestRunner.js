@@ -1,11 +1,10 @@
-var jsface       = require('jsface'),
-	unirest      = require('unirest'),
-	log          = require('../utilities/Logger'),
-	Queue        = require('../utilities/Queue'),
-	Globals        = require('../utilities/Globals'),
-	EventEmitter = require('../utilities/EventEmitter'),
+var jsface            = require('jsface'),
+	unirest           = require('unirest'),
+	Queue             = require('../utilities/Queue'),
+	Globals           = require('../utilities/Globals'),
+	EventEmitter      = require('../utilities/EventEmitter'),
 	VariableProcessor = require('../utilities/VariableProcessor.js'),
-	_und         = require('underscore');
+	_und              = require('underscore');
 
 /**
  * @class RequestRunner
@@ -76,12 +75,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	// Generates and returns the request Options to be used by unirest.
 	_getRequestOptions: function(request) {
 		var RequestOptions = {};
-		RequestOptions.url = request.url;
+		RequestOptions.url = request.transformed.url;
 		RequestOptions.method = request.method;
-		RequestOptions.headers = this._generateHeaders(request.headers);
+		RequestOptions.headers = this._generateHeaders(request.transformed.headers);
 		RequestOptions.followAllRedirects = true;
 		RequestOptions.jar = true;
-		this._setBodyData(RequestOptions,request);
+		this._setBodyData(RequestOptions, request);
 		return RequestOptions;
 	},
 
@@ -90,9 +89,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	_setBodyData: function(RequestOptions, request) {
 		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1) {
 			if (request.dataMode === "raw") {
-				RequestOptions.body = request.data;
+				RequestOptions.body = request.transformed.data;
 			} else if (request.dataMode === "urlencoded") {
-				var reqData = request.data;
+				var reqData = request.transformed.data;
 				RequestOptions.form = _und.object(_und.pluck(reqData, "key"), _und.pluck(reqData, "value"));
 			}
 		}

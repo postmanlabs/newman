@@ -26,6 +26,11 @@ var ErrorHandler = jsface.Class({
 
 	exceptionError: function(err) {
 		log.exceptionError(err);
+	},
+	
+	terminateWithError: function(msg) {
+		log.error(msg);
+		process.exit(1);
 	}
 });
 

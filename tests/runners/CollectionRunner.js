@@ -6,17 +6,17 @@ var assert = require('assert'),
 	_und   = require('underscore');
 
 // importing newman modules
-var Newman            = require('../src/Newman.js'),
-	CollectionModel   = require('../src/models/CollectionModel.js'),
-	CollectionRunner  = require('../src/runners/CollectionRunner.js'),
-	RequestRunner     = require('../src/runners/RequestRunner.js'),
-	Emitter           = require('../src/utilities/EventEmitter'),
-	VariableProcessor = require('../src/utilities/VariableProcessor.js');
+var Newman            = require('../../src/Newman.js'),
+	CollectionModel   = require('../../src/models/CollectionModel.js'),
+	CollectionRunner  = require('../../src/runners/CollectionRunner.js'),
+	RequestRunner     = require('../../src/runners/RequestRunner.js'),
+	Emitter           = require('../../src/utilities/EventEmitter'),
+	VariableProcessor = require('../../src/utilities/VariableProcessor.js');
 
 describe("CollectionRunner", function() {
 
 	beforeEach(function() {
-		var filePath = path.join(__dirname, 'data', 'PostmanCollection.json');
+		var filePath = path.join(__dirname, '../', 'data', 'PostmanCollection.json');
 		var url = "https://www.getpostman.com/collections/fc3f0598daaa5271e4f7";
 		var options = {};
 		this.emitter = new Emitter();

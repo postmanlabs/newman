@@ -1,6 +1,4 @@
 var jsface                 = require('jsface'),
-	log                    = require('../utilities/Logger'),
-	ErrorHandler           = require('../utilities/ErrorHandler'),
 	AbstractResponseHandler = require('./AbstractResponseHandler');
 
 /**

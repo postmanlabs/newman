@@ -12,7 +12,7 @@ var color   = require('cli-color'),
 	path    = require('path'),
 	request = require('unirest'),
 	fs      = require('fs'),
-	Helpers = require('../src/utilities/Helpers.js'),
+	Helpers = require('../src/utilities/Helpers'),
 	JSON5   = require('json5'),
 	Newman  = require('../src/Newman');
 
@@ -24,6 +24,7 @@ function parseArguments() {
 	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null)
 	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null)
 	  .option('-t, --test', 'Run the Test Cases.', null)
+	  .option('-d, --data [file]', 'Specify a data file to use', null)
 	  .option('-r, --runner', 'Define Which runner to pick.', null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
@@ -37,12 +38,16 @@ function parseArguments() {
 
 	program.parse(process.argv);
 
-	if (!fs.existsSync(program.collection) && !(program.url)) {
-		terminateWithError('Please specify a Postman Collection either as a file or a URL');
+	if (program.collection) {
+		Helpers.validateCollectionFile(program.collection);
 	}
 
-	if (program.url && !Helpers.isValidUrl(program.url)) {
-		terminateWithError('Please specify a valid URL');
+	if (program.url) {
+		Helpers.validateCollectionUrl(program.url);
+	}
+	
+	if (program.data) {
+		Helpers.validateDataFile(program.data);
 	}
 }
 
@@ -76,6 +81,10 @@ function main() {
 
 	if (program.outputFile) {
 		newmanOptions.outputFile = program.outputFile;
+	}
+
+	if (program.data) {
+		newmanOptions.dataFile = program.data;
 	}
 
 	if (program.collection) {

@@ -5,10 +5,10 @@ var assert = require('assert'),
 	path   = require('path'),
 	_und   = require('underscore');
 
-var Newman            = require('../src/Newman.js'),
-	RequestRunner     = require('../src/runners/RequestRunner.js'),
-	AbstractResponseHandler = require('../src/responseHandlers/AbstractResponseHandler.js'),
-	Emitter = require('../src/utilities/EventEmitter');
+var Newman                  = require('../../src/Newman.js'),
+	RequestRunner           = require('../../src/runners/RequestRunner.js'),
+	AbstractResponseHandler = require('../../src/responseHandlers/AbstractResponseHandler.js'),
+	Emitter                 = require('../../src/utilities/EventEmitter');
 
 describe("Response Handlers", function() {
 

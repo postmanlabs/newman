@@ -28,8 +28,8 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson 
 		});
 
-		assert.equal(sampleReq.url, "http://localhost/blog/edit");
-		assert.equal(sampleReq.headers, "Authorization: Basic YTg1OmJsYWhibGFoMTI= From: http://localhost Max-Forwards: 19");
+		assert.equal(sampleReq.transformed.url, "http://localhost/blog/edit");
+		assert.equal(sampleReq.transformed.headers, "Authorization: Basic YTg1OmJsYWhibGFoMTI= From: http://localhost Max-Forwards: 19");
 	});
 
 	it("should replace correct env variable multiple times", function() {
@@ -42,7 +42,7 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson
 		});
 
-		assert.equal(sampleReq.url, "http://localhost/blog/post/1/user/1");
+		assert.equal(sampleReq.transformed.url, "http://localhost/blog/post/1/user/1");
 	});
 
 	it("should not replace incorrect env variable", function() {
@@ -55,7 +55,7 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson 
 		});
 
-		assert.equal(sampleReq.url, "undefined/blog/edit");
+		assert.equal(sampleReq.transformed.url, "undefined/blog/edit");
 	});
 
 	it("should replace multiple correct env variable", function() {
@@ -69,7 +69,7 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson 
 		});
 
-		assert.equal(sampleReq.url, "http://localhost/blog/edit/1");
+		assert.equal(sampleReq.transformed.url, "http://localhost/blog/edit/1");
 	});
 
 	it("should recursively resolve environment variables", function() {
@@ -84,7 +84,7 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson
 		});
 
-		assert.equal(sampleReq.url, "http://localhost/blog/edit/posts/10");
+		assert.equal(sampleReq.transformed.url, "http://localhost/blog/edit/posts/10");
 	});
 
 	it("should replace env variable of an object property", function() {
@@ -98,8 +98,8 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson
 		});
 
-		assert.equal(sampleReq.form.msg, "Hello, Foobar");
-		assert.equal(sampleReq.data.Foobar, "password");
+		assert.equal(sampleReq.transformed.form.msg, "Hello, Foobar");
+		assert.equal(sampleReq.transformed.data.Foobar, "password");
 	});
 
 	it("should replace available path variables correctly", function() {
@@ -112,7 +112,7 @@ describe("Variable Processor", function() {
 			envJson: this.environmentJson
 		});
 
-		assert.equal(sampleReq.url, "http://localhost:3000/blog/foo/posts/10");
+		assert.equal(sampleReq.transformed.url, "http://localhost:3000/blog/foo/posts/10");
 	});
 
 	it("should replace function variables correctly", function() {
@@ -120,7 +120,7 @@ describe("Variable Processor", function() {
 
 		VariableProcessor.getFunctionVariables.testconst = (function() { return 10; })();
 
-		sampleReq.url = "http://localhost/blog/posts/$testconst";
+		sampleReq.url = "http://localhost/blog/posts/{{$testconst}}";
 
 		VariableProcessor.processRequestVariables(sampleReq, {
 			envJson: this.environmentJson
