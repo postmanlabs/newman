@@ -49,6 +49,13 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				if(response) {
 					// save some stats, only if response exists
 					this._appendStatsToReponse(request, response);
+				} else {
+					// initialize response for reporting and testcases
+					response = {
+						stats: { timeTaken: 0},
+						statusCode: 0,
+						headers: []
+					};
 				}
 
 				// emit event to signal request has been executed
