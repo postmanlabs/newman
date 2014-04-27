@@ -94,11 +94,23 @@ var ResponseExporter = jsface.Class({
 	},
 
 	_createExportVariable: function() {
-		var exportObject = Globals.requestJSON;
-		exportObject.environment = Globals.envJson;
-		exportObject.globals = Globals.globalJSON;
-		exportObject.results = this._results;
-		return exportObject;
+		return {
+			id: '',
+			name: 'Default',
+			timestamp: new Date().getTime(),
+			collection_id: Globals.requestJSON.id,
+			folder_id: 0,
+			target_type: 'collection',
+			environment_id: Globals.envJson.id,
+			count: Globals.iterationNumber - 1,
+			collection: Globals.requestJSON,
+			folder: null,
+			globals: Globals.globalJSON,
+			results: this._results,
+			environment: Globals.envJson,
+			delay: 0,
+			synced: Globals.requestJSON.synced
+		};
 	}
 });
 
