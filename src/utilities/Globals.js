@@ -15,7 +15,7 @@ var Globals = jsface.Class({
 	 */
 	addEnvironmentGlobals: function(requestJSON, options) {
 		this.requestJSON = requestJSON;
-		this.envJson = options.envJson;
+		this.envJson = options.envJson || {};
 		this.iterationNumber = 1;
 		this.outputFile = options.outputFile || '';
 		this.globalJSON = options.globalJSON || [];
