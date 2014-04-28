@@ -4,6 +4,10 @@
   "author": "Arjun Variar & Prakhar Srivastav",
   "main": "Newman",
   "description": "Command-line utility for Postman",
+  "repository": {
+	  "type": "git",
+	  "url": "git://github.com/a85/Newman.git"
+  },
   "keywords": [
     "postman",
     "api",
