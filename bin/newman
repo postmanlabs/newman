@@ -13,6 +13,7 @@ var color   = require('cli-color'),
 	request = require('unirest'),
 	fs      = require('fs'),
 	Helpers = require('../src/utilities/Helpers'),
+	Errors  = require('../src/utilities/ErrorHandler'),
 	JSON5   = require('json5'),
 	Newman  = require('../src/Newman');
 
@@ -44,20 +45,15 @@ function parseArguments() {
 
 	if (program.collection) {
 		Helpers.validateCollectionFile(program.collection);
-	}
-
-	if (program.url) {
+	} else if (program.url) {
 		Helpers.validateCollectionUrl(program.url);
+	} else {
+		Errors.terminateWithError("Please provide a valid collection file / url to run");
 	}
 	
 	if (program.data) {
 		Helpers.validateDataFile(program.data);
 	}
-}
-
-function terminateWithError(msg) {
-	console.warn(color.red(msg));
-	process.exit(1);
 }
 
 function main() {
@@ -94,7 +90,7 @@ function main() {
 		// get collection from url
 		request.get(program.url).type('json').end(function(data) {
 			if (data.error) {
-				terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
+				Errors.terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
 			}
 			Newman.execute(data.body, newmanOptions);
 		});
