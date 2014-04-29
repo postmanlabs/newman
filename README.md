@@ -9,25 +9,25 @@ Newman maintains feature parity with Postman and allows you to run collections j
 Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.
 
 With that done, Newman is just one command away. 
-```
+```bash
 $ npm install -g newman
 ```
 This installs Newman from npm globally on your system allowing you to run it from anywhere.
 
 The easiest way to run Newman is to run it with a collection. With the `-c` flag you can run any collection file lying on your file-system.
-```
+```bash
 $ newman -c mycollection.json
 ```
 
 The `-u` flag allows you to pass a postman collection as a URL. Your collection probably uses environment variables. To provide an accompanying set of environment variables, export them from Postman and run them with the `-e` flag.
-```
+```bash
 $ newman -u https://www.getpostman.com/collections/cb208e7e64056f5294e5 -e devenvironment.json
 ```
 
 ## Options
 Newman provides a rich set of options to customize a run. A list of options can be retrieved by running it with the `-h` flag.
 
-```
+```bash
 $ newman -h
 
 Options:
@@ -43,20 +43,14 @@ Options:
 -o, --outputFile [file]   Path to file where output should be written. [file]
 ```
 
-In addition to a URL, a collection can also be provided as a file with the `-c` flag.
-
-```
-$ newman -c mycollection.json
-```
-
 Use the `-n` option to set the number of iterations you want to run the collection for.
 
-```
+```bash
 $ newman -c mycollection.json -n 10  # runs the collection 10 times
 ```
 
 To provide a different set of data i.e. variables for each iteration you can use the `-d` to specify a `json` or `csv` file. For example, a data file such as the one shown below will run *2* iterations, with each iteration using a set of variables.
-```
+```javascript
 [{
 	"url": "http://127.0.0.1:5000",
 	"user_id": "1",
@@ -71,7 +65,7 @@ To provide a different set of data i.e. variables for each iteration you can use
 }]
 ```
 
-```
+```bash
 $ newman -c mycollection.json -d data.json
 ```
 
@@ -84,7 +78,7 @@ http://dump.getpostman.com, 2, 2, 899899
 
 The results of all tests and requests can be exported into file and later imported in Postman for further analysis. Use the `-o` flag and a file name to save the runner output into a file.
 
-```
+```bash
 $ newman -c mycollection.json -o outputfile.json
 ```
 
@@ -93,7 +87,7 @@ The `-r` flag is experimental and allows you to use a custom handler to handle r
 ## Library
 Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so - 
 
-```
+```javascript
 var Newman = require('newman');
 
 // read the collectionjson file
