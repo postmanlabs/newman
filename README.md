@@ -14,10 +14,11 @@ $ npm install -g newman
 ```
 This installs Newman from npm globally on your system allowing you to run it from anywhere.
 
-The easiest way to run Newman is to run it with a collection
+The easiest way to run Newman is to run it with a collection. With the `-c` flag you can run any collection file lying on your file-system.
 ```
-$ newman -u https://www.getpostman.com/collections/cb208e7e64056f5294e5
+$ newman -c mycollection.json
 ```
+
 The `-u` flag allows you to pass a postman collection as a URL. Your collection probably uses environment variables. To provide an accompanying set of environment variables, export them from Postman and run them with the `-e` flag.
 ```
 $ newman -u https://www.getpostman.com/collections/cb208e7e64056f5294e5 -e devenvironment.json
@@ -88,6 +89,27 @@ $ newman -c mycollection.json -o outputfile.json
 ```
 
 The `-r` flag is experimental and allows you to use a custom handler to handle requests and the accompanying response. This let's you further customize each run.
+
+## Library
+Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so - 
+
+```
+var Newman = require('newman');
+
+// read the collectionjson file
+var collectionJson = JSON5.parse(fs.readFileSync("collection.json", 'utf8'));
+
+// define Newman options
+newmanOptions = {
+	envJson: JSON5.parse(fs.readFileSync("envjson.json", "utf-8")), // environment file (in parsed json format)
+	dataFile: data.csv,                    // data file if required
+	iterationCount: 10,                    // define the number of times the runner should run
+	outputFile: "outfile.json",            // the file to export to
+	responseHandler: "TestResponseHandler" // the response handler to use
+}
+
+Newman.execute(collectionJson, newmanOptions);
+```
 
 ## License
 Apache. See the LICENSE file for more information

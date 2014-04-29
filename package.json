@@ -14,6 +14,9 @@
 	{"name": "Prakhar Srivastav", "email": "prakhar1989@gmail.com", "url": "http://prakhar.me"},
     {"name": "Arjun Variar", "email": "accioarjun@gmail.com", "url": "http://github.com/viig99"}
   ],
+  "engines" : { 
+	  "node" : ">=0.6.x" 
+  },
   "keywords": [
     "postman",
     "api",
