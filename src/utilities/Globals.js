@@ -19,6 +19,7 @@ var Globals = jsface.Class({
 		this.iterationNumber = 1;
 		this.outputFile = options.outputFile || '';
 		this.globalJSON = options.globalJSON || [];
+		this.stopOnError = options.stopOnError;
 	}
 });
 

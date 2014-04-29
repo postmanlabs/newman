@@ -38,7 +38,7 @@ Options:
 -u, --url [url]           Specify a Postman collection as a [url]
 -e, --environment [file]  Specify a Postman environment as a JSON [file]
 -d, --data [file]         Specify a data file to use either json or csv
--r, --responseHandler     Pick a repsonse handler to run.
+-s, --stopOnError         Stops the runner when a test case fails
 -n, --number [number]     Define the number of iterations to run.
 -o, --outputFile [file]   Path to file where output should be written. [file]
 ```
@@ -76,13 +76,26 @@ http://127.0.0.1:5000, 1, 1, 123123123
 http://dump.getpostman.com, 2, 2, 899899
 ```
 
+Newman, by default exits with a status code of 0 if everything runs well i.e. without any exceptions. Continuous integration tools respond to these exit codes and correspondingly pass or fail a build. You can use `-s` flag to tell Newman to halt on a test case error with a status code of 1 which can then be picked up by a CI tool or build system.
+
+```bash
+$ newman -c PostmanCollection.json -e environment.json -s
+
+Iteration 1 of 1
+200 17ms Blog posts http://127.0.0.1:5000/blog/posts
+    ✔ Status code is 200
+404 5ms Blog post http://127.0.0.1:5000/blog/posts/1
+200 4ms New post without token http://127.0.0.1:5000/blog/posts
+    ✔ Body has a message
+    ✔ invalid credentials
+Test case failed: Status code is 404
+```
+
 The results of all tests and requests can be exported into file and later imported in Postman for further analysis. Use the `-o` flag and a file name to save the runner output into a file.
 
 ```bash
 $ newman -c mycollection.json -o outputfile.json
 ```
-
-The `-r` flag is experimental and allows you to use a custom handler to handle requests and the accompanying response. This let's you further customize each run.
 
 ## Library
 Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so - 
@@ -99,7 +112,8 @@ newmanOptions = {
 	dataFile: data.csv,                    // data file if required
 	iterationCount: 10,                    // define the number of times the runner should run
 	outputFile: "outfile.json",            // the file to export to
-	responseHandler: "TestResponseHandler" // the response handler to use
+	responseHandler: "TestResponseHandler", // the response handler to use
+	stopOnError: true
 }
 
 Newman.execute(collectionJson, newmanOptions);
