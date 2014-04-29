@@ -50,7 +50,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	normal: function(log) {
-		process.stdout.write(color.black(log));
+		process.stdout.write(log);
 		return this;
 	},
 	/**

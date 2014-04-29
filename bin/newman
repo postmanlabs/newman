@@ -13,6 +13,7 @@ var color   = require('cli-color'),
 	request = require('unirest'),
 	fs      = require('fs'),
 	Helpers = require('../src/utilities/Helpers'),
+	Errors  = require('../src/utilities/ErrorHandler'),
 	JSON5   = require('json5'),
 	Newman  = require('../src/Newman');
 
@@ -20,39 +21,39 @@ function parseArguments() {
 	program
 	  .version('0.0.1')
 	  .usage('[options] file')
-	  .option('-c, --collection [file]', 'Specify your Postman Collection [file]', null)
-	  .option('-u, --url [url]', 'Specify your Postman Collection [url]', null)
-	  .option('-e, --environment [file]', 'Specify your Postman Environment [file]', null)
-	  .option('-d, --data [file]', 'Specify a data file to use', null)
-	  .option('-r, --responseHandler', 'Pick a repsonse Handler to run.', null)
+	  .option('-c, --collection [file]', 'Specify a Postman collection as a JSON [file]', null)
+	  .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
+	  .option('-e, --environment [file]', 'Specify a Postman environment as a JSON [file]', null)
+	  .option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
+	  .option('-r, --responseHandler', 'Pick a repsonse handler to run.', null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
 
 	program.on('--help', function() {
+	  console.log('  Newman is a command-line collection runner for Postman.');
+	  console.log('');
 	  console.log('  Examples:');
 	  console.log('');
 	  console.log('    newman -c POSTMAN_COLLECTION');
 	  console.log('    newman -u POSTMAN_COLLECTION -e POSTMAN_ENVIRONMENT');
+	  console.log('');
+	  console.log('  For more documentation, issues and examples head over to https://github.com/a85/Newman');
+	  console.log('');
 	});
 
 	program.parse(process.argv);
 
 	if (program.collection) {
 		Helpers.validateCollectionFile(program.collection);
-	}
-
-	if (program.url) {
+	} else if (program.url) {
 		Helpers.validateCollectionUrl(program.url);
+	} else {
+		Errors.terminateWithError("Please provide a valid collection file / url to run");
 	}
 	
 	if (program.data) {
 		Helpers.validateDataFile(program.data);
 	}
-}
-
-function terminateWithError(msg) {
-	console.warn(color.red(msg));
-	process.exit(1);
 }
 
 function main() {
@@ -89,7 +90,7 @@ function main() {
 		// get collection from url
 		request.get(program.url).type('json').end(function(data) {
 			if (data.error) {
-				terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
+				Errors.terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
 			}
 			Newman.execute(data.body, newmanOptions);
 		});
