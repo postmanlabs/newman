@@ -33,9 +33,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	 * @memberOf RequestRunner
 	 */
 	start: function() {
-		this._execute();
 		this._bindedOnRequestExecuted = this._onRequestExecuted.bind(this);
 		this.addEventListener('requestExecuted', this._bindedOnRequestExecuted);
+		this._execute();
 	},
 
 	// Gets a request from the queue and executes it.
