@@ -73,10 +73,6 @@ var VariableProcessor = jsface.Class({
 	// transforms the request as per the environment json data passed
 	_processEnvVariable: function(request, envJson) {
 		var kvpairs = envJson.values;
-		
-		if (kvpairs === undefined) {
-			ErrorHandler.terminateWithError("Incorrect environment JSON file.\n");
-		}
 
 		request.transformed = {};
 
