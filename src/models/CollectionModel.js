@@ -46,7 +46,7 @@ var CollectionModel = jsface.Class(ParentModel, {
             return folder.order;
         });
 		totalOrder = _und.union(_und.flatten(totalOrder), this.order);
-        return _und.flatten(totalOrder);
+        return totalOrder;
     },
     /** 
      * Returns the request with the given request ID if exists null otherwise
