@@ -25,7 +25,7 @@ function parseArguments() {
 	  .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
 	  .option('-e, --environment [file]', 'Specify a Postman environment as a JSON [file]', null)
 	  .option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
-	  .option('-r, --responseHandler', 'Pick a repsonse handler to run.', null)
+	  .option('-s, --stopOnError', "Stops the runner when a test case fails", null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
 
@@ -80,6 +80,8 @@ function main() {
 	if (program.data) {
 		newmanOptions.dataFile = program.data;
 	}
+
+	newmanOptions.stopOnError = !!program.stopOnError;
 
 	if (program.collection) {
 		// read collection from the filesystem
