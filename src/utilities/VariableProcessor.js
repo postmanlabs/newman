@@ -1,5 +1,4 @@
 var jsface       = require('jsface'),
-	ErrorHandler = require('./ErrorHandler'),
 	Helpers      = require('./Helpers'),
 	_und         = require('underscore');
 
