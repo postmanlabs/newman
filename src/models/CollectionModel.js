@@ -45,7 +45,7 @@ var CollectionModel = jsface.Class(ParentModel, {
         var totalOrder = _und.map(this.folders, function(folder) {
             return folder.order;
         });
-        totalOrder.push(this.order);
+		totalOrder = _und.union(_und.flatten(totalOrder), this.order);
         return _und.flatten(totalOrder);
     },
     /** 
