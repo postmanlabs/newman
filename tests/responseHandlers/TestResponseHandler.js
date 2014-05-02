@@ -72,6 +72,13 @@ describe("TestResponseHandler", function() {
 		assert.deepEqual(results, parsedResult);
 	});
 
+	it("should run the test cases with the Jquery properly", function() {
+		this.request.tests = 'tests["testcase1"] = $.isArray([])';
+		var parsedResult = {"testcase1": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
+	});
+
 	it("should catch exception for invalid code / test cases", function() {
 		this.request.tests = 'tests["throws exception"] = undefinedValue === 200;'; // this should throw an exception
 		TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
