@@ -97,7 +97,7 @@ The results of all tests and requests can be exported into file and later import
 $ newman -c mycollection.json -o outputfile.json
 ```
 
-*NOTE* Newman allows you to use all libraries that Postman supports. For [x2js](https://code.google.com/p/x2js/) however, only the function `xmlToJson` is supported.
+**NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.
 
 ## Library
 Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so - 

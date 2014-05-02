@@ -57,8 +57,8 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 	// run when requestRunner runs over the ordered requests in this collection
 	_onRequestRunnerOver: function() {
 		this.ResponseHandler.clear();
-		this.emit('collectionRunnerOver');
 		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
+		this.emit('collectionRunnerOver');
 	},
 });
 
