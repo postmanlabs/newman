@@ -37,6 +37,41 @@ describe("TestResponseHandler", function() {
 		assert.deepEqual(results, parsedResult);
 	});
 
+	it("should run the test cases with the sugar has properly", function() {
+		this.request.tests = 'tests["testcase1"] = "Sugar has me".has("Sugar")';
+		var parsedResult = {"testcase1": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
+	});
+
+	it("should run the test cases with the tv4 validator properly", function() {
+		this.request.tests = 'tests["testcase1"] = tv4.validate({"message": "This is a message."}, {"message": "string"})';
+		var parsedResult = {"testcase1": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
+	});
+
+	it("should run the test cases with the lodash properly", function() {
+		this.request.tests = 'tests["testcase1"] = _.isString(responseBody)';
+		var parsedResult = {"testcase1": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
+	});
+
+	it("should run the test cases with the Backbone properly", function() {
+		this.request.tests = 'tests["testcase1"] = new Backbone.Model({a: "b"}).toJSON().a === "b"';
+		var parsedResult = {"testcase1": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
+	});
+
+	it("should run the test cases with the xmlToJson properly", function() {
+		this.request.tests = 'tests["testcase1"] = xmlToJson("<a><b>Success</b></a>").a.b === "Success"';
+		var parsedResult = {"testcase1": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
+	});
+
 	it("should catch exception for invalid code / test cases", function() {
 		this.request.tests = 'tests["throws exception"] = undefinedValue === 200;'; // this should throw an exception
 		TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);

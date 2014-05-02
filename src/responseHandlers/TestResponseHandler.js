@@ -3,7 +3,7 @@ var jsface                  = require('jsface'),
 	vm                      = require('vm'),
 	ErrorHandler            = require('../utilities/ErrorHandler'),
 	AbstractResponseHandler = require('./AbstractResponseHandler'),
-	$jq                     = require("jquery"),
+	_jq                     = require("jquery"),
 	_lod                    = require("lodash"),
 	log                     = require('../utilities/Logger'),
 	Backbone                = require("backbone"),
@@ -90,10 +90,16 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			iteration: Globals.iterationNumber,
 			environment: Globals.envJson,
 			globals: {},
-			$: $jq,
+			$: _jq,
 			_: _lod,
 			Backbone: Backbone,
-			xmlToJson: xmlToJson,
+			xmlToJson: function(string) {
+				var JSON = {};
+				xmlToJson.parseString(string, {explicitArray: false,async: false}, function (err, result) {
+					JSON = result;
+				});
+				return JSON;
+			},
 			tv4: tv4,
 			console: {log: function(){}},
 			postman: {
