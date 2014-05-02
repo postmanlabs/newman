@@ -10,8 +10,8 @@ var Logger = jsface.Class({
 	$singleton: true,
 
 	symbols: {
-		err: (process.platform === "win32") ? "\u00D7" : "✗ ",
-		ok:  (process.platform === "win32") ? "\u221A" : "✔ "
+		err: (process.platform === "win32") ? "\u00D7 " : "✗ ",
+		ok:  (process.platform === "win32") ? "\u221A " : "✔ "
 	},
 
 	/**
