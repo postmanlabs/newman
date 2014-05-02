@@ -43,30 +43,34 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	_execute: function() {
 		var request = this.getFromQueue();
 		if (request) {
-			this._processUrlUsingEnvVariables(request);
-			var RequestOptions = this._getRequestOptions(request);
-			request.startTime = new Date().getTime();
-			var unireq = unirest.request(RequestOptions, function(error, response, body) {
-				if(response) {
-					// save some stats, only if response exists
-					this._appendStatsToReponse(request, response);
-				} else {
-					// initialize response for reporting and testcases
-					response = {
-						stats: { timeTaken: 0},
-						statusCode: 0,
-						headers: []
-					};
-				}
-
-				// emit event to signal request has been executed
-				this.emit('requestExecuted', error, response, body, request);
-			}.bind(this));
-
-			this._setFormDataIfParamsInRequest(unireq, request);
+			this._sendRequestAndGenerateReponse(request);
 		} else {
 			this._destroy();
 		}
+	},
+
+	_sendRequestAndGenerateReponse: function(request) {
+		this._processUrlUsingEnvVariables(request);
+		var RequestOptions = this._getRequestOptions(request);
+		request.startTime = new Date().getTime();
+		var unireq = unirest.request(RequestOptions, function(error, response, body) {
+			if(response) {
+				// save some stats, only if response exists
+				this._appendStatsToReponse(request, response);
+			} else {
+				// initialize response for reporting and testcases
+				response = {
+					stats: { timeTaken: 0},
+					statusCode: 0,
+					headers: []
+				};
+			}
+
+			// emit event to signal request has been executed
+			this.emit('requestExecuted', error, response, body, request);
+		}.bind(this));
+
+		this._setFormDataIfParamsInRequest(unireq, request);
 	},
 
 	// clean up the requestrunner
