@@ -14,6 +14,12 @@ describe("TestResponseHandler", function() {
 		var filePath = path.join(__dirname, '../', 'data', 'PostmanCollection.json');
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.request = this.collectionJson.requests[0];
+		this.request.transformed = {
+			url: this.request.url,
+			headers: this.request.headers,
+			data: this.request.data,
+			form: this.request.form
+		};
 		this.response = {
 			headers: {
 				'server': 'nginx/1.1.19',
@@ -83,6 +89,13 @@ describe("TestResponseHandler", function() {
 		this.request.tests = 'tests["throws exception"] = undefinedValue === 200;'; // this should throw an exception
 		TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert(this.loggerStub.called);
+	});
+
+	it("should run test cases on request object properly", function() {
+		this.request.tests = 'tests["testcase1"] = request.url === "' + this.request.url + '";';
+		var parsedResult = {"testcase1": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
 	});
 
 	it("should set env variable properly", function() {
