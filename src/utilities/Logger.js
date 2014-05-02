@@ -1,5 +1,6 @@
-var jsface = require("jsface"),
-	color  = require("cli-color");
+var jsface  = require("jsface"),
+	Helpers = require('./Helpers'),
+	color   = require("cli-color");
 
 /**
  * @name Logger
@@ -8,11 +9,6 @@ var jsface = require("jsface"),
  */
 var Logger = jsface.Class({
 	$singleton: true,
-
-	symbols: {
-		err: (process.platform === "win32") ? "\u00D7 " : "✗ ",
-		ok:  (process.platform === "win32") ? "\u221A " : "✔ "
-	},
 
 	/**
 	 * Logger Method
@@ -83,7 +79,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	testCaseSuccess: function(log) {
-		this.success("    " + color.green(this.symbols.ok + log) + "\n");
+		this.success("    " + color.green(Helpers.symbols.ok + log) + "\n");
 		return this;
 	},
 	/**
@@ -92,7 +88,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	testCaseError: function(log) {
-		process.stdout.write("    " + color.red(this.symbols.err + log) + "\n");
+		process.stdout.write("    " + color.red(Helpers.symbols.err + log) + "\n");
 		return this;
 	},
 	/**

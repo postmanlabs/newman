@@ -6,6 +6,7 @@ var jsface                  = require('jsface'),
 	window                  = require("jsdom-nogyp").jsdom().parentWindow,
 	_jq                     = require("jquery")(window),
 	_lod                    = require("lodash"),
+	Helpers                 = require('../utilities/Helpers'),
 	log                     = require('../utilities/Logger'),
 	Backbone                = require("backbone"),
 	xmlToJson               = require("xml2js"),
@@ -84,7 +85,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			responseTime: response.stats.timeTaken,
 			request: {
 				url: request.transformed.url,
-				headers: request.transformed.headers,
+				headers: Helpers.generateHeaderObj(request.transformed.headers),
 				data: request.transformed.data,
 				form: request.transformed.form
 			},

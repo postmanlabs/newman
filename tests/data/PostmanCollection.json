@@ -207,7 +207,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "tests[\"Request header has X-Newman\"] = _.contains(request.headers, 'X-Newman');",
+			"tests": "tests[\"Request header has X-Newman\"] = _.has(request.headers, 'X-Newman');",
 			"time": 1396961102795,
 			"name": "Headers",
 			"description": "Similar to httpbin.org/headers. Return all the headers passed to it.",
