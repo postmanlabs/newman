@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Arjun Variar & Prakhar Srivastav",
   "main": "Newman",
   "homepage": "https://github.com/a85/Newman",
@@ -37,7 +37,6 @@
     "jquery": "*",
     "backbone": "*",
     "lodash": "*",
-    "sugar": "*",
     "xml2js": "*",
     "tv4": "*"
   },

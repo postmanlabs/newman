@@ -27,7 +27,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		this.envJsons = this._getJsonArraysFromFile();
 
 		this.numOfIterations = this.envJsons.length || this.getOptions().iterationCount || 1;
-		this.iteration = 1;
+		this.iteration = 0;
 
 		// run the next iteration when the collection run is over
 		this.addEventListener('collectionRunnerOver', this._runNextIteration.bind(this));
@@ -93,10 +93,10 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 	// set the global envjson and then run the next iteration
 	_runNextIteration: function() {
-		if (this.iteration <= this.numOfIterations) {
+		if (this.iteration < this.numOfIterations) {
+			Globals.iterationNumber = ++this.iteration;
 			this._setGlobalEnvJson();
 			this._runCollection();
-			Globals.iterationNumber = ++this.iteration;
 		} else {
 			this.emit('iterationRunnerOver');
 		}
