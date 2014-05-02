@@ -33,7 +33,7 @@
     "underscore": "1.x.x",
     "jsface": "2.2.x",
     "unirest": "*",
-    "jsdom-little": "*",
+    "jsdom-nogyp": "*",
     "jquery": "*",
     "backbone": "*",
     "lodash": "*",
