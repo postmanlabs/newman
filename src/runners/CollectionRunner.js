@@ -19,6 +19,18 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 	constructor: function(collection, options) {
 		this.$class.$super.call(this, collection);
 		this.setOptions(options);
+		this._addEventListeners();
+		// Initialize the response handler using a factory
+		this.ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
+		if (!this.ResponseHandler) {
+			log.throwError('The module provided does not exist.');
+		}
+
+		// Sets up the response handler to respond to the requestExecuted event
+		this.ResponseHandler.initialize();
+		_und.each(this.collection, function(postmanRequest) {
+			RequestRunner.addRequest(postmanRequest);
+		}, this);
 	},
 
 	/**
@@ -26,22 +38,6 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 	 * @memberOf CollectionRunner
 	 */
 	execute: function() {
-
-		// Initialize the response handler using a factory
-		this.ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
-		if (!this.ResponseHandler) {
-			log.throwError('The module provided does not exist.');
-		}
-
-		this._addEventListeners();
-
-		// Sets up the response handler to respond to the requestExecuted event
-		this.ResponseHandler.initialize();
-
-		_und.each(this.collection, function(postmanRequest) {
-			RequestRunner.addRequest(postmanRequest);
-		}, this);
-
 		// Start the runner
 		RequestRunner.start();
 
