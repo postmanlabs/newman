@@ -84,9 +84,8 @@ var ResponseExporter = jsface.Class({
 	 * @memberOf ResponseExporter
 	 */
 	exportResults: function() {
-		var exportVariable = this._createExportVariable();
-
 		if (Globals.outputFile) {
+			var exportVariable = this._createExportVariable();
 			var filepath = path.resolve(Globals.outputFile);
 			fs.writeFileSync(filepath , JSON.stringify(exportVariable, null, 4));
 			log.note("\n\n Output Log: " + filepath + "\n");

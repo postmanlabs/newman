@@ -20,26 +20,23 @@ describe("IterationRunner", function() {
 		var filePath = path.join(__dirname, '../', 'data', 'PostmanCollection.json');
 		var url = "https://www.getpostman.com/collections/fc3f0598daaa5271e4f7";
 		var options = {iterationCount: 2};
-		this.emitter = new Emitter();
-		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
-
-		this.emitter.removeAllListeners();
-
-		this.iterationRunner = new IterationRunner(this.collectionJson, options);
-		this.spy = sinon.spy(this.iterationRunner, '_runNextIteration');
-
-		sinon.stub(RequestRunner, '_execute');
+		var emitter = new Emitter();
+		var collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
+		emitter.removeAllListeners();
+		this.iterationRunner = new IterationRunner(collectionJson, options);
+		sinon.stub(this.iterationRunner, '_logStatus');
+		sinon.stub(this.iterationRunner, '_runCollection', function() {
+			emitter.emit('collectionRunnerOver');
+		});
 	});
 
 	it("should call nextIteration for every itertion", function() {
-		this.iterationRunner._runCollection = function() {
-			//this.emitter.emit('collectionRunnerOver');
-		}.bind(this);
-
-		//this.iterationRunner.execute();
+		this.iterationRunner.execute();
+		assert(this.iterationRunner.iteration, 2);
 	});
 
 	afterEach(function() {
-		this.iterationRunner._runNextIteration.restore();
+		this.iterationRunner._logStatus.restore();
+		this.iterationRunner._runCollection.restore();
 	});
 });
