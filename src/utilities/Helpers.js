@@ -9,7 +9,8 @@ var jsface = require('jsface'),
  * @classdesc Helper class with useful methods used throughout Newman
  */
 var Helpers = jsface.Class({
-    $singleton: true,
+	$singleton: true,
+
     /**
      * @function
      * @memberOf Helpers
@@ -49,7 +50,26 @@ var Helpers = jsface.Class({
 	// into an object {"id": "20", "name": "joe"}
 	transformFromKeyValue: function(kvpairs) {
 		return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
+	},
+
+	// generates a header object from a string where headers are of the form
+	// Accept-Language: En\nCache-Control: 123\nPragma: Akamai\n
+	generateHeaderObj: function(headers) {
+		var headerObj = {};
+		headers.split('\n').forEach(function(str) {
+			if (str) {
+				var splitIndex = str.indexOf(':');
+				headerObj[str.substr(0,splitIndex)] = str.substr(splitIndex + 1).trim();
+			}
+		});
+		return headerObj;
 	}
 });
+
+// symbols for logging
+exports.symbols =  {
+	err: (process.platform === "win32") ? "\u00D7 " : "✗ ",
+	ok:  (process.platform === "win32") ? "\u221A " : "✔ "
+};
 
 module.exports = Helpers;

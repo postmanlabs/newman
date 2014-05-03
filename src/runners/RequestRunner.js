@@ -1,6 +1,7 @@
 var jsface            = require('jsface'),
 	unirest           = require('unirest'),
 	Queue             = require('../utilities/Queue'),
+	Helpers           = require('../utilities/Helpers'),
 	Globals           = require('../utilities/Globals'),
 	EventEmitter      = require('../utilities/EventEmitter'),
 	VariableProcessor = require('../utilities/VariableProcessor.js'),
@@ -84,7 +85,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		var RequestOptions = {};
 		RequestOptions.url = request.transformed.url;
 		RequestOptions.method = request.method;
-		RequestOptions.headers = this._generateHeaders(request.transformed.headers);
+		RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
 		RequestOptions.followAllRedirects = true;
 		RequestOptions.jar = true;
 		this._setBodyData(RequestOptions, request);
@@ -115,17 +116,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				}
 			});
 		}
-	},
-
-	_generateHeaders: function(headers) {
-		var headerObj = {};
-		headers.split('\n').forEach(function(str) {
-			if (str) {
-				var splitIndex = str.indexOf(':');
-				headerObj[str.substr(0,splitIndex)] = str.substr(splitIndex + 1).trim();
-			}
-		});
-		return headerObj;
 	},
 
 	// placeholder function to append stats to response

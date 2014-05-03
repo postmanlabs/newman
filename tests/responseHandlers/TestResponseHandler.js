@@ -6,7 +6,9 @@ var assert = require('assert'),
 
 var TestResponseHandler = require('../../src/responseHandlers/TestResponseHandler'),
 	Logger              = require('../../src/utilities/Logger'),
-	Globals             = require('../../src/utilities/Globals');
+	ErrorHandler        = require('../../src/utilities/ErrorHandler'),
+	Globals             = require('../../src/utilities/Globals'),
+	Helpers             = require('../../src/utilities/Helpers');
 
 describe("TestResponseHandler", function() {
 
@@ -14,6 +16,13 @@ describe("TestResponseHandler", function() {
 		var filePath = path.join(__dirname, '../', 'data', 'PostmanCollection.json');
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.request = this.collectionJson.requests[0];
+		this.request.headers = "Accept-Language: En\nCache-Control: 123\nPragma: Akamai";
+		this.request.transformed = {
+			url: this.request.url,
+			headers: this.request.headers,
+			data: this.request.data,
+			form: this.request.form
+		};
 		this.response = {
 			headers: {
 				'server': 'nginx/1.1.19',
@@ -27,7 +36,7 @@ describe("TestResponseHandler", function() {
 			body: "{\"lol\": \"jhingalalal\"}"
 		};
 		this.stub = sinon.stub(TestResponseHandler, '_logTestResults');
-		this.loggerStub = sinon.stub(Logger, 'exceptionError');
+		this.loggerStub = sinon.stub(ErrorHandler, 'exceptionError');
 	});
 	
 	it("should run the test cases properly", function() {
@@ -85,6 +94,15 @@ describe("TestResponseHandler", function() {
 		assert(this.loggerStub.called);
 	});
 
+	it("should run test cases on request object properly", function() {
+		this.request.tests = '';
+		this.request.tests += 'tests["testcase1"] = request.url === "' + this.request.url + '";';
+		this.request.tests += 'tests["testcase2"] = _.has(request.headers, "Cache-Control") === true';
+		var parsedResult = {"testcase1": true, "testcase2": true};
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, parsedResult);
+	});
+
 	it("should set env variable properly", function() {
 		Globals.envJson = {};
 		this.request.tests = 'postman.setEnvironmentVariable("log", "gg")';
@@ -94,6 +112,6 @@ describe("TestResponseHandler", function() {
 
 	afterEach(function() {
 		TestResponseHandler._logTestResults.restore();
-		Logger.exceptionError.restore();
+		ErrorHandler.exceptionError.restore();
 	});
 });
