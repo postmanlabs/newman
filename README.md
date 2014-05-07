@@ -14,12 +14,13 @@ $ npm install -g newman
 ```
 This installs Newman from npm globally on your system allowing you to run it from anywhere.
 
-The easiest way to run Newman is to run it with a collection. With the `-c` flag you can run any collection file lying on your file-system.
+The easiest way to run Newman is to run it with a collection. With the `-c` flag you can run any collection file lying on your file-system. Refer [the collection documentation](http://www.getpostman.com/docs/collections) to learn how to use and download collections.
+
 ```bash
 $ newman -c mycollection.json
 ```
 
-The `-u` flag allows you to pass a postman collection as a URL. Your collection probably uses environment variables. To provide an accompanying set of environment variables, export them from Postman and run them with the `-e` flag.
+The `-u` flag allows you to pass a postman collection as a URL. Your collection probably uses environment variables. To provide an accompanying set of environment variables, [export them from Postman](http://www.getpostman.com/docs/environments)  and run them with the `-e` flag.
 ```bash
 $ newman -u https://www.getpostman.com/collections/cb208e7e64056f5294e5 -e devenvironment.json
 ```
