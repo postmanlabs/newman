@@ -17,11 +17,14 @@ describe("TestResponseHandler", function() {
 		this.collectionJson = JSON5.parse(fs.readFileSync(filePath, 'utf8'));
 		this.request = this.collectionJson.requests[0];
 		this.request.headers = "Accept-Language: En\nCache-Control: 123\nPragma: Akamai";
+        this.request.dataMode = "params";
+        this.request.data = [ 
+            { "key": "name", "value": "alice", "type": "text" }, 
+            { "key": "age", "value": "40", "type": "text" }];
 		this.request.transformed = {
 			url: this.request.url,
 			headers: this.request.headers,
 			data: this.request.data,
-			form: this.request.form
 		};
 		this.response = {
 			headers: {
@@ -97,8 +100,11 @@ describe("TestResponseHandler", function() {
 	it("should run test cases on request object properly", function() {
 		this.request.tests = '';
 		this.request.tests += 'tests["testcase1"] = request.url === "' + this.request.url + '";';
-		this.request.tests += 'tests["testcase2"] = _.has(request.headers, "Cache-Control") === true';
-		var parsedResult = {"testcase1": true, "testcase2": true};
+		this.request.tests += 'tests["testcase2"] = _.has(request.headers, "Cache-Control") === true;';
+		this.request.tests += 'tests["testcase3"] = request.dataMode === "params";';
+		this.request.tests += 'tests["testcase4"] = request.data.name === "alice";';
+		this.request.tests += 'tests["testcase5"] = request.data.age == 40;';
+		var parsedResult = {"testcase1": true, "testcase2": true, "testcase3": true, "testcase4": true, "testcase5": true};
 		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert.deepEqual(results, parsedResult);
 	});

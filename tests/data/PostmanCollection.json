@@ -122,7 +122,7 @@
 			"data": "",
 			"dataMode": "raw",
 			"version": 2,
-			"tests": "tests[\"Status code is 200\"] = \nresponseCode.code === 200;\n\ntests[\"Status code is 404\"] = responseCode.code === 404;",
+			"tests": "tests[\"Status code is 404\"] = responseCode.code === 404;",
 			"time": 1396957823883,
 			"name": "Delete post",
 			"description": "Delete the existing blog post",
