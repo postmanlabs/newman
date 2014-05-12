@@ -77,6 +77,16 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 		return sandbox.tests;
 	},
 
+    _getTransformedRequestData: function(request) {
+        var transformedData;
+        if (request.dataMode === "raw") {
+            transformedData = JSON.parse(request.transformed.data);
+        } else {
+            transformedData = Helpers.transformFromKeyValue(request.transformed.data);
+        }
+        return transformedData;
+    },
+
 	_createSandboxedEnvironment: function(error, response, body, request) {
 		return {
 			tests: {},
@@ -84,10 +94,10 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			responseBody: body,
 			responseTime: response.stats.timeTaken,
 			request: {
-				url: request.transformed.url,
-				headers: Helpers.generateHeaderObj(request.transformed.headers),
-				data: request.transformed.data,
-				form: request.transformed.form
+                url: request.transformed.url,
+                headers: Helpers.generateHeaderObj(request.transformed.headers),
+                data: this._getTransformedRequestData(request),
+                dataMode: request.dataMode
 			},
 			responseCode: {
 				code: response.statusCode,
