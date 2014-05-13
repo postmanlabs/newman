@@ -173,7 +173,7 @@
 			"data": "{\n  \"post\": \"This is a new post\"\n}",
 			"dataMode": "raw",
 			"version": 2,
-			"tests": "var data = JSON.parse(responseBody);\ntests[\"Body has a message\"] = responseBody.has(data[\"message\"]);\ntests[\"invalid credentials\"] = data.message === \"Invalid credentials\"\n",
+			"tests": "",
 			"time": 1396957765546,
 			"name": "New post without token",
 			"description": "Create a new blog post",

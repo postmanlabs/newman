@@ -95,6 +95,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			responseTime: response.stats.timeTaken,
 			request: {
                 url: request.transformed.url,
+                method: request.method,
                 headers: Helpers.generateHeaderObj(request.transformed.headers),
                 data: this._getTransformedRequestData(request),
                 dataMode: request.dataMode
