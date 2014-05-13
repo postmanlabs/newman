@@ -1,0 +1,88 @@
+{
+	"id": "8a1bfa14-7415-14af-7fad-61517a4af72c",
+	"name": "Blank collection",
+	"description": "blank collection",
+	"order": [
+		"541a56f8-d36b-e0ca-6d7c-1ea99b90ea1c",
+		"607d74dd-ada4-67b9-cc83-ef8e5fd316be",
+		"5ca8bda7-471c-ea7d-9830-3b91f360e7fb"
+	],
+	"folders": [],
+	"timestamp": 1398879310780,
+	"synced": false,
+	"requests": [
+		{
+			"id": "541a56f8-d36b-e0ca-6d7c-1ea99b90ea1c",
+			"headers": "",
+			"url": "http://127.0.0.1:5000/post",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "foo",
+					"type": "text"
+				},
+				{
+					"key": "age",
+					"value": "10",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Datamode is params\"] = request.dataMode === 'params'; tests['name is foo'] = request.data.name === 'foo'; tests['age is 10'] = request.data.age == 10;",
+			"time": 1398884292239,
+			"name": "POST with Form data",
+			"description": "",
+			"collectionId": "8a1bfa14-7415-14af-7fad-61517a4af72c",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "5ca8bda7-471c-ea7d-9830-3b91f360e7fb",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://127.0.0.1:5000/post",
+			"pathVariables": {},
+			"method": "POST",
+			"data": "{\"name\": \"baz\"}",
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "tests[\"Datamode is raw\"] = request.dataMode === 'raw'; tests['name is baz again'] = request.data.name === 'baz';",
+			"time": 1398884634696,
+			"name": "POST with raw data",
+			"description": "",
+			"collectionId": "8a1bfa14-7415-14af-7fad-61517a4af72c",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "607d74dd-ada4-67b9-cc83-ef8e5fd316be",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://127.0.0.1:5000/post",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "alice",
+					"type": "text"
+				},
+				{
+					"key": "age",
+					"value": "40",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "tests[\"Datamode is urlencoded\"] = request.dataMode === 'urlencoded'; tests['name is alice'] = request.data.name === 'alice'; tests['age is 40'] = request.data.age == 40;",
+			"time": 1398884624248,
+			"name": "POST with url encoded",
+			"description": "",
+			"collectionId": "8a1bfa14-7415-14af-7fad-61517a4af72c",
+			"responses": [],
+			"synced": false
+		}
+	]
+}
