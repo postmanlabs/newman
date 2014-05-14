@@ -109,8 +109,8 @@ describe("Variable Processor", function() {
 		sampleReq.url = "http://localhost:3000/blog/:user/posts/";
 		sampleReq.pathVariables = {user: "foo"};
 
-        anotherSample.url = "http://localhost:26069/values/one:two@three:four/resource/pathone/pathtwo/pathlast";
-        anotherSample.pathVariables = {};
+		anotherSample.url = "http://localhost:26069/values/one:two@three:four/resource/pathone/pathtwo/pathlast";
+		anotherSample.pathVariables = {};
 
 		VariableProcessor.processRequestVariables(sampleReq, {
 			envJson: this.environmentJson

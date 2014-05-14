@@ -27,13 +27,13 @@ var VariableProcessor = jsface.Class({
 	// updates request url by the replacing it with pathVariables
 	_processPathVariable: function(request) {
 		if (typeof request.pathVariables !== undefined) {
-            var sourceObject = request.pathVariables;
-            // for each path variable - do a simple find replace
-            _und.each(_und.keys(sourceObject), function(key) {
-                var s = request.url;
-                request.url = s.replace(":" + key, sourceObject[key]);
-            }, this);
-        }
+			var sourceObject = request.pathVariables;
+			// for each path variable - do a simple find replace
+			_und.each(_und.keys(sourceObject), function(key) {
+				var s = request.url;
+				request.url = s.replace(":" + key, sourceObject[key]);
+			}, this);
+		}
 	},
 	
 	// updates request properties by the replacing them with function variables
