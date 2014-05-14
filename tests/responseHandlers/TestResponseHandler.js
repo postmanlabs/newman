@@ -1,6 +1,7 @@
 var assert = require('assert'),
 	sinon  = require('sinon'),
 	fs     = require('fs'),
+	_und   = require('underscore'),
 	JSON5  = require('json5'),
 	path   = require('path');
 
@@ -110,10 +111,28 @@ describe("TestResponseHandler", function() {
 	});
 
 	it("should set env variable properly", function() {
-		Globals.envJson = {};
-		this.request.tests = 'postman.setEnvironmentVariable("log", "gg")';
+		Globals.envJson = {
+			values: [
+				{
+					"key": "url",
+					"value": "http://dump.getpostman.com",
+					"type": "text",
+					"name": "url"
+				},
+				{
+					"key": "user_id",
+					"value": "1",
+					"type": "text",
+					"name": "user_id"
+				}
+			]
+		};
+		this.request.tests = 'postman.setEnvironmentVariable("url", "google.com"); postman.setEnvironmentVariable("id", "10");';
 		var tests = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
-		assert.strictEqual(Globals.envJson.log, "gg");
+		assert(_und.contains(_und.pluck(Globals.envJson.values, 'key'), 'id'));
+		assert(_und.contains(_und.pluck(Globals.envJson.values, 'key'), 'url'));
+		assert(_und.contains(_und.pluck(Globals.envJson.values, 'value'), 'google.com'));
+		assert(_und.contains(_und.pluck(Globals.envJson.values, 'value'), '10'));
 	});
 
 	afterEach(function() {
