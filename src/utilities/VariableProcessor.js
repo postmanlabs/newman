@@ -14,9 +14,6 @@ var VariableProcessor = jsface.Class({
 	$statics: {
 		ENV_REGEX: /\{\{([a-z0-9\-._]+)\}\}/ig,
 
-		// negative match for 4 digit numbers to weed out port number matches
-		PATH_REGEX: /\:(?![0-9]{4})+(([a-z0-9\-._]+))/,
-
 		FUNCTION_REGEX: /\{\{\$([a-z0-9\-._]+)\}\}/ig
 	},
 
@@ -30,8 +27,13 @@ var VariableProcessor = jsface.Class({
 	// updates request url by the replacing it with pathVariables
 	_processPathVariable: function(request) {
 		if (typeof request.pathVariables !== undefined) {
-			request.url = this._findReplace(request.url, request.pathVariables, this.PATH_REGEX);
-		}
+            var sourceObject = request.pathVariables;
+            // for each path variable - do a simple find replace
+            _und.each(_und.keys(sourceObject), function(key) {
+                var s = request.url;
+                request.url = s.replace(":" + key, sourceObject[key]);
+            }, this);
+        }
 	},
 	
 	// updates request properties by the replacing them with function variables
