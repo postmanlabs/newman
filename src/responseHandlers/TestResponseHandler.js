@@ -126,14 +126,22 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			console: {log: function(){}},
 			postman: {
 				setEnvironmentVariable: function(key, value) {
+					var isSet = false;
+
 					// check if the envVariable already exists
 					Globals.envJson.values.forEach(function(envObject) {
 						// if yes, replace it
 						if (envObject["key"] === key)  {
-							this.value = value;
+							envObject["value"] = value;
+							isSet = true;
 							return;
 						}
 					});
+
+					// to exit from the main function
+					if (isSet) {
+						return;
+					}
 
 					// else add a new envVariable
 					Globals.envJson.values.push({
@@ -152,6 +160,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
 	// logger for test case results
 	_logTestResults: function(results) {
+		//console.log(Globals.envJson.values);
 		_und.each(_und.keys(results), function(key) {
 			if (results[key]) {
 				log.testCaseSuccess(key);

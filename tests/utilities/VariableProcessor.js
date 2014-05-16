@@ -104,7 +104,7 @@ describe("Variable Processor", function() {
 
 	it("should replace available path variables correctly", function() {
 		var sampleReq = this.collectionJson.requests[0];
-        var anotherSample = this.collectionJson.requests[1];
+		var anotherSample = this.collectionJson.requests[1];
 
 		sampleReq.url = "http://localhost:3000/blog/:user/posts/";
 		sampleReq.pathVariables = {user: "foo"};
