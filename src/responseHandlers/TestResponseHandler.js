@@ -126,30 +126,20 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			console: {log: function(){}},
 			postman: {
 				setEnvironmentVariable: function(key, value) {
-					var isSet = false;
-
-					// check if the envVariable already exists
-					Globals.envJson.values.forEach(function(envObject) {
-						// if yes, replace it
-						if (envObject["key"] === key)  {
-							envObject["value"] = value;
-							isSet = true;
-							return;
-						}
+					var envVar = _und.find(Globals.envJson.values, function(envObject){
+						return envObject["key"] === key;
 					});
 
-					// to exit from the main function
-					if (isSet) {
-						return;
+					if (envVar) { // if the envVariable exists replace it
+						envVar["value"] = value;
+					} else { // else add a new envVariable
+						Globals.envJson.values.push({
+							key: key,
+							value: value,
+							type: "text",
+							name: key
+						});
 					}
-
-					// else add a new envVariable
-					Globals.envJson.values.push({
-						key: key,
-						value: value,
-						type: "text",
-						name: key
-					});
 				},
 				setGlobalVariable: function(key, value) {
 					// Set this guy up when we setup globals.
