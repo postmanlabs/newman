@@ -79,6 +79,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
     _getTransformedRequestData: function(request) {
         var transformedData;
+        if (request.transformed.data === "") {
+            return {};
+        }
         if (request.dataMode === "raw") {
             transformedData = JSON.parse(request.transformed.data);
         } else {
@@ -94,10 +97,11 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			responseBody: body,
 			responseTime: response.stats.timeTaken,
 			request: {
-                url: request.transformed.url,
-                headers: Helpers.generateHeaderObj(request.transformed.headers),
-                data: this._getTransformedRequestData(request),
-                dataMode: request.dataMode
+				url: request.transformed.url,
+				method: request.method,
+				headers: Helpers.generateHeaderObj(request.transformed.headers),
+				data: this._getTransformedRequestData(request),
+				dataMode: request.dataMode
 			},
 			responseCode: {
 				code: response.statusCode,
@@ -122,7 +126,20 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			console: {log: function(){}},
 			postman: {
 				setEnvironmentVariable: function(key, value) {
-					Globals.envJson[key] = value;
+					var envVar = _und.find(Globals.envJson.values, function(envObject){
+						return envObject["key"] === key;
+					});
+
+					if (envVar) { // if the envVariable exists replace it
+						envVar["value"] = value;
+					} else { // else add a new envVariable
+						Globals.envJson.values.push({
+							key: key,
+							value: value,
+							type: "text",
+							name: key
+						});
+					}
 				},
 				setGlobalVariable: function(key, value) {
 					// Set this guy up when we setup globals.
