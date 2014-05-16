@@ -160,7 +160,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
 	// logger for test case results
 	_logTestResults: function(results) {
-		//console.log(Globals.envJson.values);
 		_und.each(_und.keys(results), function(key) {
 			if (results[key]) {
 				log.testCaseSuccess(key);
