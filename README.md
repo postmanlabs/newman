@@ -25,6 +25,12 @@ The `-u` flag allows you to pass a postman collection as a URL. Your collection 
 $ newman -u https://www.getpostman.com/collections/cb208e7e64056f5294e5 -e devenvironment.json
 ```
 
+### Update
+To update Newman
+```bash
+$ npm update -g newman
+```
+
 ## Options
 Newman provides a rich set of options to customize a run. A list of options can be retrieved by running it with the `-h` flag.
 
