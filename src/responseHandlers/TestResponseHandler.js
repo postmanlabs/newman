@@ -79,11 +79,12 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
     _getTransformedRequestData: function(request) {
         var transformedData;
+
         if (request.transformed.data === "") {
             return {};
         }
         if (request.dataMode === "raw") {
-            transformedData = JSON.parse(request.transformed.data);
+            transformedData = request.transformed.data;
         } else {
             transformedData = Helpers.transformFromKeyValue(request.transformed.data);
         }
