@@ -65,11 +65,16 @@ var CollectionModel = jsface.Class(ParentModel, {
 	 * @memberOf CollectionModel
 	 */
 	getOrderedRequests: function() {
-		var orderedIds = this.getOrderOfIds();
 		var orderedRequests = [];
-		_und.each(orderedIds, function(id) {
-			orderedRequests.push(this.getRequestWithId(id));
-		}, this);
+		if (this.order === undefined) {
+			// handling case for older postman collection format
+			orderedRequests = this.requests;
+		} else {
+			var orderedIds = this.getOrderOfIds();
+			_und.each(orderedIds, function(id) {
+				orderedRequests.push(this.getRequestWithId(id));
+			}, this);
+		}
 		return orderedRequests;
 	}
 });
