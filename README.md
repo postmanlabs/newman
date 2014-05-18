@@ -14,6 +14,11 @@ $ npm install -g newman
 ```
 This installs Newman from npm globally on your system allowing you to run it from anywhere.
 
+If you already have Newman, you can update with a simple command
+```bash
+$ npm update -g newman
+```
+
 The easiest way to run Newman is to run it with a collection. With the `-c` flag you can run any collection file lying on your file-system. Refer [the collection documentation](http://www.getpostman.com/docs/collections) to learn how to use and download collections.
 
 ```bash
@@ -23,12 +28,6 @@ $ newman -c mycollection.json
 The `-u` flag allows you to pass a postman collection as a URL. Your collection probably uses environment variables. To provide an accompanying set of environment variables, [export them from Postman](http://www.getpostman.com/docs/environments)  and run them with the `-e` flag.
 ```bash
 $ newman -u https://www.getpostman.com/collections/cb208e7e64056f5294e5 -e devenvironment.json
-```
-
-### Update
-To update Newman
-```bash
-$ npm update -g newman
 ```
 
 ## Options
@@ -127,6 +126,41 @@ newmanOptions = {
 
 Newman.execute(collectionJson, newmanOptions);
 ```
+
+## Cron
+Want your test suite to run every hour? Newman can be used to schedule tests to run hourly, daily or weekly automatically in combination with the awesome Unix scheduler **CRON**. 
+
+Lets setup a simple script called `run_newman` to run our tests
+```bash
+#!/bin/bash
+
+timestamp=$(date +"%s") 
+collection=/var/www/myapp/tests/collection.json
+env=/var/www/myapp/tests/envfile.json
+
+# create separate outfile for each run
+outfile=/var/www/myapp/tests/outfile-$timestamp.json
+
+# redirect all output to /dev/null
+newman -c $collection -c $env -o $outfile > /dev/null2>&1
+```
+Make it an executable
+```bash
+$ chmod +x run_newman
+```
+
+To run Newman every hour, run `crontab -e` and enter the following - 
+```bash
+0 * * * * /path/to/run_newman
+```
+Check your `cron` if it has been setup
+```bash
+$ crontab -l
+0 * * * * /path/to/run_newman
+```
+With this, you're Newman is set to run automatically every hour.
+
+Note: Exact location for `cron` is dependent on the linux distribution you are running. See specific `cron` instructions for your distribution. For an introduction to `cron` checkout [this](http://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800) article.
 
 ## License
 Apache. See the LICENSE file for more information
