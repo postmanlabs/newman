@@ -41,6 +41,7 @@ describe("TestResponseHandler", function() {
 		};
 		this.stub = sinon.stub(TestResponseHandler, '_logTestResults');
 		this.loggerStub = sinon.stub(ErrorHandler, 'exceptionError');
+		Globals.envJson = { values: [] };
 	});
 	
 	it("should run the test cases properly", function() {
@@ -110,6 +111,31 @@ describe("TestResponseHandler", function() {
 		assert.deepEqual(results, parsedResult);
 	});
 
+	it("should get env variable properly", function() {
+		Globals.envJson = {
+			values: [
+				{
+					"key": "url",
+					"value": "http://dump.getpostman.com",
+					"type": "text",
+					"name": "url"
+				},
+				{
+					"key": "user_id",
+					"value": "1",
+					"type": "text",
+					"name": "user_id"
+				}
+			]
+		};
+		this.request.tests = '';
+		this.request.tests += 'tests["testcase1"] = environment.url === "http://dump.getpostman.com";';
+		this.request.tests += 'tests["testcase2"] = environment["user_id"] == 1;';
+		var expectedResult = {"testcase1": true, "testcase2": true };
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, expectedResult);
+	});
+
 	it("should set env variable properly", function() {
 		Globals.envJson = {
 			values: [
@@ -133,6 +159,36 @@ describe("TestResponseHandler", function() {
 		assert(_und.contains(_und.pluck(Globals.envJson.values, 'key'), 'url'));
 		assert(_und.contains(_und.pluck(Globals.envJson.values, 'value'), 'google.com'));
 		assert(_und.contains(_und.pluck(Globals.envJson.values, 'value'), '10'));
+	});
+
+
+	it("should get and set env variable properly", function() {
+		Globals.envJson = {
+			values: [
+				{
+					"key": "url",
+					"value": "http://dump.getpostman.com",
+					"type": "text",
+					"name": "url"
+				},
+				{
+					"key": "user_id",
+					"value": "1",
+					"type": "text",
+					"name": "user_id"
+				}
+			]
+		};
+		this.request.tests = '';
+		this.request.tests = 'postman.setEnvironmentVariable("url", "google.com");';
+		this.request.tests += 'tests["testcase1"] = environment.url === "http://dump.getpostman.com";'; // not changed for the first time
+		var results1 = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results1, {"testcase1": true});
+
+		var another_request = _und.extend(this.request); // deep copy
+		another_request.tests = 'tests["testcase2"] = environment.url === "google.com";';
+		var results2 = TestResponseHandler._runTestCases(null, this.response, this.response.body, another_request);
+		assert.deepEqual(results2, {"testcase2": true});
 	});
 
 	afterEach(function() {

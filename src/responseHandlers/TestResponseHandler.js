@@ -91,6 +91,11 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         return transformedData;
     },
 
+	// sets the env vars json as a key value pair
+	_setEnvironmentContext: function() {
+		return Helpers.transformFromKeyValue(Globals.envJson.values);
+	},
+
 	_createSandboxedEnvironment: function(error, response, body, request) {
 		return {
 			tests: {},
@@ -111,7 +116,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 			},
 			data: {},
 			iteration: Globals.iterationNumber,
-			environment: Globals.envJson,
+			environment: this._setEnvironmentContext(),
 			globals: {},
 			$: _jq,
 			_: _lod,
