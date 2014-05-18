@@ -41,6 +41,7 @@ describe("TestResponseHandler", function() {
 		};
 		this.stub = sinon.stub(TestResponseHandler, '_logTestResults');
 		this.loggerStub = sinon.stub(ErrorHandler, 'exceptionError');
+		Globals.envJson = { values: [] };
 	});
 	
 	it("should run the test cases properly", function() {
@@ -108,6 +109,31 @@ describe("TestResponseHandler", function() {
 		var parsedResult = {"testcase1": true, "testcase2": true, "testcase3": true, "testcase4": true, "testcase5": true};
 		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert.deepEqual(results, parsedResult);
+	});
+
+	it("should get env variable properly", function() {
+		Globals.envJson = {
+			values: [
+				{
+					"key": "url",
+					"value": "http://dump.getpostman.com",
+					"type": "text",
+					"name": "url"
+				},
+				{
+					"key": "user_id",
+					"value": "1",
+					"type": "text",
+					"name": "user_id"
+				}
+			]
+		};
+		this.request.tests = '';
+		this.request.tests += 'tests["testcase1"] = environment.url === "http://dump.getpostman.com";';
+		this.request.tests += 'tests["testcase2"] = environment["user_id"] == 1;';
+		var expectedResult = {"testcase1": true, "testcase2": true };
+		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
+		assert.deepEqual(results, expectedResult);
 	});
 
 	it("should set env variable properly", function() {
