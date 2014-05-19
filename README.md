@@ -45,6 +45,7 @@ Options:
 -e, --environment [file]  Specify a Postman environment as a JSON [file]
 -d, --data [file]         Specify a data file to use either json or csv
 -s, --stopOnError         Stops the runner when a test case fails
+-m, --monochrome          Run Newman with colorless output - safe for monochrome terminals
 -n, --number [number]     Define the number of iterations to run.
 -o, --outputFile [file]   Path to file where output should be written. [file]
 ```
@@ -102,6 +103,8 @@ The results of all tests and requests can be exported into file and later import
 ```bash
 $ newman -c mycollection.json -o outputfile.json
 ```
+
+The `-m` flag allows you to run Newman with colorless output which can be helpful with older terminals.
 
 **NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.
 
