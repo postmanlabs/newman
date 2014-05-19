@@ -20,6 +20,8 @@ var Newman = jsface.Class([Options], {
 	 */
 	execute: function(requestJSON, options) {
 		Globals.addEnvironmentGlobals(requestJSON, options);
+		Globals.monochrome = options.monochrome;
+
 		this.setOptions(options);
 
 		// setup the iteration runner with requestJSON passed and options
