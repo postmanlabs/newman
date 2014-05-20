@@ -27,7 +27,7 @@
 	"newman": "./bin/newman"
   },
   "dependencies": {
-    "cli-color": "*",
+    "cli-color": "0.2.x",
     "json5": "*",
     "commander": "2.x.x",
     "underscore": "1.x.x",
