@@ -21,8 +21,11 @@ var Newman = jsface.Class([Options, EventEmitter], {
 	 */
 	execute: function(requestJSON, options, callback) {
 		Globals.addEnvironmentGlobals(requestJSON, options);
-		callback && this.addEventListener('iterationRunnerOver', callback);
 		this.setOptions(options);
+
+		if (typeof callback === "function") {
+			this.addEventListener('iterationRunnerOver', callback);
+		}
 
 		// setup the iteration runner with requestJSON passed and options
 		this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
