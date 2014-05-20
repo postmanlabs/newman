@@ -27,6 +27,7 @@ function parseArguments() {
 	  .option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
 	  .option('-s, --stopOnError', "Stops the runner when a test case fails", null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
+	  .option('-C, --noColor', 'Disable colored output.', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
 
 	program.on('--help', function() {
@@ -82,6 +83,7 @@ function main() {
 	}
 
 	newmanOptions.stopOnError = !!program.stopOnError;
+	newmanOptions.noColor = !!program.noColor;
 
 	if (program.collection) {
 		// read collection from the filesystem

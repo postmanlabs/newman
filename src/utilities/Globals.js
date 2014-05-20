@@ -20,6 +20,7 @@ var Globals = jsface.Class({
 		this.outputFile = options.outputFile || '';
 		this.globalJSON = options.globalJSON || [];
 		this.stopOnError = options.stopOnError;
+		this.noColor = options.noColor;
 	}
 });
 
