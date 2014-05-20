@@ -1,6 +1,8 @@
 var jsface  = require("jsface"),
 	Helpers = require('./Helpers'),
-	color   = require("cli-color");
+	Globals = require('./Globals'),
+	color   = require("cli-color"),
+	ansiTrim = require("cli-color/lib/trim");
 
 /**
  * @name Logger
@@ -16,7 +18,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	success: function(log) {
-		process.stdout.write(color.green(log));
+		process.stdout.write(this._parseANSIStringsOnUserOption(color.green(log)));
 		return this;
 	},
 	/**
@@ -25,7 +27,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	error: function(log) {
-		process.stdout.write(color.red(log));
+		process.stdout.write(this._parseANSIStringsOnUserOption(color.red(log)));
 		return this;
 	},
 	/**
@@ -34,7 +36,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	notice: function(log) {
-		process.stdout.write(color.cyan(log));
+		process.stdout.write(this._parseANSIStringsOnUserOption(color.cyan(log)));
 		return this;
 	},
 	/**
@@ -43,7 +45,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	warn: function(log) {
-		process.stdout.write(color.yellow(log));
+		process.stdout.write(this._parseANSIStringsOnUserOption(color.yellow(log)));
 		return this;
 	},
 	/**
@@ -52,7 +54,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	normal: function(log) {
-		process.stdout.write(log);
+		process.stdout.write(this._parseANSIStringsOnUserOption(log));
 		return this;
 	},
 	/**
@@ -61,7 +63,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	light: function(log) {
-		process.stdout.write(color.underline.xterm(245)(log));
+		process.stdout.write(this._parseANSIStringsOnUserOption(color.underline.xterm(245)(log)));
 		return this;
 	},
 	/**
@@ -70,7 +72,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	note: function(log) {
-		process.stdout.write(color.xterm(33)(log));
+		process.stdout.write(this._parseANSIStringsOnUserOption(color.xterm(33)(log)));
 		return this;
 	},
 	/**
@@ -79,7 +81,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	testCaseSuccess: function(log) {
-		this.success("    " + color.green(Helpers.symbols.ok + log) + "\n");
+		this.success(this._parseANSIStringsOnUserOption("    " + color.green(Helpers.symbols.ok + log) + "\n"));
 		return this;
 	},
 	/**
@@ -88,7 +90,7 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	testCaseError: function(log) {
-		process.stdout.write("    " + color.red(Helpers.symbols.err + log) + "\n");
+		process.stdout.write(this._parseANSIStringsOnUserOption("    " + color.red(Helpers.symbols.err + log) + "\n"));
 		return this;
 	},
 	/**
@@ -98,7 +100,7 @@ var Logger = jsface.Class({
 	 */
 	throwError: function(msg) {
 		var err = new Error(msg);
-		this.error(color.red(err.message));
+		this.error(	(color.red(err.message)));
 		throw err;
 	},
 	/**
@@ -107,7 +109,14 @@ var Logger = jsface.Class({
 	 * @memberOf Logger
 	 */
 	exceptionError: function(err) {
-		this.error("    " + color.bold.red("EXCEPTION - " + err) + "\n");
+		this.error(this._parseANSIStringsOnUserOption("    " + color.bold.red("EXCEPTION - " + err) + "\n"));
+	},
+
+	_parseANSIStringsOnUserOption: function(string) {
+		if (Globals.noColor) {
+			string = ansiTrim(string);
+		}
+		return string;
 	}
 });
 

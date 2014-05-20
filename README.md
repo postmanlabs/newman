@@ -48,6 +48,7 @@ Options:
 -s, --stopOnError         Stops the runner when a test case fails
 -n, --number [number]     Define the number of iterations to run.
 -o, --outputFile [file]   Path to file where output should be written. [file]
+-C, --noColor             Disable colored output.
 ```
 
 Use the `-n` option to set the number of iterations you want to run the collection for.
