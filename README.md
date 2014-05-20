@@ -124,7 +124,8 @@ newmanOptions = {
 	stopOnError: true
 }
 
-Newman.execute(collectionJson, newmanOptions);
+// Optional Callback function which will be executed once Newman is done executing all its tasks.
+Newman.execute(collectionJson, newmanOptions, callback);
 ```
 
 ## Cron

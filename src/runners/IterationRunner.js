@@ -31,7 +31,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 		// run the next iteration when the collection run is over
 		this.addEventListener('collectionRunnerOver', this._runNextIteration.bind(this));
-		this.addEventListener('iterationRunnerOver', this._exportResponses.bind(this));
 	},
 
 	_getOrderedCollection: function(requestJSON) {
@@ -98,6 +97,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 			this._setGlobalEnvJson();
 			this._runCollection();
 		} else {
+			this._exportResponses();
 			this.emit('iterationRunnerOver');
 		}
 	},

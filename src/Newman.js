@@ -1,5 +1,6 @@
 var jsface          = require("jsface"),
 	IterationRunner = require("./runners/IterationRunner"),
+	EventEmitter     = require('./utilities/EventEmitter'),
 	Globals          = require('./utilities/Globals'),
 	Options          = require('./utilities/Options');
 
@@ -8,7 +9,7 @@ var jsface          = require("jsface"),
  * @classdesc Bootstrap Newman class, mixin from Options class
  * @namespace
  */
-var Newman = jsface.Class([Options], {
+var Newman = jsface.Class([Options, EventEmitter], {
 	$singleton: true,
 
 	/**
@@ -18,9 +19,13 @@ var Newman = jsface.Class([Options], {
 	 * @memberOf Newman
 	 * @param {object} Newman options
 	 */
-	execute: function(requestJSON, options) {
+	execute: function(requestJSON, options, callback) {
 		Globals.addEnvironmentGlobals(requestJSON, options);
 		this.setOptions(options);
+
+		if (typeof callback === "function") {
+			this.addEventListener('iterationRunnerOver', callback);
+		}
 
 		// setup the iteration runner with requestJSON passed and options
 		this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
