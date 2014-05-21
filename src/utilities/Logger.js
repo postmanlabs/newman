@@ -12,111 +12,68 @@ var jsface  = require("jsface"),
 var Logger = jsface.Class({
 	$singleton: true,
 
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs success.
-	 * @memberOf Logger
-	 */
-	success: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption(color.green(log)));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs errors.
-	 * @memberOf Logger
-	 */
-	error: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption(color.red(log)));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs notice messages.
-	 * @memberOf Logger
-	 */
-	notice: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption(color.cyan(log)));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs warning messages.
-	 * @memberOf Logger
-	 */
-	warn: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption(color.yellow(log)));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs normal messages.
-	 * @memberOf Logger
-	 */
-	normal: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption(log));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs light grey messages.
-	 * @memberOf Logger
-	 */
-	light: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption(color.underline.xterm(245)(log)));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs orange notes.
-	 * @memberOf Logger
-	 */
-	note: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption(color.xterm(33)(log)));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs a test case success
-	 * @memberOf Logger
-	 */
-	testCaseSuccess: function(log) {
-		this.success(this._parseANSIStringsOnUserOption("    " + color.green(Helpers.symbols.ok + log) + "\n"));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs a test case error
-	 * @memberOf Logger
-	 */
-	testCaseError: function(log) {
-		process.stdout.write(this._parseANSIStringsOnUserOption("    " + color.red(Helpers.symbols.err + log) + "\n"));
-		return this;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs a node error in red
-	 * @memberOf Logger
-	 */
-	throwError: function(msg) {
-		var err = new Error(msg);
-		this.error(	(color.red(err.message)));
-		throw err;
-	},
-	/**
-	 * Logger Method
-	 * @param  {String} log Logs a node exception error in red
-	 * @memberOf Logger
-	 */
-	exceptionError: function(err) {
-		this.error(this._parseANSIStringsOnUserOption("    " + color.bold.red("EXCEPTION - " + err) + "\n"));
+	_printMessage: function(string, colorFunc) {
+		if (Globals.noColor) {
+			string = ansiTrim(colorFunc(string));
+		} else {
+			string = colorFunc(string);
+		}
+		process.stdout.write(string);
 	},
 
-	_parseANSIStringsOnUserOption: function(string) {
-		if (Globals.noColor) {
-			string = ansiTrim(string);
-		}
-		return string;
+	success: function(log) {
+		this._printMessage(log, color.green);
+		return this;
+	},
+
+	error: function(log) {
+		this._printMessage(log, color.red);
+		return this;
+	},
+
+	notice: function(log) {
+		this._printMessage(log, color.cyan);
+		return this;
+	},
+
+	warn: function(log) {
+		this._printMessage(log, color.yellow);
+		return this;
+	},
+
+	normal: function(log) {
+		this._printMessage(log, color.white);
+		return this;
+	},
+
+	light: function(log) {
+		this._printMessage(log, color.underline.xterm(245));
+		return this;
+	},
+
+	note: function(log) {
+		this._printMessage(log, color.underline.xterm(33));
+		return this;
+	},
+
+	testCaseSuccess: function(log) {
+		this.success("    " + Helpers.symbols.ok + log + "\n");
+		return this;
+	},
+
+	testCaseError: function(log) {
+		this.error("    " + Helpers.symbols.err + log + "\n");
+		return this;
+	},
+
+	throwError: function(msg) {
+		var err = new Error(msg);
+		this.error(err.message);
+		throw err;
+	},
+
+	exceptionError: function(err) {
+		this.error("    " + "EXCEPTION - " + err + "\n");
 	}
 });
 
