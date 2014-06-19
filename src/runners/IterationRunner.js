@@ -7,6 +7,7 @@ var jsface           = require("jsface"),
 	CollectionModel  = require('../models/CollectionModel'),
     FolderModel      = require('../models/FolderModel'),
 	CollectionRunner = require("../runners/CollectionRunner"),
+    Errors           = require('../utilities/ErrorHandler'),
 	fs               = require('fs'),
 	path             = require('path'),
 	JSON5            = require('json5'),
@@ -24,10 +25,15 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		this.setOptions(options);
 		this.collection = this._getOrderedCollection(requestJSON);
 
+        //check if only a folder has to be run
         if(options.folderName) {
             this.folder = this._getFolderFromCollection(requestJSON, options.folderName);
+            if(!this.folder) {
+                Errors.terminateWithError('The folder ['+options.folderName+'] does not exist.');
+            }
             this.collection = this._getFolderRequestsFromCollection(this.collection, this.folder);
         }
+
 		// collection of environment jsons passed from datafile
 		this.envJsons = this._getJsonArraysFromFile();
 

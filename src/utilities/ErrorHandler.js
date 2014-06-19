@@ -29,7 +29,7 @@ var ErrorHandler = jsface.Class({
 	},
 	
 	terminateWithError: function(msg) {
-		log.error(msg);
+		log.error(msg+"\n");
 		process.exit(1);
 	}
 });
