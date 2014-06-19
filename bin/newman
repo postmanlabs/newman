@@ -22,6 +22,7 @@ function parseArguments() {
 	  .version('1.0.6')
 	  .usage('[options] file')
 	  .option('-c, --collection [file]', 'Specify a Postman collection as a JSON [file]', null)
+      .option('-f, --folder [folder-name]', 'Run a single folder from a collection. To be used with -c or -u', null)
 	  .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
 	  .option('-e, --environment [file]', 'Specify a Postman environment as a JSON [file]', null)
 	  .option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
@@ -37,6 +38,7 @@ function parseArguments() {
 	  console.log('');
 	  console.log('    newman -c POSTMAN_COLLECTION');
 	  console.log('    newman -u POSTMAN_COLLECTION -e POSTMAN_ENVIRONMENT');
+      console.log('    newman -c POSTMAN_COLLECTION -f SAMPLE_FOLDER');
 	  console.log('');
 	  console.log('  For more documentation, issues and examples head over to https://github.com/a85/Newman');
 	  console.log('');
@@ -81,6 +83,10 @@ function main() {
 	if (program.data) {
 		newmanOptions.dataFile = program.data;
 	}
+
+    if(program.folder) {
+        newmanOptions.folderName = program.folder;
+    }
 
 	newmanOptions.stopOnError = !!program.stopOnError;
 	newmanOptions.noColor = !!program.noColor;
