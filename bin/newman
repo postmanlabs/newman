@@ -53,6 +53,12 @@ function parseArguments() {
 	} else {
 		Errors.terminateWithError("Please provide a valid collection file / url to run");
 	}
+
+    if (!program.folder) {
+        if(process.argv.indexOf("-f")!=-1 || process.argv.indexOf("--folder")!=-1) {
+            Errors.terminateWithError("The --folder / -f switch requires a folder name.");
+        }
+    }
 	
 	if (program.data) {
 		Helpers.validateDataFile(program.data);
