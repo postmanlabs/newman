@@ -52,18 +52,22 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
     _getFolderFromCollection: function(requestJSON, folderName) {
         var folders = requestJSON.folders;
-        var folderNeeded = _und.find(folders, function(folder) {return folder.name==folderName;});
-        if(!folderNeeded) return null;
+        var folderNeeded = _und.find(folders, function(folder) {return folder.name===folderName;});
+        if(!folderNeeded) {
+            return null;
+        }
         var folderModel = new FolderModel(folderNeeded);
         return folderModel;
     },
 
     _getFolderRequestsFromCollection: function(collection, folder) {
-        if(!folder || !folder.order) return [];
+        if(!folder || !folder.order) {
+            return [];
+        }
         var retVal = [];
         var folderOrders = folder.order;
         _und.each(collection,function(request) {
-            if(folderOrders.indexOf(request.id)!=-1) {
+            if(folderOrders.indexOf(request.id)!==-1) {
                 retVal.push(request);
             }
         });
