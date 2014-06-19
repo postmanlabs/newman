@@ -51,7 +51,7 @@ function parseArguments() {
 	} else if (program.url) {
 		Helpers.validateCollectionUrl(program.url);
 	} else {
-		Errors.terminateWithError("Please provide a valid collection file / url to run");
+		Errors.terminateWithError("Please provide a valid collection file / url to run\n");
 	}
 	
 	if (program.data) {
