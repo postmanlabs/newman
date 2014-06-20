@@ -160,7 +160,7 @@ Check your `cron` if it has been setup
 $ crontab -l
 0 * * * * /path/to/run_newman
 ```
-With this, you're Newman is set to run automatically every hour.
+With this, your Newman is set to run automatically every hour.
 
 Note: Exact location for `cron` is dependent on the linux distribution you are running. See specific `cron` instructions for your distribution. For an introduction to `cron` checkout [this](http://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800) article.
 
