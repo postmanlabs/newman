@@ -5,7 +5,9 @@ var jsface           = require("jsface"),
 	Globals          = require('../utilities/Globals'),
 	EventEmitter     = require('../utilities/EventEmitter'),
 	CollectionModel  = require('../models/CollectionModel'),
+    FolderModel      = require('../models/FolderModel'),
 	CollectionRunner = require("../runners/CollectionRunner"),
+    Errors           = require('../utilities/ErrorHandler'),
 	fs               = require('fs'),
 	path             = require('path'),
 	JSON5            = require('json5'),
@@ -23,6 +25,15 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		this.setOptions(options);
 		this.collection = this._getOrderedCollection(requestJSON);
 
+        //check if only a folder has to be run
+        if(options.folderName) {
+            this.folder = this._getFolderFromCollection(requestJSON, options.folderName);
+            if(!this.folder) {
+                Errors.terminateWithError('The folder ['+options.folderName+'] does not exist.');
+            }
+            this.collection = this._getFolderRequestsFromCollection(this.collection, this.folder);
+        }
+
 		// collection of environment jsons passed from datafile
 		this.envJsons = this._getJsonArraysFromFile();
 
@@ -38,6 +49,30 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		var orderedCollection = collectionModel.getOrderedRequests(this.getOptions());
 		return orderedCollection;
 	},
+
+    _getFolderFromCollection: function(requestJSON, folderName) {
+        var folders = requestJSON.folders;
+        var folderNeeded = _und.find(folders, function(folder) {return folder.name===folderName;});
+        if(!folderNeeded) {
+            return null;
+        }
+        var folderModel = new FolderModel(folderNeeded);
+        return folderModel;
+    },
+
+    _getFolderRequestsFromCollection: function(collection, folder) {
+        if(!folder || !folder.order) {
+            return [];
+        }
+        var retVal = [];
+        var folderOrders = folder.order;
+        _und.each(collection,function(request) {
+            if(folderOrders.indexOf(request.id)!==-1) {
+                retVal.push(request);
+            }
+        });
+        return retVal;
+    },
 
 	// sets the global environment object property as the current data json
 	_setGlobalEnvJson: function() {
