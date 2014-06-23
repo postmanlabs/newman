@@ -74,11 +74,43 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         return retVal;
     },
 
+    _kvArrayToObject: function(array) {
+        var obj = {};
+        _und.each(array,function(kv) {
+            obj[kv.key]=kv.value;
+        });
+        return obj;
+    },
+
+    _objectToKvArray: function(obj) {
+        var arr=[];
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property)) {
+                arr.push({"key":property, "value":obj[property]});
+            }
+        }
+        return arr;
+    },
+
 	// sets the global environment object property as the current data json
 	_setGlobalEnvJson: function() {
 		if (this.envJsons.length) {
 			var envJson = { values: this.envJsons[this.iteration - 1] };
-			Globals.envJson = envJson;
+            if(!Globals.envJson && !Globals.envJson.values) {
+			    Globals.envJson = envJson;
+            }
+            else {
+                var existingEnvVars = this._kvArrayToObject(Globals.envJson.values);
+                var dataFileVars = this._kvArrayToObject(envJson.values);
+                var finalObject = existingEnvVars;
+                for (var property in dataFileVars) {
+                    if (dataFileVars.hasOwnProperty(property)) {
+                        finalObject[property]=dataFileVars[property];
+                    }
+                }
+                var finalArray = this._objectToKvArray(finalObject);
+                Globals.envJson.values = finalArray;
+            }
 		}
 	},
 
@@ -129,8 +161,10 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 	_runNextIteration: function() {
 		if (this.iteration < this.numOfIterations) {
 			Globals.iterationNumber = ++this.iteration;
+            var currentGlobalEnv = Globals.envJson;
 			this._setGlobalEnvJson();
 			this._runCollection();
+            Globals.envJson = currentGlobalEnv;
 		} else {
 			this._exportResponses();
 			this.emit('iterationRunnerOver');
