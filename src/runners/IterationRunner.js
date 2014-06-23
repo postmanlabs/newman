@@ -97,7 +97,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		if (this.envJsons.length) {
 			var envJson = { values: this.envJsons[this.iteration - 1] };
             if(!Globals.envJson && !Globals.envJson.values) {
-			    Globals.envJson = envJson;
+                Globals.envJson = envJson;
             }
             else {
                 var existingEnvVars = this._kvArrayToObject(Globals.envJson.values);
