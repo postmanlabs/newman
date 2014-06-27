@@ -45,6 +45,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		if (request) {
 			this._processUrlUsingEnvVariables(request);
 			var RequestOptions = this._getRequestOptions(request);
+            request.data=request.transformed.data;
 			request.startTime = new Date().getTime();
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
 				if(response) {
