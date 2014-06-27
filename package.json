@@ -38,6 +38,7 @@
     "backbone": "*",
     "lodash": "*",
     "xml2js": "*",
+    "sugar" : "1.3.9",
     "tv4": "*"
   },
   "devDependencies": {
