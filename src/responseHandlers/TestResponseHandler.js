@@ -102,7 +102,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 	},
 
 	_createSandboxedEnvironment: function(error, response, body, request) {
-		var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };                                                                                         
+		var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };
 		Object.getOwnPropertyNames(Array.prototype).each(function(p) { sugar.array[p] = Array.prototype[p];});
 		Object.getOwnPropertyNames(Object.prototype).each(function(p) { sugar.object[p] = Object.prototype[p];});
 		Object.getOwnPropertyNames(String.prototype).each(function(p) { sugar.string[p] = String.prototype[p];});
