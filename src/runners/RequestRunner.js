@@ -44,6 +44,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		var request = this.getFromQueue();
 		if (request) {
 			this._processUrlUsingEnvVariables(request);
+            request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
 			var RequestOptions = this._getRequestOptions(request);
             request.data=request.transformed.data;
 			request.startTime = new Date().getTime();
@@ -124,6 +125,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		res.stats = {};
 		res.stats.timeTaken = new Date().getTime() - req.startTime;
 	},
+
+    //ensures the return value is prefixed with http://
+    _ensureUrlPrefix: function(str) {
+        if(str.indexOf("http://")==-1 && str.indexOf("https://")==-1) {
+            return "http://"+str;
+        }
+        return str;
+    },
 
 	_processUrlUsingEnvVariables: function(request) {
 		VariableProcessor.processRequestVariables(request, {
