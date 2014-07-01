@@ -128,7 +128,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
     //ensures the return value is prefixed with http://
     _ensureUrlPrefix: function(str) {
-        if(str.indexOf("http://")==-1 && str.indexOf("https://")==-1) {
+        if(str.indexOf("http://") === -1 && str.indexOf("https://") === -1) {
             return "http://"+str;
         }
         return str;
