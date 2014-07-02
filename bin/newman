@@ -63,6 +63,10 @@ function parseArguments() {
 	if (program.data) {
 		Helpers.validateDataFile(program.data);
 	}
+
+    if(program.environment) {
+        Helpers.validateEnvironmentFile(program.environment);
+    }
 }
 
 function main() {
@@ -73,7 +77,12 @@ function main() {
 	if (program.environment) {
 		// in case of environment variable set the envJson property 
  		// on the options object
-		newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
+        try {
+		    newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
+        }
+        catch (err) {
+            Errors.terminateWithError("The environment file " + program.environment+" could not be parsed.");
+        }
 	}
 
 	newmanOptions.responseHandler = 'TestResponseHandler';
@@ -98,8 +107,14 @@ function main() {
 	newmanOptions.noColor = !!program.noColor;
 
 	if (program.collection) {
-		// read collection from the filesystem
-		var collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
+        var collectionJson;
+        try {
+		    // read collection from the filesystem
+		    collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
+        }
+        catch (err) {
+            Errors.terminateWithError("The collection file " + program.collection+" could not be parsed.");
+        }
 		Newman.execute(collectionJson, newmanOptions);
 
 	} else {
