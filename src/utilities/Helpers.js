@@ -30,11 +30,17 @@ var Helpers = jsface.Class({
 		}
 	},
 
-	validateCollectionFile: function(file) {
-		if (!fs.existsSync(file)) {
-			Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
-		}
-	},
+    validateCollectionFile: function(file) {
+        if (!fs.existsSync(file)) {
+            Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
+        }
+    },
+
+    validateEnvironmentFile: function(file) {
+        if (!fs.existsSync(file)) {
+            Errors.terminateWithError("Please specify a valid Postman environment file");
+        }
+    },
 
 	// transforms an array of 
 	// [{"id": 1, "name":"foo"}, { .. }, ..] 
