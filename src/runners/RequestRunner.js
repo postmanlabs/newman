@@ -48,6 +48,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			var RequestOptions = this._getRequestOptions(request);
             request.data=request.transformed.data;
 			request.startTime = new Date().getTime();
+            RequestOptions.rejectUnauthorized=false;
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
 				if(response) {
 					// save some stats, only if response exists
