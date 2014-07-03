@@ -94,22 +94,16 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 	// sets the global environment object property as the current data json
 	_setGlobalEnvJson: function() {
+        if(typeof Globals.envJson.values==="undefined") {
+            Globals.envJson.values=[];
+        }
 		if (this.envJsons.length) {
 			var envJson = { values: this.envJsons[this.iteration - 1] };
             if(!Globals.envJson && !Globals.envJson.values) {
                 Globals.envJson = envJson;
             }
             else {
-                var existingEnvVars = this._kvArrayToObject(Globals.envJson.values);
-                var dataFileVars = this._kvArrayToObject(envJson.values);
-                var finalObject = existingEnvVars;
-                for (var property in dataFileVars) {
-                    if (dataFileVars.hasOwnProperty(property)) {
-                        finalObject[property]=dataFileVars[property];
-                    }
-                }
-                var finalArray = this._objectToKvArray(finalObject);
-                Globals.envJson.values = finalArray;
+                Globals.envJson.values=Helpers.augmentDataArrays(Globals.envJson.values,envJson.values);
             }
 		}
 	},
