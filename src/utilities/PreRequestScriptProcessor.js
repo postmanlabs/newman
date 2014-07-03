@@ -2,12 +2,10 @@ var jsface                  = require('jsface'),
     _und                    = require('underscore'),
     vm                      = require('vm'),
     ErrorHandler            = require('./ErrorHandler'),
-    AbstractResponseHandler = require('../responseHandlers/AbstractResponseHandler'),
     window                  = require("jsdom-nogyp").jsdom().parentWindow,
     _jq                     = require("jquery")(window),
     _lod                    = require("lodash"),
     Helpers                 = require('./Helpers'),
-    log                     = require('./Logger'),
     Backbone                = require("backbone"),
     xmlToJson               = require("xml2js"),
     Globals                 = require("./Globals"),
@@ -40,32 +38,12 @@ var PreRequestScriptProcessor = jsface.Class({
         return !!request.preScript;
     },
 
-    // run and generate test results. Also exit if any of the tests has failed
-    // given the users passes the flag
+    // run the preRequestScript in a sandbox. Add to the global env vars
     _runScript: function(requestScript, sandbox) {
-        var testResults = this._evaluateInSandboxedEnvironment(requestScript, sandbox);
+        this._evaluateInSandboxedEnvironment(requestScript, sandbox);
         //do we return here??
         //env vars are already set - no Impact on test results or anything
         return;
-        var testResultsToReturn = {};
-        if (Globals.stopOnError) {
-            for (var key in testResults) {
-                if (testResults.hasOwnProperty(key)) {
-                    if (!testResults[key]) {
-                        testResultsToReturn[key]=false;
-                        this.throwErrorOnLog="Test case failed: " + key;
-                        return testResultsToReturn;
-                    }
-                    else {
-                        testResultsToReturn[key]=true;
-                    }
-                }
-            }
-        }
-        else {
-            testResultsToReturn = testResults;
-        }
-        return testResultsToReturn;
     },
 
     _evaluateInSandboxedEnvironment: function(requestScript, sandbox) {

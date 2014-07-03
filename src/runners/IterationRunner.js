@@ -94,6 +94,9 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 	// sets the global environment object property as the current data json
 	_setGlobalEnvJson: function() {
+        if(typeof Globals.envJson.values==="undefined") {
+            Globals.envJson.values=[];
+        }
 		if (this.envJsons.length) {
 			var envJson = { values: this.envJsons[this.iteration - 1] };
             if(!Globals.envJson && !Globals.envJson.values) {
