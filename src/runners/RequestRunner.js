@@ -5,6 +5,7 @@ var jsface            = require('jsface'),
 	Globals           = require('../utilities/Globals'),
 	EventEmitter      = require('../utilities/EventEmitter'),
 	VariableProcessor = require('../utilities/VariableProcessor.js'),
+    PreRequestScripter= require('../utilities/PreRequestScriptProcessor.js'),
 	_und              = require('underscore');
 
 /**
@@ -43,6 +44,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	_execute: function() {
 		var request = this.getFromQueue();
 		if (request) {
+            var oldGlobals = Globals.envJson;
+            PreRequestScripter.runPreRequestScript(request);
 			this._processUrlUsingEnvVariables(request);
             request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
 			var RequestOptions = this._getRequestOptions(request);
@@ -67,6 +70,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			}.bind(this));
 
 			this._setFormDataIfParamsInRequest(unireq, request);
+            Globals.envJson = oldGlobals;
 		} else {
 			this._destroy();
 		}
