@@ -40,6 +40,28 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		this._execute();
 	},
 
+    _getPropertyFromArray: function(array, propName) {
+        return _und.find(array,function(elem) {
+            return (propName===("{{"+elem.key+"}}"));
+        });
+    },
+
+    _addGlobalData: function(oldArray, newArray) {
+        var finalArray = [];
+        var oLen = oldArray.length;
+        for(var i=0;i<oLen;i++) {
+            var thisValue=oldArray[i].value;
+            var actualValue=this._getPropertyFromArray(newArray,thisValue);
+            if(typeof actualValue==="undefined") {
+                finalArray.push({"key":oldArray[i].key,"value":thisValue, "type":oldArray[i].type});
+            }
+            else {
+                finalArray.push({"key":oldArray[i].key,"value":actualValue.value, "type":oldArray[i].type});
+            }
+        }
+        return finalArray;
+    },
+
 	// Gets a request from the queue and executes it.
 	_execute: function() {
 		var request = this.getFromQueue();
@@ -49,7 +71,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			this._processUrlUsingEnvVariables(request);
             request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
 			var RequestOptions = this._getRequestOptions(request);
-            request.data=request.transformed.data;
+            //request.data=request.transformed.data;
+            var oldRequestData = request.data;
+            request.data=this._addGlobalData(request.data,Globals.envJson.values);
 			request.startTime = new Date().getTime();
             RequestOptions.rejectUnauthorized=false;
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
@@ -71,6 +95,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
 			this._setFormDataIfParamsInRequest(unireq, request);
             Globals.envJson = oldGlobals;
+            request.data=oldRequestData;
 		} else {
 			this._destroy();
 		}
