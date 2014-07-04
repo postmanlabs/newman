@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		},
 		run: {
 			integTest: {
-      			exec: 'newman -c tests/integ_tests/tc2.json -d tests/integ_tests/d2.json -e tests/integ_tests/e2.json -s',
+      			exec: 'bin/newman -c tests/integ_tests/tc2.json -d tests/integ_tests/d2.json -e tests/integ_tests/e2.json -s',
     		}
 		}
 	});
