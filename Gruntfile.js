@@ -22,6 +22,11 @@ module.exports = function(grunt) {
 				},
 				src: ["tests/**/*.js"]
 			}
+		},
+		run: {
+			integTest: {
+      			exec: 'newman -c tests/integ_tests/tc2.json -d tests/integ_tests/d2.json -e tests/integ_tests/e2.json -s',
+    		}
 		}
 	});
 
@@ -29,10 +34,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-jsdoc');
 	grunt.loadNpmTasks('grunt-mocha-test');
+	grunt.loadNpmTasks('grunt-run');
 
 	// register tasks
 	grunt.registerTask('prepare_release', ['lint', 'mochaTest', 'jsdoc']);
 	grunt.registerTask('default', ['mochaTest', 'jsdoc', 'jshint']);
-	grunt.registerTask('test', ['mochaTest', 'jshint']);
+	grunt.registerTask('test', ['mochaTest', 'jshint','run:*']);
+	grunt.registerTask('integ_test',['run:*'])
 	grunt.registerTask('docs', 'jsdoc');
 }

@@ -47,7 +47,8 @@
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-jsdoc": "*",
     "sinon": "*",
-    "grunt-mocha-test": "~0.10.0"
+    "grunt-mocha-test": "~0.10.0",
+    "grunt-run": "~0.2.2"
   },
   "scripts": {
     "test": "grunt test"
