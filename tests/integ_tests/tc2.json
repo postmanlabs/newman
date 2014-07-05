@@ -1,0 +1,47 @@
+{
+	"id": "dd85194f-bdb3-8ce1-fd25-554cac614f89",
+	"name": "tc2",
+	"description": "",
+	"order": [
+		"91d6cd93-d25c-722d-f8b4-48090fc19337"
+	],
+	"folders": [],
+	"timestamp": 1404406855474,
+	"synced": false,
+	"requests": [
+		{
+			"id": "91d6cd93-d25c-722d-f8b4-48090fc19337",
+			"headers": "h1:v1\n",
+			"url": "http://httpbin.org/post",
+			"pathVariables": {},
+			"method": "POST",
+			"preScript":"postman.setEnvironmentVariable(\"dataVar2\",iteration);",
+			"data": [
+				{
+					"key": "newKey",
+					"value": "{{dataVar}}",
+					"type": "text"
+				},
+				{
+					"key": "oldKey",
+					"value": "{{hKey}}",
+					"type": "text"
+				},
+				{
+					"key": "prScriptTest",
+					"value": "{{dataVar2}}",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"formVars\"] = ((data.form.newKey === \"value1\" && iteration===1) || (data.form.newKey === \"value2\" && iteration===2));\ntests[\"envVars\"] = (data.form.oldKey===\"abhijit3\");\ntests[\"prScript\"] = (data.form.prScriptTest==iteration);",
+			"time": 1404409637382,
+			"name": "http://httpbin.org/post",
+			"description": "",
+			"collectionId": "dd85194f-bdb3-8ce1-fd25-554cac614f89",
+			"responses": [],
+			"synced": false
+		}
+	]
+}
