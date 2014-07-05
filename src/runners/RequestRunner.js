@@ -67,8 +67,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		var request = this.getFromQueue();
 		if (request) {
             var oldGlobals = Globals.envJson;
+            this._processUrlUsingEnvVariables(request); //to process ENV and DATAFILE variables
             PreRequestScripter.runPreRequestScript(request);
-			this._processUrlUsingEnvVariables(request);
+			this._processUrlUsingEnvVariables(request); //to process PreRequestScript variables
             request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
 			var RequestOptions = this._getRequestOptions(request);
             //request.data=request.transformed.data;

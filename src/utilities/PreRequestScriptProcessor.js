@@ -28,7 +28,7 @@ var PreRequestScriptProcessor = jsface.Class({
     runPreRequestScript: function(request) {
         var requestScript = this._getScriptForRequest(request);
         if (requestScript) {
-            var sandbox = this._createSandboxedEnvironment();
+            var sandbox = this._createSandboxedEnvironment(request);
             return this._runScript(request.preScript, sandbox);
         }
         return {};
@@ -67,7 +67,21 @@ var PreRequestScriptProcessor = jsface.Class({
         return Helpers.transformFromKeyValue(Globals.envJson.values);
     },
 
-    _createSandboxedEnvironment: function() {
+    _getTransformedRequestData: function(request) {
+        var transformedData;
+
+        if (request.transformed.data === "") {
+            return {};
+        }
+        if (request.dataMode === "raw") {
+            transformedData = request.transformed.data;
+        } else {
+            transformedData = Helpers.transformFromKeyValue(request.transformed.data);
+        }
+        return transformedData;
+    },
+
+    _createSandboxedEnvironment: function(request) {
         var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };
         Object.getOwnPropertyNames(Array.prototype).each(function(p) { sugar.array[p] = Array.prototype[p];});
         Object.getOwnPropertyNames(Object.prototype).each(function(p) { sugar.object[p] = Object.prototype[p];});
@@ -76,22 +90,13 @@ var PreRequestScriptProcessor = jsface.Class({
         Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
         return {
             sugar: sugar,
-//            tests: {},
-//            responseHeaders: response.headers,
-//            responseBody: body,
-//            responseTime: response.stats.timeTaken,
-//            request: {
-//                url: request.transformed.url,
-//                method: request.method,
-//                headers: Helpers.generateHeaderObj(request.transformed.headers),
-//                data: this._getTransformedRequestData(request),
-//                dataMode: request.dataMode
-//            },
-//            responseCode: {
-//                code: response.statusCode,
-//                name: request.name,
-//                detail: request.description
-//            },
+            request: {
+                url: request.transformed.url,
+                method: request.method,
+                headers: Helpers.generateHeaderObj(request.transformed.headers),
+                data: this._getTransformedRequestData(request),
+                dataMode: request.dataMode
+            },
             data: {},
             iteration: Globals.iterationNumber,
             environment: this._setEnvironmentContext(),
