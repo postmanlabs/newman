@@ -94,7 +94,12 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 		try {
 			vm.runInNewContext(testCases, sandbox);
 		} catch (err) {
-			ErrorHandler.exceptionError(err);
+            if(err.toString()==="SyntaxError: Unexpected token u") {
+                ErrorHandler.exceptionError("No response from URL");
+            }
+            else {
+                ErrorHandler.exceptionError(err);
+            }
 		}
 		return sandbox.tests;
 	},

@@ -19,7 +19,7 @@ var RequestModel = jsface.Class(ParentModel, {
         this.dataMode      = requestJson.dataMode;
         this.responses     = requestJson.responses;
         this.tests         = requestJson.tests;
-        this.preScript     = requestJson.preScript;
+        this.preRequestScript     = requestJson.preRequestScript;
     },
     toString: function() {
         return "Request: [" + this.method + "]: " + this.url;

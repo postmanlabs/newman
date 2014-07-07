@@ -29,13 +29,13 @@ var PreRequestScriptProcessor = jsface.Class({
         var requestScript = this._getScriptForRequest(request);
         if (requestScript) {
             var sandbox = this._createSandboxedEnvironment(request);
-            return this._runScript(request.preScript, sandbox);
+            return this._runScript(request.preRequestScript, sandbox);
         }
         return {};
     },
 
     _getScriptForRequest: function(request) {
-        return !!request.preScript;
+        return !!request.preRequestScript;
     },
 
     // run the preRequestScript in a sandbox. Add to the global env vars
