@@ -12,7 +12,7 @@
 		{
 			"id": "91d6cd93-d25c-722d-f8b4-48090fc19337",
 			"headers": "h1:v1\n",
-			"url": "http://httpbin.org/post",
+			"url": "http://dump.getpostman.com/post",
 			"pathVariables": {},
 			"method": "POST",
 			"preRequestScript":"postman.setEnvironmentVariable(\"dataVar2\",iteration);",
@@ -37,7 +37,7 @@
 			"version": 2,
 			"tests": "var data = JSON.parse(responseBody);\ntests[\"formVars\"] = ((data.form.newKey === \"value1\" && iteration===1) || (data.form.newKey === \"value2\" && iteration===2));\ntests[\"envVars\"] = (data.form.oldKey===\"abhijit3\");\ntests[\"prScript\"] = (data.form.prScriptTest==iteration);",
 			"time": 1404409637382,
-			"name": "http://httpbin.org/post",
+			"name": "http://dump.getpostman.com/post",
 			"description": "",
 			"collectionId": "dd85194f-bdb3-8ce1-fd25-554cac614f89",
 			"responses": [],
