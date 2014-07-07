@@ -15,7 +15,7 @@
 			"url": "http://httpbin.org/post",
 			"pathVariables": {},
 			"method": "POST",
-			"preScript":"postman.setEnvironmentVariable(\"dataVar2\",iteration);",
+			"preRequestScript":"postman.setEnvironmentVariable(\"dataVar2\",iteration);",
 			"data": [
 				{
 					"key": "newKey",
