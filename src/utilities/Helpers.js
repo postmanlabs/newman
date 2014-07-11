@@ -104,10 +104,4 @@ var Helpers = jsface.Class({
     }
 });
 
-// symbols for logging
-exports.symbols =  {
-	err: (process.platform === "win32") ? "\u00D7 " : "✗ ",
-	ok:  (process.platform === "win32") ? "\u221A " : "✔ "
-};
-
 module.exports = Helpers;

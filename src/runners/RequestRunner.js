@@ -66,13 +66,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	_execute: function() {
 		var request = this.getFromQueue();
 		if (request) {
-            var oldGlobals = Globals.envJson;
-            this._processUrlUsingEnvVariables(request); //to process ENV and DATAFILE variables
-            PreRequestScripter.runPreRequestScript(request);
+            //To be uncommented if each prScript/test should set transient env. vars
+            //var oldGlobals = Globals.envJson;
+
+            this._processUrlUsingEnvVariables(request); //to process ENV and DATAFILE variables, because the processed URL is available in the PR script
+            PreRequestScripter.runPreRequestScript(request); //adds PR env variables
 			this._processUrlUsingEnvVariables(request); //to process PreRequestScript variables
             request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
 			var RequestOptions = this._getRequestOptions(request);
-            //request.data=request.transformed.data;
             var oldRequestData = request.data;
             request.data=this._addGlobalData(request.data,Globals.envJson.values);
 			request.startTime = new Date().getTime();
@@ -95,7 +96,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			}.bind(this));
 
 			this._setFormDataIfParamsInRequest(unireq, request);
-            Globals.envJson = oldGlobals;
+
+            //To be uncommented if each prScript/test should set transient env. vars
+            //Globals.envJson = oldGlobals;
+
             request.data=oldRequestData;
 		} else {
 			this._destroy();
