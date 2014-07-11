@@ -37,7 +37,12 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 		// collection of environment jsons passed from datafile
 		this.envJsons = this._getJsonArraysFromFile();
 
-		this.numOfIterations = this.envJsons.length || this.getOptions().iterationCount || 1;
+        var iterationCount = this.getOptions().iterationCount;
+        if(iterationCount && this.envJsons.length && iterationCount>this.envJsons.length) {
+            log.warn("WARNING: The iterationCount is greater than the number of records in the data file. This could lead to unexpected results\n");
+        }
+
+		this.numOfIterations = iterationCount || this.envJsons.length || 1;
 		this.iteration = 0;
 
 		// run the next iteration when the collection run is over
