@@ -1,5 +1,5 @@
 var jsface  = require("jsface"),
-	Helpers = require('./Helpers'),
+	Helpers = require('./Symbols'),
 	Globals = require('./Globals'),
 	color   = require("cli-color"),
 	ansiTrim = require("cli-color/lib/trim");
