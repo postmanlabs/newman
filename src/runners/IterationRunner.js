@@ -36,6 +36,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
 		// collection of environment jsons passed from datafile
 		this.envJsons = this._getJsonArraysFromFile();
+        this.globalVars = this._getJsonArraysFromGlobalFile();
 
         var iterationCount = this.getOptions().iterationCount;
         if(iterationCount && this.envJsons.length && iterationCount>this.envJsons.length) {
@@ -97,21 +98,32 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         return arr;
     },
 
-	// sets the global environment object property as the current data json
+	// sets the global environment object property as the env vars + globals + dataFiles
 	_setGlobalEnvJson: function() {
         if(typeof Globals.envJson.values==="undefined") {
             Globals.envJson.values=[];
         }
+
+        //add the globals (globalJSON, overriden by envJson)
+        if(this.globalVars && this.globalVars.length) {
+            Globals.envJson.values = Helpers.augmentDataArrays(this.globalVars,Globals.envJson.values);
+        }
+
+        //add the dataFile vars (overrides everything else)
 		if (this.envJsons.length) {
-			var envJson = { values: this.envJsons[this.iteration - 1] };
-            if(!Globals.envJson && !Globals.envJson.values) {
-                Globals.envJson = envJson;
-            }
-            else {
-                Globals.envJson.values=Helpers.augmentDataArrays(Globals.envJson.values,envJson.values);
-            }
+			var envJson = { values: this.envJsons[this.iteration - 1] }; //data file
+            Globals.envJson.values=Helpers.augmentDataArrays(Globals.envJson.values,envJson.values);
 		}
 	},
+
+    _getJsonArraysFromGlobalFile: function() {
+        var globalFile = this.getOptions().globalJSON;
+        var jsonArray = [];
+        if (globalFile) {
+            jsonArray = JSON5.parse(fs.readFileSync(globalFile, 'utf8'));
+        }
+        return jsonArray;
+    },
 
 	// parses the json from data file and sends it for transformation
 	_getJsonArraysFromFile: function() {

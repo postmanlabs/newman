@@ -42,6 +42,12 @@ var Helpers = jsface.Class({
         }
     },
 
+    validateGlobalFile: function(file) {
+        if (!fs.existsSync(file)) {
+            Errors.terminateWithError("Please specify a valid Postman globals file");
+        }
+    },
+
 	// transforms an array of 
 	// [{"id": 1, "name":"foo"}, { .. }, ..] 
 	// into an object {"key": "id", "value": "foo"}]
