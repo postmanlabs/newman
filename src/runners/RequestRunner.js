@@ -75,7 +75,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
             request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
 			var RequestOptions = this._getRequestOptions(request);
             var oldRequestData = request.data;
-            request.data=this._addGlobalData(request.data,Globals.envJson.values);
+            request.data=request.transformed.data;
 			request.startTime = new Date().getTime();
             RequestOptions.rejectUnauthorized=false;
 			var unireq = unirest.request(RequestOptions, function(error, response, body) {
@@ -170,8 +170,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     },
 
 	_processUrlUsingEnvVariables: function(request) {
+        var mergedArray = {"values":[]};
+        mergedArray.values = Helpers.augmentDataArrays(Globals.globalJson.values,Globals.envJson.values);
+        mergedArray.values = Helpers.augmentDataArrays(mergedArray.values, Globals.dataJson.values);
+
 		VariableProcessor.processRequestVariables(request, {
-			envJson: Globals.envJson
+			envJson: mergedArray
 		});
 	}
 });

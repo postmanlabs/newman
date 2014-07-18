@@ -1,0 +1,50 @@
+{
+	"id": "dcc7e181-766f-e7ef-4b94-efbfe57189a9",
+	"name": "globals_c",
+	"description": "",
+	"order": [
+		"4802fd24-fab7-06eb-11f3-3401006261a2",
+		"139cd10a-0041-59ea-f7bc-1b4df840d7dc"
+	],
+	"folders": [],
+	"timestamp": 1405183101705,
+	"synced": false,
+	"requests": [
+		{
+			"id": "139cd10a-0041-59ea-f7bc-1b4df840d7dc",
+			"headers": "",
+			"url": "{{url}}/get?global={{global}}&env={{env}}&data={{data}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data1 = JSON.parse(responseBody);\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG1\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE1\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";",
+			"time": 1405488161538,
+			"name": "GET copy",
+			"description": "Similar to httpbin.org/get. Return GET data.",
+			"collectionId": "dcc7e181-766f-e7ef-4b94-efbfe57189a9",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "4802fd24-fab7-06eb-11f3-3401006261a2",
+			"headers": "",
+			"url": "{{url}}/get?global={{global}}&env={{env}}&data={{data}}&prsE={{prsE}}&prsG={{prsG}}",
+			"preRequestScript": "postman.setGlobalVariable(\"prsG\", \"prsG\");\npostman.setGlobalVariable(\"prsE\", \"prsEaRDDDROR\");\npostman.setEnvironmentVariable(\"prsE\", \"prsE\");\n",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data1 = JSON.parse(responseBody);\ntests[\"testGlobalSetFromPRScript\"] = data1.args.prsG === \"prsG\";\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG\";\n\ntests[\"testEnvSetFromPRScript\"] = data1.args.prsE === \"prsE\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";\n\npostman.setGlobalVariable(\"prsG\", \"prsG1\");\n\npostman.setEnvironmentVariable(\"prsE\", \"prsE1\");",
+			"time": 1405449473947,
+			"name": "GET",
+			"description": "Similar to httpbin.org/get. Return GET data.",
+			"collectionId": "dcc7e181-766f-e7ef-4b94-efbfe57189a9",
+			"responses": [],
+			"synced": false
+		}
+	]
+}

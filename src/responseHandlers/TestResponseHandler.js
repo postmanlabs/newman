@@ -118,10 +118,23 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         return transformedData;
     },
 
-	// sets the env vars json as a key value pair
-	_setEnvironmentContext: function() {
-		return Helpers.transformFromKeyValue(Globals.envJson.values);
-	},
+    //sets env vars
+    _setEnvironmentContext: function() {
+        if(!Globals.envJson) {return {};}
+        return Helpers.transformFromKeyValue(Globals.envJson.values);
+    },
+
+    // sets the global vars json as a key value pair
+    _setGlobalContext: function() {
+        if(!Globals.globalJson) {return {};}
+        return Helpers.transformFromKeyValue(Globals.globalJson.values);
+    },
+
+    // sets the data vars json as a key value pair
+    _setDataContext: function() {
+        if(!Globals.dataJson) {return {};}
+        return Helpers.transformFromKeyValue(Globals.dataJson.values);
+    },
 
 	_createSandboxedEnvironment: function(error, response, body, request) {
 		var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };
@@ -148,10 +161,10 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 				name: request.name,
 				detail: request.description
 			},
-			data: {},
 			iteration: Globals.iterationNumber,
-			environment: this._setEnvironmentContext(),
-			globals: {},
+            environment: this._setEnvironmentContext(),
+            globals: this._setGlobalContext(),
+            data: this._setDataContext(),
 			$: _jq,
 			_: _lod,
 			Backbone: Backbone,
@@ -163,7 +176,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 				return JSON;
 			},
 			tv4: tv4,
-			console: {log: function(){}},
+			console: {log: function(msg){console.log(msg);}},
 			postman: {
 				setEnvironmentVariable: function(key, value) {
 					var envVar = _und.find(Globals.envJson.values, function(envObject){
@@ -180,9 +193,42 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 							name: key
 						});
 					}
+                    //environment["key"]=value;
 				},
+                getEnvironmentVariable: function(key) {
+                    var envVar = _und.find(Globals.envJson.values, function(envObject){
+                        return envObject["key"] === key;
+                    });
+                    if(envVar) {
+                        return envVar["value"];
+                    }
+                    return null;
+                },
+                getGlobalVariable: function(key) {
+                    var envVar = _und.find(Globals.globalJson.values, function(envObject){
+                        return envObject["key"] === key;
+                    });
+                    if(envVar) {
+                        return envVar["value"];
+                    }
+                    return null;
+                },
 				setGlobalVariable: function(key, value) {
-					// Set this guy up when we setup globals.
+                    var envVar = _und.find(Globals.globalJson.values, function(envObject){
+                        return envObject["key"] === key;
+                    });
+
+                    if (envVar) { // if the envVariable exists replace it
+                        envVar["value"] = value;
+                    } else { // else add a new envVariable
+                        Globals.globalJson.values.push({
+                            key: key,
+                            value: value,
+                            type: "text",
+                            name: key
+                        });
+                    }
+                    //globals["key"]=value;
 				}
 			}
 		};

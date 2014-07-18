@@ -105,7 +105,12 @@ function main() {
     }
 
     if (program.global) {
-        newmanOptions.globalJSON = program.global;
+        try {
+            newmanOptions.globalJSON = JSON5.parse(fs.readFileSync(program.global, 'utf8'));
+        }
+        catch (err) {
+            Errors.terminateWithError("The global file " + program.global+" could not be parsed.");
+        }
     }
 
     if(program.folder) {

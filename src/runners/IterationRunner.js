@@ -35,15 +35,15 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         }
 
 		// collection of environment jsons passed from datafile
-		this.envJsons = this._getJsonArraysFromFile();
+		this.dataVars = this._getJsonArraysFromFile();
         this.globalVars = this._getJsonArraysFromGlobalFile();
 
         var iterationCount = this.getOptions().iterationCount;
-        if(iterationCount && this.envJsons.length && iterationCount>this.envJsons.length) {
+        if(iterationCount && this.dataVars.length && iterationCount>this.dataVars.length) {
             log.warn("WARNING: The iterationCount is greater than the number of records in the data file. This could lead to unexpected results\n");
         }
 
-		this.numOfIterations = iterationCount || this.envJsons.length || 1;
+		this.numOfIterations = iterationCount || this.dataVars.length || 1;
 		this.iteration = 0;
 
 		// run the next iteration when the collection run is over
@@ -106,23 +106,27 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
         //add the globals (globalJSON, overriden by envJson)
         if(this.globalVars && this.globalVars.length) {
-            Globals.envJson.values = Helpers.augmentDataArrays(this.globalVars,Globals.envJson.values);
+            Globals.globalJson.values = this.globalVars;//Helpers.augmentDataArrays(this.globalVars,Globals.envJson.values);
         }
 
         //add the dataFile vars (overrides everything else)
-		if (this.envJsons.length) {
-			var envJson = { values: this.envJsons[this.iteration - 1] }; //data file
-            Globals.envJson.values=Helpers.augmentDataArrays(Globals.envJson.values,envJson.values);
+		if (this.dataVars.length) {
+			var dataJson = { values: this.dataVars[this.iteration - 1] }; //data file
+            Globals.dataJson.values= dataJson.values;
 		}
 	},
 
     _getJsonArraysFromGlobalFile: function() {
         var globalFile = this.getOptions().globalJSON;
-        var jsonArray = [];
-        if (globalFile) {
-            jsonArray = JSON5.parse(fs.readFileSync(globalFile, 'utf8'));
+        if(globalFile===null) {
+            return [];
         }
-        return jsonArray;
+        return globalFile;
+//        var jsonArray = [];
+//        if (globalFile) {
+//            jsonArray = JSON5.parse(fs.readFileSync(globalFile, 'utf8'));
+//        }
+//        return jsonArray;
     },
 
 	// parses the json from data file and sends it for transformation
@@ -172,6 +176,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 	_runNextIteration: function() {
 		if (this.iteration < this.numOfIterations) {
 			Globals.iterationNumber = ++this.iteration;
+            Globals.dataJson={"values":[]};
             var currentGlobalEnv = Globals.envJson;
 			this._setGlobalEnvJson();
 			this._runCollection();
