@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Arjun Variar & Prakhar Srivastav & Abhijit Kane",
   "main": "Newman",
   "homepage": "https://github.com/a85/Newman",
@@ -12,8 +12,8 @@
   },
   "contributors": [
     {"name": "Prakhar Srivastav", "email": "prakhar1989@gmail.com", "url": "http://prakhar.me"},
-    {"name": "Arjun Variar", "email": "accioarjun@gmail.com", "url": "http://github.com/viig99"}
-    {"name": "Abhijit Kane", "email": "abhijitkane@gmail.com", "url": "http://github.com/abhijitkane"},
+    {"name": "Arjun Variar", "email": "accioarjun@gmail.com", "url": "http://github.com/viig99"},
+    {"name": "Abhijit Kane", "email": "abhijitkane@gmail.com", "url": "http://github.com/abhijitkane"}
   ],
   "engines" : { 
 	  "node" : ">=0.6.x" 
