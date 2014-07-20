@@ -34,6 +34,7 @@
     "underscore": "1.x.x",
     "jsface": "2.2.x",
     "unirest": "*",
+    "postman_validator" : "0.0.4",
     "jsdom-nogyp": "*",
     "jquery": "*",
     "backbone": "*",
