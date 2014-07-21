@@ -3,17 +3,17 @@
 	"name": "testEnv",
 	"values": [
 		{
-			"key": "hKey",
+			"key": "envKey",
 			"value": "abhijit3",
 			"type": "text",
-			"name": "hKey",
+			"name": "envKey",
 			"enabled": true
 		},
 		{
-			"key": "hburl",
+			"key": "envFileUrl",
 			"value": "dump.getpostman.com",
 			"type": "text",
-			"name": "hburl",
+			"name": "envFileUrl",
 			"enabled": true
 		}
 	],
