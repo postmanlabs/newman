@@ -139,7 +139,6 @@ var PreRequestScriptProcessor = jsface.Class({
                             name: key
                         });
                     }
-                    //environment["key"]=value;
                 },
                 getEnvironmentVariable: function(key) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){
@@ -165,7 +164,6 @@ var PreRequestScriptProcessor = jsface.Class({
                             name: key
                         });
                     }
-                    //globals["key"]=value;
                 },
                 getGlobalVariable: function(key) {
                     var envVar = _und.find(Globals.globalJson.values, function(envObject){

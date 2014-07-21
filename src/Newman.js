@@ -1,10 +1,10 @@
 var jsface          = require("jsface"),
     Validator       = require("postman_validator"),
-	IterationRunner = require("./runners/IterationRunner"),
-	EventEmitter     = require('./utilities/EventEmitter'),
+    IterationRunner = require("./runners/IterationRunner"),
+    EventEmitter     = require('./utilities/EventEmitter'),
     Errors           = require('./utilities/ErrorHandler'),
-	Globals          = require('./utilities/Globals'),
-	Options          = require('./utilities/Options');
+    Globals          = require('./utilities/Globals'),
+    Options          = require('./utilities/Options');
 
 /**
  * @name Newman
@@ -12,16 +12,16 @@ var jsface          = require("jsface"),
  * @namespace
  */
 var Newman = jsface.Class([Options, EventEmitter], {
-	$singleton: true,
+    $singleton: true,
 
-	/**
-	 * Executes XHR Requests for the Postman request, and logs the responses 
-	 * & runs tests on them.
-	 * @param  {JSON} requestJSON Takes the Postman Collection JSON from a file or url.
-	 * @memberOf Newman
-	 * @param {object} Newman options
-	 */
-	execute: function(requestJSON, options, callback) {
+    /**
+     * Executes XHR Requests for the Postman request, and logs the responses
+     * & runs tests on them.
+     * @param  {JSON} requestJSON Takes the Postman Collection JSON from a file or url.
+     * @memberOf Newman
+     * @param {object} Newman options
+     */
+    execute: function(requestJSON, options, callback) {
         var collectionParseError = Validator.validateJSON('c',requestJSON);
         if(!collectionParseError.status) {
             Errors.terminateWithError("Not a valid POSTMAN collection");
@@ -41,18 +41,18 @@ var Newman = jsface.Class([Options, EventEmitter], {
             }
         }
 
-		Globals.addEnvironmentGlobals(requestJSON, options);
-		this.setOptions(options);
+        Globals.addEnvironmentGlobals(requestJSON, options);
+        this.setOptions(options);
 
-		if (typeof callback === "function") {
-			this.addEventListener('iterationRunnerOver', callback);
-		}
+        if (typeof callback === "function") {
+            this.addEventListener('iterationRunnerOver', callback);
+        }
 
-		// setup the iteration runner with requestJSON passed and options
-		this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
+        // setup the iteration runner with requestJSON passed and options
+        this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
 
-		this.iterationRunner.execute();
-	}
+        this.iterationRunner.execute();
+    }
 });
 
 module.exports = Newman;
