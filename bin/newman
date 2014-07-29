@@ -19,7 +19,7 @@ var color   = require('cli-color'),
 
 function parseArguments() {
 	program
-	  .version('1.0.6')
+	  .version('1.0.9')
 	  .usage('[options] file')
 	  .option('-c, --collection [file]', 'Specify a Postman collection as a JSON [file]', null)
       .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
@@ -105,7 +105,12 @@ function main() {
     }
 
     if (program.global) {
-        newmanOptions.globalJSON = program.global;
+        try {
+            newmanOptions.globalJSON = JSON5.parse(fs.readFileSync(program.global, 'utf8'));
+        }
+        catch (err) {
+            Errors.terminateWithError("The global file " + program.global+" could not be parsed.");
+        }
     }
 
     if(program.folder) {

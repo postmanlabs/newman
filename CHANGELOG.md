@@ -1,5 +1,12 @@
 ##CHANGELOG
 
+1.0.9 (July 29, 2014)
+================
+* Header names are now converted to title case (Content-Type, instead of content-type)
+* An explicit iteration count overrides the data-file
+* No separate global file is needed to use global variables
+
+
 1.0.7 (July 7, 2014)
 ================
 * Https requests are now handled by newman.

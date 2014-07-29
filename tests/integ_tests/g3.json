@@ -1,0 +1,51 @@
+[
+	{
+		"key": "full_global_url",
+		"value": "http://localhost:5000/get",
+		"type": "text",
+		"name": "full_global_url",
+		"enabled": true
+	},
+	{
+		"key": "global_resource_get",
+		"value": "/get",
+		"type": "text",
+		"name": "global_resource_get",
+		"enabled": true
+	},
+	{
+		"key": "Global Foo",
+		"value": "Global Bar",
+		"type": "text",
+		"name": "Global Foo",
+		"enabled": true
+	},
+	{
+		"key": "Global Phew",
+		"value": "Global Works",
+		"type": "text",
+		"name": "Global Phew",
+		"enabled": true
+	},
+	{
+		"key": "global",
+		"value": "global1",
+		"type": "text",
+		"name": "global",
+		"enabled": true
+	},
+	{
+		"key": "env",
+		"value": "global1",
+		"type": "text",
+		"name": "env",
+		"enabled": true
+	},
+	{
+		"key": "data",
+		"value": "global1",
+		"type": "text",
+		"name": "data",
+		"enabled": true
+	}
+]

@@ -1,7 +1,7 @@
 {
   "name": "newman",
-  "version": "1.0.6",
-  "author": "Arjun Variar & Prakhar Srivastav",
+  "version": "1.0.9",
+  "author": "Arjun Variar & Prakhar Srivastav & Abhijit Kane",
   "main": "Newman",
   "homepage": "https://github.com/a85/Newman",
   "bugs": "https://github.com/a85/Newman/issues",
@@ -11,8 +11,9 @@
 	  "url": "git://github.com/a85/Newman.git"
   },
   "contributors": [
-	{"name": "Prakhar Srivastav", "email": "prakhar1989@gmail.com", "url": "http://prakhar.me"},
-    {"name": "Arjun Variar", "email": "accioarjun@gmail.com", "url": "http://github.com/viig99"}
+    {"name": "Prakhar Srivastav", "email": "prakhar1989@gmail.com", "url": "http://prakhar.me"},
+    {"name": "Arjun Variar", "email": "accioarjun@gmail.com", "url": "http://github.com/viig99"},
+    {"name": "Abhijit Kane", "email": "abhijitkane@gmail.com", "url": "http://github.com/abhijitkane"}
   ],
   "engines" : { 
 	  "node" : ">=0.6.x" 
@@ -33,6 +34,7 @@
     "underscore": "1.x.x",
     "jsface": "2.2.x",
     "unirest": "*",
+    "postman_validator" : "0.0.4",
     "jsdom-nogyp": "*",
     "jquery": "*",
     "backbone": "*",

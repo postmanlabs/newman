@@ -12,19 +12,19 @@
 		{
 			"id": "91d6cd93-d25c-722d-f8b4-48090fc19337",
 			"headers": "h1:v1\n",
-			"url": "http://dump.getpostman.com/post",
+			"url": "http://{{envFileUrl}}/post",
 			"pathVariables": {},
 			"method": "POST",
 			"preRequestScript":"postman.setEnvironmentVariable(\"dataVar2\",iteration);",
 			"data": [
 				{
-					"key": "newKey",
+					"key": "dataFileKey",
 					"value": "{{dataVar}}",
 					"type": "text"
 				},
 				{
-					"key": "oldKey",
-					"value": "{{hKey}}",
+					"key": "envFileKey",
+					"value": "{{envKey}}",
 					"type": "text"
 				},
 				{
@@ -35,7 +35,7 @@
 			],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "var data = JSON.parse(responseBody);\ntests[\"formVars\"] = ((data.form.newKey === \"value1\" && iteration===1) || (data.form.newKey === \"value2\" && iteration===2));\ntests[\"envVars\"] = (data.form.oldKey===\"abhijit3\");\ntests[\"prScript\"] = (data.form.prScriptTest==iteration);",
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"form-data is populated through data-files\"] = ((data.form.dataFileKey === \"value1\" && iteration===1) || (data.form.dataFileKey === \"value2\" && iteration===2));\ntests[\"form data populated through env file\"] = (data.form.envFileKey===\"abhijit3\");\ntests[\"form-data populated through prScript\"] = (data.form.prScriptTest==iteration);",
 			"time": 1404409637382,
 			"name": "http://dump.getpostman.com/post",
 			"description": "",

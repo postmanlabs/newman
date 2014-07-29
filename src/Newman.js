@@ -1,8 +1,10 @@
 var jsface          = require("jsface"),
-	IterationRunner = require("./runners/IterationRunner"),
-	EventEmitter     = require('./utilities/EventEmitter'),
-	Globals          = require('./utilities/Globals'),
-	Options          = require('./utilities/Options');
+    //Validator       = require("postman_validator"),
+	//Errors			= require('./utilities/ErrorHandler'),
+    IterationRunner = require("./runners/IterationRunner"),
+    EventEmitter     = require('./utilities/EventEmitter'),
+    Globals          = require('./utilities/Globals'),
+    Options          = require('./utilities/Options');
 
 /**
  * @name Newman
@@ -10,28 +12,47 @@ var jsface          = require("jsface"),
  * @namespace
  */
 var Newman = jsface.Class([Options, EventEmitter], {
-	$singleton: true,
+    $singleton: true,
 
-	/**
-	 * Executes XHR Requests for the Postman request, and logs the responses 
-	 * & runs tests on them.
-	 * @param  {JSON} requestJSON Takes the Postman Collection JSON from a file or url.
-	 * @memberOf Newman
-	 * @param {object} Newman options
-	 */
-	execute: function(requestJSON, options, callback) {
-		Globals.addEnvironmentGlobals(requestJSON, options);
-		this.setOptions(options);
+    /**
+     * Executes XHR Requests for the Postman request, and logs the responses
+     * & runs tests on them.
+     * @param  {JSON} requestJSON Takes the Postman Collection JSON from a file or url.
+     * @memberOf Newman
+     * @param {object} Newman options
+     */
+    execute: function(requestJSON, options, callback) {
+        // var collectionParseError = Validator.validateJSON('c',requestJSON);
+        // if(!collectionParseError.status) {
+        //     Errors.terminateWithError("Not a valid POSTMAN collection");
+        // }
 
-		if (typeof callback === "function") {
-			this.addEventListener('iterationRunnerOver', callback);
-		}
+        // if(options.envJson) {
+        //     var envParseError = Validator.validateJSON('e',options.envJson);
+        //     if(!envParseError.status) {
+        //         Errors.terminateWithError("Not a valid POSTMAN environment");
+        //     }
+        // }
 
-		// setup the iteration runner with requestJSON passed and options
-		this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
+        // if(options.globalJSON) {
+        //     var globalParseError = Validator.validateJSON('g',options.globalJSON);
+        //     if(!globalParseError.status) {
+        //         Errors.terminateWithError("Not a valid POSTMAN globals file");
+        //     }
+        // }
 
-		this.iterationRunner.execute();
-	}
+        Globals.addEnvironmentGlobals(requestJSON, options);
+        this.setOptions(options);
+
+        if (typeof callback === "function") {
+            this.addEventListener('iterationRunnerOver', callback);
+        }
+
+        // setup the iteration runner with requestJSON passed and options
+        this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
+
+        this.iterationRunner.execute();
+    }
 });
 
 module.exports = Newman;
