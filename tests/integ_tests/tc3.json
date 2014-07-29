@@ -38,7 +38,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "var data1 = JSON.parse(responseBody);\ntests[\"testGlobalSetFromPRScript\"] = data1.args.prsG === \"prsG\";\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG\";\n\ntests[\"testEnvSetFromPRScript\"] = data1.args.prsE === \"prsE\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";\n\npostman.setGlobalVariable(\"prsG\", \"prsG1\");\n\npostman.setEnvironmentVariable(\"prsE\", \"prsE1\");",
+			"tests": "tests[\"Content-Type is present\"] = responseHeaders.hasOwnProperty(\"Content-Type\");var data1 = JSON.parse(responseBody);\ntests[\"testGlobalSetFromPRScript\"] = data1.args.prsG === \"prsG\";\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG\";\n\ntests[\"testEnvSetFromPRScript\"] = data1.args.prsE === \"prsE\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";\n\npostman.setGlobalVariable(\"prsG\", \"prsG1\");\n\npostman.setEnvironmentVariable(\"prsE\", \"prsE1\");",
 			"time": 1405449473947,
 			"name": "GET",
 			"description": "Similar to httpbin.org/get. Return GET data.",

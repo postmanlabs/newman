@@ -77,6 +77,36 @@ var Helpers = jsface.Class({
 		return headerObj;
 	},
 
+    createProperCasedHeaderObject: function(headers) {
+        var retVal={};
+        for (var key in headers) {
+            if(headers.hasOwnProperty(key)) {
+                retVal[Helpers.toHeaderCase(key)]=headers[key];
+            }
+        }
+        return retVal;
+    },
+
+    toHeaderCase: function(str) {
+        var toUpper=true;
+        var retVal="";
+        var len = str.length;
+        var wordBreakers="- ";
+        for(var i=0;i<len;i++) {
+            if(toUpper) {
+                toUpper=false;
+                retVal+=str[i].toUpperCase();
+            }
+            else {
+                retVal+=str[i];
+            }
+            if(wordBreakers.indexOf(str[i])!==-1) {
+                toUpper=true;
+            }
+        }
+        return retVal;
+    },
+
     kvArrayToObject: function(array) {
         var obj = {};
         _und.each(array,function(kv) {

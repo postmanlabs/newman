@@ -45,7 +45,7 @@ describe("TestResponseHandler", function() {
 	});
 	
 	it("should run the test cases properly", function() {
-		this.request.tests = 'tests["statuscode is 200"] = responseCode.code === 200;\n\ntests["Content type is correct"] = responseHeaders["content-type"].has("application/json")';
+		this.request.tests = 'tests["statuscode is 200"] = responseCode.code === 200;\n\ntests["Content type is correct"] = responseHeaders["Content-Type"].has("application/json")';
 		var parsedResult = {"statuscode is 200": true,"Content type is correct": true};
 		var results = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert.deepEqual(results, parsedResult);

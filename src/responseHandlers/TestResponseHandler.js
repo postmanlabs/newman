@@ -146,7 +146,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         return {
             sugar: sugar,
             tests: {},
-            responseHeaders: response.headers,
+            responseHeaders: Helpers.createProperCasedHeaderObject(response.headers),
             responseBody: body,
             responseTime: response.stats.timeTaken,
             request: {
