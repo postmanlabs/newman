@@ -1,5 +1,5 @@
 var jsface          = require("jsface"),
-    Validator       = require("postman_validator"),
+    //Validator       = require("postman_validator"),
     IterationRunner = require("./runners/IterationRunner"),
     EventEmitter     = require('./utilities/EventEmitter'),
     Errors           = require('./utilities/ErrorHandler'),
@@ -22,24 +22,24 @@ var Newman = jsface.Class([Options, EventEmitter], {
      * @param {object} Newman options
      */
     execute: function(requestJSON, options, callback) {
-        var collectionParseError = Validator.validateJSON('c',requestJSON);
-        if(!collectionParseError.status) {
-            Errors.terminateWithError("Not a valid POSTMAN collection");
-        }
+        // var collectionParseError = Validator.validateJSON('c',requestJSON);
+        // if(!collectionParseError.status) {
+        //     Errors.terminateWithError("Not a valid POSTMAN collection");
+        // }
 
-        if(options.envJson) {
-            var envParseError = Validator.validateJSON('e',options.envJson);
-            if(!envParseError.status) {
-                Errors.terminateWithError("Not a valid POSTMAN environment");
-            }
-        }
+        // if(options.envJson) {
+        //     var envParseError = Validator.validateJSON('e',options.envJson);
+        //     if(!envParseError.status) {
+        //         Errors.terminateWithError("Not a valid POSTMAN environment");
+        //     }
+        // }
 
-        if(options.globalJSON) {
-            var globalParseError = Validator.validateJSON('g',options.globalJSON);
-            if(!globalParseError.status) {
-                Errors.terminateWithError("Not a valid POSTMAN globals file");
-            }
-        }
+        // if(options.globalJSON) {
+        //     var globalParseError = Validator.validateJSON('g',options.globalJSON);
+        //     if(!globalParseError.status) {
+        //         Errors.terminateWithError("Not a valid POSTMAN globals file");
+        //     }
+        // }
 
         Globals.addEnvironmentGlobals(requestJSON, options);
         this.setOptions(options);
