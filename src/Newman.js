@@ -1,8 +1,8 @@
 var jsface          = require("jsface"),
     //Validator       = require("postman_validator"),
+	//Errors			= require('./utilities/ErrorHandler'),
     IterationRunner = require("./runners/IterationRunner"),
     EventEmitter     = require('./utilities/EventEmitter'),
-    Errors           = require('./utilities/ErrorHandler'),
     Globals          = require('./utilities/Globals'),
     Options          = require('./utilities/Options');
 
