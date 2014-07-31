@@ -29,7 +29,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             else error = results._error.toString();
             delete results._error;
         }
-        AbstractResponseHandler._onRequestExecuted.call(this, error, response, body, request, results, error);
+        AbstractResponseHandler._onRequestExecuted.call(this, error, response, body, request, results);
         this._logTestResults(results);
 
         if(this.throwErrorOnLog!==false) {
