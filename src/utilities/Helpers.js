@@ -30,11 +30,23 @@ var Helpers = jsface.Class({
 		}
 	},
 
-	validateCollectionFile: function(file) {
-		if (!fs.existsSync(file)) {
-			Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
-		}
-	},
+    validateCollectionFile: function(file) {
+        if (!fs.existsSync(file)) {
+            Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
+        }
+    },
+
+    validateEnvironmentFile: function(file) {
+        if (!fs.existsSync(file)) {
+            Errors.terminateWithError("Please specify a valid Postman environment file");
+        }
+    },
+
+    validateGlobalFile: function(file) {
+        if (!fs.existsSync(file)) {
+            Errors.terminateWithError("Please specify a valid Postman globals file");
+        }
+    },
 
 	// transforms an array of 
 	// [{"id": 1, "name":"foo"}, { .. }, ..] 
@@ -63,13 +75,69 @@ var Helpers = jsface.Class({
 			}
 		});
 		return headerObj;
-	}
-});
+	},
 
-// symbols for logging
-exports.symbols =  {
-	err: (process.platform === "win32") ? "\u00D7 " : "✗ ",
-	ok:  (process.platform === "win32") ? "\u221A " : "✔ "
-};
+    createProperCasedHeaderObject: function(headers) {
+        var retVal={};
+        for (var key in headers) {
+            if(headers.hasOwnProperty(key)) {
+                retVal[Helpers.toHeaderCase(key)]=headers[key];
+            }
+        }
+        return retVal;
+    },
+
+    toHeaderCase: function(str) {
+        var toUpper=true;
+        var retVal="";
+        var len = str.length;
+        var wordBreakers="- ";
+        for(var i=0;i<len;i++) {
+            if(toUpper) {
+                toUpper=false;
+                retVal+=str[i].toUpperCase();
+            }
+            else {
+                retVal+=str[i];
+            }
+            if(wordBreakers.indexOf(str[i])!==-1) {
+                toUpper=true;
+            }
+        }
+        return retVal;
+    },
+
+    kvArrayToObject: function(array) {
+        var obj = {};
+        _und.each(array,function(kv) {
+            obj[kv.key]=kv.value;
+        });
+        return obj;
+    },
+
+    objectToKvArray: function(obj) {
+        var arr=[];
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property)) {
+                arr.push({"key":property, "value":obj[property]});
+            }
+        }
+        return arr;
+    },
+
+    augmentDataArrays: function(oldArray, newArray) {
+        var existingEnvVars = this.kvArrayToObject(oldArray);
+        var dataFileVars = this.kvArrayToObject(newArray);
+        var finalObject = existingEnvVars;
+        for (var property in dataFileVars) {
+            if (dataFileVars.hasOwnProperty(property)) {
+                finalObject[property]=dataFileVars[property];
+            }
+        }
+        var finalArray = this.objectToKvArray(finalObject);
+        //Globals.envJson.values = finalArray;
+        return finalArray;
+    }
+});
 
 module.exports = Helpers;

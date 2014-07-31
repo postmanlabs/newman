@@ -42,8 +42,10 @@ Options:
 -V, --version             output the version number
 -c, --collection [file]   Specify a Postman collection as a JSON [file]
 -u, --url [url]           Specify a Postman collection as a [url]
+-f, --folder [folderName] Specify a single folder to run from a collection. To be used with -c or -u.
 -e, --environment [file]  Specify a Postman environment as a JSON [file]
 -d, --data [file]         Specify a data file to use either json or csv
+-g, --global [file]       Specify a Postman globals file as JSON [file]
 -s, --stopOnError         Stops the runner when a test case fails
 -n, --number [number]     Define the number of iterations to run.
 -o, --outputFile [file]   Path to file where output should be written. [file]
