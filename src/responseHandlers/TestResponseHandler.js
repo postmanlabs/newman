@@ -24,7 +24,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     // function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
     _onRequestExecuted: function(error, response, body, request) {
         var results = this._runTestCases(error, response, body, request);
-        AbstractResponseHandler._onRequestExecuted.call(this, error, response, body, request, results);
+        AbstractResponseHandler._onRequestExecuted.call(this, error, response, body, request, results, error);
         this._logTestResults(results);
 
         if(this.throwErrorOnLog!==false) {
@@ -94,6 +94,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         try {
             vm.runInNewContext(testCases, sandbox);
         } catch (err) {
+            sandbox._error = err;
             if(err.toString()==="SyntaxError: Unexpected token u") {
                 ErrorHandler.exceptionError("No response from URL");
             }
