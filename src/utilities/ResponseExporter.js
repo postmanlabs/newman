@@ -21,18 +21,18 @@ var ResponseExporter = jsface.Class({
 	 * @param {Object} tests Test Results.
 	 * @memberOf ResponseExporter
 	 */
-	addResult: function(request, response, tests) {
+	addResult: function(request, response, tests, error) {
 		var result = this._findResultObject(request);
 		if (result) {
-			this._appendToResultsObject(result, request, response, tests);
+			this._appendToResultsObject(result, request, response, tests, error);
 		} else {
-			result = this._createResultObject(request, response, tests);
+			result = this._createResultObject(request, response, tests, error);
 			this._results.push(result);
 		}
 	},
 
 	// Used to create a first result object, to be used while exporting the results.
-	_createResultObject: function(request, response, tests) {
+	_createResultObject: function(request, response, tests, error) {
 		if (!tests) {
 			tests = {};
 		}
@@ -41,6 +41,7 @@ var ResponseExporter = jsface.Class({
 			"id": request.id,
 			"name": request.name,
 			"url": request.url,
+			"error":error,
 			"totalTime": response.stats.timeTaken,
 			"responseCode": {
 				"code": response.statusCode,
@@ -61,8 +62,8 @@ var ResponseExporter = jsface.Class({
 		}) || null;
 	},
 
-	_appendToResultsObject: function(result, request, response, tests) {
-		var newResultObject = this._createResultObject(request, response, tests);
+	_appendToResultsObject: function(result, request, response, tests, error) {
+		var newResultObject = this._createResultObject(request, response, tests, error);
 		newResultObject.totalTime += result.totalTime;
 		newResultObject.allTests = newResultObject.allTests.concat(result.allTests);
 		this._results[this._results.indexOf(result)] = newResultObject;
