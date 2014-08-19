@@ -27,7 +27,7 @@ function parseArguments() {
 	  .option('-e, --environment [file]', 'Specify a Postman environment as a JSON [file]', null)
       .option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
       .option('-g, --global [file]', 'Specify a Postman globals file [file]', null)
-	  .option('-s, --stopOnError', "Stops the runner when a test case fails", null)
+	  .option('-s, --stopOnError', "Stops the runner when a test case fails, or when there is an exception", null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-C, --noColor', 'Disable colored output.', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
@@ -119,6 +119,7 @@ function main() {
 
 	newmanOptions.stopOnError = !!program.stopOnError;
 	newmanOptions.noColor = !!program.noColor;
+	newmanOptions.asLibrary = false;
 
 	if (program.collection) {
         var collectionJson;

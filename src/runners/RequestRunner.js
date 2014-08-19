@@ -64,6 +64,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
     // Gets a request from the queue and executes it.
     _execute: function() {
+		if(Globals.exitCode===1 && Globals.stopOnError===true) {
+			return;
+		}
+
         var request = this.getFromQueue();
         if (request) {
             //To be uncommented if each prScript/test should set transient env. vars
