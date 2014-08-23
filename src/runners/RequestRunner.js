@@ -6,7 +6,9 @@ var jsface            = require('jsface'),
     EventEmitter      = require('../utilities/EventEmitter'),
     VariableProcessor = require('../utilities/VariableProcessor.js'),
     prScripter        = require('../utilities/PreRequestScriptProcessor.js'),
-    _und              = require('underscore');
+    _und              = require('underscore'),
+    path              = require('path'),
+    fs                = require('fs');
 
 /**
  * @class RequestRunner
@@ -153,6 +155,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                 // TODO: @viig99 add other types like File Stream, Blob, Buffer.
                 if (dataObj.type === 'text') {
                     form.append(dataObj.key, dataObj.value);
+                } else if (dataObj.type === 'file') {
+                    var loc = path.resolve(dataObj.value);
+                    form.append(dataObj.key, fs.createReadStream(loc));
                 }
             });
         }
