@@ -124,6 +124,7 @@ newmanOptions = {
 	iterationCount: 10,                    // define the number of times the runner should run
 	outputFile: "outfile.json",            // the file to export to
 	responseHandler: "TestResponseHandler", // the response handler to use
+	asLibrary: true,         				// this makes sure the exit code is returned as an argument to the callback function
 	stopOnError: true
 }
 
