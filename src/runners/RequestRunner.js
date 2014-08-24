@@ -1,9 +1,10 @@
 var jsface            = require('jsface'),
-    unirest           = require('unirest'),
+    requestLib        = require('request'),
     Queue             = require('../utilities/Queue'),
     Helpers           = require('../utilities/Helpers'),
     Globals           = require('../utilities/Globals'),
     EventEmitter      = require('../utilities/EventEmitter'),
+    Errors            = require('../utilities/ErrorHandler'),
     VariableProcessor = require('../utilities/VariableProcessor.js'),
     prScripter        = require('../utilities/PreRequestScriptProcessor.js'),
     _und              = require('underscore'),
@@ -83,7 +84,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
             request.data=request.transformed.data;
             request.startTime = new Date().getTime();
             RequestOptions.rejectUnauthorized=false;
-            var unireq = unirest.request(RequestOptions, function(error, response, body) {
+            var unireq = requestLib(RequestOptions, function(error, response, body) {
                 if(response) {
                     // save some stats, only if response exists
                     this._appendStatsToReponse(request, response);
@@ -101,7 +102,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
             }.bind(this));
 
             this._setFormDataIfParamsInRequest(unireq, request);
-
             //To be uncommented if each prScript/test should set transient env. vars
             //Globals.envJson = oldGlobals;
 
@@ -157,9 +157,13 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                     form.append(dataObj.key, dataObj.value);
                 } else if (dataObj.type === 'file') {
                     var loc = path.resolve(dataObj.value);
+                    if(!fs.existsSync(loc)) {
+                      Errors.terminateWithError("No file found - "+loc);
+                    }
                     form.append(dataObj.key, fs.createReadStream(loc));
                 }
             });
+
         }
     },
 
