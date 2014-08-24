@@ -1,5 +1,10 @@
 ##CHANGELOG
 
+1.1.0 (August 19, 2014)
+================
+* If used as a library, the exit code is now passed to the callback function
+
+
 1.0.9 (July 29, 2014)
 ================
 * Header names are now converted to title case (Content-Type, instead of content-type)
