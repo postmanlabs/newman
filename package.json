@@ -33,6 +33,7 @@
     "commander": "2.x.x",
     "underscore": "1.x.x",
     "jsface": "2.2.x",
+    "request": "2.40.0",
     "unirest": "*",
     "postman_validator" : "0.0.4",
     "jsdom-nogyp": "*",
