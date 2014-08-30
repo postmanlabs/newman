@@ -119,6 +119,7 @@ function main() {
 
 	newmanOptions.stopOnError = !!program.stopOnError;
 	newmanOptions.noColor = !!program.noColor;
+	newmanOptions.asLibrary = false;
 
 	if (program.collection) {
         var collectionJson;
