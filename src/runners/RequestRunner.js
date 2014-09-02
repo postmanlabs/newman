@@ -75,6 +75,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if (request) {
             //To be uncommented if each prScript/test should set transient env. vars
             //var oldGlobals = Globals.envJson;
+            var oldRequestData = request.data;
+
+            //To remain compatible with Postman - ensure consistency of request.data
+            if(request.dataMode === "raw" && request.hasOwnProperty("rawModeData")) {
+                if(request.rawModeData !== undefined) {
+                    request.data = request.rawModeData;
+                }
+            }
 
             //to add Environment and Data variables to the request, because the processed URL is available in the PR script
             this._processUrlUsingEnvVariables(request);
@@ -83,9 +91,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
             this._processUrlUsingEnvVariables(request);
 
             request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
+
             var RequestOptions = this._getRequestOptions(request);
-            var oldRequestData = request.data;
+
             request.data=request.transformed.data;
+
+
             request.startTime = new Date().getTime();
             RequestOptions.rejectUnauthorized=false;
             var unireq = requestLib(RequestOptions, function(error, response, body) {

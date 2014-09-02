@@ -16,6 +16,7 @@ var RequestModel = jsface.Class(ParentModel, {
         this.method        = requestJson.method;
         this.pathVariables = requestJson.pathVariables;
         this.data          = requestJson.data;
+        this.rawModeData   = requestJson.rawModeData;
         this.dataMode      = requestJson.dataMode;
         this.responses     = requestJson.responses;
         this.tests         = requestJson.tests;
