@@ -1,5 +1,13 @@
 ##CHANGELOG
 
+1.1.2 (September 13, 2014)
+===============
+* Ability to add a delay between requests
+
+1.1.1 (September 2, 2014)
+================
+* Newman handles the latest version of Postman collections
+
 1.1.0 (August 19, 2014)
 ================
 * If used as a library, the exit code is now passed to the callback function

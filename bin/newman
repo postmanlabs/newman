@@ -19,7 +19,7 @@ var color   = require('cli-color'),
 
 function parseArguments() {
 	program
-	  .version('1.1.1')
+	  .version('1.1.2')
 	  .usage('[options] file')
 	  .option('-c, --collection [file]', 'Specify a Postman collection as a JSON [file]', null)
 	  .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
@@ -27,6 +27,7 @@ function parseArguments() {
 	  .option('-e, --environment [file]', 'Specify a Postman environment as a JSON [file]', null)
 	  .option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
 	  .option('-g, --global [file]', 'Specify a Postman globals file [file]', null)
+	  .option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
 	  .option('-s, --stopOnError', "Stops the runner when a test case fails", null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-C, --noColor', 'Disable colored output.', null)
@@ -102,6 +103,13 @@ function main() {
 
     if (program.data) {
         newmanOptions.dataFile = program.data;
+    }
+
+    if (program.delay) {
+        if(isNaN(program.delay) || parseFloat(program.delay)%1 !== 0) {
+            Errors.terminateWithError("The delay must be an integer");
+        }
+        newmanOptions.delay = parseInt(program.delay);
     }
 
     if (program.global) {

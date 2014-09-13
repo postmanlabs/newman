@@ -43,6 +43,7 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 		}, this);
 
 		// Start the runner
+		RequestRunner.setDelay(this.opts.delay);
 		RequestRunner.start();
 
 		this.$class.$superp.execute.call(this);

@@ -34,6 +34,16 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this.collection = this._getFolderRequestsFromCollection(this.collection, this.folder);
         }
 
+        if(!isNaN(options.delay) && options.delay%1===0) {
+            this.delay=options.delay;
+        }
+        else if(options.delay==null) {
+            this.delay=0;
+        }
+        else {
+            Errors.terminateWithError('The delay must be an integer');
+        }
+
         // collection of environment jsons passed from datafile
         this.dataVars = this._getJsonArraysFromFile();
         this.globalVars = this._getJsonArraysFromGlobalFile();

@@ -20,8 +20,18 @@ var jsface            = require('jsface'),
 var RequestRunner = jsface.Class([Queue, EventEmitter], {
     $singleton: true,
 
+    delay: 0,
+
     $statics: {
         METHODS_WHICH_ALLOW_BODY: ['POST','PUT','PATCH','DELETE','LINK','UNLINK','LOCK','PROPFIND']
+    },
+
+    /**
+     * Sets a delay to be used between requests
+     * @param delay
+     */
+    setDelay: function(delay) {
+        this.delay = delay;
     },
 
     /**
@@ -40,7 +50,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     start: function() {
         this._bindedOnRequestExecuted = this._onRequestExecuted.bind(this);
         this.addEventListener('requestExecuted', this._bindedOnRequestExecuted);
-        this._execute();
+        var runner = this;
+        setTimeout(function() {
+            runner._execute();
+        }, this.delay);
     },
 
     _getPropertyFromArray: function(array, propName) {
@@ -113,7 +126,11 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                 }
 
                 // emit event to signal request has been executed
-                this.emit('requestExecuted', error, response, body, request);
+                var delay = this.delay;
+                if(this.isEmptyQueue()) {
+                    delay = 0;
+                }
+                this.emit('requestExecuted', error, response, body, request, delay);
             }.bind(this));
 
             this._setFormDataIfParamsInRequest(unireq, request);
@@ -132,9 +149,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         this.emit('requestRunnerOver');
     },
 
-    _onRequestExecuted: function(error, response, body, request) {
+    _onRequestExecuted: function(error, response, body, request, delay) {
         // Call the next request to execute
-        this._execute();
+        var runner = this;
+        setTimeout(function() {
+            runner._execute();
+        }, delay);
     },
 
     // Generates and returns the request Options to be used by unirest.
