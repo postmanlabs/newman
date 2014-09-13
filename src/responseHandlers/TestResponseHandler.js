@@ -12,6 +12,8 @@ var jsface                  = require('jsface'),
     xmlToJson               = require("xml2js"),
     Globals                 = require("../utilities/Globals"),
     ResponseExporter        = require("../utilities/ResponseExporter"),
+    btoa                    = require("btoa"),
+    atob                    = require("atob"),
     tv4                     = require("tv4");
 require('sugar');
 /**
@@ -161,6 +163,8 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                 name: request.name,
                 detail: request.description
             },
+			btoa: btoa,
+			atob: atob,
             iteration: Globals.iterationNumber,
             environment: this._setEnvironmentContext(),
             globals: this._setGlobalContext(),

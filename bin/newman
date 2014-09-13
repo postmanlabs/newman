@@ -31,6 +31,7 @@ function parseArguments() {
 	  .option('-s, --stopOnError', "Stops the runner when a test case fails", null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-C, --noColor', 'Disable colored output.', null)
+	  .option('-x, --exitCode', 'Exit with code=1 if any test fails', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
 
 	program.on('--help', function() {
@@ -138,7 +139,11 @@ function main() {
         catch (err) {
             Errors.terminateWithError("The collection file " + program.collection+" could not be parsed.");
         }
-		Newman.execute(collectionJson, newmanOptions);
+		Newman.execute(collectionJson, newmanOptions, function(exitCode) {
+			if(program.exitCode) {
+				process.exit(exitCode);
+			}
+		});
 
 	} else {
 		// get collection from url
@@ -146,7 +151,11 @@ function main() {
 			if (data.error) {
 				Errors.terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
 			}
-			Newman.execute(data.body, newmanOptions);
+			Newman.execute(data.body, newmanOptions, function(exitCode) {
+				if(program.exitCode) {
+					process.exit(exitCode);
+				}
+			});
 		});
 	}
 }
