@@ -1,5 +1,6 @@
 var jsface       = require('jsface'),
 	Helpers      = require('./Helpers'),
+    uuid         = require('node-uuid'),
 	_und         = require('underscore');
 
 /** 
@@ -23,6 +24,17 @@ var VariableProcessor = jsface.Class({
 		timestamp: _und.now(),
 		randomInt: _und.random(0, 1000)
 	},
+
+    _resetFunctionVariables: function() {
+        var guid = uuid.v4();
+        var timestamp = _und.now();
+        var randomInt = _und.random(0, 1000);
+        this.getFunctionVariables = {
+            guid: guid,
+            timestamp: timestamp,
+            randomInt: randomInt
+        }
+    },
 
 	// updates request url by the replacing it with pathVariables
 	_processPathVariable: function(request) {
@@ -106,6 +118,7 @@ var VariableProcessor = jsface.Class({
 	 * @param {JSON} options passed to Newman runner
 	 */
 	processRequestVariables: function(request, options) {
+        this._resetFunctionVariables();
 		this._processPathVariable(request);
 		this._processFunctionVariable(request);
 		this._processEnvVariable(request, options.envJson);

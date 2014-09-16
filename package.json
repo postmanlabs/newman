@@ -36,6 +36,7 @@
     "request": "2.40.0",
     "unirest": "*",
     "postman_validator" : "0.0.4",
+    "node-uuid" : "1.4.1",
     "jsdom-nogyp": "*",
     "jquery": "*",
     "backbone": "*",
