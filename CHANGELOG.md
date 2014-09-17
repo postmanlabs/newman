@@ -1,5 +1,12 @@
 ##CHANGELOG
 
+1.1.3 (September 17, 2014)
+===============
+* {{$randomInt}} works as expected
+* {{$guid}} functionality added
+* atob and btoa functions now available in tests and pre-request scripts
+* Added an option to exit with code=1 if any test in the collection fails
+
 1.1.2 (September 13, 2014)
 ===============
 * Ability to add a delay between requests

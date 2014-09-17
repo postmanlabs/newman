@@ -50,6 +50,7 @@ Options:
 -s, --stopOnError         Stops the runner when a test case fails
 -n, --number [number]     Define the number of iterations to run.
 -o, --outputFile [file]   Path to file where output should be written. [file]
+-x, --exitCode             Continue running tests even after a failure, but exit with code=1
 -C, --noColor             Disable colored output.
 ```
 

@@ -9,6 +9,8 @@ var jsface                  = require('jsface'),
     Backbone                = require("backbone"),
     xmlToJson               = require("xml2js"),
     Globals                 = require("./Globals"),
+    btoa                    = require("btoa"),
+    atob                    = require("atob"),
     tv4                     = require("tv4");
 
 
@@ -113,6 +115,8 @@ var PreRequestScriptProcessor = jsface.Class({
             data: this._setDataContext(),
             $: _jq,
             _: _lod,
+            btoa: btoa,
+            atob: atob,
             Backbone: Backbone,
             xmlToJson: function(string) {
                 var JSON = {};

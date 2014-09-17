@@ -1,6 +1,6 @@
 var jsface       = require('jsface'),
 	Helpers      = require('./Helpers'),
-    uuid         = require('node-uuid'),
+	uuid         = require('node-uuid'),
 	_und         = require('underscore');
 
 /** 
@@ -29,11 +29,9 @@ var VariableProcessor = jsface.Class({
         var guid = uuid.v4();
         var timestamp = _und.now();
         var randomInt = _und.random(0, 1000);
-        this.getFunctionVariables = {
-            guid: guid,
-            timestamp: timestamp,
-            randomInt: randomInt
-        }
+        this.getFunctionVariables.guid = guid;
+        this.getFunctionVariables.randomInt = randomInt;
+        this.getFunctionVariables.timestamp= timestamp;
     },
 
 	// updates request url by the replacing it with pathVariables
