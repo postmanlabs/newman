@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+1.1.4 (September 18, 2014)
+===============
+* Version number fix
+
 1.1.3 (September 17, 2014)
 ===============
 * {{$randomInt}} works as expected
