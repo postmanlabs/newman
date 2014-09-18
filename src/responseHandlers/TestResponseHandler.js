@@ -11,6 +11,7 @@ var jsface                  = require('jsface'),
     Backbone                = require("backbone"),
     xmlToJson               = require("xml2js"),
     Globals                 = require("../utilities/Globals"),
+    HttpStatusCodes         = require("../utilities/HttpStatusCodes"),
     ResponseExporter        = require("../utilities/ResponseExporter"),
     btoa                    = require("btoa"),
     atob                    = require("atob"),
@@ -138,7 +139,24 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         return Helpers.transformFromKeyValue(Globals.dataJson.values);
     },
 
+    _getResponseCodeObject: function(code) {
+        var obj = {
+            'code': code,
+            'name': "",
+            'detail': ""
+        };
+        code = code.toString();
+        var statusCodes = HttpStatusCodes.getCodes();
+        if(statusCodes.hasOwnProperty(code)) {
+            obj.name = statusCodes[code].name;
+            obj.detail = statusCodes[code].detail;
+        }
+        return obj;
+
+    },
+
     _createSandboxedEnvironment: function(error, response, body, request) {
+        var responseCodeObject = this._getResponseCodeObject(response.statusCode);
         var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };
         Object.getOwnPropertyNames(Array.prototype).each(function(p) { sugar.array[p] = Array.prototype[p];});
         Object.getOwnPropertyNames(Object.prototype).each(function(p) { sugar.object[p] = Object.prototype[p];});
@@ -158,11 +176,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                 data: this._getTransformedRequestData(request),
                 dataMode: request.dataMode
             },
-            responseCode: {
-                code: response.statusCode,
-                name: request.name,
-                detail: request.description
-            },
+            responseCode: responseCodeObject,
 			btoa: btoa,
 			atob: atob,
             iteration: Globals.iterationNumber,
