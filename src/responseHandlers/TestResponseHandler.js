@@ -38,7 +38,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
     _runTestCases: function(error, response, body, request) {
         if (this._hasTestCases(request)) {
-            var tests = this._getValidTestCases(request.tests);
+            var tests = request.tests;
             var sandbox = this._createSandboxedEnvironment(error, response, body, request);
             return this._runAndGenerateTestResults(tests, sandbox);
         }
@@ -47,17 +47,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
     _hasTestCases: function(request) {
         return !!request.tests;
-    },
-
-    // returns an array of test cases ( as strings )
-    _getValidTestCases: function(tests) {
-        return _und.reduce(tests.split(';'), function(listOfTests, testCase) {
-            var t = testCase.trim();
-            if (t.length > 0) {
-                listOfTests.push(t);
-            }
-            return listOfTests;
-        }, []);
     },
 
     // run and generate test results. Also exit if any of the tests has failed
@@ -93,7 +82,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         sweet += "for(p in sugar.string) String.prototype[p]  = sugar.string[p];";
         sweet += "for(p in sugar.date)   Date.prototype[p]    = sugar.date[p];";
         sweet += "for(p in sugar.funcs)  Function.prototype[p]= sugar.funcs[p];";
-        testCases = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + testCases.join(";");
+        testCases = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + testCases;
         try {
             vm.runInNewContext(testCases, sandbox);
         } catch (err) {

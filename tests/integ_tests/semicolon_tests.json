@@ -1,0 +1,29 @@
+{
+    "id": "3830b384-b0ae-65fb-725e-840dc3d006a1",
+    "name": "sandbox",
+    "requests": [
+        {
+            "id": "609a5233-6542-c2ed-b308-446101ac693d",
+            "headers": "",
+            "url": "http://api.openweathermap.org/data/2.5/weather?q=San%20Francisco,USA",
+            "preRequestScript": "",
+            "pathVariables": {},
+            "method": "GET",
+            "data": [],
+            "dataMode": "params",
+            "version": 2,
+            "tests": "console.log(responseHeaders[\"Content-Type\"]);\nconsole.log(\"application/json; charset=utf-8\");\n\ntests[\"Test1: Content-Type is 'application/json;  charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json; charset=utf-8\";\ntests[\"Test2: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json; charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n\n\ntests[\"Test3: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json;\\ charset=utf-8\";\ntests[\"Test4: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json;\\ charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n",
+            "time": 1411072520378,
+            "name": "This is a name of my Request",
+            "description": "This is a descirption of my Request",
+            "collectionId": "3830b384-b0ae-65fb-725e-840dc3d006a1",
+            "responses": [],
+            "synced": false
+        }
+    ],
+    "order": [
+        "609a5233-6542-c2ed-b308-446101ac693d"
+    ],
+    "timestamp": 1411060190075,
+    "synced": false
+}
