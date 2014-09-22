@@ -4,6 +4,15 @@
 ===============
 * Version number fix
 
+1.1.5 (September 22, 2014)
+===============
+* Test cases with semicolons in them work properly
+* HttpStatusCodes and descriptions are in-line with Postman
+
+1.1.4 (September 18, 2014)
+===============
+* Corrected version nummber
+
 1.1.3 (September 17, 2014)
 ===============
 * {{$randomInt}} works as expected
