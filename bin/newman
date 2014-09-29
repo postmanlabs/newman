@@ -13,9 +13,11 @@ var color   = require('cli-color'),
 	request = require('unirest'),
 	fs      = require('fs'),
 	Helpers = require('../src/utilities/Helpers'),
+	Importer = require('../src/utilities/Importer'),
 	Errors  = require('../src/utilities/ErrorHandler'),
 	JSON5   = require('json5'),
 	Newman  = require('../src/Newman');
+
 
 function parseArguments() {
 	program
@@ -32,7 +34,8 @@ function parseArguments() {
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-C, --noColor', 'Disable colored output.', null)
 	  .option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
-	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null);
+	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null)
+	  .option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals. [file] (Incompatible with any other option)', null);
 
 	program.on('--help', function() {
 	  console.log('  Newman is a command-line collection runner for Postman.');
@@ -48,6 +51,11 @@ function parseArguments() {
 	});
 
 	program.parse(process.argv);
+
+    if(program.import) {
+        Importer.importFile(program.import);
+        return;
+    }
 
 	if (program.collection) {
 		Helpers.validateCollectionFile(program.collection);
@@ -80,6 +88,11 @@ function main() {
 	parseArguments();
 	
 	newmanOptions = {};
+
+    if(program.import) {
+        //the importer function will print all relevant messages
+        return;
+    }
 
 	if (program.environment) {
 		// in case of environment variable set the envJson property 
