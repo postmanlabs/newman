@@ -1,8 +1,7 @@
 var jsface = require('jsface'),
     fs     = require('fs'),
     Errors = require('./ErrorHandler'),
-    _und   = require('underscore');
-var mkdirp = require('mkdirp');
+    mkdirp = require('mkdirp');
 
 /**
  * @name Helpers
@@ -31,7 +30,6 @@ var Importer = jsface.Class({
 
         var numC = collections.length;
         var numE = environments.length;
-        var numG = globals.length;
 
         mkdirp.sync('data/collections');
         mkdirp.sync('data/environments');
@@ -51,7 +49,7 @@ var Importer = jsface.Class({
 
     _saveCollection: function(thisCollection) {
         var collectionName = thisCollection.name;
-        if(collectionName==null || collectionName=="") {
+        if(collectionName===null || collectionName==="") {
             collectionName = thisCollection.id;
         }
         var collectionString = JSON.stringify(thisCollection);
@@ -66,7 +64,7 @@ var Importer = jsface.Class({
 
     _saveEnvironment: function(environment) {
         var envName = environment.name;
-        if(envName==null || envName=="") {
+        if(envName===null || envName==="") {
             envName = environment.id;
         }
         var envString = JSON.stringify(environment);
