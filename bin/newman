@@ -21,7 +21,7 @@ var color   = require('cli-color'),
 
 function parseArguments() {
 	program
-	  .version('1.1.5')
+	  .version('1.1.6')
 	  .usage('[options]')
 	  .option('-c, --collection [file]', 'Specify a Postman collection as a JSON [file]', null)
 	  .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
@@ -35,7 +35,8 @@ function parseArguments() {
 	  .option('-C, --noColor', 'Disable colored output.', null)
 	  .option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null)
-	  .option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals. [file] (Incompatible with any other option)', null);
+	  .option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals. [file] (Incompatible with any other option)', null)
+	  .option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals');
 
 	program.on('--help', function() {
 	  console.log('  Newman is a command-line collection runner for Postman.');
@@ -53,7 +54,7 @@ function parseArguments() {
 	program.parse(process.argv);
 
     if(program.import) {
-        Importer.importFile(program.import);
+        Importer.importFile(program.import, program.pretty);
         return;
     }
 

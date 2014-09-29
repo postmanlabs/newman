@@ -50,8 +50,11 @@ Options:
 -s, --stopOnError         Stops the runner when a test case fails
 -n, --number [number]     Define the number of iterations to run.
 -o, --outputFile [file]   Path to file where output should be written. [file]
--x, --exitCode             Continue running tests even after a failure, but exit with code=1
+-x, --exitCode            Continue running tests even after a failure, but exit with code=1
 -C, --noColor             Disable colored output.
+-o, --outputFile [file]   Path to file where output should be written. [file]
+-i, --import [file]       Import a Postman backup file, and save collections, environments, and globals. [file]
+-p, --pretty		  (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
 ```
 
 Use the `-n` option to set the number of iterations you want to run the collection for.
@@ -108,6 +111,13 @@ The results of all tests and requests can be exported into file and later import
 $ newman -c mycollection.json -o outputfile.json
 ```
 
+Newman can also be used to import a Postman backup file. The collections, environments, and globals will be saved to the 'data' folder. (Use the -p option to enable pretty-print)
+```bash
+newman -i /path/to/Backup.json -p
+```
+
+
+
 **NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.
 
 ## Library
@@ -133,6 +143,7 @@ newmanOptions = {
 // Optional Callback function which will be executed once Newman is done executing all its tasks.
 Newman.execute(collectionJson, newmanOptions, callback);
 ```
+
 
 ## Cron
 Want your test suite to run every hour? Newman can be used to schedule tests to run hourly, daily or weekly automatically in combination with the awesome Unix scheduler **CRON**. 
