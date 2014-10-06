@@ -71,9 +71,19 @@ var VariableProcessor = jsface.Class({
 	// Note: The regex provided should capture the key to be replaced (use parenthesis)
 	_findReplace: function(stringSource, sourceObject, REGEX) {
 		function getKey(match, key){
-			return sourceObject[key];
+			var fromSource = sourceObject[key];
+			if(typeof fromSource === "undefined") {
+				return "{{"+key+"}}";
+			}
+			return fromSource;
 		}
+
+		var oldString = stringSource + "";
 		stringSource = stringSource.replace(REGEX, getKey);
+
+		if(oldString === stringSource) {
+			return stringSource;
+		}
 
 		if (stringSource.match(REGEX)){
 			return this._findReplace(stringSource, sourceObject, REGEX);

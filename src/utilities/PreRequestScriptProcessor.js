@@ -153,6 +153,9 @@ var PreRequestScriptProcessor = jsface.Class({
                     }
                     return null;
                 },
+                clearEnvironmentVariables: function() {
+                    Globals.envJson.values = [];
+                },
                 setGlobalVariable: function(key, value) {
                     var envVar = _und.find(Globals.globalJson.values, function(envObject){
                         return envObject["key"] === key;
@@ -177,6 +180,9 @@ var PreRequestScriptProcessor = jsface.Class({
                         return envVar["value"];
                     }
                     return null;
+                },
+                clearGlobalVariables: function() {
+                    Globals.globalJson.values = [];
                 }
             }
         };

@@ -211,6 +211,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                     }
                     return null;
                 },
+                clearEnvironmentVariables: function() {
+                    Globals.envJson.values = [];
+                },
                 getGlobalVariable: function(key) {
                     var envVar = _und.find(Globals.globalJson.values, function(envObject){
                         return envObject["key"] === key;
@@ -236,6 +239,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                         });
                     }
                     //globals["key"]=value;
+                },
+                clearGlobalVariables: function() {
+                    Globals.globalJson.values = [];
                 }
             }
         };

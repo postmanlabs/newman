@@ -1,0 +1,50 @@
+{
+	"id": "29199569-c73e-da26-69f3-c6e644b00e25",
+	"name": "testCollection",
+	"description": "",
+	"order": [
+		"742d8c11-e9d5-d3c2-4bb4-d63fbbfacb76"
+	],
+	"folders": [],
+	"timestamp": 1409766174430,
+	"synced": false,
+	"requests": [
+		{
+			"id": "742d8c11-e9d5-d3c2-4bb4-d63fbbfacb76",
+			"headers": "",
+			"url": "http://httpbin.org/get?novar={{novar}}&var={{var}}",
+			"pathVariables": {},
+			"preRequestScript": "postman.setEnvironmentVariable(\"var\", \"replaced\");",
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"name": "Valid and invalid variables",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1412621287623,
+			"version": 2,
+			"responses": [],
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"Variable substitution\"] = (data.args.var===\"replaced\");\ntests[\"No blank variable substitution\"] = (data.args.novar===\"{{novar}}\");",
+			"collectionId": "29199569-c73e-da26-69f3-c6e644b00e25",
+			"synced": false
+		},
+		{
+			"id": "d17e7ad0-7339-99d7-0b97-701c41d7b2b9",
+			"headers": "",
+			"url": "http://dump.getpostman.com/get?header={{header}}",
+			"preRequestScript": "postman.setEnvironmentVariable(\"header\", data.header);",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"reading data file correctly\"] = data.args.header === \"v\"+(iteration+1);",
+			"time": 1410979389130,
+			"name": "http://dump.getpostman.com/get?header={{header}}",
+			"description": "",
+			"collectionId": "29199569-c73e-da26-69f3-c6e644b00e25",
+			"responses": [],
+			"synced": false
+		}
+	]
+}
