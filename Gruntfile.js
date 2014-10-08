@@ -29,8 +29,8 @@ module.exports = function(grunt) {
 					' bin/newman -c tests/integ_tests/tc3.json -d tests/integ_tests/d3.json -e tests/integ_tests/e3.json -g tests/integ_tests/g3.json -s && ' +
 					'bin/newman -c tests/integ_tests/tc4.json -s && ' +
 					'bin/newman -c tests/integ_tests/randomIntC.json -s && ' +
-					'bin/newman -c tests/integ_tests/semicolon_tests.json -s &&' + 
-					'bin/newman -c tests/integ_tests/varReplacement.json -s &&' +
+					'bin/newman -c tests/integ_tests/semicolon_tests.json -s && ' + 
+					'bin/newman -c tests/integ_tests/varReplacement.json -s && ' +
 					'bin/newman -c tests/integ_tests/clearVars.json -s'
     		}
 		}

@@ -77,6 +77,16 @@ var Helpers = jsface.Class({
 		return headerObj;
 	},
 
+    getResponseHeader: function(headerString, headers) {
+        if(headerString==null || headerString.length==0) {
+            return null;
+        }
+        if(headers.hasOwnProperty(headerString.toLowerCase())) {
+            return headers[headerString.toLowerCase()];
+        }
+        return null;
+    },
+
     createProperCasedHeaderObject: function(headers) {
         var retVal={};
         for (var key in headers) {
