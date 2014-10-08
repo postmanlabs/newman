@@ -78,7 +78,7 @@ var Helpers = jsface.Class({
 	},
 
     getResponseHeader: function(headerString, headers) {
-        if(headerString==null || headerString.length==0) {
+        if(headerString==null || headerString.length===0) {
             return null;
         }
         if(headers.hasOwnProperty(headerString.toLowerCase())) {
