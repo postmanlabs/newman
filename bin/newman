@@ -35,6 +35,7 @@ function parseArguments() {
 	  .option('-C, --noColor', 'Disable colored output.', null)
 	  .option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null)
+		.option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML. [file]', null)
 	  .option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals. [file] (Incompatible with any other option)', null)
 	  .option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals');
 
@@ -114,6 +115,10 @@ function main() {
 
 	if (program.outputFile) {
 		newmanOptions.outputFile = program.outputFile;
+	}
+
+	if (program.testReportFile) {
+		newmanOptions.testReportFile = program.testReportFile;
 	}
 
     if (program.data) {

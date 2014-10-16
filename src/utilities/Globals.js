@@ -18,6 +18,7 @@ var Globals = jsface.Class({
 		this.envJson = options.envJson || {};
 		this.iterationNumber = 1;
 		this.outputFile = options.outputFile || '';
+		this.testReportFile = options.testReportFile || '';
 		this.globalJson = options.globalJSON || [];
         this.dataJson = [];
 		this.stopOnError = options.stopOnError;

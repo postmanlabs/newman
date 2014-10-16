@@ -90,6 +90,40 @@ var ResponseExporter = jsface.Class({
 			fs.writeFileSync(filepath , JSON.stringify(exportVariable, null, 4));
 			log.note("\n\n Output Log: " + filepath + "\n");
 		}
+
+		if (Globals.testReportFile) {
+			var outputpath = path.resolve(Globals.testReportFile);
+			fs.writeFileSync(outputpath, this._createJunitXML());
+			log.note("\n\nJunit XML file written to: " + outputpath + "\n");
+		}
+	},
+
+	_createJunitXML: function() {
+			var xml = '<?xml version="1.0" encoding="UTF-8"?>';
+			xml += "<testsuites>";
+
+			_und.each(this._results, function(suite) {
+				var testRequest = _und.find(Globals.requestJSON.requests, function(request) {
+					return suite.id === request.id;
+				});
+
+				var timeStamp = new Date(testRequest.time);
+				var time = testRequest.time;
+				var tests = Object.keys(suite.tests).length;
+
+				xml += "<testsuite name='" + _und.escape(suite.name) + "' id='" +
+					_und.escape(suite.id) + "' timestamp='" + timeStamp.toISOString() +
+					"' time='" + time + "' tests='" + tests + "' >";
+
+				_und.each(suite.testPassFailCounts, function(testcase, testcaseName) {
+					xml += "<testcase name='" + _und.escape(testcaseName) + "' failures='" + testcase.fail + "' />";
+				}, this);
+
+				xml += "</testsuite>";
+			}, this);
+
+			xml += "</testsuites>";
+			return xml;
 	},
 
 	_createExportVariable: function() {
