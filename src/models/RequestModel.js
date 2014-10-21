@@ -21,6 +21,8 @@ var RequestModel = jsface.Class(ParentModel, {
         this.responses     = requestJson.responses;
         this.tests         = requestJson.tests;
         this.preRequestScript     = requestJson.preRequestScript;
+	    this.currentHelper = requestJson.currentHelper;
+	    this.helperAttributes = requestJson.helperAttributes;
     },
     toString: function() {
         return "Request: [" + this.method + "]: " + this.url;

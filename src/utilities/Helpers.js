@@ -77,6 +77,16 @@ var Helpers = jsface.Class({
 		return headerObj;
 	},
 
+	generateHeaderStringFromObj: function(headerObj) {
+		var ret = "";
+		for(var hKey in headerObj) {
+			if(headerObj.hasOwnProperty(hKey)) {
+				ret+=hKey+":"+headerObj[hKey]+"\n";
+			}
+		}
+		return ret;
+	},
+
     getResponseHeader: function(headerString, headers) {
         if(headerString==null || headerString.length===0) {
             return null;
@@ -147,7 +157,21 @@ var Helpers = jsface.Class({
         var finalArray = this.objectToKvArray(finalObject);
         //Globals.envJson.values = finalArray;
         return finalArray;
-    }
+    },
+
+	findPosition: function(list, key, value) {
+		var listLength = list.length;
+		var pos = -1;
+		for (var i = 0; i < listLength; i++) {
+			var h = list[i];
+			if (h['key'] === value) {
+				pos = i;
+				break;
+			}
+		}
+
+		return pos;
+	}
 });
 
 module.exports = Helpers;

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @Authors Arjun Variar & Prakhar Srivastav.
+ * @Authors Arjun Variar & Prakhar Srivastav & Abhijit Kane
  * @Purpose Integerates POSTMAN Collection runner/tests with CI systems.
  * 
  * Main file which parses the command line arguments and runs Newman, Supports JSON5.

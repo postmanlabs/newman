@@ -2,6 +2,7 @@ var jsface            = require('jsface'),
     requestLib        = require('request'),
     Queue             = require('../utilities/Queue'),
     Helpers           = require('../utilities/Helpers'),
+	HelperProcessor   = require('../utilities/HelperProcessor'),
     Globals           = require('../utilities/Globals'),
     EventEmitter      = require('../utilities/EventEmitter'),
     Errors            = require('../utilities/ErrorHandler'),
@@ -9,6 +10,7 @@ var jsface            = require('jsface'),
     prScripter        = require('../utilities/PreRequestScriptProcessor.js'),
     _und              = require('underscore'),
     path              = require('path'),
+	btoa              = require("btoa"),
     fs                = require('fs');
 
 /**
@@ -103,6 +105,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
             //to process PreRequestScript variables
             this._processUrlUsingEnvVariables(request);
 
+	        HelperProcessor._useAuthHelpers(request);
+
             request.transformed.url = this._ensureUrlPrefix(request.transformed.url);
 
             var RequestOptions = this._getRequestOptions(request);
@@ -165,6 +169,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
         RequestOptions.followAllRedirects = true;
         RequestOptions.jar = true;
+        RequestOptions.timeout = 5000;
         this._setBodyData(RequestOptions, request);
         return RequestOptions;
     },
@@ -224,7 +229,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         VariableProcessor.processRequestVariables(request, {
             envJson: mergedArray
         });
-    }
+    },
+
+
 });
 
 module.exports = RequestRunner;
