@@ -46,7 +46,8 @@
     "tv4": "*",
     "mkdirp": "*",
     "atob": "1.1.2",
-    "btoa": "1.1.2"
+    "btoa": "1.1.2",
+	"crypto-js": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
