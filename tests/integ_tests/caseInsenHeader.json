@@ -1,0 +1,32 @@
+{
+	"id": "1153d5ce-29e2-c83f-648c-24e17c4aa852",
+	"name": "caseInsenHeader",
+	"description": "",
+	"order": [
+		"a7b90b07-4d6b-059e-0874-6185d8c07bf0"
+	],
+	"folders": [],
+	"timestamp": 1414061708400,
+	"synced": false,
+	"requests": [
+		{
+			"id": "a7b90b07-4d6b-059e-0874-6185d8c07bf0",
+			"headers": "",
+			"url": "http://httpbin.org/get",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"name": "http://httpbin.org/get",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1414061722045,
+			"version": 2,
+			"responses": [],
+			"tests": "tests[\"Case-insensitive header checking\"] = postman.getResponseHeader(\"contenT-TypE\")===\"application/json\";",
+			"collectionId": "1153d5ce-29e2-c83f-648c-24e17c4aa852",
+			"synced": false
+		}
+	]
+}

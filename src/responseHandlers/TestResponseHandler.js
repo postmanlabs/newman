@@ -156,9 +156,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             sugar: sugar,
             tests: {},
             responseHeaders: Helpers.createProperCasedHeaderObject(response.headers),
-            getResponseHeader: function(headerString) {
-                return Helpers.getResponseHeader(headerString, response.headers);
-            },
             responseBody: body,
             responseTime: response.stats.timeTaken,
             request: {
@@ -188,6 +185,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             tv4: tv4,
             console: {log: function(msg){console.log(msg);}},
             postman: {
+                getResponseHeader: function(headerString) {
+                    return Helpers.getResponseHeader(headerString, response.headers);
+                },
                 setEnvironmentVariable: function(key, value) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){
                         return envObject["key"] === key;
