@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####1.1.7 (October 23, 2014)
+* postman.clearEnvironmentVariables() and postman.clearGlobalVariables() available to clear environment and global variables
+* postman.getResponseHeader(headerKey) available to get response headers in a case-insensitive manner
+
 ####1.1.6 (September 30, 2014)
 * Postman backup files can now be imported
 
