@@ -135,8 +135,12 @@ var ResponseExporter = jsface.Class({
 				totalSummary = res;
 			}
 		});
-		sortedSummaries.push(collectionSummary);
-		sortedSummaries.push(totalSummary);
+		if(collectionSummary) {
+			sortedSummaries.push(collectionSummary);
+		}
+		if(totalSummary) {
+			sortedSummaries.push(totalSummary);
+		}
 		log.showIterationSummary(sortedSummaries);
 		this._summaryResults = [];
 	},

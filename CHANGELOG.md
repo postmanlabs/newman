@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####1.1.9 (November 4, 2014)
+* Summary correctly shown for folder-only runs
+
 ####1.1.8 (November 4, 2014)
 * Iteration-wise summary is shown by default
 
