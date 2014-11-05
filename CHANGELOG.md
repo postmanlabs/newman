@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####1.1.8 (November 4, 2014)
+* Iteration-wise summary is shown by default
+
 ####1.1.7 (October 23, 2014)
 * postman.clearEnvironmentVariables() and postman.clearGlobalVariables() available to clear environment and global variables
 * postman.getResponseHeader(headerKey) available to get response headers in a case-insensitive manner

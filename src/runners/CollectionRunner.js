@@ -5,7 +5,8 @@ var jsface                 = require("jsface"),
 	_und                   = require('underscore'),
 	log                    = require('../utilities/Logger'),
 	EventEmitter           = require('../utilities/EventEmitter'),
-	Options                = require('../utilities/Options');
+	Options                = require('../utilities/Options'),
+	ResponseExporter       = require("../utilities/ResponseExporter");
 
 
 /**
@@ -58,9 +59,13 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 	// run when requestRunner runs over the ordered requests in this collection
 	_onRequestRunnerOver: function() {
 		this.ResponseHandler.clear();
+		if(this.opts.summary) {
+			ResponseExporter.showIterationSummary();
+		}
+
 		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
 		this.emit('collectionRunnerOver');
-	},
+	}
 });
 
 module.exports = CollectionRunner;
