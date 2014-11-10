@@ -31,11 +31,11 @@ var CollectionModel = jsface.Class(ParentModel, {
 		});
 		return models;
 	},
-	/** 
-	 * 
+	/**
+	 *
 	 * @function getOrderOfIds
 	 * @desc Returns the total order of request IDs in the collection as an array
-	 *  Order - 
+	 *  Order -
 	 *  1. Folders (order as per the collection)
 	 *  2. Collection level order
 	 *  @memberOf CollectionModel
@@ -47,6 +47,37 @@ var CollectionModel = jsface.Class(ParentModel, {
 		});
 		totalOrder = _und.union(_und.flatten(totalOrder), this.order);
 		return totalOrder;
+	},
+
+	/**
+	 *
+	 * @function getOrderOfFolderIds
+	 * @desc Returns the total order of request IDs in the folders of the collection as an array
+	 *  Order -
+	 *  1. Folders (order as per the collection)
+	 *  @memberOf CollectionModel
+	 *  @return {Array} Flattens array of request Id's.
+	 */
+	getOrderOfFolderIds: function() {
+		var totalOrder = _und.map(this.folders, function(folder) {
+			return folder.order;
+		});
+		totalOrder = _und.flatten(totalOrder);
+		return totalOrder;
+	},
+
+
+	/**
+	 *
+	 * @function getOrderOfRootIds
+	 * @desc Returns the total order of request IDs in the root collection as an array
+	 *  Order -
+	 *  1. Collection level order
+	 *  @memberOf CollectionModel
+	 *  @return {Array} Flattens array of request Id's.
+	 */
+	getOrderOfRootIds: function() {
+		return this.order;
 	},
 	/** 
 	 * Returns the request with the given request ID if exists null otherwise
@@ -65,17 +96,43 @@ var CollectionModel = jsface.Class(ParentModel, {
 	 * @memberOf CollectionModel
 	 */
 	getOrderedRequests: function() {
+		this.assignRequestsToFolders();
 		var orderedRequests = [];
+		this.folderOrder = this.getOrderOfFolderIds();
 		if (this.order === undefined) {
 			// handling case for older postman collection format
 			orderedRequests = this.requests;
 		} else {
 			var orderedIds = this.getOrderOfIds();
 			_und.each(orderedIds, function(id) {
-				orderedRequests.push(this.getRequestWithId(id));
+				var thisRequest = this.getRequestWithId(id);
+				thisRequest.collectionName = this.name;
+				thisRequest.collectionID = this.id;
+				var folderData = this.requestFolderMap[id];
+				if(folderData) {
+					thisRequest.folderName = folderData.folderName;
+					thisRequest.folderId = folderData.folderId;
+				}
+				orderedRequests.push(thisRequest);
 			}, this);
 		}
 		return orderedRequests;
+	},
+
+	assignRequestsToFolders: function() {
+		var requestFolderMap = {};
+		_und.map(this.folders, function(folder) {
+			var order = folder.order;
+			var fname = folder.name;
+			var fid = folder.id;
+			_und.map(order, function(requestId) {
+				requestFolderMap[requestId] = {
+					folderName: fname,
+					folderId: fid
+				};
+			});
+		});
+		this.requestFolderMap = requestFolderMap;
 	}
 });
 

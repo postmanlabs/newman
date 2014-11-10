@@ -54,7 +54,7 @@ Options:
 -C, --noColor             Disable colored output.
 -o, --outputFile [file]   Path to file where output should be written. [file]
 -i, --import [file]       Import a Postman backup file, and save collections, environments, and globals. [file]
--p, --pretty		  (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
+-p, --pretty              (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
 ```
 
 Use the `-n` option to set the number of iterations you want to run the collection for.

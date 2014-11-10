@@ -31,7 +31,8 @@ module.exports = function(grunt) {
 					'bin/newman -c tests/integ_tests/randomIntC.json -s && ' +
 					'bin/newman -c tests/integ_tests/semicolon_tests.json -s && ' + 
 					'bin/newman -c tests/integ_tests/varReplacement.json -s && ' +
-					'bin/newman -c tests/integ_tests/clearVars.json -s'
+					'bin/newman -c tests/integ_tests/clearVars.json -s && ' +
+					'bin/newman -c tests/integ_tests/caseInsenHeader.json -s'
     		}
 		}
 	});

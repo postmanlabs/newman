@@ -2,6 +2,7 @@ var jsface       = require('jsface'),
 	Globals      = require('./Globals'),
 	log          = require('./Logger'),
 	_und         = require('underscore'),
+	ResultSummary= require('../models/ResultSummaryModel'),
 	path         = require('path'),
 	fs           = require('fs');
 
@@ -13,6 +14,9 @@ var ResponseExporter = jsface.Class({
 	$singleton: true,
 
 	_results: [],
+
+	//each element will be an object of type: {type:coll/folder, parentId, parentName, passCount, failCount}
+	_summaryResults: [],
 
 	/**
 	 * Adds the Reponse to the Result Array.
@@ -29,6 +33,116 @@ var ResponseExporter = jsface.Class({
 			result = this._createResultObject(request, response, tests);
 			this._results.push(result);
 		}
+		this.summarizeResults(request, tests);
+	},
+
+	summarizeResults: function(request, tests) {
+		var passFailCount = this._getPassFailCount(tests);
+		this._addPassFailCountToCollection(request, passFailCount);
+		this._addPassFailCountToFolder(request, passFailCount);
+		this._addPassFailCountToTotal(request, passFailCount);
+	},
+
+	_getPassFailCount: function(tests) {
+		var vals = _und.values(tests);
+		var total = vals.length;
+		var passes = _und.filter(vals, function(val) {
+			return val===true;
+		});
+		return {
+			pass: passes.length,
+			fail: total - passes.length
+		};
+	},
+
+	_addPassFailCountToTotal: function(request, results) {
+		var existingModel = _und.find(this._summaryResults, function(summaryResult) {
+			return (summaryResult.type === "total");
+		});
+		if(!existingModel) {
+			var newModel = new ResultSummary({
+				type: 'total',
+				parentId: null,
+				parentName: "",
+				passCount: results.pass,
+				failCount: results.fail
+			});
+			this._summaryResults.push(newModel);
+		}
+		else {
+			existingModel.passCount = existingModel.passCount + results.pass;
+			existingModel.failCount = existingModel.failCount + results.fail;
+		}
+	},
+
+	_addPassFailCountToCollection: function(request, results) {
+		if(request.folderId && request.folderName) {
+			return;
+		}
+		var existingModel = _und.find(this._summaryResults, function(summaryResult) {
+			return (summaryResult.type === "collection" && summaryResult.parentId === request.collectionID);
+		});
+		if(!existingModel) {
+			var newModel = new ResultSummary({
+				type: 'collection',
+				parentId: request.collectionID,
+				parentName: request.collectionName,
+				passCount: results.pass,
+				failCount: results.fail
+			});
+			this._summaryResults.push(newModel);
+		}
+		else {
+			existingModel.passCount = existingModel.passCount + results.pass;
+			existingModel.failCount = existingModel.failCount + results.fail;
+		}
+	},
+
+	_addPassFailCountToFolder: function(request, results) {
+		if(!request.folderId || !request.folderName) {
+			return;
+		}
+
+		var existingModel = _und.find(this._summaryResults, function(summaryResult) {
+			return (summaryResult.type === "folder" && summaryResult.parentId === request.folderId);
+		});
+		if(!existingModel) {
+			var newModel = new ResultSummary({
+				type: 'folder',
+				parentId: request.folderId,
+				parentName: request.folderName,
+				passCount: results.pass,
+				failCount: results.fail
+			});
+			this._summaryResults.push(newModel);
+		}
+		else {
+			existingModel.passCount = existingModel.passCount + results.pass;
+			existingModel.failCount = existingModel.failCount + results.fail;
+		}
+	},
+
+	showIterationSummary: function() {
+		var sortedSummaries = [], collectionSummary, totalSummary;
+		_und.map(this._summaryResults, function(res) {
+			if(res.type==='folder') {
+				sortedSummaries.push(res);
+			}
+			else if(res.type==='collection') {
+				collectionSummary = res;
+			}
+			else if(res.type==='total') {
+				totalSummary = res;
+			}
+		});
+		if(collectionSummary) {
+			sortedSummaries.push(collectionSummary);
+		}
+		if(totalSummary) {
+			sortedSummaries.push(totalSummary);
+		}
+		log.showIterationSummary(sortedSummaries);
+		this._summaryResults = [];
 	},
 
 	// Used to create a first result object, to be used while exporting the results.

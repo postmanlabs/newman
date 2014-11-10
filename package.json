@@ -1,7 +1,7 @@
 {
   "name": "newman",
-  "version": "1.1.6",
-  "author": "Arjun Variar & Prakhar Srivastav & Abhijit Kane",
+  "version": "1.1.9",
+  "author": "Abhijit Kane & Arjun Variar & Prakhar Srivastav",
   "main": "Newman",
   "homepage": "https://github.com/a85/Newman",
   "bugs": "https://github.com/a85/Newman/issues",

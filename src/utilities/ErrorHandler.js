@@ -31,6 +31,7 @@ var ErrorHandler = jsface.Class({
 	terminateWithError: function(msg) {
 		log.error(msg+"\n");
         //console.log("Fatal Error: "+msg);
+		console.log(Globals.updateMessage);
 		process.exit(1);
 	}
 });

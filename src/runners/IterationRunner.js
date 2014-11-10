@@ -24,7 +24,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
     constructor: function(requestJSON, options) {
         this.setOptions(options);
         this.collection = this._getOrderedCollection(requestJSON);
-
+        this.collectionName = requestJSON.name;
         //check if only a folder has to be run
         if(options.folderName) {
             this.folder = this._getFolderFromCollection(requestJSON, options.folderName);
@@ -197,6 +197,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         } else {
             this._exportResponses();
             this.emit('iterationRunnerOver',Globals.exitCode);
+            console.log(Globals.updateMessage);
         }
     },
 

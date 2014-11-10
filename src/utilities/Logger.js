@@ -1,6 +1,7 @@
 var jsface  = require("jsface"),
 	Symbols = require('./Symbols'),
 	Globals = require('./Globals'),
+	_und         = require('underscore'),
 	EventEmitter     = require('../utilities/EventEmitter'),
 	color   = require("cli-color"),
 	ansiTrim = require("cli-color/lib/trim");
@@ -12,6 +13,40 @@ var jsface  = require("jsface"),
  */
 var Logger = jsface.Class([EventEmitter], {
 	$singleton: true,
+
+	main: function() {
+		_und.mixin({
+			capitalize: function(string) {
+				return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+			},
+
+			padStringFromRight: function(string, length) {
+				if(string.length>length) {
+					return string.substring(0,length-3) + "...";
+				}
+				else {
+					var dif = length - string.length;
+					for(var i=0;i<dif;i++) {
+						string += " ";
+					}
+					return string;
+				}
+			},
+
+			padStringFromLeft: function(string, length) {
+				if(string.length>length) {
+					return string.substring(0,length-3) + "...";
+				}
+				else {
+					var dif = length - string.length;
+					for(var i=0;i<dif;i++) {
+						string = " " + string;
+					}
+					return string;
+				}
+			}
+		});
+	},
 
 	_printMessage: function(string, colorFunc) {
 		if (Globals.noColor) {
@@ -69,6 +104,7 @@ var Logger = jsface.Class([EventEmitter], {
 				this.emit('iterationRunnerOver',1);
 			}
 			else {
+				console.log(Globals.updateMessage);
 				process.exit(1);
 			}
 		}
@@ -91,12 +127,32 @@ var Logger = jsface.Class([EventEmitter], {
 				this.emit('iterationRunnerOver',1);
 			}
 			else {
+				console.log(Globals.updateMessage);
 				process.exit(1);
 			}
 		}
 		else {
 			Globals.exitCode=1;
 		}
+	},
+
+	showIterationSummary: function(summaryArray) {
+		this.normal("\nSummary:\n\n");
+		this.normal(_und.padStringFromRight("Parent",25)+"\t"+_und.padStringFromLeft("Pass Count",10)+"\t"+_und.padStringFromLeft("FailCount",10)+"\n");
+		this.normal("-------------------------------------------------------------\n");
+		var oldThis = this;
+		_und.map(summaryArray, function(summary) {
+			if(summary.type === 'total') {
+				oldThis.normal("\n");
+			}
+
+			var col1 = _und.capitalize(summary.type) + " " + summary.parentName;
+			var col2 = summary.passCount+"";
+			var col3 = summary.failCount+"";
+			oldThis.normal(_und.padStringFromRight(col1,25)+"\t");
+			oldThis.success(_und.padStringFromLeft(col2,10)+"\t");
+			oldThis.error(_und.padStringFromLeft(col3,10)+"\n");
+		});
 	}
 });
 
