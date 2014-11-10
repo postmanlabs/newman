@@ -104,6 +104,7 @@ var Logger = jsface.Class([EventEmitter], {
 				this.emit('iterationRunnerOver',1);
 			}
 			else {
+				console.log(Globals.updateMessage);
 				process.exit(1);
 			}
 		}
@@ -126,6 +127,7 @@ var Logger = jsface.Class([EventEmitter], {
 				this.emit('iterationRunnerOver',1);
 			}
 			else {
+				console.log(Globals.updateMessage);
 				process.exit(1);
 			}
 		}

@@ -4,7 +4,9 @@ var jsface          = require("jsface"),
     IterationRunner = require("./runners/IterationRunner"),
     EventEmitter     = require('./utilities/EventEmitter'),
     Globals          = require('./utilities/Globals'),
-    Options          = require('./utilities/Options');
+    Options          = require('./utilities/Options'),
+    sys              = require('sys'),
+    exec             = require('child_process').exec;
 
 /**
  * @name Newman
@@ -40,6 +42,12 @@ var Newman = jsface.Class([Options, EventEmitter], {
         //         Errors.terminateWithError("Not a valid POSTMAN globals file");
         //     }
         // }
+        exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
+            stdout = stdout.trim();
+            if(stdout!=Globals.newmanVersion && stdout.length>0) {
+                Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update newman` to update.\n";
+            }
+        });
 
         Globals.addEnvironmentGlobals(requestJSON, options);
         this.setOptions(options);

@@ -8,6 +8,8 @@ var jsface = require('jsface');
 var Globals = jsface.Class({
 	$singleton: true,
 
+	newmanVersion: "1.1.9",
+
 	/**
 	 * Used to add the Globals used through out the app
 	 * @param {Object} requestJSON Request JSON.
@@ -24,6 +26,7 @@ var Globals = jsface.Class({
 		this.noColor = options.noColor;
 		this.asLibrary = options.asLibrary;
 		this.exitCode=0;
+		this.updateMessage="";
 	}
 });
 

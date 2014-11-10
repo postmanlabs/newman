@@ -197,6 +197,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         } else {
             this._exportResponses();
             this.emit('iterationRunnerOver',Globals.exitCode);
+            console.log(Globals.updateMessage);
         }
     },
 
