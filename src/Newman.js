@@ -5,7 +5,6 @@ var jsface          = require("jsface"),
     EventEmitter     = require('./utilities/EventEmitter'),
     Globals          = require('./utilities/Globals'),
     Options          = require('./utilities/Options'),
-    sys              = require('sys'),
     exec             = require('child_process').exec;
 
 /**
@@ -44,7 +43,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
         // }
         exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
             stdout = stdout.trim();
-            if(stdout!=Globals.newmanVersion && stdout.length>0) {
+            if(stdout !== Globals.newmanVersion && stdout.length>0) {
                 Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update newman` to update.\n";
             }
         });

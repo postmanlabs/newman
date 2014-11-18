@@ -1,5 +1,6 @@
 var jsface = require('jsface'),
-	log = require('./Logger');
+	log = require('./Logger'),
+	Globals = require('./Globals');
 
 /**
  * @name ErrorHandler

@@ -143,6 +143,8 @@ var PreRequestScriptProcessor = jsface.Class({
                             name: key
                         });
                     }
+                    console.log("adding "+key+" = "+value);
+                    environment[key]=value;
                 },
                 getEnvironmentVariable: function(key) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){

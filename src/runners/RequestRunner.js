@@ -166,9 +166,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		RequestOptions.url = request.transformed.url;
 		RequestOptions.method = request.method;
 		RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
-		RequestOptions.followAllRedirects = true;
+		RequestOptions.followAllRedirects = false;
 		RequestOptions.jar = true;
-		RequestOptions.timeout = 5000;
+		RequestOptions.timeout = 15000;
 		this._setBodyData(RequestOptions, request);
 		return RequestOptions;
 	},

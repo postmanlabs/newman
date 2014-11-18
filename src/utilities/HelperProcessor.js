@@ -26,7 +26,7 @@ var HelperProcessor = jsface.Class({
 			this._useDigestAuth(request);
 		}
 		else if(request.currentHelper==="oAuth1") {
-			this._useBasicAuth(request);
+			this._useOAuth1(request);
 		}
 	},
 
@@ -137,7 +137,7 @@ var HelperProcessor = jsface.Class({
 
 		params = params.concat(urlParams);
 
-		var bodyParams = request.data;
+		bodyParams = request.data;
 		if(bodyParams.length!==0) {
 			params = params.concat(bodyParams);
 		}
@@ -148,6 +148,8 @@ var HelperProcessor = jsface.Class({
 		var oAuthParams = [];
 
 		var helperAttrs = request.transformed.helperAttributes;
+		helperAttrs.nonce = OAuth.nonce(6)+"";
+		helperAttrs.timestamp = OAuth.timestamp()+"";
 
 		var signatureParams = [
 			{key: "oauth_consumer_key", value: helperAttrs.consumerKey},
@@ -163,7 +165,7 @@ var HelperProcessor = jsface.Class({
 			oAuthParams.push(param);
 		}
 
-		var signature = this.generateSignature();
+		var signature = this.generateSignature(request, helperAttrs);
 
 		if (signature === null) {
 			return;
@@ -183,35 +185,39 @@ var HelperProcessor = jsface.Class({
 			var len = oAuthParams.length;
 
 			for (i = 0; i < len; i++) {
-				if(oAuthParams[i].value==null || oAuthParams[i].value.trim()=="") {
+				if(oAuthParams[i].value===null || oAuthParams[i].value.trim()==="") {
 					continue;
 				}
 				rawString += encodeURIComponent(oAuthParams[i].key) + "=\"" + encodeURIComponent(oAuthParams[i].value) + "\",";
 			}
 
 			rawString = rawString.substring(0, rawString.length - 1);
-			request.setHeader(authHeaderKey, rawString);
-			request.trigger("customHeaderUpdate");
+			var headerObj = Helpers.generateHeaderObj(request.transformed.headers);
+			headerObj[authHeaderKey] = rawString;
+			var headerString = Helpers.generateHeaderStringFromObj(headerObj);
+			request.transformed.headers = headerString;
+
 		} else {
 			params = params.concat(oAuthParams);
-
+			var newParams = [];
+			_und.map(params, function(param) {
+				param.enabled=true;
+				param.type="text";
+				newParams.push(param);
+			});
 			if (request.method.toLowerCase()!=="post" && request.method.toLowerCase()!=="put") {
-				// console.log("Setting URL params", params);
+				//console.log("Setting URL params", params);
 
-				this.setUrlParamStringWithOptBlankValRemoval(params, null, true, request);
+				this.setUrlParamStringWithOptBlankValRemoval(request, params, null, true);
 			} else {
 				if (dataMode === 'urlencoded') {
-					//add params to body
-					//body.loadData("urlencoded", params, true);
+					request.transformed.data = request.transformed.data.concat(newParams);
 				}
 				else if (dataMode === 'params') {
-					//add params to body
-					//body.loadData("params", params, true);
+					request.transformed.data = request.transformed.data.concat(newParams);
 				}
 				else if (dataMode === 'raw') {
-					//add params to url
-					//request.setUrlParamString(params);
-					//request.trigger("customURLParamUpdate");
+					this.setUrlParamStringWithOptBlankValRemoval(request, params, null, true);
 				}
 			}
 		}
@@ -219,15 +225,16 @@ var HelperProcessor = jsface.Class({
 	},
 
 	_getRequestBody: function(request) {
+		var numParams, params, retVal;
+		var i;
 		if(request.method.toLowerCase()==="post" || request.method.toLowerCase()==="put") {
 			if(request.dataMode==="urlencoded") {
-				var numParams = request.transformed.data.length;
-				var params = request.transformed.data;
-				//console.log(request.transformed.data);
-				var retval="";
-				for(var i=0;i<numParams;i++) {
+				numParams = request.transformed.data.length;
+				params = request.transformed.data;
+				retval="";
+				for(i=0;i<numParams;i++) {
 					retVal += encodeURIComponent(params[i].key) + "=" + encodeURIComponent(params[i].value) + "&";
-					if(i==numParams-i) {
+					if(i===numParams-i) {
 						retVal = retVal.substring(0,retVal.length-1);
 					}
 				}
@@ -236,10 +243,10 @@ var HelperProcessor = jsface.Class({
 			}
 			else if(request.dataMode==="params") {
 				//console.log("Problem - what do we do for the separator? :S");
-				var numParams = request.transformed.data.length;
-				var params = request.transformed.data;
-				var retVal = this._getDummyFormDataBoundary();
-				for(var i=0;i<numParams;i++) {
+				numParams = request.transformed.data.length;
+				params = request.transformed.data;
+				retVal = this._getDummyFormDataBoundary();
+				for(i=0;i<numParams;i++) {
 					if(params[i].type==="text") {
 						retVal += '<br/>Content-Disposition: form-data; name="'+params[i].key+'"<br/><br/>';
 						retVal += params[i].value + "<br/>";
@@ -248,7 +255,7 @@ var HelperProcessor = jsface.Class({
 						retVal += "<br/>Content-Disposition: form-data; name=\"" + params[i].key + "\"; filename=";
 						retVal += "\"" + params[i].value.name + "\"<br/>";
 						retVal += "Content-Type: " + params[i].value.type;
-						retVal += "<br/><br/><br/>"
+						retVal += "<br/><br/><br/>";
 					}
 				}
 				retVal += this._getDummyFormDataBoundary();
@@ -289,7 +296,7 @@ var HelperProcessor = jsface.Class({
 		var hasParams = quesLocation >= 0 ? true : false;
 
 		if (hasParams) {
-			parts = getUrlVars(path);
+			parts = this.getUrlVars(path);
 			var count = parts.length;
 			var encodedPath = path.substr(0, quesLocation + 1);
 			for (var j = 0; j < count; j++) {
@@ -376,7 +383,12 @@ var HelperProcessor = jsface.Class({
 				};
 			}
 
-			(associative) ? (varsAssoc[element.key] = element.value) : (vars.push(element));
+			if(associative) {
+				varsAssoc[element.key] = element.value;
+			}
+			else {
+				vars.push(element);
+			}
 		}
 
 		if (associative) {
@@ -395,7 +407,7 @@ var HelperProcessor = jsface.Class({
 			if (p.key && p.key !== "") {
 				p.key = p.key.replace(/&/g, '%26');
 				p.value = p.value.replace(/&/g, '%26');
-				if(removeBlankParams == false || p.value !== "") {
+				if(removeBlankParams === false || p.value !== "") {
 					paramArr.push(p.key + "=" + p.value);
 				}
 			}
@@ -416,6 +428,31 @@ var HelperProcessor = jsface.Class({
 
 	},
 
+	_removeOAuthKeys: function (params) {
+		var i, count;
+		var oauthParams = [
+			"oauth_consumer_key",
+			"oauth_token",
+			"oauth_signature_method",
+			"oauth_timestamp",
+			"oauth_nonce",
+			"oauth_version",
+			"oauth_signature"
+		];
+
+		var newParams = [];
+		var oauthIndexes = [];
+
+		for (i = 0, count = params.length; i < count; i++) {
+			var index = _.indexOf(oauthParams, params[i].key);
+			if (index < 0) {
+				newParams.push(params[i]);
+			}
+		}
+
+		return newParams;
+	},
+
 	generateSignature: function (request, helperAttrs) {
 		//Make sure the URL is urlencoded properly
 		//Set the URL keyval editor as well. Other get params disappear when you click on URL params again
@@ -428,7 +465,7 @@ var HelperProcessor = jsface.Class({
 		var method = request.method;
 		var requestBody = request.body; //will this work? :S
 
-		processedUrl = url
+		processedUrl = url;
 		//processedUrl = ensureProperUrl(processedUrl);
 
 		if (processedUrl.indexOf('?') > 0) {
@@ -452,13 +489,13 @@ var HelperProcessor = jsface.Class({
 
 		for(i = 0; i < signatureParams.length; i++) {
 			var param = signatureParams[i];
-			if(param.value!="") {
+			if(param.value!=="") {
 				message.parameters.push([param.key, param.value]);
 			}
 		}
 
 		//Get parameters
-		var urlParams = this._getUrlVars(request);
+		var urlParams = this._getUrlVars(request.url);
 
 		var bodyParams;
 
@@ -473,9 +510,9 @@ var HelperProcessor = jsface.Class({
 			bodyParams = [];
 		}
 
-		var params = _.union(urlParams, bodyParams);
+		var params = _und.union(urlParams, bodyParams);
 		var param;
-		var existingOAuthParams = _.union(signatureParams, [{key: "oauth_signature", value: ""}]);
+		var existingOAuthParams = _und.union(signatureParams, [{key: "oauth_signature", value: ""}]);
 		var pos;
 
 		for (i = 0; i < params.length; i++) {
@@ -483,7 +520,7 @@ var HelperProcessor = jsface.Class({
 			if (param.key) {
 				pos = Helpers.findPosition(existingOAuthParams, "key", param.key);
 				if (pos < 0) {
-					if(param.value != "") {
+					if(param.value !== "") {
 						message.parameters.push([param.key, param.value]);
 					}
 				}

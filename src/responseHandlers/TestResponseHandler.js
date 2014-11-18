@@ -203,7 +203,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                             name: key
                         });
                     }
-                    //environment["key"]=value;
                 },
                 getEnvironmentVariable: function(key) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){
