@@ -21,7 +21,7 @@ var color   = require('cli-color'),
 
 function parseArguments() {
 	program
-	  .version('1.1.6')
+	  .version('1.1.7')
 	  .usage('[options]')
 	  .option('-c, --collection [file]', 'Specify a Postman collection as a JSON [file]', null)
 	  .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
