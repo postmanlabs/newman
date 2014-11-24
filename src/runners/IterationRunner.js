@@ -182,7 +182,8 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
     // logs the iteration count
     _logStatus: function() {
-        log.note("\nIteration " + this.iteration + " of " + this.numOfIterations + "\n");
+        log.note("iterationNumber" + this.iteration + " of " + this.numOfIterations + "\n");
+        log.note("Yoonji");
     },
 
     // set the global envjson and then run the next iteration
