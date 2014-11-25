@@ -47,7 +47,7 @@ var ResponseExporter = jsface.Class({
 				"name": "",       // TODO: Fill these guys later on
 				"detail": ""
 			},
-			"tests": tests,
+			"tests": tests, //this is meaningless
 			"testPassFailCounts": this._extractPassFailCountFromTests(tests),
 			"times": [],			// Not sure what to do with this guy
 			"allTests": [tests],
@@ -98,31 +98,71 @@ var ResponseExporter = jsface.Class({
 		}
 	},
 
+	_aggregateTestResults: function(runs) {
+		var retVal = {};
+		_und.each(runs, function(run) {
+			for(var testName in run) {
+				if(run.hasOwnProperty(testName)) {
+					if(retVal.hasOwnProperty(testName)) {
+						if(run[testName]) {
+							retVal[testName].successes++;
+						}
+						else {
+							retVal[testName].failures++;
+						}
+					}
+					else {
+						if(run[testName]) {
+							retVal[testName]={
+								successes: 1, failures: 0
+							};
+						}
+						else {
+							retVal[testName]={
+								successes: 0, failures: 1
+							};
+						}
+					}
+				}
+			}
+		});
+		return retVal;
+	},
+
 	_createJunitXML: function() {
-			var xml = '<?xml version="1.0" encoding="UTF-8"?>';
-			xml += "<testsuites>";
+			var oldThis = this;
+			var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+			xml += "<testsuites>\n";
 
 			_und.each(this._results, function(suite) {
-				var testRequest = _und.find(Globals.requestJSON.requests, function(request) {
-					return suite.id === request.id;
-				});
+				//var testRequest = _und.find(Globals.requestJSON.requests, function(request) {
+				//	return suite.id === request.id;
+				//});
+				var aggregateTestStats = oldThis._aggregateTestResults(suite.allTests);
 
-				var timeStamp = new Date(testRequest.time);
-				var time = testRequest.time;
+				//var timeStamp = new Date(testRequest.time);
+				var iterations = suite.allTests.length;
+
+				var timeStamp = new Date();
+				//var time = testRequest.time;
+				var time = suite.time;
+				var meanTime = (time/iterations).toFixed(2);
 				var tests = Object.keys(suite.tests).length;
 
-				xml += "<testsuite name='" + _und.escape(suite.name) + "' id='" +
-					_und.escape(suite.id) + "' timestamp='" + timeStamp.toISOString() +
-					"' time='" + time + "' tests='" + tests + "' >";
+				xml += '\t<testsuite name="' + _und.escape(suite.name) + '" id="' +
+					_und.escape(suite.id) + '" timestamp="' + timeStamp.toISOString() +
+					'" time="' + meanTime + ' ms" totalTime="'+time+' ms" tests="' + tests + '" iterations="'+iterations+'">\n';
 
 				_und.each(suite.testPassFailCounts, function(testcase, testcaseName) {
-					xml += "<testcase name='" + _und.escape(testcaseName) + "' failures='" + testcase.fail + "' />";
+					var successes = aggregateTestStats[testcaseName].successes;
+					var failures = aggregateTestStats[testcaseName].failures;
+					xml += '\t\t<testcase name="' + _und.escape(testcaseName) + '" successes="'+successes+'" failures="' + failures + '" />\n';
 				}, this);
 
-				xml += "</testsuite>";
+				xml += "\t</testsuite>\n";
 			}, this);
 
-			xml += "</testsuites>";
+			xml += "</testsuites>\n";
 			return xml;
 	},
 
