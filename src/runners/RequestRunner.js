@@ -21,6 +21,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     $singleton: true,
 
     delay: 0,
+    strictSSL: true,
+    secureProtocol: null,
 
     $statics: {
         METHODS_WHICH_ALLOW_BODY: ['POST','PUT','PATCH','DELETE','LINK','UNLINK','LOCK','PROPFIND']
@@ -35,6 +37,22 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     },
 
     /**
+     * Sets strictSSL
+     * @param strictSSL
+     */
+    setStrictSSL: function(strictSSL) {
+        this.strictSSL = strictSSL;
+    },
+
+    /**
+     * Sets secure protocol
+     * @param secureProtocol
+     */
+    setSecureProtocol: function(secureProtocol) {
+        this.secureProtocol = secureProtocol;
+    },
+
+    /*
      * Adds the Request to the RequestRunner's queue.
      * @memberOf RequestRunner
      * @param {RequestModel} request Takes a RequestModel Object.
@@ -112,6 +130,11 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
             request.startTime = new Date().getTime();
             RequestOptions.rejectUnauthorized=false;
+            RequestOptions.strictSSL = this.strictSSL;
+            if (this.secureProtocol) {
+                RequestOptions.secureProtocol = this.secureProtocol;
+            }
+            console.log("Request Options: \n"+ JSON.stringify(RequestOptions));
             var unireq = requestLib(RequestOptions, function(error, response, body) {
                 if(response) {
                     // save some stats, only if response exists

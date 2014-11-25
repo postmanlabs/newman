@@ -33,6 +33,8 @@ function parseArguments() {
 	  .option('-s, --stopOnError', "Stops the runner with code=1 when a test case fails", null)
 	  .option('-n, --number [number]', 'Define the number of iterations to run.', null)
 	  .option('-C, --noColor', 'Disable colored output.', null)
+	  .option('-k, --insecure', 'Disable strict ssl.', null)
+	  .option('-1, --tls', 'Use TLSv1.', null)
 	  .option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
 	  .option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null)
 	  .option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals. [file] (Incompatible with any other option)', null)
@@ -60,7 +62,7 @@ function parseArguments() {
 
 	if (program.collection) {
 		Helpers.validateCollectionFile(program.collection);
-	} else if (program.url) {
+	} else if (program.url) { 
 		Helpers.validateCollectionUrl(program.url);
 	} else {
 		Errors.terminateWithError("Please provide a valid collection file / url to run");
@@ -136,15 +138,20 @@ function main() {
         }
     }
 
+    if (program.tls) {
+        newmanOptions.secureProtocol = 'TLSv1_method';
+    }
+
     if(program.folder) {
         newmanOptions.folderName = program.folder;
     }
 
 	newmanOptions.stopOnError = !!program.stopOnError;
 	newmanOptions.noColor = !!program.noColor;
+    newmanOptions.strictSSL = !program.insecure; 
 	newmanOptions.asLibrary = false;
 
-	if (program.collection) {
+    if (program.collection) {
         var collectionJson;
         try {
 		    // read collection from the filesystem
