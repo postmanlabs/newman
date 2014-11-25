@@ -25,6 +25,7 @@ var Globals = jsface.Class({
 		this.stopOnError = options.stopOnError;
 		this.noColor = options.noColor;
 		this.asLibrary = options.asLibrary;
+        this.strictSSL = options.strictSSL || true;
 		this.exitCode=0;
 		this.updateMessage="";
 	}
