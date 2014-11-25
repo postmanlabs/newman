@@ -1,5 +1,6 @@
 var jsface = require('jsface'),
-	log = require('./Logger');
+	log = require('./Logger'),
+	Globals = require('./Globals');
 
 /**
  * @name ErrorHandler
@@ -30,7 +31,9 @@ var ErrorHandler = jsface.Class({
 	
 	terminateWithError: function(msg) {
 		log.error(msg+"\n");
-		console.log(Globals.updateMessage);
+		if(Globals.updateMessage) {
+			console.log(Globals.updateMessage);
+		}
 		process.exit(1);
 	}
 });

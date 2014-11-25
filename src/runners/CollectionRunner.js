@@ -45,8 +45,8 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 
 		// Start the runner
 		RequestRunner.setDelay(this.opts.delay);
-        RequestRunner.setStrictSSL(this.opts.strictSSL);
-        RequestRunner.setSecureProtocol(this.opts.secureProtocol);
+		RequestRunner.setStrictSSL(this.opts.strictSSL);
+		RequestRunner.setSecureProtocol(this.opts.secureProtocol);
 		RequestRunner.start();
 
 		this.$class.$superp.execute.call(this);
