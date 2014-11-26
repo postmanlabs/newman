@@ -1,3 +1,10 @@
+/*
+ * Interprets HTTP status according to their status codes
+ * @return the details of each HTTP status
+ */
+
+
+
 var jsface  = require("jsface");
 
 var HttpStatusCodes = jsface.Class({

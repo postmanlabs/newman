@@ -7,16 +7,28 @@
   "bugs": "https://github.com/a85/Newman/issues",
   "description": "Command-line utility for Postman",
   "repository": {
-	  "type": "git",
-	  "url": "git://github.com/a85/Newman.git"
+    "type": "git",
+    "url": "git://github.com/a85/Newman.git"
   },
   "contributors": [
-    {"name": "Prakhar Srivastav", "email": "prakhar1989@gmail.com", "url": "http://prakhar.me"},
-    {"name": "Arjun Variar", "email": "accioarjun@gmail.com", "url": "http://github.com/viig99"},
-    {"name": "Abhijit Kane", "email": "abhijitkane@gmail.com", "url": "http://github.com/abhijitkane"}
+    {
+      "name": "Prakhar Srivastav",
+      "email": "prakhar1989@gmail.com",
+      "url": "http://prakhar.me"
+    },
+    {
+      "name": "Arjun Variar",
+      "email": "accioarjun@gmail.com",
+      "url": "http://github.com/viig99"
+    },
+    {
+      "name": "Abhijit Kane",
+      "email": "abhijitkane@gmail.com",
+      "url": "http://github.com/abhijitkane"
+    }
   ],
-  "engines" : { 
-	  "node" : ">=0.6.x" 
+  "engines": {
+    "node": ">=0.6.x"
   },
   "keywords": [
     "postman",
@@ -25,28 +37,30 @@
     "rest"
   ],
   "bin": {
-	"newman": "./bin/newman"
+    "newman": "./bin/newman"
   },
   "dependencies": {
-    "cli-color": "0.2.x",
-    "json5": "*",
-    "commander": "2.x.x",
-    "underscore": "1.x.x",
-    "jsface": "2.2.x",
-    "request": "2.40.0",
-    "unirest": "*",
-    "postman_validator" : "0.0.4",
-    "node-uuid" : "1.4.1",
-    "jsdom-nogyp": "*",
-    "jquery": "*",
-    "backbone": "*",
-    "lodash": "*",
-    "xml2js": "*",
-    "sugar" : "1.3.9",
-    "tv4": "*",
-    "mkdirp": "*",
     "atob": "1.1.2",
-    "btoa": "1.1.2"
+    "backbone": "*",
+    "btoa": "1.1.2",
+    "cli-color": "0.2.x",
+    "commander": "^2.5.0",
+    "content-disposition": "^0.5.0",
+    "express": "^4.10.4",
+    "jquery": "*",
+    "jsdom-nogyp": "*",
+    "jsface": "2.2.x",
+    "json5": "*",
+    "lodash": "*",
+    "mkdirp": "*",
+    "node-uuid": "1.4.1",
+    "postman_validator": "0.0.4",
+    "request": "2.40.0",
+    "sugar": "1.3.9",
+    "tv4": "*",
+    "underscore": "1.x.x",
+    "unirest": "*",
+    "xml2js": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

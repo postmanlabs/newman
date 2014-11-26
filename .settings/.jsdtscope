@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="src/runners/|tests/runners/|tests/utilities/|src/|src/utilities/|src/responseHandlers/|tests/responseHandlers/|src/models/" kind="src" path=""/>
+	<classpathentry excluding="runners/|utilities/|responseHandlers/|models/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/models"/>
+	<classpathentry kind="src" path="src/responseHandlers"/>
+	<classpathentry kind="src" path="src/runners"/>
+	<classpathentry kind="src" path="src/utilities"/>
+	<classpathentry kind="src" path="tests/responseHandlers"/>
+	<classpathentry kind="src" path="tests/runners"/>
+	<classpathentry kind="src" path="tests/utilities"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
