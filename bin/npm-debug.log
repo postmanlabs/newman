@@ -1,0 +1,86 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'loclash' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink /usr/bin/node
+5 warn package.json module@0.0.1 No README data
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'loclash', null ]
+8 verbose cache add name=undefined spec="loclash" args=["loclash",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'loclash',
+9 verbose parsed url   path: 'loclash',
+9 verbose parsed url   href: 'loclash' }
+10 silly lockFile bd6dd90c-loclash loclash
+11 verbose lock loclash /home/eece210/.npm/bd6dd90c-loclash.lock
+12 silly lockFile bd6dd90c-loclash loclash
+13 silly lockFile bd6dd90c-loclash loclash
+14 verbose addNamed [ 'loclash', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile e0a5884f-loclash loclash@
+17 verbose lock loclash@ /home/eece210/.npm/e0a5884f-loclash.lock
+18 silly addNameRange { name: 'loclash', range: '*', hasData: false }
+19 verbose request where is /loclash
+20 verbose request registry https://registry.npmjs.org/
+21 verbose request id 9a155692970a4f91
+22 verbose url raw /loclash
+23 verbose url resolving [ 'https://registry.npmjs.org/', './loclash' ]
+24 verbose url resolved https://registry.npmjs.org/loclash
+25 verbose request where is https://registry.npmjs.org/loclash
+26 info trying registry request attempt 1 at 01:55:39
+27 http GET https://registry.npmjs.org/loclash
+28 http 404 https://registry.npmjs.org/loclash
+29 verbose headers { date: 'Tue, 25 Nov 2014 09:55:39 GMT',
+29 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+29 verbose headers   'content-type': 'application/json',
+29 verbose headers   'cache-control': 'max-age=0',
+29 verbose headers   'content-length': '52',
+29 verbose headers   'accept-ranges': 'bytes',
+29 verbose headers   via: '1.1 varnish',
+29 verbose headers   age: '0',
+29 verbose headers   'x-served-by': 'cache-sjc3129-SJC',
+29 verbose headers   'x-cache': 'MISS',
+29 verbose headers   'x-cache-hits': '0',
+29 verbose headers   'x-timer': 'S1416909339.489718,VS0,VE94',
+29 verbose headers   'keep-alive': 'timeout=10, max=50',
+29 verbose headers   connection: 'Keep-Alive' }
+30 silly registry.get cb [ 404,
+30 silly registry.get   { date: 'Tue, 25 Nov 2014 09:55:39 GMT',
+30 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+30 silly registry.get     'content-type': 'application/json',
+30 silly registry.get     'cache-control': 'max-age=0',
+30 silly registry.get     'content-length': '52',
+30 silly registry.get     'accept-ranges': 'bytes',
+30 silly registry.get     via: '1.1 varnish',
+30 silly registry.get     age: '0',
+30 silly registry.get     'x-served-by': 'cache-sjc3129-SJC',
+30 silly registry.get     'x-cache': 'MISS',
+30 silly registry.get     'x-cache-hits': '0',
+30 silly registry.get     'x-timer': 'S1416909339.489718,VS0,VE94',
+30 silly registry.get     'keep-alive': 'timeout=10, max=50',
+30 silly registry.get     connection: 'Keep-Alive' } ]
+31 silly lockFile e0a5884f-loclash loclash@
+32 silly lockFile e0a5884f-loclash loclash@
+33 error 404 404 Not Found: loclash
+33 error 404
+33 error 404 'loclash' is not in the npm registry.
+33 error 404 You should bug the author to publish it
+33 error 404 It was specified as a dependency of 'newman'
+33 error 404
+33 error 404 Note that you can also install from a
+33 error 404 tarball, folder, or http url, or git url.
+34 error System Linux 3.5.0-40-generic
+35 error command "/usr/bin/node" "/usr/bin/npm" "install" "loclash"
+36 error cwd /home/eece210/eece310/Newman/bin
+37 error node -v v0.10.33
+38 error npm -v 1.4.28
+39 error code E404
+40 verbose exit [ 1, true ]

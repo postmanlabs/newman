@@ -1,0 +1,83 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '-g', 'grant-cli' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink /usr/bin/node
+5 verbose cache add [ 'grant-cli', null ]
+6 verbose cache add name=undefined spec="grant-cli" args=["grant-cli",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'grant-cli',
+7 verbose parsed url   path: 'grant-cli',
+7 verbose parsed url   href: 'grant-cli' }
+8 silly lockFile 5e10beb7-grant-cli grant-cli
+9 verbose lock grant-cli /home/eece210/.npm/5e10beb7-grant-cli.lock
+10 silly lockFile 5e10beb7-grant-cli grant-cli
+11 silly lockFile 5e10beb7-grant-cli grant-cli
+12 verbose addNamed [ 'grant-cli', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 669215e0-grant-cli grant-cli@
+15 verbose lock grant-cli@ /home/eece210/.npm/669215e0-grant-cli.lock
+16 silly addNameRange { name: 'grant-cli', range: '*', hasData: false }
+17 verbose request where is /grant-cli
+18 verbose request registry https://registry.npmjs.org/
+19 verbose request id 31be4fd4c0c261a4
+20 verbose url raw /grant-cli
+21 verbose url resolving [ 'https://registry.npmjs.org/', './grant-cli' ]
+22 verbose url resolved https://registry.npmjs.org/grant-cli
+23 verbose request where is https://registry.npmjs.org/grant-cli
+24 info trying registry request attempt 1 at 20:57:40
+25 http GET https://registry.npmjs.org/grant-cli
+26 http 404 https://registry.npmjs.org/grant-cli
+27 verbose headers { date: 'Wed, 26 Nov 2014 04:57:41 GMT',
+27 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+27 verbose headers   'content-type': 'application/json',
+27 verbose headers   'cache-control': 'max-age=0',
+27 verbose headers   'content-length': '52',
+27 verbose headers   'accept-ranges': 'bytes',
+27 verbose headers   via: '1.1 varnish',
+27 verbose headers   age: '0',
+27 verbose headers   'x-served-by': 'cache-lax1433-LAX',
+27 verbose headers   'x-cache': 'MISS',
+27 verbose headers   'x-cache-hits': '0',
+27 verbose headers   'x-timer': 'S1416977861.278053,VS0,VE314',
+27 verbose headers   'keep-alive': 'timeout=10, max=50',
+27 verbose headers   connection: 'Keep-Alive' }
+28 silly registry.get cb [ 404,
+28 silly registry.get   { date: 'Wed, 26 Nov 2014 04:57:41 GMT',
+28 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+28 silly registry.get     'content-type': 'application/json',
+28 silly registry.get     'cache-control': 'max-age=0',
+28 silly registry.get     'content-length': '52',
+28 silly registry.get     'accept-ranges': 'bytes',
+28 silly registry.get     via: '1.1 varnish',
+28 silly registry.get     age: '0',
+28 silly registry.get     'x-served-by': 'cache-lax1433-LAX',
+28 silly registry.get     'x-cache': 'MISS',
+28 silly registry.get     'x-cache-hits': '0',
+28 silly registry.get     'x-timer': 'S1416977861.278053,VS0,VE314',
+28 silly registry.get     'keep-alive': 'timeout=10, max=50',
+28 silly registry.get     connection: 'Keep-Alive' } ]
+29 silly lockFile 669215e0-grant-cli grant-cli@
+30 silly lockFile 669215e0-grant-cli grant-cli@
+31 error 404 404 Not Found: grant-cli
+31 error 404
+31 error 404 'grant-cli' is not in the npm registry.
+31 error 404 You should bug the author to publish it
+31 error 404
+31 error 404 Note that you can also install from a
+31 error 404 tarball, folder, or http url, or git url.
+32 error System Linux 3.5.0-40-generic
+33 error command "/usr/bin/node" "/usr/bin/npm" "install" "-g" "grant-cli"
+34 error cwd /home/eece210/eece310/Newman
+35 error node -v v0.10.33
+36 error npm -v 1.4.28
+37 error code E404
+38 verbose exit [ 1, true ]

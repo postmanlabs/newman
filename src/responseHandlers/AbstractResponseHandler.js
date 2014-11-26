@@ -32,6 +32,11 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 		ResponseExporter.addResult(request, response, tests);
 	},
 
+	/*
+	 * Print the time it takes to get response from the website,
+	 * name of the request, such as GET,
+	 * url we are looking at
+	 */
 	_printResponse: function(error, response, body, request) {
 		if (response.statusCode >= 200 && response.statusCode < 300) {
 			log.success(response.statusCode);

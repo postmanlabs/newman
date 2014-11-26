@@ -1,0 +1,29 @@
+{
+	"id": "099ba954-7781-3e17-0909-fcb9139d3ff4",
+	"name": "NASA1",
+	"requests": [
+		{
+			"id": "ecec4b40-854f-80ea-e3d5-8aa6d26cd594",
+			"headers": "",
+			"url": "http://data.nasa.gov/api/get_search_results/?search=apollo",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Body matches string\"] = responseBody.has(\"apollo\");\n\ntests[\"Response time is less than 200ms\"] = responseTime < 1000;",
+			"time": 1416522226789,
+			"name": "GET search",
+			"description": "search apollo",
+			"collectionId": "099ba954-7781-3e17-0909-fcb9139d3ff4",
+			"responses": [],
+			"synced": false
+		}
+	],
+	"order": [
+		"ecec4b40-854f-80ea-e3d5-8aa6d26cd594"
+	],
+	"timestamp": 1416522183392,
+	"synced": false
+}
