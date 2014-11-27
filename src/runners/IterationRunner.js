@@ -58,6 +58,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
         // run the next iteration when the collection run is over
         this.addEventListener('collectionRunnerOver', this._runNextIteration.bind(this));
+
     },
 
     _getOrderedCollection: function(requestJSON) {
@@ -205,11 +206,18 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this._logStatus();
             var runner = new CollectionRunner(this.collection, this.getOptions());
             runner.execute();
+            this._isSuccessfulIteration(); // connie
         }
     },
 
     _exportResponses: function() {
         ResponseExporter.exportResults();
+    },
+    
+    // connie
+    // if isSuccessfulIteration, adds to number of succesful iterations and logs it
+    _isSuccessfulIteration: function() {
+    	log.success("\nThis has been a successful iteration 1 of" + this.numOfIterations + "\n");
     },
 
     /**
