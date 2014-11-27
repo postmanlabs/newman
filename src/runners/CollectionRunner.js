@@ -57,18 +57,16 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 
 	// run when requestRunner runs over the ordered requests in this collection
 	_onRequestRunnerOver: function() {
+		collection = this.collection;
 		this.ResponseHandler.clear();
 		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
 		this.emit('collectionRunnerOver');
 		// connie - add if collection is successful, emit event
-		this.emit('collectionSuccessful');
+		if(collection.isSuccessful == true){
+			this.emit('collectionSuccessful');
+		}
 	},
 	
-	/*/ connie
-	// no fails in the collection
-	_noFailsRecorded: function() {
-		if()
-	},*/
 });
 
 module.exports = CollectionRunner;

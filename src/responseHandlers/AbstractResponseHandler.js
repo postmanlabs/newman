@@ -30,6 +30,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 			this._printResponse(error, response, body, request);
 		}
 		ResponseExporter.addResult(request, response, tests);
+		//ResponseExporter.ifFailsExists(tests); // connie
 	},
 
 	/*

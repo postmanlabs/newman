@@ -197,9 +197,9 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             Globals.envJson = currentGlobalEnv;
         } else {
             this._exportResponses();
-            // connie - runs line of log if collection is succesful
-            this.addEventListener('collectionSuccessful', this._isSuccessfulIteration.bind(this)); 
-            // connie //
+            // connie - runs line of log if collection is successful
+            //this._addEventListeners();
+            //this.addEventListener('collectionSuccessful', this._isSuccessfulIteration.bind(this));
             this.emit('iterationRunnerOver',Globals.exitCode);
         }
     },
@@ -215,6 +215,22 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
     _exportResponses: function() {
         ResponseExporter.exportResults();
     },
+    
+    // connie - refactored function
+    // adding event listeners to signal end of iterationRunner and collectionRunner
+	_addEventListeners: function() {
+		this._onCollectionRunnerOverBinded = this._onCollectionRunnerOver.bind(this);
+		this.addEventListener('collectionRunnerOver', this._onCollectionRunnerOverBinded);
+	},
+	
+	// connie - refactored function
+	// run when collectionRunner runs over the ordered requests in this iteration
+	_onCollectionRunnerOver: function() {
+		this.removeAllListeners();
+		//this.removeEventListener('collectionRunnerOver', this._onRequestRunnerOverBinded);
+		this.emit('iterationRunnerOver');
+		this.emit('collectionSuccessful');
+	},
     
     // connie
     // if isSuccessfulIteration, adds to number of succesful iterations and logs it

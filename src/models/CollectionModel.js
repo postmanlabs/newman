@@ -17,7 +17,7 @@ var CollectionModel = jsface.Class(ParentModel, {
 		this.order       = collectionJson.order;
 		this.requests    = this.initModel(RequestModel, collectionJson.requests);
 		this.folders     = this.initModel(FolderModel, collectionJson.folders);
-		this.isSuccessful = false; // connie
+		this.isSuccessful = true; // connie
 	},
 	/** 
 	 * Initializes a Model object with the modelsJson as the initial data

@@ -74,9 +74,17 @@ var ResponseExporter = jsface.Class({
 			results[key] = {
 				pass: tests[key] ? 1 : 0,
 				fail: tests[key] ? 0 : 1
-			};
+			}; 
 			return results;
 		}, {});
+	},
+	
+	// connie - function to emit a flag if there are fails
+	_ifFailsExist: function(tests) {
+		failresult = this._extractPassFailCountFromTests(this.tests);
+		if(failresult == fail){
+			this.emit('testFailed');
+		}
 	},
 
 	/**
