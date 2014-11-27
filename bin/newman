@@ -18,7 +18,6 @@ var color   = require('cli-color'),
 	JSON5   = require('json5'),
 	Newman  = require('../src/Newman');
 
-
 function parseArguments() {
 	program
 	  .version('1.1.7')
@@ -48,6 +47,7 @@ function parseArguments() {
 	  console.log('    newman -c POSTMAN_COLLECTION -f SAMPLE_FOLDER');
 	  console.log('');
 	  console.log('  For more documentation, issues and examples head over to https://github.com/a85/Newman');
+	  console.log('  connie is having a little fun here'); //connie messing around
 	  console.log('');
 	});
 
@@ -63,7 +63,7 @@ function parseArguments() {
 	} else if (program.url) {
 		Helpers.validateCollectionUrl(program.url);
 	} else {
-		Errors.terminateWithError("Please provide a valid collection file / url to run");
+		Errors.terminateWithError("HIHI CONNIE TEST HI Please provide a valid collection file / url to run");
 	}
 
     if (!program.folder) {

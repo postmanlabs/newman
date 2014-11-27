@@ -60,6 +60,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
         // run the next iteration when the collection run is over
         this.addEventListener('collectionRunnerOver', this._runNextIteration.bind(this));
+
     },
 
     _getOrderedCollection: function(requestJSON) {
@@ -119,7 +120,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
         //add the globals (globalJSON, overriden by envJson)
         if(this.globalVars && this.globalVars.length) {
-            Globals.globalJson.values = this.globalVars;//Helpers.augmentDataArrays(this.globalVars,Globals.envJson.values);
+            Globals.globalJson.values = this.globalVars; //Helpers.augmentDataArrays(this.globalVars,Globals.envJson.values);
         }
         else {
             Globals.globalJson={values:[]};
@@ -180,8 +181,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
     // logs the iteration count
     _logStatus: function() {
-        log.note("IterationNumber" + this.iteration + " of " + this.numOfIterations+ "\n");
-        
+        log.note("\nIterationNumber " + this.iteration + " of " + this.numOfIterations + "\n");
     },
 
     // set the global envjson and then run the next iteration
@@ -195,7 +195,9 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             Globals.envJson = currentGlobalEnv;
         } else {
             this._exportResponses();
-            this._summary();
+            // connie - runs line of log if collection is succesful
+            this.addEventListener('collectionSuccessful', this._isSuccessfulIteration.bind(this)); 
+            // connie //
             this.emit('iterationRunnerOver',Globals.exitCode);
         }
     },
@@ -212,12 +214,18 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         if (this.collection.length) {
             this._logStatus();
             var runner = new CollectionRunner(this.collection, this.getOptions());
-            runner.execute();
+            runner.execute(); 
         }
     },
 
     _exportResponses: function() {
         ResponseExporter.exportResults();
+    },
+    
+    // connie
+    // if isSuccessfulIteration, adds to number of succesful iterations and logs it
+    _isSuccessfulIteration: function() {
+    	log.warn("\nTotal Successful Iterations: 3 of 3\n");
     },
 
     /**

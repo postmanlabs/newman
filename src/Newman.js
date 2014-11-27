@@ -52,6 +52,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
         this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
 
         this.iterationRunner.execute();
+        
     }
 });
 
