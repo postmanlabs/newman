@@ -120,6 +120,23 @@ newman -i /path/to/Backup.json -p
 
 **NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.
 
+##Test locally
+1.Install grunt
+    npm install -g grunt-cli
+
+These are packages you need to downlaod.
+    npm install grunt-contrib-jshint 
+    npm install grunt-jsdoc 
+    npm install grunt-mocha-test 
+    npm install grunt-run sinon
+This might be varies depending on your computer.
+
+2.Run grunt
+    grunt test
+
+It is going to run Gruntfile.js. 
+
+
 ## Library
 Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so - 
 
