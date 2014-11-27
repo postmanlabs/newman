@@ -63,7 +63,7 @@ function parseArguments() {
 	} else if (program.url) {
 		Helpers.validateCollectionUrl(program.url);
 	} else {
-		Errors.terminateWithError("HIHI CONNIE TEST HI Please provide a valid collection file / url to run");
+		Errors.terminateWithError("Please provide a valid collection file / url to run");
 	}
 
     if (!program.folder) {
