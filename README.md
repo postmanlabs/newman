@@ -122,22 +122,32 @@ newman -i /path/to/Backup.json -p
 
 ##Test locally
 1.Install grunt
-    npm install -g grunt-cli
+
+```bash
+npm install -g grunt-cli
+```
 
 These are packages you need to downlaod.
+```bash
     npm install grunt-contrib-jshint 
     npm install grunt-jsdoc 
     npm install grunt-mocha-test 
     npm install grunt-run sinon
+```
 This might be varies depending on your computer.
 
 2.Run grunt
-    grunt test
+```bash
+grunt test
+```
 It is going to run Gruntfile.js. 
 
 You can test your own json file by running ./newman in bin folder.
 For example,
+```bash
 	./newman -c file.json
+	./newman -c file.json -n 5 
+```
 
 
 ## Library
