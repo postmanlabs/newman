@@ -53,7 +53,6 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 	_addEventListeners: function() {
 		this._onRequestRunnerOverBinded = this._onRequestRunnerOver.bind(this);
 		this.addEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
-		this.addEventListener('isSuccessful', this._noFailsRecorded); // connie
 	},
 
 	// run when requestRunner runs over the ordered requests in this collection
@@ -61,13 +60,15 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 		this.ResponseHandler.clear();
 		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
 		this.emit('collectionRunnerOver');
+		// connie - add if collection is successful, emit event
+		this.emit('collectionSuccessful');
 	},
 	
-	// connie
+	/*/ connie
 	// no fails in the collection
 	_noFailsRecorded: function() {
-		return true;
-	},
+		if()
+	},*/
 });
 
 module.exports = CollectionRunner;

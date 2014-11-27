@@ -97,7 +97,7 @@ var Logger = jsface.Class([EventEmitter], {
 		else {
 			Globals.exitCode=1;
 		}
-	}
+	}	
 });
 
 module.exports = Logger;

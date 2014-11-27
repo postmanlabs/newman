@@ -197,6 +197,9 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             Globals.envJson = currentGlobalEnv;
         } else {
             this._exportResponses();
+            // connie - runs line of log if collection is succesful
+            this.addEventListener('collectionSuccessful', this._isSuccessfulIteration.bind(this)); 
+            // connie //
             this.emit('iterationRunnerOver',Globals.exitCode);
         }
     },
@@ -205,8 +208,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         if (this.collection.length) {
             this._logStatus();
             var runner = new CollectionRunner(this.collection, this.getOptions());
-            runner.execute();
-            this._isSuccessfulIteration(); // connie
+            runner.execute(); 
         }
     },
 
@@ -217,8 +219,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
     // connie
     // if isSuccessfulIteration, adds to number of succesful iterations and logs it
     _isSuccessfulIteration: function() {
-    	var successfulIterations = 3;
-    	log.success("Iteration " + this.iteration + " of " + successfulIterations + " successful iterations\n");
+    	log.warn("\nTotal Successful Iterations: 3 of 3\n");
     },
 
     /**
