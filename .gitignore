@@ -3,3 +3,4 @@ docs/*
 .idea/*
 .project
 .settings/
+.sublime-workspace
