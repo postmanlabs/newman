@@ -133,8 +133,11 @@ This might be varies depending on your computer.
 
 2.Run grunt
     grunt test
-
 It is going to run Gruntfile.js. 
+
+You can test your own json file by running ./newman in bin folder.
+For example,
+	./newman -c file.json
 
 
 ## Library
