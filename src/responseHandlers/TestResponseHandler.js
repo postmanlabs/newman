@@ -46,7 +46,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     },
 
     _hasTestCases: function(request) {
-        return !!request.tests;
+        return request.tests;
     },
 
     // run and generate test results. Also exit if any of the tests has failed
