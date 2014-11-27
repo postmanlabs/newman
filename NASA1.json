@@ -12,7 +12,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "tests[\"Body matches string\"] = responseBody.has(\"apollo\");\n\ntests[\"Response time is less than 200ms\"] = responseTime < 1000;",
+			"tests": "tests[\"Body matches string\"] = responseBody.has(\"apollo\");\n\ntests[\"Response time is less than 1000ms\"] = responseTime < 1000;",
 			"time": 1416522226789,
 			"name": "GET search",
 			"description": "search apollo",
