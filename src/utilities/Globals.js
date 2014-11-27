@@ -24,6 +24,8 @@ var Globals = jsface.Class({
 		this.noColor = options.noColor;
 		this.asLibrary = options.asLibrary;
 		this.exitCode=0;
+		this.fail=0;
+		this.totalTests=0;
 	}
 });
 

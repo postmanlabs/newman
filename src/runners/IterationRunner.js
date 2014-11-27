@@ -192,6 +192,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this._runCollection();
             Globals.envJson = currentGlobalEnv;
         } else {
+            log.note("\nIn total " + Globals.fail + " of " + Globals.totalTests + " tests failed\n");
             this._exportResponses();
             // connie - runs line of log if collection is succesful
             this.addEventListener('collectionSuccessful', this._isSuccessfulIteration.bind(this)); 
