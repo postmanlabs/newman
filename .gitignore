@@ -1,6 +1,3 @@
 node_modules/
 docs/*
 .idea/*
-.project
-.settings/
-.sublime-workspace
