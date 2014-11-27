@@ -57,7 +57,8 @@ var Logger = jsface.Class([EventEmitter], {
 		return this;
 	},
 
-	testCaseSuccess: function(log) {
+
+	testCaseSuccess: function(log,count) {
 		this.success("    " + Symbols.symbols.ok + log + "\n");
 		return this;
 	},

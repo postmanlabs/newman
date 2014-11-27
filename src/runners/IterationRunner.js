@@ -13,6 +13,7 @@ var jsface           = require("jsface"),
     JSON5            = require('json5'),
     _und             = require('underscore'),
     ResponseExporter = require("../utilities/ResponseExporter");
+    testVar          = require('../responseHandlers/TestResponseHandler')
 
 /**
  * @class IterationRunner
@@ -21,6 +22,7 @@ var jsface           = require("jsface"),
  * @param numOfIterations {int} Number of times the iteration has to run
  */
 var IterationRunner = jsface.Class([Options, EventEmitter], {
+    count:0,
     constructor: function(requestJSON, options) {
         this.setOptions(options);
         this.collection = this._getOrderedCollection(requestJSON);
@@ -66,6 +68,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         return orderedCollection;
     },
 
+    //Return foldermodel of requestJSON that representing postman folder object
     _getFolderFromCollection: function(requestJSON, folderName) {
         var folders = requestJSON.folders;
         var folderNeeded = _und.find(folders, function(folder) {return folder.name===folderName;});
@@ -135,11 +138,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             return [];
         }
         return globalFile;
-//        var jsonArray = [];
-//        if (globalFile) {
-//            jsonArray = JSON5.parse(fs.readFileSync(globalFile, 'utf8'));
-//        }
-//        return jsonArray;
     },
 
     // parses the json from data file and sends it for transformation
@@ -182,7 +180,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
     // logs the iteration count
     _logStatus: function() {
-        log.note("IterationNumber" + this.iteration + " of " + this.numOfIterations + "\n");
+        log.note("IterationNumber" + this.iteration + " of " + this.numOfIterations+ "\n");
         
     },
 
@@ -197,8 +195,17 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             Globals.envJson = currentGlobalEnv;
         } else {
             this._exportResponses();
+            this._summary();
             this.emit('iterationRunnerOver',Globals.exitCode);
         }
+    },
+
+    _summary: function(){
+        log.normal("\nSummary\n");
+        if(!testVar.iterationPass){
+            this.count++;
+        }
+        log.note(this.count);
     },
 
     _runCollection: function() {

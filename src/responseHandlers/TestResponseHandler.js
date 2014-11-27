@@ -17,11 +17,14 @@ var jsface                  = require('jsface'),
     atob                    = require("atob"),
     tv4                     = require("tv4");
 require('sugar');
+
 /**
  * @class TestResponseHandler
  * @classdesc
  */
 var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
+    log.note("Checking1");
+    iterationPass:false,
     $singleton: true,
     throwErrorOnLog: false,
     // function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
@@ -35,7 +38,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             ErrorHandler.terminateWithError(this.throwErrorOnLog);
         }
     },
-
+    //If request has tests then return runAndGenerateTestResults
     _runTestCases: function(error, response, body, request) {
         if (this._hasTestCases(request)) {
             var tests = request.tests;
@@ -45,6 +48,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         return {};
     },
 
+    //If request has tests then return true
     _hasTestCases: function(request) {
         return!! request.tests;
     },
@@ -96,6 +100,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         return sandbox.tests;
     },
 
+    //return transformed data when the dataMode is raw
     _getTransformedRequestData: function(request) {
         var transformedData;
 
@@ -128,6 +133,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         return Helpers.transformFromKeyValue(Globals.dataJson.values);
     },
 
+    //Return the statusCode that has name and detail of the status
     _getResponseCodeObject: function(code) {
         var obj = {
             'code': code,
@@ -255,8 +261,10 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         _und.each(_und.keys(results), function(key) {
             if (results[key]) {
                 log.testCaseSuccess(key);
+                iterationPass=true;
             } else {
                 ErrorHandler.testCaseError(key);
+                iterationPass=false;
             }
         });
     }
