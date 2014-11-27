@@ -179,7 +179,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
     // logs the iteration count
     _logStatus: function() {
-        log.note("IterationNumber " + this.iteration + " of " + this.numOfIterations + "\n");
+        log.note("\nIterationNumber " + this.iteration + " of " + this.numOfIterations + "\n");
     },
 
     // set the global envjson and then run the next iteration
@@ -192,16 +192,11 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this._runCollection();
             Globals.envJson = currentGlobalEnv;
         } else {
-<<<<<<< HEAD
+            var totalFail=Globals.fail;
             var totalPass=Globals.totalTests-Globals.fail;
-            log.warn("\nTotal Passes: "+totalPass+ "/"+Globals.totalTests+ "\n");
-            log.warn("Total Failures: " + Globals.fail + "/" +Globals.totalTests +"\n");
-=======
-        	// using globals will slow it down??? try event listeners
-            log.warn("\nTotal: \n" + Globals.fail + " of " + Globals.totalTests + " tests failed\n");
->>>>>>> 7e693c7049513bd6b80e79c172ca56c8eb406c75
+            log.warn("\nTotal Passes: "+totalPass+"/"+Globals.totalTests);
+            log.warn("\nTotal Failures: " + totalFail +"/"+Globals.totalTests +"\n");
             this._exportResponses();
-            // connie - runs line of log if collection is successful
             //this._addEventListeners();
             //this.addEventListener('collectionSuccessful', this._isSuccessfulIteration.bind(this));
             this.emit('iterationRunnerOver',Globals.exitCode);
