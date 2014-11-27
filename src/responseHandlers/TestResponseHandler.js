@@ -23,7 +23,6 @@ require('sugar');
  * @classdesc
  */
 var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
-    iterationPass:false,
     $singleton: true,
     throwErrorOnLog: false,
     // function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
@@ -260,10 +259,8 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         _und.each(_und.keys(results), function(key) {
             if (results[key]) {
                 log.testCaseSuccess(key);
-                iterationPass=true;
             } else {
                 ErrorHandler.testCaseError(key);
-                iterationPass=false;
             }
         });
     }
