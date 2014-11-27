@@ -67,6 +67,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         return orderedCollection;
     },
 
+    //Return foldermodel of requestJSON that representing postman folder object
     _getFolderFromCollection: function(requestJSON, folderName) {
         var folders = requestJSON.folders;
         var folderNeeded = _und.find(folders, function(folder) {return folder.name===folderName;});
@@ -136,11 +137,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             return [];
         }
         return globalFile;
-//        var jsonArray = [];
-//        if (globalFile) {
-//            jsonArray = JSON5.parse(fs.readFileSync(globalFile, 'utf8'));
-//        }
-//        return jsonArray;
     },
 
     // parses the json from data file and sends it for transformation
@@ -196,6 +192,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this._runCollection();
             Globals.envJson = currentGlobalEnv;
         } else {
+            log.note("\nIn total " + Globals.fail + " of " + Globals.totalTests + " tests failed\n");
             this._exportResponses();
             // connie - runs line of log if collection is successful
             //this._addEventListeners();

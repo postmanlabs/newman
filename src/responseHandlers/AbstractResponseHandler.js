@@ -13,7 +13,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 	$singleton: true,
 
 	/**
-	 * Sets up the event listener for the request executed event emitted on each
+	 * Sets up the event listener for the executed event emitted on each
 	 * request execution
 	 * @memberOf AbstractResponseHandler
 	 */
@@ -34,7 +34,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 	},
 
 	/*
-	 * Print the time it takes to get response from the website,
+	 * log the time it takes to get response from the website,
 	 * name of the request, such as GET,
 	 * url we are looking at
 	 */
