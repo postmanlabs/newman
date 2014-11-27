@@ -183,9 +183,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
 
     // logs the iteration count
     _logStatus: function() {
-    	var successfulIterations = 0;
         log.note("\nIterationNumber " + this.iteration + " of " + this.numOfIterations + "\n");
-        log.success("Total successful iterations: " + this.iteration + " of " + successfulIterations + "\n");
     },
 
     // set the global envjson and then run the next iteration
@@ -208,7 +206,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this._logStatus();
             var runner = new CollectionRunner(this.collection, this.getOptions());
             runner.execute();
-            //this._isSuccessfulIteration(); // connie
+            this._isSuccessfulIteration(); // connie
         }
     },
 
@@ -216,11 +214,12 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         ResponseExporter.exportResults();
     },
     
-    /*
+    // connie
     // if isSuccessfulIteration, adds to number of succesful iterations and logs it
     _isSuccessfulIteration: function() {
-    	log.success("\nThis has been successful iteration 1 of " + this.numOfIterations + " successful iterations\n");
-    }, */
+    	var successfulIterations = 3;
+    	log.success("Iteration " + this.iteration + " of " + successfulIterations + " successful iterations\n");
+    },
 
     /**
      * Runs the iteration. Instantiates a new CollectionRunner and executes it
