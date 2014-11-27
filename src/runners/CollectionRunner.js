@@ -61,10 +61,6 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 		this.ResponseHandler.clear();
 		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
 		this.emit('collectionRunnerOver');
-		// connie - add if collection is successful, emit event
-		if(collection.isSuccessful == true){
-			this.emit('collectionSuccessful');
-		}
 	},
 	
 });

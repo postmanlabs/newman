@@ -197,8 +197,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             log.warn("\nTotal Passes: "+totalPass+"/"+Globals.totalTests);
             log.warn("\nTotal Failures: " + totalFail +"/"+Globals.totalTests +"\n");
             this._exportResponses();
-            //this._addEventListeners();
-            //this.addEventListener('collectionSuccessful', this._isSuccessfulIteration.bind(this));
             this.emit('iterationRunnerOver',Globals.exitCode);
         }
     },
@@ -215,28 +213,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         ResponseExporter.exportResults();
     },
     
-    // connie - refactored function
-    // adding event listeners to signal end of iterationRunner and collectionRunner
-	_addEventListeners: function() {
-		this._onCollectionRunnerOverBinded = this._onCollectionRunnerOver.bind(this);
-		this.addEventListener('collectionRunnerOver', this._onCollectionRunnerOverBinded);
-	},
-	
-	// connie - refactored function
-	// run when collectionRunner runs over the ordered requests in this iteration
-	_onCollectionRunnerOver: function() {
-		this.removeAllListeners();
-		//this.removeEventListener('collectionRunnerOver', this._onRequestRunnerOverBinded);
-		this.emit('iterationRunnerOver');
-		this.emit('collectionSuccessful');
-	},
-    
-    // connie
-    // if isSuccessfulIteration, adds to number of succesful iterations and logs it
-    _isSuccessfulIteration: function() {
-    	log.warn("\nTotal Successful Iterations: 3 of 3\n");
-    },
-
     /**
      * Runs the iteration. Instantiates a new CollectionRunner and executes it
      */
