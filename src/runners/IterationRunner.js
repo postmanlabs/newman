@@ -13,7 +13,6 @@ var jsface           = require("jsface"),
     JSON5            = require('json5'),
     _und             = require('underscore'),
     ResponseExporter = require("../utilities/ResponseExporter");
-    testVar          = require('../responseHandlers/TestResponseHandler')
 
 /**
  * @class IterationRunner
@@ -22,7 +21,6 @@ var jsface           = require("jsface"),
  * @param numOfIterations {int} Number of times the iteration has to run
  */
 var IterationRunner = jsface.Class([Options, EventEmitter], {
-    count:0,
     constructor: function(requestJSON, options) {
         this.setOptions(options);
         this.collection = this._getOrderedCollection(requestJSON);
@@ -200,14 +198,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             // connie //
             this.emit('iterationRunnerOver',Globals.exitCode);
         }
-    },
-
-    _summary: function(){
-        log.normal("\nSummary\n");
-        if(!testVar.iterationPass){
-            this.count++;
-        }
-        log.note(this.count);
     },
 
     _runCollection: function() {
