@@ -23,7 +23,6 @@ require('sugar');
  * @classdesc
  */
 var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
-    log.note("Checking1");
     iterationPass:false,
     $singleton: true,
     throwErrorOnLog: false,
