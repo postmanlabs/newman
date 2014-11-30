@@ -134,7 +134,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
             if (this.secureProtocol) {
                 RequestOptions.secureProtocol = this.secureProtocol;
             }
-            console.log("Request Options: \n"+ JSON.stringify(RequestOptions));
             var unireq = requestLib(RequestOptions, function(error, response, body) {
                 if(response) {
                     // save some stats, only if response exists
@@ -221,7 +220,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                     form.append(dataObj.key, fs.createReadStream(loc));
                 }
             });
-
         }
     },
 
