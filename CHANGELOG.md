@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####1.2.0 (December 2, 2014)
+* Adding option for jUnit-style output of test runs - Courtesy @pal-thomassen (BETA)
+* Configurable SSL/TLS behavior while running collections - Courtesy @gituser4
+
 ####1.1.9 (November 4, 2014)
 * Summary correctly shown for folder-only runs
 

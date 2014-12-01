@@ -34,14 +34,14 @@ function parseArguments() {
 		.option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
 		.option('-s, --stopOnError', "Stops the runner with code=1 when a test case fails", null)
 		.option('-j, --noSummary', "Doesn't show the summary for each iteration", null)
-		.option('-n, --number [number]', 'Define the number of iterations to run.', null)
-		.option('-C, --noColor', 'Disable colored output.', null)
-		.option('-k, --insecure', 'Disable strict ssl.', null)
-		.option('-1, --tls', 'Use TLSv1.', null)
+		.option('-n, --number [number]', 'Define the number of iterations to run', null)
+		.option('-C, --noColor', 'Disable colored output', null)
+		.option('-k, --insecure', 'Disable strict ssl', null)
+		.option('-l, --tls', 'Use TLSv1', null)
 		.option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
-		.option('-o, --outputFile [file]', 'Path to file where output should be written. [file]', null)
-		.option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML. [file]', null)
-		.option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals. [file] (Incompatible with any other option)', null)
+		.option('-o, --outputFile [file]', 'Path to file where output should be written [file]', null)
+		.option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML [file]', null)
+		.option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals [file] (Incompatible with any other option)', null)
 		.option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals');
 
 	program.on('--help', function() {
