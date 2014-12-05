@@ -25,6 +25,9 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         this.setOptions(options);
         this.collection = this._getOrderedCollection(requestJSON);
         this.collectionName = requestJSON.name;
+        if(!Globals.requestJSON) {
+            Globals.requestJSON = requestJSON;
+        }
         //check if only a folder has to be run
         if(options.folderName) {
             this.folder = this._getFolderFromCollection(requestJSON, options.folderName);

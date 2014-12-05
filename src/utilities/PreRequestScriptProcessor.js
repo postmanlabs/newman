@@ -114,6 +114,7 @@ var PreRequestScriptProcessor = jsface.Class({
             globals: this._setGlobalContext(),
             data: this._setDataContext(),
             $: _jq,
+            jQuery: _jq,
             _: _lod,
             btoa: btoa,
             atob: atob,

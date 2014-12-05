@@ -29,6 +29,9 @@ var Globals = jsface.Class({
 		this.strictSSL = options.strictSSL || true;
 		this.exitCode=0;
 		this.updateMessage="";
+		this.folder = options.folderName || false;
+		this.iterationCount = options.iterationCount || 1;
+		this.html = options.html || false;
 	}
 });
 

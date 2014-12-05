@@ -173,6 +173,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             globals: this._setGlobalContext(),
             data: this._setDataContext(),
             $: _jq,
+            jQuery: _jq,
             _: _lod,
             Backbone: Backbone,
             xmlToJson: function(string) {
