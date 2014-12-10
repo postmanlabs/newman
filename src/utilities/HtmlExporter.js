@@ -26,7 +26,12 @@ var HtmlExporter = jsface.Class({
 		// }
 		template = require('../templates/htmlResponseTemplate');
 		var htmlPath = Globals.html;
-		fs.writeFileSync(htmlPath, template(resultObj));
+		try {
+			fs.writeFileSync(htmlPath, template(resultObj));
+		}
+		catch(e) {
+			log.error("Error writing to file. Try using sudo. Error: " + e);
+		}
 		log.note("\nHTML Report written to: " + htmlPath+"\n");
 	}
 });
