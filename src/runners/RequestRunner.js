@@ -36,6 +36,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         this.delay = delay;
     },
 
+    setRunMode: function(runMode) {
+        this.runMode = runMode;
+    },
+
     /**
      * Sets strictSSL
      * @param strictSSL
@@ -96,13 +100,38 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         return finalArray;
     },
 
+    _getNextRequest: function() {
+        if(this.runMode === "default" || !Globals.nextRequestName) {
+            return this.getFromQueue();
+        }
+        else if(Globals.nextRequestName == "none") {
+            return null;
+        }
+        else {
+            var queue = this.getAllItems();
+            var index = 0;
+            var indexToUse = -1;
+            _und.each(queue, function(request) {
+                if(request.name === Globals.nextRequestName) {
+                    indexToUse = index;
+                    return false;
+                }
+                index++;
+            });
+            var requestToSend = this.getItemWithIndex(indexToUse)[0];
+            Globals.nextRequestName = "none";
+            return requestToSend;
+        }
+    },
+
     // Gets a request from the queue and executes it.
     _execute: function() {
 		if(Globals.exitCode===1 && Globals.stopOnError===true) {
 			return;
 		}
 
-        var request = this.getFromQueue();
+        var request = this._getNextRequest();
+
         if (request) {
             //To be uncommented if each prScript/test should set transient env. vars
             //var oldGlobals = Globals.envJson;

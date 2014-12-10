@@ -17,9 +17,10 @@ var jsface                 = require("jsface"),
  * @mixes Options
  */
 var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
-	constructor: function(collection, options) {
+	constructor: function(collection, options, runMode) {
 		this.$class.$super.call(this, collection);
 		this.setOptions(options);
+		this.runMode = runMode;
 	},
 
 	/**
@@ -47,6 +48,7 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 		RequestRunner.setDelay(this.opts.delay);
 		RequestRunner.setStrictSSL(this.opts.strictSSL);
 		RequestRunner.setSecureProtocol(this.opts.secureProtocol);
+		RequestRunner.setRunMode(this.runMode);
 		RequestRunner.start();
 
 		this.$class.$superp.execute.call(this);

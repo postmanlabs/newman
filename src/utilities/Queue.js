@@ -18,6 +18,12 @@ var Queue = jsface.Class({
 	},
 	isEmptyQueue: function() {
 		return !this._queue.length;
+	},
+	getAllItems: function() {
+		return this._queue;
+	},
+	getItemWithIndex: function(index) {
+		return this._queue.splice(index,1);
 	}
 });
 

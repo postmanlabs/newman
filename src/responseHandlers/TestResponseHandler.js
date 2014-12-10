@@ -246,6 +246,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                 },
                 clearGlobalVariables: function() {
                     Globals.globalJson.values = [];
+                },
+                setNextRequest: function(requestName) {
+                    Globals.nextRequestName = requestName;
                 }
             }
         };
