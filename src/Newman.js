@@ -45,7 +45,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
             exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
                 stdout = stdout.trim();
                 if(stdout!==Globals.newmanVersion && stdout.length>0) {
-                    Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update newman` to update.\n";
+                    Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update -g newman` to update.\n";
                 }
                 else {
                     Globals.updateMessage = "";

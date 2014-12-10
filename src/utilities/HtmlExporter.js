@@ -14,15 +14,16 @@ var HtmlExporter = jsface.Class({
 	generateHTML: function(resultObj) {
 		var template;
 		//check if .js file exists
-		if (!fs.existsSync(__dirname + "/../templates/htmlResponseTemplate.js")) {
-			if (!this.templates) {
-				//Disable console.log for DOT process
-				var oldConsoleLog = console.log;
-				console.log = function() {};
-				this.templates = DOT.process({path: __dirname + "/../templates"});
-				console.log = oldConsoleLog;
-			}
-		}
+		//ALWAYS USE EXISTING FILE
+		// if (!fs.existsSync(__dirname + "/../templates/htmlResponseTemplate.js")) {
+		// 	if (!this.templates) {
+		// 		//Disable console.log for DOT process
+		// 		var oldConsoleLog = console.log;
+		// 		console.log = function() {};
+		// 		this.templates = DOT.process({path: __dirname + "/../templates"});
+		// 		console.log = oldConsoleLog;
+		// 	}
+		// }
 		template = require('../templates/htmlResponseTemplate');
 		var htmlPath = Globals.html;
 		fs.writeFileSync(htmlPath, template(resultObj));
