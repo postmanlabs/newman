@@ -76,7 +76,7 @@ var Helpers = jsface.Class({
                     //do nothing...disabled header
                 }
                 else {
-                    headerObj[headerName] = str.substr(splitIndex + 1).trim();    
+                    headerObj[headerName] = str.substr(splitIndex + 1).trim();
                 }
 			}
 		});

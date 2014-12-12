@@ -104,7 +104,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if(this.runMode === "default" || !Globals.nextRequestName) {
             return this.getFromQueue();
         }
-        else if(Globals.nextRequestName == "none") {
+        else if(Globals.nextRequestName === "none") {
             return null;
         }
         else {

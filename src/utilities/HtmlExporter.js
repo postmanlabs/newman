@@ -1,8 +1,7 @@
 var jsface       = require('jsface'),
 	Globals      = require('./Globals'),
 	log          = require('./Logger'),
-	fs           = require('fs'),
-	DOT          = require('dot');
+	fs           = require('fs');
 
 /**
  * @class HtmlExporter
@@ -13,17 +12,7 @@ var HtmlExporter = jsface.Class({
 	templates: null,
 	generateHTML: function(resultObj) {
 		var template;
-		//check if .js file exists
-		//ALWAYS USE EXISTING FILE
-		// if (!fs.existsSync(__dirname + "/../templates/htmlResponseTemplate.js")) {
-		// 	if (!this.templates) {
-		// 		//Disable console.log for DOT process
-		// 		var oldConsoleLog = console.log;
-		// 		console.log = function() {};
-		// 		this.templates = DOT.process({path: __dirname + "/../templates"});
-		// 		console.log = oldConsoleLog;
-		// 	}
-		// }
+		//Always use existing file
 		template = require('../templates/htmlResponseTemplate');
 		var htmlPath = Globals.html;
 		try {
