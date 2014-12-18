@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "author": "Abhijit Kane & Arjun Variar & Prakhar Srivastav",
   "main": "Newman",
   "homepage": "https://github.com/a85/Newman",
@@ -39,7 +39,7 @@
     "postman_validator" : "0.0.4",
     "node-uuid" : "1.4.1",
     "jsdom-nogyp": "*",
-    "jquery": "*",
+    "jquery": "2.1.1",
     "backbone": "*",
     "lodash": "*",
     "xml2js": "*",
