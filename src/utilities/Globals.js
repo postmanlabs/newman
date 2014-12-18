@@ -8,7 +8,7 @@ var jsface = require('jsface');
 var Globals = jsface.Class({
 	$singleton: true,
 
-	newmanVersion: "1.2.2",
+	newmanVersion: "1.2.3",
 
 	/**
 	 * Used to add the Globals used through out the app
