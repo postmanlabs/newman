@@ -51,7 +51,7 @@ Options:
 -j, --noSummary           Doesn't show the summary for each iteration
 -n, --number [number]     Define the number of iterations to run.
 -C, --noColor             Disable colored output', null)
--k, --insecure            Disable strict ssl', null)
+-k, --insecure            Disable strict ssl', null
 -l, --tls                 Use TLSv1
 -o, --outputFile [file]   Path to file where output should be written. [file]
 -x, --exitCode            Continue running tests even after a failure, but exit with code=1
