@@ -49,9 +49,9 @@ Options:
 -y, --delay [number]      Specify a delay (in ms) between requests [number]
 -s, --stopOnError         Stops the runner when a test case fails
 -j, --noSummary           Doesn't show the summary for each iteration
--n, --number [number]     Define the number of iterations to run.
--C, --noColor             Disable colored output', null)
--k, --insecure            Disable strict ssl', null
+-n, --number [number]     Define the number of iterations to run
+-C, --noColor             Disable colored output
+-k, --insecure            Disable strict ssl
 -l, --tls                 Use TLSv1
 -o, --outputFile [file]   Path to file where output should be written. [file]
 -x, --exitCode            Continue running tests even after a failure, but exit with code=1
