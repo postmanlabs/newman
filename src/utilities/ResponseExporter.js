@@ -48,7 +48,7 @@ var ResponseExporter = jsface.Class({
 		var vals = _und.values(tests);
 		var total = vals.length;
 		var passes = _und.filter(vals, function(val) {
-			return val===true;
+			return !!val;
 		});
 		return {
 			pass: passes.length,
