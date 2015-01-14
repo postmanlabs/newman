@@ -201,8 +201,8 @@ var ResponseExporter = jsface.Class({
 	_extractPassFailCountFromTests: function(tests) {
 		return _und.reduce(_und.keys(tests), function(results, key) {
 			results[key] = {
-				pass: tests[key] ? 1 : 0,
-				fail: tests[key] ? 0 : 1
+				pass: !!tests[key] ? 1 : 0,
+				fail: !tests[key] ? 0 : 1
 			};
 			return results;
 		}, {});
@@ -212,7 +212,7 @@ var ResponseExporter = jsface.Class({
 	extractTotalPassFailCount: function(tests) {
 		var pass= 0, fail=0;
 		_und.each(_und.values(tests), function(bool) {
-			if(bool) {
+			if(!!bool) {
 				pass++;
 			}
 			else {
@@ -259,7 +259,7 @@ var ResponseExporter = jsface.Class({
 			for(var testName in run) {
 				if(run.hasOwnProperty(testName)) {
 					if(retVal.hasOwnProperty(testName)) {
-						if(run[testName]) {
+						if(!!run[testName]) {
 							retVal[testName].successes++;
 						}
 						else {
@@ -267,7 +267,7 @@ var ResponseExporter = jsface.Class({
 						}
 					}
 					else {
-						if(run[testName]) {
+						if(!!run[testName]) {
 							retVal[testName]={
 								successes: 1, failures: 0
 							};
