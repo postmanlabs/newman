@@ -1,5 +1,18 @@
 ##CHANGELOG
 
+####1.2.5 (January 14, 2015)
+* Correcting jUnit export format
+* Test resuts are now parsed consistently (truthy/falsy values are accepted)
+
+####1.2.4 (December 20, 2014)
+* Fixed command-line flag for HTML report
+
+####1.2.3 (December 16, 2014)
+* Fixed jQuery dependeny issue
+
+####1.2.1 (December 8, 2014)
+* Added HTML reporting capability
+
 ####1.2.0 (December 2, 2014)
 * Adding option for jUnit-style output of test runs - Courtesy @pal-thomassen (BETA)
 * Configurable SSL/TLS behavior while running collections - Courtesy @gituser4
