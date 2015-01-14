@@ -304,15 +304,22 @@ var ResponseExporter = jsface.Class({
 				var meanTime = (time/iterations).toFixed(2);
 				var tests = Object.keys(suite.tests).length;
 
-				xml += '\t<testsuite name="' + _und.escape(suite.name) + '" id="' +
-					_und.escape(suite.id) + '" timestamp="' + timeStamp.toISOString() +
-					'" time="' + meanTime + ' ms" totalTime="'+time+' ms" tests="' + tests + '" iterations="'+iterations+'">\n';
-
+				var testcases = "";
+				var totalFailuresForSuite = 0;
+				var totalSuccessesForSuite = 0;
 				_und.each(suite.testPassFailCounts, function(testcase, testcaseName) {
 					var successes = aggregateTestStats[testcaseName].successes;
 					var failures = aggregateTestStats[testcaseName].failures;
-					xml += '\t\t<testcase name="' + _und.escape(testcaseName) + '" successes="'+successes+'" failures="' + failures + '" />\n';
+					totalFailuresForSuite += failures;
+					totalSuccessesForSuite += successes;
+					testcases += '\t\t<testcase name="' + _und.escape(testcaseName) + '" successes="'+successes+'" failures="' + failures + '" />\n';
 				}, this);
+
+				xml += '\t<testsuite name="' + _und.escape(suite.name) + '" id="' +
+					_und.escape(suite.id) + '" timestamp="' + timeStamp.toISOString() +
+					'" time="' + meanTime + ' ms" totalTime="'+time+' ms" tests="' + tests + '" iterations="'+iterations+'" failures="'+totalFailuresForSuite+'" successes="'+totalSuccessesForSuite+'">\n';
+
+				xml += testcases;
 
 				xml += "\t</testsuite>\n";
 			}, this);
