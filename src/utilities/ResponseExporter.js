@@ -190,8 +190,16 @@ var ResponseExporter = jsface.Class({
 
 	_mergeTestCounts: function(oldResult, thisResult) {
 		_und.each(_und.keys(thisResult.testPassFailCounts), function(testName) {
-			oldResult.testPassFailCounts[testName].pass += thisResult.testPassFailCounts[testName].pass;
-			oldResult.testPassFailCounts[testName].fail += thisResult.testPassFailCounts[testName].fail;
+			if(oldResult.testPassFailCounts.hasOwnProperty(testName)) {
+				oldResult.testPassFailCounts[testName].pass += thisResult.testPassFailCounts[testName].pass;
+				oldResult.testPassFailCounts[testName].fail += thisResult.testPassFailCounts[testName].fail;
+			}
+			else {
+				oldResult.testPassFailCounts[testName] = {
+					pass: thisResult.testPassFailCounts[testName].pass,
+					fail: thisResult.testPassFailCounts[testName].fail
+				};
+			}
 			oldResult.totalPassFailCounts.pass += thisResult.testPassFailCounts[testName].pass;
 			oldResult.totalPassFailCounts.fail += thisResult.testPassFailCounts[testName].fail;
 		});
