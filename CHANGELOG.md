@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####1.2.6 (January 17, 2015)
+* Fixing tests for different names across iterations
+
 ####1.2.5 (January 14, 2015)
 * Correcting jUnit export format
 * Test resuts are now parsed consistently (truthy/falsy values are accepted)
