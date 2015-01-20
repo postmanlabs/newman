@@ -257,7 +257,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     // logger for test case results
     _logTestResults: function(results) {
         _und.each(_und.keys(results), function(key) {
-            if (!!results[key]) {
+            if (results[key]) {
                 log.testCaseSuccess(key);
             } else {
                 ErrorHandler.testCaseError(key);
