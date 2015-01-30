@@ -174,14 +174,13 @@ function main() {
 			collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
 		}
 		catch (err) {
-			Errors.terminateWithError("The collection file " + program.collection+" could not be parsed.");
+			Errors.terminateWithError("The collection file " + program.collection + " could not be parsed.");
 		}
-		Newman.execute(collectionJson, newmanOptions, function(exitCode) {
-			if(program.exitCode) {
+		Newman.execute(collectionJson, newmanOptions, function (exitCode) {
+			if (program.exitCode) {
 				process.exit(exitCode);
 			}
 		});
-
 	} else {
 		// get collection from url
 		request.get(program.url).type('json').end(function(data) {

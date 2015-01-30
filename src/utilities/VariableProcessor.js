@@ -13,7 +13,7 @@ var VariableProcessor = jsface.Class({
 
 	// TODO: Make {{}} configurable 
 	$statics: {
-		ENV_REGEX: /\{\{([a-z0-9\-._]+)\}\}/ig,
+		ENV_REGEX: /\{\{([a-z0-9\-._\s]+)\}\}/ig,
 
 		FUNCTION_REGEX: /\{\{\$([a-z0-9\-._]+)\}\}/ig
 	},

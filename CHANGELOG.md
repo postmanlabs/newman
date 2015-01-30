@@ -1,5 +1,11 @@
 ##CHANGELOG
 
+####1.2.8 (January 30, 2015)
+* Spaces in variable names working
+
+####1.2.7 (January 20, 2015)
+* Accepting truthy/falsy values as test results
+
 ####1.2.6 (January 17, 2015)
 * Fixing tests for different names across iterations
 
