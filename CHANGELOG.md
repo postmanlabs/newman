@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####1.2.9 (February 2, 2015)
+* SugarJS object definitions working as expected - https://github.com/a85/Newman/issues/176
+
 ####1.2.8 (January 30, 2015)
 * Spaces in variable names working
 
