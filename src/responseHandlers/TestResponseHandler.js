@@ -181,7 +181,23 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             Backbone: Backbone,
             xmlToJson: function(string) {
                 var JSON = {};
-                xmlToJson.parseString(string, {explicitArray: false,async: false}, function (err, result) {
+                xmlToJson.parseString(string, {
+                    explicitArray: false,
+                    async: false
+                }, function (err, result) {
+                    JSON = result;
+                });
+                return JSON;
+            },
+
+            xml2Json: function(string) {
+                var JSON = {};
+                xmlToJson.parseString(string, {
+                    explicitArray: false,
+                    async: false,
+                    trim: true,
+                    mergeAttrs: false
+                }, function (err, result) {
                     JSON = result;
                 });
                 return JSON;
