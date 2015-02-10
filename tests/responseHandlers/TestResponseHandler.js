@@ -181,7 +181,7 @@ describe("TestResponseHandler", function() {
 		};
 		this.request.tests = '';
 		this.request.tests = 'postman.setEnvironmentVariable("url", "google.com");';
-		this.request.tests += 'tests["testcase1"] = environment.url === "http://dump.getpostman.com";'; // not changed for the first time
+		this.request.tests += 'tests["testcase1"] = environment.url === "google.com";'; // changed as soon as it is set
 		var results1 = TestResponseHandler._runTestCases(null, this.response, this.response.body, this.request);
 		assert.deepEqual(results1, {"testcase1": true});
 
