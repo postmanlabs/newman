@@ -55,7 +55,12 @@ var PreRequestScriptProcessor = jsface.Class({
         sweet += "for(p in sugar.string) String.prototype[p]  = sugar.string[p];";
         sweet += "for(p in sugar.date)   Date.prototype[p]    = sugar.date[p];";
         sweet += "for(p in sugar.funcs)  Function.prototype[p]= sugar.funcs[p];";
-        requestScript = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + requestScript;
+
+        var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
+        setEnvHack += "postman.setGlobalVariable = function(key,val) {postman.setGlobalVariableReal(key,val);globals[key]=val;};";
+
+        requestScript = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + setEnvHack + requestScript;
+
         try {
             vm.runInNewContext(requestScript, sandbox);
         } catch (err) {
@@ -133,7 +138,7 @@ var PreRequestScriptProcessor = jsface.Class({
             tv4: tv4,
             console: {log: function(msg){console.log(msg);}},
             postman: {
-                setEnvironmentVariable: function(key, value) {
+                setEnvironmentVariableReal: function(key, value) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){
                         return envObject["key"] === key;
                     });
@@ -161,7 +166,7 @@ var PreRequestScriptProcessor = jsface.Class({
                 clearEnvironmentVariables: function() {
                     Globals.envJson.values = [];
                 },
-                setGlobalVariable: function(key, value) {
+                setGlobalVariableReal: function(key, value) {
                     var envVar = _und.find(Globals.globalJson.values, function(envObject){
                         return envObject["key"] === key;
                     });
