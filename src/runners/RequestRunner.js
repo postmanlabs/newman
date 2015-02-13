@@ -139,9 +139,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
             //To remain compatible with Postman - ensure consistency of request.data
             if(request.dataMode === "raw" && request.hasOwnProperty("rawModeData")) {
-                if(request.rawModeData !== undefined) {
+                if(request.rawModeData !== undefined && !(request.rawModeData instanceof Array)) {
                     request.data = request.rawModeData;
                 }
+            }
+
+            //making sure empty arrays are not sent. This meeses up the request library
+            if(request.data instanceof Array && request.data.length===0) {
+                request.data = "";
             }
 
             //to add Environment and Data variables to the request, because the processed URL is available in the PR script
