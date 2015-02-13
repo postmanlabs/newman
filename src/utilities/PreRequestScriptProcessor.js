@@ -2,8 +2,8 @@ var jsface                  = require('jsface'),
     _und                    = require('underscore'),
     vm                      = require('vm'),
     ErrorHandler            = require('./ErrorHandler'),
-    window                  = require("jsdom-nogyp").jsdom().parentWindow,
-    _jq                     = require("jquery")(window),
+    jsdom                   = require("jsdom"),
+    _jq                     = null,
     _lod                    = require("lodash"),
     Helpers                 = require('./Helpers'),
     Backbone                = require("backbone"),
@@ -22,6 +22,13 @@ require('sugar');
 var PreRequestScriptProcessor = jsface.Class({
     $singleton: true,
     _results: [],
+
+
+    main: function() {
+        jsdom.env("<html><body></body></html>", function (err, window) {
+            _jq = require('jquery')(window);
+        });
+    },
 
     /**
      * Execute the preRequestScript for this request, and add to the global env vars
