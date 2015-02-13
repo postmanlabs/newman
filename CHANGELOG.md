@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####1.2.11/12 (February 13, 2015)
+* Node v0.12.0 supported
+
 ####1.2.10 (February 13, 2015)
 * Incorrect rawModeData being handled properly
 * New sandbox method - xml2Json added. Compatible with POSTMAN
