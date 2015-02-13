@@ -2,7 +2,8 @@
 
 ####1.2.10 (February 13, 2015)
 * Incorrect rawModeData being handled properly
-* 
+* New sandbox method - xml2Json added. Compatible with POSTMAN
+* Envs and Globals set in scripts are available in the env and global arrays instantly
 
 ####1.2.9 (February 2, 2015)
 * SugarJS object definitions working as expected - https://github.com/a85/Newman/issues/176
