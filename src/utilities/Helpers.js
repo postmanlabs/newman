@@ -48,6 +48,13 @@ var Helpers = jsface.Class({
         }
     },
 
+    validateEncoding: function(encoding) {
+        var validEncs = ['ascii','utf8','utf16le','ucs2','base64','binary','hex'];
+        if(validEncs.indexOf(encoding) === -1) {
+            Errors.terminateWithError("Please specify a valid encoding. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex");
+        }
+    },
+
 	// transforms an array of 
 	// [{"id": 1, "name":"foo"}, { .. }, ..] 
 	// into an object {"key": "id", "value": "foo"}]

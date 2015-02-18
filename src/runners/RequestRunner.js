@@ -221,7 +221,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
         RequestOptions.followAllRedirects = true;
         RequestOptions.jar = true;
+
+        if(Globals.responseEncoding) {
+            RequestOptions.encoding = Globals.responseEncoding;
+        }
         this._setBodyData(RequestOptions, request);
+
         return RequestOptions;
     },
 
