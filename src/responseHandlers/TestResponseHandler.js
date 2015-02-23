@@ -96,6 +96,11 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
         testCases = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + setEnvHack + testCases;
 
+        /* Convert access to responseHeaders with correct camelCase */
+        testCases = testCases.replace(/responseHeaders\s*\[\s*['"](.*?)['"]\]/gmi, function(matchAll, headerName) {
+            return 'responseHeaders[\'' + Helpers.toHeaderCase(headerName.toLowerCase()) + '\']';
+        });
+
         try {
             vm.runInNewContext(testCases, sandbox);
         } catch (err) {
