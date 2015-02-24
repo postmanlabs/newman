@@ -222,6 +222,13 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         RequestOptions.followAllRedirects = true;
         RequestOptions.jar = true;
         this._setBodyData(RequestOptions, request);
+
+        if (request.helpers && request.helpers.id === 'basic') {
+            RequestOptions.auth = {
+                user: request.transformed.helpers.username,
+                pass: request.transformed.helpers.password
+            };
+        }
         return RequestOptions;
     },
 

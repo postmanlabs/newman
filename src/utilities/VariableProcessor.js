@@ -97,7 +97,7 @@ var VariableProcessor = jsface.Class({
 
 		request.transformed = {};
 
-		var properties = ["url", "headers", "form", "data"];
+		var properties = ["url", "headers", "form", "data", "helpers"];
 
 		var pairObject = Helpers.transformFromKeyValue(kvpairs);
 		_und.each(properties, function(prop) {
