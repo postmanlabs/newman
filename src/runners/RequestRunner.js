@@ -218,7 +218,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         RequestOptions.jar = true;
         this._setBodyData(RequestOptions, request);
 
-        if (request.helpers && request.helpers.id) {
+        if (request.helpers && request.helpers.id === 'basic') {
             RequestOptions.auth = {
                 user: request.transformed.helpers.username,
                 pass: request.transformed.helpers.password
