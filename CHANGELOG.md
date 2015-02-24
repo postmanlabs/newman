@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####1.2.13 (February 24, 2015)
+* Set Jsdom version to 3.x.x for NodeJS-compatibility
+
 ####1.2.11/12 (February 13, 2015)
 * Node v0.12.0 supported
 
