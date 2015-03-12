@@ -47,10 +47,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     _runTestCases: function(error, response, body, request) {
         if (this._hasTestCases(request)) {
             var tests = request.tests;
-            //remove BOM from response
-            if(body[0] === '\uFEFF') {
-                //body = body.substring(1);
-            }
             var sandbox = this._createSandboxedEnvironment(error, response, body, request);
             return this._runAndGenerateTestResults(tests, sandbox);
         }
