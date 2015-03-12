@@ -161,7 +161,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
             request.data=request.transformed.data;
 
-
             request.startTime = new Date().getTime();
             RequestOptions.rejectUnauthorized=false;
             RequestOptions.strictSSL = this.strictSSL;
