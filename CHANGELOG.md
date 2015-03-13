@@ -1,5 +1,12 @@
 ##CHANGELOG
 
+####1.2.14 (March 13, 2015)
+* Removing dead code for BOM-removal. This also fixes zero-length body cases
+* Adding support for commas in data file fields, and double-quotes to surround fields (in line with Postman)
+
+####1.2.13 (February 24, 2015)
+* Set Jsdom version to 3.x.x for NodeJS-compatibility
+
 ####1.2.11/12 (February 13, 2015)
 * Node v0.12.0 supported
 
