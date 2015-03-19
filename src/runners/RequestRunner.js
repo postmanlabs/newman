@@ -19,73 +19,119 @@ var jsface            = require('jsface'),
  * @mixes EventEmitter , Queue
  */
 var RequestRunner = jsface.Class([Queue, EventEmitter], {
-	$singleton: true,
+    $singleton: true,
 
-	delay: 0,
+    delay: 0,
+    strictSSL: true,
+    secureProtocol: null,
 
-	$statics: {
-		METHODS_WHICH_ALLOW_BODY: ['POST','PUT','PATCH','DELETE','LINK','UNLINK','LOCK','PROPFIND']
-	},
+    $statics: {
+        METHODS_WHICH_ALLOW_BODY: ['POST','PUT','PATCH','DELETE','LINK','UNLINK','LOCK','PROPFIND']
+    },
 
-	/**
-	 * Sets a delay to be used between requests
-	 * @param delay
-	 */
-	setDelay: function(delay) {
-		this.delay = delay;
-	},
+    /**
+     * Sets a delay to be used between requests
+     * @param delay
+     */
+    setDelay: function(delay) {
+        this.delay = delay;
+    },
 
-	/**
-	 * Adds the Request to the RequestRunner's queue.
-	 * @memberOf RequestRunner
-	 * @param {RequestModel} request Takes a RequestModel Object.
-	 */
-	addRequest: function(request) {
-		this.addToQueue(request);
-	},
+    setRunMode: function(runMode) {
+        this.runMode = runMode;
+    },
 
-	/**
-	 * Starts the RequestRunner going to each request in the queue.
-	 * @memberOf RequestRunner
-	 */
-	start: function() {
-		this._bindedOnRequestExecuted = this._onRequestExecuted.bind(this);
-		this.addEventListener('requestExecuted', this._bindedOnRequestExecuted);
-		var runner = this;
-		setTimeout(function() {
-			runner._execute();
-		}, this.delay);
-	},
+    /**
+     * Sets strictSSL
+     * @param strictSSL
+     */
+    setStrictSSL: function(strictSSL) {
+        this.strictSSL = strictSSL;
+    },
 
-	_getPropertyFromArray: function(array, propName) {
-		return _und.find(array,function(elem) {
-			return (propName===("{{"+elem.key+"}}"));
-		});
-	},
+    /**
+     * Sets secure protocol
+     * @param secureProtocol
+     */
+    setSecureProtocol: function(secureProtocol) {
+        this.secureProtocol = secureProtocol;
+    },
 
-	_addGlobalData: function(oldArray, newArray) {
-		var finalArray = [];
-		var oLen = oldArray.length;
-		for(var i=0;i<oLen;i++) {
-			var thisValue=oldArray[i].value;
-			var actualValue=this._getPropertyFromArray(newArray,thisValue);
-			if(typeof actualValue==="undefined") {
-				finalArray.push({"key":oldArray[i].key,"value":thisValue, "type":oldArray[i].type});
-			}
-			else {
-				finalArray.push({"key":oldArray[i].key,"value":actualValue.value, "type":oldArray[i].type});
-			}
-		}
-		return finalArray;
-	},
+    /*
+     * Adds the Request to the RequestRunner's queue.
+     * @memberOf RequestRunner
+     * @param {RequestModel} request Takes a RequestModel Object.
+     */
+    addRequest: function(request) {
+        this.addToQueue(request);
+    },
 
-	// Gets a request from the queue and executes it.
-	_execute: function() {
+    /**
+     * Starts the RequestRunner going to each request in the queue.
+     * @memberOf RequestRunner
+     */
+    start: function() {
+        this._bindedOnRequestExecuted = this._onRequestExecuted.bind(this);
+        this.addEventListener('requestExecuted', this._bindedOnRequestExecuted);
+        var runner = this;
+        setTimeout(function() {
+            runner._execute();
+        }, this.delay);
+    },
+
+    _getPropertyFromArray: function(array, propName) {
+        return _und.find(array,function(elem) {
+            return (propName===("{{"+elem.key+"}}"));
+        });
+    },
+
+    _addGlobalData: function(oldArray, newArray) {
+        var finalArray = [];
+        var oLen = oldArray.length;
+        for(var i=0;i<oLen;i++) {
+            var thisValue=oldArray[i].value;
+            var actualValue=this._getPropertyFromArray(newArray,thisValue);
+            if(typeof actualValue==="undefined") {
+                finalArray.push({"key":oldArray[i].key,"value":thisValue, "type":oldArray[i].type});
+            }
+            else {
+                finalArray.push({"key":oldArray[i].key,"value":actualValue.value, "type":oldArray[i].type});
+            }
+        }
+        return finalArray;
+    },
+
+    _getNextRequest: function() {
+        if(this.runMode === "default" || !Globals.nextRequestName) {
+            return this.getFromQueue();
+        }
+        else if(Globals.nextRequestName === "none") {
+            return null;
+        }
+        else {
+            var queue = this.getAllItems();
+            var index = 0;
+            var indexToUse = -1;
+            _und.each(queue, function(request) {
+                if(request.name === Globals.nextRequestName) {
+                    indexToUse = index;
+                    return false;
+                }
+                index++;
+            });
+            var requestToSend = this.getItemWithIndex(indexToUse)[0];
+            Globals.nextRequestName = "none";
+            return requestToSend;
+        }
+    },
+
+    // Gets a request from the queue and executes it.
+    _execute: function() {
 		if(Globals.exitCode===1 && Globals.stopOnError===true) {
 			return;
 		}
 
-		var request = this.getFromQueue();
+        var request = this._getNextRequest();
 		if (request) {
 			//To be uncommented if each prScript/test should set transient env. vars
 			//var oldGlobals = Globals.envJson;
@@ -97,6 +143,11 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 					request.data = request.rawModeData;
 				}
 			}
+
+            //making sure empty arrays are not sent. This meeses up the request library
+            if(request.data instanceof Array && request.data.length===0) {
+                request.data = "";
+            }
 
 			//to add Environment and Data variables to the request, because the processed URL is available in the PR script
 			this._processUrlUsingEnvVariables(request);
@@ -115,18 +166,22 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
 			request.startTime = new Date().getTime();
 			RequestOptions.rejectUnauthorized=false;
-			var unireq = requestLib(RequestOptions, function(error, response, body) {
-				if(response) {
-					// save some stats, only if response exists
-					this._appendStatsToReponse(request, response);
-				} else {
-					// initialize response for reporting and testcases
-					response = {
-						stats: { timeTaken: 0},
-						statusCode: 0,
-						headers: []
-					};
-				}
+            RequestOptions.strictSSL = this.strictSSL;
+            if (this.secureProtocol) {
+                RequestOptions.secureProtocol = this.secureProtocol;
+            }
+            var unireq = requestLib(RequestOptions, function(error, response, body) {
+                if(response) {
+                    // save some stats, only if response exists
+                    this._appendStatsToReponse(request, response);
+                } else {
+                    // initialize response for reporting and testcases
+                    response = {
+                        stats: { timeTaken: 0},
+                        statusCode: 0,
+                        headers: []
+                    };
+                }
 
 				// emit event to signal request has been executed
 				var delay = this.delay;
@@ -169,6 +224,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		RequestOptions.followAllRedirects = false;
 		RequestOptions.jar = true;
 		RequestOptions.timeout = 15000;
+        if(Globals.responseEncoding) {
+            RequestOptions.encoding = Globals.responseEncoding;
+        }
+
 		this._setBodyData(RequestOptions, request);
 		return RequestOptions;
 	},
@@ -229,8 +288,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			envJson: mergedArray
 		});
 	}
-
-
 });
 
 module.exports = RequestRunner;

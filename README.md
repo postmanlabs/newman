@@ -48,13 +48,16 @@ Options:
 -g, --global [file]       Specify a Postman globals file as JSON [file]
 -y, --delay [number]      Specify a delay (in ms) between requests [number]
 -s, --stopOnError         Stops the runner when a test case fails
--n, --number [number]     Define the number of iterations to run.
+-j, --noSummary           Doesn't show the summary for each iteration
+-n, --number [number]     Define the number of iterations to run
+-C, --noColor             Disable colored output
+-k, --insecure            Disable strict ssl
+-l, --tls                 Use TLSv1
 -o, --outputFile [file]   Path to file where output should be written. [file]
 -x, --exitCode            Continue running tests even after a failure, but exit with code=1
--C, --noColor             Disable colored output.
--o, --outputFile [file]   Path to file where output should be written. [file]
 -i, --import [file]       Import a Postman backup file, and save collections, environments, and globals. [file]
 -p, --pretty              (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
+-H, --html                Export a HTML report to a specified file [file]
 ```
 
 Use the `-n` option to set the number of iterations you want to run the collection for.

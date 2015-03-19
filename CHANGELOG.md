@@ -1,5 +1,45 @@
 ##CHANGELOG
 
+####1.2.13 (February 24, 2015)
+* Set Jsdom version to 3.x.x for NodeJS-compatibility
+
+####1.2.11/12 (February 13, 2015)
+* Node v0.12.0 supported
+
+####1.2.10 (February 13, 2015)
+* Incorrect rawModeData being handled properly
+* New sandbox method - xml2Json added. Compatible with POSTMAN
+* Envs and Globals set in scripts are available in the env and global arrays instantly
+
+####1.2.9 (February 2, 2015)
+* SugarJS object definitions working as expected - https://github.com/a85/Newman/issues/176
+
+####1.2.8 (January 30, 2015)
+* Spaces in variable names working
+
+####1.2.7 (January 20, 2015)
+* Accepting truthy/falsy values as test results
+
+####1.2.6 (January 17, 2015)
+* Fixing tests for different names across iterations
+
+####1.2.5 (January 14, 2015)
+* Correcting jUnit export format
+* Test resuts are now parsed consistently (truthy/falsy values are accepted)
+
+####1.2.4 (December 20, 2014)
+* Fixed command-line flag for HTML report
+
+####1.2.3 (December 16, 2014)
+* Fixed jQuery dependeny issue
+
+####1.2.1 (December 8, 2014)
+* Added HTML reporting capability
+
+####1.2.0 (December 2, 2014)
+* Adding option for jUnit-style output of test runs - Courtesy @pal-thomassen (BETA)
+* Configurable SSL/TLS behavior while running collections - Courtesy @gituser4
+
 ####1.1.9 (November 4, 2014)
 * Summary correctly shown for folder-only runs
 

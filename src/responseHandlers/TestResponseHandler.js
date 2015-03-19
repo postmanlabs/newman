@@ -3,8 +3,8 @@ var jsface                  = require('jsface'),
     vm                      = require('vm'),
     ErrorHandler            = require('../utilities/ErrorHandler'),
     AbstractResponseHandler = require('./AbstractResponseHandler'),
-    window                  = require("jsdom-nogyp").jsdom().parentWindow,
-    _jq                     = require("jquery")(window),
+    jsdom                   = require("jsdom"),
+    _jq                     = null,
     _lod                    = require("lodash"),
     Helpers                 = require('../utilities/Helpers'),
     log                     = require('../utilities/Logger'),
@@ -24,6 +24,14 @@ require('sugar');
 var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     $singleton: true,
     throwErrorOnLog: false,
+
+    main: function() {
+        jsdom.env("<html><body></body></html>", function (err, window) {
+            _jq = require('jquery')(window);
+        });
+    },
+
+
     // function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
     _onRequestExecuted: function(error, response, body, request) {
         var results = this._runTestCases(error, response, body, request);
@@ -39,6 +47,10 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     _runTestCases: function(error, response, body, request) {
         if (this._hasTestCases(request)) {
             var tests = request.tests;
+            //remove BOM from response
+            if(body[0] === '\uFEFF') {
+                //body = body.substring(1);
+            }
             var sandbox = this._createSandboxedEnvironment(error, response, body, request);
             return this._runAndGenerateTestResults(tests, sandbox);
         }
@@ -82,7 +94,12 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         sweet += "for(p in sugar.string) String.prototype[p]  = sugar.string[p];";
         sweet += "for(p in sugar.date)   Date.prototype[p]    = sugar.date[p];";
         sweet += "for(p in sugar.funcs)  Function.prototype[p]= sugar.funcs[p];";
-        testCases = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + testCases;
+
+        var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
+        setEnvHack += "postman.setGlobalVariable = function(key,val) {postman.setGlobalVariableReal(key,val);globals[key]=val;};";
+
+        testCases = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + setEnvHack + testCases;
+
         try {
             vm.runInNewContext(testCases, sandbox);
         } catch (err) {
@@ -147,8 +164,11 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     _createSandboxedEnvironment: function(error, response, body, request) {
         var responseCodeObject = this._getResponseCodeObject(response.statusCode);
         var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };
+        Object.extend();
         Object.getOwnPropertyNames(Array.prototype).each(function(p) { sugar.array[p] = Array.prototype[p];});
         Object.getOwnPropertyNames(Object.prototype).each(function(p) { sugar.object[p] = Object.prototype[p];});
+        sugar.object["extended"] = Object.extended;
+
         Object.getOwnPropertyNames(String.prototype).each(function(p) { sugar.string[p] = String.prototype[p];});
         Object.getOwnPropertyNames(Date.prototype).each(function(p) { sugar.date[p] = Date.prototype[p];});
         Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
@@ -173,11 +193,28 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             globals: this._setGlobalContext(),
             data: this._setDataContext(),
             $: _jq,
+            jQuery: _jq,
             _: _lod,
             Backbone: Backbone,
             xmlToJson: function(string) {
                 var JSON = {};
-                xmlToJson.parseString(string, {explicitArray: false,async: false}, function (err, result) {
+                xmlToJson.parseString(string, {
+                    explicitArray: false,
+                    async: false
+                }, function (err, result) {
+                    JSON = result;
+                });
+                return JSON;
+            },
+
+            xml2Json: function(string) {
+                var JSON = {};
+                xmlToJson.parseString(string, {
+                    explicitArray: false,
+                    async: false,
+                    trim: true,
+                    mergeAttrs: false
+                }, function (err, result) {
                     JSON = result;
                 });
                 return JSON;
@@ -188,7 +225,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                 getResponseHeader: function(headerString) {
                     return Helpers.getResponseHeader(headerString, response.headers);
                 },
-                setEnvironmentVariable: function(key, value) {
+                setEnvironmentVariableReal: function(key, value) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){
                         return envObject["key"] === key;
                     });
@@ -225,7 +262,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                     }
                     return null;
                 },
-                setGlobalVariable: function(key, value) {
+                setGlobalVariableReal: function(key, value) {
                     var envVar = _und.find(Globals.globalJson.values, function(envObject){
                         return envObject["key"] === key;
                     });
@@ -244,6 +281,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                 },
                 clearGlobalVariables: function() {
                     Globals.globalJson.values = [];
+                },
+                setNextRequest: function(requestName) {
+                    Globals.nextRequestName = requestName;
                 }
             }
         };

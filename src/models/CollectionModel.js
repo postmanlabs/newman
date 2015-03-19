@@ -106,14 +106,20 @@ var CollectionModel = jsface.Class(ParentModel, {
 			var orderedIds = this.getOrderOfIds();
 			_und.each(orderedIds, function(id) {
 				var thisRequest = this.getRequestWithId(id);
-				thisRequest.collectionName = this.name;
-				thisRequest.collectionID = this.id;
-				var folderData = this.requestFolderMap[id];
-				if(folderData) {
-					thisRequest.folderName = folderData.folderName;
-					thisRequest.folderId = folderData.folderId;
+				if(thisRequest) {
+					thisRequest.collectionName = this.name;
+					thisRequest.collectionID = this.id;
+					var folderData = this.requestFolderMap[id];
+					if(folderData) {
+						thisRequest.folderName = folderData.folderName;
+						thisRequest.folderId = folderData.folderId;
+					}
+					orderedRequests.push(thisRequest);
 				}
-				orderedRequests.push(thisRequest);
+				else {
+					//request with this ID not found
+					console.log("Missing request: " + id);
+				}
 			}, this);
 		}
 		return orderedRequests;

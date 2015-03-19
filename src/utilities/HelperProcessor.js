@@ -211,9 +211,15 @@ var HelperProcessor = jsface.Class({
 				this.setUrlParamStringWithOptBlankValRemoval(request, params, null, true);
 			} else {
 				if (dataMode === 'urlencoded') {
+                    if(!request.transformed.data || !(request.transformed.data instanceof Array)) {
+                        request.transformed.data = [];
+                    }
 					request.transformed.data = request.transformed.data.concat(newParams);
 				}
 				else if (dataMode === 'params') {
+                    if(!request.transformed.data || !(request.transformed.data instanceof Array)) {
+                        request.transformed.data = [];
+                    }
 					request.transformed.data = request.transformed.data.concat(newParams);
 				}
 				else if (dataMode === 'raw') {

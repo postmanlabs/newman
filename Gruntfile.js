@@ -18,7 +18,9 @@ module.exports = function(grunt) {
 		mochaTest: {
 			test: {
 				options: {
-					reporter: 'spec'
+					reporter: 'spec',
+					timeout: 200,
+					slow: 200
 				},
 				src: ["tests/**/*.js"]
 			}
@@ -32,8 +34,9 @@ module.exports = function(grunt) {
 					'bin/newman -c tests/integ_tests/semicolon_tests.json -s && ' + 
 					'bin/newman -c tests/integ_tests/varReplacement.json -s && ' +
 					'bin/newman -c tests/integ_tests/clearVars.json -s && ' +
-					'bin/newman -c tests/integ_tests/caseInsenHeader.json -s &&' +
-					'bin/newman -c tests/integ_tests/helper.postman_collection -n 3 -s'
+					'bin/newman -c tests/integ_tests/helper.postman_collection -n 3 -s && ' +
+					'bin/newman -c tests/integ_tests/steph.json -s -d tests/integ_tests/steph_data.csv -n 2 -s && ' +
+					'bin/newman -c tests/integ_tests/caseInsenHeader.json -s'
     		}
 		}
 	});

@@ -48,6 +48,13 @@ var Helpers = jsface.Class({
         }
     },
 
+    validateEncoding: function(encoding) {
+        var validEncs = ['ascii','utf8','utf16le','ucs2','base64','binary','hex'];
+        if(validEncs.indexOf(encoding) === -1) {
+            Errors.terminateWithError("Please specify a valid encoding. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex");
+        }
+    },
+
 	// transforms an array of 
 	// [{"id": 1, "name":"foo"}, { .. }, ..] 
 	// into an object {"key": "id", "value": "foo"}]
@@ -71,7 +78,13 @@ var Helpers = jsface.Class({
 		headers.split('\n').forEach(function(str) {
 			if (str) {
 				var splitIndex = str.indexOf(':');
-				headerObj[str.substr(0,splitIndex)] = str.substr(splitIndex + 1).trim();
+                var headerName = str.substr(0,splitIndex);
+                if(headerName.indexOf("//")===0) {
+                    //do nothing...disabled header
+                }
+                else {
+                    headerObj[headerName] = str.substr(splitIndex + 1).trim();
+                }
 			}
 		});
 		return headerObj;

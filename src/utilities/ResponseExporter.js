@@ -4,6 +4,7 @@ var jsface       = require('jsface'),
 	_und         = require('underscore'),
 	ResultSummary= require('../models/ResultSummaryModel'),
 	path         = require('path'),
+	HtmlExporter = require('./HtmlExporter'),
 	fs           = require('fs');
 
 /**
@@ -19,7 +20,7 @@ var ResponseExporter = jsface.Class({
 	_summaryResults: [],
 
 	/**
-	 * Adds the Reponse to the Result Array.
+	 * Adds the Response to the Result Array.
 	 * @param {Object} request Request we got from Newman.
 	 * @param {Object} response Response we got from Newman.
 	 * @param {Object} tests Test Results.
@@ -47,7 +48,7 @@ var ResponseExporter = jsface.Class({
 		var vals = _und.values(tests);
 		var total = vals.length;
 		var passes = _und.filter(vals, function(val) {
-			return val===true;
+			return !!val;
 		});
 		return {
 			pass: passes.length,
@@ -151,6 +152,9 @@ var ResponseExporter = jsface.Class({
 			tests = {};
 		}
 
+		var passFailCounts = this._extractPassFailCountFromTests(tests);
+		var totalPassFailCounts = this.extractTotalPassFailCount(tests);
+
 		return {
 			"id": request.id,
 			"name": request.name,
@@ -161,11 +165,12 @@ var ResponseExporter = jsface.Class({
 				"name": "",       // TODO: Fill these guys later on
 				"detail": ""
 			},
-			"tests": tests,
-			"testPassFailCounts": this._extractPassFailCountFromTests(tests),
+			"tests": tests, //this is meaningless. preserved for backward-compat
+			"totalPassFailCounts": totalPassFailCounts,
+			"testPassFailCounts": passFailCounts, //this will hold results per test, across all iterations
 			"times": [],			// Not sure what to do with this guy
 			"allTests": [tests],
-			"time": response.stats.timeTaken
+			"time": response.stats.timeTaken //this is per request
 		};
 	},
 
@@ -178,8 +183,26 @@ var ResponseExporter = jsface.Class({
 	_appendToResultsObject: function(result, request, response, tests) {
 		var newResultObject = this._createResultObject(request, response, tests);
 		newResultObject.totalTime += result.totalTime;
+		this._mergeTestCounts(newResultObject, result);
 		newResultObject.allTests = newResultObject.allTests.concat(result.allTests);
 		this._results[this._results.indexOf(result)] = newResultObject;
+	},
+
+	_mergeTestCounts: function(oldResult, thisResult) {
+		_und.each(_und.keys(thisResult.testPassFailCounts), function(testName) {
+			if(oldResult.testPassFailCounts.hasOwnProperty(testName)) {
+				oldResult.testPassFailCounts[testName].pass += thisResult.testPassFailCounts[testName].pass;
+				oldResult.testPassFailCounts[testName].fail += thisResult.testPassFailCounts[testName].fail;
+			}
+			else {
+				oldResult.testPassFailCounts[testName] = {
+					pass: thisResult.testPassFailCounts[testName].pass,
+					fail: thisResult.testPassFailCounts[testName].fail
+				};
+			}
+			oldResult.totalPassFailCounts.pass += thisResult.testPassFailCounts[testName].pass;
+			oldResult.totalPassFailCounts.fail += thisResult.testPassFailCounts[testName].fail;
+		});
 	},
 
 	// Creates a pass, fail object for a given test.
@@ -193,17 +216,124 @@ var ResponseExporter = jsface.Class({
 		}, {});
 	},
 
+	//creates a pass,fail count for all tests
+	extractTotalPassFailCount: function(tests) {
+		var pass= 0, fail=0;
+		_und.each(_und.values(tests), function(bool) {
+			if(bool) {
+				pass++;
+			}
+			else {
+				fail++;
+			}
+		});
+		return {
+			pass: pass, fail: fail
+		};
+	},
+
 	/**
 	 * This function when called creates a file with the JSON of the results.
 	 * @memberOf ResponseExporter
 	 */
 	exportResults: function() {
+		var exportVariable = this._createExportVariable();
+
+		//calculate mean time
+		_und.each(exportVariable.results, function(result) {
+			result.meanResponseTime = parseInt(result.totalTime,10)/exportVariable.count;
+		});
+
 		if (Globals.outputFile) {
-			var exportVariable = this._createExportVariable();
 			var filepath = path.resolve(Globals.outputFile);
 			fs.writeFileSync(filepath , JSON.stringify(exportVariable, null, 4));
-			log.note("\n\n Output Log: " + filepath + "\n");
+			log.note("\n\nOutput Log: " + filepath + "\n");
 		}
+
+		if (Globals.testReportFile) {
+			var outputpath = path.resolve(Globals.testReportFile);
+			fs.writeFileSync(outputpath, this._createJunitXML());
+			log.note("\n\nJunit XML file written to: " + outputpath + "\n");
+		}
+
+		if(Globals.html) {
+			HtmlExporter.generateHTML(exportVariable);
+		}
+	},
+
+	_aggregateTestResults: function(runs) {
+		var retVal = {};
+		_und.each(runs, function(run) {
+			for(var testName in run) {
+				if(run.hasOwnProperty(testName)) {
+					if(retVal.hasOwnProperty(testName)) {
+						if(run[testName]) {
+							retVal[testName].successes++;
+						}
+						else {
+							retVal[testName].failures++;
+						}
+					}
+					else {
+						if(run[testName]) {
+							retVal[testName]={
+								successes: 1, failures: 0
+							};
+						}
+						else {
+							retVal[testName]={
+								successes: 0, failures: 1
+							};
+						}
+					}
+				}
+			}
+		});
+		return retVal;
+	},
+
+	_createJunitXML: function() {
+			var oldThis = this;
+			var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+			xml += "<testsuites>\n";
+
+			_und.each(this._results, function(suite) {
+				//var testRequest = _und.find(Globals.requestJSON.requests, function(request) {
+				//	return suite.id === request.id;
+				//});
+				var aggregateTestStats = oldThis._aggregateTestResults(suite.allTests);
+
+				//var timeStamp = new Date(testRequest.time);
+				var iterations = suite.allTests.length;
+
+				var timeStamp = new Date();
+				//var time = testRequest.time;
+				var time = suite.time;
+				var meanTime = (time/iterations).toFixed(2);
+				var tests = Object.keys(suite.tests).length;
+
+				var testcases = "";
+				var totalFailuresForSuite = 0;
+				var totalSuccessesForSuite = 0;
+				_und.each(suite.testPassFailCounts, function(testcase, testcaseName) {
+					var successes = aggregateTestStats[testcaseName].successes;
+					var failures = aggregateTestStats[testcaseName].failures;
+					totalFailuresForSuite += failures;
+					totalSuccessesForSuite += successes;
+					testcases += '\t\t<testcase name="' + _und.escape(testcaseName) + '" successes="'+successes+'" failures="' + failures + '" />\n';
+				}, this);
+
+				xml += '\t<testsuite name="' + _und.escape(suite.name) + '" id="' +
+					_und.escape(suite.id) + '" timestamp="' + timeStamp.toISOString() +
+					'" time="' + meanTime + ' ms" totalTime="'+time+' ms" tests="' + tests + '" iterations="'+iterations+'" failures="'+totalFailuresForSuite+'" successes="'+totalSuccessesForSuite+'">\n';
+
+				xml += testcases;
+
+				xml += "\t</testsuite>\n";
+			}, this);
+
+			xml += "</testsuites>\n";
+			return xml;
 	},
 
 	_createExportVariable: function() {
@@ -213,12 +343,12 @@ var ResponseExporter = jsface.Class({
 			timestamp: new Date().getTime(),
 			collection_id: Globals.requestJSON.id,
 			folder_id: 0,
-			target_type: 'collection',
+			target_type: (Globals.folder)?'folder':'collection',
 			environment_id: Globals.envJson.id,
-			count: Globals.iterationNumber - 1,
+			count: parseInt(Globals.iterationCount, 10),
 			collection: Globals.requestJSON,
-			folder: null,
-			globals: Globals.globalJSON,
+			folder: Globals.folder || null,
+			globals: Globals.globalJson,
 			results: this._results,
 			environment: Globals.envJson,
 			delay: 0,

@@ -41,12 +41,17 @@ var Newman = jsface.Class([Options, EventEmitter], {
         //         Errors.terminateWithError("Not a valid POSTMAN globals file");
         //     }
         // }
-        exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
-            stdout = stdout.trim();
-            if(stdout !== Globals.newmanVersion && stdout.length>0) {
-                Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update newman` to update.\n";
-            }
-        });
+        if(Math.random()<0.3) {
+            exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
+                stdout = stdout.trim();
+                if(stdout!==Globals.newmanVersion && stdout.length>0) {
+                    Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update -g newman` to update.\n";
+                }
+                else {
+                    Globals.updateMessage = "";
+                }
+            });
+        }
 
         Globals.addEnvironmentGlobals(requestJSON, options);
         this.setOptions(options);

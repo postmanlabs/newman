@@ -25,6 +25,11 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         this.setOptions(options);
         this.collection = this._getOrderedCollection(requestJSON);
         this.collectionName = requestJSON.name;
+        if(!Globals.requestJSON) {
+            Globals.requestJSON = requestJSON;
+        }
+        this.runMode = requestJSON.runMode || "default";
+
         //check if only a folder has to be run
         if(options.folderName) {
             this.folder = this._getFolderFromCollection(requestJSON, options.folderName);
@@ -197,14 +202,16 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         } else {
             this._exportResponses();
             this.emit('iterationRunnerOver',Globals.exitCode);
-            console.log(Globals.updateMessage);
+            if(Globals.updateMessage) {
+                console.log(Globals.updateMessage);
+            }
         }
     },
 
     _runCollection: function() {
         if (this.collection.length) {
             this._logStatus();
-            var runner = new CollectionRunner(this.collection, this.getOptions());
+            var runner = new CollectionRunner(this.collection, this.getOptions(), this.runMode);
             runner.execute();
         }
     },

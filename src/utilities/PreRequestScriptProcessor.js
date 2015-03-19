@@ -2,8 +2,8 @@ var jsface                  = require('jsface'),
     _und                    = require('underscore'),
     vm                      = require('vm'),
     ErrorHandler            = require('./ErrorHandler'),
-    window                  = require("jsdom-nogyp").jsdom().parentWindow,
-    _jq                     = require("jquery")(window),
+    jsdom                   = require("jsdom"),
+    _jq                     = null,
     _lod                    = require("lodash"),
     Helpers                 = require('./Helpers'),
     Backbone                = require("backbone"),
@@ -12,6 +12,7 @@ var jsface                  = require('jsface'),
     btoa                    = require("btoa"),
     atob                    = require("atob"),
     tv4                     = require("tv4");
+require('sugar');
 
 
 /**
@@ -21,6 +22,13 @@ var jsface                  = require('jsface'),
 var PreRequestScriptProcessor = jsface.Class({
     $singleton: true,
     _results: [],
+
+
+    main: function() {
+        jsdom.env("<html><body></body></html>", function (err, window) {
+            _jq = require('jquery')(window);
+        });
+    },
 
     /**
      * Execute the preRequestScript for this request, and add to the global env vars
@@ -54,7 +62,12 @@ var PreRequestScriptProcessor = jsface.Class({
         sweet += "for(p in sugar.string) String.prototype[p]  = sugar.string[p];";
         sweet += "for(p in sugar.date)   Date.prototype[p]    = sugar.date[p];";
         sweet += "for(p in sugar.funcs)  Function.prototype[p]= sugar.funcs[p];";
-        requestScript = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + requestScript;
+
+        var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
+        setEnvHack += "postman.setGlobalVariable = function(key,val) {postman.setGlobalVariableReal(key,val);globals[key]=val;};";
+
+        requestScript = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + setEnvHack + requestScript;
+
         try {
             vm.runInNewContext(requestScript, sandbox);
         } catch (err) {
@@ -95,8 +108,11 @@ var PreRequestScriptProcessor = jsface.Class({
 
     _createSandboxedEnvironment: function(request) {
         var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };
+        Object.extend();
         Object.getOwnPropertyNames(Array.prototype).each(function(p) { sugar.array[p] = Array.prototype[p];});
         Object.getOwnPropertyNames(Object.prototype).each(function(p) { sugar.object[p] = Object.prototype[p];});
+        sugar.object["extended"] = Object.extended;
+
         Object.getOwnPropertyNames(String.prototype).each(function(p) { sugar.string[p] = String.prototype[p];});
         Object.getOwnPropertyNames(Date.prototype).each(function(p) { sugar.date[p] = Date.prototype[p];});
         Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
@@ -114,6 +130,7 @@ var PreRequestScriptProcessor = jsface.Class({
             globals: this._setGlobalContext(),
             data: this._setDataContext(),
             $: _jq,
+            jQuery: _jq,
             _: _lod,
             btoa: btoa,
             atob: atob,
@@ -128,7 +145,7 @@ var PreRequestScriptProcessor = jsface.Class({
             tv4: tv4,
             console: {log: function(msg){console.log(msg);}},
             postman: {
-                setEnvironmentVariable: function(key, value) {
+                setEnvironmentVariableReal: function(key, value) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){
                         return envObject["key"] === key;
                     });
@@ -143,8 +160,6 @@ var PreRequestScriptProcessor = jsface.Class({
                             name: key
                         });
                     }
-                    console.log("adding "+key+" = "+value);
-                    environment[key]=value;
                 },
                 getEnvironmentVariable: function(key) {
                     var envVar = _und.find(Globals.envJson.values, function(envObject){
@@ -158,7 +173,7 @@ var PreRequestScriptProcessor = jsface.Class({
                 clearEnvironmentVariables: function() {
                     Globals.envJson.values = [];
                 },
-                setGlobalVariable: function(key, value) {
+                setGlobalVariableReal: function(key, value) {
                     var envVar = _und.find(Globals.globalJson.values, function(envObject){
                         return envObject["key"] === key;
                     });
