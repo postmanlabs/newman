@@ -58,9 +58,9 @@ var PreRequestScriptProcessor = jsface.Class({
 
     _evaluateInSandboxedEnvironment: function(requestScript, sandbox) {
         var sweet= "for(p in sugar.object) Object.prototype[p]  = sugar.object[p];";
-        sweet += "for(p in sugar.array)  Array.prototype[p]   = sugar.array[p];";
+        sweet += "for(p in sugar.array)  {if(p==='create'){Array.create=sugar.array.create} else{Array.prototype[p]= sugar.array[p];}}";
         sweet += "for(p in sugar.string) String.prototype[p]  = sugar.string[p];";
-        sweet += "for(p in sugar.date)   Date.prototype[p]    = sugar.date[p];";
+        sweet += "for(p in sugar.date)  {if(p==='create'){Date.create=sugar.date.create} else{Date.prototype[p]= sugar.date[p];}}";
         sweet += "for(p in sugar.funcs)  Function.prototype[p]= sugar.funcs[p];";
 
         var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
@@ -110,11 +110,15 @@ var PreRequestScriptProcessor = jsface.Class({
         var sugar = { array:{}, object:{}, string:{}, funcs:{}, date:{} };
         Object.extend();
         Object.getOwnPropertyNames(Array.prototype).each(function(p) { sugar.array[p] = Array.prototype[p];});
+        sugar.array["create"] = Array.create;
         Object.getOwnPropertyNames(Object.prototype).each(function(p) { sugar.object[p] = Object.prototype[p];});
         sugar.object["extended"] = Object.extended;
 
         Object.getOwnPropertyNames(String.prototype).each(function(p) { sugar.string[p] = String.prototype[p];});
-        Object.getOwnPropertyNames(Date.prototype).each(function(p) { sugar.date[p] = Date.prototype[p];});
+        Object.getOwnPropertyNames(Date.prototype).each(function(p) {
+            sugar.date[p] = Date.prototype[p];
+        });
+        sugar.date["create"] = Date.create;
         Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
         return {
             sugar: sugar,
