@@ -48,7 +48,7 @@ var VariableProcessor = jsface.Class({
 	
 	// updates request properties by the replacing them with function variables
 	_processFunctionVariable: function(request) {
-		var properties = ["url", "headers", "form", "data"];
+		var properties = ["url", "headers", "form", "data", "helperAttributes"];
 		_und.each(properties, function(prop) {
 			// check if the prop exists
 			if (request[prop] !== undefined)  {
@@ -97,7 +97,7 @@ var VariableProcessor = jsface.Class({
 
 		request.transformed = {};
 
-		var properties = ["url", "headers", "form", "data"];
+		var properties = ["url", "headers", "form", "data", "helperAttributes"];
 
 		var pairObject = Helpers.transformFromKeyValue(kvpairs);
 		_und.each(properties, function(prop) {
