@@ -13,7 +13,6 @@ var jsface           = require("jsface"),
     JSON5            = require('json5'),
     _und             = require('underscore'),
     ResponseExporter = require("../utilities/ResponseExporter");
-
 /**
  * @class IterationRunner
  * @param CollectionJson {JSON} Takes a JSON as the input
@@ -161,20 +160,15 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
                 var headers;
                 var strContents = fs.readFileSync(dataFile, 'utf-8');
 
-                _und.each(strContents.split('\n'), function(row, i) {
-                    if (row.length) { // since node reads a blank line as well
-                        if (i === 0) {
-                            headers = _und.map(row.split(','), function(key) {
-                                return key.trim();
-                            });
-                        } else {
-                            var vals = _und.map(row.split(','), function(val) {
-                                return val.trim();
-                            });
-                            jsonArray.push(_und.object(headers, vals));
-                        }
+                var array = Helpers.CSVUtil.csvToArray(strContents);
+                if(array && array.length>0) {
+                    headers = array[0];
+
+                    var numRows = array.length;
+                    for(var i=1;i<numRows;i++) {
+                        jsonArray.push(_und.object(headers, array[i]));
                     }
-                });
+                }
             }
 
             var envJsonArray = _und.map(jsonArray, function(rawJson) {

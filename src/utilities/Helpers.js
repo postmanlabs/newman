@@ -1,9 +1,10 @@
 var jsface = require('jsface'),
 	fs     = require('fs'),
 	Errors = require('./ErrorHandler'),
+    CSVHelper = require('./CsvHelper'),
 	_und   = require('underscore');
 
-/** 
+/**
  * @name Helpers
  * @namespace
  * @classdesc Helper class with useful methods used throughout Newman
@@ -48,8 +49,15 @@ var Helpers = jsface.Class({
         }
     },
 
-	// transforms an array of 
-	// [{"id": 1, "name":"foo"}, { .. }, ..] 
+    validateEncoding: function(encoding) {
+        var validEncs = ['ascii','utf8','utf16le','ucs2','base64','binary','hex'];
+        if(validEncs.indexOf(encoding) === -1) {
+            Errors.terminateWithError("Please specify a valid encoding. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex");
+        }
+    },
+
+	// transforms an array of
+	// [{"id": 1, "name":"foo"}, { .. }, ..]
 	// into an object {"key": "id", "value": "foo"}]
 	transformToKeyValue: function(json) {
 		return _und.map(_und.pairs(json), function(pair){
@@ -57,8 +65,8 @@ var Helpers = jsface.Class({
 		}, []);
 	},
 
-	// transforms an array of 
-	// [{ "key": "id", "value": "20" }, { "key": "name", "value": "joe" }] 
+	// transforms an array of
+	// [{ "key": "id", "value": "20" }, { "key": "name", "value": "joe" }]
 	// into an object {"id": "20", "name": "joe"}
 	transformFromKeyValue: function(kvpairs) {
 		return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
@@ -81,6 +89,16 @@ var Helpers = jsface.Class({
 			}
 		});
 		return headerObj;
+	},
+
+	generateHeaderStringFromObj: function(headerObj) {
+		var ret = "";
+		for(var hKey in headerObj) {
+			if(headerObj.hasOwnProperty(hKey)) {
+				ret+=hKey+":"+headerObj[hKey]+"\n";
+			}
+		}
+		return ret;
 	},
 
     getResponseHeader: function(headerString, headers) {
@@ -153,7 +171,23 @@ var Helpers = jsface.Class({
         var finalArray = this.objectToKvArray(finalObject);
         //Globals.envJson.values = finalArray;
         return finalArray;
-    }
+    },
+
+    CSVUtil: CSVHelper.CSV,
+
+	findPosition: function(list, key, value) {
+		var listLength = list.length;
+		var pos = -1;
+		for (var i = 0; i < listLength; i++) {
+			var h = list[i];
+			if (h['key'] === value) {
+				pos = i;
+				break;
+			}
+		}
+
+		return pos;
+	}
 });
 
 module.exports = Helpers;

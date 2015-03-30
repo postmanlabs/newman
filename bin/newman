@@ -38,6 +38,7 @@ function parseArguments() {
 		.option('-C, --noColor', 'Disable colored output', null)
 		.option('-k, --insecure', 'Disable strict ssl', null)
 		.option('-l, --tls', 'Use TLSv1', null)
+		.option('-N, --encoding [encoding-type]', 'Specify an encoding for the response. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex', null)
 		.option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
 		.option('-o, --outputFile [file]', 'Path to file where output should be written [file]', null)
 		.option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML [file]', null)
@@ -82,6 +83,10 @@ function parseArguments() {
 		}
 	}
 
+	if(program.encoding) {
+		Helpers.validateEncoding(program.encoding);
+	}
+
 	if (program.data) {
 		Helpers.validateDataFile(program.data);
 	}
@@ -121,6 +126,8 @@ function main() {
 	if (program.number) {
 		newmanOptions.iterationCount = program.number;
 	}
+
+	newmanOptions.responseEncoding = program.encoding;
 
 	newmanOptions.summary = !program.noSummary;
 

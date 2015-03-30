@@ -1,4 +1,5 @@
 var jsface = require('jsface');
+var packageVersion = require('../../package.json').version;
 
 /** 
  * @name Globals
@@ -8,7 +9,7 @@ var jsface = require('jsface');
 var Globals = jsface.Class({
 	$singleton: true,
 
-	newmanVersion: "1.2.10",
+	newmanVersion: packageVersion,
 
 	/**
 	 * Used to add the Globals used through out the app
@@ -32,6 +33,7 @@ var Globals = jsface.Class({
 		this.folder = options.folderName || false;
 		this.iterationCount = options.iterationCount || 1;
 		this.html = options.html || false;
+		this.responseEncoding = options.responseEncoding;
 	}
 });
 
