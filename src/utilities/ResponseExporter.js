@@ -264,8 +264,12 @@ var ResponseExporter = jsface.Class({
 		}
 
 		if(Globals.html) {
-			HtmlExporter.generateHTML(exportVariable);
+			HtmlExporter.generateHTMLOld(exportVariable);
 		}
+
+        if(Globals.html2) {
+            HtmlExporter.generateHTMLNew(exportVariable);
+        }
 	},
 
 	_aggregateTestResults: function(runs) {
