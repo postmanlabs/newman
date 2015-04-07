@@ -5,6 +5,7 @@ var jsface       = require('jsface'),
 	ResultSummary= require('../models/ResultSummaryModel'),
 	path         = require('path'),
 	HtmlExporter = require('./HtmlExporter'),
+	HttpStatusCodes = require('./HttpStatusCodes'),
 	fs           = require('fs');
 
 /**
@@ -154,6 +155,7 @@ var ResponseExporter = jsface.Class({
 
 		var passFailCounts = this._extractPassFailCountFromTests(tests);
 		var totalPassFailCounts = this.extractTotalPassFailCount(tests);
+		var httpCode = HttpStatusCodes.getCodes()[Number(response.statusCode)];
 
 		return {
 			"id": request.id,
@@ -162,8 +164,13 @@ var ResponseExporter = jsface.Class({
 			"totalTime": response.stats.timeTaken,
 			"responseCode": {
 				"code": response.statusCode,
-				"name": "",       // TODO: Fill these guys later on
-				"detail": ""
+				"name": httpCode.name,
+				"detail": httpCode.detail
+			},
+			"transformed": request.transformed,
+			"response": {
+				"body": response.body,
+				"headers": response.headers
 			},
 			"tests": tests, //this is meaningless. preserved for backward-compat
 			"totalPassFailCounts": totalPassFailCounts,
