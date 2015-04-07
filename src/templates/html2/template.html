@@ -167,11 +167,9 @@
                         <% if (result.transformed.headers) { %>
                         <%
                         var headers = _.trim(result.transformed.headers).split("\n");
-                        var splitHeaders = _.map(headers, function (h) {
-                            return {
-                                key: _.trim(h.split(":")[0]),
-                                value: _.trim(h.split(":")[1])
-                            }
+                        var headersObj = {};
+                        _.forEach(headers, function (h) {
+                            headersObj[_.trim(h.split(":")[0])] = _.trim(h.split(":")[1]);
                         });
                         %>
                         <table class="striped">
@@ -182,10 +180,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <% _.forEach(splitHeaders, function (h) { %>
+                            <% _.forEach(headersObj, function (value, header) { %>
                             <tr>
-                                <td><%= h.key %></td>
-                                <td><%= h.value %></td>
+                                <td><%= header %></td>
+                                <td><%= value %></td>
                             </tr>
                             <% }); %>
                             </tbody>
@@ -199,11 +197,25 @@
                         <% if (result.transformed.data) { %>
                         <pre><code class="language-javascript"><%
                             if (coll.dataMode === 'params' || coll.dataMode === 'urlencoded') {
-                                var datum = {};
-                                _.forEach(result.transformed.data, function (obj) {
-                                    datum[obj.key] =  _.template(obj.value, {interpolate: /{{([\s\S]+?)}}/g})(data.$environment)
-                                });
-                                print(JSON.stringify(datum, undefined, 4));
+                                if (headersObj['Content-Type'] && headersObj['Content-Type'] === 'multipart/form-data') {
+                                    var res = [];
+                                    var boundary = result.rawRequestHeaders['content-type'].split(';')[1].split('=')[1];
+                                    res.push(boundary);
+                                    _.forEach(result.transformed.data, function (obj) {
+                                        if (obj.type === 'text') {
+                                            res.push("Content-Disposition: form-data; name=\""+obj.key+"\"", "", obj.value, boundary);
+                                        } else {
+                                            res.push("Content-Disposition: form-data; name=\""+obj.key+"\"; filename=\""+obj.value+"\"", "", "/* Binary data */", boundary);
+                                        }
+                                    });
+                                    print(res.join("\n"));
+                                } else {
+                                    var datum = {};
+                                    _.forEach(result.transformed.data, function (obj) {
+                                    datum[obj.key] =  obj.value;
+                                    });
+                                    print(JSON.stringify(datum, undefined, 4));
+                                }
                             } else if (coll.dataMode === 'raw') {
                                 try {
                                     print(JSON.stringify(JSON.parse(result.transformed.data), undefined, 4));
