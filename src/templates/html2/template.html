@@ -177,15 +177,15 @@
                         <table class="striped">
                             <thead>
                             <tr>
-                                <th>Value</th>
                                 <th>Header</th>
+                                <th>Value</th>
                             </tr>
                             </thead>
                             <tbody>
                             <% _.forEach(splitHeaders, function (h) { %>
                             <tr>
-                                <td><%= h.value %></td>
                                 <td><%= h.key %></td>
+                                <td><%= h.value %></td>
                             </tr>
                             <% }); %>
                             </tbody>
@@ -196,7 +196,13 @@
                     </blockquote>
                     <h6 class="small-header">Request body:</h6>
                     <blockquote class="teal-border">
-                        <pre><code class="language-javascript"><%= JSON.stringify(result.transformed.data || {}, undefined, 4) %></code></pre>
+                        <pre><code class="language-javascript"><%
+                            var datum = {};
+                            _.forEach(result.transformed.data, function (obj) {
+                            datum[obj.key] =  _.template(obj.value, {interpolate: /{{([\s\S]+?)}}/g})(data.$environment)
+                            });
+                            print(JSON.stringify(datum, undefined, 4));
+                            %></code></pre>
                     </blockquote>
                 </div>
                 <div class="divider"></div>
@@ -220,15 +226,15 @@
                         <table class="striped">
                             <thead>
                             <tr>
-                                <th>Value</th>
                                 <th>Header</th>
+                                <th>Value</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <% _.forEach(headers, function (header, value) { %>
+                            <% _.forEach(headers, function (value, header) { %>
                             <tr>
-                                <td><%= value %></td>
                                 <td><%= header %></td>
+                                <td><%= value %></td>
                             </tr>
                             <% }); %>
                             </tbody>
