@@ -81,3 +81,8 @@ a.current::before {
 table td {
     padding: 5px;
 }
+
+pre, blockquote.description {
+    max-height: 620px;
+    overflow-y: scroll;
+}

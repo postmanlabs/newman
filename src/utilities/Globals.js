@@ -33,6 +33,7 @@ var Globals = jsface.Class({
 		this.folder = options.folderName || false;
 		this.iterationCount = options.iterationCount || 1;
 		this.html = options.html || false;
+		this.html2 = options.html2 || false;
 		this.responseEncoding = options.responseEncoding;
 	}
 });
