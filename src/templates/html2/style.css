@@ -84,5 +84,5 @@ table td {
 
 pre, blockquote.description {
     max-height: 620px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }

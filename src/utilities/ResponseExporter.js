@@ -167,6 +167,7 @@ var ResponseExporter = jsface.Class({
 				"name": httpCode.name,
 				"detail": httpCode.detail
 			},
+			"debug": response.req,
 			"transformed": request.transformed,
 			"response": {
 				"body": response.body,
