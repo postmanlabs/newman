@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         id = link.getAttribute('href').slice(1);
         document.querySelector('a.current').classList.remove('current');
-        link.classList.add('current');
+        document.querySelector('a[href="#'+id+'"]').classList.add('current');
         document.querySelector('div.data-tab-active').classList.remove('data-tab-active');
         document.querySelector('div[id="'+id+'"]').classList.add('data-tab-active');
         document.querySelector('a.page-title').textContent = document.querySelector('div[id="'+id+'"]').getAttribute('data-name');
