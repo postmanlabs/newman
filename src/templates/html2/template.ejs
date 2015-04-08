@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link href="<%= statics.materializeCss %>" rel="stylesheet" media="screen, projection">
+    <title>Report</title>
+    <style>
+        <%= statics.prismCss %>
+    </style>
+    <style>
+        <%= statics.customCss %>
+    </style>
+</head>
+<body>
+<header>
+    <%= fragments.header %>
+</header>
+<main>
+    <div class="container">
+        <div class="row">
+            <%= fragments.mainPage %>
+
+	        <%= fragments.requestPage %>
+        </div>
+    </div>
+</main>
+<script src="<%= statics.jquery %>"></script>
+<script src="<%= statics.materializeJs %>"></script>
+<script>
+    <%= statics.prismJs %>
+</script>
+<script>
+    <%= statics.markdownJs %>
+</script>
+<script>
+    <%= statics.customJs %>
+</script>
+</body>
+</html>

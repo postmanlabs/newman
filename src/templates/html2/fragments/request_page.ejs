@@ -1,0 +1,196 @@
+<!-- Individual REQUEST pages -->
+<%
+_.forEach(collection.requests, function (request) {
+	var resultIndex = _.findIndex(results, 'id', request.id)
+	var result = results[resultIndex]
+%>
+<div id="<%= request.id %>" class="col s12 data-tab" data-name="<%= request.name %>">
+	<!-- Description -->
+	<% if (request.description) { %>
+	<div class="section" id="description">
+		<h5 class="header">Description:</h5>
+		<blockquote class="description"><%= request.description %></blockquote>
+	</div>
+	<% } %>
+
+	<!-- Request -->
+	<div class="divider"></div>
+	<div class="section" id="request">
+		<h5 class="header">Request:</h5>
+		<blockquote class="teal-border">
+			<h5 class="green-text"><%= request.method %></h5>
+			<h5>
+				<small>
+					<%= result.transformed.url %>
+				</small>
+			</h5>
+		</blockquote>
+		<h6 class="small-header">Headers:</h6>
+		<blockquote class="teal-border">
+			<% if (result.transformed.headers) {
+				var rawRequestHeaders = _.trim(result.transformed.headers).split("\n");
+				var requestHeaders = {};
+				_.forEach(rawRequestHeaders, function (rawHeader) {
+					var header = _.trim(rawHeader.split(":")[0]);
+					requestHeaders[header] = _.trim(rawHeader.split(":")[1]);
+				});
+			%>
+			<table class="striped">
+				<thead>
+				<tr>
+					<th>Header</th>
+					<th>Value</th>
+				</tr>
+				</thead>
+				<tbody>
+				<% _.forEach(requestHeaders, function (value, header) { %>
+				<tr>
+					<td><%= header %></td>
+					<td><%= value %></td>
+				</tr>
+				<% }); %>
+				</tbody>
+			</table>
+			<% } else { %>
+			—
+			<% } %>
+		</blockquote>
+		<h6 class="small-header">Request body:</h6>
+		<blockquote class="teal-border">
+			<% if (result.transformed.data) { %>
+			<pre><code class="language-javascript"><%
+				if (request.dataMode === 'params') {
+					if (requestHeaders && requestHeaders['Content-Type'] && requestHeaders['Content-Type'] === 'multipart/form-data') {
+						var multipartBody = [];
+						var boundary = result.rawRequestHeaders['content-type'].split(';')[1].split('=')[1];
+						multipartBody.push(boundary);
+						_.forEach(result.transformed.data, function (field) {
+							if (field.type === 'text') {
+								multipartBody.push("Content-Disposition: form-data; name=\"" + field.key + "\"", "", field.value, boundary);
+							} else if (field.type === 'file') {
+								multipartBody.push("Content-Disposition: form-data; name=\"" + field.key + "\"; filename=\"" + field.value + "\"", "Content-Type: /* TODO */", "", "/* Binary data */", boundary);
+							}
+						});
+						print(multipartBody.join("\n"));
+					} else {
+						var JSONBody = {};
+						_.forEach(result.transformed.data, function (obj) {
+							JSONBody[obj.key] = obj.value;
+						});
+						print(JSON.stringify(JSONBody, null, 4));
+					}
+				} else if (request.dataMode === 'urlencoded') {
+					var urlEncodedBody = [];
+					_.forEach(result.transformed.data, function (field) {
+						urlEncodedBody.push(field.key + "=" + encodeURIComponent(field.value).replace(/%20/g, "+"));
+					})
+					print(urlEncodedBody.join("&"));
+
+				} else if (request.dataMode === 'raw') {
+					try {
+						print(JSON.stringify(JSON.parse(result.transformed.data), null, 4));
+					} catch (e) {
+						print(_.escape(result.transformed.data));
+					}
+				} else if (request.dataMode === 'binary') {
+					print('/* Binary data */');
+				}
+			%></code></pre>
+			<% } else { %>
+			—
+			<% } %>
+		</blockquote>
+	</div>
+
+	<!-- Response -->
+	<div class="divider"></div>
+	<div class="section" id="response">
+		<h5 class="header">Response:</h5>
+		<blockquote class="pink-border">
+			<% var responseCode = result.responseCode %>
+			<h5>
+				<%= responseCode.code %>
+				<small>
+					<%= responseCode.name %>
+				</small>
+			</h5>
+		</blockquote>
+		<h6 class="small-header">Headers:</h6>
+		<blockquote class="pink-border">
+			<% if (result.response.headers) { %>
+			<%
+				var headers = result.response.headers;
+			%>
+			<table class="striped">
+				<thead>
+				<tr>
+					<th>Header</th>
+					<th>Value</th>
+				</tr>
+				</thead>
+				<tbody>
+				<% _.forEach(headers, function (value, header) { %>
+				<tr>
+					<td><%= header %></td>
+					<td><%= value %></td>
+				</tr>
+				<% }); %>
+				</tbody>
+			</table>
+			<% } else { %>
+			—
+			<% } %>
+		</blockquote>
+		<h6 class="small-header">Response body:</h6>
+		<blockquote class="pink-border">
+			<% if (result.response.body) { %>
+			<pre><code class="language-javascript"><%
+				try {
+					print(JSON.stringify(JSON.parse(result.response.body), undefined, 4));
+				} catch (e) {
+					print(_.escape(result.response.body));
+				}
+			%></code></pre>
+			<% } else { %>
+			—
+			<% } %>
+		</blockquote>
+	</div>
+
+	<!-- Tests -->
+	<div class="divider"></div>
+	<div class="section" id="tests">
+		<h5 class="header">Tests:</h5>
+		<blockquote class="amber-border">
+			<% if (request.tests) { %>
+			<table class="striped">
+				<thead>
+				<tr>
+					<th>Test name</th>
+					<th>Result</th>
+				</tr>
+				</thead>
+				<tbody>
+				<% _.forEach(result.tests, function (testResult, name) { %>
+				<tr>
+					<td><%= name %></td>
+					<td class="<%= testResult ? 'green-text' : 'red-text' %>"><%= testResult ? "Pass" : "Fail" %></td>
+				</tr>
+				<% }); %>
+				</tbody>
+			</table>
+			<% } else { %>
+			—
+			<% } %>
+		</blockquote>
+		<h6 class="small-header">Code:</h6>
+		<blockquote class="amber-border">
+			<% if (request.tests) { %>
+			<pre><code class="language-javascript"><%= request.tests %></code></pre>
+			<% } else { %>
+			—
+			<% } %>
+		</blockquote>
+	</div>
+</div>
+<% }); %>

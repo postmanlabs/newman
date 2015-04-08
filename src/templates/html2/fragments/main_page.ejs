@@ -1,0 +1,62 @@
+<!-- MAIN page -->
+<div id="main" class="col s12 data-tab data-tab-active" data-name="Main page">
+    <!-- TOTALS section -->
+    <div class="section">
+        <p>Total tests passed:
+            <span class="green-text">
+            <%= _.reduce(results, function (sum, test) { return sum + Number(test.totalPassFailCounts.pass); }, 0) %>
+            </span>
+        </p>
+        <p>Total tests failed:
+            <span class="red-text">
+            <%= _.reduce(results, function (sum, test) { return sum + Number(test.totalPassFailCounts.fail); }, 0) %>
+            </span>
+        </p>
+    </div>
+    <div class="divider"></div>
+
+    <!-- No-folders REQUEST section -->
+    <%
+    _.forEach(collection.order, function (requestID) {
+        var requestIndex = _.findIndex(collection.requests, 'id', requestID);
+    %>
+    <div class="section">
+        <div class="col s12">
+            <a href="#<%= requestID %>" class="tab-navigation">
+                <%= collection.requests[requestIndex].name %>
+            </a>
+        </div>
+        <%
+        var resultIndex = _.findIndex(results, 'id', requestID);
+        _.forEach(results[resultIndex].tests, function (result, name) {
+        %>
+        <div class="col s9 offset-s1"><%- name %></div>
+        <div class="col s2 <%= result ? 'green-text' : 'red-text' %>"><%= result ? "Pass" : "Fail" %></div>
+        <% }); %>
+    </div>
+    <% }); %>
+
+    <!-- FOLDER REQUESTS section -->
+    <% _.forEach(collection.folders, function(folder) { %>
+    <div class="section">
+        <div class="col s12">
+            <h5 class="header"><%- folder.name %></h5>
+        </div>
+
+        <% _.forEach(folder.order, function(requestID) {
+            var requestIndex = _.findIndex(collection.requests, 'id', requestID);
+        %>
+        <div class="col s11 offset-s1 small-header">
+            <a href="#<%= requestID %>" class="tab-navigation"><%- collection.requests[requestIndex].name %></a>
+        </div>
+        <%
+        var resultIndex = _.findIndex(results, 'id', requestID);
+        _.forEach(results[resultIndex].tests, function (result, name) {
+        %>
+        <div class="col s8 offset-s2"><%- name %></div>
+        <div class="col s2 <%= result ? 'green-text' : 'red-text' %>"><%= result ? "Pass" : "Fail" %></div>
+        <% }); %>
+        <% }); %>
+    </div>
+    <% }); %>
+</div>

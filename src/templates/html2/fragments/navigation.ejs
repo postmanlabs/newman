@@ -1,0 +1,67 @@
+<!-- TOP PANEL -->
+<nav class="top-nav">
+    <div class="container">
+        <div class="nav-wrapper"><a class="page-title">Main page</a></div>
+    </div>
+</nav>
+<!-- SIDEBAR -->
+<ul class="side-nav fixed">
+    <!-- Main page -->
+    <li class="bold"><a href="#main" class="tab-navigation current"><%= collection.name %></a></li>
+
+    <!-- No-folder requests -->
+    <% _.forEach(collection.order, function (requestID) {
+        var requestIndex = _.findIndex(collection.requests, 'id', requestID); %>
+    <li>
+        <a href="#<%= requestID %>" class="tab-navigation">
+            <%= collection.requests[requestIndex].name %>
+            <%
+            var resultIndex = _.findIndex(results, 'id', requestID);
+            var result = results[resultIndex];
+            var pass = result.totalPassFailCounts.pass;
+            var fail = result.totalPassFailCounts.fail;
+            %>
+            <span class="right <%= fail === 0 ? 'green-text' : 'red-text' %>">
+                <% print(pass + "/" + (pass + fail)) %>
+            </span>
+        </a>
+    </li>
+    <% }); %>
+
+    <!-- Folders -->
+    <li class="no-padding">
+        <ul class="collapsible collapsible-accordion" data-collapsible="expandable">
+            <% _.forEach(collection.folders, function(folder) { %>
+            <li class="bold">
+	            <a class="collapsible-header active">
+		            <%- folder.name %>
+		            <i class="mdi-navigation-expand-more"></i>
+	            </a>
+                <div class="collapsible-body">
+                    <ul>
+                        <!-- Requests/collections -->
+                        <% _.forEach(folder.order, function(requestID) {
+                            var requestIndex = _.findIndex(collection.requests, 'id', requestID);
+                        %>
+                        <li>
+                            <a href="#<%= requestID %>" class="tab-navigation">
+                                <%= collection.requests[requestIndex].name %>
+                                <%
+                                var resultIndex = _.findIndex(results, 'id', requestID);
+                                var result = results[resultIndex];
+                                var pass = result.totalPassFailCounts.pass;
+                                var fail = result.totalPassFailCounts.fail;
+                                %>
+                                <span class="right <%= fail === 0 ? 'green-text' : 'red-text' %>">
+                                    <% print(pass + "/" + (pass + fail)) %>
+                                </span>
+                            </a>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </li>
+            <% }); %>
+        </ul>
+    </li>
+</ul>
