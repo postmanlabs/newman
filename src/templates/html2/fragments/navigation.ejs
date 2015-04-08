@@ -13,18 +13,24 @@
     <% _.forEach(collection.order, function (requestID) {
         var requestIndex = _.findIndex(collection.requests, 'id', requestID); %>
     <li>
-        <a href="#<%= requestID %>" class="tab-navigation">
-            <%= collection.requests[requestIndex].name %>
-            <%
-            var resultIndex = _.findIndex(results, 'id', requestID);
-            var result = results[resultIndex];
-            var pass = result.totalPassFailCounts.pass;
-            var fail = result.totalPassFailCounts.fail;
-            %>
-            <span class="right <%= fail === 0 ? 'green-text' : 'red-text' %>">
-                <% print(pass + "/" + (pass + fail)) %>
-            </span>
-        </a>
+	    <div class="row">
+		    <div class="col s10">
+			    <a href="#<%= requestID %>" class="tab-navigation">
+				    <%= collection.requests[requestIndex].name %>
+			    </a>
+		    </div>
+		    <div class="col s2">
+			    <%
+				    var resultIndex = _.findIndex(results, 'id', requestID);
+				    var result = results[resultIndex];
+				    var pass = result.totalPassFailCounts.pass;
+				    var fail = result.totalPassFailCounts.fail;
+			    %>
+			    <span class="right <%= fail === 0 ? 'green-text' : 'red-text' %>">
+				    <% print(pass + "/" + (pass + fail)) %>
+			    </span>
+		    </div>
+	    </div>
     </li>
     <% }); %>
 
@@ -44,18 +50,24 @@
                             var requestIndex = _.findIndex(collection.requests, 'id', requestID);
                         %>
                         <li>
-                            <a href="#<%= requestID %>" class="tab-navigation">
-                                <%= collection.requests[requestIndex].name %>
-                                <%
-                                var resultIndex = _.findIndex(results, 'id', requestID);
-                                var result = results[resultIndex];
-                                var pass = result.totalPassFailCounts.pass;
-                                var fail = result.totalPassFailCounts.fail;
-                                %>
-                                <span class="right <%= fail === 0 ? 'green-text' : 'red-text' %>">
-                                    <% print(pass + "/" + (pass + fail)) %>
-                                </span>
-                            </a>
+	                        <div class="row">
+		                        <div class="col s10">
+			                        <a href="#<%= requestID %>" class="tab-navigation">
+				                        <%= collection.requests[requestIndex].name %>
+			                        </a>
+		                        </div>
+		                        <div class="col s2">
+			                        <%
+				                        var resultIndex = _.findIndex(results, 'id', requestID);
+				                        var result = results[resultIndex];
+				                        var pass = result.totalPassFailCounts.pass;
+				                        var fail = result.totalPassFailCounts.fail;
+			                        %>
+			                        <span class="right <%= fail === 0 ? 'green-text' : 'red-text' %>">
+				                        <% print(pass + "/" + (pass + fail)) %>
+			                        </span>
+		                        </div>
+	                        </div>
                         </li>
                         <% }); %>
                     </ul>

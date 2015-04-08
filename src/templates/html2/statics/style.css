@@ -86,3 +86,11 @@ pre, blockquote.description {
     max-height: 620px;
     overflow-y: auto;
 }
+
+.tab-navigation {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.side-nav.fixed .row {
+    margin-bottom: 0;
+}

@@ -1,8 +1,12 @@
 <!-- Individual REQUEST pages -->
 <%
 _.forEach(collection.requests, function (request) {
-	var resultIndex = _.findIndex(results, 'id', request.id)
-	var result = results[resultIndex]
+	var resultIndex = _.findIndex(results, 'id', request.id);
+	var result = results[resultIndex];
+
+	if (result === undefined) {
+		return;
+	}
 %>
 <div id="<%= request.id %>" class="col s12 data-tab" data-name="<%= request.name %>">
 	<!-- Description -->
@@ -58,9 +62,10 @@ _.forEach(collection.requests, function (request) {
 		<h6 class="small-header">Request body:</h6>
 		<blockquote class="teal-border">
 			<% if (result.transformed.data) { %>
-			<pre><code class="language-javascript"><%
-				if (request.dataMode === 'params') {
+			<pre><%
+				if (request.dataMode === 'params' || request.dataMode === 'urlencoded') {
 					if (requestHeaders && requestHeaders['Content-Type'] && requestHeaders['Content-Type'] === 'multipart/form-data') {
+				%><code><%
 						var multipartBody = [];
 						var boundary = result.rawRequestHeaders['content-type'].split(';')[1].split('=')[1];
 						multipartBody.push(boundary);
@@ -73,20 +78,15 @@ _.forEach(collection.requests, function (request) {
 						});
 						print(multipartBody.join("\n"));
 					} else {
+				%><code class="language-javascript"><%
 						var JSONBody = {};
 						_.forEach(result.transformed.data, function (obj) {
 							JSONBody[obj.key] = obj.value;
 						});
 						print(JSON.stringify(JSONBody, null, 4));
 					}
-				} else if (request.dataMode === 'urlencoded') {
-					var urlEncodedBody = [];
-					_.forEach(result.transformed.data, function (field) {
-						urlEncodedBody.push(field.key + "=" + encodeURIComponent(field.value).replace(/%20/g, "+"));
-					})
-					print(urlEncodedBody.join("&"));
-
 				} else if (request.dataMode === 'raw') {
+				%><code class="language-javascript"><%
 					try {
 						print(JSON.stringify(JSON.parse(result.transformed.data), null, 4));
 					} catch (e) {
