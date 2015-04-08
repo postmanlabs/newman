@@ -1,5 +1,6 @@
 src/utilities/oauth.js
 src/utilities/HelperProcessor.js
 src/utilities/CsvHelper.js
-src/templates/htmlResponseTemplate.js
-
+src/templates/html/htmlResponseTemplate.js
+src/templates/html2/statics/markdown.min.js
+src/templates/html2/statics/prism.js

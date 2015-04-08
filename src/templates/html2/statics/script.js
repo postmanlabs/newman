@@ -1,3 +1,4 @@
+/* global document, window, markdown */
 document.addEventListener('DOMContentLoaded', function() {
     var descriptions = document.querySelectorAll('.description');
 

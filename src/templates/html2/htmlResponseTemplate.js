@@ -3,7 +3,7 @@ var _ = require('lodash');
 var fs = require('fs');
 
 function template (obj) {
-    var template = read('template.ejs');
+    var layout = read('template.ejs');
     var fragments = {
         header: _.template(read('fragments/navigation.ejs'))(obj),
         mainPage: _.template(read('fragments/main_page.ejs'))(obj),
@@ -19,7 +19,7 @@ function template (obj) {
         materializeJs: 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.0/js/materialize.min.js',
         jquery: 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'
     };
-    var compiled = _.template(template);
+    var compiled = _.template(layout);
 
     return compiled({
         fragments: fragments,
