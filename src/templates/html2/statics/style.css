@@ -1,5 +1,5 @@
 header, main, footer {
-    padding-left: 240px;
+    padding-left: 16.6667%;
 }
 
 @media only screen and (max-width : 992px) {
@@ -9,6 +9,7 @@ header, main, footer {
 }
 ul.side-nav.fixed {
     overflow: hidden;
+    width: 16.6667%;
 }
 ul.side-nav.fixed li {
     line-height: 44px;
