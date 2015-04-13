@@ -32,6 +32,7 @@ function parseArguments() {
 		.option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
 		.option('-g, --global [file]', 'Specify a Postman globals file [file]', null)
 		.option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
+		.option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for a request", null)
 		.option('-s, --stopOnError', "Stops the runner with code=1 when a test case fails", null)
 		.option('-j, --noSummary', "Doesn't show the summary for each iteration", null)
 		.option('-n, --number [number]', 'Define the number of iterations to run', null)
@@ -151,6 +152,13 @@ function main() {
 		}
 		newmanOptions.delay = parseInt(program.delay);
 	}
+
+    if (program.requestTimeout) {
+        if (isNaN(program.requestTimeout) || parseFloat(program.requestTimeout)%1 !== 0) {
+            Errors.terminateWithError("The request Timeout must be an integer");
+        }
+		newmanOptions.requestTimeout = parseInt(program.requestTimeout);
+    }
 
 	if (program.global) {
 		try {
