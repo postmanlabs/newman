@@ -5,6 +5,8 @@ var jsface          = require("jsface"),
     EventEmitter     = require('./utilities/EventEmitter'),
     Globals          = require('./utilities/Globals'),
     Options          = require('./utilities/Options'),
+    log              = require('./utilities/Logger'),
+    fs               = require('fs'),
     exec             = require('child_process').exec;
 
 /**
@@ -57,7 +59,19 @@ var Newman = jsface.Class([Options, EventEmitter], {
         this.setOptions(options);
 
         if (typeof callback === "function") {
-            this.addEventListener('iterationRunnerOver', callback);
+            this.addEventListener('iterationRunnerOver', function() {
+                if (options.exportGlobalsFile) {
+                    fs.writeFileSync(options.exportGlobalsFile, JSON.stringify(Globals.globalJson.values,null,1));
+                    log.note("\n\nGlobals File Exported To: " + options.exportGlobalsFile + "\n");
+                }
+
+                if (options.exportEnvironmentFile) {
+                    fs.writeFileSync(options.exportEnvironmentFile, JSON.stringify(Globals.envJson,null,1));
+                    log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
+                }
+
+                callback();
+            });
         }
 
         // setup the iteration runner with requestJSON passed and options
