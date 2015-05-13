@@ -2,6 +2,7 @@ var jsface                 = require("jsface"),
 	AbstractRunner         = require("./AbstractRunner"),
 	RequestRunner          = require("./RequestRunner"),
 	ResponseHandlerFactory = require('../responseHandlers/ResponseHandlerFactory'),
+	Errors           = require('../utilities/ErrorHandler'),
 	_und                   = require('underscore'),
 	log                    = require('../utilities/Logger'),
 	EventEmitter           = require('../utilities/EventEmitter'),
@@ -46,6 +47,17 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 
 		// Start the runner
 		RequestRunner.setDelay(this.opts.delay);
+
+        if(!isNaN(this.opts.requestTimeout) && this.opts.requestTimeout%1===0) {
+            RequestRunner.setRequestTimeout(this.opts.requestTimeout);
+        }
+        else if (this.opts.requestTimeout == null) {
+            RequestRunner.setRequestTimeout(15000);
+        }
+        else {
+            Errors.terminateWithError('The request timeout must be an integer');
+        }
+
 		RequestRunner.setStrictSSL(this.opts.strictSSL);
 		RequestRunner.setSecureProtocol(this.opts.secureProtocol);
 		RequestRunner.setRunMode(this.runMode);

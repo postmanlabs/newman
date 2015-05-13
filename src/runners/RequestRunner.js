@@ -37,6 +37,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         this.delay = delay;
     },
 
+    /**
+     * Sets a timeout to be used waiting for a requests
+     * @param requestTimeout
+     */
+    setRequestTimeout: function(timeout) {
+        this.requestTimeout = timeout;
+    },
+
     setRunMode: function(runMode) {
         this.runMode = runMode;
     },
@@ -223,7 +231,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
 		RequestOptions.followAllRedirects = false;
 		RequestOptions.jar = true;
-		RequestOptions.timeout = 15000;
+		RequestOptions.timeout = this.requestTimeout;
         if(Globals.responseEncoding) {
             RequestOptions.encoding = Globals.responseEncoding;
         }
