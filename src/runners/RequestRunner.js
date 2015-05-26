@@ -225,15 +225,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	_onRequestExecuted: function(error, response, body, request, delay) {
+        var runner = this;
         if ( request.asyncRequestIterations && request.asyncRequestIterations > 0) {
-            var runner = this;
             setTimeout(function() {
             runner.execute(request);
             }, delay);
         }
         else {
             // Call the next request to execute
-            var runner = this;
             setTimeout(function() {
                 runner._execute();
             }, delay);
