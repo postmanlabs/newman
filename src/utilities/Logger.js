@@ -96,6 +96,10 @@ var Logger = jsface.Class([EventEmitter], {
 		this.success("    " + Symbols.symbols.ok + log + "\n");
 		return this;
 	},
+	testCaseWarn: function(log) {
+		this.warn("    " + Symbols.symbols.err + log + "\n");
+		return this;
+	},
 
 	testCaseError: function(log) {
 		this.error("    " + Symbols.symbols.err + log + "\n");

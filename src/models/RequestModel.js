@@ -23,6 +23,8 @@ var RequestModel = jsface.Class(ParentModel, {
 		this.preRequestScript     = requestJson.preRequestScript;
 		this.currentHelper = requestJson.currentHelper;
 		this.helperAttributes = requestJson.helperAttributes;
+		this.asyncRequestIterations = requestJson.asyncRequestIterations -1;	//index by 0
+		this.asyncRequestDelay = requestJson.asyncRequestDelay;
 	},
 	toString: function() {
 		return "Request: [" + this.method + "]: " + this.url;

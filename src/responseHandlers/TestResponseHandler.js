@@ -35,8 +35,27 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     // function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
     _onRequestExecuted: function(error, response, body, request) {
         var results = this._runTestCases(error, response, body, request);
-        AbstractResponseHandler._onRequestExecuted.call(this, error, response, body, request, results);
-        this._logTestResults(results);
+        this._logTestResults(results, request);
+
+        if (error) {
+            ErrorHandler.requestError(request, error);
+        } else  {
+            this._printResponse(error, response, body, request);
+        }
+
+        // if a request is supposed to run multiple times, disable throwErrorOnLog.
+        if ( request.asyncRequestIterations && request.asyncRequestIterations > 0) {
+            //if all tests pass, don't bother repeating subsequent iterations -- note, there is no way of knowing this when stopOnError is not set
+            if (Globals.stopOnError && this.throwErrorOnLog === false ) {
+                request.asyncRequestIterations = 0;
+            }
+
+            request.asyncRequestIterations--;
+            this.throwErrorOnLog = false;
+        }
+        else {
+            ResponseExporter.addResult(request, response, results);
+        }
 
         if(this.throwErrorOnLog!==false) {
             ResponseExporter.exportResults();
@@ -286,12 +305,17 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     },
 
     // logger for test case results
-    _logTestResults: function(results) {
+    _logTestResults: function(results, request) {
         _und.each(_und.keys(results), function(key) {
-            if (results[key]) {
+            if (results[key] ) {
                 log.testCaseSuccess(key);
             } else {
-                ErrorHandler.testCaseError(key);
+                if (request.asyncRequestIterations > 0) {
+                    log.testCaseWarn(key);
+                }
+                else {
+                    ErrorHandler.testCaseError(key);
+                }
             }
         });
     }
