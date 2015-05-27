@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####1.2.15 (March 19, 2015)
+* Support for authentication helpers (Basic, Digest, OAuth1.0)
+
 ####1.2.14 (March 13, 2015)
 * Removing dead code for BOM-removal. This also fixes zero-length body cases
 * Adding support for commas in data file fields, and double-quotes to surround fields (in line with Postman)
@@ -29,13 +32,13 @@
 
 ####1.2.5 (January 14, 2015)
 * Correcting jUnit export format
-* Test resuts are now parsed consistently (truthy/falsy values are accepted)
+* Test results are now parsed consistently (truthy/falsy values are accepted)
 
 ####1.2.4 (December 20, 2014)
 * Fixed command-line flag for HTML report
 
 ####1.2.3 (December 16, 2014)
-* Fixed jQuery dependeny issue
+* Fixed jQuery dependecny issue
 
 ####1.2.1 (December 8, 2014)
 * Added HTML reporting capability
