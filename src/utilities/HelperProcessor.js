@@ -338,7 +338,7 @@ var HelperProcessor = jsface.Class({
 		var oauthIndexes = [];
 
 		for (i = 0, count = params.length; i < count; i++) {
-			var index = _.indexOf(oauthParams, params[i].key);
+			var index = _und.indexOf(oauthParams, params[i].key);
 			if (index < 0) {
 				newParams.push(params[i]);
 			}
@@ -450,7 +450,7 @@ var HelperProcessor = jsface.Class({
 		var oauthIndexes = [];
 
 		for (i = 0, count = params.length; i < count; i++) {
-			var index = _.indexOf(oauthParams, params[i].key);
+			var index = _und.indexOf(oauthParams, params[i].key);
 			if (index < 0) {
 				newParams.push(params[i]);
 			}
