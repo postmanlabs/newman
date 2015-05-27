@@ -292,6 +292,12 @@ var ResponseExporter = jsface.Class({
 		return retVal;
 	},
 
+	/**
+	 * Returns a JUnit-compatible XML string of the test results
+	 * 
+	 * @memberOf ResponseExporter
+	 * @return {string} JUnit XML 
+	 */
 	_createJunitXML: function() {
 			var oldThis = this;
 			var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
@@ -315,17 +321,24 @@ var ResponseExporter = jsface.Class({
 				var testcases = "";
 				var totalFailuresForSuite = 0;
 				var totalSuccessesForSuite = 0;
+
 				_und.each(suite.testPassFailCounts, function(testcase, testcaseName) {
 					var successes = aggregateTestStats[testcaseName].successes;
 					var failures = aggregateTestStats[testcaseName].failures;
 					totalFailuresForSuite += failures;
 					totalSuccessesForSuite += successes;
-					testcases += '\t\t<testcase name="' + _und.escape(testcaseName) + '" successes="'+successes+'" failures="' + failures + '" />\n';
+					testcases += '\t\t<testcase name="' + _und.escape(testcaseName) + '" ' + (failures > 0 ? '' : '/') + '>\n';
+					if(failures > 0) {
+						testcases += '\t\t\t<failure><![CDATA[' + _und.escape(testcaseName) +
+									(iterations > 1 ? ' (failed ' + failures + '/' + iterations + ' iterations)' : '') +
+									']]></failure>\n' +
+									'\t\t</testcase>\n';
+					}
 				}, this);
 
 				xml += '\t<testsuite name="' + _und.escape(suite.name) + '" id="' +
 					_und.escape(suite.id) + '" timestamp="' + timeStamp.toISOString() +
-					'" time="' + meanTime + ' ms" totalTime="'+time+' ms" tests="' + tests + '" iterations="'+iterations+'" failures="'+totalFailuresForSuite+'" successes="'+totalSuccessesForSuite+'">\n';
+					'" time="' + meanTime + ' ms" tests="' + tests + '" failures="'+totalFailuresForSuite+'">\n';
 
 				xml += testcases;
 
