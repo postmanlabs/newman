@@ -34,7 +34,7 @@ function parseArguments() {
 		.option('-g, --global [file]', 'Specify a Postman globals file [file]', null)
 		.option('-G, --exportGlobals [file]', 'Specify an output file to dump Globals before exiting [file]', null)
 		.option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
-		.option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for a request", null)
+		.option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for requests", null)
 		.option('-s, --stopOnError', "Stops the runner with code=1 when a test case fails", null)
 		.option('-j, --noSummary', "Doesn't show the summary for each iteration", null)
 		.option('-n, --number [number]', 'Define the number of iterations to run', null)

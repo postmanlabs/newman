@@ -38,27 +38,38 @@ $ newman -h
 
 Options:
 
+Utility:
 -h, --help                  output usage information
 -V, --version               output the version number
+
+Basic setup:
 -c, --collection [file]     Specify a Postman collection as a JSON [file]
 -u, --url [url]             Specify a Postman collection as a [url]
 -f, --folder [folderName]   Specify a single folder to run from a collection. To be used with -c or -u.
 -e, --environment [file]    Specify a Postman environment as a JSON [file]
 -d, --data [file]           Specify a data file to use either json or csv
 -g, --global [file]         Specify a Postman globals file as JSON [file]
--y, --delay [number]        Specify a delay (in ms) between requests [number]
+-n, --number [number]       Define the number of iterations to run
+-i, --import [file]         Import a Postman backup file, and save collections, environments, and globals. [file]
+-p, --pretty                (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
+
+Request options:
+-y, --delay [number]            Specify a delay (in ms) between requests [number]
+-r, --requestTimeout [number]   Specify a request timeout (in ms) for a request
+
+Misc.:
 -s, --stopOnError           Stops the runner when a test case fails
 -j, --noSummary             Doesn't show the summary for each iteration
--n, --number [number]       Define the number of iterations to run
 -C, --noColor               Disable colored output
 -k, --insecure              Disable strict ssl
 -l, --tls                   Use TLSv1
+-x, --exitCode              Continue running tests even after a failure, but exit with code=1
+
+Output:
 -o, --outputFile [file]     Path to file where output should be written. [file]
 -t, --testReportFile [file] Path to file where results should be written as JUnit XML [file]
--x, --exitCode              Continue running tests even after a failure, but exit with code=1
--i, --import [file]         Import a Postman backup file, and save collections, environments, and globals. [file]
--p, --pretty                (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
 -H, --html                  Export a HTML report to a specified file [file]
+
 ```
 
 Use the `-n` option to set the number of iterations you want to run the collection for.
