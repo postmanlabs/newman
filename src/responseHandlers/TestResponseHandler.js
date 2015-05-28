@@ -35,13 +35,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     // function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
     _onRequestExecuted: function(error, response, body, request) {
         var results = this._runTestCases(error, response, body, request);
-        this._logTestResults(results, request);
-
-        if (error) {
-            ErrorHandler.requestError(request, error);
-        } else  {
-            this._printResponse(error, response, body, request);
-        }
 
         // if a request is supposed to run multiple times, disable throwErrorOnLog.
         if ( request.asyncRequestIterations && request.asyncRequestIterations > 0) {
@@ -51,13 +44,25 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             }
 
             request.asyncRequestIterations--;
-            this.throwErrorOnLog = false;
+            if (request.asyncRequestIterations > 0) {
+                this.throwErrorOnLog = false;
+            }
         }
         else {
             ResponseExporter.addResult(request, response, results);
         }
 
+        this._logTestResults(results, request);
+
+        if (error) {
+            ErrorHandler.requestError(request, error);
+        } else  {
+            this._printResponse(error, response, body, request);
+        }
+
         if(this.throwErrorOnLog!==false) {
+            ResponseExporter.addResult(request, response, results);
+            ResponseExporter.showIterationSummary();
             ResponseExporter.exportResults();
             ErrorHandler.terminateWithError(this.throwErrorOnLog);
         }
@@ -316,7 +321,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                     log.testCaseWarn(key);
                 }
                 else {
-                    ErrorHandler.testCaseError(key);
+                    log.testCaseError(key);
                 }
             }
         });
