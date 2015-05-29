@@ -21,12 +21,22 @@ var ErrorHandler = jsface.Class({
 		log.error("ParseError: " + msg);
 	},
 
-	testCaseError: function(testcase) {
-		log.testCaseError(testcase);
+	testCaseError: function(err) {
+		Globals.exitCode = 1;
+		log.error(err);
+
+		if (Globals.stopOnError) {
+			terminateWithError(err);
+		}
 	},
 
 	exceptionError: function(err) {
+		Globals.exitCode = 1;
 		log.exceptionError(err);
+
+		if (Globals.stopOnError) {
+			terminateWithError(err);
+		}
 	},
 	
 	terminateWithError: function(msg) {
