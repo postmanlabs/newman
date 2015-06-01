@@ -140,6 +140,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		}
 
         var request = this._getNextRequest();
+
+        if (request && request.asyncRequestIterations && request.asyncRequestIterations > 0) {
+            debugger;
+            request.asyncRequestIterationsCounter = request.asyncRequestIterations;
+        }
+
         this.execute(request);
     },
 
@@ -200,7 +206,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				if(this.isEmptyQueue()) {
 					delay = 0;
 				}
-                if ( request.asyncRequestDelay && request.asyncRequestIterations > 0 ) {
+                if ( request.asyncRequestDelay && request.asyncRequestIterationsCounter > 0 ) {
                     delay = request.asyncRequestDelay;
                 }
 
@@ -226,7 +232,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
 	_onRequestExecuted: function(error, response, body, request, delay) {
         var runner = this;
-        if ( request.asyncRequestIterations && request.asyncRequestIterations > 0) {
+        if ( request.asyncRequestIterationsCounter && request.asyncRequestIterationsCounter > 0) {
             setTimeout(function() {
             runner.execute(request);
             }, delay);

@@ -40,27 +40,28 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             this._printResponse(error, response, body, request);
         }
         var results = this._runTestCases(error, response, body, request);
-debugger;
+
         // check if a request is supposed to run multiple times
-        if ( request.asyncRequestIterations && request.asyncRequestIterations > 0) {
-            request.asyncRequestIterations--;
+        if ( request.asyncRequestIterationsCounter && request.asyncRequestIterationsCounter > 0) {
+            request.asyncRequestIterationsCounter--;
 
             //if all tests pass, don't bother repeating subsequent iterations
             if ( this.failingTestCaseKey === "" ) {
-                request.asyncRequestIterations = 0;
+                request.asyncRequestIterationsCounter = 0;
             }
 
             //otherwise reset the failing test case
-            if (request.asyncRequestIterations > 0) {
+            if (request.asyncRequestIterationsCounter > 0) {
                 this.failingTestCaseKey = "";
             }
         }
 
-        if (!request.asyncRequestIterations || (request.asyncRequestIterations && request.asyncRequestIterations == 0)) {
+        if (!request.asyncRequestIterationsCounter || (request.asyncRequestIterationsCounter && request.asyncRequestIterationsCounter == 0)) {
             ResponseExporter.addResult(request, response, results);
         }
 
         if(this.failingTestCaseKey !== "") {
+debugger;
             ResponseExporter.showIterationSummary();
             ResponseExporter.exportResults();
             ErrorHandler.testCaseError("Test case failed: " + this.failingTestCaseKey);
@@ -316,7 +317,7 @@ debugger;
         if (results[key]) {
             log.testCaseSuccess(key);
         } else {
-            if (request.asyncRequestIterations > 0) {
+            if (request.asyncRequestIterationsCounter > 0) {
                 log.testCaseWarn(key);
             }
             else {
