@@ -243,18 +243,27 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	// Takes request as the input, parses it for different types and
 	// sets it as the request body for the unirest request.
 	_setBodyData: function(RequestOptions, request) {
+		var self = this;
 		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1) {
 			if (request.dataMode === "raw") {
 				RequestOptions.body = request.transformed.data;
 			} else if (request.dataMode === "urlencoded") {
 				var reqData = request.transformed.data;
 				RequestOptions.form = _und.object(_und.pluck(reqData, "key"), _und.pluck(reqData, "value"));
+			} else if(request.dataMode === "binary") {
+				request.headers.replace(/Content-Disposition\s*:\s*.*?filename\*?=(?:.*?'')?["']?(.*)["']?\n+/gmi, function(matchAll, fileHeader) {
+				var loc = self._filenametoPath(fileHeader);
+					if (loc) {
+						RequestOptions.body = new Buffer(fs.readFileSync(loc), "binary");
+					}
+				});
 			}
 		}
 	},
 
 	// Request Mumbo jumbo for `multipart/form-data`.
 	_setFormDataIfParamsInRequest: function(unireq, request) {
+		var self = this;
 		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1 && request.dataMode === "params" && request.data.length > 0) {
 			var form = unireq.form();
 			_und.each(request.data, function(dataObj) {
@@ -262,15 +271,23 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				if (dataObj.type === 'text') {
 					form.append(dataObj.key, dataObj.value);
 				} else if (dataObj.type === 'file') {
-					var loc = path.resolve(dataObj.value);
-					if(!fs.existsSync(loc)) {
-						Errors.terminateWithError("No file found - "+loc);
+					var loc = self._filenametoPath(dataObj.value);
+					if (loc) {
+						form.append(dataObj.key, fs.createReadStream(loc));
 					}
-					form.append(dataObj.key, fs.createReadStream(loc));
 				}
 			});
 
 		}
+	},
+
+	_filenametoPath: function(filename) {
+		var loc = path.resolve(filename);
+		if (!fs.existsSync(loc)) {
+			Errors.terminateWithError("No file found - " + loc);
+			return false;
+		}
+		return loc;
 	},
 
 	// placeholder function to append stats to response
