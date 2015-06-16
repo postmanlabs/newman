@@ -248,7 +248,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				RequestOptions.body = request.transformed.data;
 			} else if (request.dataMode === "urlencoded") {
 				var reqData = request.transformed.data;
-				RequestOptions.form = _und.object(_und.pluck(reqData, "key"), _und.pluck(reqData, "value"));
+				RequestOptions.form = this._parseFormParams(reqData);
 			}
 		}
 	},
@@ -295,6 +295,27 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		VariableProcessor.processRequestVariables(request, {
 			envJson: mergedArray
 		});
+	},
+
+	// Parses form parameters from requestData, ensuring that duplicates go into an array.
+	_parseFormParams: function (reqData) {
+		var params = {};
+		reqData.forEach(function (paramData) {
+			if (paramData.enabled) {
+				// Check if this is a duplicate
+				if (params[paramData.key]){
+					var original = params[paramData.key];
+					if (Array.isArray(original)) {
+						original.push(paramData.value);
+					} else {
+						params[paramData.key] = [original].concat(paramData.value);
+					}
+				} else {
+					params[paramData.key] = paramData.value;
+				}
+			}
+		});
+		return params;
 	}
 });
 
