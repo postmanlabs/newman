@@ -1,14 +1,14 @@
 {
   "name": "newman",
   "version": "1.2.16",
-  "author": "Abhijit Kane & Arjun Variar & Prakhar Srivastav",
-  "main": "Newman",
-  "homepage": "https://github.com/a85/Newman",
-  "bugs": "https://github.com/a85/Newman/issues",
+  "author": "Postman Labs <help@getpostman.com",
+  "main": "index.js",
+  "homepage": "https://github.com/postmanlabs/newman",
+  "bugs": "https://github.com/postmanlabs/newman/issues",
   "description": "Command-line utility for Postman",
   "repository": {
     "type": "git",
-    "url": "git://github.com/a85/Newman.git"
+    "url": "git://github.com/postmanlabs/newman.git"
   },
   "contributors": [
     {
