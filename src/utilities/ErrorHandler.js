@@ -44,6 +44,17 @@ var ErrorHandler = jsface.Class({
 		if(Globals.updateMessage) {
 			console.log(Globals.updateMessage);
 		}
+
+		if (Globals.exportGlobalsFile) {
+			fs.writeFileSync(Globals.exportGlobalsFile, JSON.stringify(Globals.globalJson.values,null,1));
+			log.note("\n\nGlobals File Exported To: " + Globals.exportGlobalsFile + "\n");
+		}
+
+		if (Globals.exportEnvironmentFile) {
+			fs.writeFileSync(Globals.exportEnvironmentFile, JSON.stringify(Globals.envJson,null,1));
+			log.note("\n\nEnvironment File Exported To: " + Globals.exportEnvironmentFile + "\n");
+		}
+
 		process.exit(1);
 	}
 });
