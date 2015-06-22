@@ -42,21 +42,21 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         var results = this._runTestCases(error, response, body, request);
 
         // check if a request is supposed to run multiple times
-        if ( request.asyncRequestIterationsCounter && request.asyncRequestIterationsCounter > 0) {
-            request.asyncRequestIterationsCounter--;
+        if ( request.iterationsUntilFailCounter && request.iterationsUntilFailCounter > 0) {
+            request.iterationsUntilFailCounter--;
 
             //if all tests pass, don't bother repeating subsequent iterations
             if ( this.failingTestCaseKey === "" ) {
-                request.asyncRequestIterationsCounter = 0;
+                request.iterationsUntilFailCounter = 0;
             }
 
             //otherwise reset the failing test case
-            if (request.asyncRequestIterationsCounter > 0) {
+            if (request.iterationsUntilFailCounter > 0) {
                 this.failingTestCaseKey = "";
             }
         }
 
-        if (!request.asyncRequestIterationsCounter || (request.asyncRequestIterationsCounter && request.asyncRequestIterationsCounter == 0)) {
+        if (!request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter == 0)) {
             ResponseExporter.addResult(request, response, results);
         }
 
@@ -317,7 +317,7 @@ debugger;
         if (results[key]) {
             log.testCaseSuccess(key);
         } else {
-            if (request.asyncRequestIterationsCounter > 0) {
+            if (request.iterationsUntilFailCounter > 0) {
                 log.testCaseWarn(key);
             }
             else {
