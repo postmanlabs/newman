@@ -93,12 +93,15 @@ var Logger = jsface.Class([EventEmitter], {
 	},
 
 	testCaseSuccess: function(log) {
+		Globals.totalTests++;
 		this.success("    " + Symbols.symbols.ok + log + "\n");
 		return this;
 	},
 
 	testCaseError: function(log) {
 		this.error("    " + Symbols.symbols.err + log + "\n");
+		Globals.totalTests++;
+		Globals.fail = Globals.fail +1;
 		if (Globals.stopOnError) {
 			if(Globals.asLibrary) {
 				this.emit('iterationRunnerOver',1);

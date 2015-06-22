@@ -248,6 +248,10 @@ var ResponseExporter = jsface.Class({
 			var filepath = path.resolve(Globals.outputFile);
 			fs.writeFileSync(filepath , JSON.stringify(exportVariable, null, 4));
 			log.note("\n\nOutput Log: " + filepath + "\n");
+			if(Globals.fail > 0 )
+			{				
+				throw ' Found ' + Globals.fail + ' failed tests.';				
+			}
 		}
 
 		if (Globals.testReportFile) {
