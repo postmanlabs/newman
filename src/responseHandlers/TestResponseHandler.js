@@ -56,12 +56,11 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             }
         }
 
-        if (!request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter == 0)) {
+        if (!request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter === 0)) {
             ResponseExporter.addResult(request, response, results);
         }
 
         if(this.failingTestCaseKey !== "") {
-debugger;
             ResponseExporter.showIterationSummary();
             ResponseExporter.exportResults();
             ErrorHandler.testCaseError("Test case failed: " + this.failingTestCaseKey);

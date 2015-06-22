@@ -142,7 +142,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         var request = this._getNextRequest();
 
         if (request && request.iterationsUntilFail && request.iterationsUntilFail > 0) {
-            debugger;
             request.iterationsUntilFailCounter = request.iterationsUntilFail;
         }
 
