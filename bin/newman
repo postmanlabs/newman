@@ -44,6 +44,7 @@ function parseArguments() {
 		.option('-N, --encoding [encoding-type]', 'Specify an encoding for the response. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex', null)
 		.option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
 		.option('-o, --outputFile [file]', 'Path to file where output should be written [file]', null)
+		.option('-O, --outputFileVerbose [file]', 'Path to file where full request and responses should be logged [file]', null)
 		.option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML [file]', null)
 		.option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals [file] (Incompatible with any option except pretty)', null)
 		.option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals', null)
@@ -138,6 +139,10 @@ function main() {
 
 	if (program.outputFile) {
 		newmanOptions.outputFile = program.outputFile;
+	}
+
+	if (program.outputFileVerbose) {
+		newmanOptions.outputFileVerbose = program.outputFileVerbose;
 	}
 
 	if (program.testReportFile) {
