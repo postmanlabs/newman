@@ -50,7 +50,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
                     "\nRequest body:\n" +
                     request.body +
                     "\n------------------------------------------------------------" +
-                    "\nResponse headers:" +
+                    "\nResponse headers:\n" +
                     JSON.stringify(response.headers, undefined, 1) +
                     "\nResponse body:\n" + response.body + "\n";
 
