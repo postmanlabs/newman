@@ -191,6 +191,7 @@ function main() {
 	newmanOptions.noColor = !!program.noColor;
 	newmanOptions.strictSSL = !program.insecure;
 	newmanOptions.asLibrary = false;
+	newmanOptions.exitCode = !!program.exitCode;
 
 	if (program.collection) {
 		var collectionJson;
@@ -202,9 +203,7 @@ function main() {
 			Errors.terminateWithError("The collection file " + program.collection + " could not be parsed.");
 		}
 		Newman.execute(collectionJson, newmanOptions, function (exitCode) {
-			if (program.exitCode) {
-				process.exit(1);
-			}
+			process.exit(exitCode);
 		});
 	} else {
 		// get collection from url
@@ -213,9 +212,7 @@ function main() {
 				Errors.terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
 			}
 			Newman.execute(data.body, newmanOptions, function(exitCode) {
-				if(program.exitCode) {
-					process.exit(1);
-				}
+				process.exit(exitCode);
 			});
 		});
 	}
