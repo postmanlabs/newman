@@ -70,8 +70,12 @@ var Newman = jsface.Class([Options, EventEmitter], {
                     log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
                 }
 
+                //if -x is set, return the exit code
                 if(options.exitCode) {
                     callback(exitCode);
+                }
+                else if(options.stopOnError && exitCode==1) {
+                    callback(1);
                 }
                 else {
                     callback(0);
