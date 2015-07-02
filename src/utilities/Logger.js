@@ -96,23 +96,12 @@ var Logger = jsface.Class([EventEmitter], {
 		this.success("    " + Symbols.symbols.ok + log + "\n");
 		return this;
 	},
-
+	testCaseWarn: function(log) {
+		this.warn("    " + Symbols.symbols.err + log + "\n");
+		return this;
+	},
 	testCaseError: function(log) {
 		this.error("    " + Symbols.symbols.err + log + "\n");
-		if (Globals.stopOnError) {
-			if(Globals.asLibrary) {
-				this.emit('iterationRunnerOver',1);
-			}
-			else {
-				if(Globals.updateMessage) {
-					console.log(Globals.updateMessage);
-				}
-				process.exit(1);
-			}
-		}
-		else {
-			Globals.exitCode=1;
-		}
 		return this;
 	},
 
@@ -124,20 +113,6 @@ var Logger = jsface.Class([EventEmitter], {
 
 	exceptionError: function(err) {
 		this.error("    " + "EXCEPTION - " + err + "\n");
-		if (Globals.stopOnError) {
-			if(Globals.asLibrary) {
-				this.emit('iterationRunnerOver',1);
-			}
-			else {
-				if(Globals.updateMessage) {
-					console.log(Globals.updateMessage);
-				}
-				process.exit(1);
-			}
-		}
-		else {
-			Globals.exitCode=1;
-		}
 	},
 
 	showIterationSummary: function(summaryArray) {

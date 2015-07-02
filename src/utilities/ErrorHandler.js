@@ -10,7 +10,7 @@ var ErrorHandler = jsface.Class({
 	$singleton: true,
 
 	requestError: function(request, error) {
-		log.error("RequestError: " + request.id + " terminated. Error: " + error.code + "\n");
+		log.error("RequestError: " + request + "( " + request.id + ") terminated. Error: " + error.code + "\n");
 	},
 
 	responseError: function(response) {
@@ -21,12 +21,22 @@ var ErrorHandler = jsface.Class({
 		log.error("ParseError: " + msg);
 	},
 
-	testCaseError: function(testcase) {
-		log.testCaseError(testcase);
+	testCaseError: function(err) {
+		Globals.exitCode = 1;
+		log.error(err);
+
+		if (Globals.stopOnError) {
+			this.terminateWithError(err);
+		}
 	},
 
 	exceptionError: function(err) {
+		Globals.exitCode = 1;
 		log.exceptionError(err);
+
+		if (Globals.stopOnError) {
+			this.terminateWithError(err);
+		}
 	},
 	
 	terminateWithError: function(msg) {
