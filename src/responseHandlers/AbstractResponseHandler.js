@@ -1,5 +1,8 @@
 var jsface           = require('jsface'),
 	log              = require('../utilities/Logger'),
+	Globals           = require('../utilities/Globals'),
+	path              = require('path'),
+	fs                = require('fs'),
 	ErrorHandler     = require('../utilities/ErrorHandler'),
 	EventEmitter     = require('../utilities/EventEmitter'),
 	ResponseExporter = require('../utilities/ResponseExporter');
@@ -33,6 +36,27 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 	},
 
 	_printResponse: function(error, response, body, request) {
+        if (Globals.outputFileVerbose) {
+            var filepath = path.resolve(Globals.outputFileVerbose);
+
+            var requestString = "-------------------------------------------------------------------------------------------\n" +
+                    response.statusCode + " " +
+                    response.stats.timeTaken + "ms" + " " +
+                    request.name + " " +  "[" + request.method + "] " +
+                    request.transformed.url +
+                    "\n------------------------------------------------------------" +
+                    "\nRequest headers:\n" +
+                    JSON.stringify(response.req._headers, undefined, 1) +
+                    "\nRequest body:\n" +
+                    request.body +
+                    "\n------------------------------------------------------------" +
+                    "\nResponse headers:\n" +
+                    JSON.stringify(response.headers, undefined, 1) +
+                    "\nResponse body:\n" + response.body + "\n";
+
+            fs.appendFileSync(filepath , requestString);
+        }
+
 		if (response.statusCode >= 200 && response.statusCode < 300) {
 			log.success(response.statusCode);
 		} else {
@@ -41,7 +65,8 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
 		log
 		.notice(" " + response.stats.timeTaken + "ms")
 		.normal(" " + request.name + " ")
-		.light(request.transformed.url + "\n");
+		.notice("[" + request.method + "] ")
+		.light( request.transformed.url + "\n");
 	},
 
 	// clears up the set event
