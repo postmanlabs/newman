@@ -43,7 +43,6 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
         // check if a request is supposed to run multiple times
         if ( request.iterationsUntilFailCounter && request.iterationsUntilFailCounter > 0) {
-            request.iterationsUntilFailCounter--;
 
             //if all tests pass, don't bother repeating subsequent iterations
             if ( this.failingTestCaseKey === "" ) {
@@ -51,9 +50,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             }
 
             //otherwise reset the failing test case
-            if (request.iterationsUntilFailCounter > 0) {
-                this.failingTestCaseKey = "";
-            }
+            this.failingTestCaseKey = "";
         }
 
         if (!request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter === 0)) {

@@ -233,6 +233,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         var runner = this;
 
         if ( request.iterationsUntilFailCounter && request.iterationsUntilFailCounter > 0) {
+            request.iterationsUntilFailCounter--;
             setTimeout(function() {
             runner.execute(request);
             }, delay);
