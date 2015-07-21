@@ -205,9 +205,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				if(this.isEmptyQueue()) {
 					delay = 0;
 				}
-                if ( request.requestDelay && request.iterationsUntilFailCounter > 0 ) {
-                    delay = request.requestDelay;
-                }
 
 
 				this.emit('requestExecuted', error, response, body, request, delay);
@@ -233,6 +230,11 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         var runner = this;
         if ( request.iterationsUntilFailCounter && request.iterationsUntilFailCounter > 0) {
             request.iterationsUntilFailCounter--;
+
+            if ( request.requestDelay && request.iterationsUntilFailCounter > 0 ) {
+                delay = request.requestDelay;
+            }
+
             setTimeout(function() {
             runner.execute(request);
             }, delay);
