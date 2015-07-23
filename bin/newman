@@ -59,7 +59,7 @@ function parseArguments() {
 		console.log('    newman -u POSTMAN_COLLECTION -e POSTMAN_ENVIRONMENT');
 		console.log('    newman -c POSTMAN_COLLECTION -f SAMPLE_FOLDER');
 		console.log('');
-		console.log('  For more documentation, issues and examples head over to https://github.com/a85/Newman');
+		console.log('  For more documentation, issues and examples head over to https://github.com/postmanlabs/newman');
 		console.log('');
 	});
 
@@ -114,7 +114,7 @@ function main() {
 	}
 
 	if (program.environment) {
-		// in case of environment variable set the envJson property 
+		// in case of environment variable set the envJson property
 		// on the options object
 		try {
 			newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
