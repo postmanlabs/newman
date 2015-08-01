@@ -7,6 +7,7 @@ var jsface                  = require('jsface'),
     _lod                    = require("lodash"),
     Helpers                 = require('./Helpers'),
     Backbone                = require("backbone"),
+    CryptoJS                = require('crypto-js'),
     xmlToJson               = require("xml2js"),
     Globals                 = require("./Globals"),
     btoa                    = require("btoa"),
@@ -138,6 +139,7 @@ var PreRequestScriptProcessor = jsface.Class({
             _: _lod,
             btoa: btoa,
             atob: atob,
+            CryptoJS: CryptoJS,
             Backbone: Backbone,
             xmlToJson: function(string) {
                 var JSON = {};

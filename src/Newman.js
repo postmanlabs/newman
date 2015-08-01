@@ -74,7 +74,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
                 if(options.exitCode) {
                     callback(exitCode);
                 }
-                else if(options.stopOnError && exitCode==1) {
+                else if(options.stopOnError && exitCode===1) {
                     callback(1);
                 }
                 else {
