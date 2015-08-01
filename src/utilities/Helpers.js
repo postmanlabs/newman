@@ -12,6 +12,55 @@ var jsface = require('jsface'),
 var Helpers = jsface.Class({
 	$singleton: true,
 
+    validateConfigFile: function(file) {
+        if (!fs.existsSync(file)) {
+            Errors.terminateWithError("Please specify the config as a valid file");
+        }
+    },
+
+    validateAndReturnConfig: function(file) {
+        var validOptions = {
+                collection: "string",
+                url: "string",
+                folder: "string",
+                environment: "string",
+                exportEnvironment: "string",
+                data: "string",
+                global: "string",
+                exportGlobals: "number",
+                delay: "number",
+                requestTimeout: "number",
+                stopOnError: "boolean",
+                noSummary: "boolean",
+                noColor: "boolean",
+                insecure: "boolean",
+                tls: "boolean",
+                encoding: "string",
+                exitCode: "boolean",
+                outputFile: "string",
+                testReportFile: "string",
+                import: "string",
+                pretty: "boolean",
+                html: "string"
+            },
+            config;
+
+        try {
+            config = require(file);
+        }
+        catch (RefrenceError) {
+            Errors.terminateWithError("The config file specified is not a valid JSON file");
+        }
+
+        Object.keys(config).forEach(function (option) {
+            if (!validOptions[option] || (typeof config[option] !== validOptions[option])) {
+                Errors.terminateWithError("Config JSON has invalid options");
+            }
+        });
+
+        return config;
+    },
+
     /**
      * @function
      * @memberOf Helpers

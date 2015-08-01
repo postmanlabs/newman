@@ -21,10 +21,25 @@ var color   = require('cli-color'),
 
 
 
+function parseConfigFile() {
+	var config,
+		option;
+
+	Helpers.validateConfigFile(program.configFile);
+	config = Helpers.validateAndReturnConfig(program.configFile);
+
+	for (option in config) {
+		if (!program[option]) {
+			program[option] = config[option];
+		}
+	}
+}
+
 function parseArguments() {
 	program
 		.version(Globals.newmanVersion)
 		.usage('[options]')
+		.option('-F, --configFile [file]', 'Pass options to Newman via a JSON [file]', null)
 		.option('-c, --collection [file]', 'Specify a Postman collection as a JSON [file]', null)
 		.option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
 		.option('-f, --folder [folder-name]', 'Run a single folder from a collection. To be used with -c or -u', null)
@@ -55,6 +70,7 @@ function parseArguments() {
 		console.log('  A collection file or URL is mandatory');
 		console.log('  Examples:');
 		console.log('');
+		console.log('    newman -C CONFIG_FILE');
 		console.log('    newman -c POSTMAN_COLLECTION');
 		console.log('    newman -u POSTMAN_COLLECTION -e POSTMAN_ENVIRONMENT');
 		console.log('    newman -c POSTMAN_COLLECTION -f SAMPLE_FOLDER');
@@ -65,7 +81,11 @@ function parseArguments() {
 
 	program.parse(process.argv);
 
-	if(program.import) {
+	if (program.configFile) {
+		parseConfigFile();
+	}
+
+	if (program.import) {
 		Importer.importFile(program.import, program.pretty);
 		return;
 	}
@@ -114,7 +134,7 @@ function main() {
 	}
 
 	if (program.environment) {
-		// in case of environment variable set the envJson property 
+		// in case of environment variable set the envJson property
 		// on the options object
 		try {
 			newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
