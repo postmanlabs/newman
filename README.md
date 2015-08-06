@@ -201,4 +201,6 @@ With this, your Newman is set to run automatically every hour.
 Note: Exact location for `cron` is dependent on the linux distribution you are running. See specific `cron` instructions for your distribution. For an introduction to `cron` checkout [this](http://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800) article.
 
 ## License
-Apache. See the LICENSE file for more information
+Apache-2.0. See the LICENSE file for more information
+
+[![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman/readme)](https://www.getpostman.com)
