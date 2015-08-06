@@ -1,9 +1,14 @@
-# Newman [![Build Status](https://travis-ci.org/a85/Newman.svg?branch=master)](https://travis-ci.org/a85/Newman) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![NPM](https://nodei.co/npm/newman.png?downloads=true)](https://nodei.co/npm-dl/newman/)
+<img src="https://s3.amazonaws.com/web-artefacts/newman-128.png" />
+
+# Newman [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) <a href="https://gitter.im/postmanlabs/newman" target="_blank"><img src="https://badges.gitter.im/Join%20Chat.svg" /></a>
+
+
 
 Newman is a command-line collection runner for [Postman](http://getpostman.com). It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
 Newman maintains feature parity with Postman and allows you to run collections just the way they are executed inside the collection runner in Postman.
+
+[![NPM](https://nodei.co/npm/newman.png?downloads=true)](https://nodei.co/npm-dl/newman/)
 
 ## Getting Started
 Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.
@@ -196,4 +201,6 @@ With this, your Newman is set to run automatically every hour.
 Note: Exact location for `cron` is dependent on the linux distribution you are running. See specific `cron` instructions for your distribution. For an introduction to `cron` checkout [this](http://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800) article.
 
 ## License
-Apache. See the LICENSE file for more information
+Apache-2.0. See the LICENSE file for more information
+
+[![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman/readme)](https://www.getpostman.com)

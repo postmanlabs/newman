@@ -59,7 +59,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
         this.setOptions(options);
 
         if (typeof callback === "function") {
-            this.addEventListener('iterationRunnerOver', function() {
+            this.addEventListener('iterationRunnerOver', function(exitCode) {
                 if (options.exportGlobalsFile) {
                     fs.writeFileSync(options.exportGlobalsFile, JSON.stringify(Globals.globalJson.values,null,1));
                     log.note("\n\nGlobals File Exported To: " + options.exportGlobalsFile + "\n");
@@ -70,7 +70,16 @@ var Newman = jsface.Class([Options, EventEmitter], {
                     log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
                 }
 
-                callback();
+                //if -x is set, return the exit code
+                if(options.exitCode) {
+                    callback(exitCode);
+                }
+                else if(options.stopOnError && exitCode===1) {
+                    callback(1);
+                }
+                else {
+                    callback(0);
+                }
             });
         }
 

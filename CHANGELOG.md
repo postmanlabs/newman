@@ -1,5 +1,13 @@
 ##CHANGELOG
 
+####1.2.17 (July 1, 2015)
+* -x / --exitCode works correctly in standalone/library mode
+
+####1.2.16 (June 18, 2015)
+* Custom paths to export environment/global files after the run
+* Support for custom request timeouts
+* Jenkins-compatible JUnit output
+
 ####1.2.15 (March 19, 2015)
 * Support for authentication helpers (Basic, Digest, OAuth1.0)
 
