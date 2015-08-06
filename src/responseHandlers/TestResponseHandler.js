@@ -10,6 +10,7 @@ var jsface                  = require('jsface'),
     log                     = require('../utilities/Logger'),
     Backbone                = require("backbone"),
     xmlToJson               = require("xml2js"),
+    CryptoJS                = require('crypto-js'),
     Globals                 = require("../utilities/Globals"),
     HttpStatusCodes         = require("../utilities/HttpStatusCodes"),
     ResponseExporter        = require("../utilities/ResponseExporter"),
@@ -36,9 +37,15 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     _onRequestExecuted: function(error, response, body, request) {
         if (error) {
             ErrorHandler.requestError(request, error);
-        } else  {
-            this._printResponse(error, response, body, request);
+            if ( !request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter <= 0)) {
+                ResponseExporter.showIterationSummary();
+                ResponseExporter.exportResults();
+                ErrorHandler.testCaseError("Test case failed: " + this.failingTestCaseKey);
+            }
+            return;
         }
+
+        this._printResponse(error, response, body, request);
         var results = this._runTestCases(error, response, body, request);
 
         // check if a request is supposed to run multiple times
@@ -207,6 +214,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
             responseCode: responseCodeObject,
             btoa: btoa,
             atob: atob,
+            CryptoJS: CryptoJS,
             iteration: Globals.iterationNumber,
             environment: this._setEnvironmentContext(),
             globals: this._setGlobalContext(),

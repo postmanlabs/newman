@@ -1,0 +1,34 @@
+{
+	"id": "4f085147-6c40-19dc-6250-257d64c261ac",
+	"name": "crypto-md5",
+	"description": "",
+	"order": [
+		"b2c2ea1f-447f-68fb-d0b2-755d15608f8a"
+	],
+	"folders": [],
+	"timestamp": 1438436770997,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "b2c2ea1f-447f-68fb-d0b2-755d15608f8a",
+			"headers": "",
+			"url": "http://httpbin.org/get?a={{a}}",
+			"preRequestScript": "postman.setGlobalVariable(\"a\", CryptoJS.MD5(\"abhijit\").toString());",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"Your test name\"] = data.args.a === \"4ce26a583724d5689bf9333af8431483\";",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1438449208721,
+			"name": "r1",
+			"description": "",
+			"collectionId": "4f085147-6c40-19dc-6250-257d64c261ac",
+			"responses": []
+		}
+	]
+}
