@@ -37,9 +37,15 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     _onRequestExecuted: function(error, response, body, request) {
         if (error) {
             ErrorHandler.requestError(request, error);
-        } else  {
-            this._printResponse(error, response, body, request);
+            if ( !request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter <= 0)) {
+                ResponseExporter.showIterationSummary();
+                ResponseExporter.exportResults();
+                ErrorHandler.testCaseError("Test case failed: " + this.failingTestCaseKey);
+            }
+            return;
         }
+
+        this._printResponse(error, response, body, request);
         var results = this._runTestCases(error, response, body, request);
 
         // check if a request is supposed to run multiple times
