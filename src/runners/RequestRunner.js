@@ -273,7 +273,13 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				RequestOptions.body = request.transformed.data;
 			} else if (request.dataMode === "urlencoded") {
 				var reqData = request.transformed.data;
-				RequestOptions.form = _und.object(_und.pluck(reqData, "key"), _und.pluck(reqData, "value"));
+                RequestOptions.form = {};
+                _und.each(reqData, function(dataRow) {
+                    if(dataRow.enabled===false) {
+                        return;
+                    }
+                    RequestOptions.form[dataRow["key"]] = dataRow["value"];
+                });
 			}
 		}
 	},
@@ -283,7 +289,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1 && request.dataMode === "params" && request.data.length > 0) {
 			var form = unireq.form();
 			_und.each(request.data, function(dataObj) {
-				// TODO: @viig99 add other types like File Stream, Blob, Buffer.
+                //do not send form fields if they're disabled
+                if(dataObj.enabled === false) {
+                    return;
+                }
 				if (dataObj.type === 'text') {
 					form.append(dataObj.key, dataObj.value);
 				} else if (dataObj.type === 'file') {
