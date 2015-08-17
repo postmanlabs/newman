@@ -232,7 +232,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if ( request.iterationsUntilFailCounter && request.iterationsUntilFailCounter > 0) {
             request.iterationsUntilFailCounter--;
 
-            if ( request.requestDelay && request.iterationsUntilFailCounter > 0 ) {
+            if ( request.requestDelay ) {
                 delay = request.requestDelay;
             }
 
