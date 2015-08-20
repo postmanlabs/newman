@@ -95,6 +95,23 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
         setEnvHack += "postman.setGlobalVariable = function(key,val) {postman.setGlobalVariableReal(key,val);globals[key]=val;};";
 
+        //to ensure that JSON.parse throws the right error
+        setEnvHack += 'var oldJsonParser=JSON.parse;JSON.parse = function(str,modifierFunction) { \
+        try { \
+            if(typeof modifierFunction === "function") { \
+                return oldJsonParser(str, modifierFunction); \
+            } \
+            else { \
+                return oldJsonParser(str); \
+            } \
+        } \
+        catch(e) { \
+            throw { \
+                message: "There was an error during JSON.parse(): " + e.message \
+            }; \
+        } \
+        };';
+        
         testCases = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + setEnvHack + testCases;
 
         try {
@@ -171,6 +188,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         Object.getOwnPropertyNames(Date.prototype).each(function(p) {sugar.date[p] = Date.prototype[p];});
         sugar.date["create"] = Date.create;
         Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
+
         return {
             sugar: sugar,
             tests: {},

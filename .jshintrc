@@ -9,5 +9,6 @@
   "boss": true,     // true: Tolerate assignments where comparisons would be expected
   "eqnull": true,   // true: Tolerate use of `== null`
   "trailing": true,
+  "multistr": true,
   "node": true      // Node.js
 }

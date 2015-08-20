@@ -29,7 +29,6 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 	 * @memberOf CollectionRunner
 	 */
 	execute: function() {
-
 		// Initialize the response handler using a factory
 		this.ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
 		if (!this.ResponseHandler) {
