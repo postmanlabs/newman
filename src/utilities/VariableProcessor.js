@@ -110,7 +110,9 @@ var VariableProcessor = jsface.Class({
 					// if not string, stringify it
 					// findReplace, unstringify it and set it
 					var jsonifiedProp = JSON.stringify(request[prop]);
-					var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, pairObject, this.ENV_REGEX));
+					var toParse = this._findReplace(jsonifiedProp, pairObject, this.ENV_REGEX);
+					console.log(toParse);
+					var parsedJsonProp = JSON.parse(toParse);
 					request.transformed[prop] = parsedJsonProp;
 				}
 			}

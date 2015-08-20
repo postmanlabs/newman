@@ -64,9 +64,27 @@ var PreRequestScriptProcessor = jsface.Class({
         sweet += "for(p in sugar.date)  {if(p==='create'){Date.create=sugar.date.create} else{Date.prototype[p]= sugar.date[p];}}";
         sweet += "for(p in sugar.funcs)  Function.prototype[p]= sugar.funcs[p];";
 
+        //to ensure that environment. and global. references are updated
         var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
         setEnvHack += "postman.setGlobalVariable = function(key,val) {postman.setGlobalVariableReal(key,val);globals[key]=val;};";
 
+        //to ensure that JSON.parse throws the right error
+        setEnvHack += 'var oldJsonParser=JSON.parse;JSON.parse = function(str,modifierFunction) { \
+        try { \
+            if(typeof modifierFunction === "function") { \
+                return oldJsonParser(str, modifierFunction); \
+            } \
+            else { \
+                return oldJsonParser(str); \
+            } \
+        } \
+        catch(e) { \
+            throw { \
+                message: "There was an error during JSON.parse(): " + e.message \
+            }; \
+        } \
+        };';
+        
         requestScript = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + setEnvHack + requestScript;
 
         try {
