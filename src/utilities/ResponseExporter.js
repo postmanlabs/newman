@@ -160,6 +160,8 @@ var ResponseExporter = jsface.Class({
 			"name": request.name,
 			"url": request.url,
 			"totalTime": response.stats.timeTaken,
+			"request": request,
+			"response": response,
 			"responseCode": {
 				"code": response.statusCode,
 				"name": "",       // TODO: Fill these guys later on
@@ -329,9 +331,10 @@ var ResponseExporter = jsface.Class({
 					totalSuccessesForSuite += successes;
 					testcases += '\t\t<testcase name="' + _und.escape(testcaseName) + '" ' + (failures > 0 ? '' : '/') + '>\n';
 					if(failures > 0) {
-						testcases += '\t\t\t<failure><![CDATA[' + _und.escape(testcaseName) +
+						testcases += '\t\t\t<failure>' + _und.escape(testcaseName) +
 									(iterations > 1 ? ' (failed ' + failures + '/' + iterations + ' iterations)' : '') +
-									']]></failure>\n' +
+									'\n' + _und.escape(this.formatRequestResponseLog(suite.request, suite.response)) +
+									'\t\t\t</failure>\n' +
 									'\t\t</testcase>\n';
 					}
 				}, this);
@@ -367,6 +370,34 @@ var ResponseExporter = jsface.Class({
 			delay: 0,
 			synced: Globals.requestJSON.synced
 		};
+	},
+
+	formatRequestResponseLog: function(request, response) {
+		var requestData;
+
+		try {
+			requestData = JSON.stringify(_.object(_.pluck(request.transformed.data, "key"),
+				_.pluck(request.transformed.data, "value")), null, 2);
+		}
+		catch (e) {
+			// Not JSON.
+			requestData = request.transformed.data;
+		}
+
+		return "-------------------------------------------------------------------------------------------\n" +
+			response.statusCode + " " +
+			response.stats.timeTaken + "ms" + " " +
+			request.name + " " + "[" + request.method + "] " +
+			request.transformed.url +
+			"\n------------------------------------------------------------" +
+			"\nRequest headers:\n" +
+			JSON.stringify(response.req._headers, undefined, 1) +
+			"\nRequest data:\n" +
+			requestData +
+			"\n------------------------------------------------------------" +
+			"\nResponse headers:\n" +
+			JSON.stringify(response.headers, undefined, 1) +
+			"\nResponse body:\n" + response.body + "\n";
 	}
 });
 
