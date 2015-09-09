@@ -120,7 +120,7 @@ var PreRequestScriptProcessor = jsface.Class({
             sugar.date[p] = Date.prototype[p];
         });
         sugar.date["create"] = Date.create;
-        Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
+        //Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
         return {
             sugar: sugar,
             request: {

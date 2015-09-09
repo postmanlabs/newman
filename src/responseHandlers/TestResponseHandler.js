@@ -170,7 +170,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         Object.getOwnPropertyNames(String.prototype).each(function(p) { sugar.string[p] = String.prototype[p];});
         Object.getOwnPropertyNames(Date.prototype).each(function(p) {sugar.date[p] = Date.prototype[p];});
         sugar.date["create"] = Date.create;
-        Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
+        //Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
         return {
             sugar: sugar,
             tests: {},
