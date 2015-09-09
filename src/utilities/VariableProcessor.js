@@ -111,7 +111,9 @@ var VariableProcessor = jsface.Class({
 					// findReplace, unstringify it and set it
 					var jsonifiedProp = JSON.stringify(request[prop]);
 					var toParse = this._findReplace(jsonifiedProp, pairObject, this.ENV_REGEX);
-					console.log(toParse);
+
+					//Postamn GH#1329 - Env Variables with backslashes should work
+					toParse = toParse.replace(/\\/g , "\\\\");
 					var parsedJsonProp = JSON.parse(toParse);
 					request.transformed[prop] = parsedJsonProp;
 				}
