@@ -25,6 +25,9 @@ var Newman = jsface.Class([Options, EventEmitter], {
      * @param {object} Newman options
      */
     execute: function(requestJSON, options, callback) {
+        var checking = false,
+            onChecked = null;
+
         // var collectionParseError = Validator.validateJSON('c',requestJSON);
         // if(!collectionParseError.status) {
         //     Errors.terminateWithError("Not a valid POSTMAN collection");
@@ -44,13 +47,18 @@ var Newman = jsface.Class([Options, EventEmitter], {
         //     }
         // }
         if(Math.random()<0.3) {
+            checking = true;
             exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
+                checking = false;
                 stdout = stdout.trim();
                 if(stdout!==Globals.newmanVersion && stdout.length>0) {
                     Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update -g newman` to update.\n";
                 }
                 else {
                     Globals.updateMessage = "";
+                }
+                if(typeof onChecked==='function') {
+                    onChecked();
                 }
             });
         }
@@ -70,15 +78,23 @@ var Newman = jsface.Class([Options, EventEmitter], {
                     log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
                 }
 
-                //if -x is set, return the exit code
-                if(options.exitCode) {
-                    callback(exitCode);
+                function wrapUp() {
+                    //if -x is set, return the exit code
+                    if(options.exitCode) {
+                        callback(exitCode);
+                    }
+                    else if(options.stopOnError && exitCode===1) {
+                        callback(1);
+                    }
+                    else {
+                        callback(0);
+                    }
                 }
-                else if(options.stopOnError && exitCode===1) {
-                    callback(1);
-                }
-                else {
-                    callback(0);
+
+                if(!checking) {
+                    wrapUp();
+                } else {
+                    onChecked = wrapUp;
                 }
             });
         }
