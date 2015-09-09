@@ -38,7 +38,8 @@ module.exports = function(grunt) {
 					'bin/newman -c tests/integ_tests/steph.json -s -d tests/integ_tests/steph_data.csv -n 2 -s && ' +
 					'bin/newman -c tests/integ_tests/caseInsenHeader.json -s && ' + 
 					'bin/newman -c tests/integ_tests/CommaTest.json.postman_collection -d tests/integ_tests/csvComma.csv -s && ' +
-					'bin/newman -c tests/integ_tests/crypto-md5.json.postman_collection -s'
+					'bin/newman -c tests/integ_tests/crypto-md5.json.postman_collection -s && ' +
+					'bin/newman -c tests/integ_tests/prototypeCheck.json.postman_collection -s'
     		}
 		}
 	});
