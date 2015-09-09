@@ -1,0 +1,35 @@
+{
+	"id": "ef199a85-04ed-1659-f199-abe3300115b8",
+	"name": "prototypeCheck",
+	"description": "",
+	"order": [
+		"7fa36ddb-3937-bddb-85d7-809d5648e652"
+	],
+	"folders": [],
+	"timestamp": 1441783487644,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "7fa36ddb-3937-bddb-85d7-809d5648e652",
+			"headers": "",
+			"url": "dump.getpostman.com/get",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "ef199a85-04ed-1659-f199-abe3300115b8",
+			"data": [],
+			"dataMode": "params",
+			"name": "objectPrototype",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1441783538708,
+			"version": 2,
+			"responses": [],
+			"tests": "var resp = Object.extended(JSON.parse(responseBody));\ntests[\"Passing\"] = true;",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}
