@@ -161,7 +161,7 @@ var ResponseExporter = jsface.Class({
 			// fully-qualified name: collection.folder.request
 			"fqName": request.collectionName +
 					(request.folderId && request.folderName ? '.' + request.folderName : '') +
-					'.' + request.name.replace(/\./, '_'),
+					'.' + request.name.replace(/\./g, '_'),
 			"url": request.url,
 			"totalTime": response.stats.timeTaken,
 			"request": request,

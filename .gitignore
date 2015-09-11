@@ -3,6 +3,7 @@ docs/*
 .idea/*
 ./*.postman_collection
 ./*.globals
+.project
 
 #Custom files - to prevent inclusion in npm package
 .DS_Store
