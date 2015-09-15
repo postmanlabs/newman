@@ -74,7 +74,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js"
   },
   "license": "Apache"
 }
