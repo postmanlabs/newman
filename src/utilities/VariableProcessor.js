@@ -1,6 +1,7 @@
 var jsface       = require('jsface'),
 	Helpers      = require('./Helpers'),
 	uuid         = require('node-uuid'),
+	_lod         = require("lodash"),
 	_und         = require('underscore');
 
 /** 
@@ -94,6 +95,7 @@ var VariableProcessor = jsface.Class({
 	// transforms the request as per the environment json data passed
 	_processEnvVariable: function(request, envJson) {
 		var kvpairs = envJson.values;
+		var oldThis = this;
 
 		request.transformed = {};
 
@@ -107,15 +109,45 @@ var VariableProcessor = jsface.Class({
 					// if string, use directly
 					request.transformed[prop] = this._findReplace(request[prop], pairObject, this.ENV_REGEX);
 				} else {
-					// if not string, stringify it
-					// findReplace, unstringify it and set it
-					var jsonifiedProp = JSON.stringify(request[prop]);
-					var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, pairObject, this.ENV_REGEX));
-					request.transformed[prop] = parsedJsonProp;
+					//The old option of stringify+replace+parse was removed.
+					request.transformed[prop] = _lod.cloneDeep(request[prop]);
+					oldThis._traverseJson(request.transformed[prop], oldThis._processNode, pairObject);
 				}
 			}
 		}, this);
 		return true;
+	},
+
+	_processNode: function(key,value,pairObject) {
+		if(typeof key==="string") {
+			key = this._findReplace(key, pairObject, this.ENV_REGEX);
+		}
+		if(typeof value==="string") {
+			value = this._findReplace(value, pairObject, this.ENV_REGEX);
+		}
+		return {
+			"key": key,
+			"value": value
+		};
+	},
+
+	_traverseJson: function(o,func,pairObject) {
+		if(o._visited) {
+			//To prevent traversing cycling objects
+			return;
+		}
+		o._visited = true;
+		for (var i in o) {
+			var newData = func.apply(this,[i,o[i], pairObject]);
+			delete o[i];
+			o[newData.key] = newData.value;
+			i = newData.key;
+			if (o[i] !== null && typeof(o[i])==="object") {
+				//going on step down in the object tree!!
+				this._traverseJson(o[i],func, pairObject);
+			}
+		}
+		delete o._visited;
 	},
 
 

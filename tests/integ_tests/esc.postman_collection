@@ -1,0 +1,47 @@
+{
+	"id": "df4d105a-e01b-b219-9a65-266547e02cd0",
+	"name": "newmanTest",
+	"description": "",
+	"order": [
+		"ca0d82ad-abec-8b5b-f266-322a4cbc6e95"
+	],
+	"folders": [],
+	"timestamp": 1441815784898,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "ca0d82ad-abec-8b5b-f266-322a4cbc6e95",
+			"headers": "",
+			"url": "httpbin.org/post?a={{msg}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "{{msg1}}",
+					"value": "{{msg}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "incollection",
+					"value": "hello\\world",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "console.log(responseBody);var data=JSON.parse(responseBody);tests[\"Form Key Replaced\"]=data.form.hasOwnProperty(\"hello\"); tests[\"Form val replaced from env\"]=data.form.hello===\"hello\\\\kworld\";",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1441815966636,
+			"name": "r1",
+			"description": "",
+			"collectionId": "df4d105a-e01b-b219-9a65-266547e02cd0",
+			"responses": []
+		}
+	]
+}

@@ -1,5 +1,15 @@
 ##CHANGELOG
 
+####1.2.19 (September 14, 2015)
+* Fix for https://github.com/postmanlabs/postman-app-support/issues/1329 (Backslashes in variables)
+* JSON.parse shows parsing errors, if any
+
+####1.2.18 (August 7, 2015)
+* When used as a library, the callback returns the exit code correctly
+* Form fields that are disabled are not sent
+* CryptoJS (https://code.google.com/p/crypto-js/) available in the test/pre-request script sandbox
+* Repository link updated in CLI
+
 ####1.2.17 (July 1, 2015)
 * -x / --exitCode works correctly in standalone/library mode
 
