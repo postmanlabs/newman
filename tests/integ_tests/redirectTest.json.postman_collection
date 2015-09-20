@@ -1,0 +1,34 @@
+{
+	"id": "be3bf661-9803-6712-5f8e-ff5fcf1ba5db",
+	"name": "redirectTest",
+	"description": "",
+	"order": [
+		"77ed67f7-5720-4c5a-82a4-0f79dfef96f3"
+	],
+	"folders": [],
+	"timestamp": 1442742742040,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "77ed67f7-5720-4c5a-82a4-0f79dfef96f3",
+			"headers": "",
+			"url": "httpbin.org/redirect/1",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Returned 302\"] = responseCode.code===302;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442742888915,
+			"name": "r1",
+			"description": "",
+			"collectionId": "be3bf661-9803-6712-5f8e-ff5fcf1ba5db",
+			"responses": []
+		}
+	]
+}

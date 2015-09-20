@@ -34,6 +34,7 @@ var Globals = jsface.Class({
 		this.iterationCount = options.iterationCount || 1;
 		this.html = options.html || false;
 		this.responseEncoding = options.responseEncoding;
+		this.avoidRedirects = options.avoidRedirects;
 	}
 });
 
