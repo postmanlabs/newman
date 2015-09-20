@@ -230,6 +230,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		RequestOptions.method = request.method;
 		RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
 		RequestOptions.followAllRedirects = false;
+        //TODO: Add an option for this
+        //RequestOptions.followRedirect = false;
 		RequestOptions.jar = true;
 		RequestOptions.timeout = this.requestTimeout;
         if(Globals.responseEncoding) {
