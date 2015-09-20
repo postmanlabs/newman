@@ -67,6 +67,10 @@ var PreRequestScriptProcessor = jsface.Class({
         //to ensure that environment. and global. references are updated
         var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
         setEnvHack += "postman.setGlobalVariable = function(key,val) {postman.setGlobalVariableReal(key,val);globals[key]=val;};";
+        setEnvHack += "postman.clearGlobalVariable = function(key) {postman.clearGlobalVariableReal(key);delete globals[key];};";
+        setEnvHack += "postman.clearEnvironmentVariable = function(key) {postman.clearEnvironmentVariableReal(key);delete environment[key];};";
+        setEnvHack += "postman.clearGlobalVariables = function() {postman.clearGlobalVariablesReal();globals={};};";
+        setEnvHack += "postman.clearEnvironmentVariables = function() {postman.clearEnvironmentVariablesReal();environment={};};";
 
         //to ensure that JSON.parse throws the right error
         setEnvHack += 'var oldJsonParser=JSON.parse;JSON.parse = function(str,modifierFunction) { \
@@ -194,8 +198,20 @@ var PreRequestScriptProcessor = jsface.Class({
                     }
                     return null;
                 },
-                clearEnvironmentVariables: function() {
+                clearEnvironmentVariablesReal: function() {
                     Globals.envJson.values = [];
+                },
+                clearEnvironmentVariableReal: function(key) {
+                    var oldLength = Globals.envJson.values.length;
+                    _lod.remove(Globals.envJson.values, function(envObject){
+                        return envObject["key"] === key;
+                    });
+                    if(oldLength === Globals.envJson.values.length) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
                 },
                 setGlobalVariableReal: function(key, value) {
                     var envVar = _und.find(Globals.globalJson.values, function(envObject){
@@ -222,8 +238,20 @@ var PreRequestScriptProcessor = jsface.Class({
                     }
                     return null;
                 },
-                clearGlobalVariables: function() {
+                clearGlobalVariablesReal: function() {
                     Globals.globalJson.values = [];
+                },
+                clearGlobalVariableReal: function(key) {
+                    var oldLength = Globals.globalJson.values.length;
+                    _lod.remove(Globals.globalJson.values, function(envObject){
+                        return envObject["key"] === key;
+                    });
+                    if(oldLength === Globals.globalJson.values.length) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
                 }
             }
         };
