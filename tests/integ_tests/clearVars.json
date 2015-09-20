@@ -39,7 +39,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env not working after clearing invididually\"] = (data.args.a===\"{{e}}\");\ntests[\"Variable substitution from global not working after clearing invididually\"] = (data.args.b===\"{{g}}\");",
+			"tests": "console.log(environment);console.log(globals);var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env not working after clearing invididually\"] = (data.args.a===\"{{e}}\");\ntests[\"Variable substitution from global not working after clearing invididually\"] = (data.args.b===\"{{g}}\");",
 			"time": 1412619676002,
 			"name": "After clearing",
 			"description": "rd",
