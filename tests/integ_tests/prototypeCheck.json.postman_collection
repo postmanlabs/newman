@@ -21,7 +21,7 @@
 			"data": [],
 			"dataMode": "params",
 			"version": 2,
-			"tests": "tests[\"Array prototype 1\"] = ['a', 'b', 'c'].none('d');\ntests[\"Array prototype 2\"] = [ [1,2], [2,3] ].any([2,3]);\n\ntests[\"String prototype 1\"] = 'jumpy'.endsWith('py');\ntests[\"String prototype 2\"] = !('jumpy'.endsWith('MPY'));\n\ntests[\"Date prototype 1\"] = Date.now()==(new Date()).getTime();\ntests[\"Date prototype 2\"] = Date.create().is('weekday');\n\nvar fCount = 0;\nvar fn = (function() {\n  fCount++;\n}).once(); fn(); fn(); fn();\ntests[\"Function prototype 1\"] = fCount===1;\n\n\n",
+			"tests": "tests[\"Array prototype 1\"] = ['a', 'b', 'c'].none('d');\ntests[\"Array prototype 2\"] = [ [1,2], [2,3] ].any([2,3]);\n\ntests[\"String prototype 1\"] = 'jumpy'.endsWith('py');\ntests[\"String prototype 2\"] = !('jumpy'.endsWith('MPY'));\n\ntests[\"Date prototype 1\"] = Date.now()==(new Date()).getTime();\ntests[\"Date prototype 2\"] = Date.create().is('weekday') || Date.create().is('weekend');\n\nvar fCount = 0;\nvar fn = (function() {\n  fCount++;\n}).once(); fn(); fn(); fn();\ntests[\"Function prototype 1\"] = fCount===1;\n\n\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"time": 1442309779314,
