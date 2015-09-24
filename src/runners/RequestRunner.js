@@ -113,22 +113,22 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if(this.runMode === "default" || !Globals.nextRequestName) {
             return this.getFromQueue();
         }
+        else if(!Globals.nextRequestName) {
+            return this.getFromQueueWithoutRemoving();
+        }
         else if(Globals.nextRequestName === "none") {
             return null;
         }
         else {
             var queue = this.getAllItems();
-            var index = 0;
             var indexToUse = -1;
-            _und.each(queue, function(request) {
-                if(request.name === Globals.nextRequestName) {
-                    indexToUse = index;
-                    return false;
+            for(var i=0;i<queue.length;i++) {
+                if(queue[i].name === Globals.nextRequestName) {
+                    indexToUse = i;
+                    break;
                 }
-                index++;
-            });
-            var requestToSend = this.getItemWithIndex(indexToUse)[0];
-            Globals.nextRequestName = "none";
+            }
+            var requestToSend = this.getItemWithIndexWithoutRemoval(indexToUse);
             return requestToSend;
         }
     },
