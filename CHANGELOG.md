@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####2.0.0-beta.1 (September 24, 2015)
+* Support for Node v4
+
 ####1.2.20 (September 24, 2015)
 * Adding -R option to block redirects
 * Adding sugarJS number prototype
