@@ -113,6 +113,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if(this.runMode === "default" || !Globals.nextRequestName) {
             return this.getFromQueue();
         }
+        else if(!Globals.nextRequestName) {
+            return this.getFromQueueWithoutRemoving();
+        }
         else if(Globals.nextRequestName === "none") {
             return null;
         }
@@ -127,7 +130,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                 }
                 index++;
             });
-            var requestToSend = this.getItemWithIndex(indexToUse)[0];
+            var requestToSend = this.getItemWithIndexWithoutRemoval(indexToUse)[0];
             Globals.nextRequestName = "none";
             return requestToSend;
         }
