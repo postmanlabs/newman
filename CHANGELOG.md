@@ -1,5 +1,10 @@
 ##CHANGELOG
 
+####1.2.20 (September 24, 2015)
+* Adding -R option to block redirects
+* Adding sugarJS number prototype
+* Adding clearVariables sandbox function
+
 ####1.2.19 (September 14, 2015)
 * Fix for https://github.com/postmanlabs/postman-app-support/issues/1329 (Backslashes in variables)
 * JSON.parse shows parsing errors, if any
