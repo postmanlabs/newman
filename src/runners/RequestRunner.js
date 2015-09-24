@@ -121,17 +121,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         }
         else {
             var queue = this.getAllItems();
-            var index = 0;
             var indexToUse = -1;
-            _und.each(queue, function(request) {
-                if(request.name === Globals.nextRequestName) {
-                    indexToUse = index;
-                    return false;
+            for(var i=0;i<queue.length;i++) {
+                if(queue[i].name === Globals.nextRequestName) {
+                    indexToUse = i;
+                    break;
                 }
-                index++;
-            });
-            var requestToSend = this.getItemWithIndexWithoutRemoval(indexToUse)[0];
-            Globals.nextRequestName = "none";
+            }
+            var requestToSend = this.getItemWithIndexWithoutRemoval(indexToUse);
             return requestToSend;
         }
     },
