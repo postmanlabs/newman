@@ -62,8 +62,10 @@ var PreRequestScriptProcessor = jsface.Class({
         sweet += "for(p in sugar.array)  {if(p==='create'){Array.create=sugar.array.create} else{Array.prototype[p]= sugar.array[p];}}";
         sweet += "for(p in sugar.string) String.prototype[p]  = sugar.string[p];";
         sweet += "for(p in sugar.date)  {if(p==='create'){Date.create=sugar.date.create} else{Date.prototype[p]= sugar.date[p];}}";
-        sweet += "for(p in sugar.funcs)  Function.prototype[p]= sugar.funcs[p];";
         sweet += "for(p in sugar.number) Number.prototype[p]= sugar.number[p];";
+        sweet += "for(p in sugar.funcs) {" +
+                     "Object.defineProperty(Function.prototype, p, sugar.funcs[p]);" +
+                 "}";
 
         //to ensure that environment. and global. references are updated
         var setEnvHack = "postman.setEnvironmentVariable = function(key,val) {postman.setEnvironmentVariableReal(key,val);environment[key]=val;};";
@@ -144,7 +146,9 @@ var PreRequestScriptProcessor = jsface.Class({
             sugar.date[p] = Date.prototype[p];
         });
         sugar.date["create"] = Date.create;
-        Object.getOwnPropertyNames(Function.prototype).each(function(p) { sugar.funcs[p] = Function.prototype[p];});
+        Object.getOwnPropertyNames(Function.prototype).each(function(p) {
+            sugar.funcs[p] = Object.getOwnPropertyDescriptor(Function.prototype, p);
+        });
         return {
             sugar: sugar,
             request: {

@@ -45,3 +45,5 @@ testC1.json
 testpost.js
 tests/data/data1.json
 tests/integ_tests/dCSV.csv
+
+npm-debug.log*

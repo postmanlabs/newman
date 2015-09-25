@@ -13,17 +13,30 @@ Newman maintains feature parity with Postman and allows you to run collections j
 ## Getting Started
 Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.
 
+#### Newman Stable
 With that done, Newman is just one command away. 
 ```bash
-$ npm install -g newman
+$ npm install -g newman # installs Newman globally on your system allowing you to run it from anywhere.
 ```
-This installs Newman from npm globally on your system allowing you to run it from anywhere.
+#### Newman Beta
 
+We've released a beta of Newman v2.0, which supports Node v4.0+ as well. If you wish to install the beta,
+```bash
+$ npm install -g newman@beta # installs Newman globally on your system allowing you to run it from anywhere.
+```
+Notes on the Beta:
+* The [jsdom](https://github.com/tmpvar/jsdom) dependency is no longer listed in package.json. The installation of this dependency has been moved to the postinstall script. This is because a different version of "jsdom" is required for node v0.x.x and Node v4.0+.
+* The absence of ``jsdom`` from package.json should be specially noted. If you use any automated tools to audit dependencies, etc, this change can cause issues.
+* For Windows users, if you are using Node v4.0+, you no longer need to install the Visual Studio Runtime. You do however need to ensure that the Node binary (node.exe) is on your system ``%PATH``.
+* In the future, Newman will stop supporting Node v0.x.x, and only support Node version 4.0+. This will considerably reduce installation woes, especially on Windows.
+
+#### Updating Newman
 If you already have Newman, you can update with a simple command
 ```bash
 $ npm update -g newman
 ```
 
+#### Running Newman
 The easiest way to run Newman is to run it with a collection. With the `-c` flag you can run any collection file lying on your file-system. Refer [the collection documentation](http://www.getpostman.com/docs/collections) to learn how to use and download collections.
 
 ```bash

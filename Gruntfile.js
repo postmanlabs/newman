@@ -27,21 +27,21 @@ module.exports = function(grunt) {
 		},
 		run: {
 			integTest: {
-      			exec: 'bin/newman -c tests/integ_tests/tc2.json -d tests/integ_tests/d2.json -e tests/integ_tests/e2.json -s && ' +
-					'bin/newman -c tests/integ_tests/tc3.json -d tests/integ_tests/d3.json -e tests/integ_tests/e3.json -g tests/integ_tests/g3.json -s && ' +
-					'bin/newman -c tests/integ_tests/tc4.json -s && ' +
-					'bin/newman -c tests/integ_tests/randomIntC.json -s && ' +
-					'bin/newman -c tests/integ_tests/semicolon_tests.json -s && ' + 
-					'bin/newman -c tests/integ_tests/varReplacement.json -s && ' +
-					'bin/newman -c tests/integ_tests/clearVars.json -s && ' +
-					'bin/newman -c tests/integ_tests/helper.postman_collection -n 3 -s && ' +
-					'bin/newman -c tests/integ_tests/steph.json -s -d tests/integ_tests/steph_data.csv -n 2 -s && ' +
-					'bin/newman -c tests/integ_tests/caseInsenHeader.json -s && ' + 
-					'bin/newman -c tests/integ_tests/CommaTest.json.postman_collection -d tests/integ_tests/csvComma.csv -s && ' +
-					'bin/newman -c tests/integ_tests/crypto-md5.json.postman_collection -s && ' +
-					'bin/newman -c tests/integ_tests/esc.postman_collection -e tests/integ_tests/esc.postman_environment -s && ' +
-					'bin/newman -c tests/integ_tests/prototypeCheck.json.postman_collection -s && ' +
-					'bin/newman -c tests/integ_tests/redirectTest.json.postman_collection -s -R'
+      			exec: 'node bin/newman -c tests/integ_tests/tc2.json -d tests/integ_tests/d2.json -e tests/integ_tests/e2.json -s && ' +
+					'node bin/newman -c tests/integ_tests/tc3.json -d tests/integ_tests/d3.json -e tests/integ_tests/e3.json -g tests/integ_tests/g3.json -s && ' +
+					'node bin/newman -c tests/integ_tests/tc4.json -s && ' +
+					'node bin/newman -c tests/integ_tests/randomIntC.json -s && ' +
+					'node bin/newman -c tests/integ_tests/semicolon_tests.json -s && ' +
+					'node bin/newman -c tests/integ_tests/varReplacement.json -s && ' +
+					'node bin/newman -c tests/integ_tests/clearVars.json -s && ' +
+					'node bin/newman -c tests/integ_tests/helper.postman_collection -n 3 -s && ' +
+					'node bin/newman -c tests/integ_tests/steph.json -s -d tests/integ_tests/steph_data.csv -n 2 -s && ' +
+					'node bin/newman -c tests/integ_tests/caseInsenHeader.json -s && ' +
+					'node bin/newman -c tests/integ_tests/CommaTest.json.postman_collection -d tests/integ_tests/csvComma.csv -s && ' +
+					'node bin/newman -c tests/integ_tests/crypto-md5.json.postman_collection -s && ' +
+					'node bin/newman -c tests/integ_tests/esc.postman_collection -e tests/integ_tests/esc.postman_environment -s && ' +
+					'node bin/newman -c tests/integ_tests/prototypeCheck.json.postman_collection -s && ' +
+					'node bin/newman -c tests/integ_tests/redirectTest.json.postman_collection -s -R'
     		}
 		}
 	});
