@@ -106,6 +106,9 @@ var Importer = jsface.Class({
 
     exportJSON: function( requestJSON, options ) {
 
+            //Make the output folder if required
+            mkdirp.sync(options.exportJSON);
+        
             var changes = false;
 
             var collectionName = requestJSON.name.replace(/ /g, '');
@@ -194,7 +197,10 @@ var Importer = jsface.Class({
                     rawModeData
                 write a new output file 
             */
-            
+        
+            //ensure output path exists
+            mkdirp.sync(options.importJSON);
+        
             console.log('options.collectionFileName:', options.collectionFileName);
 
             var changes = false;
@@ -253,7 +259,9 @@ var Importer = jsface.Class({
             }, this);
 
             if (changes) {
-                var collectionFileName = options.collectionFileName + '.out';
+                
+                var collectionFileName = path.join(options.importJSON, path.basename(options.collectionFileName)+ '.out');
+                
                 fs.writeFileSync(collectionFileName, JSON.stringify(requestJSON, null, 1));
                 console.log('created output file %s', collectionFileName);
             }
