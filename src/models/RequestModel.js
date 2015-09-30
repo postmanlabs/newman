@@ -1,5 +1,6 @@
 var jsface = require('jsface'),
-	ParentModel = require('./ParentModel.js');
+	ParentModel = require('./ParentModel.js'),
+    fs     = require('fs');
 
 /**
  * @class RequestModel
