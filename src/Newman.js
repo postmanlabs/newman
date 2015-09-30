@@ -27,8 +27,6 @@ var Newman = jsface.Class([Options, EventEmitter], {
      */
     execute: function(requestJSON, options, callback) {
         
-        log.note("this is the new version");
-        
         // var collectionParseError = Validator.validateJSON('c',requestJSON);
         // if(!collectionParseError.status) {
         //     Errors.terminateWithError("Not a valid POSTMAN collection");
@@ -92,7 +90,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
 
         if (options.exportJSON) {
             importer.exportJSON(requestJSON, options);
-        } 
+        }
         else if (options.importJSON) {
             importer.importJSON(requestJSON, options);
         }else {

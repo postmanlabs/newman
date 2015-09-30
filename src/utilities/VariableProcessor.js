@@ -95,8 +95,6 @@ var VariableProcessor = jsface.Class({
     // Process variables defined in the tests
     _processEnvVariableForJSONExportedCollections: function (request, envJson) {
         var kvpairs = envJson.values;
-        var oldThis = this;
-
 
         var properties = ["tests","rawModeData"];
 
@@ -113,7 +111,7 @@ var VariableProcessor = jsface.Class({
                     //console.log( 'new value: ', newValue );
                     
                     request[prop] = newValue;
-                } 
+                }
             }
         }, this);
         return true;

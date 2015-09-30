@@ -48,7 +48,7 @@ var RequestModel = jsface.Class(ParentModel, {
 
         
         if (requestJson.rawModeData && requestJson.rawModeData.startsWith('file:')) {
-            var fileName = requestJson.rawModeData.substring(5);
+            fileName = requestJson.rawModeData.substring(5);
             console.log('Reading in rawModeData from file:%s', fileName);
 
             try {
@@ -66,8 +66,7 @@ var RequestModel = jsface.Class(ParentModel, {
             }
         } else {
             this.rawModeData = requestJson.rawModeData;
-        }          
-        
+        }  
 	},
 	toString: function() {
 		return "Request: [" + this.method + "]: " + this.url;

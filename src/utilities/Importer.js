@@ -117,8 +117,8 @@ var Importer = jsface.Class({
             //Remove all the spaces from the folder name to make a decent file name
             _und.each(requestJSON.folders, function (folder) {
 
-                var folderItemName = folder.name.replace(/ /g, '')
-                if (folderItemName != folder.name) {
+                var folderItemName = folder.name.replace(/ /g, '');
+                if (folderItemName !== folder.name) {
                     changes = true;
                     folder.name = folderItemName;
                 }
@@ -131,15 +131,15 @@ var Importer = jsface.Class({
 
 
             _und.each(orderedCollection, function (postmanRequest) {
-                var fileName
+                var fileName;
 
                 //Remove spaces from Request Name
                 var requestItem = _und.find(requestJSON.requests, function (request) {
                     return request.id === postmanRequest.id;
                 });
 
-                requestItem.name = postmanRequest.name.replace(/ /g, '')
-                if (requestItem.name != postmanRequest.name) {
+                requestItem.name = postmanRequest.name.replace(/ /g, '');
+                if (requestItem.name !== postmanRequest.name) {
                     changes = true;
                 }
 
@@ -155,13 +155,13 @@ var Importer = jsface.Class({
                 }
 
                 //build a base file name for data output
-                baseFileName = path.join(options.exportJSON, fileName);
+                var baseFileName = path.join(options.exportJSON, fileName);
 
                 if (requestItem.tests) {
                     //build a file name for the test data output
                     var testsDatafileName = baseFileName + '.tests.json';
 
-                    var testsJSON = requestItem.tests
+                    var testsJSON = requestItem.tests;
                         //write out the info
                     fs.writeFileSync(testsDatafileName, testsJSON);
                     console.log('dump tests to file: %s', testsDatafileName);
@@ -171,7 +171,7 @@ var Importer = jsface.Class({
 
                 if (requestItem.rawModeData) {
                     var rawModeDatafileName = baseFileName + '.rawModeData.json';
-                    var rawModeData = requestItem.rawModeData
+                    var rawModeData = requestItem.rawModeData;
                         //write out the info
                     fs.writeFileSync(rawModeDatafileName, rawModeData);
                     console.log('dump rawModeData to file: %s', rawModeDatafileName);
@@ -211,7 +211,7 @@ var Importer = jsface.Class({
 
             _und.each(orderedCollection, function (postmanRequest) {
 
-                var fileName
+                var fileName;
 
                 //get the single request item
                 var requestItem = _und.find(requestJSON.requests, function (request) {
@@ -224,7 +224,7 @@ var Importer = jsface.Class({
 
                 //take a file reference and convert to postman
                 if (requestItem.tests && requestItem.tests.startsWith('file:')) {
-                    var fileName = requestItem.tests.substring(5);
+                    fileName = requestItem.tests.substring(5);
                     console.log('Reading in tests from file:%s', fileName);
 
                     try {
@@ -237,11 +237,11 @@ var Importer = jsface.Class({
                             throw e;
                         }
                     }
-                } 
-
-                //take a file reference and convert to postman
+                }
+				
+				//take a file reference and convert to postman
                 if (requestItem.rawModeData && requestItem.rawModeData.startsWith('file:')) {
-                    var fileName = requestItem.rawModeData.substring(5);
+                    fileName = requestItem.rawModeData.substring(5);
                     console.log('Reading in rawModeData from file:%s', fileName);
 
                     try {
@@ -259,16 +259,12 @@ var Importer = jsface.Class({
             }, this);
 
             if (changes) {
-                
                 var collectionFileName = path.join(options.importJSON, path.basename(options.collectionFileName)+ '.out');
-                
                 fs.writeFileSync(collectionFileName, JSON.stringify(requestJSON, null, 1));
                 console.log('created output file %s', collectionFileName);
             }
 
-        } 
-    
-
+        }
 });
 
 module.exports = Importer;
