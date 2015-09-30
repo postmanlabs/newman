@@ -42,6 +42,11 @@ module.exports = function(grunt) {
 					'bin/newman -c tests/integ_tests/esc.postman_collection -e tests/integ_tests/esc.postman_environment -s && ' +
 					'bin/newman -c tests/integ_tests/prototypeCheck.json.postman_collection -s && ' +
 					'bin/newman -c tests/integ_tests/redirectTest.json.postman_collection -s -R'
+    		},
+    		whiteScreenTest: {
+      			exec: 'bin/newman -c tests/integ_tests/tc4.json -s -W && ' +
+					'bin/newman -c tests/integ_tests/randomIntC.json -s -W && ' +
+					'bin/newman -c tests/integ_tests/semicolon_tests.json -s -W '
     		}
 		}
 	});
@@ -56,6 +61,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('prepare_release', ['lint', 'mochaTest', 'jsdoc']);
 	grunt.registerTask('default', ['mochaTest', 'jsdoc', 'jshint']);
 	grunt.registerTask('test', ['mochaTest', 'jshint','run:*']);
-	grunt.registerTask('integ_test',['run:*'])
+	grunt.registerTask('integ_test',['run:*']);
 	grunt.registerTask('docs', 'jsdoc');
+	grunt.registerTask('test_white_screen',['run:whiteScreenTest']);
 }

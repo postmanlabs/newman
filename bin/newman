@@ -48,7 +48,8 @@ function parseArguments() {
 		.option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML [file]', null)
 		.option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals [file] (Incompatible with any option except pretty)', null)
 		.option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals', null)
-		.option('-H, --html [file]', 'Export a HTML report to a specified file [file]', null);
+		.option('-H, --html [file]', 'Export a HTML report to a specified file [file]', null)
+		.option('-W, --whiteScreen', 'Black text for white screen', null);
 
 	program.on('--help', function() {
 		console.log('  Newman is a command-line collection runner for Postman. You must specify a collection file or a collection URL to run newman');
@@ -195,6 +196,7 @@ function main() {
 	newmanOptions.strictSSL = !program.insecure;
 	newmanOptions.asLibrary = false;
 	newmanOptions.exitCode = !!program.exitCode;
+	newmanOptions.whiteScreen = !!program.whiteScreen;
 
 	if (program.collection) {
 		var collectionJson;
