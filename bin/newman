@@ -33,6 +33,8 @@ function parseArguments() {
 		.option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
 		.option('-g, --global [file]', 'Specify a Postman globals file [file]', null)
 		.option('-G, --exportGlobals [file]', 'Specify an output file to dump Globals before exiting [file]', null)
+		.option('-J, --exportJSON data to path [path]', 'Specify an output path to dump tests and rawModeData to [path]', null)
+        .option('-K, --importJSON data from path [path]', 'Specify an input path to import tests and rawModeData from [path]', null)        
 		.option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
 		.option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for requests", null)
 		.option('-R, --avoidRedirects', "Prevents Newman from automatically following redirects", null)
@@ -182,6 +184,14 @@ function main() {
 		newmanOptions.exportEnvironmentFile = program.exportEnvironment;
 	}
 
+    if (program.exportJSON) {
+		newmanOptions.exportJSON = program.exportJSON;
+	}
+
+	if (program.importJSON) {
+		newmanOptions.importJSON = program.importJSON;
+	}
+
 	if (program.tls) {
 		newmanOptions.secureProtocol = 'TLSv1_method';
 	}
@@ -201,6 +211,8 @@ function main() {
 		try {
 			// read collection from the filesystem
 			collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
+            //save the original file name if provided
+            newmanOptions.collectionFileName = program.collection;
 		}
 		catch (err) {
 			Errors.terminateWithError("The collection file " + program.collection + " could not be parsed.");
