@@ -182,7 +182,7 @@ var Importer = jsface.Class({
             }, this);
 
             if (changes) {
-                var collectionFileName = path.join(options.exportJSON, collectionName + '.colleciton.json');
+                var collectionFileName = path.join(options.exportJSON, collectionName + '.collection.json');
                 fs.writeFileSync(collectionFileName, JSON.stringify(requestJSON, null, 1));
                 console.log('created output file %s', collectionFileName);
             }
