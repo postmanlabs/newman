@@ -25,8 +25,10 @@ var RequestModel = jsface.Class(ParentModel, {
 		this.currentHelper = requestJson.currentHelper;
 		this.helperAttributes = requestJson.helperAttributes;
         
+		var fileName;
+		
         if (requestJson.tests && requestJson.tests.startsWith('file:')) {
-            var fileName = requestJson.tests.substring(5);
+            fileName = requestJson.tests.substring(5);
             console.log('Reading in tests from file:%s', fileName);
 
             try {
@@ -66,7 +68,7 @@ var RequestModel = jsface.Class(ParentModel, {
             }
         } else {
             this.rawModeData = requestJson.rawModeData;
-        }  
+        }
 	},
 	toString: function() {
 		return "Request: [" + this.method + "]: " + this.url;

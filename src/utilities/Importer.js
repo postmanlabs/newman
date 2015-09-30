@@ -254,8 +254,7 @@ var Importer = jsface.Class({
                             throw e;
                         }
                     }
-                } 
-
+                }
             }, this);
 
             if (changes) {
