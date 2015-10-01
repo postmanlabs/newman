@@ -24,7 +24,7 @@ require('sugar');
  */
 var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     $singleton: true,
-    throwErrorOnLog: false,
+    failingTestCaseKey: "",
 
     main: function() {
         jsdom.env("<html><body></body></html>", function (err, window) {
@@ -35,13 +35,39 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
     // function called when the event "requestExecuted" is fired. Takes 4 self-explanatory parameters
     _onRequestExecuted: function(error, response, body, request) {
-        var results = this._runTestCases(error, response, body, request);
-        AbstractResponseHandler._onRequestExecuted.call(this, error, response, body, request, results);
-        this._logTestResults(results);
+        if (error) {
+            ErrorHandler.requestError(request, error);
+            if ( !request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter <= 0)) {
+                ResponseExporter.showIterationSummary();
+                ResponseExporter.exportResults();
+                ErrorHandler.testCaseError("Test case failed: " + this.failingTestCaseKey);
+            }
+            return;
+        }
 
-        if(this.throwErrorOnLog!==false) {
+        this._printResponse(error, response, body, request);
+        var results = this._runTestCases(error, response, body, request);
+
+        // check if a request is supposed to run multiple times
+        if ( request.iterationsUntilFailCounter && request.iterationsUntilFailCounter > 0) {
+
+            //if all tests pass, don't bother repeating subsequent iterations
+            if ( this.failingTestCaseKey === "" ) {
+                request.iterationsUntilFailCounter = 0;
+            }
+
+            //otherwise reset the failing test case
+            this.failingTestCaseKey = "";
+        }
+
+        if (!request.iterationsUntilFailCounter || (request.iterationsUntilFailCounter && request.iterationsUntilFailCounter === 0)) {
+            ResponseExporter.addResult(request, response, results);
+        }
+
+        if(this.failingTestCaseKey !== "") {
+            ResponseExporter.showIterationSummary();
             ResponseExporter.exportResults();
-            ErrorHandler.terminateWithError(this.throwErrorOnLog);
+            ErrorHandler.testCaseError("Test case failed: " + this.failingTestCaseKey);
         }
     },
 
@@ -49,7 +75,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         if (this._hasTestCases(request)) {
             var tests = request.tests;
             var sandbox = this._createSandboxedEnvironment(error, response, body, request);
-            return this._runAndGenerateTestResults(tests, sandbox);
+            return this._runAndGenerateTestResults(tests, request, sandbox);
         }
         return {};
     },
@@ -60,25 +86,26 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
 
     // run and generate test results. Also exit if any of the tests has failed
     // given the users passes the flag
-    _runAndGenerateTestResults: function(testCases, sandbox) {
+    _runAndGenerateTestResults: function(testCases, request, sandbox) {
         var testResults = this._evaluateInSandboxedEnvironment(testCases, sandbox);
         var testResultsToReturn = {};
-        if (Globals.stopOnError) {
-            for (var key in testResults) {
-                if (testResults.hasOwnProperty(key)) {
-                    if (!testResults[key]) {
-                        testResultsToReturn[key]=false;
-                        this.throwErrorOnLog="Test case failed: " + key;
-                        return testResultsToReturn;
-                    }
-                    else {
-                        testResultsToReturn[key]=true;
+
+        for (var key in testResults) {
+            if (testResults.hasOwnProperty(key)) {
+                this._logTestResult(testResults, key, request);
+
+                if (!testResults[key]) {
+                    testResultsToReturn[key]=false;
+                    this.failingTestCaseKey = key;
+
+                    if (Globals.stopOnError) {
+                        break;
                     }
                 }
+                else {
+                    testResultsToReturn[key]=true;
+                }
             }
-        }
-        else {
-            testResultsToReturn = testResults;
         }
         return testResultsToReturn;
     },
@@ -339,14 +366,18 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     },
 
     // logger for test case results
-    _logTestResults: function(results) {
-        _und.each(_und.keys(results), function(key) {
-            if (results[key]) {
-                log.testCaseSuccess(key);
-            } else {
-                ErrorHandler.testCaseError(key);
+    _logTestResult: function(results, key, request) {
+        if (results[key]) {
+            log.testCaseSuccess(key);
+        } else {
+            if (request.iterationsUntilFailCounter > 0) {
+                log.testCaseWarn(key);
             }
-        });
+            else {
+                log.testCaseError(key);
+                Globals.exitCode = 1;
+            }
+        }
     }
 });
 

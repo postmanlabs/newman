@@ -1,5 +1,6 @@
 var jsface = require('jsface'),
 	log = require('./Logger'),
+	fs = require('fs'),
 	Globals = require('./Globals');
 
 /**
@@ -10,7 +11,7 @@ var ErrorHandler = jsface.Class({
 	$singleton: true,
 
 	requestError: function(request, error) {
-		log.error("RequestError: " + request.id + " terminated. Error: " + error.code + "\n");
+		log.error("RequestError: " + request + "( " + request.id + ") terminated. Error: " + error.code + "\n");
 	},
 
 	responseError: function(response) {
@@ -21,12 +22,22 @@ var ErrorHandler = jsface.Class({
 		log.error("ParseError: " + msg);
 	},
 
-	testCaseError: function(testcase) {
-		log.testCaseError(testcase);
+	testCaseError: function(err) {
+		Globals.exitCode = 1;
+		log.error(err);
+
+		if (Globals.stopOnError) {
+			this.terminateWithError(err);
+		}
 	},
 
 	exceptionError: function(err) {
+		Globals.exitCode = 1;
 		log.exceptionError(err);
+
+		if (Globals.stopOnError) {
+			this.terminateWithError(err);
+		}
 	},
 	
 	terminateWithError: function(msg) {
@@ -34,6 +45,17 @@ var ErrorHandler = jsface.Class({
 		if(Globals.updateMessage) {
 			console.log(Globals.updateMessage);
 		}
+
+		if (Globals.exportGlobalsFile) {
+			fs.writeFileSync(Globals.exportGlobalsFile, JSON.stringify(Globals.globalJson.values,null,1));
+			log.note("\n\nGlobals File Exported To: " + Globals.exportGlobalsFile + "\n");
+		}
+
+		if (Globals.exportEnvironmentFile) {
+			fs.writeFileSync(Globals.exportEnvironmentFile, JSON.stringify(Globals.envJson,null,1));
+			log.note("\n\nEnvironment File Exported To: " + Globals.exportEnvironmentFile + "\n");
+		}
+
 		process.exit(1);
 	}
 });

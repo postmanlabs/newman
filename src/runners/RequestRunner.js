@@ -143,6 +143,15 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		}
 
         var request = this._getNextRequest();
+
+        if (request && request.iterationsUntilFail && request.iterationsUntilFail > 0) {
+            request.iterationsUntilFailCounter = request.iterationsUntilFail;
+        }
+
+        this.execute(request);
+    },
+
+    execute: function(request) {
 		if (request) {
 			//To be uncommented if each prScript/test should set transient env. vars
 			//var oldGlobals = Globals.envJson;
@@ -199,6 +208,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				if(this.isEmptyQueue()) {
 					delay = 0;
 				}
+
+
 				this.emit('requestExecuted', error, response, body, request, delay);
 			}.bind(this));
 
@@ -219,11 +230,25 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	},
 
 	_onRequestExecuted: function(error, response, body, request, delay) {
-		// Call the next request to execute
-		var runner = this;
-		setTimeout(function() {
-			runner._execute();
-		}, delay);
+        var runner = this;
+
+        if ( request.iterationsUntilFailCounter && request.iterationsUntilFailCounter > 0) {
+            request.iterationsUntilFailCounter--;
+
+            if ( request.requestDelay ) {
+                delay = request.requestDelay;
+            }
+
+            setTimeout(function() {
+            runner.execute(request);
+            }, delay);
+        }
+        else {
+            // Call the next request to execute
+            setTimeout(function() {
+                runner._execute();
+            }, delay);
+        }
 	},
 
 	// Generates and returns the request Options to be used by unirest.

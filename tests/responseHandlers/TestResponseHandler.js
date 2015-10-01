@@ -39,7 +39,7 @@ describe("TestResponseHandler", function() {
 			statusCode: 200,
 			body: "{\"lol\": \"jhingalalal\"}"
 		};
-		this.stub = sinon.stub(TestResponseHandler, '_logTestResults');
+		this.stub = sinon.stub(TestResponseHandler, '_logTestResult');
 		this.loggerStub = sinon.stub(ErrorHandler, 'exceptionError');
 		Globals.envJson = { values: [] };
 	});
@@ -192,7 +192,7 @@ describe("TestResponseHandler", function() {
 	});
 
 	afterEach(function() {
-		TestResponseHandler._logTestResults.restore();
+		TestResponseHandler._logTestResult.restore();
 		ErrorHandler.exceptionError.restore();
 	});
 });
