@@ -41,7 +41,8 @@ module.exports = function(grunt) {
 					'bin/newman -c tests/integ_tests/crypto-md5.json.postman_collection -s && ' +
 					'bin/newman -c tests/integ_tests/esc.postman_collection -e tests/integ_tests/esc.postman_environment -s && ' +
 					'bin/newman -c tests/integ_tests/prototypeCheck.json.postman_collection -s && ' +
-					'bin/newman -c tests/integ_tests/redirectTest.json.postman_collection -s -R'
+					'bin/newman -c tests/integ_tests/redirectTest.json.postman_collection -s -R && ' +
+					'bin/newman -c tests/integ_tests/multipleFormValues.json.postman_collection -s'
     		}
 		}
 	});
