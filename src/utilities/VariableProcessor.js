@@ -26,14 +26,14 @@ var VariableProcessor = jsface.Class({
 		randomInt: _und.random(0, 1000)
 	},
 
-    _resetFunctionVariables: function() {
-        var guid = uuid.v4();
-        var timestamp = _und.now();
-        var randomInt = _und.random(0, 1000);
-        this.getFunctionVariables.guid = guid;
-        this.getFunctionVariables.randomInt = randomInt;
-        this.getFunctionVariables.timestamp= timestamp;
-    },
+	_resetFunctionVariables: function() {
+		var guid = uuid.v4();
+		var timestamp = _und.now();
+		var randomInt = _und.random(0, 1000);
+		this.getFunctionVariables.guid = guid;
+		this.getFunctionVariables.randomInt = randomInt;
+		this.getFunctionVariables.timestamp= timestamp;
+	},
 
 	// updates request url by the replacing it with pathVariables
 	_processPathVariable: function(request) {
@@ -91,33 +91,33 @@ var VariableProcessor = jsface.Class({
 		}
 		return stringSource;
 	},
-    
-    // Process variables defined in the tests
-    _processEnvVariableForJSONExportedCollections: function (request, envJson) {
-        var kvpairs = envJson.values;
+	
+	// Process variables defined in the tests
+	_processEnvVariableForJSONExportedCollections: function (request, envJson) {
+		var kvpairs = envJson.values;
 
-        var properties = ["tests","rawModeData"];
+		var properties = ["tests","rawModeData"];
 
-        var pairObject = Helpers.transformFromKeyValue(kvpairs);
-        _und.each(properties, function (prop) {
-            // check if the prop exists
-            if (request[prop] !== undefined) {
-                if (typeof request[prop] === "string") {
-                    //console.log('_processEnvVariableForTets: processing string prop %s', prop);
+		var pairObject = Helpers.transformFromKeyValue(kvpairs);
+		_und.each(properties, function (prop) {
+			// check if the prop exists
+			if (request[prop] !== undefined) {
+				if (typeof request[prop] === "string") {
+					//console.log('_processEnvVariableForTets: processing string prop %s', prop);
 
-                    // if string, use directly
-                    var newValue = this._findReplace(request[prop], pairObject, this.ENV_REGEX);
-                    
-                    //console.log( 'new value: ', newValue );
-                    
-                    request[prop] = newValue;
-                }
-            }
-        }, this);
-        return true;
-    },
+					// if string, use directly
+					var newValue = this._findReplace(request[prop], pairObject, this.ENV_REGEX);
+					
+					//console.log( 'new value: ', newValue );
+					
+					request[prop] = newValue;
+				}
+			}
+		}, this);
+		return true;
+	},
 
-    
+	
 
 	// transforms the request as per the environment json data passed
 	_processEnvVariable: function(request, envJson) {
@@ -185,11 +185,11 @@ var VariableProcessor = jsface.Class({
 	 * @param {JSON} options passed to Newman runner
 	 */
 	processRequestVariables: function(request, options) {
-        this._resetFunctionVariables();
+		this._resetFunctionVariables();
 		this._processPathVariable(request);
 		this._processFunctionVariable(request);
 		this._processEnvVariable(request, options.envJson);
-        this._processEnvVariableForJSONExportedCollections(request, options.envJson);
+		this._processEnvVariableForJSONExportedCollections(request, options.envJson);
 	}
 });
 

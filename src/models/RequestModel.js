@@ -1,6 +1,6 @@
 var jsface = require('jsface'),
 	ParentModel = require('./ParentModel.js'),
-    fs     = require('fs');
+	fs     = require('fs');
 
 /**
  * @class RequestModel
@@ -24,51 +24,51 @@ var RequestModel = jsface.Class(ParentModel, {
 		this.preRequestScript     = requestJson.preRequestScript;
 		this.currentHelper = requestJson.currentHelper;
 		this.helperAttributes = requestJson.helperAttributes;
-        
+		
 		var fileName;
 		
-        if (requestJson.tests && requestJson.tests.startsWith('file:')) {
-            fileName = requestJson.tests.substring(5);
-            console.log('Reading in tests from file:%s', fileName);
+		if (requestJson.tests && requestJson.tests.startsWith('file:')) {
+			fileName = requestJson.tests.substring(5);
+			console.log('Reading in tests from file:%s', fileName);
 
-            try {
-                this.tests = fs.readFileSync(fileName, 'utf8');
-                //console.log('tests:\n\r', this.tests);
-            } catch (e) {
-                if (e.code === 'ENOENT') {
-                    console.log('File not found!');
-                    //leave tests as they were this will no dobut cause an exception inthe newman process but will be 
-                    //reported back to user
-                    this.tests = requestJson.tests;
-                } else {
-                    throw e;
-                }
-            }
-        } else {
-            this.tests = requestJson.tests;
-        }
+			try {
+				this.tests = fs.readFileSync(fileName, 'utf8');
+				//console.log('tests:\n\r', this.tests);
+			} catch (e) {
+				if (e.code === 'ENOENT') {
+					console.log('File not found!');
+					//leave tests as they were this will no dobut cause an exception inthe newman process but will be 
+					//reported back to user
+					this.tests = requestJson.tests;
+				} else {
+					throw e;
+				}
+			}
+		} else {
+			this.tests = requestJson.tests;
+		}
 
-        
-        if (requestJson.rawModeData && requestJson.rawModeData.startsWith('file:')) {
-            fileName = requestJson.rawModeData.substring(5);
-            console.log('Reading in rawModeData from file:%s', fileName);
+		
+		if (requestJson.rawModeData && requestJson.rawModeData.startsWith('file:')) {
+			fileName = requestJson.rawModeData.substring(5);
+			console.log('Reading in rawModeData from file:%s', fileName);
 
-            try {
-                this.rawModeData = fs.readFileSync(fileName, 'utf8');
-                //console.log('tests:\n\r', this.tests);
-            } catch (e) {
-                if (e.code === 'ENOENT') {
-                    console.log('File not found!');
-                    //leave tests as they were this will no dobut cause an exception inthe newman process but will be 
-                    //reported back to user
-                    this.rawModeData = requestJson.rawModeData;
-                } else {
-                    throw e;
-                }
-            }
-        } else {
-            this.rawModeData = requestJson.rawModeData;
-        }
+			try {
+				this.rawModeData = fs.readFileSync(fileName, 'utf8');
+				//console.log('tests:\n\r', this.tests);
+			} catch (e) {
+				if (e.code === 'ENOENT') {
+					console.log('File not found!');
+					//leave tests as they were this will no dobut cause an exception inthe newman process but will be 
+					//reported back to user
+					this.rawModeData = requestJson.rawModeData;
+				} else {
+					throw e;
+				}
+			}
+		} else {
+			this.rawModeData = requestJson.rawModeData;
+		}
 	},
 	toString: function() {
 		return "Request: [" + this.method + "]: " + this.url;
