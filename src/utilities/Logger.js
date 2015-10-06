@@ -78,7 +78,12 @@ var Logger = jsface.Class([EventEmitter], {
 	},
 
 	normal: function(log) {
-		this._printMessage(log, color.white);
+		if (Globals.whiteScreen) {
+			this._printMessage(log, color.black);
+		}
+		else{
+			this._printMessage(log, color.white);
+		}
 		return this;
 	},
 

@@ -84,6 +84,8 @@ Misc.:
 -k, --insecure              Disable strict ssl
 -l, --tls                   Use TLSv1
 -x, --exitCode              Continue running tests even after a failure, but exit with code=1
+-W, --whiteScreen			Black text for white screen
+
 
 Output:
 -o, --outputFile [file]     Path to file where output should be written. [file]
