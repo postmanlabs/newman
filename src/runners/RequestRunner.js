@@ -244,18 +244,15 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	// Takes request as the input, parses it for different types and
 	// sets it as the request body for the unirest request.
 	_setBodyData: function(RequestOptions, request) {
+        var self = this;
+
 		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1) {
 			if (request.dataMode === "raw") {
 				RequestOptions.body = request.transformed.data;
 			} else if (request.dataMode === "urlencoded") {
 				var reqData = request.transformed.data;
-                RequestOptions.form = {};
-                _und.each(reqData, function(dataRow) {
-                    if(dataRow.enabled===false) {
-                        return;
-                    }
-                    RequestOptions.form[dataRow["key"]] = dataRow["value"];
-                });
+                RequestOptions.form = self._parseFormParams(reqData);
+
 			}
 		}
 	},
@@ -302,10 +299,30 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		mergedArray.values = Helpers.augmentDataArrays(Globals.globalJson.values,Globals.envJson.values);
 		mergedArray.values = Helpers.augmentDataArrays(mergedArray.values, Globals.dataJson.values);
 
-		VariableProcessor.processRequestVariables(request, {
-			envJson: mergedArray
-		});
-	}
+        VariableProcessor.processRequestVariables(request, {
+            envJson: mergedArray
+        });
+    },
+
+    _parseFormParams: function (reqData) {
+        var params = {};
+        reqData.forEach(function (paramData) {
+            if (paramData.enabled) {
+                // Check if this is a duplicate
+                if (params[paramData.key]) {
+                    var original = params[paramData.key];
+                    if (Array.isArray(original)) {
+                        original.push(paramData.value);
+                    } else {
+                        params[paramData.key] = [original].concat(paramData.value);
+                    }
+                } else {
+                    params[paramData.key] = paramData.value;
+                }
+            }
+        });
+        return params;
+    }
 });
 
 module.exports = RequestRunner;
