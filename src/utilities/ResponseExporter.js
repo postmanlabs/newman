@@ -5,7 +5,8 @@ var jsface       = require('jsface'),
 	ResultSummary= require('../models/ResultSummaryModel'),
 	path         = require('path'),
 	HtmlExporter = require('./HtmlExporter'),
-	fs           = require('fs');
+	fs           = require('fs'),
+	_            = require('lodash');
 
 /**
  * @class ResponseExporter

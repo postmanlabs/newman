@@ -3,7 +3,6 @@ var jsface = require('jsface'),
     Globals = require('../utilities/Globals'),
     path = require('path'),
     fs = require('fs'),
-    _ = require('lodash'),
     ErrorHandler = require('../utilities/ErrorHandler'),
     EventEmitter = require('../utilities/EventEmitter'),
     ResponseExporter = require('../utilities/ResponseExporter');
