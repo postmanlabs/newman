@@ -1,5 +1,12 @@
 ##CHANGELOG
 
+####1.2.22 (October 18, 2015)
+* Adding option to limit recursive resolution depth
+
+####1.2.21 (September 24, 2015)
+* Adding --whiteScreen flag
+* Adding option to print all requests and responses in a file
+
 ####1.2.20 (September 24, 2015)
 * Adding -R option to block redirects
 * Adding sugarJS number prototype
