@@ -412,6 +412,10 @@ var HelperProcessor = jsface.Class({
 			var p = params[i];
 			if (p.key && p.key !== "") {
 				p.key = p.key.replace(/&/g, '%26');
+
+				if(!p.value) {
+					p.value = "";
+				}
 				p.value = p.value.replace(/&/g, '%26');
 				if(removeBlankParams === false || p.value !== "") {
 					paramArr.push(p.key + "=" + p.value);
