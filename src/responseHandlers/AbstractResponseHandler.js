@@ -3,7 +3,6 @@ var jsface = require('jsface'),
     Globals = require('../utilities/Globals'),
     path = require('path'),
     fs = require('fs'),
-    _ = require('lodash'),
     ErrorHandler = require('../utilities/ErrorHandler'),
     EventEmitter = require('../utilities/EventEmitter'),
     ResponseExporter = require('../utilities/ResponseExporter');
@@ -39,31 +38,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
     _printResponse: function (error, response, body, request) {
         if (Globals.outputFileVerbose) {
             var filepath = path.resolve(Globals.outputFileVerbose);
-            var requestData;
-
-            try {
-                requestData = JSON.stringify(_.object(_.pluck(request.transformed.data, "key"),
-                    _.pluck(request.transformed.data, "value")), null, 2);
-            }
-            catch (e) {
-                // Not JSON.
-                requestData = request.transformed.data;
-            }
-
-            var requestString = "-------------------------------------------------------------------------------------------\n" +
-                response.statusCode + " " +
-                response.stats.timeTaken + "ms" + " " +
-                request.name + " " + "[" + request.method + "] " +
-                request.transformed.url +
-                "\n------------------------------------------------------------" +
-                "\nRequest headers:\n" +
-                JSON.stringify(response.req._headers, undefined, 1) +
-                "\nRequest data:\n" +
-                requestData +
-                "\n------------------------------------------------------------" +
-                "\nResponse headers:\n" +
-                JSON.stringify(response.headers, undefined, 1) +
-                "\nResponse body:\n" + response.body + "\n";
+            var requestString = ResponseExporter.formatRequestResponseLog(request, response);
 
             fs.appendFileSync(filepath, requestString);
         }

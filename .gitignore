@@ -3,6 +3,7 @@ docs/*
 .idea/*
 ./*.postman_collection
 ./*.globals
+.project
 
 
 #Visual Studio Code specific files
