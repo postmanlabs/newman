@@ -67,6 +67,8 @@ Basic setup:
 -e, --environment [file]    Specify a Postman environment as a JSON [file]
 -d, --data [file]           Specify a data file to use either json or csv
 -g, --global [file]         Specify a Postman globals file as JSON [file]
+-J, --exportJSON            Specify an output path to dump tests and rawModeData to [path] To be used with -c
+-K, --importJSON            Specify an input path to import tests and rawModeData from [path] To be used with -c
 -n, --number [number]       Define the number of iterations to run
 -i, --import [file]         Import a Postman backup file, and save collections, environments, and globals. [file]
 -p, --pretty                (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
@@ -151,6 +153,15 @@ Newman can also be used to import a Postman backup file. The collections, enviro
 newman -i /path/to/Backup.json -p
 ```
 
+Newman can also be used to export the JSON data defined in tets and rawModeData to separate source files for ease of local editing. 
+```bash
+newman -J /path/to/outputfolder -c /path/and/mycollection.json
+```
+
+Newman can also be used to import the JSON data defined in tets and rawModeData from separate source files.  Input folder should be same folder as the output folder (used with the -J export JSON option)
+```bash
+newman -K /path/to/inputfolder -c /path/and/mycollection.json
+```
 
 
 **NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.

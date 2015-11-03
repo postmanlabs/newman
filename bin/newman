@@ -33,6 +33,8 @@ function parseArguments() {
 		.option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
 		.option('-g, --global [file]', 'Specify a Postman globals file [file]', null)
 		.option('-G, --exportGlobals [file]', 'Specify an output file to dump Globals before exiting [file]', null)
+		.option('-J, --exportJSON data to path [path]', 'Specify an output path to dump tests and rawModeData to [path]', null)
+		.option('-K, --importJSON data from path [path]', 'Specify an input path to import tests and rawModeData from [path]', null)        
 		.option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
 		.option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for requests", null)
 		.option('-R, --avoidRedirects', "Prevents Newman from automatically following redirects", null)
@@ -159,9 +161,9 @@ function main() {
 		newmanOptions.testReportFile = program.testReportFile;
 	}
 
-    if (program.data) {
-        newmanOptions.dataFile = program.data;
-    }
+	if (program.data) {
+		newmanOptions.dataFile = program.data;
+	}
 
 	if (program.delay) {
 		if(isNaN(program.delay) || parseFloat(program.delay)%1 !== 0) {
@@ -170,12 +172,12 @@ function main() {
 		newmanOptions.delay = parseInt(program.delay);
 	}
 
-    if (program.requestTimeout) {
-        if (isNaN(program.requestTimeout) || parseFloat(program.requestTimeout)%1 !== 0) {
-            Errors.terminateWithError("The request Timeout must be an integer");
-        }
+	if (program.requestTimeout) {
+		if (isNaN(program.requestTimeout) || parseFloat(program.requestTimeout)%1 !== 0) {
+			Errors.terminateWithError("The request Timeout must be an integer");
+		}
 		newmanOptions.requestTimeout = parseInt(program.requestTimeout);
-    }
+	}
 
 	if (program.global) {
 		try {
@@ -192,6 +194,14 @@ function main() {
 
 	if (program.exportEnvironment) {
 		newmanOptions.exportEnvironmentFile = program.exportEnvironment;
+	}
+
+	if (program.exportJSON) {
+		newmanOptions.exportJSON = program.exportJSON;
+	}
+
+	if (program.importJSON) {
+		newmanOptions.importJSON = program.importJSON;
 	}
 
 	if (program.tls) {
@@ -214,6 +224,8 @@ function main() {
 		try {
 			// read collection from the filesystem
 			collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
+			//save the original file name if provided
+			newmanOptions.collectionFileName = program.collection;
 		}
 		catch (err) {
 			Errors.terminateWithError("The collection file " + program.collection + " could not be parsed.");
