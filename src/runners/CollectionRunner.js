@@ -1,13 +1,13 @@
-var jsface                 = require("jsface"),
-	AbstractRunner         = require("./AbstractRunner"),
-	RequestRunner          = require("./RequestRunner"),
-	ResponseHandlerFactory = require('../responseHandlers/ResponseHandlerFactory'),
-	Errors           = require('../utilities/ErrorHandler'),
-	_und                   = require('underscore'),
-	log                    = require('../utilities/Logger'),
-	EventEmitter           = require('../utilities/EventEmitter'),
-	Options                = require('../utilities/Options'),
-	ResponseExporter       = require("../utilities/ResponseExporter");
+var jsface = require("jsface"),
+    AbstractRunner = require("./AbstractRunner"),
+    RequestRunner = require("./RequestRunner"),
+    ResponseHandlerFactory = require('../responseHandlers/ResponseHandlerFactory'),
+    Errors = require('../utilities/ErrorHandler'),
+    _und = require('underscore'),
+    log = require('../utilities/Logger'),
+    EventEmitter = require('../utilities/EventEmitter'),
+    Options = require('../utilities/Options'),
+    ResponseExporter = require("../utilities/ResponseExporter");
 
 
 /**
@@ -18,36 +18,36 @@ var jsface                 = require("jsface"),
  * @mixes Options
  */
 var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
-	constructor: function(collection, options, runMode) {
-		this.$class.$super.call(this, collection);
-		this.setOptions(options);
-		this.runMode = runMode;
-	},
+    constructor: function (collection, options, runMode) {
+        this.$class.$super.call(this, collection);
+        this.setOptions(options);
+        this.runMode = runMode;
+    },
 
-	/**
-	 * @function
-	 * @memberOf CollectionRunner
-	 */
-	execute: function() {
-		// Initialize the response handler using a factory
-		this.ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
-		if (!this.ResponseHandler) {
-			log.throwError('The module provided does not exist.');
-		}
+    /**
+     * @function
+     * @memberOf CollectionRunner
+     */
+    execute: function () {
+        // Initialize the response handler using a factory
+        this.ResponseHandler = ResponseHandlerFactory.createResponseHandler(this.getOptions());
+        if (!this.ResponseHandler) {
+            log.throwError('The module provided does not exist.');
+        }
 
-		this._addEventListeners();
+        this._addEventListeners();
 
-		// Sets up the response handler to respond to the requestExecuted event
-		this.ResponseHandler.initialize();
+        // Sets up the response handler to respond to the requestExecuted event
+        this.ResponseHandler.initialize();
 
-		_und.each(this.collection, function(postmanRequest) {
-			RequestRunner.addRequest(postmanRequest);
-		}, this);
+        _und.each(this.collection, function (postmanRequest) {
+            RequestRunner.addRequest(postmanRequest);
+        }, this);
 
-		// Start the runner
-		RequestRunner.setDelay(this.opts.delay);
+        // Start the runner
+        RequestRunner.setDelay(this.opts.delay);
 
-        if(!isNaN(this.opts.requestTimeout) && this.opts.requestTimeout%1===0) {
+        if (!isNaN(this.opts.requestTimeout) && this.opts.requestTimeout % 1 === 0) {
             RequestRunner.setRequestTimeout(this.opts.requestTimeout);
         }
         else if (this.opts.requestTimeout == null) {
@@ -57,30 +57,30 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
             Errors.terminateWithError('The request timeout must be an integer');
         }
 
-		RequestRunner.setStrictSSL(this.opts.strictSSL);
-		RequestRunner.setSecureProtocol(this.opts.secureProtocol);
-		RequestRunner.setRunMode(this.runMode);
-		RequestRunner.start();
+        RequestRunner.setStrictSSL(this.opts.strictSSL);
+        RequestRunner.setSecureProtocol(this.opts.secureProtocol);
+        RequestRunner.setRunMode(this.runMode);
+        RequestRunner.start();
 
-		this.$class.$superp.execute.call(this);
-	},
+        this.$class.$superp.execute.call(this);
+    },
 
-	// adding event listeners to signal end of requestRunner and collectionRunner
-	_addEventListeners: function() {
-		this._onRequestRunnerOverBinded = this._onRequestRunnerOver.bind(this);
-		this.addEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
-	},
+    // adding event listeners to signal end of requestRunner and collectionRunner
+    _addEventListeners: function () {
+        this._onRequestRunnerOverBinded = this._onRequestRunnerOver.bind(this);
+        this.addEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
+    },
 
-	// run when requestRunner runs over the ordered requests in this collection
-	_onRequestRunnerOver: function() {
-		this.ResponseHandler.clear();
-		if(this.opts.summary) {
-			ResponseExporter.showIterationSummary();
-		}
+    // run when requestRunner runs over the ordered requests in this collection
+    _onRequestRunnerOver: function () {
+        this.ResponseHandler.clear();
+        if (this.opts.summary) {
+            ResponseExporter.showIterationSummary();
+        }
 
-		this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
-		this.emit('collectionRunnerOver');
-	}
+        this.removeEventListener('requestRunnerOver', this._onRequestRunnerOverBinded);
+        this.emit('collectionRunnerOver');
+    }
 });
 
 module.exports = CollectionRunner;
