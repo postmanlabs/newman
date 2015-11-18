@@ -50,7 +50,8 @@ function parseArguments() {
 		.option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals [file] (Incompatible with any option except pretty)', null)
 		.option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals', null)
 		.option('-H, --html [file]', 'Export a HTML report to a specified file [file]', null)
-		.option('-W, --whiteScreen', 'Black text for white screen', null);
+		.option('-W, --whiteScreen', 'Black text for white screen', null)
+		.option('-L, --recurseLimit [limit]', 'Do not run recursive resolution more than [limit] times. Default = 10. Using 0 will prevent any varialbe resolution', null);
 
 	program.on('--help', function() {
 		console.log('  Newman is a command-line collection runner for Postman. You must specify a collection file or a collection URL to run newman');
@@ -67,6 +68,7 @@ function parseArguments() {
 	});
 
 	program.parse(process.argv);
+
 
 	if(program.import) {
 		Importer.importFile(program.import, program.pretty);
@@ -143,6 +145,10 @@ function main() {
 
 	if (program.outputFile) {
 		newmanOptions.outputFile = program.outputFile;
+	}
+
+	if (program.recurseLimit) {
+		newmanOptions.recurseLimit = parseInt(program.recurseLimit);
 	}
 
 	if (program.outputFileVerbose) {

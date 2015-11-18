@@ -156,7 +156,9 @@ var PreRequestScriptProcessor = jsface.Class({
                 method: request.method,
                 headers: Helpers.generateHeaderObj(request.transformed.headers),
                 data: this._getTransformedRequestData(request),
-                dataMode: request.dataMode
+                dataMode: request.dataMode,
+                name: request.name,
+                description: request.description
             },
             iteration: Globals.iterationNumber,
             environment: this._setEnvironmentContext(),

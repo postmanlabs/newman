@@ -152,7 +152,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				}
 			}
 
-            //making sure empty arrays are not sent. This meeses up the request library
+            //making sure empty arrays are not sent. This messes up the request library
             if(request.data instanceof Array && request.data.length===0) {
                 request.data = "";
             }
@@ -252,7 +252,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 			} else if (request.dataMode === "urlencoded") {
 				var reqData = request.transformed.data;
                 RequestOptions.form = self._parseFormParams(reqData);
-
 			}
 		}
 	},
@@ -306,21 +305,23 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
     _parseFormParams: function (reqData) {
         var params = {};
-        reqData.forEach(function (paramData) {
-            if (paramData.enabled) {
-                // Check if this is a duplicate
-                if (params[paramData.key]) {
-                    var original = params[paramData.key];
-                    if (Array.isArray(original)) {
-                        original.push(paramData.value);
+        if(reqData instanceof Array) { //may also be a string for empty array
+            reqData.forEach(function (paramData) {
+                if (paramData.enabled) {
+                    // Check if this is a duplicate
+                    if (params[paramData.key]) {
+                        var original = params[paramData.key];
+                        if (Array.isArray(original)) {
+                            original.push(paramData.value);
+                        } else {
+                            params[paramData.key] = [original].concat(paramData.value);
+                        }
                     } else {
-                        params[paramData.key] = [original].concat(paramData.value);
+                        params[paramData.key] = paramData.value;
                     }
-                } else {
-                    params[paramData.key] = paramData.value;
                 }
-            }
-        });
+            });
+        }
         return params;
     }
 });

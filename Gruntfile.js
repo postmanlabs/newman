@@ -42,6 +42,7 @@ module.exports = function(grunt) {
 					'node bin/newman -c tests/integ_tests/esc.postman_collection -e tests/integ_tests/esc.postman_environment -s && ' +
 					'node bin/newman -c tests/integ_tests/prototypeCheck.json.postman_collection -s && ' +
 					'node bin/newman -c tests/integ_tests/redirectTest.json.postman_collection -s -R && ' +
+					'node bin/newman -c tests/integ_tests/requestNameInScript.json.postman_collection -s && ' +
 					'node bin/newman -c tests/integ_tests/multipleFormValues.json.postman_collection -s &&' +
 					'node bin/newman -c tests/integ_tests/randomIntC.json -s -W'
     		}

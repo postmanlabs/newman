@@ -2,6 +2,7 @@ var jsface       = require('jsface'),
 	Helpers      = require('./Helpers'),
 	uuid         = require('node-uuid'),
 	_lod         = require("lodash"),
+	Globals      = require("./Globals"),
 	_und         = require('underscore');
 
 /** 
@@ -70,7 +71,15 @@ var VariableProcessor = jsface.Class({
 	// replaces a string based on keys in the sourceObject as matched by a regex. Supports recursive replacement
 	// usage: _findReplace("{{url}}/blog/posts/{{id}}", {url: "http://localhost", id: 2}, this.ENV_REGEX)
 	// Note: The regex provided should capture the key to be replaced (use parenthesis)
-	_findReplace: function(stringSource, sourceObject, REGEX) {
+	_findReplace: function(stringSource, sourceObject, REGEX, recurseCount) {
+		if(typeof recurseCount === "undefined") {
+			recurseCount = 1;
+		}
+		//console.log("Limit: " + Globals.recurseLimit);
+		if(recurseCount > Globals.recurseLimit) {
+			return stringSource;
+		}
+
 		function getKey(match, key){
 			var fromSource = sourceObject[key];
 			if(typeof fromSource === "undefined") {
@@ -87,7 +96,7 @@ var VariableProcessor = jsface.Class({
 		}
 
 		if (stringSource.match(REGEX)){
-			return this._findReplace(stringSource, sourceObject, REGEX);
+			return this._findReplace(stringSource, sourceObject, REGEX, recurseCount+1);
 		}
 		return stringSource;
 	},

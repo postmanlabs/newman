@@ -4,6 +4,16 @@ docs/*
 ./*.postman_collection
 ./*.globals
 
+
+#Visual Studio Code specific files
+.vscode/*
+jsconfig.json
+
+#ctags
+tags
+src/tags
+tests/tags
+
 #Custom files - to prevent inclusion in npm package
 .DS_Store
 Angelist%20API.json.postman_collection

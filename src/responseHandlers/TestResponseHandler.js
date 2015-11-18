@@ -210,7 +210,9 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
                 method: request.method,
                 headers: Helpers.generateHeaderObj(request.transformed.headers),
                 data: this._getTransformedRequestData(request),
-                dataMode: request.dataMode
+                dataMode: request.dataMode,
+                name: request.name,
+                description: request.description
             },
             responseCode: responseCodeObject,
             btoa: btoa,

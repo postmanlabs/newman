@@ -3,6 +3,16 @@
 ####2.0.0-beta.1 (September 24, 2015)
 * Support for Node v4
 
+####1.2.23 (October 20, 2015)
+* Empty data array fields don't cause errors
+
+####1.2.22 (October 18, 2015)
+* Adding option to limit recursive resolution depth
+
+####1.2.21 (September 24, 2015)
+* Adding --whiteScreen flag
+* Adding option to print all requests and responses in a file
+
 ####1.2.20 (September 24, 2015)
 * Adding -R option to block redirects
 * Adding sugarJS number prototype
