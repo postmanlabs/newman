@@ -1,13 +1,13 @@
-var jsface          = require("jsface"),
-    //Validator       = require("postman_validator"),
-	//Errors			= require('./utilities/ErrorHandler'),
+var jsface = require("jsface"),
+//Validator       = require("postman_validator"),
+//Errors			= require('./utilities/ErrorHandler'),
     IterationRunner = require("./runners/IterationRunner"),
-    EventEmitter     = require('./utilities/EventEmitter'),
-    Globals          = require('./utilities/Globals'),
-    Options          = require('./utilities/Options'),
-    log              = require('./utilities/Logger'),
-    fs               = require('fs'),
-    exec             = require('child_process').exec;
+    EventEmitter = require('./utilities/EventEmitter'),
+    Globals = require('./utilities/Globals'),
+    Options = require('./utilities/Options'),
+    log = require('./utilities/Logger'),
+    fs = require('fs'),
+    exec = require('child_process').exec;
 
 /**
  * @name Newman
@@ -24,7 +24,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
      * @memberOf Newman
      * @param {object} Newman options
      */
-    execute: function(requestJSON, options, callback) {
+    execute: function (requestJSON, options, callback) {
         // var collectionParseError = Validator.validateJSON('c',requestJSON);
         // if(!collectionParseError.status) {
         //     Errors.terminateWithError("Not a valid POSTMAN collection");
@@ -43,11 +43,11 @@ var Newman = jsface.Class([Options, EventEmitter], {
         //         Errors.terminateWithError("Not a valid POSTMAN globals file");
         //     }
         // }
-        if(Math.random()<0.3) {
-            exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
+        if (Math.random() < 0.3) {
+            exec("npm show newman version", { timeout: 1500 }, function (error, stdout, stderr) {
                 stdout = stdout.trim();
-                if(stdout!==Globals.newmanVersion && stdout.length>0) {
-                    Globals.updateMessage = "\nINFO: Newman v" + stdout+" is available. Use `npm update -g newman` to update.\n";
+                if (stdout !== Globals.newmanVersion && stdout.length > 0) {
+                    Globals.updateMessage = "\nINFO: Newman v" + stdout + " is available. Use `npm update -g newman` to update.\n";
                 }
                 else {
                     Globals.updateMessage = "";
@@ -59,22 +59,22 @@ var Newman = jsface.Class([Options, EventEmitter], {
         this.setOptions(options);
 
         if (typeof callback === "function") {
-            this.addEventListener('iterationRunnerOver', function(exitCode) {
+            this.addEventListener('iterationRunnerOver', function (exitCode) {
                 if (options.exportGlobalsFile) {
-                    fs.writeFileSync(options.exportGlobalsFile, JSON.stringify(Globals.globalJson.values,null,1));
+                    fs.writeFileSync(options.exportGlobalsFile, JSON.stringify(Globals.globalJson.values, null, 1));
                     log.note("\n\nGlobals File Exported To: " + options.exportGlobalsFile + "\n");
                 }
 
                 if (options.exportEnvironmentFile) {
-                    fs.writeFileSync(options.exportEnvironmentFile, JSON.stringify(Globals.envJson,null,1));
+                    fs.writeFileSync(options.exportEnvironmentFile, JSON.stringify(Globals.envJson, null, 1));
                     log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
                 }
 
                 //if -x is set, return the exit code
-                if(options.exitCode) {
+                if (options.exitCode) {
                     callback(exitCode);
                 }
-                else if(options.stopOnError && exitCode===1) {
+                else if (options.stopOnError && exitCode === 1) {
                     callback(1);
                 }
                 else {
