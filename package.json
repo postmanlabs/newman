@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "author": "Postman Labs <help@getpostman.com",
   "main": "index.js",
   "homepage": "https://github.com/postmanlabs/newman",
@@ -23,8 +23,13 @@
     },
     {
       "name": "Abhijit Kane",
-      "email": "abhijitkane@gmail.com",
+      "email": "abhijit@getpostman.com",
       "url": "http://github.com/abhijitkane"
+    },
+    {
+      "name": "Aniket Panse",
+      "email": "aniket@getpostman.com",
+      "url": "http://github.com/czardoz"
     }
   ],
   "engines": {
