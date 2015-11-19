@@ -2,19 +2,27 @@
 
 # Newman [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) <a href="https://gitter.im/postmanlabs/newman" target="_blank"><img src="https://badges.gitter.im/Join%20Chat.svg" /></a>
 
-
-
 Newman is a command-line collection runner for [Postman](http://getpostman.com). It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
 Newman maintains feature parity with Postman and allows you to run collections just the way they are executed inside the collection runner in Postman.
 
 [![NPM](https://nodei.co/npm/newman.png?downloads=true)](https://nodei.co/npm-dl/newman/)
 
+
+## Supported Node Versions
+
+| Node Version    | Newman Version | Installation Command         |
+|-----------------|----------------|------------------------------|
+| 0.10.x - 0.12.x | 1.x.x          | `npm install -g newman`      |
+| 4.0+            | 2.x.x          | `npm install -g newman@beta` |
+
+All versions of Newman currently have the same features. For details about the Beta, read on.
+
 ## Getting Started
 Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.
 
 #### Newman Stable
-With that done, Newman is just one command away. 
+With that done, Newman is just one command away.
 ```bash
 $ npm install -g newman # installs Newman globally on your system allowing you to run it from anywhere.
 ```
@@ -118,7 +126,7 @@ To provide a different set of data i.e. variables for each iteration you can use
 $ newman -c mycollection.json -d data.json
 ```
 
-The csv file for the above set of variables would look like 
+The csv file for the above set of variables would look like
 ```
 url, user_id, id, token_id
 http://127.0.0.1:5000, 1, 1, 123123123
@@ -156,7 +164,7 @@ newman -i /path/to/Backup.json -p
 **NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.
 
 ## Library
-Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so - 
+Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so -
 
 ```javascript
 var Newman = require('newman');
@@ -181,13 +189,13 @@ Newman.execute(collectionJson, newmanOptions, callback);
 
 
 ## Cron
-Want your test suite to run every hour? Newman can be used to schedule tests to run hourly, daily or weekly automatically in combination with the awesome Unix scheduler **CRON**. 
+Want your test suite to run every hour? Newman can be used to schedule tests to run hourly, daily or weekly automatically in combination with the awesome Unix scheduler **CRON**.
 
 Lets setup a simple script called `run_newman` to run our tests
 ```bash
 #!/bin/bash
 
-timestamp=$(date +"%s") 
+timestamp=$(date +"%s")
 collection=/var/www/myapp/tests/collection.json
 env=/var/www/myapp/tests/envfile.json
 
@@ -202,7 +210,7 @@ Make it an executable
 $ chmod +x run_newman
 ```
 
-To run Newman every hour, run `crontab -e` and enter the following - 
+To run Newman every hour, run `crontab -e` and enter the following -
 ```bash
 0 * * * * /path/to/run_newman
 ```
