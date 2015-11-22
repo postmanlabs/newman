@@ -109,8 +109,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         return finalArray;
     },
 
-    _getNextRequest: function () {
-        if (this.runMode === "default" || !Globals.nextRequestName) {
+    _getNextRequest: function() {
+        if(this.runMode === "default") {
             return this.getFromQueue();
         }
         else if (!Globals.nextRequestName) {
