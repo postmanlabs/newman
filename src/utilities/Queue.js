@@ -14,6 +14,9 @@ var Queue = jsface.Class({
     getFromQueue: function () {
         return this._queue.shift();
     },
+    getFromQueueWithoutRemoving: function() {
+        return _und.clone(this._queue[0]);
+    },
     purgeAllItemsInQueue: function () {
         this._queue.splice(0, this._queue.length);
     },
