@@ -236,7 +236,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if (Globals.responseEncoding) {
             RequestOptions.encoding = Globals.responseEncoding;
         }
-
+        RequestOptions.gzip = true;
         this._setBodyData(RequestOptions, request);
         return RequestOptions;
     },

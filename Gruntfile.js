@@ -44,7 +44,8 @@ module.exports = function (grunt) {
                 'bin/newman -c tests/integ_tests/redirectTest.json.postman_collection -s -R && ' +
                 'bin/newman -c tests/integ_tests/requestNameInScript.json.postman_collection -s && ' +
                 'bin/newman -c tests/integ_tests/multipleFormValues.json.postman_collection -s &&' +
-                'bin/newman -c tests/integ_tests/randomIntC.json -s -W'
+                'bin/newman -c tests/integ_tests/randomIntC.json -s -W &&' +
+                'bin/newman -c tests/integ_tests/newmangziptest.json.postman_collection -s'
             }
         }
     });
