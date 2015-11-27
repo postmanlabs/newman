@@ -76,21 +76,17 @@ var PreRequestScriptProcessor = jsface.Class({
         setEnvHack += "postman.clearEnvironmentVariables = function() {postman.clearEnvironmentVariablesReal();environment={};};";
 
         //to ensure that JSON.parse throws the right error
-        setEnvHack += 'var oldJsonParser=JSON.parse;JSON.parse = function(str,modifierFunction) { \
-        try { \
-            if(typeof modifierFunction === "function") { \
-                return oldJsonParser(str, modifierFunction); \
-            } \
-            else { \
-                return oldJsonParser(str); \
-            } \
-        } \
-        catch(e) { \
-            throw { \
-                message: "There was an error during JSON.parse(): " + e.message \
-            }; \
-        } \
-        };';
+        setEnvHack += '(function () {                               \
+        var nativeJSONParser = JSON.parse;                          \
+        JSON.parse = function () {                                  \
+        try {                                                       \
+                return nativeJSONParser.apply(JSON, arguments);     \
+            } catch (e) {                                           \
+                e && (e.message = "Encountered an error during JSON.parse(): " + e.message);\
+                throw e;                                            \
+            }                                                       \
+        };                                                          \
+        }());';
 
         requestScript = sweet + 'String.prototype.has = function(value){ return this.indexOf(value) > -1};' + setEnvHack + requestScript;
 

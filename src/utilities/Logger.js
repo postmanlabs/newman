@@ -128,7 +128,7 @@ var Logger = jsface.Class([EventEmitter], {
     },
 
     exceptionError: function (err) {
-        this.error("    " + "EXCEPTION - " + err + "\n");
+        this.error((err.message || err));
         if (Globals.stopOnError) {
             if (Globals.asLibrary) {
                 this.emit('iterationRunnerOver', 1);

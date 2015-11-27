@@ -109,8 +109,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         return finalArray;
     },
 
-    _getNextRequest: function () {
-        if (this.runMode === "default" || !Globals.nextRequestName) {
+    _getNextRequest: function() {
+        if(this.runMode === "default") {
             return this.getFromQueue();
         }
         else if (!Globals.nextRequestName) {
@@ -236,7 +236,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if (Globals.responseEncoding) {
             RequestOptions.encoding = Globals.responseEncoding;
         }
-
+        RequestOptions.gzip = true;
         this._setBodyData(RequestOptions, request);
         return RequestOptions;
     },
