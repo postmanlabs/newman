@@ -12,6 +12,7 @@ var ErrorHandler = jsface.Class({
     requestError: function (request, error) {
         log.error("RequestError: [" + request.id + "] '" + request.name + "' terminated. Complete error: \n");
         log.error(error.stack);
+        log.error('\n');
     },
 
     responseError: function (response) {
