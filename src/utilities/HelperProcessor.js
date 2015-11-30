@@ -4,7 +4,7 @@ var jsface = require('jsface'),
     Helpers = require('./Helpers'),
     CryptoJS = require('crypto-js'),
     OAuth = require('./oauth.js'),
-    Hawk = require('hawk')
+    Hawk = require('hawk'),
     btoa = require("btoa"),
     _und = require('underscore');
 
