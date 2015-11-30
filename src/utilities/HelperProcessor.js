@@ -4,6 +4,7 @@ var jsface = require('jsface'),
     Helpers = require('./Helpers'),
     CryptoJS = require('crypto-js'),
     OAuth = require('./oauth.js'),
+    Hawk = require('hawk'),
     btoa = require("btoa"),
     _und = require('underscore');
 
@@ -28,6 +29,9 @@ var HelperProcessor = jsface.Class({
         else if (request.currentHelper === "oAuth1") {
             this._useOAuth1(request);
         }
+        else if (request.currentHelper === "hawkAuth") {
+            this._useHawkAuth(request);
+        }
     },
 
     _useBasicAuth: function (request) {
@@ -42,6 +46,43 @@ var HelperProcessor = jsface.Class({
         headerObj[authHeaderKey] = encodedString;
         var headerString = Helpers.generateHeaderStringFromObj(headerObj);
         request.transformed.headers = headerString;
+    },
+
+    _useHawkAuth: function (request) {
+        var authHeaderKey = "Authorization";
+        var hawk_id = request.transformed.helperAttributes.hawk_id;
+        var hawk_key = request.transformed.helperAttributes.hawk_key;
+        var algorithm = request.transformed.helperAttributes.algorithm;
+        var user = request.transformed.helperAttributes.user || undefined;
+        var nonce = request.transformed.helperAttributes.nonce || Hawk.utils.randomString(6);
+        var ext = request.transformed.helperAttributes.ext || undefined;
+        var app = request.transformed.helperAttributes.app || undefined;
+        var dlg = request.transformed.helperAttributes.dlg || undefined;
+        var timestamp = request.transformed.helperAttributes.timestamp || undefined;
+
+        var options = {
+            credentials: {
+                id: hawk_id,
+                key: hawk_key,
+                algorithm: algorithm
+            },
+            nonce: nonce,
+            ext: ext,
+            app: app,
+            dlg: dlg,
+            timestamp: timestamp,
+            user: user
+        };
+
+        var result = Hawk.client.header(request.transformed.url, request.method, options);
+        if (result.err) {
+            Errors.requestError(request, new Error('Unable to compute Hawk Auth parameters: ' + result.err));
+            return;
+        }
+
+        var headerObj = Helpers.generateHeaderObj(request.transformed.headers);
+        headerObj[authHeaderKey] = result.field;
+        request.transformed.headers = Helpers.generateHeaderStringFromObj(headerObj);
     },
 
     _useDigestAuth: function (request) {

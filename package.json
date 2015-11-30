@@ -53,6 +53,7 @@
     "commander": "2.x.x",
     "crypto-js": "^3.1.5",
     "dot": "1.0.3",
+    "hawk": "3.1.2",
     "jquery": "2.1.1",
     "jsface": "2.2.x",
     "json5": "^0.4.0",
