@@ -25,26 +25,35 @@ var Helpers = jsface.Class({
         }
     },
 
+    fileExists: function (path) {
+        try {
+            return fs.statSync(path);
+        }
+        catch (e) {
+            console.log(e.stack || e);
+        }
+    },
+
     validateDataFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("The data file passed is not a valid json / csv file");
         }
     },
 
     validateCollectionFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
         }
     },
 
     validateEnvironmentFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("Please specify a valid Postman environment file");
         }
     },
 
     validateGlobalFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("Please specify a valid Postman globals file");
         }
     },

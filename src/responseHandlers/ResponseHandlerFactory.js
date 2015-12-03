@@ -22,10 +22,12 @@ var ResponseHandlerFactory = jsface.Class({
             return DefaultResponseHandler;
         } else {
             var filePath = path.join(__dirname, options.responseHandler.split(".")[0] + '.js');
-            if (!fs.existsSync(filePath)) {
-                return false;
-            } else {
+            try {
+                fs.statSync(filePath); // make sure the file exists
                 return require(filePath);
+            }
+            catch (e) {
+                return false;
             }
         }
     }
