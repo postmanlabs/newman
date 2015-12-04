@@ -23,11 +23,18 @@ require('sugar');
 var PreRequestScriptProcessor = jsface.Class({
     $singleton: true,
     _results: [],
+    jqLoaded: false,
+    requestToRun: null,
 
 
     main: function () {
+        var self = this;
         jsdom.env("<html><body></body></html>", function (err, window) {
             _jq = require('jquery')(window);
+            self.jqLoaded = true;
+            if (self.requestToRun) {
+                self.runPreRequestScript(self.requestToRun);
+            }
         });
     },
 
@@ -37,6 +44,10 @@ var PreRequestScriptProcessor = jsface.Class({
      * @param {Object} request: the request object
      */
     runPreRequestScript: function (request) {
+        if (!this.jqLoaded) {
+            this.requestToRun = request;
+            return {};
+        }
         var requestScript = this._getScriptForRequest(request);
         if (requestScript) {
             var sandbox = this._createSandboxedEnvironment(request);
