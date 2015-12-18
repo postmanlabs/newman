@@ -57,7 +57,7 @@ var HelperProcessor = jsface.Class({
         var signedParams = aws4.sign({
             host: parsedURL.hostname,
             path: parsedURL.path,
-            service: 'execute-api',
+            service: properties.serviceName || 'execute-api',
             region: properties.region,
             method: request.method,
             body: body,
