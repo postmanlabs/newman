@@ -42,6 +42,7 @@
   "preferGlobal": true,
   "dependencies": {
     "atob": "1.1.2",
+    "aws4": "1.1.0",
     "backbone": "^1.1.2",
     "btoa": "1.1.2",
     "cli-color": "0.2.x",

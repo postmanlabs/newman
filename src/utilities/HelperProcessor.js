@@ -6,6 +6,9 @@ var jsface = require('jsface'),
     OAuth = require('./oauth.js'),
     Hawk = require('hawk'),
     btoa = require("btoa"),
+    aws4 = require('aws4'),
+    url	 = require('url'),
+    queryString = require('querystring'),
     _und = require('underscore');
 
 /**
@@ -32,6 +35,46 @@ var HelperProcessor = jsface.Class({
         else if (request.currentHelper === "hawkAuth") {
             this._useHawkAuth(request);
         }
+        else if(request.currentHelper==="awsSigV4") {
+			this._useAWSSigV4Auth(request)
+		}
+    },
+
+    _useAWSSigV4Auth: function(request) {
+        var properties = request.transformed.helperAttributes;
+        var credentials = {
+            accessKeyId: properties.accessKey,
+            secretAccessKey: properties.secretKey
+        };
+        var parsedURL = url.parse(request.transformed.url);
+        var allHeaders = Helpers.generateHeaderObj(request.transformed.headers);
+        var body = this._getRequestBody(request);
+
+        if (allHeaders['x-amz-date']) { // The AWS signing library hates lowercase header
+            allHeaders['X-Amz-Date'] = allHeaders['x-amz-date'];
+            delete allHeaders['x-amz-date'];
+        }
+        var signedParams = aws4.sign({
+            host: parsedURL.hostname,
+            path: parsedURL.path,
+            service: 'execute-api',
+            region: properties.region,
+            method: request.method,
+            body: body,
+            headers: allHeaders
+        }, credentials);
+
+        var headerObj = _und.extend({}, Helpers.generateHeaderObj(request.transformed.headers), signedParams.headers);
+        var finalHeaders = {};
+
+        // Remove duplicate headers which may have difference cases, e.g: x-amx-date and X-Amz-Date
+        var headerKeys = Object.keys(headerObj);
+        headerKeys.forEach(function (key) {
+            if (key.toLowerCase() !== 'host') {
+                finalHeaders[key.toLowerCase()] = headerObj[key];
+            }
+        });
+        request.transformed.headers = Helpers.generateHeaderStringFromObj(finalHeaders);
     },
 
     _useBasicAuth: function (request) {
@@ -276,17 +319,8 @@ var HelperProcessor = jsface.Class({
         var i;
         if (request.method.toLowerCase() === "post" || request.method.toLowerCase() === "put") {
             if (request.dataMode === "urlencoded") {
-                numParams = request.transformed.data.length;
-                params = request.transformed.data;
-                retval = "";
-                for (i = 0; i < numParams; i++) {
-                    retVal += encodeURIComponent(params[i].key) + "=" + encodeURIComponent(params[i].value) + "&";
-                    if (i === numParams - i) {
-                        retVal = retVal.substring(0, retVal.length - 1);
-                    }
-                }
-                return retVal;
-
+                params = this._parseFormParams(request.transformed.data);
+                return queryString.stringify(params);
             }
             else if (request.dataMode === "params") {
                 //console.log("Problem - what do we do for the separator? :S");
@@ -309,9 +343,7 @@ var HelperProcessor = jsface.Class({
                 return retVal;
             }
             else if (request.dataMode === "raw") {
-                console.log("Raw");
-                var dataToSend = this.htmlEscape(request.data);
-                console.log(dataToSend);
+                return request.rawModeData
             }
             else {
                 return false;
@@ -596,8 +628,30 @@ var HelperProcessor = jsface.Class({
             .replace(/'/g, '&#39;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
-    }
+    },
 
+    _parseFormParams: function (reqData) {
+        var params = {};
+        reqData.sort(function (a, b) {
+            return (a.key <= b.key) ? -1 : 1;
+        });
+        reqData.forEach(function (paramData) {
+            if (paramData.enabled) {
+                // Check if this is a duplicate
+                if (params[paramData.key]) {
+                    var original = params[paramData.key];
+                    if (Array.isArray(original)) {
+                        original.push(paramData.value);
+                    } else {
+                        params[paramData.key] = [original].concat(paramData.value);
+                    }
+                } else {
+                    params[paramData.key] = paramData.value;
+                }
+            }
+        });
+        return params;
+    }
 });
 
 module.exports = HelperProcessor;
