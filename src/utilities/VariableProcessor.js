@@ -142,6 +142,9 @@ var VariableProcessor = jsface.Class({
     },
 
     _traverseJson: function (o, func, pairObject) {
+        if(!o) {
+            return;
+        }
         if (o._visited) {
             //To prevent traversing cycling objects
             return;
