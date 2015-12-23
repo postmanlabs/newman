@@ -90,13 +90,14 @@ Misc.:
 -k, --insecure              Disable strict ssl
 -l, --tls                   Use TLSv1
 -x, --exitCode              Continue running tests even after a failure, but exit with code=1
--W, --whiteScreen			Black text for white screen
+-W, --whiteScreen           Black text for white screen
 
 
 Output:
--o, --outputFile [file]     Path to file where output should be written. [file]
--t, --testReportFile [file] Path to file where results should be written as JUnit XML [file]
--H, --html                  Export a HTML report to a specified file [file]
+-o, --outputFile [file]                 Path to file where output should be written. [file]
+-t, --testReportFile [file]             Path to file where results should be written as JUnit XML [file]
+-H, --html                              Export a HTML report to a specified file [file]
+-O, --outputFileVerbose [file]          Path to file where full request and responses should be logged [file]
 
 ```
 
