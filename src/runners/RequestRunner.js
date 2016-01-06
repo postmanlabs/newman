@@ -265,6 +265,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                 if (dataObj.enabled === false) {
                     return;
                 }
+                if(dataObj.key == null) {
+                    dataObj.key = "";
+                }
+                if(dataObj.value == null) {
+                    dataObj.value = "";
+                }
                 if (dataObj.type === 'text') {
                     form.append(dataObj.key, dataObj.value);
                 } else if (dataObj.type === 'file') {
