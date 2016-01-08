@@ -583,7 +583,7 @@ var HelperProcessor = jsface.Class({
         var bodyParams;
 
         if (method.toLowerCase() === "post" || method.toLowerCase() === "put") {
-            bodyParams = request.params;
+            bodyParams = request.transformed.data;
 
             if (typeof bodyParams === "undefined") {
                 bodyParams = [];

@@ -69,15 +69,17 @@ Utility:
 -V, --version               output the version number
 
 Basic setup:
--c, --collection [file]     Specify a Postman collection as a JSON [file]
--u, --url [url]             Specify a Postman collection as a [url]
--f, --folder [folderName]   Specify a single folder to run from a collection. To be used with -c or -u.
--e, --environment [file]    Specify a Postman environment as a JSON [file]
--d, --data [file]           Specify a data file to use either json or csv
--g, --global [file]         Specify a Postman globals file as JSON [file]
--n, --number [number]       Define the number of iterations to run
--i, --import [file]         Import a Postman backup file, and save collections, environments, and globals. [file]
--p, --pretty                (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
+-c, --collection [file]     	Specify a Postman collection as a JSON [file]
+-u, --url [url]             	Specify a Postman collection as a [url]
+-f, --folder [folderName]   	Specify a single folder to run from a collection. To be used with -c or -u.
+-e, --environment [file]    	Specify a Postman environment as a JSON [file]
+-d, --data [file]           	Specify a data file to use either json or csv
+-g, --global [file]         	Specify a Postman globals file as JSON [file]
+-n, --number [number]       	Define the number of iterations to run
+-i, --import [file]         	Import a Postman backup file, and save collections, environments, and globals. [file]
+-p, --pretty                	(Use with -i) Enable pretty-print while saving imported collections, environments, and globals
+-G, --exportGlobals [file]      Specify an output file to dump Globals before exiting [file]
+-E, --exportEnvironment [file]  Specify an output file to dump the Postman environment before exiting [file]
 
 Request options:
 -y, --delay [number]            Specify a delay (in ms) between requests [number]
@@ -90,13 +92,14 @@ Misc.:
 -k, --insecure              Disable strict ssl
 -l, --tls                   Use TLSv1
 -x, --exitCode              Continue running tests even after a failure, but exit with code=1
--W, --whiteScreen			Black text for white screen
+-W, --whiteScreen           Black text for white screen
 
 
 Output:
--o, --outputFile [file]     Path to file where output should be written. [file]
--t, --testReportFile [file] Path to file where results should be written as JUnit XML [file]
--H, --html                  Export a HTML report to a specified file [file]
+-o, --outputFile [file]                 Path to file where output should be written. [file]
+-t, --testReportFile [file]             Path to file where results should be written as JUnit XML [file]
+-H, --html                              Export a HTML report to a specified file [file]
+-O, --outputFileVerbose [file]          Path to file where full request and responses should be logged [file]
 
 ```
 
