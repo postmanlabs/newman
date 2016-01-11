@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####1.2.28 (January 08, 2016)
+* Fixed handling of null values to be compatible with Postman
+* Fixed a bug in handling of OAuth
+
 ####1.2.27 (December 18, 2015)
 * Set default service name to API Gateway for AWS Authentication
 
