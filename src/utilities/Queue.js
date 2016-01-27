@@ -1,4 +1,5 @@
-var jsface = require("jsface");
+var jsface = require("jsface"),
+    _und   = require('underscore');
 
 /**
  * @name Queue
@@ -24,6 +25,9 @@ var Queue = jsface.Class({
 	},
 	getItemWithIndex: function(index) {
 		return this._queue.splice(index,1);
+	},
+	getItemWithIndexWithoutRemoval: function(index) {
+		return _und.clone(this._queue[index]);
 	}
 });
 

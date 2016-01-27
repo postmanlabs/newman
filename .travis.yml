@@ -1,5 +1,14 @@
 language: node_js
 node_js:
-  - "0.10"
+- '0.10'
+- '0.12'
 before_install: npm install -g grunt-cli
 install: npm install
+# deploy:
+#   provider: npm
+#   email: help@getpostman.com
+#   api_key:
+#     secure: lL/1+mZAroisLT8OCF4vmPVvUz7WDjQbtIMLlbm4aHoYCu8Yg/dY00RCUZsdz0FluMu7C+hgU2nNcKUu5NJe8ve5sLY+ghaK1RAuzyHv055fhbYcw6wcMHs5nBgZW+FSpv+E/jhiWH6iWzj7bcsIDC2NZBdfDV8oOafqJFUp7eU=
+#   on:
+#     tags: true
+#     repo: postmanlabs/newman

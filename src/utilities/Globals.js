@@ -21,6 +21,7 @@ var Globals = jsface.Class({
 		this.envJson = options.envJson || {};
 		this.iterationNumber = 1;
 		this.outputFile = options.outputFile || '';
+		this.outputFileVerbose = options.outputFileVerbose || '';
 		this.testReportFile = options.testReportFile || '';
 		this.globalJson = options.globalJSON || [];
         this.dataJson = [];
@@ -36,6 +37,12 @@ var Globals = jsface.Class({
 		this.iterationCount = options.iterationCount || 1;
 		this.html = options.html || false;
 		this.responseEncoding = options.responseEncoding;
+		this.avoidRedirects = options.avoidRedirects;
+		this.whiteScreen = options.whiteScreen;
+		this.recurseLimit = 10;
+		if(typeof options.recurseLimit !== "undefined") {
+			this.recurseLimit = options.recurseLimit;
+		}
 	}
 });
 

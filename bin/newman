@@ -35,6 +35,7 @@ function parseArguments() {
 		.option('-G, --exportGlobals [file]', 'Specify an output file to dump Globals before exiting [file]', null)
 		.option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
 		.option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for requests", null)
+		.option('-R, --avoidRedirects', "Prevents Newman from automatically following redirects", null)
 		.option('-s, --stopOnError', "Stops the runner with code=1 when a test case fails", null)
 		.option('-j, --noSummary', "Doesn't show the summary for each iteration", null)
 		.option('-n, --number [number]', 'Define the number of iterations to run', null)
@@ -44,10 +45,13 @@ function parseArguments() {
 		.option('-N, --encoding [encoding-type]', 'Specify an encoding for the response. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex', null)
 		.option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
 		.option('-o, --outputFile [file]', 'Path to file where output should be written [file]', null)
+		.option('-O, --outputFileVerbose [file]', 'Path to file where full request and responses should be logged [file]', null)
 		.option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML [file]', null)
 		.option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals [file] (Incompatible with any option except pretty)', null)
 		.option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals', null)
-		.option('-H, --html [file]', 'Export a HTML report to a specified file [file]', null);
+		.option('-H, --html [file]', 'Export a HTML report to a specified file [file]', null)
+		.option('-W, --whiteScreen', 'Black text for white screen', null)
+		.option('-L, --recurseLimit [limit]', 'Do not run recursive resolution more than [limit] times. Default = 10. Using 0 will prevent any varialbe resolution', null);
 
 	program.on('--help', function() {
 		console.log('  Newman is a command-line collection runner for Postman. You must specify a collection file or a collection URL to run newman');
@@ -59,11 +63,12 @@ function parseArguments() {
 		console.log('    newman -u POSTMAN_COLLECTION -e POSTMAN_ENVIRONMENT');
 		console.log('    newman -c POSTMAN_COLLECTION -f SAMPLE_FOLDER');
 		console.log('');
-		console.log('  For more documentation, issues and examples head over to https://github.com/a85/Newman');
+		console.log('  For more documentation, issues and examples head over to https://github.com/postmanlabs/newman');
 		console.log('');
 	});
 
 	program.parse(process.argv);
+
 
 	if(program.import) {
 		Importer.importFile(program.import, program.pretty);
@@ -114,7 +119,7 @@ function main() {
 	}
 
 	if (program.environment) {
-		// in case of environment variable set the envJson property 
+		// in case of environment variable set the envJson property
 		// on the options object
 		try {
 			newmanOptions.envJson = JSON5.parse(fs.readFileSync(program.environment, 'utf8'));
@@ -132,12 +137,22 @@ function main() {
 
 	newmanOptions.responseEncoding = program.encoding;
 
+	newmanOptions.avoidRedirects = program.avoidRedirects;
+
 	newmanOptions.summary = !program.noSummary;
 
 	newmanOptions.html = program.html;
 
 	if (program.outputFile) {
 		newmanOptions.outputFile = program.outputFile;
+	}
+
+	if (program.recurseLimit) {
+		newmanOptions.recurseLimit = parseInt(program.recurseLimit);
+	}
+
+	if (program.outputFileVerbose) {
+		newmanOptions.outputFileVerbose = program.outputFileVerbose;
 	}
 
 	if (program.testReportFile) {
@@ -191,6 +206,8 @@ function main() {
 	newmanOptions.noColor = !!program.noColor;
 	newmanOptions.strictSSL = !program.insecure;
 	newmanOptions.asLibrary = false;
+	newmanOptions.exitCode = !!program.exitCode;
+	newmanOptions.whiteScreen = !!program.whiteScreen;
 
 	if (program.collection) {
 		var collectionJson;
@@ -202,9 +219,7 @@ function main() {
 			Errors.terminateWithError("The collection file " + program.collection + " could not be parsed.");
 		}
 		Newman.execute(collectionJson, newmanOptions, function (exitCode) {
-			if (program.exitCode) {
-				process.exit(exitCode);
-			}
+			process.exit(exitCode);
 		});
 	} else {
 		// get collection from url
@@ -213,9 +228,7 @@ function main() {
 				Errors.terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
 			}
 			Newman.execute(data.body, newmanOptions, function(exitCode) {
-				if(program.exitCode) {
-					process.exit(exitCode);
-				}
+				process.exit(exitCode);
 			});
 		});
 	}

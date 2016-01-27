@@ -113,22 +113,22 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         if(this.runMode === "default" || !Globals.nextRequestName) {
             return this.getFromQueue();
         }
+        else if(!Globals.nextRequestName) {
+            return this.getFromQueueWithoutRemoving();
+        }
         else if(Globals.nextRequestName === "none") {
             return null;
         }
         else {
             var queue = this.getAllItems();
-            var index = 0;
             var indexToUse = -1;
-            _und.each(queue, function(request) {
-                if(request.name === Globals.nextRequestName) {
-                    indexToUse = index;
-                    return false;
+            for(var i=0;i<queue.length;i++) {
+                if(queue[i].name === Globals.nextRequestName) {
+                    indexToUse = i;
+                    break;
                 }
-                index++;
-            });
-            var requestToSend = this.getItemWithIndex(indexToUse)[0];
-            Globals.nextRequestName = "none";
+            }
+            var requestToSend = this.getItemWithIndexWithoutRemoval(indexToUse);
             return requestToSend;
         }
     },
@@ -152,7 +152,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 				}
 			}
 
-            //making sure empty arrays are not sent. This meeses up the request library
+            //making sure empty arrays are not sent. This messes up the request library
             if(request.data instanceof Array && request.data.length===0) {
                 request.data = "";
             }
@@ -230,6 +230,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		RequestOptions.method = request.method;
 		RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
 		RequestOptions.followAllRedirects = false;
+        RequestOptions.followRedirect = !Globals.avoidRedirects;
 		RequestOptions.jar = true;
 		RequestOptions.timeout = this.requestTimeout;
         if(Globals.responseEncoding) {
@@ -243,12 +244,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 	// Takes request as the input, parses it for different types and
 	// sets it as the request body for the unirest request.
 	_setBodyData: function(RequestOptions, request) {
+        var self = this;
+
 		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1) {
 			if (request.dataMode === "raw") {
 				RequestOptions.body = request.transformed.data;
 			} else if (request.dataMode === "urlencoded") {
 				var reqData = request.transformed.data;
-				RequestOptions.form = _und.object(_und.pluck(reqData, "key"), _und.pluck(reqData, "value"));
+                RequestOptions.form = self._parseFormParams(reqData);
 			}
 		}
 	},
@@ -258,7 +261,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1 && request.dataMode === "params" && request.data.length > 0) {
 			var form = unireq.form();
 			_und.each(request.data, function(dataObj) {
-				// TODO: @viig99 add other types like File Stream, Blob, Buffer.
+                //do not send form fields if they're disabled
+                if(dataObj.enabled === false) {
+                    return;
+                }
 				if (dataObj.type === 'text') {
 					form.append(dataObj.key, dataObj.value);
 				} else if (dataObj.type === 'file') {
@@ -292,10 +298,32 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 		mergedArray.values = Helpers.augmentDataArrays(Globals.globalJson.values,Globals.envJson.values);
 		mergedArray.values = Helpers.augmentDataArrays(mergedArray.values, Globals.dataJson.values);
 
-		VariableProcessor.processRequestVariables(request, {
-			envJson: mergedArray
-		});
-	}
+        VariableProcessor.processRequestVariables(request, {
+            envJson: mergedArray
+        });
+    },
+
+    _parseFormParams: function (reqData) {
+        var params = {};
+        if(reqData instanceof Array) { //may also be a string for empty array
+            reqData.forEach(function (paramData) {
+                if (paramData.enabled) {
+                    // Check if this is a duplicate
+                    if (params[paramData.key]) {
+                        var original = params[paramData.key];
+                        if (Array.isArray(original)) {
+                            original.push(paramData.value);
+                        } else {
+                            params[paramData.key] = [original].concat(paramData.value);
+                        }
+                    } else {
+                        params[paramData.key] = paramData.value;
+                    }
+                }
+            });
+        }
+        return params;
+    }
 });
 
 module.exports = RequestRunner;

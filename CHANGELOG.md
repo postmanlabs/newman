@@ -1,5 +1,38 @@
 ##CHANGELOG
 
+####1.2.23 (October 20, 2015)
+* Empty data array fields don't cause errors
+
+####1.2.22 (October 18, 2015)
+* Adding option to limit recursive resolution depth
+
+####1.2.21 (September 24, 2015)
+* Adding --whiteScreen flag
+* Adding option to print all requests and responses in a file
+
+####1.2.20 (September 24, 2015)
+* Adding -R option to block redirects
+* Adding sugarJS number prototype
+* Adding clearVariables sandbox function
+
+####1.2.19 (September 14, 2015)
+* Fix for https://github.com/postmanlabs/postman-app-support/issues/1329 (Backslashes in variables)
+* JSON.parse shows parsing errors, if any
+
+####1.2.18 (August 7, 2015)
+* When used as a library, the callback returns the exit code correctly
+* Form fields that are disabled are not sent
+* CryptoJS (https://code.google.com/p/crypto-js/) available in the test/pre-request script sandbox
+* Repository link updated in CLI
+
+####1.2.17 (July 1, 2015)
+* -x / --exitCode works correctly in standalone/library mode
+
+####1.2.16 (June 18, 2015)
+* Custom paths to export environment/global files after the run
+* Support for custom request timeouts
+* Jenkins-compatible JUnit output
+
 ####1.2.15 (March 19, 2015)
 * Support for authentication helpers (Basic, Digest, OAuth1.0)
 
