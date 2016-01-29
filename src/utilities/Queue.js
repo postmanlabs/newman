@@ -8,11 +8,9 @@ var jsface = require("jsface"),
  */
 var Queue = jsface.Class({
     _queue: [],
+    _currentIndex: -1,
     addToQueue: function (obj) {
         this._queue.push(obj);
-    },
-    getFromQueue: function () {
-        return this._queue.shift();
     },
     getFromQueueWithoutRemoving: function() {
         return _und.clone(this._queue[0]);
@@ -30,8 +28,16 @@ var Queue = jsface.Class({
         return this._queue.splice(index, 1);
     },
     getItemWithIndexWithoutRemoval: function (index) {
+        this._currentIndex = index;
         return _und.clone(this._queue[index]);
-    }
+    },
+    getNextItemFromQueue: function() {
+        this._currentIndex++;
+        if(this._currentIndex >= this._queue.length) {
+            return null;
+        }
+        return this._queue[this._currentIndex];
+    },
 });
 
 module.exports = Queue;
