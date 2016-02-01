@@ -10,9 +10,9 @@ var Symbols = jsface.Class({
 });
 
 // symbols for logging
-Symbols.symbols =  {
+Symbols.symbols = {
     err: (process.platform === "win32") ? "\u00D7 " : "✗ ",
-    ok:  (process.platform === "win32") ? "\u221A " : "✔ "
+    ok: (process.platform === "win32") ? "\u221A " : "✔ "
 };
 
 module.exports = Symbols;

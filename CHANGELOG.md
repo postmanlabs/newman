@@ -1,5 +1,24 @@
 ##CHANGELOG
 
+####1.2.28 (January 08, 2016)
+* Fixed handling of null values to be compatible with Postman
+* Fixed a bug in handling of OAuth
+
+####1.2.27 (December 18, 2015)
+* Set default service name to API Gateway for AWS Authentication
+
+####1.2.26 (December 18, 2015)
+* Fixed json traversal https://github.com/postmanlabs/newman/issues/301
+* Added support for AWS Signature v4 authentication
+
+####1.2.25 (December 01, 2015)
+* Added support for Hawk Authentication
+
+####1.2.24 (November 27, 2015)
+* Added `name` and `description` to request object in the Sandbox
+* Fixed null OAuth params https://github.com/postmanlabs/postman-app-support/issues/1543
+* Fixed a bug where GZip requests failed for no reason
+
 ####1.2.23 (October 20, 2015)
 * Empty data array fields don't cause errors
 

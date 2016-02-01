@@ -1,30 +1,31 @@
 var jsface = require('jsface');
 var packageVersion = require('../../package.json').version;
 
-/** 
+/**
  * @name Globals
  * @namespace
  * @classdesc Globals to be used throught Newman.
  */
 var Globals = jsface.Class({
-	$singleton: true,
+    $singleton: true,
 
-	newmanVersion: packageVersion,
+    newmanVersion: packageVersion,
 
-	/**
-	 * Used to add the Globals used through out the app
-	 * @param {Object} requestJSON Request JSON.
-	 * @param {Object} options Newman Options.
-	 */
-	addEnvironmentGlobals: function(requestJSON, options) {
-		this.requestJSON = requestJSON;
-		this.envJson = options.envJson || {};
-		this.iterationNumber = 1;
-		this.outputFile = options.outputFile || '';
-		this.outputFileVerbose = options.outputFileVerbose || '';
-		this.testReportFile = options.testReportFile || '';
-		this.globalJson = options.globalJSON || [];
+    /**
+     * Used to add the Globals used through out the app
+     * @param {Object} requestJSON Request JSON.
+     * @param {Object} options Newman Options.
+     */
+    addEnvironmentGlobals: function (requestJSON, options) {
+        this.requestJSON = requestJSON;
+        this.envJson = options.envJson || {};
+        this.iterationNumber = 1;
+        this.outputFile = options.outputFile || '';
+        this.outputFileVerbose = options.outputFileVerbose || '';
+        this.testReportFile = options.testReportFile || '';
+        this.globalJson = options.globalJSON || [];
         this.dataJson = [];
+<<<<<<< HEAD
 		this.stopOnError = options.stopOnError;
 		this.noColor = options.noColor;
 		this.asLibrary = options.asLibrary;
@@ -44,6 +45,25 @@ var Globals = jsface.Class({
 			this.recurseLimit = options.recurseLimit;
 		}
 	}
+=======
+        this.stopOnError = options.stopOnError;
+        this.noColor = options.noColor;
+        this.asLibrary = options.asLibrary;
+        this.strictSSL = options.strictSSL || true;
+        this.exitCode = 0;
+        this.updateMessage = "";
+        this.folder = options.folderName || false;
+        this.iterationCount = options.iterationCount || 1;
+        this.html = options.html || false;
+        this.responseEncoding = options.responseEncoding;
+        this.avoidRedirects = options.avoidRedirects;
+        this.whiteScreen = options.whiteScreen;
+        this.recurseLimit = 10;
+        if (typeof options.recurseLimit !== "undefined") {
+            this.recurseLimit = options.recurseLimit;
+        }
+    }
+>>>>>>> upstream/develop
 });
 
 module.exports = Globals;

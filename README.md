@@ -2,19 +2,28 @@
 
 # Newman [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) <a href="https://gitter.im/postmanlabs/newman" target="_blank"><img src="https://badges.gitter.im/Join%20Chat.svg" /></a>
 
-
-
 Newman is a command-line collection runner for [Postman](http://getpostman.com). It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
 Newman maintains feature parity with Postman and allows you to run collections just the way they are executed inside the collection runner in Postman.
 
 [![NPM](https://nodei.co/npm/newman.png?downloads=true)](https://nodei.co/npm-dl/newman/)
 
+
+## Supported Node Versions
+
+| Node Version    | Newman Version | Installation Command         |
+|-----------------|----------------|------------------------------|
+| 0.10.x - 0.12.x | 1.x.x          | `npm install -g newman`      |
+| 4.0+            | 2.x.x+         | `npm install -g newman@beta` |
+
+##### Important Notice about the Beta
+Keeping in line with the [Postman Sandbox](https://www.getpostman.com/docs/sandbox) roadmap, the next major version of Newman Beta (`v3.0.0+`) will drop support for jQuery and Backbone inside the tests. Any tests that you might have, which use these two libraries might break.
+
 ## Getting Started
 Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.
 
 #### Newman Stable
-With that done, Newman is just one command away. 
+With that done, Newman is just one command away.
 ```bash
 $ npm install -g newman # installs Newman globally on your system allowing you to run it from anywhere.
 ```
@@ -61,15 +70,17 @@ Utility:
 -V, --version               output the version number
 
 Basic setup:
--c, --collection [file]     Specify a Postman collection as a JSON [file]
--u, --url [url]             Specify a Postman collection as a [url]
--f, --folder [folderName]   Specify a single folder to run from a collection. To be used with -c or -u.
--e, --environment [file]    Specify a Postman environment as a JSON [file]
--d, --data [file]           Specify a data file to use either json or csv
--g, --global [file]         Specify a Postman globals file as JSON [file]
--n, --number [number]       Define the number of iterations to run
--i, --import [file]         Import a Postman backup file, and save collections, environments, and globals. [file]
--p, --pretty                (Use with -i) Enable pretty-print while saving imported collections, environments, and globals
+-c, --collection [file]     	Specify a Postman collection as a JSON [file]
+-u, --url [url]             	Specify a Postman collection as a [url]
+-f, --folder [folderName]   	Specify a single folder to run from a collection. To be used with -c or -u.
+-e, --environment [file]    	Specify a Postman environment as a JSON [file]
+-d, --data [file]           	Specify a data file to use either json or csv
+-g, --global [file]         	Specify a Postman globals file as JSON [file]
+-n, --number [number]       	Define the number of iterations to run
+-i, --import [file]         	Import a Postman backup file, and save collections, environments, and globals. [file]
+-p, --pretty                	(Use with -i) Enable pretty-print while saving imported collections, environments, and globals
+-G, --exportGlobals [file]      Specify an output file to dump Globals before exiting [file]
+-E, --exportEnvironment [file]  Specify an output file to dump the Postman environment before exiting [file]
 
 Request options:
 -y, --delay [number]            Specify a delay (in ms) between requests [number]
@@ -82,13 +93,14 @@ Misc.:
 -k, --insecure              Disable strict ssl
 -l, --tls                   Use TLSv1
 -x, --exitCode              Continue running tests even after a failure, but exit with code=1
--W, --whiteScreen			Black text for white screen
+-W, --whiteScreen           Black text for white screen
 
 
 Output:
--o, --outputFile [file]     Path to file where output should be written. [file]
--t, --testReportFile [file] Path to file where results should be written as JUnit XML [file]
--H, --html                  Export a HTML report to a specified file [file]
+-o, --outputFile [file]                 Path to file where output should be written. [file]
+-t, --testReportFile [file]             Path to file where results should be written as JUnit XML [file]
+-H, --html                              Export a HTML report to a specified file [file]
+-O, --outputFileVerbose [file]          Path to file where full request and responses should be logged [file]
 
 ```
 
@@ -118,7 +130,7 @@ To provide a different set of data i.e. variables for each iteration you can use
 $ newman -c mycollection.json -d data.json
 ```
 
-The csv file for the above set of variables would look like 
+The csv file for the above set of variables would look like
 ```
 url, user_id, id, token_id
 http://127.0.0.1:5000, 1, 1, 123123123
@@ -156,7 +168,7 @@ newman -i /path/to/Backup.json -p
 **NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.
 
 ## Library
-Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so - 
+Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so -
 
 ```javascript
 var Newman = require('newman');
@@ -181,13 +193,13 @@ Newman.execute(collectionJson, newmanOptions, callback);
 
 
 ## Cron
-Want your test suite to run every hour? Newman can be used to schedule tests to run hourly, daily or weekly automatically in combination with the awesome Unix scheduler **CRON**. 
+Want your test suite to run every hour? Newman can be used to schedule tests to run hourly, daily or weekly automatically in combination with the awesome Unix scheduler **CRON**.
 
 Lets setup a simple script called `run_newman` to run our tests
 ```bash
 #!/bin/bash
 
-timestamp=$(date +"%s") 
+timestamp=$(date +"%s")
 collection=/var/www/myapp/tests/collection.json
 env=/var/www/myapp/tests/envfile.json
 
@@ -202,7 +214,7 @@ Make it an executable
 $ chmod +x run_newman
 ```
 
-To run Newman every hour, run `crontab -e` and enter the following - 
+To run Newman every hour, run `crontab -e` and enter the following -
 ```bash
 0 * * * * /path/to/run_newman
 ```

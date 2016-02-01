@@ -6,12 +6,12 @@ var jsface = require("jsface");
  * @namespace
  */
 var Options = jsface.Class({
-	setOptions: function(opts) {
-		this.opts = opts;
-	},
-	getOptions: function() {
-		return this.opts;
-	}
+    setOptions: function (opts) {
+        this.opts = opts;
+    },
+    getOptions: function () {
+        return this.opts;
+    }
 });
 
 module.exports = Options;

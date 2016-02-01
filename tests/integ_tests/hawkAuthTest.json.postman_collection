@@ -1,0 +1,46 @@
+{
+	"id": "d497d10e-e280-8c83-709a-a4d4ea12ad14",
+	"name": "hawkAuthTest",
+	"description": "",
+	"order": [
+		"951fc3e8-c6b6-5c19-9f69-4e7499b3127f"
+	],
+	"folders": [],
+	"timestamp": 1448876955917,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "951fc3e8-c6b6-5c19-9f69-4e7499b3127f",
+			"headers": "Authorization: Hawk id=\"dh37fgj492je\", ts=\"1448888081\", nonce=\"HoH6Ay\", ext=\"skjdfklsjhdflkjhsdf\", mac=\"moWleO5f/8QbvIiy7oo2zj1bmezhrYwrCkz4BsXg0M4=\"\n",
+			"url": "http://echo.getpostman.com/auth/hawk",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var response = JSON.parse(responseBody); tests['Hawk auth should pass'] = response.status === 'pass';",
+			"currentHelper": "hawkAuth",
+			"helperAttributes": {
+				"hawk_id": "dh37fgj492je",
+				"hawk_key": "werxhqb98rpaxn39848xrunpaw3489ruxnpa98w4rxn",
+				"algorithm": "sha256",
+				"user": "asda",
+				"saveToRequest": true,
+				"nonce": "eFRP2o",
+				"ext": "skjdfklsjhdflkjhsdf",
+				"app": "",
+				"dlg": "",
+				"timestamp": "",
+				"id": "hawk"
+			},
+			"time": 1448888108375,
+			"name": "test hawk auth success",
+			"description": "",
+			"collectionId": "d497d10e-e280-8c83-709a-a4d4ea12ad14",
+			"responses": []
+		}
+	]
+}
