@@ -44,6 +44,7 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
         }, this);
 
         // Start the runner
+        RequestRunner.resetIndex();
         RequestRunner.setDelay(this.opts.delay);
 
         if (!isNaN(this.opts.requestTimeout) && this.opts.requestTimeout % 1 === 0) {

@@ -70,6 +70,10 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         this.addToQueue(request);
     },
 
+    resetIndex: function() {
+        this._currentIndex = -1;
+    },
+
     /**
      * Starts the RequestRunner going to each request in the queue.
      * @memberOf RequestRunner
