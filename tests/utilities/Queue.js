@@ -23,9 +23,9 @@ describe("Queue", function () {
         var b = { b: 1 };
         this.Q.addToQueue(a);
         this.Q.addToQueue(b);
-        var items = this.Q.getFromQueue();
+        var items = this.Q.getFromQueueWithoutRemoving();
         assert.deepEqual(a, items);
-        assert.equal(this.Q._queue.length, 1);
+        assert.equal(this.Q._queue.length, 2);
     });
 
 

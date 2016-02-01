@@ -45,10 +45,6 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         this.requestTimeout = timeout;
     },
 
-    setRunMode: function (runMode) {
-        this.runMode = runMode;
-    },
-
     /**
      * Sets strictSSL
      * @param strictSSL
@@ -110,11 +106,9 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     },
 
     _getNextRequest: function() {
-        if(this.runMode === "default") {
-            return this.getFromQueue();
-        }
-        else if (!Globals.nextRequestName) {
-            return this.getFromQueueWithoutRemoving();
+        if (!Globals.nextRequestName) {
+            //will get the next item based on the index saved in the queue
+            return this.getNextItemFromQueue();
         }
         else if (Globals.nextRequestName === "none") {
             return null;
@@ -129,6 +123,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                 }
             }
             var requestToSend = this.getItemWithIndexWithoutRemoval(indexToUse);
+            Globals.nextRequestName = null;
             return requestToSend;
         }
     },

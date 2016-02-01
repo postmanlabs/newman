@@ -14,9 +14,10 @@ Newman maintains feature parity with Postman and allows you to run collections j
 | Node Version    | Newman Version | Installation Command         |
 |-----------------|----------------|------------------------------|
 | 0.10.x - 0.12.x | 1.x.x          | `npm install -g newman`      |
-| 4.0+            | 2.x.x          | `npm install -g newman@beta` |
+| 4.0+            | 2.x.x+         | `npm install -g newman@beta` |
 
-All versions of Newman currently have the same features. For details about the Beta, read on.
+##### Important Notice about the Beta
+Keeping in line with the [Postman Sandbox](https://www.getpostman.com/docs/sandbox) roadmap, the next major version of Newman Beta (`v3.0.0+`) will drop support for jQuery and Backbone inside the tests. Any tests that you might have, which use these two libraries might break.
 
 ## Getting Started
 Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.

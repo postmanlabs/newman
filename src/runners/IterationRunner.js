@@ -27,7 +27,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         if (!Globals.requestJSON) {
             Globals.requestJSON = requestJSON;
         }
-        this.runMode = requestJSON.runMode || "default";
 
         //check if only a folder has to be run
         if (options.folderName) {
@@ -207,7 +206,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
     _runCollection: function () {
         if (this.collection.length) {
             this._logStatus();
-            var runner = new CollectionRunner(this.collection, this.getOptions(), this.runMode);
+            var runner = new CollectionRunner(this.collection, this.getOptions());
             runner.execute();
         }
     },

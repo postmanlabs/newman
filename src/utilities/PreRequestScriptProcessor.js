@@ -268,6 +268,9 @@ var PreRequestScriptProcessor = jsface.Class({
                     else {
                         return true;
                     }
+                },
+                setNextRequest: function (requestName) {
+                    Globals.nextRequestName = requestName;
                 }
             }
         };
