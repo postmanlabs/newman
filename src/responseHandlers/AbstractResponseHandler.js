@@ -42,8 +42,8 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
             var requestData;
 
             try {
-                requestData = JSON.stringify(_.object(_.pluck(request.transformed.data, "key"),
-                    _.pluck(request.transformed.data, "value")), null, 2);
+                requestData = _.isArray(request.transformed.data) ? JSON.stringify(_.object(_.pluck(request.transformed.data, "key"),
+                    _.pluck(request.transformed.data, "value")), null, 2) : request.transformed.data;
             }
             catch (e) {
                 // Not JSON.
