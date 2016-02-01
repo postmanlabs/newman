@@ -1,10 +1,6 @@
 {
   "name": "newman",
-<<<<<<< HEAD
   "version": "v2.3.0",
-=======
-  "version": "1.2.28",
->>>>>>> upstream/develop
   "author": "Postman Labs <help@getpostman.com",
   "main": "index.js",
   "homepage": "https://github.com/postmanlabs/newman",
