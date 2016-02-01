@@ -27,25 +27,25 @@ var Helpers = jsface.Class({
 
     validateDataFile: function (file) {
         if (!fs.existsSync(file)) {
-            Errors.terminateWithError("The data file passed is not a valid json / csv file");
+            Errors.terminateWithError("Specified file does not exist: " + file);
         }
     },
 
     validateCollectionFile: function (file) {
         if (!fs.existsSync(file)) {
-            Errors.terminateWithError("Please specify a Postman Collection either as a file or a URL");
+            Errors.terminateWithError("Specified collection file does not exist: " + file);
         }
     },
 
     validateEnvironmentFile: function (file) {
         if (!fs.existsSync(file)) {
-            Errors.terminateWithError("Please specify a valid Postman environment file");
+            Errors.terminateWithError("Specified environment file does not exist: " + file);
         }
     },
 
     validateGlobalFile: function (file) {
         if (!fs.existsSync(file)) {
-            Errors.terminateWithError("Please specify a valid Postman globals file");
+            Errors.terminateWithError("Specified globals does not exist: " + file);
         }
     },
 
