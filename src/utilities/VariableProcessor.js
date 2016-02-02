@@ -52,18 +52,21 @@ var VariableProcessor = jsface.Class({
     // updates request properties by the replacing them with function variables
     _processFunctionVariable: function (request) {
         var properties = ["url", "headers", "form", "data", "helperAttributes"];
+
+        request.transformed = request.transformed || {};
+
         _und.each(properties, function (prop) {
             // check if the prop exists
             if (request[prop] !== undefined) {
                 if (typeof request[prop] === "string") {
                     // if string, use directly
-                    request[prop] = this._findReplace(request[prop], this.getFunctionVariables, this.FUNCTION_REGEX);
+                    request.transformed[prop] = this._findReplace(request[prop], this.getFunctionVariables, this.FUNCTION_REGEX);
                 } else {
                     // if not string, stringify it
                     // findReplace, unstringify it and set it
                     var jsonifiedProp = JSON.stringify(request[prop]);
                     var parsedJsonProp = JSON.parse(this._findReplace(jsonifiedProp, this.getFunctionVariables, this.FUNCTION_REGEX));
-                    request[prop] = parsedJsonProp;
+                    request.transformed[prop] = parsedJsonProp;
                 }
             }
         }, this);
@@ -105,9 +108,10 @@ var VariableProcessor = jsface.Class({
     // transforms the request as per the environment json data passed
     _processEnvVariable: function (request, envJson) {
         var kvpairs = envJson.values;
-        var oldThis = this;
+        var oldThis = this,
+            toReplace;
 
-        request.transformed = {};
+        request.transformed = request.transformed || {};
 
         var properties = ["url", "headers", "form", "data", "helperAttributes"];
 
@@ -115,9 +119,12 @@ var VariableProcessor = jsface.Class({
         _und.each(properties, function (prop) {
             // check if the prop exists
             if (request[prop] !== undefined) {
+
+                // If already processed by function vars
+                toReplace = request.transformed[prop] || request[prop];
+
                 if (typeof request[prop] === "string") {
-                    // if string, use directly
-                    request.transformed[prop] = this._findReplace(request[prop], pairObject, this.ENV_REGEX);
+                    request.transformed[prop] = this._findReplace(toReplace, pairObject, this.ENV_REGEX);
                 } else {
                     //The old option of stringify+replace+parse was removed.
                     request.transformed[prop] = _lod.cloneDeep(request[prop]);

@@ -137,6 +137,6 @@ describe("Variable Processor", function () {
             envJson: this.environmentJson
         });
 
-        assert.equal(sampleReq.url, "http://localhost/blog/posts/10");
+        assert.equal(sampleReq.transformed.url, "http://localhost/blog/posts/10");
     });
 });
