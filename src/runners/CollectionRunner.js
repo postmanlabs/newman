@@ -39,12 +39,11 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
         // Sets up the response handler to respond to the requestExecuted event
         this.ResponseHandler.initialize();
 
+        RequestRunner.resetIndex();
         _und.each(this.collection, function (postmanRequest) {
             RequestRunner.addRequest(postmanRequest);
         }, this);
 
-        // Start the runner
-        RequestRunner.resetIndex();
         RequestRunner.setDelay(this.opts.delay);
 
         if (!isNaN(this.opts.requestTimeout) && this.opts.requestTimeout % 1 === 0) {

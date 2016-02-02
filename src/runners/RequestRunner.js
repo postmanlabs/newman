@@ -71,6 +71,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     },
 
     resetIndex: function() {
+        this._queue = [];
         this._currentIndex = -1;
     },
 
