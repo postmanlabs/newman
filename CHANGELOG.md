@@ -1,5 +1,10 @@
 ##CHANGELOG
 
+####1.2.29 (February 02, 2016)
+* Fixed #310 (Better error messages)
+* Fixed #311 (Response body logging in verbose output)
+* Fixed #320 (Variable replacement for special variables "{{$guid}}" etc)
+
 ####1.2.28 (January 08, 2016)
 * Fixed handling of null values to be compatible with Postman
 * Fixed a bug in handling of OAuth
