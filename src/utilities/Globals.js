@@ -25,23 +25,25 @@ var Globals = jsface.Class({
         this.testReportFile = options.testReportFile || '';
         this.globalJson = options.globalJSON || [];
         this.dataJson = [];
-        this.stopOnError = options.stopOnError;
-        this.noColor = options.noColor;
-        this.asLibrary = options.asLibrary;
-        this.strictSSL = options.strictSSL || true;
-        this.exitCode = 0;
-        this.updateMessage = "";
-        this.folder = options.folderName || false;
-        this.iterationCount = options.iterationCount || 1;
-        this.html = options.html || false;
-        this.responseEncoding = options.responseEncoding;
-        this.avoidRedirects = options.avoidRedirects;
-        this.whiteScreen = options.whiteScreen;
-        this.recurseLimit = 10;
-        if (typeof options.recurseLimit !== "undefined") {
-            this.recurseLimit = options.recurseLimit;
-        }
-    }
+		this.stopOnError = options.stopOnError;
+		this.noColor = options.noColor;
+		this.asLibrary = options.asLibrary;
+		this.strictSSL = options.strictSSL || true;
+		this.exitCode=0;
+		this.fail=0;
+		this.totalTests=0;
+		this.updateMessage="";
+		this.folder = options.folderName || false;
+		this.iterationCount = options.iterationCount || 1;
+		this.html = options.html || false;
+		this.responseEncoding = options.responseEncoding;
+		this.avoidRedirects = options.avoidRedirects;
+		this.whiteScreen = options.whiteScreen;
+		this.recurseLimit = 10;
+		if(typeof options.recurseLimit !== "undefined") {
+			this.recurseLimit = options.recurseLimit;
+		}
+	}
 });
 
 module.exports = Globals;
