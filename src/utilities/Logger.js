@@ -98,14 +98,11 @@ var Logger = jsface.Class([EventEmitter], {
     },
 
     testCaseSuccess: function (log) {
-        Globals.totalTests++;
         this.success("    " + Symbols.symbols.ok + log + "\n");
         return this;
     },
 
     testCaseError: function (log) {
-        Globals.totalTests++;
-        Globals.failedTest++;
         this.error("    " + Symbols.symbols.err + log + "\n");
         if (Globals.stopOnError) {
             if (Globals.asLibrary) {

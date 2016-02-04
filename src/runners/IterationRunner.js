@@ -195,7 +195,6 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this._runCollection();
             Globals.envJson = currentGlobalEnv;
         } else {
-            log.note("\nIn total " + Globals.failedTest + " of " + Globals.totalTests + " tests failed\n");
             this._exportResponses();
             this.emit('iterationRunnerOver', Globals.exitCode);
             if (Globals.updateMessage) {
