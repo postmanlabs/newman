@@ -184,7 +184,8 @@ newmanOptions = {
 	outputFile: "outfile.json",            // the file to export to
 	responseHandler: "TestResponseHandler", // the response handler to use
 	asLibrary: true,         				// this makes sure the exit code is returned as an argument to the callback function
-	stopOnError: true
+	summary: true							// displays the summary at the end of the iteration
+	stopOnError: true,
 }
 
 // Optional Callback function which will be executed once Newman is done executing all its tasks.
