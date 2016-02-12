@@ -182,8 +182,14 @@ var PreRequestScriptProcessor = jsface.Class({
             },
             tv4: tv4,
             console: {
-                log: function (msg) {
-                    console.log(msg);
+                log: function () {
+                    console.log.apply(console, arguments);
+                },
+                error: function () {
+                    console.error.apply(console, arguments);
+                },
+                warn: function () {
+                    console.warn.apply(console, arguments);
                 }
             },
             postman: {
