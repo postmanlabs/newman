@@ -258,7 +258,8 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
 
     // Request Mumbo jumbo for `multipart/form-data`.
     _setFormDataIfParamsInRequest: function (unireq, request) {
-        if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1 && request.dataMode === "params" && request.data.length > 0) {
+        if (RequestRunner.METHODS_WHICH_ALLOW_BODY.indexOf(request.method) > -1 && request.dataMode === "params" &&
+                request.data && request.data.length > 0) {
             var form = unireq.form();
             _und.each(request.data, function (dataObj) {
                 //do not send form fields if they're disabled
