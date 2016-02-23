@@ -75,7 +75,8 @@
     "grunt-run": "~0.2.2"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "preinstall": "node ./scripts/preinstall.js"
   },
   "license": "Apache"
 }
