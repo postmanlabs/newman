@@ -1,9 +1,12 @@
 console.log('****************************************************************');
 console.log('*                          Notice                              *');
 console.log('****************************************************************');
-console.log('* If you are using Node v4.0+, you should install Newman v2.x: *');
+console.log('* If you are using Node v0.12 or v0.10, you should install     *');
+console.log('* Newman v1.x:                                                 *');
 console.log('*                                                              *');
-console.log('*                  npm install newman@2                        *');
+console.log('*                  npm install newman@1                        *');
 console.log('*                                                              *');
-console.log('* Note that Newman v1.x will be deprecated soon.               *');
+console.log('* Note that Newman v3 onwards will deprecate the use of DOM    *');
+console.log('* related libraries, such as JQuery and Backbone. For details, *');
+console.log('* check https://www.getpostman.com/docs/sandbox                *');
 console.log('****************************************************************');
