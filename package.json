@@ -81,7 +81,8 @@
     "sinon": "^1.15.4"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "preinstall": "node ./scripts/preinstall.js"
   },
   "license": "Apache"
 }
