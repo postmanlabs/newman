@@ -25,26 +25,35 @@ var Helpers = jsface.Class({
         }
     },
 
+    fileExists: function (path) {
+        try {
+            return fs.statSync(path);
+        }
+        catch (e) {
+            console.log(e.stack || e);
+        }
+    },
+
     validateDataFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("Specified file does not exist: " + file);
         }
     },
 
     validateCollectionFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("Specified collection file does not exist: " + file);
         }
     },
 
     validateEnvironmentFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("Specified environment file does not exist: " + file);
         }
     },
 
     validateGlobalFile: function (file) {
-        if (!fs.existsSync(file)) {
+        if (!this.fileExists(file)) {
             Errors.terminateWithError("Specified globals does not exist: " + file);
         }
     },

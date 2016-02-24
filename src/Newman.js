@@ -7,6 +7,8 @@ var jsface = require("jsface"),
     Options = require('./utilities/Options'),
     log = require('./utilities/Logger'),
     fs = require('fs'),
+    _ = require('lodash'),
+    transformer = require('postman-collection-transformer'),
     exec = require('child_process').exec;
 
 /**
@@ -24,7 +26,10 @@ var Newman = jsface.Class([Options, EventEmitter], {
      * @memberOf Newman
      * @param {object} Newman options
      */
-    execute: function (requestJSON, options, callback) {
+    execute: function(requestJSON, options, callback) {
+        var checking = false,
+            onChecked = null,
+            self = this;
         // var collectionParseError = Validator.validateJSON('c',requestJSON);
         // if(!collectionParseError.status) {
         //     Errors.terminateWithError("Not a valid POSTMAN collection");
@@ -43,14 +48,19 @@ var Newman = jsface.Class([Options, EventEmitter], {
         //         Errors.terminateWithError("Not a valid POSTMAN globals file");
         //     }
         // }
-        if (Math.random() < 0.3) {
-            exec("npm show newman version", { timeout: 1500 }, function (error, stdout, stderr) {
+        if(Math.random()<0.3) {
+            checking = true;
+            exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
+                checking = false;
                 stdout = stdout.trim();
                 if (stdout !== Globals.newmanVersion && stdout.length > 0) {
                     Globals.updateMessage = "\nINFO: Newman v" + stdout + " is available. Use `npm update -g newman` to update.\n";
                 }
                 else {
                     Globals.updateMessage = "";
+                }
+                if(typeof onChecked==='function') {
+                    onChecked();
                 }
             });
         }
@@ -70,23 +80,46 @@ var Newman = jsface.Class([Options, EventEmitter], {
                     log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
                 }
 
-                //if -x is set, return the exit code
-                if (options.exitCode) {
-                    callback(exitCode);
+                function wrapUp() {
+                    //if -x is set, return the exit code
+                    if(options.exitCode) {
+                        callback(exitCode);
+                    }
+                    else if(options.stopOnError && exitCode===1) {
+                        callback(1);
+                    }
+                    else {
+                        callback(0);
+                    }
                 }
-                else if (options.stopOnError && exitCode === 1) {
-                    callback(1);
-                }
-                else {
-                    callback(0);
+
+                if(!checking) {
+                    wrapUp();
+                } else {
+                    onChecked = wrapUp;
                 }
             });
         }
 
         // setup the iteration runner with requestJSON passed and options
-        this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
-
-        this.iterationRunner.execute();
+        if (_.get(requestJSON, 'info.schema')) {
+            // Need to convert the V2 collection to V1 and then run it.
+            transformer.convert(requestJSON, {
+                inputVersion: '2.0.0',
+                outputVersion: '1.0.0'
+            }, function (err, result) {
+                if (err) {
+                    console.error(err.stack || err);
+                }
+                console.log('converted the collection, now running');
+                self.iterationRunner = new IterationRunner(result, self.getOptions());
+                self.iterationRunner.execute();
+            });
+        }
+        else {
+            this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
+            this.iterationRunner.execute();
+        }
     }
 });
 

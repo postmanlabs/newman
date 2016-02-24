@@ -276,9 +276,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                     form.append(dataObj.key, dataObj.value);
                 } else if (dataObj.type === 'file') {
                     var loc = path.resolve(dataObj.value);
-                    if (!fs.existsSync(loc)) {
+
+                    try {
+                        fs.statSync(loc);
+                    }
+                    catch (e) {
                         Errors.terminateWithError("No file found - " + loc);
                     }
+
                     form.append(dataObj.key, fs.createReadStream(loc));
                 }
             });

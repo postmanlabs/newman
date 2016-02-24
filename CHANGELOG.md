@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####2.0.0-beta.1 (September 24, 2015)
+* Support for Node v4
+
 ####1.2.29 (February 02, 2016)
 * Fixed #310 (Better error messages)
 * Fixed #311 (Response body logging in verbose output)
