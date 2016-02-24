@@ -27,7 +27,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
     throwErrorOnLog: false,
 
     main: function () {
-        jsdom.env("<html <body></body></html>", function (err, window) {
+        jsdom.env("<html><body></body></html>", function (err, window) {
             _jq = require('jquery')(window);
         });
     },
