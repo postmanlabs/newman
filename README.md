@@ -13,31 +13,14 @@ Newman maintains feature parity with Postman and allows you to run collections j
 
 | Node Version    | Newman Version | Installation Command         |
 |-----------------|----------------|------------------------------|
-| 0.10.x - 0.12.x | 1.x.x          | `npm install -g newman`      |
-| 4.0+            | 2.x.x+         | `npm install -g newman@beta` |
+| 0.10.x - 0.12.x | 1.x.x          | `npm install -g newman@1`    |
+| 4.0+            | 2.x.x+         | `npm install -g newman`      |
 
 ##### Important Notice about the Beta
-Keeping in line with the [Postman Sandbox](https://www.getpostman.com/docs/sandbox) roadmap, the next major version of Newman Beta (`v3.0.0+`) will drop support for jQuery and Backbone inside the tests. Any tests that you might have, which use these two libraries might break.
+Keeping in line with the [Postman Sandbox](https://www.getpostman.com/docs/sandbox) roadmap, the next major version of Newman (`v3.0.0+`) will drop support for DOM (and associated libraries such as jQuery and Backbone) inside the tests. Any tests that you might have, which use these libraries might break.
 
 ## Getting Started
 Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.
-
-#### Newman Stable
-With that done, Newman is just one command away.
-```bash
-$ npm install -g newman # installs Newman globally on your system allowing you to run it from anywhere.
-```
-#### Newman Beta
-
-We've released a beta of Newman v2.0, which supports Node v4.0+ as well. If you wish to install the beta,
-```bash
-$ npm install -g newman@beta # installs Newman globally on your system allowing you to run it from anywhere.
-```
-Notes on the Beta:
-* The [``jsdom``](https://github.com/tmpvar/jsdom) dependency is no longer listed in package.json. The installation of this dependency has been moved to the postinstall script. This is because a different version of ``jsdom`` is required for node v0.x.x and Node v4.0+.
-* The absence of ``jsdom`` from package.json should be specially noted. If you use any automated tools to audit dependencies, etc, this change can cause issues.
-* For Windows users, if you are using Node v4.0+, you no longer need to install the Visual Studio Runtime. You do however need to ensure that the Node binary (node.exe) is on your system ``%PATH``.
-* In the future, Newman will stop supporting Node v0.x.x, and only support Node version 4.0+. This will considerably reduce installation woes, especially on Windows.
 
 #### Updating Newman
 If you already have Newman, you can update with a simple command
