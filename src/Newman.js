@@ -7,6 +7,8 @@ var jsface = require("jsface"),
     Options = require('./utilities/Options'),
     log = require('./utilities/Logger'),
     fs = require('fs'),
+    _ = require('lodash'),
+    transformer = require('postman-collection-transformer'),
     exec = require('child_process').exec;
 
 /**
@@ -26,7 +28,8 @@ var Newman = jsface.Class([Options, EventEmitter], {
      */
     execute: function(requestJSON, options, callback) {
         var checking = false,
-            onChecked = null;
+            onChecked = null,
+            self = this;
         // var collectionParseError = Validator.validateJSON('c',requestJSON);
         // if(!collectionParseError.status) {
         //     Errors.terminateWithError("Not a valid POSTMAN collection");
@@ -99,9 +102,24 @@ var Newman = jsface.Class([Options, EventEmitter], {
         }
 
         // setup the iteration runner with requestJSON passed and options
-        this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
-
-        this.iterationRunner.execute();
+        if (_.get(requestJSON, 'info.schema')) {
+            // Need to convert the V2 collection to V1 and then run it.
+            transformer.convert(requestJSON, {
+                inputVersion: '2.0.0',
+                outputVersion: '1.0.0'
+            }, function (err, result) {
+                if (err) {
+                    console.error(err.stack || err);
+                }
+                console.log('converted the collection, now running');
+                self.iterationRunner = new IterationRunner(result, self.getOptions());
+                self.iterationRunner.execute();
+            });
+        }
+        else {
+            this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
+            this.iterationRunner.execute();
+        }
     }
 });
 
