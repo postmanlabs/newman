@@ -1,0 +1,2242 @@
+{
+    "variables": [],
+    "info": {
+        "name": "Postman Echo (shamasified)",
+        "_postman_id": "03cf74df-32de-af8b-7db8-855b51b05e50",
+        "description": "Postman Echo is service you can use to test your REST clients and make sample API calls. It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility endpoints.",
+        "schema": "http://schema.getpostman.com/collection/v2/collection.json"
+    },
+    "item": [
+        {
+            "_postman_id": "ca633394-d946-8e44-f4fe-e0470be8cb64",
+            "name": "Auth: Digest",
+            "description": "Digest authentication protects an endpoint with a username and password without actually transmitting the password over network.\nOne has to apply a hash function (like MD5, etc) to the username and password before sending them over the network.\n\n> Username: `postman`\n>\n> Password: `password`\n\nUnlike Basic-Auth, authentication happens using two consecutive requests where the first request returns `401 Unauthorised` along with `WWW-Authenticate` header containing information that needs to be used to authenticate subsequent calls.\n\nTo know more about digest authentication, refer to the [Digest Access Authentication](https://en.wikipedia.org/wiki/Digest_access_authentication) wikipedia article.\nThe article on [authentication helpers](https://www.getpostman.com/docs/helpers#digest-auth) elaborates how to use the same within the Postman app.",
+            "item": [
+                {
+                    "id": "a0d5867c-dd87-3f01-9560-8095271e2644",
+                    "name": "DigestAuth Request",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 401\"] = responseCode.code === 401;\ntests[\"response has WWW-Authenticate header\"] = (postman.getResponseHeader('WWW-Authenticate'));\n\nvar authenticateHeader = postman.getResponseHeader('WWW-Authenticate'),\n    realmStart = authenticateHeader.indexOf('\"',authenticateHeader.indexOf(\"realm\")) + 1 ,\n    realmEnd = authenticateHeader.indexOf('\"',realmStart),\n    realm = authenticateHeader.slice(realmStart,realmEnd),\n    nonceStart = authenticateHeader.indexOf('\"',authenticateHeader.indexOf(\"nonce\")) + 1,\n    nonceEnd = authenticateHeader.indexOf('\"',nonceStart),\n    nonce = authenticateHeader.slice(nonceStart,nonceEnd);\n    \npostman.setGlobalVariable('echo_digest_realm', realm);\npostman.setGlobalVariable('echo_digest_nonce', nonce);"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/digest-auth",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "Performing a simple `GET` request to this endpoint returns status code `401 Unauthorized` with `WWW-Authenticate` header containing information to successfully authenticate subsequent requests.\nThe `WWW-Authenticate` header must be processed to extract `realm` and `nonce` values to hash subsequent requests.\n\nWhen this request is executed within Postman, the script attached with this request does the hard work of extracting realm and nonce from the header and set it as [global variables](https://www.getpostman.com/docs/environments#global-variables) named `echo_digest_nonce` and `echo_digest_realm`.\nThese variables are re-used in subsequent request for seamless integration of the two requests."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "eecb504e-1736-d34c-990a-b86d36f06ddd",
+                    "name": "DigestAuth Success",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\ntests[\"body contains authenticated\"] = responseBody.has(\"authenticated\");"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "digest",
+                            "digest": {
+                                "algorithm": "MD5",
+                                "username": "postman",
+                                "realm": "{{echo_digest_realm}}",
+                                "password": "password",
+                                "nonce": "{{echo_digest_nonce}}",
+                                "nonceCount": "",
+                                "clientNonce": "",
+                                "opaque": "",
+                                "qop": ""
+                            }
+                        },
+                        "url": "https://echo.getpostman.com/digest-auth",
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Digest username=\"postman\", realm=\"Users\", nonce=\"ni1LiL0O37PRRhofWdCLmwFsnEtH1lew\", uri=\"/digest-auth\", response=\"254679099562cf07df9b6f5d8d15db44\", opaque=\"\"",
+                                "description": ""
+                            }
+                        ],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "This endpoint sends a hashed Digest Authorization header to gain access to a valid `200 Ok` response code. In Postman, it uses the stored [global variables](https://www.getpostman.com/docs/environments#gloval-variables), `echo_digest_realm` and `echo_digest_nonce`, to generate the hashed authorisation header.\n\nWithin Postman, for this request to successfully authenticate, running the previous request \"DigestAuth Request\" stores the relevant information within the global variables."
+                    },
+                    "response": [
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "digest",
+                                    "digest": {
+                                        "algorithm": "MD5",
+                                        "username": "postman",
+                                        "realm": "{{echo_digest_realm}}",
+                                        "password": "password",
+                                        "nonce": "{{echo_digest_nonce}}",
+                                        "nonceCount": "",
+                                        "clientNonce": "",
+                                        "opaque": "",
+                                        "qop": ""
+                                    }
+                                },
+                                "url": "https://echo.getpostman.com/digest-auth",
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Digest username=\"postman\", realm=\"Users\", nonce=\"ni1LiL0O37PRRhofWdCLmwFsnEtH1lew\", uri=\"/digest-auth\", response=\"254679099562cf07df9b6f5d8d15db44\", opaque=\"\"",
+                                        "description": ""
+                                    }
+                                ],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "description": "This endpoint sends a hashed Digest Authorization header to gain access to a valid `200 Ok` response code. In Postman, it uses the stored [global variables](https://www.getpostman.com/docs/environments#gloval-variables), `echo_digest_realm` and `echo_digest_nonce`, to generate the hashed authorisation header.\n\nWithin Postman, for this request to successfully authenticate, running the previous request \"DigestAuth Request\" stores the relevant information within the global variables."
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Encoding",
+                                    "key": "Content-Encoding",
+                                    "value": "gzip",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "42",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Thu, 29 Oct 2015 06:17:51 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "9843",
+                            "data": "{\"authenticated\":true}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "_postman_id": "b9707261-deb2-7bf3-f1ae-8edd1373f4b8",
+            "name": "Auth: Others",
+            "description": "",
+            "item": [
+                {
+                    "id": "ef90671a-ab14-16f5-0a57-41b32fc2a36f",
+                    "name": "Basic Auth",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\ntests[\"Body contains authenticated\"] = responseBody.has(\"authenticated\");"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "basic",
+                            "basic": {
+                                "username": "postman",
+                                "password": "password",
+                                "saveHelperData": true,
+                                "showPassword": false
+                            }
+                        },
+                        "url": "https://echo.getpostman.com/basic-auth",
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Basic cG9zdG1hbjpwYXNzd29yZA==",
+                                "description": ""
+                            }
+                        ],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "This endpoint simulates a **basic-auth** protected endpoint. \nThe endpoint accepts a default username and password and returns a status code of `200 ok` only if the same is provided. \nOtherwise it will return a status code `401 unauthorized`.\n\n> Username: `postman`\n> \n> Password: `password`\n\nTo use this endpoint, send a request with the header `Authorization: Basic cG9zdG1hbjpwYXNzd29yZA==`. \nThe cryptic latter half of the header value is a base64 encoded concatenation of the default username and password. \nUsing Postman, to send this request, you can simply fill in the username and password in the \"Authorization\" tab and Postman will do the rest for you.\n\nTo know more about basic authentication, refer to the [Basic Access Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) wikipedia article.\nThe article on [authentication helpers](https://www.getpostman.com/docs/helpers#basic-auth) elaborates how to use the same within the Postman app."
+                    },
+                    "response": [
+                        {
+                            "name": "401",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "basic",
+                                    "basic": {
+                                        "username": "postman",
+                                        "password": "password",
+                                        "saveHelperData": true,
+                                        "showPassword": false
+                                    }
+                                },
+                                "url": "https://echo.getpostman.com/basic-auth",
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Basic cG9zdG1hbjpwYXNzd29yZA==",
+                                        "description": ""
+                                    }
+                                ],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "description": "This endpoint simulates a **basic-auth** protected endpoint. \nThe endpoint accepts a default username and password and returns a status code of `200 ok` only if the same is provided. \nOtherwise it will return a status code `401 unauthorized`.\n\n> Username: `postman`\n> \n> Password: `password`\n\nTo use this endpoint, send a request with the header `Authorization: Basic cG9zdG1hbjpwYXNzd29yZA==`. \nThe cryptic latter half of the header value is a base64 encoded concatenation of the default username and password. \nUsing Postman, to send this request, you can simply fill in the username and password in the \"Authorization\" tab and Postman will do the rest for you.\n\nTo know more about basic authentication, refer to the [Basic Access Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) wikipedia article.\nThe article on [authentication helpers](https://www.getpostman.com/docs/helpers#basic-auth) elaborates how to use the same within the Postman app."
+                            },
+                            "status": "Unauthorized",
+                            "code": 401,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Sat, 31 Oct 2015 06:38:51 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "WWW-Authenticate",
+                                    "key": "WWW-Authenticate",
+                                    "value": "Basic realm=\"Users\"",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "transfer-encoding",
+                                    "key": "transfer-encoding",
+                                    "value": "chunked",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "276",
+                            "data": "Unauthorized"
+                        },
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "basic",
+                                    "basic": {
+                                        "username": "postman",
+                                        "password": "password",
+                                        "saveHelperData": true,
+                                        "showPassword": false
+                                    }
+                                },
+                                "url": "https://echo.getpostman.com/basic-auth",
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Basic cG9zdG1hbjpwYXNzd29yZA==",
+                                        "description": ""
+                                    }
+                                ],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "description": "This endpoint simulates a **basic-auth** protected endpoint. \nThe endpoint accepts a default username and password and returns a status code of `200 ok` only if the same is provided. \nOtherwise it will return a status code `401 unauthorized`.\n\n> Username: `postman`\n> \n> Password: `password`\n\nTo use this endpoint, send a request with the header `Authorization: Basic cG9zdG1hbjpwYXNzd29yZA==`. \nThe cryptic latter half of the header value is a base64 encoded concatenation of the default username and password. \nUsing Postman, to send this request, you can simply fill in the username and password in the \"Authorization\" tab and Postman will do the rest for you.\n\nTo know more about basic authentication, refer to the [Basic Access Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) wikipedia article.\nThe article on [authentication helpers](https://www.getpostman.com/docs/helpers#basic-auth) elaborates how to use the same within the Postman app."
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Encoding",
+                                    "key": "Content-Encoding",
+                                    "value": "gzip",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "42",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Sat, 31 Oct 2015 06:38:25 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "377",
+                            "data": "{\"authenticated\":true}"
+                        }
+                    ]
+                },
+                {
+                    "id": "ced12b69-9604-99a9-65e3-03d09f68efbc",
+                    "name": "OAuth1.0 Verify Signature",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\nvar body = JSON.parse(responseBody);\ntests[\"Body contains status pass\"] = body[\"status\"] == \"pass\""
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/oauth1",
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "OAuth oauth_consumer_key=\"RKCGzna7bv9YD57c\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1442394747\",oauth_nonce=\"UIGipk\",oauth_version=\"1.0\",oauth_signature=\"CaeyGPr2mns1WCq4Cpm5aLvz6Gs=\"",
+                                "description": ""
+                            }
+                        ],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "OAuth1.0a is a specification that defines a protocol that can be used by one\nservice to access \"protected\" resources (endpoints) on another service. A\nmajor part of OAuth1.0 is HTTP Request Signing. This endpoint allows you to \ncheck whether the request calculation works properly in the client. \n\nThe endpoint supports the HTTP ``Authorization`` header. In case the signature\nverification fails, the endpoint provides the four debug values,\n\n* ``base_uri``\n* ``normalized_param_string``\n* ``base_string``\n* ``signing_key``\n\nFor more details about these parameters, check the [OAuth1.0a Specification](http://oauth.net/core/1.0a/)\n\nIn order to use this endpoint, you can set the following values:\n\n> Consumer Key: ``RKCGzna7bv9YD57c``\n>\n> Consumer Secret: ``D+EdQ-gs$-%@2Nu7``\n\nIf you are using Postman, also check the \"Add params to header\" and \n\"Auto add parameters\" boxes."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "_postman_id": "e3d0c773-6416-3c53-b933-96826acfa85a",
+            "name": "Cookies",
+            "description": "The cookie related endpoints allow one to get, set and delete simple cookies.\n\nCookies are small snippets of information that is stored in the browser and sent back to the server with every subsequent requests in order to store useful information between requests.\nIf you want to know more about cookies, read the [HTTP Cookie](https://en.wikipedia.org/wiki/HTTP_cookie) article on wikipedia.",
+            "item": [
+                {
+                    "id": "96a24790-4951-ba7e-aa4f-fb40a45a7fcb",
+                    "name": "Set Cookies",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body contains cookies\"] = responseBody.has(\"cookies\");\nvar body = JSON.parse(responseBody);\ntests[\"Body contains cookie foo1\"] = 'foo1' in body.cookies;\ntests[\"Body contains cookie foo2\"] = 'foo2' in body.cookies;\n\n"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "The cookie setter endpoint accepts a list of cookies and their values as part of URL parameters of a `GET` request. These cookies are saved and can be subsequently retrieved or deleted. The response of this request returns a JSON with all cookies listed.\n\nTo set your own set of cookies, simply replace the URL parameters \"foo1=bar1&foo2=bar2\" with your own set of key-value pairs."
+                    },
+                    "response": [
+                        {
+                            "name": "Cookies",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "noauth",
+                                    "noauth": {}
+                                },
+                                "url": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
+                                "method": "GET",
+                                "header": [],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "description": "The cookie setter endpoint accepts a list of cookies and their values as part of URL parameters of a `GET` request. These cookies are saved and can be subsequently retrieved or deleted. The response of this request returns a JSON with all cookies listed.\n\nTo set your own set of cookies, simply replace the URL parameters \"foo1=bar1&foo2=bar2\" with your own set of key-value pairs."
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Encoding",
+                                    "key": "Content-Encoding",
+                                    "value": "gzip",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "51",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Thu, 29 Oct 2015 06:15:28 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "3063",
+                            "data": "{\"cookies\":{\"foo1\":\"bar\",\"foo2\":\"bar\"}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "4118ca21-f216-410f-510c-2d0e465022c5",
+                    "name": "Get Cookies",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body contains cookies\"] = responseBody.has(\"cookies\");\nvar body = JSON.parse(responseBody);\ntests[\"Body contains cookie foo2\"] = 'foo2' in body.cookies;"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/cookies",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "Use this endpoint to get a list of all cookies that are stored with respect to this domain. Whatever key-value pairs that has been previously set by calling the \"Set Cookies\" endpoint, will be returned as response JSON."
+                    },
+                    "response": [
+                        {
+                            "name": "Cookies",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "noauth",
+                                    "noauth": {}
+                                },
+                                "url": "https://echo.getpostman.com/cookies",
+                                "method": "GET",
+                                "header": [],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "description": "Use this endpoint to get a list of all cookies that are stored with respect to this domain. Whatever key-value pairs that has been previously set by calling the \"Set Cookies\" endpoint, will be returned as response JSON."
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Encoding",
+                                    "key": "Content-Encoding",
+                                    "value": "gzip",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "46",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Thu, 29 Oct 2015 06:16:29 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "462",
+                            "data": "{\"cookies\":{\"foo2\":\"bar\"}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "4ac1e980-6990-fc1d-5f80-4e5cedce9812",
+                    "name": "Delete Cookies",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body contains key cookies\"] = responseBody.has(\"cookies\");\nvar body = JSON.parse(responseBody);\ntests[\"Body contains cookie foo2\"] = 'foo2' in body.cookies;\ntests[\"Body does not contain cookie foo2\"] = !('foo1' in body.cookies);"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "One or more cookies that has been set for this domain can be deleted by providing the cookie names as part of the URL parameter. The response of this request is a JSON containing the list of currently set cookies."
+                    },
+                    "response": [
+                        {
+                            "name": "Cookies Response",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "noauth",
+                                    "noauth": {}
+                                },
+                                "url": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
+                                "method": "GET",
+                                "header": [],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "description": "One or more cookies that has been set for this domain can be deleted by providing the cookie names as part of the URL parameter. The response of this request is a JSON containing the list of currently set cookies."
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Encoding",
+                                    "key": "Content-Encoding",
+                                    "value": "gzip",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "46",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Thu, 29 Oct 2015 06:16:00 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "1417",
+                            "data": "{\"cookies\":{\"foo2\":\"bar\"}}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "_postman_id": "997e9a45-51e0-98b1-1894-319a72efca57",
+            "name": "Headers",
+            "description": "The following set of endpoints allow one to see the headers being sent as part of a request and to get a custom set of headers as part of response.\n\nHTTP header fields provide required information about the request or response, or about the object sent in the message body. Both request headers and response headers can be controlled using these endpoints.",
+            "item": [
+                {
+                    "id": "557b9d4d-bc9a-5172-5edf-d43a27055c89",
+                    "name": "Request Headers",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n\nvar data = JSON.parse(responseBody).headers;\n\ntests[\"Header contains host\"] = \"host\" in data;\ntests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in data;"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/headers",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "A `GET` request to this endpoint returns the list of all request headers as part of the response JSON.\nIn Postman, sending your own set of headers through the [Headers tab](https://www.getpostman.com/docs/requests#headers) will reveal the headers as part of the response."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "5ec6f591-4460-e4cf-fdc1-0de07c10b2b1",
+                    "name": "Response Headers",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Body contains Content-Type\"] = responseBody.has(\"Content-Type\");\ntests[\"Body contains Server\"] = responseBody.has(\"Server\");"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/response-headers?Content-Type=text/html&Server=apibin",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "This endpoint causes the server to send custom set of response headers. Providing header values as part of the URL parameters of a `GET` request to this endpoint returns the same as part of response header.\n\nTo send your own set of headers, simply add or replace the the URL parameters with your own set."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "_postman_id": "a3729195-78fd-52c3-0313-9aefed8af7eb",
+            "name": "Request Methods",
+            "description": "HTTP has multiple request \"verbs\", such as `GET`, `PUT`, `POST`, `DELETE`,\n`PATCH`, `HEAD`, etc. \n\nAn HTTP Method (verb) defines how a request should be interpreted by a server. \nThe endpoints in this section demonstrate various HTTP Verbs. Postman supports \nall the HTTP Verbs, including some rarely used ones, such as `PROPFIND`, `UNLINK`, \netc.\n\nFor details about HTTP Verbs, refer to [RFC 2616](http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9)\n",
+            "item": [
+                {
+                    "id": "439a41a1-4bc7-0b90-6cb9-50accfd187ff",
+                    "name": "GET Request ",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\nvar data = JSON.parse(responseBody)\n\ntests[\"Args key contains argument passed as url parameter\"] = 'test' in data.args"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/get?test=123",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "The HTTP `GET` request method is meant to retrieve data from a server. The data\nis identified by a unique URI (Uniform Resource Identifier). \n\nA `GET` request can pass parameters to the server using \"Query String \nParameters\". For example, in the following request,\n\n> http://example.com/hi/there?hand=wave\n\nThe parameter \"hand\" has the value \"wave\".\n\nThis endpoint echoes the HTTP headers, request parameters and the complete\nURI requested."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "6325e9fd-d3fc-3ea7-d014-f1d41a56177c",
+                    "name": "POST Request",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "var responseJSON;\n\ntry { responseJSON = JSON.parse(responseBody); }\ncatch (e) { }\n\n\ntests[\"response has data\"] = responseJSON && responseJSON.data && (responseJSON.data.length === 256);\ntests[\"content-type equals text/plain\"] = responseJSON && responseJSON.headers && (responseJSON.headers[\"content-type\"] === 'text/plain');"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/post",
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "text/plain",
+                                "description": ""
+                            }
+                        ],
+                        "data": {
+                            "mode": "raw",
+                            "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium. Praesent neque quam, tincidunt nec leo eget, rutrum vehicula magna.\nMaecenas consequat elementum elit, id semper sem tristique et. Integer pulvinar enim quis consectetur interdum volutpat."
+                        },
+                        "description": "The HTTP `POST` request method is meant to transfer data to a server \n(and elicit a response). What data is returned depends on the implementation\nof the server.\n\nA `POST` request can pass parameters to the server using \"Query String \nParameters\", as well as the Request Body. For example, in the following request,\n\n> POST /hi/there?hand=wave\n>\n> <request-body>\n\nThe parameter \"hand\" has the value \"wave\". The request body can be in multiple\nformats. These formats are defined by the MIME type of the request. The MIME \nType can be set using the ``Content-Type`` HTTP header. The most commonly used \nMIME types are:\n\n* `multipart/form-data`\n* `application/x-www-form-urlencoded`\n* `application/json`\n\nThis endpoint echoes the HTTP headers, request parameters, the contents of\nthe request body and the complete URI requested."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "21559428-a25b-cddc-c932-581e483e16e2",
+                    "name": "PUT Request",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "var data;\n\ntry { responseJSON = JSON.parse(responseBody); }\ncatch (e) {}\n\ntests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\n\n\ntests[\"Data has been passed\"] = (responseJSON && responseJSON.data && responseJSON.data.length)"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/put",
+                        "method": "PUT",
+                        "header": [],
+                        "data": {
+                            "mode": "raw",
+                            "raw": "Etiam mi lacus, cursus vitae felis et, blandit pellentesque neque. Vestibulum eget nisi a tortor commodo dignissim.\nQuisque ipsum ligula, faucibus a felis a, commodo elementum nisl. Mauris vulputate sapien et tincidunt viverra. Donec vitae velit nec metus."
+                        },
+                        "description": "The HTTP `PUT` request method is similar to HTTP `POST`. It too is meant to \ntransfer data to a server (and elicit a response). What data is returned depends on the implementation\nof the server.\n\nA `PUT` request can pass parameters to the server using \"Query String \nParameters\", as well as the Request Body. For example, in the following \nraw HTTP request,\n\n> PUT /hi/there?hand=wave\n>\n> <request-body>\n\n\n"
+                    },
+                    "response": []
+                },
+                {
+                    "id": "62be870e-f72e-eeeb-2efa-cd27ddae0d34",
+                    "name": "PATCH Request",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\nvar data = JSON.parse(responseBody)\n\ntests[\"form key has data passed in as form-data\"] = 'test' in data.form"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/patch",
+                        "method": "PATCH",
+                        "header": [],
+                        "data": {
+                            "mode": "raw",
+                            "raw": "Curabitur auctor, elit nec pulvinar porttitor, ex augue condimentum enim, eget suscipit urna felis quis neque.\nSuspendisse sit amet luctus massa, nec venenatis mi. Suspendisse tincidunt massa at nibh efficitur fringilla. Nam quis congue mi. Etiam volutpat."
+                        },
+                        "description": "The HTTP `PATCH` method is used to update resources on a server. The exact\nuse of `PATCH` requests depends on the server in question. There are a number\nof server implementations which handle `PATCH` differently. Technically, \n`PATCH` supports both Query String parameters and a Request Body.\n\nThis endpoint accepts an HTTP `PATCH` request and provides debug information\nsuch as the HTTP headers, Query String arguments, and the Request Body."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "b4fcb293-1ef4-35f9-4f82-c4b519a55904",
+                    "name": "DELETE Request",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\nvar data = JSON.parse(responseBody)\n\ntests[\"form key has data passed in as form-data\"] = 'test' in data.form"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/delete",
+                        "method": "DELETE",
+                        "header": [],
+                        "data": {
+                            "mode": "raw",
+                            "raw": "Donec fermentum, nisi sed cursus eleifend, nulla tortor ultricies tellus, ut vehicula orci arcu ut velit. In volutpat egestas dapibus. \nMorbi condimentum vestibulum sapien. Etiam dignissim diam quis eros lobortis gravida vel lobortis est. Etiam gravida sed."
+                        },
+                        "description": "The HTTP `DELETE` method is used to delete resources on a server. The exact\nuse of `DELETE` requests depends on the server implementation. In general, \n`DELETE` requests support both, Query String parameters as well as a Request \nBody.\n\nThis endpoint accepts an HTTP `DELETE` request and provides debug information\nsuch as the HTTP headers, Query String arguments, and the Request Body."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "_postman_id": "3448365f-6534-c34d-14ed-01915810374e",
+            "name": "Utilities",
+            "description": "",
+            "item": [
+                {
+                    "id": "7212fe16-50d5-3f6d-2513-319d49a9ea44",
+                    "name": "Response Status Code",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"Body contains status\"] = responseBody.has(\"status\");\n\nvar data = JSON.parse(responseBody);\n\ntests[\"Status equals 200\"] = data.status === 200;\n"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/status/200",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "test",
+                                    "value": "123",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "This endpoint allows one to instruct the server which status code to respond with.\n\nEvery response is accompanied by a status code. The status code provides a summary of the nature of response sent by the server. For example, a status code of `200` means everything is okay with the response and a code of `404` implies that the requested URL does not exist on server. \nA list of all valid HTTP status code can be found at the [List of Status Codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) wikipedia article. When using Postman, the response status code is described for easy reference.\n\nNote that if an invalid status code is requested to be sent, the server returns a status code of `400 Bad Request`."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "9fc9c5d1-51c3-aa36-fdb2-dd4ff7bd5e18",
+                    "name": "Streamed Response",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\n\n"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/stream/10",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "This endpoint allows one to recieve streaming http response using [chunked transfer encoding](https://en.wikipedia.org/wiki/Chunked_transfer_encoding) of a configurable length.\n\nA streaming response does not wait for the entire response to be generated on server before flushing it out. This implies that for a fairly large response, parts of it can be streamed to the requestee as and when it is generated on server. The client can then take actions of processing this partially received data."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "502f7f5b-b129-78a7-b27f-8dc36ce58f66",
+                    "name": "Delay Response",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\n\nvar data = JSON.parse(responseBody);\n\ntests[\"response body has key delay\"] = 'delay' in data;"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/delay/3",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "test",
+                                    "value": "123",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "Using this endpoint one can configure how long it takes for the server to come back with a response. Appending a number to the URL defines the time (in seconds) the server will wait before responding.\n\nNote that a maximum delay of 10 seconds is accepted by the server."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "b213d463-8587-8470-acdc-92f7dfb0660e",
+                    "name": "Get UTF8 Encoded Response",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/encoding/utf8",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "If a response of an endpoint requires to send data beyond the basic English / ASCII character set, the `charset` parameter in the `Content-Type` response header defines the character encoding policy.\n\nThis endpoint returns an `UTF8` character encoded response body with text in various languages such as Greek, Latin, East Asian, etc. Postman can interpret the character encoding and use appropriate methods to display the character set in responses."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "eb8e2717-56b0-6a61-5387-eb46530ec4be",
+                    "name": "GZip Compressed Response",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\n\ntry {\n    var data = JSON.parse(responseBody);\n    tests[\"Body contains gzipped\"] = responseBody.has(\"gzipped\");\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    tests[\"Body contains method\"] = responseBody.has(\"method\");\n}\ncatch(e) {\n    console.log('Cannot parse response,probably not a JSON');\n}"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/gzip",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "This endpoint returns the response using [gzip compression algoritm](https://en.wikipedia.org/wiki/Gzip).\nThe uncompressed response is a JSON string containing the details of the request sent by the client. For this endpoint to work, one should request with `Accept-encoding` header containing `gzip` as part of its value. Postman supports gzip, deflate and SDCH decoding and automatically sends them as part of the request.\n\nHTTP Compression allows the server to send responses in a compressed format, which is uncompressed by the client before processing. This reduces network bandwidth consumption at the cost of increase in CPU usage.\nTo know more about this, refer the [HTTP Compression](https://en.wikipedia.org/wiki/HTTP_compression) wikipedia article."
+                    },
+                    "response": []
+                },
+                {
+                    "id": "947d31d6-16ce-2e3a-bf32-e0337c838ff8",
+                    "name": "Deflate Compressed Response",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\n\ntry {\n    var data = JSON.parse(responseBody);\n    tests[\"Body contains deflated\"] = responseBody.has(\"deflated\");\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    tests[\"Body contains method\"] = responseBody.has(\"method\");\n}\ncatch(e) {\n    console.log('Cannot parse response,probably not a JSON');\n}\n"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/deflate",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "description": "This endpoint returns the response using [deflate compression algoritm](https://en.wikipedia.org/wiki/DEFLATE). \nThe uncompressed response is a JSON string containing the details of the request sent by the client. For this endpoint to work, one should request with `Accept-encoding` header containing `deflate` as part of its value. Postman supports gzip, deflate and SDCH decoding and automatically sends them as part of the request.\n\nHTTP Compression allows the server to send responses in a compressed format, which is uncompressed by the client before processing. This reduces network bandwidth consumption at the cost of increase in CPU usage.\nTo know more about this, refer the [HTTP Compression](https://en.wikipedia.org/wiki/HTTP_compression) wikipedia article."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "_postman_id": "58b0685d-5e5c-d03e-8899-c1084704d0d3",
+            "name": "[draft] Auth: OAuth2.0",
+            "description": "OAuth 2.0 allows a client to access a resource owners(user) protected resources without direct access to the users credentials.\nThe client obtains an access token which can be used to access the resource owners resources.\nOAuth 2.0 implements 4 different types of grant flows. Postman Echo has implemented the [Authorization Code](https://tools.ietf.org/html/rfc6749#section-1.3.1) grant flow.\n\nThe OAuth flow typically consists of three steps. \nIn the first step the client requests an authentication code from the server implementing the OAuth flow.\nThe authentication code along with other client credentials is then used to get the access token.\nThe access token can be used by the client to access users resources.\n",
+            "item": [
+                {
+                    "id": "d8fbfb17-6993-d43e-43af-2996f5138b9a",
+                    "name": "OAuth2.0 Get Auth Code",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
+                        "method": "GET",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "In the first request for the OAuth 2.0 flow, the client tries to get an authentication code by passing in `client_id` and `response_type`.\n\n> client_id: `abc123`\n>\n> response_type: `code`\n\nThe authentication code is returned as a part of the redirect URI and can be used to get the access token."
+                    },
+                    "response": [
+                        {
+                            "name": "401",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "noauth",
+                                    "noauth": {}
+                                },
+                                "url": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
+                                "method": "GET",
+                                "header": [],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "key": "code",
+                                            "value": "xWnkliVQJURqB2x1",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "grant_type",
+                                            "value": "authorization_code",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "redirect_uri",
+                                            "value": "https://www.getpostman.com/oauth2/callback",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_id",
+                                            "value": "abc123",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_secret",
+                                            "value": "ssh-secret",
+                                            "type": "text",
+                                            "enabled": true
+                                        }
+                                    ]
+                                },
+                                "description": "In the first request for the OAuth 2.0 flow, the client tries to get an authentication code by passing in `client_id` and `response_type`.\n\n> client_id: `abc123`\n>\n> response_type: `code`\n\nThe authentication code is returned as a part of the redirect URI and can be used to get the access token."
+                            },
+                            "status": "Unauthorized",
+                            "code": 401,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Sat, 31 Oct 2015 06:43:23 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "ETag",
+                                    "key": "ETag",
+                                    "value": "W/\"2-2745614147\"",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "291",
+                            "data": "{}"
+                        }
+                    ]
+                },
+                {
+                    "id": "0628a95f-c283-94e2-fa9f-53477775692f",
+                    "name": "OAuth2.0 Get Access Token",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 200\"] = responseCode.code === 200;\nvar body = JSON.parse(responseBody);\ntests[\"body has access token\"] = \"access_token\" in body;\ntests[\"body has bearer type\"] = \"token_type\" in body;"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/oauth2/token",
+                        "method": "POST",
+                        "header": [],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "This endpoint is used to get the `access_token`\n\nIt requires the following secret client credentials to be sent as part of the form body along with the `authentication code` obtained as part of the `redirect_uri` from the previous request.\n\n> code: xWnkliVQJURqB2x1\n>\n> grant_type: authorization_code\n>\n> redirect_uri: https://www.getpostman.com/oauth2/callback\n>\n> client_id: abc123\n>\n> client_secret: ssh-secret\n\nIf the correct credentials are not passed, the server returns with a `401 Unauthorized` response."
+                    },
+                    "response": [
+                        {
+                            "name": "401",
+                            "originalRequest": {
+                                "url": "https://echo.getpostman.com/oauth2/token",
+                                "method": "POST",
+                                "header": [],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "key": "code",
+                                            "value": "xWnkliVQJURqB2x1",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "grant_type",
+                                            "value": "authorization_code",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "redirect_uri",
+                                            "value": "https://www.getpostman.com/oauth2/callback",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_id",
+                                            "value": "abc123",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_secret",
+                                            "value": "ssh-secret",
+                                            "type": "text",
+                                            "enabled": true
+                                        }
+                                    ]
+                                },
+                                "description": "Tries to get the access token by passing the clientId , clientSecret,\nauthentication code, redirect URI and grant type.\n"
+                            },
+                            "status": "Unauthorized",
+                            "code": 401,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Sat, 31 Oct 2015 06:43:44 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "X-HTTP-Method-Override, Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "287",
+                            "data": "{}"
+                        },
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "url": "https://echo.getpostman.com/oauth2/token",
+                                "method": "POST",
+                                "header": [],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "key": "code",
+                                            "value": "xWnkliVQJURqB2x1",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "grant_type",
+                                            "value": "authorization_code",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "redirect_uri",
+                                            "value": "https://www.getpostman.com/oauth2/callback",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_id",
+                                            "value": "abc123",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_secret",
+                                            "value": "ssh-secret",
+                                            "type": "text",
+                                            "enabled": true
+                                        }
+                                    ]
+                                },
+                                "description": "Tries to get the access token by passing the clientId , clientSecret,\nauthentication code, redirect URI and grant type.\n"
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Encoding",
+                                    "key": "Content-Encoding",
+                                    "value": "gzip",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "153",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Sat, 31 Oct 2015 06:43:34 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "X-HTTP-Method-Override, Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "303",
+                            "data": "{\"access_token\":\"vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj\",\"token_type\":\"Bearer\"}"
+                        }
+                    ]
+                },
+                {
+                    "id": "b94ef436-e62e-bef3-bdbd-69be97d72579",
+                    "name": "OAuth2.0 Get Resource",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": "tests[\"response code is 401\"] = (responseCode.code === 200);\nvar body = JSON.parse(responseBody);\ntests[\"body has user_id\"] = \"user_id\" in body;\ntests[\"body has name\"] = \"name\" in body;"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth",
+                            "noauth": {}
+                        },
+                        "url": "https://echo.getpostman.com/oauth2/user/info",
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj",
+                                "description": ""
+                            }
+                        ],
+                        "data": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "code",
+                                    "value": "xWnkliVQJURqB2x1",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "grant_type",
+                                    "value": "authorization_code",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "redirect_uri",
+                                    "value": "https://www.getpostman.com/oauth2/callback",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123",
+                                    "type": "text",
+                                    "enabled": true
+                                },
+                                {
+                                    "key": "client_secret",
+                                    "value": "ssh-secret",
+                                    "type": "text",
+                                    "enabled": true
+                                }
+                            ]
+                        },
+                        "description": "Once the bearer token has been obtained, it can be passed as `Authorization` header to access user's resources.\n\n> Authorization: Bearer vp7jx...\n\nIf the `Authorization` header is not passed the endpoint returns `401 Unauthorized`.\n"
+                    },
+                    "response": [
+                        {
+                            "name": "401",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "noauth",
+                                    "noauth": {}
+                                },
+                                "url": "https://echo.getpostman.com/oauth2/user/info",
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj",
+                                        "description": ""
+                                    }
+                                ],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "key": "code",
+                                            "value": "xWnkliVQJURqB2x1",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "grant_type",
+                                            "value": "authorization_code",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "redirect_uri",
+                                            "value": "https://www.getpostman.com/oauth2/callback",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_id",
+                                            "value": "abc123",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_secret",
+                                            "value": "ssh-secret",
+                                            "type": "text",
+                                            "enabled": true
+                                        }
+                                    ]
+                                },
+                                "description": "Once the bearer token has been obtained, it can be passed as `Authorization` header to access user's resources.\n\n> Authorization: Bearer vp7jx...\n\nIf the `Authorization` header is not passed the endpoint returns `401 Unauthorized`.\n"
+                            },
+                            "status": "Unauthorized",
+                            "code": 401,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Sat, 31 Oct 2015 06:44:16 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "WWW-Authenticate",
+                                    "key": "WWW-Authenticate",
+                                    "value": "Bearer realm=\"Users\"",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "transfer-encoding",
+                                    "key": "transfer-encoding",
+                                    "value": "chunked",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "303",
+                            "data": "Unauthorized"
+                        },
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "auth": {
+                                    "type": "noauth",
+                                    "noauth": {}
+                                },
+                                "url": "https://echo.getpostman.com/oauth2/user/info",
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj",
+                                        "description": ""
+                                    }
+                                ],
+                                "data": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "key": "code",
+                                            "value": "xWnkliVQJURqB2x1",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "grant_type",
+                                            "value": "authorization_code",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "redirect_uri",
+                                            "value": "https://www.getpostman.com/oauth2/callback",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_id",
+                                            "value": "abc123",
+                                            "type": "text",
+                                            "enabled": true
+                                        },
+                                        {
+                                            "key": "client_secret",
+                                            "value": "ssh-secret",
+                                            "type": "text",
+                                            "enabled": true
+                                        }
+                                    ]
+                                },
+                                "description": "Once the bearer token has been obtained, it can be passed as `Authorization` header to access user's resources.\n\n> Authorization: Bearer vp7jx...\n\nIf the `Authorization` header is not passed the endpoint returns `401 Unauthorized`.\n"
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "name": "Access-Control-Allow-Credentials",
+                                    "key": "Access-Control-Allow-Credentials",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Headers",
+                                    "key": "Access-Control-Allow-Headers",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Methods",
+                                    "key": "Access-Control-Allow-Methods",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Access-Control-Allow-Origin",
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Connection",
+                                    "key": "Connection",
+                                    "value": "keep-alive",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Encoding",
+                                    "key": "Content-Encoding",
+                                    "value": "gzip",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Length",
+                                    "key": "Content-Length",
+                                    "value": "50",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Content-Type",
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Date",
+                                    "key": "Date",
+                                    "value": "Sat, 31 Oct 2015 06:44:49 GMT",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Server",
+                                    "key": "Server",
+                                    "value": "nginx/1.6.2",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "Vary",
+                                    "key": "Vary",
+                                    "value": "Accept-Encoding",
+                                    "description": ""
+                                },
+                                {
+                                    "name": "X-Powered-By",
+                                    "key": "X-Powered-By",
+                                    "value": "Sails <sailsjs.org>",
+                                    "description": ""
+                                }
+                            ],
+                            "cookie": [],
+                            "responseTime": "323",
+                            "data": "{\"user_id\":1,\"name\":\"postman\"}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

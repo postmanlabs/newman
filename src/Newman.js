@@ -111,7 +111,6 @@ var Newman = jsface.Class([Options, EventEmitter], {
                 if (err) {
                     console.error(err.stack || err);
                 }
-                console.log('converted the collection, now running');
                 self.iterationRunner = new IterationRunner(result, self.getOptions());
                 self.iterationRunner.execute();
             });

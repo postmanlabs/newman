@@ -16,7 +16,7 @@ Newman maintains feature parity with Postman and allows you to run collections j
 | 0.10.x - 0.12.x | 1.x.x          | `npm install -g newman@1`    |
 | 4.0+            | 2.x.x+         | `npm install -g newman`      |
 
-##### Important Notice about the Beta
+##### DOM Deprecation
 Keeping in line with the [Postman Sandbox](https://www.getpostman.com/docs/sandbox) roadmap, the next major version of Newman (`v3.0.0+`) will drop support for DOM (and associated libraries such as jQuery and Backbone) inside the tests. Any tests that you might have, which use these libraries might break.
 
 ## Getting Started
