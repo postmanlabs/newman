@@ -46,7 +46,8 @@ module.exports = function (grunt) {
                 'node bin/newman -c tests/integ_tests/multipleFormValues.json.postman_collection -s &&' +
                 'node bin/newman -c tests/integ_tests/randomIntC.json -s -W &&' +
                 'node bin/newman -c tests/integ_tests/newmangziptest.json.postman_collection -s &&' +
-                'bin/newman -c tests/integ_tests/hawkAuthTest.json.postman_collection -s'
+                'node bin/newman -c tests/integ_tests/hawkAuthTest.json.postman_collection -s &&' +
+                'node bin/newman -c tests/integ_tests/echo-v2.json -s'
             }
         }
     });

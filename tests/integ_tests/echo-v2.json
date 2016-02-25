@@ -1,19 +1,19 @@
 {
     "variables": [],
     "info": {
-        "name": "Postman Echo (shamasified)",
-        "_postman_id": "03cf74df-32de-af8b-7db8-855b51b05e50",
+        "name": "Postman Echo (V2)",
+        "_postman_id": "2228fc32-fbaf-015d-0b93-692a80d62019",
         "description": "Postman Echo is service you can use to test your REST clients and make sample API calls. It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility endpoints.",
-        "schema": "http://schema.getpostman.com/collection/v2/collection.json"
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0-rc.1/collection.json"
     },
     "item": [
         {
-            "_postman_id": "ca633394-d946-8e44-f4fe-e0470be8cb64",
+            "_postman_id": "e372e924-c66a-fdb0-0363-cc55944206f7",
             "name": "Auth: Digest",
             "description": "Digest authentication protects an endpoint with a username and password without actually transmitting the password over network.\nOne has to apply a hash function (like MD5, etc) to the username and password before sending them over the network.\n\n> Username: `postman`\n>\n> Password: `password`\n\nUnlike Basic-Auth, authentication happens using two consecutive requests where the first request returns `401 Unauthorised` along with `WWW-Authenticate` header containing information that needs to be used to authenticate subsequent calls.\n\nTo know more about digest authentication, refer to the [Digest Access Authentication](https://en.wikipedia.org/wiki/Digest_access_authentication) wikipedia article.\nThe article on [authentication helpers](https://www.getpostman.com/docs/helpers#digest-auth) elaborates how to use the same within the Postman app.",
             "item": [
                 {
-                    "id": "a0d5867c-dd87-3f01-9560-8095271e2644",
+                    "id": "0e5181dc-1baf-02ec-d105-0c94e4463b2a",
                     "name": "DigestAuth Request",
                     "event": [
                         {
@@ -25,11 +25,20 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/digest-auth",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "digest-auth"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/digest-auth",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -72,7 +81,7 @@
                     "response": []
                 },
                 {
-                    "id": "eecb504e-1736-d34c-990a-b86d36f06ddd",
+                    "id": "5206c7ad-b9b4-a314-0f4a-03772e8e15f8",
                     "name": "DigestAuth Success",
                     "event": [
                         {
@@ -98,7 +107,20 @@
                                 "qop": ""
                             }
                         },
-                        "url": "https://echo.getpostman.com/digest-auth",
+                        "url": {
+                            "raw": "https://echo.getpostman.com/digest-auth",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "digest-auth"
+                            ],
+                            "variable": []
+                        },
                         "method": "GET",
                         "header": [
                             {
@@ -116,36 +138,6 @@
                     "response": [
                         {
                             "name": "200",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "digest",
-                                    "digest": {
-                                        "algorithm": "MD5",
-                                        "username": "postman",
-                                        "realm": "{{echo_digest_realm}}",
-                                        "password": "password",
-                                        "nonce": "{{echo_digest_nonce}}",
-                                        "nonceCount": "",
-                                        "clientNonce": "",
-                                        "opaque": "",
-                                        "qop": ""
-                                    }
-                                },
-                                "url": "https://echo.getpostman.com/digest-auth",
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Digest username=\"postman\", realm=\"Users\", nonce=\"ni1LiL0O37PRRhofWdCLmwFsnEtH1lew\", uri=\"/digest-auth\", response=\"254679099562cf07df9b6f5d8d15db44\", opaque=\"\"",
-                                        "description": ""
-                                    }
-                                ],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": []
-                                },
-                                "description": "This endpoint sends a hashed Digest Authorization header to gain access to a valid `200 Ok` response code. In Postman, it uses the stored [global variables](https://www.getpostman.com/docs/environments#gloval-variables), `echo_digest_realm` and `echo_digest_nonce`, to generate the hashed authorisation header.\n\nWithin Postman, for this request to successfully authenticate, running the previous request \"DigestAuth Request\" stores the relevant information within the global variables."
-                            },
                             "status": "OK",
                             "code": 200,
                             "header": [
@@ -231,12 +223,12 @@
             ]
         },
         {
-            "_postman_id": "b9707261-deb2-7bf3-f1ae-8edd1373f4b8",
+            "_postman_id": "e6842700-03cb-2df4-ecb5-23a1c4b1a8ae",
             "name": "Auth: Others",
             "description": "",
             "item": [
                 {
-                    "id": "ef90671a-ab14-16f5-0a57-41b32fc2a36f",
+                    "id": "2924e4d9-7f5d-23b4-03fd-1a8d3ae69a22",
                     "name": "Basic Auth",
                     "event": [
                         {
@@ -257,7 +249,20 @@
                                 "showPassword": false
                             }
                         },
-                        "url": "https://echo.getpostman.com/basic-auth",
+                        "url": {
+                            "raw": "https://echo.getpostman.com/basic-auth",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "basic-auth"
+                            ],
+                            "variable": []
+                        },
                         "method": "GET",
                         "header": [
                             {
@@ -275,31 +280,6 @@
                     "response": [
                         {
                             "name": "401",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "basic",
-                                    "basic": {
-                                        "username": "postman",
-                                        "password": "password",
-                                        "saveHelperData": true,
-                                        "showPassword": false
-                                    }
-                                },
-                                "url": "https://echo.getpostman.com/basic-auth",
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Basic cG9zdG1hbjpwYXNzd29yZA==",
-                                        "description": ""
-                                    }
-                                ],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": []
-                                },
-                                "description": "This endpoint simulates a **basic-auth** protected endpoint. \nThe endpoint accepts a default username and password and returns a status code of `200 ok` only if the same is provided. \nOtherwise it will return a status code `401 unauthorized`.\n\n> Username: `postman`\n> \n> Password: `password`\n\nTo use this endpoint, send a request with the header `Authorization: Basic cG9zdG1hbjpwYXNzd29yZA==`. \nThe cryptic latter half of the header value is a base64 encoded concatenation of the default username and password. \nUsing Postman, to send this request, you can simply fill in the username and password in the \"Authorization\" tab and Postman will do the rest for you.\n\nTo know more about basic authentication, refer to the [Basic Access Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) wikipedia article.\nThe article on [authentication helpers](https://www.getpostman.com/docs/helpers#basic-auth) elaborates how to use the same within the Postman app."
-                            },
                             "status": "Unauthorized",
                             "code": 401,
                             "header": [
@@ -370,31 +350,6 @@
                         },
                         {
                             "name": "200",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "basic",
-                                    "basic": {
-                                        "username": "postman",
-                                        "password": "password",
-                                        "saveHelperData": true,
-                                        "showPassword": false
-                                    }
-                                },
-                                "url": "https://echo.getpostman.com/basic-auth",
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Basic cG9zdG1hbjpwYXNzd29yZA==",
-                                        "description": ""
-                                    }
-                                ],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": []
-                                },
-                                "description": "This endpoint simulates a **basic-auth** protected endpoint. \nThe endpoint accepts a default username and password and returns a status code of `200 ok` only if the same is provided. \nOtherwise it will return a status code `401 unauthorized`.\n\n> Username: `postman`\n> \n> Password: `password`\n\nTo use this endpoint, send a request with the header `Authorization: Basic cG9zdG1hbjpwYXNzd29yZA==`. \nThe cryptic latter half of the header value is a base64 encoded concatenation of the default username and password. \nUsing Postman, to send this request, you can simply fill in the username and password in the \"Authorization\" tab and Postman will do the rest for you.\n\nTo know more about basic authentication, refer to the [Basic Access Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) wikipedia article.\nThe article on [authentication helpers](https://www.getpostman.com/docs/helpers#basic-auth) elaborates how to use the same within the Postman app."
-                            },
                             "status": "OK",
                             "code": 200,
                             "header": [
@@ -478,7 +433,7 @@
                     ]
                 },
                 {
-                    "id": "ced12b69-9604-99a9-65e3-03d09f68efbc",
+                    "id": "36314ffc-e6cc-d277-a3ce-1ecf1b35573f",
                     "name": "OAuth1.0 Verify Signature",
                     "event": [
                         {
@@ -490,11 +445,20 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/oauth1",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "oauth1"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/oauth1",
                         "method": "GET",
                         "header": [
                             {
@@ -545,12 +509,12 @@
             ]
         },
         {
-            "_postman_id": "e3d0c773-6416-3c53-b933-96826acfa85a",
+            "_postman_id": "086c2ad2-522d-5ab9-59b5-b9ed56883a64",
             "name": "Cookies",
             "description": "The cookie related endpoints allow one to get, set and delete simple cookies.\n\nCookies are small snippets of information that is stored in the browser and sent back to the server with every subsequent requests in order to store useful information between requests.\nIf you want to know more about cookies, read the [HTTP Cookie](https://en.wikipedia.org/wiki/HTTP_cookie) article on wikipedia.",
             "item": [
                 {
-                    "id": "96a24790-4951-ba7e-aa4f-fb40a45a7fcb",
+                    "id": "9c2ef092-5e81-a934-3d8a-a16f2bd7f262",
                     "name": "Set Cookies",
                     "event": [
                         {
@@ -562,11 +526,31 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "cookies",
+                                "set"
+                            ],
+                            "query": [
+                                {
+                                    "key": "foo1",
+                                    "value": "bar1"
+                                },
+                                {
+                                    "key": "foo2",
+                                    "value": "bar2"
+                                }
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -578,20 +562,6 @@
                     "response": [
                         {
                             "name": "Cookies",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "noauth",
-                                    "noauth": {}
-                                },
-                                "url": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
-                                "method": "GET",
-                                "header": [],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": []
-                                },
-                                "description": "The cookie setter endpoint accepts a list of cookies and their values as part of URL parameters of a `GET` request. These cookies are saved and can be subsequently retrieved or deleted. The response of this request returns a JSON with all cookies listed.\n\nTo set your own set of cookies, simply replace the URL parameters \"foo1=bar1&foo2=bar2\" with your own set of key-value pairs."
-                            },
                             "status": "OK",
                             "code": 200,
                             "header": [
@@ -675,7 +645,7 @@
                     ]
                 },
                 {
-                    "id": "4118ca21-f216-410f-510c-2d0e465022c5",
+                    "id": "a317d5a1-7ad5-0eb0-889d-bfe9c34f1787",
                     "name": "Get Cookies",
                     "event": [
                         {
@@ -687,11 +657,20 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/cookies",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "cookies"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/cookies",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -703,20 +682,6 @@
                     "response": [
                         {
                             "name": "Cookies",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "noauth",
-                                    "noauth": {}
-                                },
-                                "url": "https://echo.getpostman.com/cookies",
-                                "method": "GET",
-                                "header": [],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": []
-                                },
-                                "description": "Use this endpoint to get a list of all cookies that are stored with respect to this domain. Whatever key-value pairs that has been previously set by calling the \"Set Cookies\" endpoint, will be returned as response JSON."
-                            },
                             "status": "OK",
                             "code": 200,
                             "header": [
@@ -800,23 +765,43 @@
                     ]
                 },
                 {
-                    "id": "4ac1e980-6990-fc1d-5f80-4e5cedce9812",
+                    "id": "2dccf8a7-7729-6acf-6888-ef04cbb178fd",
                     "name": "Delete Cookies",
                     "event": [
                         {
                             "listen": "test",
                             "script": {
                                 "type": "text/javascript",
-                                "exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body contains key cookies\"] = responseBody.has(\"cookies\");\nvar body = JSON.parse(responseBody);\ntests[\"Body contains cookie foo2\"] = 'foo2' in body.cookies;\ntests[\"Body does not contain cookie foo2\"] = !('foo1' in body.cookies);"
+                                "exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body contains key cookies\"] = responseBody.has(\"cookies\");\nvar body = JSON.parse(responseBody);\ntests[\"Body does not contain cookie foo2\"] = !('foo1' in body.cookies);"
                             }
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "cookies",
+                                "delete"
+                            ],
+                            "query": [
+                                {
+                                    "key": "foo1",
+                                    "value": ""
+                                },
+                                {
+                                    "key": "foo2",
+                                    "value": ""
+                                }
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -828,20 +813,6 @@
                     "response": [
                         {
                             "name": "Cookies Response",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "noauth",
-                                    "noauth": {}
-                                },
-                                "url": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
-                                "method": "GET",
-                                "header": [],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": []
-                                },
-                                "description": "One or more cookies that has been set for this domain can be deleted by providing the cookie names as part of the URL parameter. The response of this request is a JSON containing the list of currently set cookies."
-                            },
                             "status": "OK",
                             "code": 200,
                             "header": [
@@ -927,28 +898,37 @@
             ]
         },
         {
-            "_postman_id": "997e9a45-51e0-98b1-1894-319a72efca57",
+            "_postman_id": "9847133e-9424-bf2c-be77-db510b2fdbba",
             "name": "Headers",
             "description": "The following set of endpoints allow one to see the headers being sent as part of a request and to get a custom set of headers as part of response.\n\nHTTP header fields provide required information about the request or response, or about the object sent in the message body. Both request headers and response headers can be controlled using these endpoints.",
             "item": [
                 {
-                    "id": "557b9d4d-bc9a-5172-5edf-d43a27055c89",
+                    "id": "1b462a0b-8f0d-2b90-7f3b-b956985904d1",
                     "name": "Request Headers",
                     "event": [
                         {
                             "listen": "test",
                             "script": {
                                 "type": "text/javascript",
-                                "exec": "tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n\nvar data = JSON.parse(responseBody).headers;\n\ntests[\"Header contains host\"] = \"host\" in data;\ntests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in data;"
+                                "exec": "tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n\nvar data = JSON.parse(responseBody).headers;\n\ntests[\"Header contains host\"] = \"host\" in data;"
                             }
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/headers",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "headers"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/headers",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -960,7 +940,7 @@
                     "response": []
                 },
                 {
-                    "id": "5ec6f591-4460-e4cf-fdc1-0de07c10b2b1",
+                    "id": "7c21464f-607c-5ca4-729f-a233faa5b180",
                     "name": "Response Headers",
                     "event": [
                         {
@@ -972,11 +952,30 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/response-headers?Content-Type=text/html&Server=apibin",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "response-headers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "text/html"
+                                },
+                                {
+                                    "key": "Server",
+                                    "value": "apibin"
+                                }
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/response-headers?Content-Type=text/html&Server=apibin",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1021,12 +1020,12 @@
             ]
         },
         {
-            "_postman_id": "a3729195-78fd-52c3-0313-9aefed8af7eb",
+            "_postman_id": "6a8fe6da-b3ca-1c4e-e096-550b501a3e91",
             "name": "Request Methods",
             "description": "HTTP has multiple request \"verbs\", such as `GET`, `PUT`, `POST`, `DELETE`,\n`PATCH`, `HEAD`, etc. \n\nAn HTTP Method (verb) defines how a request should be interpreted by a server. \nThe endpoints in this section demonstrate various HTTP Verbs. Postman supports \nall the HTTP Verbs, including some rarely used ones, such as `PROPFIND`, `UNLINK`, \netc.\n\nFor details about HTTP Verbs, refer to [RFC 2616](http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9)\n",
             "item": [
                 {
-                    "id": "439a41a1-4bc7-0b90-6cb9-50accfd187ff",
+                    "id": "e9f4387b-5b32-ae3c-cae3-f8470d1c6b1f",
                     "name": "GET Request ",
                     "event": [
                         {
@@ -1038,11 +1037,26 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/get?test=123",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "get"
+                            ],
+                            "query": [
+                                {
+                                    "key": "test",
+                                    "value": "123"
+                                }
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/get?test=123",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1085,7 +1099,7 @@
                     "response": []
                 },
                 {
-                    "id": "6325e9fd-d3fc-3ea7-d014-f1d41a56177c",
+                    "id": "4dbb1437-dd69-7ead-d072-656c0cf303e8",
                     "name": "POST Request",
                     "event": [
                         {
@@ -1097,11 +1111,20 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/post",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "post"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/post",
                         "method": "POST",
                         "header": [
                             {
@@ -1119,23 +1142,32 @@
                     "response": []
                 },
                 {
-                    "id": "21559428-a25b-cddc-c932-581e483e16e2",
+                    "id": "21400a93-c64f-87ad-adae-76e06408fa89",
                     "name": "PUT Request",
                     "event": [
                         {
                             "listen": "test",
                             "script": {
                                 "type": "text/javascript",
-                                "exec": "var data;\n\ntry { responseJSON = JSON.parse(responseBody); }\ncatch (e) {}\n\ntests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\n\n\ntests[\"Data has been passed\"] = (responseJSON && responseJSON.data && responseJSON.data.length)"
+                                "exec": "var data;\n\ntry { responseJSON = JSON.parse(responseBody); }\ncatch (e) {}\n\ntests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n"
                             }
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/put",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "put"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/put",
                         "method": "PUT",
                         "header": [],
                         "data": {
@@ -1147,23 +1179,32 @@
                     "response": []
                 },
                 {
-                    "id": "62be870e-f72e-eeeb-2efa-cd27ddae0d34",
+                    "id": "fdf95beb-6939-9cfa-f1f5-00756a09e067",
                     "name": "PATCH Request",
                     "event": [
                         {
                             "listen": "test",
                             "script": {
                                 "type": "text/javascript",
-                                "exec": "tests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\nvar data = JSON.parse(responseBody)\n\ntests[\"form key has data passed in as form-data\"] = 'test' in data.form"
+                                "exec": "tests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\nvar data = JSON.parse(responseBody)\n"
                             }
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/patch",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "patch"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/patch",
                         "method": "PATCH",
                         "header": [],
                         "data": {
@@ -1175,23 +1216,32 @@
                     "response": []
                 },
                 {
-                    "id": "b4fcb293-1ef4-35f9-4f82-c4b519a55904",
+                    "id": "8509cbff-f490-6ac8-7201-489c7a65322d",
                     "name": "DELETE Request",
                     "event": [
                         {
                             "listen": "test",
                             "script": {
                                 "type": "text/javascript",
-                                "exec": "tests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\nvar data = JSON.parse(responseBody)\n\ntests[\"form key has data passed in as form-data\"] = 'test' in data.form"
+                                "exec": "tests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\nvar data = JSON.parse(responseBody)"
                             }
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/delete",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "delete"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/delete",
                         "method": "DELETE",
                         "header": [],
                         "data": {
@@ -1205,12 +1255,12 @@
             ]
         },
         {
-            "_postman_id": "3448365f-6534-c34d-14ed-01915810374e",
+            "_postman_id": "7fbb0592-7cad-ff7e-500c-790965163a57",
             "name": "Utilities",
             "description": "",
             "item": [
                 {
-                    "id": "7212fe16-50d5-3f6d-2513-319d49a9ea44",
+                    "id": "709d6b48-c254-3005-7265-d5d337b91983",
                     "name": "Response Status Code",
                     "event": [
                         {
@@ -1222,11 +1272,21 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/status/200",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "status",
+                                "200"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/status/200",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1245,7 +1305,7 @@
                     "response": []
                 },
                 {
-                    "id": "9fc9c5d1-51c3-aa36-fdb2-dd4ff7bd5e18",
+                    "id": "23a34378-602b-0a40-252c-5555b5f72000",
                     "name": "Streamed Response",
                     "event": [
                         {
@@ -1257,11 +1317,21 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/stream/10",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "stream",
+                                "10"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/stream/10",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1273,7 +1343,7 @@
                     "response": []
                 },
                 {
-                    "id": "502f7f5b-b129-78a7-b27f-8dc36ce58f66",
+                    "id": "2942065c-eee1-2140-2801-d12f78cf67ac",
                     "name": "Delay Response",
                     "event": [
                         {
@@ -1285,11 +1355,21 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/delay/3",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "delay",
+                                "3"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/delay/3",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1308,7 +1388,7 @@
                     "response": []
                 },
                 {
-                    "id": "b213d463-8587-8470-acdc-92f7dfb0660e",
+                    "id": "6c5607e2-7021-27f4-64e8-9f7b87d34c25",
                     "name": "Get UTF8 Encoded Response",
                     "event": [
                         {
@@ -1320,11 +1400,21 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/encoding/utf8",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "encoding",
+                                "utf8"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/encoding/utf8",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1336,7 +1426,7 @@
                     "response": []
                 },
                 {
-                    "id": "eb8e2717-56b0-6a61-5387-eb46530ec4be",
+                    "id": "95ade4e4-9b25-1e11-b8c5-e88be95d87eb",
                     "name": "GZip Compressed Response",
                     "event": [
                         {
@@ -1348,11 +1438,20 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/gzip",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "gzip"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/gzip",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1395,7 +1494,7 @@
                     "response": []
                 },
                 {
-                    "id": "947d31d6-16ce-2e3a-bf32-e0337c838ff8",
+                    "id": "c5f60ab4-e497-690a-dd2f-b2b34628bd8c",
                     "name": "Deflate Compressed Response",
                     "event": [
                         {
@@ -1407,11 +1506,20 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/deflate",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "deflate"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/deflate",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1425,12 +1533,12 @@
             ]
         },
         {
-            "_postman_id": "58b0685d-5e5c-d03e-8899-c1084704d0d3",
+            "_postman_id": "73cdf1ab-aaf1-c1a1-df67-fd87d441b3a9",
             "name": "[draft] Auth: OAuth2.0",
             "description": "OAuth 2.0 allows a client to access a resource owners(user) protected resources without direct access to the users credentials.\nThe client obtains an access token which can be used to access the resource owners resources.\nOAuth 2.0 implements 4 different types of grant flows. Postman Echo has implemented the [Authorization Code](https://tools.ietf.org/html/rfc6749#section-1.3.1) grant flow.\n\nThe OAuth flow typically consists of three steps. \nIn the first step the client requests an authentication code from the server implementing the OAuth flow.\nThe authentication code along with other client credentials is then used to get the access token.\nThe access token can be used by the client to access users resources.\n",
             "item": [
                 {
-                    "id": "d8fbfb17-6993-d43e-43af-2996f5138b9a",
+                    "id": "24a7cc4c-238b-9cb7-ada0-b442e41b5731",
                     "name": "OAuth2.0 Get Auth Code",
                     "event": [
                         {
@@ -1442,11 +1550,31 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "oauth2",
+                                "authtoken"
+                            ],
+                            "query": [
+                                {
+                                    "key": "client_id",
+                                    "value": "abc123"
+                                },
+                                {
+                                    "key": "response_type",
+                                    "value": "code"
+                                }
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
                         "method": "GET",
                         "header": [],
                         "data": {
@@ -1489,51 +1617,6 @@
                     "response": [
                         {
                             "name": "401",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "noauth",
-                                    "noauth": {}
-                                },
-                                "url": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
-                                "method": "GET",
-                                "header": [],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": [
-                                        {
-                                            "key": "code",
-                                            "value": "xWnkliVQJURqB2x1",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "grant_type",
-                                            "value": "authorization_code",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "redirect_uri",
-                                            "value": "https://www.getpostman.com/oauth2/callback",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "client_id",
-                                            "value": "abc123",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "client_secret",
-                                            "value": "ssh-secret",
-                                            "type": "text",
-                                            "enabled": true
-                                        }
-                                    ]
-                                },
-                                "description": "In the first request for the OAuth 2.0 flow, the client tries to get an authentication code by passing in `client_id` and `response_type`.\n\n> client_id: `abc123`\n>\n> response_type: `code`\n\nThe authentication code is returned as a part of the redirect URI and can be used to get the access token."
-                            },
                             "status": "Unauthorized",
                             "code": 401,
                             "header": [
@@ -1617,7 +1700,7 @@
                     ]
                 },
                 {
-                    "id": "0628a95f-c283-94e2-fa9f-53477775692f",
+                    "id": "c1edd601-f55f-4edf-9885-374242b617d1",
                     "name": "OAuth2.0 Get Access Token",
                     "event": [
                         {
@@ -1629,11 +1712,21 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/oauth2/token",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "oauth2",
+                                "token"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/oauth2/token",
                         "method": "POST",
                         "header": [],
                         "data": {
@@ -1677,7 +1770,21 @@
                         {
                             "name": "401",
                             "originalRequest": {
-                                "url": "https://echo.getpostman.com/oauth2/token",
+                                "url": {
+                                    "raw": "https://echo.getpostman.com/oauth2/token",
+                                    "protocol": "https",
+                                    "auth": {},
+                                    "host": [
+                                        "echo",
+                                        "getpostman",
+                                        "com"
+                                    ],
+                                    "path": [
+                                        "oauth2",
+                                        "token"
+                                    ],
+                                    "variable": []
+                                },
                                 "method": "POST",
                                 "header": [],
                                 "data": {
@@ -1794,7 +1901,21 @@
                         {
                             "name": "200",
                             "originalRequest": {
-                                "url": "https://echo.getpostman.com/oauth2/token",
+                                "url": {
+                                    "raw": "https://echo.getpostman.com/oauth2/token",
+                                    "protocol": "https",
+                                    "auth": {},
+                                    "host": [
+                                        "echo",
+                                        "getpostman",
+                                        "com"
+                                    ],
+                                    "path": [
+                                        "oauth2",
+                                        "token"
+                                    ],
+                                    "variable": []
+                                },
                                 "method": "POST",
                                 "header": [],
                                 "data": {
@@ -1917,7 +2038,7 @@
                     ]
                 },
                 {
-                    "id": "b94ef436-e62e-bef3-bdbd-69be97d72579",
+                    "id": "ecc2a4a0-c910-608f-59f0-ffb007f9c088",
                     "name": "OAuth2.0 Get Resource",
                     "event": [
                         {
@@ -1929,11 +2050,22 @@
                         }
                     ],
                     "request": {
-                        "auth": {
-                            "type": "noauth",
-                            "noauth": {}
+                        "url": {
+                            "raw": "https://echo.getpostman.com/oauth2/user/info",
+                            "protocol": "https",
+                            "auth": {},
+                            "host": [
+                                "echo",
+                                "getpostman",
+                                "com"
+                            ],
+                            "path": [
+                                "oauth2",
+                                "user",
+                                "info"
+                            ],
+                            "variable": []
                         },
-                        "url": "https://echo.getpostman.com/oauth2/user/info",
                         "method": "GET",
                         "header": [
                             {
@@ -1982,57 +2114,6 @@
                     "response": [
                         {
                             "name": "401",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "noauth",
-                                    "noauth": {}
-                                },
-                                "url": "https://echo.getpostman.com/oauth2/user/info",
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj",
-                                        "description": ""
-                                    }
-                                ],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": [
-                                        {
-                                            "key": "code",
-                                            "value": "xWnkliVQJURqB2x1",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "grant_type",
-                                            "value": "authorization_code",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "redirect_uri",
-                                            "value": "https://www.getpostman.com/oauth2/callback",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "client_id",
-                                            "value": "abc123",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "client_secret",
-                                            "value": "ssh-secret",
-                                            "type": "text",
-                                            "enabled": true
-                                        }
-                                    ]
-                                },
-                                "description": "Once the bearer token has been obtained, it can be passed as `Authorization` header to access user's resources.\n\n> Authorization: Bearer vp7jx...\n\nIf the `Authorization` header is not passed the endpoint returns `401 Unauthorized`.\n"
-                            },
                             "status": "Unauthorized",
                             "code": 401,
                             "header": [
@@ -2103,57 +2184,6 @@
                         },
                         {
                             "name": "200",
-                            "originalRequest": {
-                                "auth": {
-                                    "type": "noauth",
-                                    "noauth": {}
-                                },
-                                "url": "https://echo.getpostman.com/oauth2/user/info",
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj",
-                                        "description": ""
-                                    }
-                                ],
-                                "data": {
-                                    "mode": "formdata",
-                                    "formdata": [
-                                        {
-                                            "key": "code",
-                                            "value": "xWnkliVQJURqB2x1",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "grant_type",
-                                            "value": "authorization_code",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "redirect_uri",
-                                            "value": "https://www.getpostman.com/oauth2/callback",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "client_id",
-                                            "value": "abc123",
-                                            "type": "text",
-                                            "enabled": true
-                                        },
-                                        {
-                                            "key": "client_secret",
-                                            "value": "ssh-secret",
-                                            "type": "text",
-                                            "enabled": true
-                                        }
-                                    ]
-                                },
-                                "description": "Once the bearer token has been obtained, it can be passed as `Authorization` header to access user's resources.\n\n> Authorization: Bearer vp7jx...\n\nIf the `Authorization` header is not passed the endpoint returns `401 Unauthorized`.\n"
-                            },
                             "status": "OK",
                             "code": 200,
                             "header": [
