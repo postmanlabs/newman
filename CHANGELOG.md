@@ -1,7 +1,13 @@
 ##CHANGELOG
 
-####2.0.0-beta.1 (September 24, 2015)
-* Support for Node v4
+####2.0.0 (February 25, 2016)
+* Dropped support for Node v0.10 and v0.12
+* Added support for running collections in the new collection format (Details: schema.getpostman.com)
+* Bugfix for AWS Auth with a service name [User contributed]
+
+####1.3.0 (February 17, 2016)
+* Added support for console.* functions (error, warn)
+* Fixed a bug which caused a crash when the request data is empty
 
 ####1.2.29 (February 02, 2016)
 * Fixed #310 (Better error messages)
