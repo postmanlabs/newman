@@ -319,11 +319,16 @@ var HelperProcessor = jsface.Class({
         var i;
         if (request.method.toLowerCase() === "post" || request.method.toLowerCase() === "put") {
             if (request.dataMode === "urlencoded") {
+                if (!request.transformed.data || (!request.transformed.data.length)) {
+                    return '';
+                }
                 params = this._parseFormParams(request.transformed.data);
                 return queryString.stringify(params);
             }
             else if (request.dataMode === "params") {
-                //console.log("Problem - what do we do for the separator? :S");
+                if (!(request.transformed.data && !request.transformed.data.length)) {
+                    return '';
+                }
                 numParams = request.transformed.data.length;
                 params = request.transformed.data;
                 retVal = this._getDummyFormDataBoundary();
