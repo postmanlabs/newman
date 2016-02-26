@@ -24,13 +24,13 @@
         for (var index = 0; index < it.results.length; index++) {
             var result = it.results[index];
             var finalDescription = "null";
-            for ( i=0; i < it.collection.requests.length; i++ ) {
+            for (var i=0; i < it.collection.requests.length; i++ ) {
                 if ( it.collection.requests[i].id === result.id ) {
                     finalDescription = it.collection.requests[i].description;
                 }
             };
             out += ' <div class="panel-group" id="collapse-request-' + (index) + '" role="tablist" aria-multiselectable="true"> <div class="panel panel-default"> <div class="panel-heading" role="tab" id="requestHead-' + (index) + '"> <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#requestData-' + (index) + '" aria-controls="collapseOne"> ' + (result.name) + ' </a> </h4> </div> <div id="requestData-' + (index) + '" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-' + (index) + '"> <div class="panel-body"> <div class="col-md-3">Description:</div><div class="col-md-6"> ' + finalDescription + ' </div><br/><div class="col-md-3">Mean time per request:</div><div class="col-md-6"> ' + (result.meanResponseTime) + ' ms </div><br/><div class="col-md-3">Total tests that passed:</div><div class="col-md-6"> ' + (result.totalPassFailCounts.pass) + ' </div><br/><div class="col-md-3">Total tests that failed:</div><div class="col-md-6"> ' + (result.totalPassFailCounts.fail) + ' </div><br /> <h5>Individual tests:</h5> <table class="table"> <thead> <tr> <!--<th>S.No.</th>--> <th>Test name</th> <th>Pass count</th> <th>Fail count</th> </tr> </thead> <tbody> <!--FOR EACH TEST IN THE REQUEST--> ';
-            for (testName in result.testPassFailCounts) {
+            for (var testName in result.testPassFailCounts) {
                 out += ' <tr> <!--S.no. missing--> <td>' + (testName) + '</td> <td>' + (result.testPassFailCounts[testName].pass) + '</td> <td>' + (result.testPassFailCounts[testName].fail) + '</td> </tr> ';
             }
             out += ' </tbody> </table> </div> </div> </div> </div> ';
