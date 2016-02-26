@@ -301,8 +301,8 @@ var ResponseExporter = jsface.Class({
     _createJunitXML: function () {
         var oldThis = this;
         var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-        xml += "<testsuites>\n";
-
+        var suitesName = Globals.requestJSON.name || 'Collection name not found';
+        xml += "<testsuites name=\"" + suitesName + "\">\n";
         _und.each(this._results, function (suite) {
             //var testRequest = _und.find(Globals.requestJSON.requests, function(request) {
             //	return suite.id === request.id;
