@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####2.0.1 (March 01, 2016)
+* Added support for custom ports in AWS Signature v4 auth (by @harshavardhana)
+* Updated postman-collection-transformer version
+
 ####2.0.0 (February 25, 2016)
 * Dropped support for Node v0.10 and v0.12
 * Added support for running collections in the new collection format (Details: schema.getpostman.com)
