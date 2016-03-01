@@ -4,7 +4,7 @@
         "name": "Postman Echo (V2)",
         "_postman_id": "2228fc32-fbaf-015d-0b93-692a80d62019",
         "description": "Postman Echo is service you can use to test your REST clients and make sample API calls. It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility endpoints.",
-        "schema": "https://schema.getpostman.com/json/collection/v2.0.0-rc.1/collection.json"
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
     },
     "item": [
         {
@@ -25,23 +25,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/digest-auth",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "digest-auth"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/digest-auth",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -107,20 +94,7 @@
                                 "qop": ""
                             }
                         },
-                        "url": {
-                            "raw": "https://echo.getpostman.com/digest-auth",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "digest-auth"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/digest-auth",
                         "method": "GET",
                         "header": [
                             {
@@ -129,7 +103,7 @@
                                 "description": ""
                             }
                         ],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -216,7 +190,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "9843",
-                            "data": "{\"authenticated\":true}"
+                            "body": "{\"authenticated\":true}"
                         }
                     ]
                 }
@@ -249,20 +223,7 @@
                                 "showPassword": false
                             }
                         },
-                        "url": {
-                            "raw": "https://echo.getpostman.com/basic-auth",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "basic-auth"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/basic-auth",
                         "method": "GET",
                         "header": [
                             {
@@ -271,7 +232,7 @@
                                 "description": ""
                             }
                         ],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -346,7 +307,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "276",
-                            "data": "Unauthorized"
+                            "body": "Unauthorized"
                         },
                         {
                             "name": "200",
@@ -428,7 +389,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "377",
-                            "data": "{\"authenticated\":true}"
+                            "body": "{\"authenticated\":true}"
                         }
                     ]
                 },
@@ -445,20 +406,7 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/oauth1",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "oauth1"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/oauth1",
                         "method": "GET",
                         "header": [
                             {
@@ -467,7 +415,7 @@
                                 "description": ""
                             }
                         ],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -526,34 +474,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "cookies",
-                                "set"
-                            ],
-                            "query": [
-                                {
-                                    "key": "foo1",
-                                    "value": "bar1"
-                                },
-                                {
-                                    "key": "foo2",
-                                    "value": "bar2"
-                                }
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -640,7 +564,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "3063",
-                            "data": "{\"cookies\":{\"foo1\":\"bar\",\"foo2\":\"bar\"}}"
+                            "body": "{\"cookies\":{\"foo1\":\"bar\",\"foo2\":\"bar\"}}"
                         }
                     ]
                 },
@@ -657,23 +581,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/cookies",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "cookies"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/cookies",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -760,7 +671,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "462",
-                            "data": "{\"cookies\":{\"foo2\":\"bar\"}}"
+                            "body": "{\"cookies\":{\"foo2\":\"bar\"}}"
                         }
                     ]
                 },
@@ -777,34 +688,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "cookies",
-                                "delete"
-                            ],
-                            "query": [
-                                {
-                                    "key": "foo1",
-                                    "value": ""
-                                },
-                                {
-                                    "key": "foo2",
-                                    "value": ""
-                                }
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -891,7 +778,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "1417",
-                            "data": "{\"cookies\":{\"foo2\":\"bar\"}}"
+                            "body": "{\"cookies\":{\"foo2\":\"bar\"}}"
                         }
                     ]
                 }
@@ -915,23 +802,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/headers",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "headers"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/headers",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -952,33 +826,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/response-headers?Content-Type=text/html&Server=apibin",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "response-headers"
-                            ],
-                            "query": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "text/html"
-                                },
-                                {
-                                    "key": "Server",
-                                    "value": "apibin"
-                                }
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/response-headers?Content-Type=text/html&Server=apibin",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -1037,29 +888,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/get?test=123",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "get"
-                            ],
-                            "query": [
-                                {
-                                    "key": "test",
-                                    "value": "123"
-                                }
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/get?test=123",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -1111,20 +943,7 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/post",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "post"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/post",
                         "method": "POST",
                         "header": [
                             {
@@ -1133,7 +952,7 @@
                                 "description": ""
                             }
                         ],
-                        "data": {
+                        "body": {
                             "mode": "raw",
                             "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium. Praesent neque quam, tincidunt nec leo eget, rutrum vehicula magna.\nMaecenas consequat elementum elit, id semper sem tristique et. Integer pulvinar enim quis consectetur interdum volutpat."
                         },
@@ -1149,28 +968,20 @@
                             "listen": "test",
                             "script": {
                                 "type": "text/javascript",
-                                "exec": "var data;\n\ntry { responseJSON = JSON.parse(responseBody); }\ncatch (e) {}\n\ntests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n"
+                                "exec": "var data;\n\ntry { responseJSON = JSON.parse(responseBody); }\ncatch (e) {}\n\ntests[\"Body contains files\"] = responseBody.has(\"files\");\ntests[\"Body contains args\"] = responseBody.has(\"args\");\ntests[\"Body contains form\"] = responseBody.has(\"form\");\ntests[\"Body contains headers\"] = responseBody.has(\"headers\");\ntests[\"Body contains url\"] = responseBody.has(\"url\");\n\n\n\ntests[\"Data has been passed\"] = (responseJSON && responseJSON.data && responseJSON.data.length)"
                             }
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/put",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "put"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/put",
                         "method": "PUT",
-                        "header": [],
-                        "data": {
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "text/plain"
+                            }
+                        ],
+                        "body": {
                             "mode": "raw",
                             "raw": "Etiam mi lacus, cursus vitae felis et, blandit pellentesque neque. Vestibulum eget nisi a tortor commodo dignissim.\nQuisque ipsum ligula, faucibus a felis a, commodo elementum nisl. Mauris vulputate sapien et tincidunt viverra. Donec vitae velit nec metus."
                         },
@@ -1191,23 +1002,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/patch",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "patch"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/patch",
                         "method": "PATCH",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "raw",
                             "raw": "Curabitur auctor, elit nec pulvinar porttitor, ex augue condimentum enim, eget suscipit urna felis quis neque.\nSuspendisse sit amet luctus massa, nec venenatis mi. Suspendisse tincidunt massa at nibh efficitur fringilla. Nam quis congue mi. Etiam volutpat."
                         },
@@ -1228,23 +1026,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/delete",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "delete"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/delete",
                         "method": "DELETE",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "raw",
                             "raw": "Donec fermentum, nisi sed cursus eleifend, nulla tortor ultricies tellus, ut vehicula orci arcu ut velit. In volutpat egestas dapibus. \nMorbi condimentum vestibulum sapien. Etiam dignissim diam quis eros lobortis gravida vel lobortis est. Etiam gravida sed."
                         },
@@ -1272,24 +1057,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/status/200",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "status",
-                                "200"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/status/200",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -1317,24 +1088,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/stream/10",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "stream",
-                                "10"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/stream/10",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -1355,24 +1112,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/delay/3",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "delay",
-                                "3"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/delay/3",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -1400,24 +1143,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/encoding/utf8",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "encoding",
-                                "utf8"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/encoding/utf8",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -1438,23 +1167,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/gzip",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "gzip"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/gzip",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -1506,23 +1222,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/deflate",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "deflate"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/deflate",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": []
                         },
@@ -1550,34 +1253,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "oauth2",
-                                "authtoken"
-                            ],
-                            "query": [
-                                {
-                                    "key": "client_id",
-                                    "value": "abc123"
-                                },
-                                {
-                                    "key": "response_type",
-                                    "value": "code"
-                                }
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
                         "method": "GET",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -1695,7 +1374,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "291",
-                            "data": "{}"
+                            "body": "{}"
                         }
                     ]
                 },
@@ -1712,24 +1391,10 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/oauth2/token",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "oauth2",
-                                "token"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/oauth2/token",
                         "method": "POST",
                         "header": [],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -1770,24 +1435,10 @@
                         {
                             "name": "401",
                             "originalRequest": {
-                                "url": {
-                                    "raw": "https://echo.getpostman.com/oauth2/token",
-                                    "protocol": "https",
-                                    "auth": {},
-                                    "host": [
-                                        "echo",
-                                        "getpostman",
-                                        "com"
-                                    ],
-                                    "path": [
-                                        "oauth2",
-                                        "token"
-                                    ],
-                                    "variable": []
-                                },
+                                "url": "https://echo.getpostman.com/oauth2/token",
                                 "method": "POST",
                                 "header": [],
-                                "data": {
+                                "body": {
                                     "mode": "formdata",
                                     "formdata": [
                                         {
@@ -1896,29 +1547,15 @@
                             ],
                             "cookie": [],
                             "responseTime": "287",
-                            "data": "{}"
+                            "body": "{}"
                         },
                         {
                             "name": "200",
                             "originalRequest": {
-                                "url": {
-                                    "raw": "https://echo.getpostman.com/oauth2/token",
-                                    "protocol": "https",
-                                    "auth": {},
-                                    "host": [
-                                        "echo",
-                                        "getpostman",
-                                        "com"
-                                    ],
-                                    "path": [
-                                        "oauth2",
-                                        "token"
-                                    ],
-                                    "variable": []
-                                },
+                                "url": "https://echo.getpostman.com/oauth2/token",
                                 "method": "POST",
                                 "header": [],
-                                "data": {
+                                "body": {
                                     "mode": "formdata",
                                     "formdata": [
                                         {
@@ -2033,7 +1670,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "303",
-                            "data": "{\"access_token\":\"vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj\",\"token_type\":\"Bearer\"}"
+                            "body": "{\"access_token\":\"vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj\",\"token_type\":\"Bearer\"}"
                         }
                     ]
                 },
@@ -2050,22 +1687,7 @@
                         }
                     ],
                     "request": {
-                        "url": {
-                            "raw": "https://echo.getpostman.com/oauth2/user/info",
-                            "protocol": "https",
-                            "auth": {},
-                            "host": [
-                                "echo",
-                                "getpostman",
-                                "com"
-                            ],
-                            "path": [
-                                "oauth2",
-                                "user",
-                                "info"
-                            ],
-                            "variable": []
-                        },
+                        "url": "https://echo.getpostman.com/oauth2/user/info",
                         "method": "GET",
                         "header": [
                             {
@@ -2074,7 +1696,7 @@
                                 "description": ""
                             }
                         ],
-                        "data": {
+                        "body": {
                             "mode": "formdata",
                             "formdata": [
                                 {
@@ -2180,7 +1802,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "303",
-                            "data": "Unauthorized"
+                            "body": "Unauthorized"
                         },
                         {
                             "name": "200",
@@ -2262,7 +1884,7 @@
                             ],
                             "cookie": [],
                             "responseTime": "323",
-                            "data": "{\"user_id\":1,\"name\":\"postman\"}"
+                            "body": "{\"user_id\":1,\"name\":\"postman\"}"
                         }
                     ]
                 }
