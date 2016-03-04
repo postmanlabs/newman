@@ -47,7 +47,7 @@ var CsvHelper = jsface.Class({
                         n = e.trim === !0 ? !0 : !1,
                         o = function (c) {
                             var e = d(c);
-                            return j !== !0 && ("" === c ? c = null : n === !0 && (c = e), (a.test(e) || b.test(e)) && (c = +e)), c
+                            return j !== !0 && ("" === c ? c = c : n === !0 && (c = e), (a.test(e) || b.test(e)) && (c = +e)), c
                         };
                     for (f = 0; f < c.length; f += 1) h = c.charAt(f), i !== !1 || "," !== h && "\n" !== h ? '"' !== h ? k += h : i ? '"' === c.charAt(f + 1) ? (k += '"', f += 1) : i = !1 : (i = !0, j = !0) : (k = o(k), l.push(k), "\n" === h && (m.push(l), l = []), k = "", j = !1);
                     return k = o(k), l.push(k), m.push(l), m
