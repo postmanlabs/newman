@@ -350,7 +350,7 @@ var HelperProcessor = jsface.Class({
                 return retVal;
             }
             else if (request.dataMode === "raw") {
-                return request.rawModeData
+                return request.transformed.data;
             }
             else {
                 return false;
