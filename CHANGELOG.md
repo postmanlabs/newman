@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####2.0.2 (March 15, 2016)
+* removed check for empty strings from CSV to be consistent with Postman (by @bwolski)
+* Fixed AWS Auth with raw body (Github #345)
+
 ####2.0.1 (March 01, 2016)
 * Added support for custom ports in AWS Signature v4 auth (by @harshavardhana)
 * Updated postman-collection-transformer version
