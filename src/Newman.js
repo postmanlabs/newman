@@ -25,6 +25,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
      * @param {object} Newman options
      */
     execute: function (requestJSON, options, callback) {
+        var self = this;
         // var collectionParseError = Validator.validateJSON('c',requestJSON);
         // if(!collectionParseError.status) {
         //     Errors.terminateWithError("Not a valid POSTMAN collection");
@@ -69,6 +70,8 @@ var Newman = jsface.Class([Options, EventEmitter], {
                     fs.writeFileSync(options.exportEnvironmentFile, JSON.stringify(Globals.envJson, null, 1));
                     log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
                 }
+
+                self.removeAllListeners();
 
                 //if -x is set, return the exit code
                 if (options.exitCode) {
