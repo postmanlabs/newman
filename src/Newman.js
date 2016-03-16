@@ -80,7 +80,7 @@ var Newman = jsface.Class([Options, EventEmitter], {
                     log.note("\n\nEnvironment File Exported To: " + options.exportEnvironmentFile + "\n");
                 }
                 
-                this.removeAllListeners();
+                self.removeAllListeners();
 
                 function wrapUp() {
                     //if -x is set, return the exit code
