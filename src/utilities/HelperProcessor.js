@@ -59,8 +59,8 @@ var HelperProcessor = jsface.Class({
             protocol: parsedURL.protocol,
             port: parsedURL.port,
             path: parsedURL.path,
-            service: properties.service || 'execute-api',
-            region: properties.region,
+            service: properties.serviceName || properties.service || 'execute-api',
+            region: properties.awsRegion || properties.region,
             method: request.method,
             body: body,
             headers: allHeaders

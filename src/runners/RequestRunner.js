@@ -111,11 +111,11 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     },
 
     _getNextRequest: function() {
-        if (!Globals.nextRequestName) {
+        if (Globals.nextRequestName === undefined) {
             //will get the next item based on the index saved in the queue
             return this.getNextItemFromQueue();
         }
-        else if (Globals.nextRequestName === "none") {
+        else if (Globals.nextRequestName === null) {
             return null;
         }
         else {
@@ -128,7 +128,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                 }
             }
             var requestToSend = this.getItemWithIndexWithoutRemoval(indexToUse);
-            Globals.nextRequestName = null;
+            Globals.nextRequestName = undefined;
             return requestToSend;
         }
     },

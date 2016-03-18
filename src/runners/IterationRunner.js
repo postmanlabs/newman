@@ -194,6 +194,7 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
             this._setGlobalEnvJson();
             this._runCollection();
             Globals.envJson = currentGlobalEnv;
+            Globals.nextRequestName = undefined;
         } else {
             this._exportResponses();
             this.emit('iterationRunnerOver', Globals.exitCode);
