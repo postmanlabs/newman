@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####2.0.3 (March 18, 2016)
+* Fixed listeners not being removed after a collection
+* Added support for postman.setNextRequest
+
 ####2.0.2 (March 15, 2016)
 * removed check for empty strings from CSV to be consistent with Postman (by @bwolski)
 * Fixed AWS Auth with raw body (Github #345)
