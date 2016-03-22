@@ -319,7 +319,8 @@ var HelperProcessor = jsface.Class({
     _getRequestBody: function (request) {
         var numParams, params, retVal;
         var i;
-        if (request.method.toLowerCase() === "post" || request.method.toLowerCase() === "put") {
+        if (request.method.toLowerCase() === "post" || request.method.toLowerCase() === "put" ||
+            request.method.toLowerCase() === "delete" || request.method.toLowerCase() === "patch") {
             if (request.dataMode === "urlencoded") {
                 if (!request.transformed.data || (!request.transformed.data.length)) {
                     return '';
