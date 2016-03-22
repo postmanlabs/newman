@@ -78,24 +78,31 @@ var Helpers = jsface.Class({
     // [{ "key": "id", "value": "20" }, { "key": "name", "value": "joe" }]
     // into an object {"id": "20", "name": "joe"}
     transformFromKeyValue: function (kvpairs) {
-        var kvpairs = {},
+        return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
+    },
+
+    transformFromKeyValueForRequestData: function (kvpairs) {
+        if(!_und.isArray(kvpairs)) {
+            return {};
+        }
+        var retVal = {},
             count = kvpairs.length;
         for(var i = 0; i < count; i++) {
-          if(kvpairs.hasOwnProperty(kvpairs[i].key)) {
+          if(retVal.hasOwnProperty(kvpairs[i].key)) {
             //2 properties with same key. convert to array
-            if(kvpairs[kvpairs[i].key] instanceof Array) {
-              kvpairs[kvpairs[i].key] = kvpairs[kvpairs[i].key].concat(kvpairs[i].value);
+            if(retVal[kvpairs[i].key] instanceof Array) {
+              retVal[kvpairs[i].key] = retVal[kvpairs[i].key].concat(kvpairs[i].value);
             }
             else {
-              kvpairs[kvpairs[i].key] = [kvpairs[kvpairs[i].key], kvpairs[i].value];
+              retVal[kvpairs[i].key] = [retVal[kvpairs[i].key], kvpairs[i].value];
             }
           }
           else {
-            kvpairs[kvpairs[i].key] = kvpairs[i].value;
+            retVal[kvpairs[i].key] = kvpairs[i].value;
           }
         }
 
-        return kvpairs;
+        return retVal;
     },
 
     // generates a header object from a string where headers are of the form

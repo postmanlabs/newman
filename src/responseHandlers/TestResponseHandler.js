@@ -140,7 +140,7 @@ var TestResponseHandler = jsface.Class(AbstractResponseHandler, {
         if (request.dataMode === "raw") {
             transformedData = request.transformed.data;
         } else {
-            transformedData = Helpers.transformFromKeyValue(request.transformed.data);
+            transformedData = Helpers.transformFromKeyValueForRequestData(request.transformed.data);
         }
         return transformedData;
     },
