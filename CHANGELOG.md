@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####2.0.4 (March 24, 2016)
+* Allow PATCH and DELETE requests to have a request body, fixes GH#360
+
 ####2.0.3 (March 18, 2016)
 * Fixed listeners not being removed after a collection
 * Added support for postman.setNextRequest
