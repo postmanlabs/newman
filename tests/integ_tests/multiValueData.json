@@ -1,0 +1,32 @@
+{
+	"id": "bd279aba-66c1-a145-5acb-e0e2fcf23465",
+	"name": "randomIntC",
+	"description": "",
+	"order": [
+		"c01a43cf-4fff-1b87-f575-7c0187d18fc4"
+	],
+	"folders": [],
+	"timestamp": 1410885984721,
+	"synced": false,
+	"requests": [
+		{
+			"id": "c01a43cf-4fff-1b87-f575-7c0187d18fc4",
+			"headers": "",
+			"url": "http://httpbin.org/get?a={{$randomInt}}",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"data": [{"key":"name", "value": "abhijit"}, {"key":"name", "value": "kane"}],
+			"dataMode": "params",
+			"name": "r1",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1410886106646,
+			"version": 2,
+			"responses": [],
+			"tests": "var data = request.data; tests['request data array correct'] = (_.isArray(data.name))",
+			"collectionId": "ad279aba-66c1-a145-5acb-e0e2fcf23465",
+			"synced": false
+		}
+	]
+}

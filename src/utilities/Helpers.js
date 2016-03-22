@@ -81,6 +81,30 @@ var Helpers = jsface.Class({
         return _und.object(_und.pluck(kvpairs, "key"), _und.pluck(kvpairs, "value"));
     },
 
+    transformFromKeyValueForRequestData: function (kvpairs) {
+        if(!_und.isArray(kvpairs)) {
+            return {};
+        }
+        var retVal = {},
+            count = kvpairs.length;
+        for(var i = 0; i < count; i++) {
+          if(retVal.hasOwnProperty(kvpairs[i].key)) {
+            //2 properties with same key. convert to array
+            if(retVal[kvpairs[i].key] instanceof Array) {
+              retVal[kvpairs[i].key] = retVal[kvpairs[i].key].concat(kvpairs[i].value);
+            }
+            else {
+              retVal[kvpairs[i].key] = [retVal[kvpairs[i].key], kvpairs[i].value];
+            }
+          }
+          else {
+            retVal[kvpairs[i].key] = kvpairs[i].value;
+          }
+        }
+
+        return retVal;
+    },
+
     // generates a header object from a string where headers are of the form
     // Accept-Language: En\nCache-Control: 123\nPragma: Akamai\n
     generateHeaderObj: function (headers) {
