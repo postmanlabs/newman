@@ -1,5 +1,10 @@
 ##CHANGELOG
 
+####2.0.5 (March 24, 2016)
+* Fixed Postman.GH#1903 (request.data object inside the sandbox)
+* Fixed #361 (Better formatting of HTML report)
+* Fixed a bug in Hawk Auth, where nonce generation resulted in an error
+
 ####2.0.4 (March 24, 2016)
 * Allow PATCH and DELETE requests to have a request body, fixes GH#360
 
