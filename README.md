@@ -75,6 +75,7 @@ Misc.:
 -s, --stopOnError           Stops the runner when a test case fails
 -j, --noSummary             Doesn't show the summary for each iteration
 -C, --noColor               Disable colored output
+-S, --noTestSymbols         Disable symbols in test output and use PASS|FAIL instead
 -k, --insecure              Disable strict ssl
 -l, --tls                   Use TLSv1
 -x, --exitCode              Continue running tests even after a failure, but exit with code=1
