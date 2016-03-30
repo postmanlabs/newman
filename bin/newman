@@ -39,6 +39,7 @@ function parseArguments() {
         .option('-j, --noSummary', "Doesn't show the summary for each iteration", null)
         .option('-n, --number [number]', 'Define the number of iterations to run', null)
         .option('-C, --noColor', 'Disable colored output', null)
+        .option('-S, --noTestSymbols', 'Disable symbols in test output and use PASS|FAIL instead', null)
         .option('-k, --insecure', 'Disable strict ssl', null)
         .option('-l, --tls', 'Use TLSv1', null)
         .option('-N, --encoding [encoding-type]', 'Specify an encoding for the response. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex', null)
@@ -203,6 +204,7 @@ function main() {
 
     newmanOptions.stopOnError = !!program.stopOnError;
     newmanOptions.noColor = !!program.noColor;
+    newmanOptions.noTestSymbols = !!program.noTestSymbols;
     newmanOptions.strictSSL = !program.insecure;
     newmanOptions.asLibrary = false;
     newmanOptions.exitCode = !!program.exitCode;
