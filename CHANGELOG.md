@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####2.0.6 (April 05, 2016)
+* Fixed redirect behavior (redirects on POST requests are now followed by default)
+* Added an option to replace Unicode symbols with text (for older terminals)
+
 ####2.0.5 (March 24, 2016)
 * Fixed Postman.GH#1903 (request.data object inside the sandbox)
 * Fixed #361 (Better formatting of HTML report)
