@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####2.0.7 (April 13, 2016)
+* Fixed #377 (Function variables in the request body not being replaced)
+
 ####2.0.6 (April 05, 2016)
 * Fixed redirect behavior (redirects on POST requests are now followed by default)
 * Added an option to replace Unicode symbols with text (for older terminals)
