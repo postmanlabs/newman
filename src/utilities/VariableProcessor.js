@@ -127,7 +127,7 @@ var VariableProcessor = jsface.Class({
                     request.transformed[prop] = this._findReplace(toReplace, pairObject, this.ENV_REGEX);
                 } else {
                     //The old option of stringify+replace+parse was removed.
-                    request.transformed[prop] = _lod.cloneDeep(request[prop]);
+                    request.transformed[prop] = _lod.cloneDeep(toReplace);
                     oldThis._traverseJson(request.transformed[prop], oldThis._processNode, pairObject);
                 }
             }
