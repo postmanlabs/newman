@@ -69,7 +69,7 @@ Basic setup:
 
 Request options:
 -y, --delay [number]            Specify a delay (in ms) between requests [number]
--r, --requestTimeout [number]   Specify a request timeout (in ms) for a request
+-r, --requestTimeout [number]   Specify a request timeout (in ms) for a request (Defaults to 15000 if not set)
 
 Misc.:
 -s, --stopOnError           Stops the runner when a test case fails
