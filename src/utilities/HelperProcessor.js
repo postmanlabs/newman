@@ -487,7 +487,7 @@ var HelperProcessor = jsface.Class({
 
     setUrlParamStringWithOptBlankValRemoval: function (request, params, silent, removeBlankParams) {
         var paramArr = [];
-        var url = request.url;
+        var url = _.get(request, 'transformed.url') ? request.transformed.url : request.url;
 
         for (var i = 0; i < params.length; i++) {
             var p = params[i];
@@ -515,7 +515,12 @@ var HelperProcessor = jsface.Class({
             }
         }
 
-        request.url = url;
+        if (request.transformed) {
+            request.transformed.url = url;
+        }
+        else {
+            request.url = url;
+        }
 
     },
 
