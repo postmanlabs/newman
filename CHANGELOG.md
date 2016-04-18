@@ -1,5 +1,10 @@
 ##CHANGELOG
 
+####2.0.8 (April 18, 2016)
+* Better handling of Request timeouts (@ramblinwreck35)
+* Fixed errors with HEAD requests on Node v5
+* Support for "deflate" encoding
+
 ####2.0.7 (April 13, 2016)
 * Fixed #377 (Function variables in the request body not being replaced)
 
