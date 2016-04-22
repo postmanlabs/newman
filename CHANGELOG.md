@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####2.0.9 (April 22, 2016)
+* Fixed a bug where OAuth1 helper failed with URLs containing variables. (postman-app-support#2011) 
+
 ####2.0.8 (April 18, 2016)
 * Better handling of Request timeouts (@ramblinwreck35)
 * Fixed errors with HEAD requests on Node v5
