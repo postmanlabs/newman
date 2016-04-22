@@ -221,7 +221,7 @@ var HelperProcessor = jsface.Class({
 
         params = params.concat(urlParams);
 
-        bodyParams = request.data;
+        bodyParams = request.data || [];
         if (bodyParams.length !== 0) {
             params = params.concat(bodyParams);
         }
