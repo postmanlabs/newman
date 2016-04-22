@@ -214,12 +214,10 @@ var HelperProcessor = jsface.Class({
     _useOAuth1: function (request) {
         var i, j, count, length;
         var params = [], bodyParams = [];
-        var urlParams = this._getUrlVars(request.url);
+        var urlParams = this._getUrlVars(request.transformed && request.transformed.url ? request.transformed.url :
+                        request.url);
 
-        var url = request.url;
-        var body = this._getRequestBody(request);
         var dataMode = request.dataMode;
-        var method = request.method;
 
         params = params.concat(urlParams);
 
@@ -591,7 +589,8 @@ var HelperProcessor = jsface.Class({
         }
 
         //Get parameters
-        var urlParams = this._getUrlVars(request.url);
+        var urlParams = this._getUrlVars(request.transformed && request.transformed.url ? request.transformed.url :
+                        request.url);
 
         var bodyParams;
 
