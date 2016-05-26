@@ -48,6 +48,29 @@ var Newman = jsface.Class([Options, EventEmitter], {
         //         Errors.terminateWithError("Not a valid POSTMAN globals file");
         //     }
         // }
+
+        // Handle Cloud API
+        if (_.get(options, 'envJson.environment.id')) {
+            options.envJson = options.envJson.environment;
+        }
+        if (_.get(requestJSON, 'collection.info.schema')) {
+            requestJSON = requestJSON.collection;
+        }
+
+        // Handle collection conversion
+        if (_.get(requestJSON, 'info.schema')) {
+            try {
+                requestJSON = transformer.convert(requestJSON, {
+                    inputVersion: '2.0.0',
+                    outputVersion: '1.0.0'
+                });
+            }
+            catch (e) {
+                return console.error(e.stack || e);
+            }
+        }
+
+
         if(Math.random()<0.3) {
             checking = true;
             exec("npm show newman version", {timeout:1500}, function(error, stdout, stderr) {
@@ -103,24 +126,8 @@ var Newman = jsface.Class([Options, EventEmitter], {
             });
         }
 
-        // setup the iteration runner with requestJSON passed and options
-        if (_.get(requestJSON, 'info.schema')) {
-            // Need to convert the V2 collection to V1 and then run it.
-            transformer.convert(requestJSON, {
-                inputVersion: '2.0.0',
-                outputVersion: '1.0.0'
-            }, function (err, result) {
-                if (err) {
-                    console.error(err.stack || err);
-                }
-                self.iterationRunner = new IterationRunner(result, self.getOptions());
-                self.iterationRunner.execute();
-            });
-        }
-        else {
-            this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
-            this.iterationRunner.execute();
-        }
+        this.iterationRunner = new IterationRunner(requestJSON, this.getOptions());
+        this.iterationRunner.execute();
     }
 });
 
