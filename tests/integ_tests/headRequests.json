@@ -1,0 +1,56 @@
+{
+	"id": "9997428c-5951-3fd2-2a02-88bbe9d91c7f",
+	"name": "Head test",
+	"description": "",
+	"order": [
+		"560b16fe-b43b-7053-036a-1ff5b8103ee7",
+		"9016e3df-2a4e-10e9-b22c-81f6d0f584ec"
+	],
+	"folders": [],
+	"timestamp": 1453975155791,
+	"owner": "265973",
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "560b16fe-b43b-7053-036a-1ff5b8103ee7",
+			"headers": "",
+			"url": "http://google.com",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "HEAD",
+			"collectionId": "9997428c-5951-3fd2-2a02-88bbe9d91c7f",
+			"data": [],
+			"dataMode": "params",
+			"name": "google",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1453975194927,
+			"version": 2,
+			"responses": [],
+			"tests": "tests['Status is 200 OK'] = responseCode.code === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "9016e3df-2a4e-10e9-b22c-81f6d0f584ec",
+			"headers": "",
+			"url": "http://github.com",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "HEAD",
+			"collectionId": "9997428c-5951-3fd2-2a02-88bbe9d91c7f",
+			"data": [],
+			"dataMode": "params",
+			"name": "github",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1453975224336,
+			"version": 2,
+			"responses": [],
+			"tests": "tests['Status is 200 OK'] = responseCode.code === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}

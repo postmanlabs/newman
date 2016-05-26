@@ -7,7 +7,8 @@
  * Main file which parses the command line arguments and runs Newman, Supports JSON5.
  */
 
-var color = require('cli-color'),
+var _ = require('lodash'),
+    color = require('cli-color'),
     program = require('commander'),
     path = require('path'),
     request = require('unirest'),
@@ -28,12 +29,13 @@ function parseArguments() {
         .option('-u, --url [url]', 'Specify a Postman collection as a [url]', null)
         .option('-f, --folder [folder-name]', 'Run a single folder from a collection. To be used with -c or -u', null)
         .option('-e, --environment [file]', 'Specify a Postman environment as a JSON [file]', null)
+        .option('--environment-url [url]', 'Specify a Postman environment as a URL', null)
         .option('-E, --exportEnvironment [file]', 'Specify an output file to dump the Postman environment before exiting [file]', null)
         .option('-d, --data [file]', 'Specify a data file to use either json or csv', null)
         .option('-g, --global [file]', 'Specify a Postman globals file [file]', null)
         .option('-G, --exportGlobals [file]', 'Specify an output file to dump Globals before exiting [file]', null)
         .option('-y, --delay [number]', "Specify a delay (in ms) between requests", null)
-        .option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for requests", null)
+        .option('-r, --requestTimeout [number]', "Specify a request timeout (in ms) for requests (Defaults to 15000 if not set)", null)
         .option('-R, --avoidRedirects', "Prevents Newman from automatically following redirects", null)
         .option('-s, --stopOnError', "Stops the runner with code=1 when a test case fails", null)
         .option('-j, --noSummary', "Doesn't show the summary for each iteration", null)
@@ -210,8 +212,8 @@ function main() {
     newmanOptions.exitCode = !!program.exitCode;
     newmanOptions.whiteScreen = !!program.whiteScreen;
 
+    var collectionJson;
     if (program.collection) {
-        var collectionJson;
         try {
             // read collection from the filesystem
             collectionJson = JSON5.parse(fs.readFileSync(program.collection, 'utf8'));
@@ -219,18 +221,46 @@ function main() {
         catch (err) {
             Errors.terminateWithError("The collection file " + program.collection + " could not be parsed.");
         }
-        Newman.execute(collectionJson, newmanOptions, function (exitCode) {
-            process.exit(exitCode);
-        });
-    } else {
-        // get collection from url
-        request.get(program.url).type('json').end(function (data) {
-            if (data.error) {
-                Errors.terminateWithError('Unable to fetch a valid response. Error: ' + data.code);
-            }
-            Newman.execute(data.body, newmanOptions, function (exitCode) {
+
+        if (program.environmentUrl) {
+            request.get(program.environmentUrl).type('json').end(function (data) {
+                if (data.error) {
+                    Errors.terminateWithError('Unable to fetch a valid environment. Error: ' + data.code);
+                }
+                newmanOptions.envJson = data.body;
+                Newman.execute(collectionJson, newmanOptions, function (exitCode) {
+                    process.exit(exitCode);
+                });
+            });
+        }
+        else {
+            Newman.execute(collectionJson, newmanOptions, function (exitCode) {
                 process.exit(exitCode);
             });
+        }
+    } else {
+        // get collection from url
+        request.get(program.url).type('json').end(function (collectionData) {
+            if (collectionData.error) {
+                Errors.terminateWithError('Unable to fetch a valid collection. Error: ' + collectionData.code);
+            }
+            collectionJson = collectionData.body;
+            if (program.environmentUrl) {
+                request.get(program.environmentUrl).type('json').end(function (environmentData) {
+                    if (environmentData.error) {
+                        Errors.terminateWithError('Unable to fetch a valid environment. Error: ' + environmentData.code);
+                    }
+                    newmanOptions.envJson = environmentData.body;
+                    Newman.execute(collectionJson, newmanOptions, function (exitCode) {
+                        process.exit(exitCode);
+                    });
+                });
+            }
+            else {
+                Newman.execute(collectionJson, newmanOptions, function (exitCode) {
+                    process.exit(exitCode);
+                });
+            }
         });
     }
 }
