@@ -1,5 +1,8 @@
 ##CHANGELOG
 
+####2.1.0 (May 26, 2016)
+* Added support for cloud APIs
+
 ####2.0.9 (April 22, 2016)
 * Fixed a bug where OAuth1 helper failed with URLs containing variables. (postman-app-support#2011) 
 
