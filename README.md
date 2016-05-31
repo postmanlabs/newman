@@ -193,7 +193,7 @@ env=/var/www/myapp/tests/envfile.json
 outfile=/var/www/myapp/tests/outfile-$timestamp.json
 
 # redirect all output to /dev/null
-newman -c $collection -c $env -o $outfile > /dev/null2>&1
+newman -c $collection -e $env -o $outfile > /dev/null2>&1
 ```
 Make it an executable
 ```bash
