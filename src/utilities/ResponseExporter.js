@@ -244,16 +244,21 @@ var ResponseExporter = jsface.Class({
             result.meanResponseTime = parseInt(result.totalTime, 10) / exportVariable.count;
         });
 
+        if (Globals.outputFileVerbose) {
+            var filepath = path.resolve(Globals.outputFileVerbose);
+            log.note("\nOutput Verbose Log: " + filepath + "\n");
+        }
+
         if (Globals.outputFile) {
             var filepath = path.resolve(Globals.outputFile);
             fs.writeFileSync(filepath, JSON.stringify(exportVariable, null, 4));
-            log.note("\n\nOutput Log: " + filepath + "\n");
+            log.note("\nOutput Log: " + filepath + "\n");
         }
 
         if (Globals.testReportFile) {
             var outputpath = path.resolve(Globals.testReportFile);
             fs.writeFileSync(outputpath, this._createJunitXML());
-            log.note("\n\nJunit XML file written to: " + outputpath + "\n");
+            log.note("\nJunit XML file written to: " + outputpath + "\n");
         }
 
         if (Globals.html) {
