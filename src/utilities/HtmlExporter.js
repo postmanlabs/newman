@@ -17,8 +17,8 @@ var HtmlExporter = jsface.Class({
         try {
             fs.writeFileSync(filepath, template(resultObj));
         }
-        catch (e) {
-            log.error("Error writing to file. Try using sudo. Error: " + (e.stack || e));
+        catch (err) {
+            log.error("Error writing to file. Try using sudo. Error: " + (err.stack || err));
         }
     }
 });

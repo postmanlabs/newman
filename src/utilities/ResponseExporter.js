@@ -251,15 +251,25 @@ var ResponseExporter = jsface.Class({
         }
 
         if (Globals.outputFile) {
-            filepath = path.resolve(Globals.outputFile);
-            fs.writeFileSync(filepath, JSON.stringify(exportVariable, null, 4));
-            log.note("\nOutput Log written to: " + filepath + "\n");
+            try {
+                filepath = path.resolve(Globals.outputFile);
+                fs.writeFileSync(filepath, JSON.stringify(exportVariable, null, 4));
+                log.note("\nOutput Log written to: " + filepath + "\n");
+            }
+            catch (err) {
+                log.error("Error writing to file. Try using sudo. Error: " + (err.stack || err));
+            }
         }
 
         if (Globals.testReportFile) {
-            filepath = path.resolve(Globals.testReportFile);
-            fs.writeFileSync(filepath, this._createJunitXML());
-            log.note("\nJunit XML file written to: " + filepath + "\n");
+            try {
+                filepath = path.resolve(Globals.testReportFile);
+                fs.writeFileSync(filepath, this._createJunitXML());
+                log.note("\nJunit XML file written to: " + filepath + "\n");
+            }
+            catch (err) {
+                log.error("Error writing to file. Try using sudo. Error: " + (err.stack || err));
+            }
         }
 
         if (Globals.html) {
