@@ -30,7 +30,7 @@ var VariableProcessor = jsface.Class({
 
     _resetFunctionVariables: function () {
         var guid = uuid.v4();
-        var timestamp = _und.now();
+        var timestamp = Date.now();
         var randomInt = _und.random(0, 1000);
         this.getFunctionVariables.guid = guid;
         this.getFunctionVariables.randomInt = randomInt;
