@@ -109,18 +109,20 @@ var Helpers = jsface.Class({
     // Accept-Language: En\nCache-Control: 123\nPragma: Akamai\n
     generateHeaderObj: function (headers) {
         var headerObj = {};
-        headers && headers.split && headers.split('\n').forEach(function (str) {
-            if (str) {
-                var splitIndex = str.indexOf(':');
-                var headerName = str.substr(0, splitIndex);
-                if (headerName.indexOf("//") === 0) {
-                    //do nothing...disabled header
+        if (headers && headers.split) {
+            headers.split('\n').forEach(function (str) {
+                if (str) {
+                    var splitIndex = str.indexOf(':');
+                    var headerName = str.substr(0, splitIndex);
+                    if (headerName.indexOf("//") === 0) {
+                        //do nothing...disabled header
+                    }
+                    else {
+                        headerObj[headerName] = str.substr(splitIndex + 1).trim();
+                    }
                 }
-                else {
-                    headerObj[headerName] = str.substr(splitIndex + 1).trim();
-                }
-            }
-        });
+            });
+        }
         return headerObj;
     },
 
