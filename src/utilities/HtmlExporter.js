@@ -1,5 +1,4 @@
 var jsface = require('jsface'),
-    Globals = require('./Globals'),
     log = require('./Logger'),
     fs = require('fs');
 
