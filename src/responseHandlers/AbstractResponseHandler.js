@@ -45,7 +45,7 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
                 requestData = _.isArray(request.transformed.data) ? JSON.stringify(_.object(_.pluck(request.transformed.data, "key"),
                     _.pluck(request.transformed.data, "value")), null, 2) : request.transformed.data;
             }
-            catch (e) {
+            catch (err) {
                 // Not JSON.
                 requestData = request.transformed.data;
             }
@@ -65,7 +65,12 @@ var AbstractResponseHandler = jsface.Class([EventEmitter], {
                 JSON.stringify(response.headers, undefined, 1) +
                 "\nResponse body:\n" + response.body + "\n";
 
-            fs.appendFileSync(filepath, requestString);
+            try {
+                fs.appendFileSync(filepath, requestString);
+            }
+            catch (err) {
+                log.error("Error writing to file. Try using sudo. Error: " + (err.stack || err));
+            }
         }
 
         if (response.statusCode >= 200 && response.statusCode < 300) {
