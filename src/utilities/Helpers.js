@@ -109,7 +109,7 @@ var Helpers = jsface.Class({
     // Accept-Language: En\nCache-Control: 123\nPragma: Akamai\n
     generateHeaderObj: function (headers) {
         var headerObj = {};
-        headers.split('\n').forEach(function (str) {
+        headers && headers.split && headers.split('\n').forEach(function (str) {
             if (str) {
                 var splitIndex = str.indexOf(':');
                 var headerName = str.substr(0, splitIndex);
