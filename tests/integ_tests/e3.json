@@ -25,7 +25,7 @@
 		},
 		{
 			"key": "url",
-			"value": "http://dump.getpostman.com",
+			"value": "http://echo.getpostman.com",
 			"type": "text",
 			"name": "url",
 			"enabled": true

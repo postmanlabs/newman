@@ -14,7 +14,7 @@
 		{
 			"id": "fc01c50c-387c-637e-43ae-c423eba86825",
 			"headers": "",
-			"url": "dump.getpostman.com/get",
+			"url": "echo.getpostman.com/get",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
