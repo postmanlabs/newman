@@ -158,6 +158,7 @@ var ResponseExporter = jsface.Class({
         return {
             "id": request.id,
             "name": request.name,
+            "folder": request.folderName,
             "url": request.url,
             "totalTime": response.stats.timeTaken,
             "responseCode": {
@@ -327,7 +328,7 @@ var ResponseExporter = jsface.Class({
                 var failures = aggregateTestStats[testcaseName].failures;
                 totalFailuresForSuite += failures;
                 totalSuccessesForSuite += successes;
-                testcases += '\t\t<testcase name="' + _und.escape(testcaseName) + '" classname="'+suitesName+'.'+_und.escape(suite.name)+'" ' + (failures > 0 ? '' : '/') + '>\n';
+                testcases += '\t\t<testcase name="' + _und.escape(testcaseName) + '" classname="'+suitesName+'.'+(suite.folder? _und.escape(suite.folder)+'.' : '')+_und.escape(suite.name)+'" ' + (failures > 0 ? '' : '/') + '>\n';
                 if (failures > 0) {
                     testcases += '\t\t\t<failure><![CDATA[' + _und.escape(testcaseName) +
                         (iterations > 1 ? ' (failed ' + failures + '/' + iterations + ' iterations)' : '') +
