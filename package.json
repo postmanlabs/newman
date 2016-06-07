@@ -59,7 +59,7 @@
     "jsdom": "7.1.0",
     "jsface": "2.2.x",
     "json5": "^0.4.0",
-    "lodash": "^3.3.0",
+    "lodash": "^3.10.0",
     "mkdirp": "^0.5.0",
     "node-uuid": "1.4.1",
     "postman-collection-transformer": "^1.5.6",
