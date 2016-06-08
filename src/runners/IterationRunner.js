@@ -120,8 +120,8 @@ var IterationRunner = jsface.Class([Options, EventEmitter], {
         }
 
         //add the globals (globalJSON, overriden by envJson)
-        if (this.globalVars && this.globalVars.length) {
-            Globals.globalJson.values = this.globalVars;//Helpers.augmentDataArrays(this.globalVars,Globals.envJson.values);
+        if (this.globalVars && this.globalVars.values.length) {
+            Globals.globalJson.values = Helpers.augmentDataArrays(this.globalVars.values, Globals.envJson.values);
         }
         else {
             Globals.globalJson = { values: [] };
