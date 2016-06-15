@@ -73,7 +73,7 @@ Request options:
 
 Misc.:
 -s, --stopOnError           Stops the runner when a test case fails
--j, --noSummary             Doesn't show the summary for each iteration
+-j, --noSummary             Does not show the summary for each iteration
 -C, --noColor               Disable colored output
 -S, --noTestSymbols         Disable symbols in test output and use PASS|FAIL instead
 -k, --insecure              Disable strict ssl
