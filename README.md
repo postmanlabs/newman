@@ -59,6 +59,7 @@ Basic setup:
 -u, --url [url]             	Specify a Postman collection as a [url]
 -f, --folder [folderName]   	Specify a single folder to run from a collection. To be used with -c or -u.
 -e, --environment [file]    	Specify a Postman environment as a JSON [file]
+--environment-url [url]         Specify a Postman environment as a URL [url]
 -d, --data [file]           	Specify a data file to use either json or csv
 -g, --global [file]         	Specify a Postman globals file as JSON [file]
 -n, --number [number]       	Define the number of iterations to run
