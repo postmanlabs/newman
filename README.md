@@ -1,6 +1,6 @@
 <img src="https://s3.amazonaws.com/web-artefacts/newman-128.png" />
 
-# Newman [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) <a href="https://gitter.im/postmanlabs/newman" target="_blank"><img src="https://badges.gitter.im/Join%20Chat.svg" /></a>
+# Newman [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman)
 
 **Update Feb 25 2016:** Newman v2 (which only works with Node v4.0+) has been released. If you are using Node v0.10 or Node v0.12, check the supported Node versions below.
 
@@ -213,6 +213,14 @@ $ crontab -l
 With this, your Newman is set to run automatically every hour.
 
 Note: Exact location for `cron` is dependent on the linux distribution you are running. See specific `cron` instructions for your distribution. For an introduction to `cron` checkout [this](http://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800) article.
+
+## Community Support
+
+<img src="https://www.getpostman.com/img/v2/icons/slack.svg" align="right" />
+If you are interested in talking to the team and other Newman users, we are there on <a href="https://www.getpostman.com/slack-invite" target="_blank">Slack</a>. Feel free to drop by and say hello. Our upcoming features and beta releases are discussed here along with world peace.
+
+Get your invitation for Postman Slack Community from: <a href="https://www.getpostman.com/slack-invite">https://www.getpostman.com/slack-invite</a>.<br />
+Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
 
 ## License
 Apache-2.0. See the LICENSE file for more information
