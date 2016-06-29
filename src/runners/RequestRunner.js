@@ -274,7 +274,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
                 }
                 if (dataObj.type === 'text') {
                     form.append(dataObj.key, dataObj.value);
-                } else if (dataObj.type === 'file') {
+                } else if (dataObj.type === 'file' && (typeof dataObj.value === 'string')) {
                     var loc = path.resolve(dataObj.value);
 
                     try {
