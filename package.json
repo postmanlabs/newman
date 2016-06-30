@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "author": "Postman Labs <help@getpostman.com",
   "main": "index.js",
   "homepage": "https://github.com/postmanlabs/newman",
