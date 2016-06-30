@@ -62,7 +62,7 @@
     "lodash": "^3.10.0",
     "mkdirp": "^0.5.0",
     "node-uuid": "1.4.1",
-    "postman-collection-transformer": "^1.6.2",
+    "postman-collection-transformer": "^1.7.2",
     "postman_validator": "0.0.4",
     "request": "2.72.0",
     "sugar": "1.3.9",
