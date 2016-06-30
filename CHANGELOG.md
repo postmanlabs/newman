@@ -1,5 +1,9 @@
 ##CHANGELOG
 
+####2.1.2 (June 30, 2016)
+* Latest version of the transformer
+* Fixed a bug where requests containing files from the Cloud API were not handled correctly
+
 ####2.1.1 (June 07, 2016)
 * Latest version of the transformer
 * Fixed #402 (Newman breaks if header is empty)
