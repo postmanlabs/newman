@@ -14,7 +14,7 @@
 		{
 			"id": "87ed67f7-5720-4c5a-82a4-0f79dfef96f3",
 			"headers": "",
-			"url": "dump.getpostman.com/get",
+			"url": "echo.getpostman.com/get",
 			"preRequestScript": "if(request.name!==\"r1\" || request.description!==\"testDesc\") {undefFunction()}",
 			"pathVariables": {},
 			"method": "GET",

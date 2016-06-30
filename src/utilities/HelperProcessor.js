@@ -9,7 +9,8 @@ var jsface = require('jsface'),
     aws4 = require('aws4'),
     url	 = require('url'),
     queryString = require('querystring'),
-    _und = require('underscore');
+    _und = require('underscore'),
+    _ = require('lodash');
 
 /**
  * @name Helpers

@@ -11,7 +11,7 @@
 		},
 		{
 			"key": "envFileUrl",
-			"value": "dump.getpostman.com",
+			"value": "echo.getpostman.com",
 			"type": "text",
 			"name": "envFileUrl",
 			"enabled": true

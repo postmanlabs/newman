@@ -1,5 +1,14 @@
 ##CHANGELOG
 
+####2.1.1 (June 07, 2016)
+* Latest version of the transformer
+* Fixed #402 (Newman breaks if header is empty)
+* Update lodash version, fixes #418
+* Fixed #406 (Newman breaks with underscore 1.5.2)
+
+####2.1.0 (May 26, 2016)
+* Added support for cloud APIs
+
 ####2.0.9 (April 22, 2016)
 * Fixed a bug where OAuth1 helper failed with URLs containing variables. (postman-app-support#2011) 
 
