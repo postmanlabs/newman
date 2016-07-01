@@ -29,6 +29,7 @@ module.exports = function (grunt) {
             integTest: {
                 exec: 'node bin/newman -c tests/integ_tests/tc2.json -d tests/integ_tests/d2.json -e tests/integ_tests/e2.json -s && ' +
                 'node bin/newman -c tests/integ_tests/tc3.json -d tests/integ_tests/d3.json -e tests/integ_tests/e3.json -g tests/integ_tests/g3.json -s && ' +
+                'node bin/newman -c tests/integ_tests/tc3.json -d tests/integ_tests/d3.json -e tests/integ_tests/e3.json -g tests/integ_tests/g4.json -s && ' +
                 'node bin/newman -c tests/integ_tests/tc4.json -s && ' +
                 'node bin/newman -c tests/integ_tests/randomIntC.json -s && ' +
                 'node bin/newman -c tests/integ_tests/semicolon_tests.json -s && ' +
