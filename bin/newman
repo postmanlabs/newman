@@ -51,6 +51,7 @@ function parseArguments() {
         .option('-t, --testReportFile [file]', 'Path to file where results should be written as JUnit XML [file]', null)
         .option('-i, --import [file]', 'Import a Postman backup file, and save collections, environments, and globals [file] (Incompatible with any option except pretty)', null)
         .option('-p, --pretty', 'Enable pretty-print while saving imported collections, environments, and globals', null)
+        .option('-P, --proxy [proxyUrl]', 'Specify a proxy url', null)
         .option('-H, --html [file]', 'Export a HTML report to a specified file [file]', null)
         .option('-W, --whiteScreen', 'Black text for white screen', null)
         .option('-L, --recurseLimit [limit]', 'Do not run recursive resolution more than [limit] times. Default = 10. Using 0 will prevent any variable resolution', null);
@@ -208,6 +209,7 @@ function main() {
     newmanOptions.noColor = !!program.noColor;
     newmanOptions.noTestSymbols = !!program.noTestSymbols;
     newmanOptions.strictSSL = !program.insecure;
+    newmanOptions.proxy = program.proxy;
     newmanOptions.asLibrary = false;
     newmanOptions.exitCode = !!program.exitCode;
     newmanOptions.whiteScreen = !!program.whiteScreen;
