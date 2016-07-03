@@ -22,6 +22,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
     $singleton: true,
 
     delay: 0,
+    proxy: null,
     strictSSL: true,
     secureProtocol: null,
 
@@ -43,6 +44,14 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
      */
     setRequestTimeout: function (timeout) {
         this.requestTimeout = timeout;
+    },
+
+    /**
+     * Sets proxy
+     * @param proxy
+     */
+    setProxy: function (proxy) {
+        this.proxy = proxy;
     },
 
     /**
@@ -174,6 +183,7 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
             request.startTime = new Date().getTime();
             RequestOptions.rejectUnauthorized = false;
             RequestOptions.strictSSL = this.strictSSL;
+            RequestOptions.proxy = this.proxy;
 
             if (this.secureProtocol) {
                 RequestOptions.secureProtocol = this.secureProtocol;

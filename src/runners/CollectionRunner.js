@@ -56,6 +56,7 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
             Errors.terminateWithError('The request timeout must be an integer');
         }
 
+        RequestRunner.setProxy(this.opts.proxy);
         RequestRunner.setStrictSSL(this.opts.strictSSL);
         RequestRunner.setSecureProtocol(this.opts.secureProtocol);
         RequestRunner.start();
