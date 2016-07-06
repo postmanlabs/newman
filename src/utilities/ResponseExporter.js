@@ -237,6 +237,7 @@ var ResponseExporter = jsface.Class({
      * @memberOf ResponseExporter
      */
     exportResults: function () {
+        var filepath;
         var exportVariable = this._createExportVariable();
 
         //calculate mean time
@@ -244,20 +245,27 @@ var ResponseExporter = jsface.Class({
             result.meanResponseTime = parseInt(result.totalTime, 10) / exportVariable.count;
         });
 
+        if (Globals.outputFileVerbose) {
+            filepath = path.resolve(Globals.outputFileVerbose);
+            log.note("\nOutput Verbose Log written to: " + filepath + "\n");
+        }
+
         if (Globals.outputFile) {
-            var filepath = path.resolve(Globals.outputFile);
+            filepath = path.resolve(Globals.outputFile);
             fs.writeFileSync(filepath, JSON.stringify(exportVariable, null, 4));
-            log.note("\n\nOutput Log: " + filepath + "\n");
+            log.note("\nOutput Log written to: " + filepath + "\n");
         }
 
         if (Globals.testReportFile) {
-            var outputpath = path.resolve(Globals.testReportFile);
-            fs.writeFileSync(outputpath, this._createJunitXML());
-            log.note("\n\nJunit XML file written to: " + outputpath + "\n");
+            filepath = path.resolve(Globals.testReportFile);
+            fs.writeFileSync(filepath, this._createJunitXML());
+            log.note("\nJunit XML file written to: " + filepath + "\n");
         }
 
         if (Globals.html) {
-            HtmlExporter.generateHTML(exportVariable);
+            filepath = path.resolve(Globals.html);
+            HtmlExporter.generateHTML(filepath, exportVariable);
+            log.note("\nHTML Report written to: " + filepath + "\n");
         }
     },
 

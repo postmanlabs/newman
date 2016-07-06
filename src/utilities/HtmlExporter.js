@@ -1,5 +1,4 @@
 var jsface = require('jsface'),
-    Globals = require('./Globals'),
     log = require('./Logger'),
     fs = require('fs');
 
@@ -10,14 +9,12 @@ var jsface = require('jsface'),
 var HtmlExporter = jsface.Class({
     $singleton: true,
     templates: null,
-    generateHTML: function (resultObj) {
+    generateHTML: function (filepath, resultObj) {
         var template;
         //Always use existing file
         template = require('../templates/htmlResponseTemplate');
-        var htmlPath = Globals.html;
         try {
-            fs.writeFileSync(htmlPath, template(resultObj));
-            log.note("\nHTML Report written to: " + htmlPath + "\n");
+            fs.writeFileSync(filepath, template(resultObj));
         }
         catch (e) {
             log.error("Error writing to file. Try using sudo. Error: " + (e.stack || e));
