@@ -31,7 +31,6 @@
   "author": "Postman Labs <help@getpostman.com> (=)",
   "license": "Apache-2.0",
   "dependencies": {
-    "postman-runtime": "2.1.0",
     "argparse": "1.0.7",
     "async": "2.0.0-rc.6",
     "cli-table2": "0.2.0",
@@ -39,7 +38,9 @@
     "eventemitter3": "1.2.0",
     "lodash": "4.13.1",
     "postman-collection": "0.4.0",
-    "shelljs": "0.7.0"
+    "postman-runtime": "2.1.0",
+    "shelljs": "0.7.0",
+    "window-size": "0.2.0"
   },
   "devDependencies": {
     "eslint": "3.0.0",
