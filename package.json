@@ -37,6 +37,7 @@
     "colors": "1.1.2",
     "eventemitter3": "1.2.0",
     "lodash": "4.13.1",
+    "parse-json": "2.2.0",
     "postman-collection": "0.4.0",
     "postman-runtime": "2.1.0",
     "shelljs": "0.7.0",
