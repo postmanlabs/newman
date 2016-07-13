@@ -31,7 +31,7 @@
   "author": "Postman Labs <help@getpostman.com> (=)",
   "license": "Apache-2.0",
   "dependencies": {
-    "postman-runtime": "2.0.1-rc.2",
+    "postman-runtime": "2.1.0",
     "argparse": "1.0.7",
     "async": "2.0.0-rc.6",
     "cli-table2": "0.2.0",
