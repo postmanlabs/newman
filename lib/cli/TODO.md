@@ -30,10 +30,7 @@
         help: 'Enable verbose output.',
         action: 'storeTrue'
     });
-    commonParser.addArgument(['--no-color'], {
-        help: 'Disable colored output.',
-        action: 'storeTrue'
-    });
+
     commonParser.addArgument(['--disable-unicode'], {
         help: 'Disables unicode characters in the console.',
         action: 'storeTrue'
