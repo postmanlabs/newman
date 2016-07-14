@@ -29,10 +29,10 @@ cli(process.argv.slice(2), 'newman', function (err, args) {
         err.help && console.log(err.help);  // will print out usage information.
         return;
     }
-    dispatch(args, function (err, code) {
+    dispatch(args, function (err) {
         if (err) {
-            return console.log(err);
+            console.error(err);
+            process.exit(1);
         }
-        console.log(code);
     });
 });
