@@ -45,7 +45,7 @@ describe('project repository', function () {
                 expect(json.keywords).to.eql(['newman', 'postman', 'api', 'testing', 'ci', 'rest-client', 'rest']);
 
                 expect(json).to.have.property('engines');
-                expect(json.engines).to.eql({node: '>=4'});
+                expect(json.engines).to.eql({ node: '>=4' });
             });
 
             it('must have a valid version string in form of <major>.<minor>.<revision>', function () {
@@ -57,7 +57,7 @@ describe('project repository', function () {
 
             it('must exits', function () {
                 expect(json.bin).be.ok();
-                expect(json.bin).to.eql({'newman-beta': './bin/newman.js'});
+                expect(json.bin).to.eql({ 'newman-beta': './bin/newman.js' });
             });
 
             it('must have valid node shebang', function () {

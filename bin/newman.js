@@ -1,21 +1,38 @@
 #!/usr/bin/env node
+var _ = require('lodash'),
 
-var ArgumentParser = require('argparse').ArgumentParser,
-    pkg = require('../package.json'),
-    parser;
+    cli = require('../lib/cli'),
+    newman = require('../'),
 
-parser = new ArgumentParser({
-    prog: pkg.name,
-    version: pkg.version,
-    addHelp: true,
-    description: pkg.description
+    /**
+     * Calls the appropriate Newman command
+     *
+     * @param options
+     * @param callback
+     */
+    dispatch = function (options, callback) {
+        var command = options.command;
+
+        if (_.isFunction(newman[command])) {
+            newman[command](options[command], callback);
+        }
+        else {
+            callback(new Error('Oops, unsupported command: ' + options.command));
+        }
+    };
+
+
+cli(process.argv.slice(2), 'newman', function (err, args) {
+    if (err) {
+        console.log(err.message || err);
+        console.log('');
+        err.help && console.log(err.help);  // will print out usage information.
+        return;
+    }
+    dispatch(args, function (err) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+    });
 });
-
-parser.addArgument(['-f', '--foo'], {
-    help: 'foo bar'
-});
-parser.addArgument(['-b', '--bar'], {
-    help: 'bar foo'
-});
-
-console.dir(parser.parseArgs());
