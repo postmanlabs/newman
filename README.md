@@ -36,7 +36,7 @@ The `newman run` command allows you to specify a collection file to be run. You 
 Collection as a json file from the Postman App.
 
 ```terminal
-$ newman run my-collection-file.json;
+$ newman run my-collection-file.json -e http://my-server.com/postman-environment --iteration-count 2;
 ```
 
 ### Using Newman inside your NodeJS projects
@@ -49,7 +49,14 @@ var newman = require('newman');
 // to complete in `callback` parameter
 newman.run({
     collection: require('./my-collection-file.json'),
-    reporters: 'cli'
+    reporters: 'cli',
+    iterationCount: 2,
+    environment: {
+        myVar: 'myValue'
+    },
+    globals: {
+        myGlobalVar: 'myGlobalValue'
+    }
 }, function (err) {
     console.log('Collection run complete!');
 
