@@ -24,6 +24,10 @@
         action: 'storeTrue'
     });
 
+    runParser.addArgument(['-d', '--data'], {
+        help: 'Specify a data file to use for iterations (either json or csv).'
+    });
+
 #### Generic options which apply throughout Newman:
 
     commonParser.addArgument(['--verbose'], {
