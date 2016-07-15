@@ -8,7 +8,7 @@ extensibility in mind so that you can easily integrate it with your continuous i
 
 > *BETA RELEASE NOTES*
 >
-> To use newan beta, ensure that you install using the beta tag: `npm install newman@beta`.
+> To use newan beta, ensure that you install using the beta tag: `npm install newman@next`.
 >
 > The beta version of `newman v3.x` is currently under development and is not intended for production use. Details
 > outlining the limitations and roadmap of newman v3.x is outlined in [BETA.md](BETA.md).
