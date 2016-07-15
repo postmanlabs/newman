@@ -172,4 +172,24 @@ describe('project repository', function () {
             expect(fs.readFileSync('./.npmignore').toString()).to.be(fs.readFileSync('./.gitignore').toString());
         });
     });
+
+    describe('.eslintrc', function () {
+        it('must exist', function () {
+            expect(fs.existsSync('./.eslintrc')).to.be.ok();
+        });
+
+        it('must have readable content', function () {
+            expect(fs.readFileSync('./.eslintrc').toString()).to.be.ok();
+        });
+    });
+
+    describe('.nsprc', function () {
+        it('must exist', function () {
+            expect(fs.existsSync('./.nsprc')).to.be.ok();
+        });
+
+        it('must have readable content', function () {
+            expect(fs.readFileSync('./.nsprc').toString()).to.be.ok();
+        });
+    });
 });
