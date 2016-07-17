@@ -130,7 +130,7 @@
     "comma-spacing": [2, { "before": false, "after": true }],
     "comma-style": ["error", "last"],
     "computed-property-spacing": "error",
-    "consistent-this": "warn",
+    // "consistent-this": "warn",
     "eol-last": "error",
     "func-names": "off",
     "func-style": "off",

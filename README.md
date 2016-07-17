@@ -57,11 +57,12 @@ newman.run({
     globals: {
         myGlobalVar: 'myGlobalValue'
     }
-}, function (err) {
-    console.log('Collection run complete!');
+}, function (err, summary) {
+    // in case of an error we log the error
+    err &&console.error('There was an error running your collection: ', err);
 
-    if (err) {
-        console.error('There was an error running your collection: ', err) ;
-    }
+    // we also log the summary object to see the result of the run
+    summary && console.dir(summary, {colors: true, depth: 3});
+    console.log('Collection run complete!');
 });
 ```
