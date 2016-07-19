@@ -43,11 +43,6 @@
         type: Number
     });
 
-    requestOptionsParser.addArgument(['--request-timeout'], {
-        help: 'Specify a timeout for requests (in milliseconds).',
-        type: Number
-    });
-
     requestOptionsParser.addArgument(['--avoid-redirects'], {
         help: 'If present, Newman will not follow HTTP Redirects.',
         action: 'storeTrue'
@@ -84,11 +79,6 @@
 
     parser.addArgument(['-y', '--delay'], {
         help: 'Specify a delay (in ms) between requests',
-        type: Number
-    });
-
-    parser.addArgument(['-r', '--requestTimeout'], {
-        help: 'Specify a request timeout (in ms) for requests',
         type: Number
     });
 
