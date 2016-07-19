@@ -97,14 +97,15 @@ describe('cli parser', function () {
 
     describe('Run Command', function () {
         it('should handle standard run command (run collection.json and -e)', function (done) {
-            cli.rawOptions('run myCollection.json --environment env.json'.split(' '), 'newmantests', function (err, config) {
-                expect(err).to.be(null);
-                expect(config.command).to.be('run');
-                expect(config.run).to.be.ok();
-                expect(config.run.collection).to.be('myCollection.json');
-                expect(config.run.environment).to.be('env.json');
-                done();
-            });
+            cli.rawOptions('run myCollection.json --environment env.json'.split(' '), 'newmantests',
+                function (err, config) {
+                    expect(err).to.be(null);
+                    expect(config.command).to.be('run');
+                    expect(config.run).to.be.ok();
+                    expect(config.run.collection).to.be('myCollection.json');
+                    expect(config.run.environment).to.be('env.json');
+                    done();
+                });
         });
 
         it.skip('should load all arguments (except reporters)', function (done) {
