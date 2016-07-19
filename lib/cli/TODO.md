@@ -43,11 +43,6 @@
         type: Number
     });
 
-    requestOptionsParser.addArgument(['-k', '--insecure'], {
-        help: 'Disables SSL validations.',
-        action: 'storeTrue'
-    });
-
     requestOptionsParser.addArgument(['--tls'], {
         help: 'Only use TLSv1',
         action: 'storeTrue'
@@ -90,12 +85,6 @@
     parser.addArgument(['-S', '--noTestSymbols'], {
         help: 'Disable symbols in test output and use PASS|FAIL instead',
         action: 'storeTrue'
-    });
-
-    parser.addArgument(['-k', '--insecure'], {
-        help: 'Disable strict ssl',
-        action: 'storeTrue',
-        defaultValue: false
     });
 
     parser.addArgument(['-l', '--tls'], {
