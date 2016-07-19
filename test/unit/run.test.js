@@ -43,7 +43,7 @@ describe('run module', function () {
         async.parallel([
             function (next) {
                 expect(run).withArgs({
-                    collection: 'garbage'
+                    collection: null
                 }, function (err) {
                     expect(err).be.ok();
                     expect(err && err.message).be('newman: expecting a collection to run');
