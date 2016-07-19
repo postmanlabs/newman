@@ -2,10 +2,6 @@
 
 #### Options for the Run Command:
 
-    runParser.addArgument(['-f', '--folder'], {
-        help: 'Run a single folder from a collection.'
-    });
-
     runParser.addArgument(['--export-environment'], {
         help: 'Exports the environment to a file after completing the run.'
     });
@@ -73,10 +69,6 @@
     });
 
 #### Older Execute options
-
-    parser.addArgument(['-f', '--folder'], {
-        help: 'Run a single folder from a collection. To be used with -c or -u'
-    });
 
     parser.addArgument(['-E', '--exportEnvironment'], {
         help: 'Exports the environment to a file after completing the run'
