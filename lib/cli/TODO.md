@@ -43,11 +43,6 @@
         type: Number
     });
 
-    requestOptionsParser.addArgument(['--avoid-redirects'], {
-        help: 'If present, Newman will not follow HTTP Redirects.',
-        action: 'storeTrue'
-    });
-
     requestOptionsParser.addArgument(['-k', '--insecure'], {
         help: 'Disables SSL validations.',
         action: 'storeTrue'
@@ -80,11 +75,6 @@
     parser.addArgument(['-y', '--delay'], {
         help: 'Specify a delay (in ms) between requests',
         type: Number
-    });
-
-    parser.addArgument(['-R', '--avoidRedirects'], {
-        help: 'Prevents Newman from automatically following redirects',
-        action: 'storeTrue'
     });
 
     parser.addArgument(['-j', '--noSummary'], {
