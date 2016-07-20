@@ -19,7 +19,7 @@
   ],
   "main": "index.js",
   "bin": {
-    "newman-beta": "./bin/newman.js"
+    "newman": "./bin/newman.js"
   },
   "preferGlobal": true,
   "scripts": {

@@ -39,6 +39,11 @@ Collection as a json file from the Postman App and run it using Newman.
 $ newman run examples/sample-collection.json;
 ```
 
+Run a collection from URL
+```terminal
+$ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
+```
+
 For the whole list of options refer to the Commandline Options section below.
 
 ### Using Newman as a NodeJS module
@@ -52,7 +57,7 @@ var newman = require('newman'); // require newman in your project
 
 // call newman.run to pass `options` object and wait for callback
 newman.run({
-    collection: require('./examples/sample-collection.json'),
+    collection: require('./sample-collection.json'),
     reporters: 'cli'
 }, function (err) {
 	if (err) { throw err; }
