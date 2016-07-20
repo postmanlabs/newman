@@ -3,7 +3,7 @@
   "info": {
     "name": "oauth1-params-in-url",
     "_postman_id": "3cd655fb-f1e6-e06f-73ad-03cf3792a502",
-    "description": "",
+    "description": "A set of sanity tests to check the validity of set and retrieved OAuth1 tokens",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

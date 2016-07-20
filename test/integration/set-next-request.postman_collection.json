@@ -3,7 +3,7 @@
   "info": {
     "name": "NewmanSetNextRequest",
     "_postman_id": "d6f7bb29-2258-4e1b-9576-b2315cf5b77e",
-    "description": "",
+    "description": "A set of tests to verify set and get operations on environment variables",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

@@ -3,7 +3,7 @@
   "info": {
     "name": "CommaTest",
     "_postman_id": "1b3aa71e-0a61-29a8-d90b-502f89e8c7bf",
-    "description": "",
+    "description": "A set of tests to check for the correctness of data passed from csv data files",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

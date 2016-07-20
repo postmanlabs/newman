@@ -3,7 +3,7 @@
   "info": {
     "name": "tc2",
     "_postman_id": "dd85194f-bdb3-8ce1-fd25-554cac614f89",
-    "description": "",
+    "description": "A set of checks for variable value population via data files",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

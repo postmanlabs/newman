@@ -3,7 +3,7 @@
   "info": {
     "name": "Request Name In Script",
     "_postman_id": "ce3bf661-9803-6712-5f8e-ff5fcf1ba5db",
-    "description": "",
+    "description": "A test to check for the presence of the request name in the script",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

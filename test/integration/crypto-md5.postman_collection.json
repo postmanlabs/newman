@@ -3,7 +3,7 @@
   "info": {
     "name": "crypto-md5",
     "_postman_id": "4f085147-6c40-19dc-6250-257d64c261ac",
-    "description": "",
+    "description": "A set of tests to ratify the crypto library",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

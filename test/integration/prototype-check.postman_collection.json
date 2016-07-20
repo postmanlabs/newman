@@ -3,7 +3,7 @@
   "info": {
     "name": "prototypeCheck",
     "_postman_id": "dd6fb732-a067-48a8-5451-74cbc86cc689",
-    "description": "",
+    "description": "A set of requests to test Array, String, Date, and Function prototypes",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

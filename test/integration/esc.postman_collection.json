@@ -3,7 +3,7 @@
   "info": {
     "name": "newmanTest",
     "_postman_id": "df4d105a-e01b-b219-9a65-266547e02cd0",
-    "description": "",
+    "description": "A set of tests for proper replacement of form key value pairs with escaped characters",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

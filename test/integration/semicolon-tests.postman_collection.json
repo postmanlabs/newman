@@ -3,6 +3,7 @@
   "info": {
     "name": "sandbox",
     "_postman_id": "f1639220-14aa-90da-0634-5f6367323dd2",
+    "description": "A test to check for the proper retrieval of headers from a specified source",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

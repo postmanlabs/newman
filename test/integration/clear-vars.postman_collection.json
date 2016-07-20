@@ -3,7 +3,7 @@
   "info": {
     "name": "testCollection",
     "_postman_id": "29199569-c73e-da26-69f3-c6e644b00e25",
-    "description": "",
+    "description": "A set of tests to check for proper clearing of environment variables",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

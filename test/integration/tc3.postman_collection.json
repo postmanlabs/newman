@@ -3,7 +3,7 @@
   "info": {
     "name": "globals_c",
     "_postman_id": "dcc7e181-766f-e7ef-4b94-efbfe57189a9",
-    "description": "",
+    "description": "A set of tests for global and data variable operations",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

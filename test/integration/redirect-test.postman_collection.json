@@ -3,7 +3,7 @@
   "info": {
     "name": "redirectTest",
     "_postman_id": "be3bf661-9803-6712-5f8e-ff5fcf1ba5db",
-    "description": "",
+    "description": "A test to check for proper redirection responses",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

@@ -3,7 +3,7 @@
   "info": {
     "name": "newmangziptest",
     "_postman_id": "af5052df-c60d-be62-d098-65b00b03a944",
-    "description": "",
+    "description": "A test to check for the correct handling of gzip encoding",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

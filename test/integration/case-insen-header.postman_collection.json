@@ -3,7 +3,7 @@
   "info": {
     "name": "caseInsenHeader",
     "_postman_id": "1153d5ce-29e2-c83f-648c-24e17c4aa852",
-    "description": "",
+    "description": "A set of tests to verify the case insensitive nature of headers",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

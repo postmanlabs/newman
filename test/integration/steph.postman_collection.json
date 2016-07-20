@@ -3,7 +3,7 @@
   "info": {
     "name": "postman",
     "_postman_id": "b6a53b01-d54e-8501-e7da-74affff4c7fc",
-    "description": "",
+    "description": "A set of tests to process piecewise form data",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [

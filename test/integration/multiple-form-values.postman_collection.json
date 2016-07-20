@@ -3,7 +3,7 @@
   "info": {
     "name": "multipleFormValues",
     "_postman_id": "8feefa71-aa26-c53a-c9bb-069cb688a041",
-    "description": "",
+    "description": "A test to check for successful sending of multiple / empty values for form data",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [
