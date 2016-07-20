@@ -41,6 +41,7 @@
     "postman-collection": "0.4.0",
     "postman-runtime": "2.2.0",
     "request": "2.73.0",
+    "serialised-error": "1.1.2",
     "shelljs": "0.7.0",
     "window-size": "0.2.0"
   },
