@@ -2,10 +2,6 @@
 
 #### Options for the Run Command:
 
-    runParser.addArgument(['-f', '--folder'], {
-        help: 'Run a single folder from a collection.'
-    });
-
     runParser.addArgument(['--export-environment'], {
         help: 'Exports the environment to a file after completing the run.'
     });
@@ -47,21 +43,6 @@
         type: Number
     });
 
-    requestOptionsParser.addArgument(['--request-timeout'], {
-        help: 'Specify a timeout for requests (in milliseconds).',
-        type: Number
-    });
-
-    requestOptionsParser.addArgument(['--avoid-redirects'], {
-        help: 'If present, Newman will not follow HTTP Redirects.',
-        action: 'storeTrue'
-    });
-
-    requestOptionsParser.addArgument(['-k', '--insecure'], {
-        help: 'Disables SSL validations.',
-        action: 'storeTrue'
-    });
-
     requestOptionsParser.addArgument(['--tls'], {
         help: 'Only use TLSv1',
         action: 'storeTrue'
@@ -73,10 +54,6 @@
     });
 
 #### Older Execute options
-
-    parser.addArgument(['-f', '--folder'], {
-        help: 'Run a single folder from a collection. To be used with -c or -u'
-    });
 
     parser.addArgument(['-E', '--exportEnvironment'], {
         help: 'Exports the environment to a file after completing the run'
@@ -95,16 +72,6 @@
         type: Number
     });
 
-    parser.addArgument(['-r', '--requestTimeout'], {
-        help: 'Specify a request timeout (in ms) for requests',
-        type: Number
-    });
-
-    parser.addArgument(['-R', '--avoidRedirects'], {
-        help: 'Prevents Newman from automatically following redirects',
-        action: 'storeTrue'
-    });
-
     parser.addArgument(['-j', '--noSummary'], {
         help: 'Doesn\'t show the summary for each iteration',
         action: 'storeTrue'
@@ -118,12 +85,6 @@
     parser.addArgument(['-S', '--noTestSymbols'], {
         help: 'Disable symbols in test output and use PASS|FAIL instead',
         action: 'storeTrue'
-    });
-
-    parser.addArgument(['-k', '--insecure'], {
-        help: 'Disable strict ssl',
-        action: 'storeTrue',
-        defaultValue: false
     });
 
     parser.addArgument(['-l', '--tls'], {
