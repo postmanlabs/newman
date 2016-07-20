@@ -1,107 +1,119 @@
 {
-	"id": "34783f86-4a67-d3bd-ba5b-148495fa2f72",
-	"name": "c1",
-	"description": "",
-	"order": [
-		"51e6ecc7-ff3c-9bc0-8aea-b417c4723f68",
-		"35c535b1-7e0f-fba7-ce6c-71162ce45dec",
-		"16f05b20-6d85-7bcd-e236-d2fa85cc811f"
-	],
-	"folders": [],
-	"timestamp": 1415470379814,
-	"synced": false,
-	"requests": [
-		{
-			"id": "16f05b20-6d85-7bcd-e236-d2fa85cc811f",
-			"headers": "",
-			"url": "httpbin.org/get",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "var data = JSON.parse(responseBody);\ntests[\"DigestAuth\"] = data.headers.Authorization.has(\"Digest\");tests[\"Correct response signature generated\"]=data.headers.Authorization.has(\"8ef925a22b7fa71b5f63d2f210d0f669\");",
-			"currentHelper": "digestAuth",
-			"helperAttributes": {
-				"id": "digest",
-				"time": 1415541054386,
-				"algorithm": "MD5",
-				"username": "abhijit",
-				"realm": "me@kennethreitz.com",
-				"password": "kane",
-				"nonce": "b595d63333715eaf0737e4255c288dc1",
-				"nonceCount": "000001",
-				"clientNonce": "abcfd",
-				"opaque": "03a268317fb5ee47794496820f0bb4fd",
-				"qop": "auth"
-			},
-			"time": 1415541064613,
-			"name": "DigestAuth",
-			"description": "",
-			"collectionId": "34783f86-4a67-d3bd-ba5b-148495fa2f72",
-			"responses": [],
-			"synced": false
-		},
-		{
-			"id": "35c535b1-7e0f-fba7-ce6c-71162ce45dec",
-			"headers": "",
-			"url": "httpbin.org/get",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "var data = JSON.parse(responseBody);\ntests[\"Correct Basic Signature generated\"] = data.headers.Authorization.has(\"Basic YWJoaWppdDprYW5l\");",
-			"currentHelper": "basicAuth",
-			"helperAttributes": {
-				"username": "abhijit",
-				"password": "kane",
-				"id": "basic",
-				"timestamp": 1415540254342
-			},
-			"time": 1415541373790,
-			"name": "basicAuth",
-			"description": "",
-			"collectionId": "34783f86-4a67-d3bd-ba5b-148495fa2f72",
-			"responses": [],
-			"synced": false
-		},
-		{
-			"id": "51e6ecc7-ff3c-9bc0-8aea-b417c4723f68",
-			"headers": "",
-			"url": "httpbin.org/post",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "var data = JSON.parse(responseBody);\nvar oldNonce = environment.oldNonce;\nvar newNonce = data.form.oauth_nonce;\ntests[\"NewNonce\"]=(oldNonce != newNonce);\npostman.setEnvironmentVariable(\"oldNonce\", newNonce);\ntests[\"HasNonce\"]=data.form.oauth_nonce;console.log('oldNonce: '+oldNonce+', newNonce='+newNonce);console.log('Signature: '+data.form.oauth_signature);",
-			"currentHelper": "oAuth1",
-			"helperAttributes": {
-				"id": "oAuth1",
-				"time": 1415541588569,
-				"consumerKey": "ds",
-				"consumerSecret": "asdgf",
-				"token": "",
-				"tokenSecret": "",
-				"signatureMethod": "HMAC-SHA1",
-				"timestamp": "1415542860",
-				"nonce": "yPmTxQ",
-				"version": "1.0",
-				"realm": "",
-				"header": false,
-				"auto": true,
-				"includeEmpty": false
-			},
-			"time": 1415542891315,
-			"name": "OAuth",
-			"description": "",
-			"collectionId": "34783f86-4a67-d3bd-ba5b-148495fa2f72",
-			"responses": [],
-			"synced": false
-		}
-	]
+  "variables": [],
+  "info": {
+    "name": "c1",
+    "_postman_id": "34783f86-4a67-d3bd-ba5b-148495fa2f72",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "OAuth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\nvar oldNonce = environment.oldNonce;\nvar newNonce = data.form.oauth_nonce;\ntests[\"NewNonce\"]=(oldNonce != newNonce);\npostman.setEnvironmentVariable(\"oldNonce\", newNonce);\ntests[\"HasNonce\"]=data.form.oauth_nonce;console.log('oldNonce: '+oldNonce+', newNonce='+newNonce);console.log('Signature: '+data.form.oauth_signature);"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "oauth1",
+          "oauth1": {
+            "consumerKey": "ds",
+            "consumerSecret": "asdgf",
+            "token": "",
+            "tokenSecret": "",
+            "signatureMethod": "HMAC-SHA1",
+            "timeStamp": "1415542860",
+            "nonce": "yPmTxQ",
+            "version": "1.0",
+            "realm": "",
+            "addParamsToHeader": false,
+            "autoAddParam": true,
+            "addEmptyParamsToSign": false
+          }
+        },
+        "url": "httpbin.org/post",
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "basicAuth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"Correct Basic Signature generated\"] = data.headers.Authorization.has(\"Basic YWJoaWppdDprYW5l\");"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": {
+            "username": "abhijit",
+            "password": "kane",
+            "showPassword": false
+          }
+        },
+        "url": "httpbin.org/get",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "DigestAuth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"DigestAuth\"] = data.headers.Authorization.has(\"Digest\");tests[\"Correct response signature generated\"]=data.headers.Authorization.has(\"8ef925a22b7fa71b5f63d2f210d0f669\");"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "digest",
+          "digest": {
+            "algorithm": "MD5",
+            "username": "abhijit",
+            "realm": "me@kennethreitz.com",
+            "password": "kane",
+            "nonce": "b595d63333715eaf0737e4255c288dc1",
+            "nonceCount": "000001",
+            "clientNonce": "abcfd",
+            "opaque": "03a268317fb5ee47794496820f0bb4fd",
+            "qop": "auth"
+          }
+        },
+        "url": "httpbin.org/get",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
 }
