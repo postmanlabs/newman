@@ -39,6 +39,7 @@
     "lodash": "4.13.1",
     "parse-json": "2.2.0",
     "postman-collection": "0.4.0",
+    "postman-collection-transformer": "1.7.2",
     "postman-runtime": "2.2.0",
     "pretty-ms": "2.1.0",
     "request": "2.73.0",
