@@ -1,0 +1,47 @@
+{
+	"id": "dd85194f-bdb3-8ce1-fd25-554cac614f89",
+	"name": "tc2",
+	"description": "",
+	"order": [
+		"91d6cd93-d25c-722d-f8b4-48090fc19337"
+	],
+	"folders": [],
+	"timestamp": 1404406855474,
+	"synced": false,
+	"requests": [
+		{
+			"id": "91d6cd93-d25c-722d-f8b4-48090fc19337",
+			"headers": "h1:v1\n",
+			"url": "http://{{envFileUrl}}/post",
+			"pathVariables": {},
+			"method": "POST",
+			"preRequestScript":"postman.setEnvironmentVariable(\"dataVar2\",iteration);",
+			"data": [
+				{
+					"key": "dataFileKey",
+					"value": "{{dataVar}}",
+					"type": "text"
+				},
+				{
+					"key": "envFileKey",
+					"value": "{{envKey}}",
+					"type": "text"
+				},
+				{
+					"key": "prScriptTest",
+					"value": "{{dataVar2}}",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"form-data is populated through data-files\"] = ((data.form.dataFileKey === \"value1\" && iteration===1) || (data.form.dataFileKey === \"value2\" && iteration===2));\ntests[\"form data populated through env file\"] = (data.form.envFileKey===\"abhijit3\");\ntests[\"form-data populated through prScript\"] = (data.form.prScriptTest==iteration);",
+			"time": 1404409637382,
+			"name": "http://echo.getpostman.com/post",
+			"description": "",
+			"collectionId": "dd85194f-bdb3-8ce1-fd25-554cac614f89",
+			"responses": [],
+			"synced": false
+		}
+	]
+}

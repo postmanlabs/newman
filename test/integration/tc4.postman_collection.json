@@ -1,0 +1,35 @@
+{
+	"id": "a143ec0d-38e3-c4d4-7030-091145b9bca0",
+	"name": "newman tests",
+	"requests": [
+		{
+			"id": "ec1016a7-2819-26ca-c3b8-3b887d1aad73",
+			"headers": "", 
+			"url": "http://httpbin.org/post",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"data": [
+				{
+					"key": "content",
+					"value": "tests/integ_tests/uploadFile.json",
+					"type": "file"
+				}
+			],
+			"dataMode": "params",
+			"name": "POST file test",
+			"description": "Passes when posted to httpbin.org",
+			"time": 1408827691742,
+			"version": 2,
+			"responses": [],
+			"tests": "var data = JSON.parse(responseBody);\nvar fileData = JSON.parse(data.files.content);\ntests[\"File upload 1\"] = fileData.key1 === \"value1\";\ntests[\"File upload 2\"] = fileData.key2 === 2;",
+			"collectionId": "a143ec0d-38e3-c4d4-7030-091145b9bca0",
+			"synced": false
+		}
+	],
+	"order": [
+		"ec1016a7-2819-26ca-c3b8-3b887d1aad73"
+	],
+	"timestamp": 1408827691742,
+	"synced": false
+}

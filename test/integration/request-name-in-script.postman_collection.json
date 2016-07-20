@@ -1,0 +1,34 @@
+{
+	"id": "ce3bf661-9803-6712-5f8e-ff5fcf1ba5db",
+	"name": "Request Name In Script",
+	"description": "",
+	"order": [
+		"87ed67f7-5720-4c5a-82a4-0f79dfef96f3"
+	],
+	"folders": [],
+	"timestamp": 1442742742040,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "87ed67f7-5720-4c5a-82a4-0f79dfef96f3",
+			"headers": "",
+			"url": "echo.getpostman.com/get",
+			"preRequestScript": "if(request.name!==\"r1\" || request.description!==\"testDesc\") {undefFunction()}",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"correct request name and description\"] = (request.name===\"r1\" && request.description===\"testDesc\")",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442742888915,
+			"name": "r1",
+			"description": "testDesc",
+			"collectionId": "ce3bf661-9803-6712-5f8e-ff5fcf1ba5db",
+			"responses": []
+		}
+	]
+}

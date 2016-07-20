@@ -1,0 +1,42 @@
+{
+	"id": "1b3aa71e-0a61-29a8-d90b-502f89e8c7bf",
+	"name": "CommaTest",
+	"description": "",
+	"order": [
+		"921dd9aa-2b3e-c486-2179-ae0feda7f7a4"
+	],
+	"folders": [],
+	"timestamp": 1426149563558,
+	"synced": false,
+	"owner": "25888",
+	"sharedWithTeam": false,
+	"subscribed": false,
+	"remoteLink": "",
+	"public": false,
+	"write": true,
+	"requests": [
+		{
+			"id": "921dd9aa-2b3e-c486-2179-ae0feda7f7a4",
+			"headers": "Content-Type: application/json\n",
+			"url": "httpbin.org/post",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "1b3aa71e-0a61-29a8-d90b-502f89e8c7bf",
+			"data": [],
+			"dataMode": "raw",
+			"name": "r1",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1426149662394,
+			"version": 2,
+			"responses": [],
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"Name with comma sent correctly\"] = data.json.nameAndSurname === \"Abhijit, Kane\";\ntests[\"Name without comma sent correctly\"] = data.json.name === \"Abhijit Kane\";",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionOwner": 0,
+			"synced": false,
+			"rawModeData": "{\n    \"nameAndSurname\": \"{{nameWithComma}}\",\n    \"name\": \"{{nameWithoutComma}}\"\n}"
+		}
+	]
+}

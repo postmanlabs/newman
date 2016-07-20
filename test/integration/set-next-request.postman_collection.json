@@ -1,0 +1,72 @@
+{
+	"id": "d6f7bb29-2258-4e1b-9576-b2315cf5b77e",
+	"name": "NewmanSetNextRequest",
+	"description": "",
+	"order": [
+		"bf0a6006-c987-253a-525d-9f6be7071210",
+		"5c822123-4bb4-62df-4aa5-ef509a84de8e",
+		"b6dda40c-4045-fcc3-df78-97e27564db8f"
+	],
+	"folders": [],
+	"timestamp": 1458288060057,
+	"owner": "61671",
+	"remoteLink": "https://www.getpostman.com/collections/75c3e1ad275643dbaf19",
+	"public": false,
+	"requests": [
+		{
+			"id": "5c822123-4bb4-62df-4aa5-ef509a84de8e",
+			"headers": "",
+			"url": "http://httpbin.org/html",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var count = _.parseInt(postman.getEnvironmentVariable('count'));\ncount++;\npostman.setEnvironmentVariable('count', String(count));\n\nif (responseCode.code === 200) {\n    postman.setEnvironmentVariable('method', 'headers');\n    console.log('Setting next request to \"method\"');\n    postman.setNextRequest('method');\n}",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1458304380994,
+			"name": "html",
+			"description": "",
+			"collectionId": "d6f7bb29-2258-4e1b-9576-b2315cf5b77e",
+			"responses": []
+		},
+		{
+			"id": "b6dda40c-4045-fcc3-df78-97e27564db8f",
+			"headers": "",
+			"url": "httpbin.org/{{method}}",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": "var jsonData = JSON.parse(responseBody);\nvar count = _.parseInt(postman.getEnvironmentVariable('count'));\ncount++;\npostman.setEnvironmentVariable('count', String(count));\n\nif (jsonData.url === 'http://httpbin.org/get') {\n    console.log('Setting next request to \"html\"');\n    postman.setNextRequest('html');\n}\nelse if (!jsonData.url && jsonData.headers) {\n    console.log('Ending shit here.'); tests['Success'] = _.parseInt(postman.getEnvironmentVariable('count')) === 4\n    postman.setNextRequest(null);\n}\nelse {\n    console.log('Not setting next request.. ', responseBody);\n}",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1458303758986,
+			"name": "method",
+			"description": "",
+			"collectionId": "d6f7bb29-2258-4e1b-9576-b2315cf5b77e",
+			"responses": []
+		},
+		{
+			"id": "bf0a6006-c987-253a-525d-9f6be7071210",
+			"headers": "",
+			"url": "httpbin.org/post",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": null,
+			"dataMode": "params",
+			"tests": "postman.setEnvironmentVariable('method', 'get');\npostman.setEnvironmentVariable('count', '1');\nconsole.log('Environment is now: ', environment);\npostman.setNextRequest('method');",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1458304339683,
+			"name": "post",
+			"description": "",
+			"collectionId": "d6f7bb29-2258-4e1b-9576-b2315cf5b77e",
+			"responses": []
+		}
+	]
+}

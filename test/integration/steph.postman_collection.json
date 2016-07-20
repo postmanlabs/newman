@@ -1,0 +1,47 @@
+{
+	"id": "b6a53b01-d54e-8501-e7da-74affff4c7fc",
+	"name": "postman",
+	"description": "",
+	"order": [
+		"5dd9cc1d-7c27-14b0-c94e-ee5243329665"
+	],
+	"folders": [],
+	"timestamp": 1421095103565,
+	"synced": false,
+	"remoteLink": "",
+	"requests": [
+		{
+			"id": "5dd9cc1d-7c27-14b0-c94e-ee5243329665",
+			"headers": "",
+			"url": "http://httpbin.org/post",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "first",
+					"value": "{{first}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "last",
+					"value": "{{last}}",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"First name is: \" + data.form.first] = true;\ntests[\"last name is: \" + data.form.last] = true;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421470919736,
+			"name": "http://httpbin.org",
+			"description": "",
+			"collectionId": "b6a53b01-d54e-8501-e7da-74affff4c7fc",
+			"responses": [],
+			"synced": false
+		}
+	]
+}

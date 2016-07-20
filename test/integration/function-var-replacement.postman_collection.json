@@ -1,0 +1,51 @@
+{
+	"id": "9543b60e-886a-b820-3f16-7087af71d296",
+	"name": "Test",
+	"description": "Test collection to show bug around dynamic variables with Newman",
+	"order": [
+		"4f6e7e83-cca1-5b83-3b96-a62be4c80158"
+	],
+	"folders": [],
+	"timestamp": 1459964816642,
+	"owner": "61671",
+	"remoteLink": "https://www.getpostman.com/collections/5dd53c1cef3949ab092c",
+	"public": false,
+	"requests": [
+		{
+			"id": "4f6e7e83-cca1-5b83-3b96-a62be4c80158",
+			"headers": "",
+			"url": "https://echo.getpostman.com/post",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "FriendlyName",
+					"value": "{{$guid}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "RandomId",
+					"value": "{{$randomInt}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "TimeCreated",
+					"value": "{{$timestamp}}",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": "var responseJSON;\ntry { responseJSON = JSON.parse(responseBody); }\ncatch (e) { \n    console.log(e);\n}\n\ntests['FriendlyName should be a GUID'] = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/i.test(responseJSON.form['FriendlyName']);\n\ntests['RandomId should be an integer'] = (_.parseInt(responseJSON.form['RandomId']) % 1) === 0;\ntests['TimeCreated should be an integer'] = (_.parseInt(responseJSON.form['TimeCreated']) % 1) === 0;\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460016490862,
+			"name": "POST Request copy",
+			"description": "The HTTP `POST` request method is meant to transfer data to a server \n(and elicit a response). What data is returned depends on the implementation\nof the server.\n\nA `POST` request can pass parameters to the server using \"Query String \nParameters\", as well as the Request Body. For example, in the following request,\n\n> POST /hi/there?hand=wave\n>\n> <request-body>\n\nThe parameter \"hand\" has the value \"wave\". The request body can be in multiple\nformats. These formats are defined by the MIME type of the request. The MIME \nType can be set using the ``Content-Type`` HTTP header. The most commonly used \nMIME types are:\n\n* `multipart/form-data`\n* `application/x-www-form-urlencoded`\n* `application/json`\n\nThis endpoint echoes the HTTP headers, request parameters, the contents of\nthe request body and the complete URI requested.",
+			"collectionId": "9543b60e-886a-b820-3f16-7087af71d296"
+		}
+	]
+}

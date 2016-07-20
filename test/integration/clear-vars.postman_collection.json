@@ -1,0 +1,69 @@
+{
+	"id": "29199569-c73e-da26-69f3-c6e644b00e25",
+	"name": "testCollection",
+	"description": "",
+	"order": [
+		"b22cba9d-722a-1bf2-d487-fff10c9288af",
+		"00ba03e7-8bbb-cff1-c846-8680ae575577",
+		"10ba03e7-8bbb-cff1-c846-8680ae575577"
+	],
+	"folders": [],
+	"timestamp": 1409766174430,
+	"synced": false,
+	"requests": [
+		{
+			"id": "00ba03e7-8bbb-cff1-c846-8680ae575577",
+			"headers": "",
+			"url": "http://httpbin.org/get?a={{e}}&b={{g}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env not working after clearing\"] = (data.args.a===\"{{e}}\");\ntests[\"Variable substitution from global not working after clearing\"] = (data.args.b===\"{{g}}\");\npostman.setEnvironmentVariable(\"e\", \"2\");\npostman.setGlobalVariable(\"g\",\"3\");\ntests[\"Recreated vars\"]=environment.e===\"2\" && globals.g===\"3\"\npostman.clearEnvironmentVariable(\"e\");\npostman.clearGlobalVariable(\"g\");",
+			"time": 1412619676002,
+			"name": "After clearing",
+			"description": "rd",
+			"collectionId": "29199569-c73e-da26-69f3-c6e644b00e25",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "10ba03e7-8bbb-cff1-c846-8680ae575577",
+			"headers": "",
+			"url": "http://httpbin.org/get?a={{e}}&b={{g}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "console.log(environment);console.log(globals);var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env not working after clearing invididually\"] = (data.args.a===\"{{e}}\");\ntests[\"Variable substitution from global not working after clearing invididually\"] = (data.args.b===\"{{g}}\");",
+			"time": 1412619676002,
+			"name": "After clearing",
+			"description": "rd",
+			"collectionId": "29199569-c73e-da26-69f3-c6e644b00e25",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "b22cba9d-722a-1bf2-d487-fff10c9288af",
+			"headers": "",
+			"url": "http://httpbin.org/get?a={{e}}&b={{g}}",
+			"preRequestScript": "postman.setEnvironmentVariable(\"e\", \"2\");\npostman.setGlobalVariable(\"g\",\"3\");",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "console.log(environment);var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env\"] = (data.args.a===\"2\");\ntests[\"Variable substitution from global\"] = (data.args.b===\"3\");\npostman.clearEnvironmentVariables();\npostman.clearGlobalVariables();",
+			"time": 1412619662169,
+			"name": "Before clearing",
+			"description": "rd",
+			"collectionId": "29199569-c73e-da26-69f3-c6e644b00e25",
+			"responses": [],
+			"synced": false
+		}
+	]
+}

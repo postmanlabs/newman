@@ -1,0 +1,38 @@
+{
+	"id": "f1639220-14aa-90da-0634-5f6367323dd2",
+	"name": "sandbox",
+	"order": [
+		"180ccdfe-67e8-6cbd-2fe3-2fa048731a4b"
+	],
+	"timestamp": 1411060190075,
+	"owner": "61671",
+	"hasRequests": true,
+	"requests": [
+		{
+			"id": "180ccdfe-67e8-6cbd-2fe3-2fa048731a4b",
+			"headers": "",
+			"url": "https://echo.getpostman.com/response-headers?Content-Type=application%2Fjson%3B%20%20charset%3Dutf-8",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "header",
+					"value": "application/json; charset=utf-8",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "tests[\"Test1: Content-Type is 'application/json;  charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json; charset=utf-8\";\ntests[\"Test2: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json; charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n\n\ntests[\"Test3: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json;\\ charset=utf-8\";\ntests[\"Test4: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json;\\ charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1465289236967,
+			"name": "Gets a header with a semicolon",
+			"description": "Receives a semicolon header from dump.getpost",
+			"collectionId": "f1639220-14aa-90da-0634-5f6367323dd2",
+			"responses": []
+		}
+	]
+}

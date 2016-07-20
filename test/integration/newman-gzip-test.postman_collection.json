@@ -1,0 +1,35 @@
+{
+	"id": "af5052df-c60d-be62-d098-65b00b03a944",
+	"name": "newmangziptest",
+	"description": "",
+	"order": [
+		"5b22797f-07a4-41e5-f080-69202dead378"
+	],
+	"folders": [],
+	"timestamp": 1448615828616,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "5b22797f-07a4-41e5-f080-69202dead378",
+			"headers": "",
+			"url": "http://echo.getpostman.com/gzip",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "af5052df-c60d-be62-d098-65b00b03a944",
+			"data": [],
+			"dataMode": "params",
+			"name": "http://echo.getpostman.com/gzip",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1448615836531,
+			"version": 2,
+			"responses": [],
+			"tests": "var res = JSON.parse(responseBody); tests['newman handles gzip properly'] = res.gzipped",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}

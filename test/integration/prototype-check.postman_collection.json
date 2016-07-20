@@ -1,0 +1,34 @@
+{
+	"id": "dd6fb732-a067-48a8-5451-74cbc86cc689",
+	"name": "prototypeCheck",
+	"description": "",
+	"order": [
+		"fc01c50c-387c-637e-43ae-c423eba86825"
+	],
+	"folders": [],
+	"timestamp": 1441783487644,
+	"owner": "61671",
+	"public": false,
+	"hasRequests": true,
+	"requests": [
+		{
+			"id": "fc01c50c-387c-637e-43ae-c423eba86825",
+			"headers": "",
+			"url": "echo.getpostman.com/get",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Array prototype 1\"] = ['a', 'b', 'c'].none('d');\ntests[\"Array prototype 2\"] = [ [1,2], [2,3] ].any([2,3]);\n\ntests[\"String prototype 1\"] = 'jumpy'.endsWith('py');\ntests[\"String prototype 2\"] = !('jumpy'.endsWith('MPY'));\n\ntests[\"Date prototype 1\"] = Date.now()==(new Date()).getTime();\ntests[\"Date prototype 2\"] = Date.create().is('weekday') || Date.create().is('weekend');\n\nvar fCount = 0;\nvar fn = (function() {\n  fCount++;\n}).once(); fn(); fn(); fn();\ntests[\"Function prototype 1\"] = fCount===1;\n\ntests[\"Number prototype 1\"] = (56).isEven() === true;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1443082024185,
+			"name": "objectPrototype",
+			"description": "",
+			"collectionId": "dd6fb732-a067-48a8-5451-74cbc86cc689",
+			"responses": []
+		}
+	]
+}
