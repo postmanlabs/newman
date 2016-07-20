@@ -41,6 +41,8 @@ $ newman run my-collection-file.json -e http://my-server.com/postman-environment
 
 ### Using Newman inside your NodeJS projects
 
+The following example runs a collection by reading a JSON collection file stored on disk.
+
 ```javascript
 // require newman in your script
 var newman = require('newman');
@@ -48,21 +50,13 @@ var newman = require('newman');
 // use newman.run and pass `options` object to it and wait for execution
 // to complete in `callback` parameter
 newman.run({
-    collection: require('./my-collection-file.json'),
-    reporters: 'cli',
-    iterationCount: 2,
-    environment: {
-        myVar: 'myValue'
-    },
-    globals: {
-        myGlobalVar: 'myGlobalValue'
-    }
+    collection: require('./examples/sample-collection.json'),
+    reporters: 'cli'
 }, function (err, summary) {
-    // in case of an error we log the error
-    err &&console.error('There was an error running your collection: ', err);
-
-    // we also log the summary object to see the result of the run
-    summary && console.dir(summary, {colors: true, depth: 3});
-    console.log('Collection run complete!');
+    console.log('collection run complete!');
 });
 ```
+
+## Commandline Options
+
+### newman run <collection-file.json> [options]
