@@ -58,7 +58,7 @@ describe('project repository', function () {
 
             it('must exits', function () {
                 expect(json.bin).be.ok();
-                expect(json.bin).to.eql({ 'newman-beta': './bin/newman.js' });
+                expect(json.bin).to.eql({ 'newman': './bin/newman.js' });
             });
 
             it('must have valid node shebang', function () {
