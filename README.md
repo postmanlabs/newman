@@ -8,13 +8,13 @@ extensibility in mind so that you can easily integrate it with your continuous i
 
 > *BETA RELEASE NOTES*
 >
-> To use newan beta, ensure that you install using the beta tag: `npm install newman@next`.
+> To use newan v3.x beta, ensure that you install using the beta tag: `npm install newman@next`.
 >
 > The beta version of `newman v3.x` is currently under development and is not intended for production use. Details
 > outlining the limitations and roadmap of newman v3.x is outlined in [BETA.md](BETA.md).
 
 
-## Getting Started
+## Getting started
 
 Newman is built using NodeJS v4+. To run Newman, make sure you have NodeJS version 4 or above installed. The latest
 version of NodeJS can be easily installed by following instructions mentioned at
@@ -30,39 +30,87 @@ $ npm install newman --global;
 If you are using Newman for a specific project, you may ignore the `--global` install argument and consequently, newman
 will only be available for use within the specific directory where you installed it.
 
-### Running a Postman Collection from file using CLI
+### Using Newman Commandline
 
-The `newman run` command allows you to specify a collection file to be run. You can easily export your Postman
-Collection as a json file from the Postman App.
+The `newman run` command allows you to specify a collection to be run. You can easily export your Postman
+Collection as a json file from the Postman App and run it using Newman.
 
 ```terminal
-$ newman run my-collection-file.json -e http://my-server.com/postman-environment --iteration-count 2;
+$ newman run examples/sample-collection.json;
 ```
 
-### Using Newman inside your NodeJS projects
+Run a collection from URL
+```terminal
+$ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
+```
+
+For the whole list of options refer to the Commandline Options section below.
+
+### Using Newman as a NodeJS module
+
+Newman can be easily used within your JavaScript projects as a NodeJS module. All functionalities of the newman command line is available for programmatic use.
+
+The following example runs a collection by reading a JSON collection file stored on disk.
 
 ```javascript
-// require newman in your script
-var newman = require('newman');
+var newman = require('newman'); // require newman in your project
 
-// use newman.run and pass `options` object to it and wait for execution
-// to complete in `callback` parameter
+// call newman.run to pass `options` object and wait for callback
 newman.run({
-    collection: require('./my-collection-file.json'),
-    reporters: 'cli',
-    iterationCount: 2,
-    environment: {
-        myVar: 'myValue'
-    },
-    globals: {
-        myGlobalVar: 'myGlobalValue'
-    }
-}, function (err, summary) {
-    // in case of an error we log the error
-    err &&console.error('There was an error running your collection: ', err);
-
-    // we also log the summary object to see the result of the run
-    summary && console.dir(summary, {colors: true, depth: 3});
-    console.log('Collection run complete!');
+    collection: require('./sample-collection.json'),
+    reporters: 'cli'
+}, function (err) {
+	if (err) { throw err; }
+    console.log('collection run complete!');
 });
 ```
+
+The newman v2.x `.execute` function has been deprecated and will be discontinued in future.
+
+## Commandline Options
+
+### `newman run <collection-file-source> [options]`
+
+| Option | Description |
+|--------|-------------|
+| `-e --environment <source>` | Specify an environment file path or URL |
+| `-g --globals <source>` | Specify file path or URL for global variables |
+| `-c --collection <source>` | Specify a collection file path or URL |
+| `--timeout-request <ms>` | Specify the timeout for requests to return a response |
+| `-k --insecure` | Prevents SSL verification and allows self-signed SSL certificates |
+| `--folder [name]` | Run requests within a particular folder in a collection |
+
+<!--
+
+| `-x --suppress-exitcode` | TODO |
+| `--silent` | TODO |
+| `--verbose` | TODO |
+
+| `--timeout-run <ms>` | TODO |
+| `--timeout-script <ms>` | TODO |
+
+| `--delay-run <ms>` | TODO |
+| `--delay-iteration <ms>` | TODO |
+| `--delay-request <ms>` | TODO |
+
+| `--stop-on [error,test]` | TBD |
+
+| `--export <directory>` | TBD |
+| `--export-environment <path>` | TODO |
+| `--export-globals <path>` | TODO |
+| `--export-collection <path>` | TODO |
+| `--export-pretty` | TODO |
+
+| `--ignore-redirects` | TODO Prevents newman from following 3XX redirect response |
+
+| `--iteration-count <number>` | Specifies the number of times the collection has to be run<br />when used in conjunction with iteration data file. |
+| `--iteration-data <source>` | TODO |
+
+| `--reporters <cli|html>` | TODO |
+| `--reporter-cli-view [result,summary,failures]` | TBD |
+| `--reporter-html-template <path>` | TODO |
+| `--reporter-html-output <path>` | TODO |
+
+-->
+
+Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be discontinued. For documentation on the older command options, refer to the README.md in latest v2.x release.
