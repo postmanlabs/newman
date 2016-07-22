@@ -1,7 +1,7 @@
 [
 	{
 		"key": "full_global_url",
-		"value": "http://localhost:5000/get",
+		"value": "http://httpbin.org/get",
 		"type": "text",
 		"name": "full_global_url",
 		"enabled": true

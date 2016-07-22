@@ -26,7 +26,7 @@
         }
       ],
       "request": {
-        "url": "localhost:1337/get?global={{global}}&env={{env}}&data={{data}}&prsE={{prsE}}&prsG={{prsG}}",
+        "url": "{{url}}/get?global={{global}}&env={{env}}&data={{data}}&prsE={{prsE}}&prsG={{prsG}}",
         "method": "GET",
         "header": [],
         "body": {
@@ -49,7 +49,7 @@
         }
       ],
       "request": {
-        "url": "localhost:1337/get?global={{global}}&env={{env}}&data={{data}}",
+        "url": "{{url}}/get?global={{global}}&env={{env}}&data={{data}}",
         "method": "GET",
         "header": [],
         "body": {
