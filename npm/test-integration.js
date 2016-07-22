@@ -3,10 +3,10 @@ require('shelljs/global');
 require('colors');
 
 var fs = require('fs'),
+    _ = require('lodash'),
     async = require('async'),
+    assert = require('assert'),
     newman = require('../index'),
-
-    integrationTests = {},
 
     CONCURRENCY_LIMIT = 20,
     SPEC_SOURCE_DIR = './test/integration';
@@ -15,50 +15,65 @@ module.exports = function (exit) {
     // banner line
     console.log('Running Integration Tests...'.yellow.bold);
 
-    fs.readdir(SPEC_SOURCE_DIR, function (err, files) {
-        if (err) {
-            console.error(err.message);
-            return exit(1);
-        }
+    async.waterfall([
+        function (next) {
+            fs.readdir(SPEC_SOURCE_DIR, function (err, files) {
+                if (err) {
+                    return exit(err);
+                }
+                if (_.isEmpty(files)) {
+                    return exit(new Error(`No test files found in ${SPEC_SOURCE_DIR}`));
+                }
 
-        async.mapLimit(files, CONCURRENCY_LIMIT, function (file, asyncCallback) {
-            var fileType,
-                fileBaseName,
-                fileParts = file.split('.');
+                next(null, files);
+            });
+        },
+        function (files, next) {
+            var compiledTests = {};
 
-            if (fileParts.length > 2 && fileParts[2] !== 'csv' && fileParts[1].indexOf('_') > -1) {
-                // find the constituent parts of the file
-                fileBaseName = fileParts[0];
+            async.mapLimit(files, CONCURRENCY_LIMIT, function (file, asyncCallback) {
+                var fileType,
+                    fileBaseName,
+                    fileParts = file.split('.');
 
-                fileType = fileParts[1].split('_')[1];
-                integrationTests[fileBaseName] = integrationTests[fileBaseName] || { abortOnError: true };
+                if (fileParts.length > 2 && fileParts[2] !== 'skip' && fileParts[1].indexOf('_') > -1) {
+                    // find the constituent parts of the file
+                    fileBaseName = fileParts[0];
 
-                integrationTests[fileBaseName][fileType] = SPEC_SOURCE_DIR + '/' + file;
-            }
+                    fileType = fileParts[1].split('_')[1];
 
-            asyncCallback();
-        }, function (err) {
-            if (err) {
-                console.error(err.message);
-                return exit(1);
-            }
+                    if (_.isEmpty(compiledTests[fileBaseName])) {
+                        compiledTests[fileBaseName] = { abortOnError: true, avoidRedirects: true };
+                    }
 
-            var test;
+                    compiledTests[fileBaseName][fileType] = SPEC_SOURCE_DIR + '/' + file;
+                }
+
+                asyncCallback(null, compiledTests);
+            }, next);
+        },
+        function (compiledTests, next) {
+            var integrationTests = compiledTests[0],
+                collections = Object.keys(integrationTests);
+
+            console.log(`Running sanity tests for ${collections.length} collections...`.yellow.bold);
 
             // run tests using the consolidated test set as a guide
-            for (test in integrationTests) {
-                if (integrationTests.hasOwnProperty(test) && integrationTests[test]) {
+            async.mapLimit(collections, CONCURRENCY_LIMIT, function (test, testCallback) {
+                // check if the current collection object actually contains a valid collection path
+                if (integrationTests[test].hasOwnProperty('collection')) {
+                    // map `data` in the original collection set to `iterationData`
                     if (integrationTests[test].hasOwnProperty('data')) {
                         integrationTests[test].iterationData = integrationTests[test].data;
 
                         delete integrationTests[test].data;
                     }
 
-                    newman.run(integrationTests[test], exit);
+                    newman.run(integrationTests[test], testCallback);
                 }
-            }
-        });
-    });
+            }, next);
+        }
+    ], exit);
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run
@@ -67,6 +82,9 @@ module.exports = function (exit) {
         throw err;
     }
 
-    //console.log(summary);
-    //assert(!summary.failures.length, `${summary.failures.length} failure${summary.failures.length > 1 ? 's' : ''}.`);
+    _.forEach(summary, function (result) {
+        assert(_.isEmpty(result.failures), `${result.failures.length} failure${result.failures.length > 1 ? 's' : ''}`);
+    });
+
+    console.log(`${summary.length} collections were tested successfully.`);
 });
