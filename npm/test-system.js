@@ -68,7 +68,7 @@ module.exports = function (exit) {
                     return next();
                 }
 
-                // in case an nsp vialation is found, we raise an error
+                // in case an nsp violation is found, we raise an error
                 if (result.length) {
                     console.error(nsp.formatters.default(err, result));
                     return next(1);
