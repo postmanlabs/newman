@@ -20,10 +20,6 @@
         action: 'storeTrue'
     });
 
-    runParser.addArgument(['-d', '--data'], {
-        help: 'Specify a data file to use for iterations (either json or csv).'
-    });
-
 #### Generic options which apply throughout Newman:
 
     commonParser.addArgument(['--verbose'], {
@@ -57,10 +53,6 @@
 
     parser.addArgument(['-E', '--exportEnvironment'], {
         help: 'Exports the environment to a file after completing the run'
-    });
-
-    parser.addArgument(['-d', '--data'], {
-        help: 'Specify a data file to use for iterations (either json or csv)'
     });
 
     parser.addArgument(['-G', '--exportGlobals'], {
