@@ -4,9 +4,10 @@ require('colors');
 
 var fs = require('fs'),
     _ = require('lodash'),
+    path = require('path'),
     async = require('async'),
-    assert = require('assert'),
-    newman = require('../index'),
+    expect = require('expect.js'),
+    newman = require(path.join(__dirname, '..', 'index')),
 
     CONCURRENCY_LIMIT = 20,
     SPEC_SOURCE_DIR = './test/integration';
@@ -83,7 +84,7 @@ module.exports = function (exit) {
     }
 
     _.forEach(summary, function (result) {
-        assert(_.isEmpty(result.failures), `${result.failures.length} failure${result.failures.length > 1 ? 's' : ''}`);
+        expect(_.isEmpty(result.failures)).to.be(true);
     });
 
     console.log(`${summary.length} collections were tested successfully.`);
