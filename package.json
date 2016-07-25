@@ -35,6 +35,7 @@
     "async": "2.0.0-rc.6",
     "cli-table2": "0.2.0",
     "colors": "1.1.2",
+    "csv-parse": "1.1.5",
     "eventemitter3": "1.2.0",
     "lodash": "4.13.1",
     "parse-json": "2.2.0",
