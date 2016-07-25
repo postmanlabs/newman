@@ -10,7 +10,6 @@ var fs = require('fs'),
     expect = require('expect.js'),
     newman = require(path.join(__dirname, '..', 'index')),
 
-    CONCURRENCY_LIMIT = 20,
     SPEC_SOURCE_DIR = './test/integration';
 
 module.exports = function (exit) {
@@ -52,7 +51,7 @@ module.exports = function (exit) {
             console.log(`\nexecuting ${Object.keys(suites).length} tests in parallel...`);
 
             // run tests using the consolidated test set as a guide
-            async.mapLimit(suites, CONCURRENCY_LIMIT, function (test, next) {
+            async.map(suites, function (test, next) {
                 newman.run({
                     collection: test.collectionJson,
                     environment: test.environmentJson,
