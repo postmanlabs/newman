@@ -71,15 +71,18 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 
 | Option | Description |
 |--------|-------------|
-| `-e --environment <source>` | Specify an environment file path or URL |
-| `-g --globals <source>` | Specify file path or URL for global variables |
-| `-c --collection <source>` | Specify a collection file path or URL |
-| `--timeout-request <ms>` | Specify the timeout for requests to return a response |
-| `-k --insecure` | Prevents SSL verification and allows self-signed SSL certificates |
-| `--folder [name]` | Run requests within a particular folder in a collection |
+| `-e --environment <source>` | Specify an environment file path or URL. Environments provide a set of variables that one can use within collections. [Read More](https://www.getpostman.com/docs/environments) |
+| `-g --globals <source>` | Specify file path or URL for global variables. |
+| `-n --iteration-count <number>` | Specifies the number of times the collection has to be run when used in conjunction with iteration data file. |
+| `-d --iteration-data <source>` | Specify a data source file (CSV) to be used for iteration. [Read More](https://www.getpostman.com/docs/multiple_instances) |
+| `-d --timeout-request <ms>` | Specify the time (in milliseconds) to wait for requests to return a response. |
+| `-k --insecure` | Disables SSL verification checks and allows self-signed SSL certificates. |
+| `--folder [name]` | Run requests within a particular folder in a collection. |
+| `--ignore-redirects` | Prevents newman from automatically following 3XX redirect responses. |
+| `--no-color` | Turns off the usage of color in terminal output. |
 
 <!--
-
+| `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
 | `-x --suppress-exitcode` | TODO |
 | `--silent` | TODO |
 | `--verbose` | TODO |
@@ -99,10 +102,8 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 | `--export-collection <path>` | TODO |
 | `--export-pretty` | TODO |
 
-| `--ignore-redirects` | TODO Prevents newman from following 3XX redirect response |
 
-| `--iteration-count <number>` | Specifies the number of times the collection has to be run<br />when used in conjunction with iteration data file. |
-| `--iteration-data <source>` | TODO |
+
 
 | `--reporters <cli|html>` | TODO |
 | `--reporter-cli-view [result,summary,failures]` | TBD |
@@ -122,6 +123,6 @@ Get your invitation for Postman Slack Community from: <a href="https://www.getpo
 Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
 
 ## License
-Apache-2.0. See the LICENSE file for more information
+This software is licensed under Apache-2.0. Copyright Postdot Technologies, Inc. See the [LICENSE.md](LICENSE.md) file for more information.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman/readme)](https://www.getpostman.com)
