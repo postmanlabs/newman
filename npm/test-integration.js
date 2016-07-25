@@ -3,6 +3,7 @@ require('shelljs/global');
 require('colors');
 
 var fs = require('fs'),
+    pathUtils = require('path'),
     _ = require('lodash'),
     path = require('path'),
     async = require('async'),
@@ -14,78 +15,68 @@ var fs = require('fs'),
 
 module.exports = function (exit) {
     // banner line
-    console.log('Running Integration Tests...'.yellow.bold);
+    console.log('Running integration tests using local newman...'.yellow.bold);
 
     async.waterfall([
-        function (next) {
-            fs.readdir(SPEC_SOURCE_DIR, function (err, files) {
-                if (err) {
-                    return exit(err);
-                }
-                if (_.isEmpty(files)) {
-                    return exit(new Error(`No test files found in ${SPEC_SOURCE_DIR}`));
-                }
+        // get all files within the spec source directory
+        fs.readdir.bind(fs, SPEC_SOURCE_DIR),
 
-                next(null, files);
-            });
-        },
+        // ensure that we forward only if files exist and has appropriate name conventions
         function (files, next) {
-            var compiledTests = {};
+            next(null, _.reduce(files, function (suites, path) {
+                // regex: [0:path, 1:test, 2:syntax, 3:skipped, 4: file-format]
+                var parts = path.match(/(.+)\.postman_([^\.]+)(\.skip)?\.([^\.]{3,})$/i);
 
-            async.mapLimit(files, CONCURRENCY_LIMIT, function (file, asyncCallback) {
-                var fileType,
-                    fileBaseName,
-                    fileParts = file.split('.');
-
-                if (fileParts.length > 2 && fileParts[2] !== 'skip' && fileParts[1].indexOf('_') > -1) {
-                    // find the constituent parts of the file
-                    fileBaseName = fileParts[0];
-
-                    fileType = fileParts[1].split('_')[1];
-
-                    if (_.isEmpty(compiledTests[fileBaseName])) {
-                        compiledTests[fileBaseName] = { abortOnError: true, avoidRedirects: true };
-                    }
-
-                    compiledTests[fileBaseName][fileType] = SPEC_SOURCE_DIR + '/' + file;
+                if (!parts) { // if a spec file did not match the pattern, log warining and move on
+                    return (console.warn(` - ignored: ${path}`.gray), suites);
+                }
+                else if (parts[3]) { // do not parse skipped files
+                    return (console.warn(` - skipped: ${path}`.cyan), suites);
                 }
 
-                asyncCallback(null, compiledTests);
-            }, next);
-        },
-        function (compiledTests, next) {
-            var integrationTests = compiledTests[0],
-                collections = Object.keys(integrationTests);
+                // add the test to the tracking object
+                (suites[parts[1]] || (suites[parts[1]] = {
+                    name: parts[1]
+                }))[_.camelCase(`${parts[2]}-${parts[4]}`)] = pathUtils.join(SPEC_SOURCE_DIR, path);
 
-            console.log(`Running sanity tests for ${collections.length} collections...`.yellow.bold);
+                return suites;
+            }, {}));
+        },
+
+        // execute each test on newman
+        function (suites, next) {
+            if (_.isEmpty(suites)) { // if no test files found, it is an error
+                return next(new Error(`No test files found in ${SPEC_SOURCE_DIR}`));
+            }
+
+            console.log(`\nexecuting ${Object.keys(suites).length} tests in parallel...`);
 
             // run tests using the consolidated test set as a guide
-            async.mapLimit(collections, CONCURRENCY_LIMIT, function (test, testCallback) {
-                // check if the current collection object actually contains a valid collection path
-                if (integrationTests[test].hasOwnProperty('collection')) {
-                    // map `data` in the original collection set to `iterationData`
-                    if (integrationTests[test].hasOwnProperty('data')) {
-                        integrationTests[test].iterationData = integrationTests[test].data;
-
-                        delete integrationTests[test].data;
-                    }
-
-                    newman.run(integrationTests[test], testCallback);
-                }
+            async.mapLimit(suites, CONCURRENCY_LIMIT, function (test, next) {
+                newman.run({
+                    collection: test.collectionJson,
+                    environment: test.environmentJson,
+                    globals: test.globalsJson,
+                    iterationData: test.dataCsv || test.dataJson,
+                    abortOnError: true,
+                    avoidRedirects: true
+                }, next);
             }, next);
         }
-    ], exit);
+    ], function (err, results) {
+        try {
+            !err && _.forEach(results, function (result) {
+                expect(result.failures).to.eql(true);
+            });
+        }
+        catch (e) { err = e; }
+
+        if (!err) {
+            console.log('integrations ok!'.green);
+        }
+        exit(err, results);
+    });
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run
-!module.parent && module.exports(function (err, summary) {
-    if (err) {
-        throw err;
-    }
-
-    _.forEach(summary, function (result) {
-        expect(_.isEmpty(result.failures)).to.be(true);
-    });
-
-    console.log(`${summary.length} collections were tested successfully.`);
-});
+!module.parent && module.exports(exit);
