@@ -195,6 +195,22 @@ method may need to be assessed for a variety of runtime conditions.
 Within each `it` block, correctness checks for expected method behaviour are done using `expect` calls. For more on
 `expect`, check out [Expect.js](https://github.com/Automattic/expect.js)
 
+Lastly, the information provided within `describe` and `it` blocks should form a cogent sentence when combined.
+
+For instance:
+
+```javascript
+    describe('Logic tests', function () {
+        it('should throw an error if parameters are missing', function () {});
+        it('should pass when valid values are provided', function () {});
+    });
+```
+
+The result sentence derived by combining the descriptions in the `describe` and `it` blocks are:
+
+**Logic tests** should throw an error if parameters are missing
+**Logic tests** should pass when valid values are provided
+
 #### Integration tests
 
 Integration tests test Newman from the outside, and as a whole. As you might have already guessed, these tests don't
