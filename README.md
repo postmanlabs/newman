@@ -13,6 +13,8 @@ extensibility in mind so that you can easily integrate it with your continuous i
 > The beta version of `newman v3.x` is currently under development and is not intended for production use. Details
 > outlining the limitations and roadmap of newman v3.x is outlined in [BETA.md](BETA.md).
 
+> To view documentation of current stable 2.x release of Newman, refer to the latest [newman v2.x release](https://github.com/postmanlabs/newman/tree/v2.1.2)
+
 
 ## Getting started
 
@@ -27,11 +29,6 @@ installed as well.
 $ npm install newman --global;
 ```
 
-If you are using Newman for a specific project, you may ignore the `--global` install argument and consequently, newman
-will only be available for use within the specific directory where you installed it.
-
-### Using Newman Commandline
-
 The `newman run` command allows you to specify a collection to be run. You can easily export your Postman
 Collection as a json file from the Postman App and run it using Newman.
 
@@ -39,16 +36,17 @@ Collection as a json file from the Postman App and run it using Newman.
 $ newman run examples/sample-collection.json;
 ```
 
-Run a collection from URL
+If your collection file is available as an URL (such as from our [Cloud API service](https://api.getpostman.com/)),
+Newman can fetch youir file and run it as well.
 ```terminal
 $ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
 ```
 
 For the whole list of options refer to the Commandline Options section below.
 
-### Using Newman as a NodeJS module
+### Using Newman programmatically as a NodeJS module
 
-Newman can be easily used within your JavaScript projects as a NodeJS module. All functionalities of the newman command line is available for programmatic use.
+Newman can be easily used within your JavaScript projects as a NodeJS module. All functionalities of the newman command line is available for programmatic use as well.
 
 The following example runs a collection by reading a JSON collection file stored on disk.
 
