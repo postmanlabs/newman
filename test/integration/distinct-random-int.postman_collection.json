@@ -1,7 +1,7 @@
 {
   "variables": [],
   "info": {
-    "name": "randomIntC",
+    "name": "Test that {{$randomInt}} gives different values across requests",
     "_postman_id": "ad279aba-66c1-a145-5acb-e0e2fcf23465",
     "description": "A set of tests to verify the value of seeded environment variables using random data from a remote source",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "http://httpbin.org/get?a=381",
+        "url": "http://httpbin.org/get?a={{$randomInt}}",
         "method": "GET",
         "header": [],
         "body": {
@@ -42,7 +42,7 @@
         }
       ],
       "request": {
-        "url": "http://httpbin.org/get?a=381&b=23b447e7-29e6-8a6f-97f3-6255f71c841e",
+        "url": "http://httpbin.org/get?a={{$randomInt}}&b={{$guid}}",
         "method": "GET",
         "header": [],
         "body": {
