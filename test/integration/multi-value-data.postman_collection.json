@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "http://httpbin.org/get?a=44",
+        "url": "http://httpbin.org/get?a={{$randomInt}}",
         "method": "GET",
         "header": [],
         "body": {
