@@ -1,7 +1,7 @@
 {
   "variables": [],
   "info": {
-    "name": "Test",
+    "name": "Dynamic variables (guid/timestamp/randomInt)",
     "_postman_id": "9543b60e-886a-b820-3f16-7087af71d296",
     "description": "Test collection to show bug around dynamic variables with Newman",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
@@ -27,19 +27,19 @@
           "urlencoded": [
             {
               "key": "FriendlyName",
-              "value": "3b3528b3-91cd-1e13-4f9b-b1aa970eec7f",
+              "value": "{{$guid}}",
               "type": "text",
               "enabled": true
             },
             {
               "key": "RandomId",
-              "value": "248",
+              "value": "{{$randomInt}}",
               "type": "text",
               "enabled": true
             },
             {
               "key": "TimeCreated",
-              "value": "1469017755",
+              "value": "{{$timestamp}}",
               "type": "text",
               "enabled": true
             }

@@ -3,7 +3,7 @@
   "info": {
     "name": "Helper Tests",
     "_postman_id": "34783f86-4a67-d3bd-ba5b-148495fa2f72",
-    "description": "A set of tests to ratify generated OAuth1 and Digest Auth signatures",
+    "description": "A set of tests to verify generated OAuth1 and Digest Auth signatures",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [
