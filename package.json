@@ -33,7 +33,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "argparse": "1.0.7",
-    "async": "2.0.0-rc.6",
+    "async": "2.0.1",
     "cli-table2": "0.2.0",
     "colors": "1.1.2",
     "csv-parse": "1.1.5",
