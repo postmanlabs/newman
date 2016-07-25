@@ -112,3 +112,16 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 -->
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be discontinued. For documentation on the older command options, refer to the README.md in latest v2.x release.
+
+## Community Support
+
+<img src="https://www.getpostman.com/img/v2/icons/slack.svg" align="right" />
+If you are interested in talking to the team and other Newman users, we are there on <a href="https://www.getpostman.com/slack-invite" target="_blank">Slack</a>. Feel free to drop by and say hello. Our upcoming features and beta releases are discussed here along with world peace.
+
+Get your invitation for Postman Slack Community from: <a href="https://www.getpostman.com/slack-invite">https://www.getpostman.com/slack-invite</a>.<br />
+Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
+
+## License
+Apache-2.0. See the LICENSE file for more information
+
+[![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman/readme)](https://www.getpostman.com)
