@@ -48,31 +48,40 @@ module.exports = function (exit) {
                 return next(new Error(`No test files found in ${SPEC_SOURCE_DIR}`));
             }
 
-            console.log(`\nexecuting ${Object.keys(suites).length} tests in parallel...`);
+            console.log(`\nexecuting ${Object.keys(suites).length} tests in parallel...\n`);
 
             // run tests using the consolidated test set as a guide
             async.map(suites, function (test, next) {
-                newman.run({
+                var runConfig;
+                console.log(` - ${test.name}`);
+
+                // load configuration JSON object if it is provided. We do this since this is not part of newman
+                // standard API
+                _.get(test, 'configJson') &&
+                    (runConfig = JSON.parse(fs.readFileSync(test.configJson).toString()));
+
+                newman.run(_.merge({
                     collection: test.collectionJson,
                     environment: test.environmentJson,
                     globals: test.globalsJson,
                     iterationData: test.dataCsv || test.dataJson,
-                    abortOnError: true,
-                    avoidRedirects: true
-                }, next);
+                    abortOnError: true
+                }, runConfig && runConfig.run), function (err, summary) {
+                    (err || summary).source = test; // store the meta in error
+                    next(err, summary);
+                });
             }, next);
         }
     ], function (err, results) {
-        try {
-            !err && _.forEach(results, function (result) {
-                expect(result.failures).to.eql(true);
-            });
-        }
-        catch (e) { err = e; }
-
         if (!err) {
-            console.log('integrations ok!'.green);
+            console.log(`${results.length} integrations ok!`.green);
         }
+        else {
+            console.log('\nintegration test failed:'.red);
+            console.dir(_.omit(err, ['stacktrace', 'stack']), { colors: true });
+
+        }
+
         exit(err, results);
     });
 };
