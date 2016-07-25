@@ -1,0 +1,41 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Crypto-MD5 should work in the sandbox",
+    "_postman_id": "4f085147-6c40-19dc-6250-257d64c261ac",
+    "description": "A set of tests to verify the crypto.md5 function in the sandbox",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "r1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"Your test name\"] = data.args.a === \"4ce26a583724d5689bf9333af8431483\";"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": "postman.setGlobalVariable(\"a\", CryptoJS.MD5(\"abhijit\").toString());"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?a={{a}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

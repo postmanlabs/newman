@@ -1,0 +1,34 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Sandbox getResponseHeader method should be case insensitive",
+    "_postman_id": "1153d5ce-29e2-c83f-648c-24e17c4aa852",
+    "description": "A set of tests to verify the case insensitive nature of response header retrieval",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get json response",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests[\"Case-insensitive header checking\"] = postman.getResponseHeader(\"contenT-TypE\")===\"application/json\";"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

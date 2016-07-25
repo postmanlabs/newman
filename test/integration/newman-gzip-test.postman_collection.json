@@ -1,0 +1,34 @@
+{
+  "variables": [],
+  "info": {
+    "name": "gzip-encoded responses",
+    "_postman_id": "af5052df-c60d-be62-d098-65b00b03a944",
+    "description": "A test to check for the correct handling of gzip encoding",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "http://echo.getpostman.com/gzip",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var res = JSON.parse(responseBody); tests['newman handles gzip properly'] = res.gzipped"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://echo.getpostman.com/gzip",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

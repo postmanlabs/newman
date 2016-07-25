@@ -1,0 +1,80 @@
+{
+  "variables": [],
+  "info": {
+    "name": "multipleFormValues",
+    "_postman_id": "8feefa71-aa26-c53a-c9bb-069cb688a041",
+    "description": "A test to check for successful sending of multiple / empty values for form data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "multiformvalues",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\n\n\ntests[\"multiple values for form variable\"] = data.args.hi.length === 2;"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/get?hi=hello&hi=lolol",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "multiformvalues",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\n\n\ntests[\"Can send empty urlencoded data\"] = responseCode.code===200;"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/post",
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "multiformvalues",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\n\n\ntests[\"Can send empty params data\"] = responseCode.code===200;"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/post",
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
