@@ -7,7 +7,6 @@ var fs = require('fs'),
     _ = require('lodash'),
     path = require('path'),
     async = require('async'),
-    expect = require('expect.js'),
     newman = require(path.join(__dirname, '..', 'index')),
 
     SPEC_SOURCE_DIR = './test/integration';
@@ -36,7 +35,7 @@ module.exports = function (exit) {
                 // add the test to the tracking object
                 (suites[parts[1]] || (suites[parts[1]] = {
                     name: parts[1]
-                }))[_.camelCase(`${parts[2]}-${parts[4]}`)] = pathUtils.join(SPEC_SOURCE_DIR, path);
+                }))[`${parts[2]}${parts[4].toUpperCase()}`] = pathUtils.join(SPEC_SOURCE_DIR, path);
 
                 return suites;
             }, {}));
@@ -48,26 +47,24 @@ module.exports = function (exit) {
                 return next(new Error(`No test files found in ${SPEC_SOURCE_DIR}`));
             }
 
-            console.log(`\nexecuting ${Object.keys(suites).length} tests in parallel...\n`);
+            console.log(`\nexecuting ${Object.keys(suites).length} tests in parallel (might take a while)...\n`);
 
             // run tests using the consolidated test set as a guide
             async.map(suites, function (test, next) {
-                var runConfig;
                 console.log(` - ${test.name}`);
 
                 // load configuration JSON object if it is provided. We do this since this is not part of newman
                 // standard API
-                _.get(test, 'configJson') &&
-                    (runConfig = JSON.parse(fs.readFileSync(test.configJson).toString()));
+                var config = test.configJSON ? JSON.parse(fs.readFileSync(test.configJSON).toString()) : {};
 
                 newman.run(_.merge({
-                    collection: test.collectionJson,
-                    environment: test.environmentJson,
-                    globals: test.globalsJson,
-                    iterationData: test.dataCsv || test.dataJson,
+                    collection: test.collectionJSON,
+                    environment: test.environmentJSON,
+                    globals: test.globalsJSON,
+                    iterationData: test.dataCSV || test.dataJSON,
                     abortOnError: true
-                }, runConfig && runConfig.run), function (err, summary) {
-                    (err || summary).source = test; // store the meta in error
+                }, config.run), function (err, summary) {
+                    err && (err.source = test); // store the meta in error
                     next(err, summary);
                 });
             }, next);
