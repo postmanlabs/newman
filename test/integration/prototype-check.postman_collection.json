@@ -1,0 +1,34 @@
+{
+  "variables": [],
+  "info": {
+    "name": "prototypeCheck",
+    "_postman_id": "dd6fb732-a067-48a8-5451-74cbc86cc689",
+    "description": "A set of requests to test Array, String, Date, and Function prototypes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "objectPrototype",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests[\"Array prototype 1\"] = ['a', 'b', 'c'].none('d');\ntests[\"Array prototype 2\"] = [ [1,2], [2,3] ].any([2,3]);\n\ntests[\"String prototype 1\"] = 'jumpy'.endsWith('py');\ntests[\"String prototype 2\"] = !('jumpy'.endsWith('MPY'));\n\ntests[\"Date prototype 1\"] = Date.now()==(new Date()).getTime();\n\nvar fCount = 0;\nvar fn = (function() {\n  fCount++;\n}).once(); fn(); fn(); fn();\ntests[\"Function prototype 1\"] = fCount===1;\n\ntests[\"Number prototype 1\"] = (56).isEven() === true;"
+          }
+        }
+      ],
+      "request": {
+        "url": "echo.getpostman.com/get",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Head test",
+    "_postman_id": "9997428c-5951-3fd2-2a02-88bbe9d91c7f",
+    "description": "A set of tests for checking HEAD requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "google",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests['Status is 200 OK'] = responseCode.code === 200;"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://google.com",
+        "method": "HEAD",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "github",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests['Status is 200 OK'] = responseCode.code === 200;"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://github.com",
+        "method": "HEAD",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
