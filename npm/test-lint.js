@@ -9,6 +9,7 @@ var async = require('async'),
         './lib',
         './bin',
         './test',
+        './examples/*.js',
         './npm/*.js',
         './index.js'
     ];
