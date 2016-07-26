@@ -1,0 +1,41 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Request Name In Script",
+    "_postman_id": "ce3bf661-9803-6712-5f8e-ff5fcf1ba5db",
+    "description": "A test to check for the presence of the request name in the script",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "r1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests[\"correct request name and description\"] = (request.name===\"r1\" && request.description===\"testDesc\")"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": "if(request.name!==\"r1\" || request.description!==\"testDesc\") {undefFunction()}"
+          }
+        }
+      ],
+      "request": {
+        "url": "echo.getpostman.com/get",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": "testDesc"
+      },
+      "response": []
+    }
+  ]
+}

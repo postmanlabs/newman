@@ -1,0 +1,34 @@
+{
+  "variables": [],
+  "info": {
+    "name": "redirectTest",
+    "_postman_id": "be3bf661-9803-6712-5f8e-ff5fcf1ba5db",
+    "description": "A test to check for proper redirection responses",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "r1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests[\"Returned 302\"] = responseCode.code===302;"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/redirect/1",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

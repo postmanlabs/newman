@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "description": "Command-line companion utility for Postman",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
@@ -26,23 +26,25 @@
     "test": "node npm/test.js",
     "test-system": "node npm/test-system.js",
     "test-lint": "node npm/test-lint.js",
-    "test-unit": "node npm/test-unit.js"
+    "test-unit": "node npm/test-unit.js",
+    "test-integration": "node npm/test-integration.js"
   },
   "author": "Postman Labs <help@getpostman.com> (=)",
   "license": "Apache-2.0",
   "dependencies": {
     "argparse": "1.0.7",
-    "async": "2.0.0-rc.6",
+    "async": "2.0.1",
     "cli-table2": "0.2.0",
     "colors": "1.1.2",
+    "csv-parse": "1.1.5",
     "eventemitter3": "1.2.0",
     "lodash": "4.13.1",
     "parse-json": "2.2.0",
-    "postman-collection": "0.4.0",
+    "postman-collection": "0.4.4",
     "postman-collection-transformer": "1.7.2",
-    "postman-runtime": "2.2.0",
+    "postman-runtime": "2.2.2",
     "pretty-ms": "2.1.0",
-    "request": "2.73.0",
+    "request": "2.74.0",
     "serialised-error": "1.1.2",
     "shelljs": "0.7.0",
     "window-size": "0.2.0"

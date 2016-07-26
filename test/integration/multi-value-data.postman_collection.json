@@ -1,0 +1,43 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Mutli-valued formdata props",
+    "_postman_id": "bd279aba-66c1-a145-5acb-e0e2fcf23465",
+    "description": "A set of tests checking if multiple formdata props with the same key are sent correctly",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "r1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = request.data; tests['request data array correct'] = (_.isArray(data.name))"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?a={{$randomInt}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "abhijit"
+            },
+            {
+              "key": "name",
+              "value": "kane"
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

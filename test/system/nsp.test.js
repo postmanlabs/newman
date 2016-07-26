@@ -35,8 +35,7 @@ describe('nsp', function () {
         // if you are changing the version here, most probably you are better of removing the exclusion in first place.
         // remove the exclusion and check if nsp passes, else update the version here
         it('on excluded package\'s version change must reconsider removing exclusion', function () {
-            expect(pkg.dependencies).to.have.property('postman-collection', '0.4.0');
-            expect(pkg.dependencies).to.have.property('postman-runtime', '2.2.0');
+            // expect(pkg.dependencies).to.have.property('<name>', '<semver>');
         });
     });
 });

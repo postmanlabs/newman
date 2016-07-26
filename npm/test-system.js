@@ -56,10 +56,9 @@ module.exports = function (exit) {
             // hence we customise the package before we send it
             nsp.check({
                 offline: false,
-                package: {
-                    name: pkg.name,
+                package: _.merge({
                     dependencies: _.omit(pkg.dependencies, nsprc.exclusions || [])
-                }
+                }, _.pick(pkg, ['name', 'version', 'homepage', 'repository']))
             }, function (err, result) {
                 // if processing nsp had an error, simply print that and exit
                 if (err) {
@@ -68,7 +67,7 @@ module.exports = function (exit) {
                     return next();
                 }
 
-                // in case an nsp vialation is found, we raise an error
+                // in case an nsp violation is found, we raise an error
                 if (result.length) {
                     console.error(nsp.formatters.default(err, result));
                     return next(1);
