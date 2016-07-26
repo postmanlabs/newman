@@ -57,7 +57,7 @@ describe('cli parser', function () {
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delay).to.be(12000);
                 expect(opts.requestTimeout).to.be(5000);
-                expect(opts.avoidRedirects).to.be(true);
+                expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
                 expect(opts.tls).to.be(true);
                 expect(opts.encoding).to.be('binary');
@@ -132,7 +132,7 @@ describe('cli parser', function () {
             '--no-color ' +
             '--disable-unicode ' +
             '--delay 12000 ' +
-            '--request-timeout 5000 ' +
+            '--timeout-request 5000 ' +
             '--avoid-redirects ' +
             '-k ' +
             '--tls ' +
@@ -149,8 +149,8 @@ describe('cli parser', function () {
                 expect(opts.globals).to.be('myGlobals.json');
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delay).to.be(12000);
-                expect(opts.requestTimeout).to.be(5000);
-                expect(opts.avoidRedirects).to.be(true);
+                expect(opts.timeoutRequest).to.be(5000);
+                expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
                 expect(opts.tls).to.be(true);
                 expect(opts.encoding).to.be('binary');
@@ -201,8 +201,8 @@ describe('cli parser', function () {
                 expect(opts.globals).to.be('myGlobals.json');
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delay).to.be(12000);
-                expect(opts.requestTimeout).to.be(5000);
-                expect(opts.avoidRedirects).to.be(true);
+                expect(opts.timeoutRequest).to.be(5000);
+                expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
                 expect(opts.tls).to.be(true);
                 expect(opts.encoding).to.be('binary');
