@@ -1,0 +1,57 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Test that {{$randomInt}} gives different values across requests",
+    "_postman_id": "ad279aba-66c1-a145-5acb-e0e2fcf23465",
+    "description": "A set of tests to verify the value of seeded environment variables using random data from a remote source",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "r1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"randomVar\", parseInt(data.args.a));"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?a={{$randomInt}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "r2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\nvar newVar = parseInt(data.args.a)\ntests[\"different randoms\"] = newVar!==environment.randomVar;"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?a={{$randomInt}}&b={{$guid}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

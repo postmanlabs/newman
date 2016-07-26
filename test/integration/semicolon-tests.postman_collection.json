@@ -1,0 +1,30 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Response headers with semicolons are handled correctly",
+    "_postman_id": "f1639220-14aa-90da-0634-5f6367323dd2",
+    "description": "A test to check for the proper retrieval of headers from a specified source",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Gets a header with a semicolon",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests[\"Test1: Content-Type is 'application/json;  charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json; charset=utf-8\";\ntests[\"Test2: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json; charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n\n\ntests[\"Test3: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json;\\ charset=utf-8\";\ntests[\"Test4: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json;\\ charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n"
+          }
+        }
+      ],
+      "request": {
+        "url": "https://echo.getpostman.com/response-headers?Content-Type=application%2Fjson%3B%20%20charset%3Dutf-8",
+        "method": "GET",
+        "header": [],
+        "description": "Receives a semicolon header from dump.getpost"
+      },
+      "response": []
+    }
+  ]
+}

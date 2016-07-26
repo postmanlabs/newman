@@ -1,0 +1,4 @@
+{
+  "exceptions": [],
+  "exclusions": ["postman-collection", "postman-runtime"]
+}
