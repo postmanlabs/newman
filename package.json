@@ -47,7 +47,6 @@
     "request": "2.74.0",
     "serialised-error": "1.1.2",
     "shelljs": "0.7.0",
-    "window-size": "0.2.0"
   },
   "devDependencies": {
     "eslint": "3.0.0",
