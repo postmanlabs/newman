@@ -97,15 +97,23 @@ describe('cli parser', function () {
 
     describe('Run Command', function () {
         it('should handle standard run command (run collection.json and -e)', function (done) {
-            cli.rawOptions('run myCollection.json --environment env.json'.split(' '), 'newmantests',
+            cli.rawOptions('run myCollection.json --environment env.json -n 2'.split(' '), 'newmantests',
                 function (err, config) {
                     expect(err).to.be(null);
                     expect(config.command).to.be('run');
                     expect(config.run).to.be.ok();
+                    expect(config.run.iterationCount).to.be(2);
                     expect(config.run.collection).to.be('myCollection.json');
                     expect(config.run.environment).to.be('env.json');
                     done();
                 });
+        });
+
+        it('should throw an error for invalid --iteration-count values', function (done) {
+            cli.rawOptions('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
+                expect(err.code).to.equal('ARGError');
+                done();
+            });
         });
 
         it.skip('should load all arguments (except reporters)', function (done) {
