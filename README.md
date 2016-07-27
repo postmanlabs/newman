@@ -109,13 +109,13 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
   `cli`, `html` and `junit`.
 
 
-- `--reporter-{{reporter-options}}<br />
+- `--reporter-{{reporter-options}}`<br />
   Since newman accepts one or more reporters as part of its arguments, reporter specific onfigurations are provided with
   `--reporter-` prefix. When multiple reporters are provided, these options are passed to all the reporters.<br /<br />
   For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
   reporter.
 
-- `--reporter-{{reporter-name}}-{{reporter-options}}<br />
+- `--reporter-{{reporter-name}}-{{reporter-options}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
   is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
   For example, `... --reporters cli,html --reporter-cli-silent` makes only the CLI reporter as silent
@@ -126,10 +126,11 @@ option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-
 
 | Option      | Description |
 |-------------|-------------|
-| silent      | The CLI reporter is internally disabled and you see no output to terminal. |
-| no-summary  | The statstical summary table is not shown. |
-| no-failures | This prevents the run failures from being separately printed. |
-| no-results  | This turns off the request-wise output as they happen. |
+| silent         | The CLI reporter is internally disabled and you see no output to terminal. |
+| no-summary     | The statstical summary table is not shown. |
+| no-failures    | This prevents the run failures from being separately printed. |
+| no-assertions  | This turns off the request-wise output as they happen. |
+| no-console     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 
 <!--
 | `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
