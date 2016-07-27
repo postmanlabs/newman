@@ -13,7 +13,8 @@ extensibility in mind so that you can easily integrate it with your continuous i
 > The beta version of `newman v3.x` is currently under development and is not intended for production use. Details
 > outlining the limitations and roadmap of newman v3.x is outlined in [BETA.md](BETA.md).
 
-> To view documentation of current stable 2.x release of Newman, refer to the latest [newman v2.x release](https://github.com/postmanlabs/newman/tree/v2.1.2)
+> To view documentation of current stable 2.x release of Newman, refer to the latest
+> [newman v2.x release](https://github.com/postmanlabs/newman/tree/v2.1.2)
 
 
 ## Getting started
@@ -82,7 +83,7 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
   <br />
 
 - `-d <source>`, `--iteration-data <source>`<br />
-  Specify a data source file (CSV) to be used for iteration.
+  Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
   [Read More](https://www.getpostman.com/docs/multiple_instances)
 
 - `--timeout-request <ms>`<br />
@@ -177,7 +178,7 @@ The `run` function executes a collection and returns the run result to a callbac
 | options.environmet        | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
 | options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object|string` |
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number` |
-| options.iterationData     | Path to the JSON or CSV file to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
+| options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
 | options.folder            | The name or ID of the folder (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string` |
 | options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number` |
 | options.ignoreRedirects   | This specifies whether newman would automatically follow 3xx responses from servers.<br /><br />_Optional_<br />Type: `boolean` |
