@@ -58,6 +58,17 @@ var Helpers = jsface.Class({
         }
     },
 
+    validateX509: function (certfile, keyfile) {
+
+        if (!this.fileExists(certfile)) {
+            Errors.terminateWithError("Specified certificate file does not exist: " + certfile);
+        }
+
+        if (!this.fileExists(keyfile)) {
+            Errors.terminateWithError("Specified key file does not exist: " + keyfile);
+        }
+    },
+
     validateEncoding: function (encoding) {
         var validEncs = ['ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'binary', 'hex'];
         if (validEncs.indexOf(encoding) === -1) {

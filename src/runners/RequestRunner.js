@@ -61,6 +61,22 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         this.secureProtocol = secureProtocol;
     },
 
+    /**
+     * Sets the X509 Certificate file
+     * @param cert
+     */
+    setX509Cert: function (cert) {
+        this.X509Cert = cert;
+    },
+
+    /**
+     * Sets the X509 Key file
+     * @param key
+     */
+    setX509Key: function (key) {
+        this.X509Key = key;
+    },
+
     /*
      * Adds the Request to the RequestRunner's queue.
      * @memberOf RequestRunner
@@ -229,6 +245,12 @@ var RequestRunner = jsface.Class([Queue, EventEmitter], {
         RequestOptions.url = request.transformed.url;
         RequestOptions.method = request.method;
         RequestOptions.headers = Helpers.generateHeaderObj(request.transformed.headers);
+
+        if(this.X509Cert) {
+            RequestOptions.cert = fs.readFileSync(this.X509Cert);
+            RequestOptions.key = fs.readFileSync(this.X509Key);
+        }
+
         RequestOptions.followAllRedirects = !Globals.avoidRedirects;
         RequestOptions.followRedirect = !Globals.avoidRedirects;
         RequestOptions.jar = true;

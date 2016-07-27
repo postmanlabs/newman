@@ -43,6 +43,8 @@ function parseArguments() {
         .option('-C, --noColor', 'Disable colored output', null)
         .option('-S, --noTestSymbols', 'Disable symbols in test output and use PASS|FAIL instead', null)
         .option('-k, --insecure', 'Disable strict ssl', null)
+        .option('--X509Cert [file]', 'Use X509 certificate', null)
+        .option('--X509Key [file]', 'Use X509 key', null)
         .option('-l, --tls', 'Use TLSv1', null)
         .option('-N, --encoding [encoding-type]', 'Specify an encoding for the response. Supported values are ascii,utf8,utf16le,ucs2,base64,binary,hex', null)
         .option('-x, --exitCode', 'Continue running tests even after a failure, but exit with code=1. Incompatible with --stopOnError', null)
@@ -93,6 +95,10 @@ function parseArguments() {
         }
     }
 
+    if (program.X509Cert || program.X509Key) {
+        Helpers.validateX509(program.X509Cert, program.X509Key)
+    }
+
     if (program.encoding) {
         Helpers.validateEncoding(program.encoding);
     }
@@ -138,6 +144,11 @@ function main() {
     }
 
     newmanOptions.responseEncoding = program.encoding;
+
+    if (program.X509Cert) {
+        newmanOptions.X509Cert = program.X509Cert;
+        newmanOptions.X509Key = program.X509Key;
+    }
 
     newmanOptions.avoidRedirects = program.avoidRedirects;
 

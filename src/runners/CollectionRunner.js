@@ -58,6 +58,12 @@ var CollectionRunner = jsface.Class([AbstractRunner, Options, EventEmitter], {
 
         RequestRunner.setStrictSSL(this.opts.strictSSL);
         RequestRunner.setSecureProtocol(this.opts.secureProtocol);
+
+        if (this.opts.X509Cert) {
+            RequestRunner.setX509Cert(this.opts.X509Cert);
+            RequestRunner.setX509Key(this.opts.X509Key);
+        }
+
         RequestRunner.start();
 
         this.$class.$superp.execute.call(this);
