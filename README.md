@@ -69,17 +69,42 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 
 ### `newman run <collection-file-source> [options]`
 
-| Option | Description |
-|--------|-------------|
-| `-e --environment <source>` | Specify an environment file path or URL. Environments provide a set of variables that one can use within collections. [Read More](https://www.getpostman.com/docs/environments) |
-| `-g --globals <source>` | Specify file path or URL for global variables. |
-| `-n --iteration-count <number>` | Specifies the number of times the collection has to be run when used in conjunction with iteration data file. |
-| `-d --iteration-data <source>` | Specify a data source file (CSV) to be used for iteration. [Read More](https://www.getpostman.com/docs/multiple_instances) |
-| `-d --timeout-request <ms>` | Specify the time (in milliseconds) to wait for requests to return a response. |
-| `-k --insecure` | Disables SSL verification checks and allows self-signed SSL certificates. |
-| `--folder [name]` | Run requests within a particular folder in a collection. |
-| `--ignore-redirects` | Prevents newman from automatically following 3XX redirect responses. |
-| `--no-color` | Turns off the usage of color in terminal output. |
+- `-e <source>`, `--environment <source>`<br />
+  Specify an environment file path or URL. Environments provide a set of variables that one can use within collections.
+  [Read More](https://www.getpostman.com/docs/environments)
+
+- `-g <source>`, `--globals <source>`<br />
+  Specify file path or URL for global variables. Global variables are similar to environment variables but has a lower
+  precedence and can be overridden by environment variables having same name.
+
+- `-n <number`, `--iteration-count <number>`<br />
+  Specifies the number of times the collection has to be run when used in conjunction with iteration data file.<br />
+  <br />
+
+- `-d <source>`, `--iteration-data <source>`<br />
+  Specify a data source file (CSV) to be used for iteration.
+  [Read More](https://www.getpostman.com/docs/multiple_instances)
+
+- `--timeout-request <ms>`<br />
+  Specify the time (in milliseconds) to wait for requests to return a response.
+
+- `-k --insecure`<br />
+  Disables SSL verification checks and allows self-signed SSL certificates.
+
+- `--folder <name>`<br />
+  Run requests within a particular folder in a collection.
+
+- `--ignore-redirects`<br />
+  Prevents newman from automatically following 3XX redirect responses.
+
+- `--no-color`<br />
+  Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With
+  this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman
+  that output to console.
+
+- `--reporters <name>`<br />
+  Specify one reporter name as `string` or provide more than one reporter name as an `array`.Available reporters are:
+  `cli`, `html` and `junit`.
 
 <!--
 | `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
@@ -113,6 +138,27 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 -->
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be discontinued. For documentation on the older command options, refer to the README.md in latest v2.x release.
+
+## API Reference
+
+### newman.run(options: _object_ , callback: _function_)
+The `run` function executes a collection and returns the run result to a callback function provided as parameter.
+
+| Parameter | Description   |
+|-----------|---------------|
+| options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
+| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an istance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
+| options.environmet        | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
+| options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object|string` |
+| options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number` |
+| options.iterationData     | Path to the JSON or CSV file to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
+| options.folder            | The name or ID of the folder (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string` |
+| options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number` |
+| options.ignoreRedirects   | This specifies whether newman would automatically follow 3xx responses from servers.<br /><br />_Optional_<br />Type: `boolean` |
+| options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean` |
+| options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
+| options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
+| callback                  | Upon completion of the run, this callback is executed with the `error` argument.<br /><br />_Required_<br />Type: `function` |
 
 ## Community Support
 
