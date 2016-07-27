@@ -16,7 +16,6 @@ extensibility in mind so that you can easily integrate it with your continuous i
 > To view documentation of current stable 2.x release of Newman, refer to the latest
 > [newman v2.x release](https://github.com/postmanlabs/newman/tree/v2.1.2)
 
-
 ## Getting started
 
 Newman is built using NodeJS v4+. To run Newman, make sure you have NodeJS version 4 or above installed. The latest
@@ -43,7 +42,9 @@ Newman can fetch youir file and run it as well.
 $ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
 ```
 
-For the whole list of options refer to the Commandline Options section below.
+For the whole list of options refer to the [Commandline Options](#commandline-options) section below.
+
+[![terminal-demo](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv.png)](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv?autoplay=1)
 
 ### Using Newman programmatically as a NodeJS module
 
