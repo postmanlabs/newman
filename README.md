@@ -102,9 +102,34 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
   this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman
   that output to console.
 
+#### Configuring Reporters
+
 - `--reporters <name>`<br />
   Specify one reporter name as `string` or provide more than one reporter name as an `array`.Available reporters are:
   `cli`, `html` and `junit`.
+
+
+- `--reporter-{{reporter-options}}<br />
+  Since newman accepts one or more reporters as part of its arguments, reporter specific onfigurations are provided with
+  `--reporter-` prefix. When multiple reporters are provided, these options are passed to all the reporters.<br /<br />
+  For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
+  reporter.
+
+- `--reporter-{{reporter-name}}-{{reporter-options}}<br />
+  When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
+  is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
+  For example, `... --reporters cli,html --reporter-cli-silent` makes only the CLI reporter as silent
+
+##### CLI reporter options
+These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
+option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
+
+| Option      | Description |
+|-------------|-------------|
+| silent      | The CLI reporter is internally disabled and you see no output to terminal. |
+| no-summary  | The statstical summary table is not shown. |
+| no-failures | This prevents the run failures from being separately printed. |
+| no-results  | This turns off the request-wise output as they happen. |
 
 <!--
 | `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
