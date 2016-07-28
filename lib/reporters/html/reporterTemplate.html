@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Newman v3</title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            table, th, td {
+                margin: 0;
+                text-align: center;
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+
+    <body>
+        {{#with reporterData}}
+            {{#with summary}}
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="7">
+                                <h1>Run Summary</h1>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th>Property</th>
+                            <th>Iterations</th>
+                            <th>Requests</th>
+                            <th>Test scripts</th>
+                            <th>Pre-request scripts</th>
+                            <th>Assertions</th>
+                        </tr>
+
+                        <tr>
+                            <th>Executed</th>
+                            {{#with executed}}
+                                <td>{{iterations}}</td>
+                                <td>{{requests}}</td>
+                                <td>{{testScripts}}</td>
+                                <td>{{preRequestScripts}}</td>
+                                <td>{{assertions}}</td>
+                            {{/with}}
+                        </tr>
+
+                        <tr>
+                            <th>Failed</th>
+                            {{#with failed}}
+                                <td>{{iterations}}</td>
+                                <td>{{requests}}</td>
+                                <td>{{testScripts}}</td>
+                                <td>{{preRequestScripts}}</td>
+                                <td>{{assertions}}</td>
+                            {{/with}}
+                        </tr>
+                    </tbody>
+
+                    <tfoot></tfoot>
+                </table>
+            {{/with}}
+
+            <br>
+
+            {{#with statistics}}
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3">
+                                <h1>Run Statistics</h1>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Total run duration</th>
+                            <th>Bytes transferred out</th>
+                            <th>Bytes transferred in</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{runDuration}}</td>
+                            <td>{{bytes.out}}</td>
+                            <td>{{bytes.in}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            {{/statistics}}
+
+            <br>
+
+            {{#with metadata}}
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="6">
+                                <h1>Run Metadata</h1>
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th colspan="2">Environment variables</th>
+                            <th colspan="2">Global variables</th>
+                            <th colspan="2">Data variables</th>
+                        </tr>
+
+                        <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                            <th>Key</th>
+                            <th>Value</th>
+                            <th>Key</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{Value}}</td>
+                            <td>{{Value}}</td>
+                            <td>{{Value}}</td>
+                            <td>{{Value}}</td>
+                            <td>{{Value}}</td>
+                            <td>{{Value}}</td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot></tfoot>
+                </table>
+            {{/metadata}}
+
+            <br>
+
+            {{#each folders}}
+                {{#with this}}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th colspan="8">
+                                <h1>{{folder}}</h1>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            {{#each item}}
+                                {{#with this}}
+                                    <tr>
+                                        <th colspan="4">{{name}}</th>
+                                        <th colspan="4">{{url}}</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="3">Request</th>
+                                        <th colspan="5">Response</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Headers</th>
+                                        <th>Body</th>
+                                        <th>Response time</th>
+                                        <th>Response size</th>
+                                        <th>Tests</th>
+                                        <th>Headers</th>
+                                        <th>Body</th>
+                                    </tr>
+
+                                    <tr>
+                                        {{#with request}}
+                                            <td>{{method}}</td>
+                                            <td>{{headers}}</td>
+                                            <td>
+                                                <pre>{{body}}</pre>
+                                            </td>
+                                        {{/with}}
+
+                                        {{#with response}}
+                                            <td>{{time}}</td>
+                                            <td>{{size}}</td>
+                                            <td>{{tests}}</td>
+                                            <td>{{headers}}</td>
+                                            <td>
+                                                <pre>{{body}}</pre>
+                                            </td>
+                                        {{/with}}
+                                    </tr>
+                                {{/with}}
+                            {{/each}}
+                        </tbody>
+
+                        <tfoot></tfoot>
+                    </table>
+                {{/with}}
+            {{/each}}
+        </body>
+
+        <footer></footer>
+    {{/with}}
+</html>
