@@ -3,8 +3,13 @@ var _ = require('lodash'),
 
 /* global describe, it */
 describe('run summary', function () {
+    // @todo add test for computation of timings, transfer sizes and avergare response time
     var Summary = require('../../lib/summary'),
-        EventEmitter = require('eventemitter3');
+        EventEmitter = require('eventemitter3'),
+
+        TRACKED_EVENTS = ['iteration', 'item', 'script', 'prerequest', 'request', 'test', 'assertion',
+            'testScript', 'prerequestScript'],
+        SURROGATE_EVENTS = ['testScript', 'prerequestScript'];
 
     it('must require only an EventEmitter during construction', function () {
         expect(function () {
@@ -39,10 +44,6 @@ describe('run summary', function () {
     });
 
     describe('runtime event statistics', function () {
-        var TRACKED_EVENTS = ['iteration', 'item', 'script', 'prerequest', 'request', 'test', 'assertion',
-            'testScript', 'prerequestScript'],
-            SURROGATE_EVENTS = ['testScript', 'prerequestScript'];
-
         it('must track relevant events', function () {
             var emitter = new EventEmitter(),
                 summary = new Summary(emitter);
@@ -55,7 +56,6 @@ describe('run summary', function () {
         TRACKED_EVENTS.forEach(function (eventName) {
             describe(`${eventName} event`, function () {
                 var beforeEventName = _.camelCase(`before-${eventName}`),
-                    isSurrogateEvent = SURROGATE_EVENTS.indexOf(eventName) > -1,
                     emitter,
                     summary,
                     tracker;
@@ -98,8 +98,52 @@ describe('run summary', function () {
                     emitter.emit(eventName, new Error(`faux error on ${eventName}`), {});
                     expect(tracker).to.eql({ total: 1, pending: 0, failed: 1 });
                 });
+            });
+        });
+    });
 
-                !isSurrogateEvent && it('must append event failure arguments to failures array', function () {
+    describe('failure logging', function () {
+
+        describe('surrogate (pseudo) event', function () {
+            SURROGATE_EVENTS.forEach(function (eventName) {
+                var beforeEventName = _.camelCase(`before-${eventName}`),
+                    emitter,
+                    summary;
+
+                beforeEach(function () {
+                    emitter = new EventEmitter();
+                    summary = new Summary(emitter);
+                });
+                afterEach(function () {
+                    emitter = null;
+                    summary = null;
+                });
+
+                it(`${eventName}must not track errors`, function () {
+                    emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
+                    emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
+
+                    expect(summary.failures.length).be(0);
+                });
+            });
+        });
+
+        _.difference(TRACKED_EVENTS, SURROGATE_EVENTS).forEach(function (eventName) {
+            describe(`${eventName} event`, function () {
+                var beforeEventName = _.camelCase(`before-${eventName}`),
+                    emitter,
+                    summary;
+
+                beforeEach(function () {
+                    emitter = new EventEmitter();
+                    summary = new Summary(emitter);
+                });
+                afterEach(function () {
+                    emitter = null;
+                    summary = null;
+                });
+
+                it('must append event failure arguments to failures array', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
@@ -108,14 +152,26 @@ describe('run summary', function () {
                     expect(summary.failures[1].error.message).be(`faux ${eventName} error`);
                 });
 
-                isSurrogateEvent && it('must not track errors for surrogate events', function () {
+                it('object of "before-*" must have relevant data', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.failures.length).be(0);
+                    expect(summary.failures.length).be(2);
+                    var failure = summary.failures[0];
+
+                    expect(failure.error.message).be(`faux ${beforeEventName} error`);
+                    expect(Object.keys(failure)).to.eql(['error', 'at', 'source', 'parent', 'cursor']);
+
+                    expect(failure).have.property('at');
+                    expect(failure.at).be(beforeEventName);
+
+                    expect(failure).have.property('source');
+                    expect(failure.source).be('<unknown>');
+
+                    expect(failure).have.property('cursor');
+                    expect(failure.cursor).be.an('object');
                 });
             });
         });
     });
-
 });
