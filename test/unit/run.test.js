@@ -1,6 +1,9 @@
-var expect = require('expect.js'),
+var tv4 = require('tv4'),
+    path = require('path'),
+    async = require('async'),
+    expect = require('expect.js'),
     sdk = require('postman-collection'),
-    async = require('async');
+    summarySchema = require(path.join(__dirname, 'summarySchema.json'));
 
 /* global describe, it */
 describe('run module', function () {
@@ -37,6 +40,16 @@ describe('run module', function () {
         expect(run).withArgs({
             collection: new sdk.Collection()
         }, done).not.throwException();
+    });
+
+    it('must provide a proper summary for runs with empty collection as SDK instance', function (done) {
+        expect(run).withArgs({
+            collection: 'test/integration/case-insen-header-sandbox.postman_collection.json'
+        }, function (err, summary) {
+            expect(err).to.be(null);
+            expect(tv4.validate(summary, summarySchema)).to.be(true);
+            done(err);
+        }).not.throwException();
     });
 
     it('must gracefully send error to callback on garbage collection', function (done) {

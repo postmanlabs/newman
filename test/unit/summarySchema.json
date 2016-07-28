@@ -1,0 +1,224 @@
+{
+  "type": "object",
+  "properties": {
+    "stats": {
+      "type": "object",
+      "properties": {
+        "iterations": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "items": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "scripts": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "prerequests": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "requests": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "tests": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "assertions": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "testScripts": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        },
+        "prerequestScripts": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "pending": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "total",
+            "pending",
+            "failed"
+          ]
+        }
+      },
+      "required": [
+        "iterations",
+        "items",
+        "scripts",
+        "prerequests",
+        "requests",
+        "tests",
+        "assertions",
+        "testScripts",
+        "prerequestScripts"
+      ]
+    },
+    "failures": {
+      "type": "array",
+      "items": {}
+    },
+    "info": {
+      "type": "object",
+      "properties": {
+        "collectionId": {
+          "type": "string"
+        },
+        "collectionName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "collectionId",
+        "collectionName"
+      ]
+    },
+    "started": {
+      "type": "integer"
+    },
+    "completed": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "stats",
+    "failures",
+    "info",
+    "started",
+    "completed"
+  ]
+}
