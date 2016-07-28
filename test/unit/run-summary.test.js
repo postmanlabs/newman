@@ -104,8 +104,15 @@ describe('run summary', function () {
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
                     expect(summary.failures.length).be(2);
-                    // expect(summary.failures[0].message).be(`faux ${beforeEventName} error`);
-                    // expect(summary.failures[1].message).be(`faux ${eventName} error`);
+                    expect(summary.failures[0].error.message).be(`faux ${beforeEventName} error`);
+                    expect(summary.failures[1].error.message).be(`faux ${eventName} error`);
+                });
+
+                isSurrogateEvent && it('must not track errors for surrogate events', function () {
+                    emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
+                    emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
+
+                    expect(summary.failures.length).be(0);
                 });
             });
         });
