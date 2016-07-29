@@ -3,147 +3,129 @@
     <head>
         <meta charset="utf-8">
         <title>Newman v3</title>
-        <style>
-            table {
-                border-collapse: collapse;
-            }
-            table, th, td {
-                margin: 0;
-                text-align: center;
-                border: 1px solid black;
-            }
-        </style>
     </head>
 
     <body>
-        {{#with reporterData}}
-            {{#with summary}}
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="7">
-                                <h1>Run Summary</h1>
-                            </th>
-                        </tr>
-                    </thead>
+        {{#with summary}}
+            <table class="summary" border="1px solid black" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th colspan="10">
+                            <h1>Run Summary</h1>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">
+                            <h3>Collection: {{info.collectionName}}</h3>
+                        </th>
+                        <th colspan="5">
+                            <h3>ID: {{info.collectionId}}</h3>
+                        </th>
+                    </tr>
+                </thead>
 
-                    <tbody>
+                <tbody>
+                    <tr>
+                        <th>Property</th>
+                        <th>Iterations</th>
+                        <th>Items</th>
+                        <th>Scripts</th>
+                        <th>Pre requests</th>
+                        <th>Requests</th>
+                        <th>Tests</th>
+                        <th>Assertions</th>
+                        <th>Test scripts</th>
+                        <th>Pre-request scripts</th>
+                    </tr>
+
+                    {{#with stats}}
                         <tr>
-                            <th>Property</th>
-                            <th>Iterations</th>
-                            <th>Requests</th>
-                            <th>Test scripts</th>
-                            <th>Pre-request scripts</th>
-                            <th>Assertions</th>
+                            <th>Total</th>
+                            <td>{{iterations.total}}</td>
+                            <td>{{items.total}}</td>
+                            <td>{{scripts.total}}</td>
+                            <td>{{prerequests.total}}</td>
+                            <td>{{requests.total}}</td>
+                            <td>{{tests.total}}</td>
+                            <td>{{assertions.total}}</td>
+                            <td>{{testScripts.total}}</td>
+                            <td>{{prerequestScripts.total}}</td>
                         </tr>
 
                         <tr>
-                            <th>Executed</th>
-                            {{#with executed}}
-                                <td>{{iterations}}</td>
-                                <td>{{requests}}</td>
-                                <td>{{testScripts}}</td>
-                                <td>{{preRequestScripts}}</td>
-                                <td>{{assertions}}</td>
-                            {{/with}}
+                            <th>Pending</th>
+                            <td>{{iterations.pending}}</td>
+                            <td>{{items.pending}}</td>
+                            <td>{{scripts.pending}}</td>
+                            <td>{{prerequests.pending}}</td>
+                            <td>{{requests.pending}}</td>
+                            <td>{{tests.pending}}</td>
+                            <td>{{assertions.pending}}</td>
+                            <td>{{testScripts.pending}}</td>
+                            <td>{{prerequestScripts.pending}}</td>
                         </tr>
 
                         <tr>
                             <th>Failed</th>
-                            {{#with failed}}
-                                <td>{{iterations}}</td>
-                                <td>{{requests}}</td>
-                                <td>{{testScripts}}</td>
-                                <td>{{preRequestScripts}}</td>
-                                <td>{{assertions}}</td>
-                            {{/with}}
+                            <td>{{iterations.failed}}</td>
+                            <td>{{items.failed}}</td>
+                            <td>{{scripts.failed}}</td>
+                            <td>{{prerequests.failed}}</td>
+                            <td>{{requests.failed}}</td>
+                            <td>{{tests.failed}}</td>
+                            <td>{{assertions.failed}}</td>
+                            <td>{{testScripts.failed}}</td>
+                            <td>{{prerequestScripts.failed}}</td>
                         </tr>
-                    </tbody>
+                    {{/with}}
+                </tbody>
 
-                    <tfoot></tfoot>
-                </table>
-            {{/with}}
+                <tfoot></tfoot>
+            </table>
 
             <br>
 
-            {{#with statistics}}
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="3">
-                                <h1>Run Statistics</h1>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>Total run duration</th>
-                            <th>Bytes transferred out</th>
-                            <th>Bytes transferred in</th>
-                        </tr>
-                    </thead>
+            <table class="stats" border="1px solid black" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th colspan="4">
+                            <h1>Run Statistics</h1>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">Total run duration</th>
+                        <th rowspan="2">Bytes transferred in</th>
+                        <th colspan="2">Variables</th>
+                    </tr>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Global</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>{{runDuration}}</td>
-                            <td>{{bytes.out}}</td>
-                            <td>{{bytes.in}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            {{/statistics}}
+                <tbody>
+                    <tr>
+                        <td>{{runDuration}}</td>
+                        <td>{{transfers.responseTotal / 1024}}</td>
+                        <td>{{Object.keys(environment.object()).length}}</td>
+                        <td>{{Object.keys(globals.object()).length}}</td>
+                    </tr>
+                </tbody>
 
-            <br>
-
-            {{#with metadata}}
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="6">
-                                <h1>Run Metadata</h1>
-                            </th>
-                        </tr>
-
-                        <tr>
-                            <th colspan="2">Environment variables</th>
-                            <th colspan="2">Global variables</th>
-                            <th colspan="2">Data variables</th>
-                        </tr>
-
-                        <tr>
-                            <th>Key</th>
-                            <th>Value</th>
-                            <th>Key</th>
-                            <th>Value</th>
-                            <th>Key</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td>{{Value}}</td>
-                            <td>{{Value}}</td>
-                            <td>{{Value}}</td>
-                            <td>{{Value}}</td>
-                            <td>{{Value}}</td>
-                            <td>{{Value}}</td>
-                        </tr>
-                    </tbody>
-
-                    <tfoot></tfoot>
-                </table>
-            {{/metadata}}
+                <tfoot></tfoot>
+            </table>
 
             <br>
 
             {{#each folders}}
                 {{#with this}}
-                    <table>
+                    <table class="folders" border="1px solid black" cellspacing="0">
                         <thead>
-                        <tr>
-                            <th colspan="8">
-                                <h1>{{folder}}</h1>
-                            </th>
-                        </tr>
+                            <tr>
+                                <th colspan="8">
+                                    <h1>{{folder}}</h1>
+                                </th>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -182,7 +164,9 @@
                                         {{#with response}}
                                             <td>{{time}}</td>
                                             <td>{{size}}</td>
-                                            <td>{{tests}}</td>
+                                            <td>
+                                                <pre>{{tests}}</pre>
+                                            </td>
                                             <td>{{headers}}</td>
                                             <td>
                                                 <pre>{{body}}</pre>
@@ -197,8 +181,8 @@
                     </table>
                 {{/with}}
             {{/each}}
-        </body>
+        {{/with}}
+    </body>
 
-        <footer></footer>
-    {{/with}}
+    <footer></footer>
 </html>
