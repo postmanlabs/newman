@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Newman v3</title>
+    </head>
+
+    <body>
+        <table class="summary">
+            {{#with summary}}
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            {{#with info}}
+                                <h1>{{collectionName}} : {{collectionId}} : {{new Date()}}</h1>
+                            {{/with}}
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#with stats}}
+                        {{#with iterations}}
+                            <tr>
+                                <th>Total iterations</th>
+                                <td>{{total}}</td>
+                            </tr>
+                            <tr>
+                                <th>Failed iterations</th>
+                                <td>{{failed}}</td>
+                            </tr>
+                        {{/with}}
+
+                        {{#with requests}}
+                            <tr>
+                                <th>Total requests</th>
+                                <td>{{total}}</td>
+                            </tr>
+                            <tr>
+                                <th>Failed requests</th>
+                                <td>{{failed}}</td>
+                            </tr>
+                        {{/with}}
+
+                        {{#with assertions}}
+                            <tr>
+                                <th>Total assertions</th>
+                                <td>{{total}}</td>
+                            </tr>
+                            <tr>
+                                <th>Failed iterations</th>
+                                <td>{{failed}}</td>
+                            </tr>
+                        {{/with}}
+                    {{/with}}
+
+                    <tr>
+                        <th>Total run duration</th>
+                        <td>{{}} s</td>
+                    </tr>
+
+                    <tr>
+                        <th>Total data received</th>
+                        <td>{{transfers.responseTotal / 1024}} KB</td>
+                    </tr>
+
+                    <tr>
+                        <th>Average response time</th>
+                        <td>{{parseInt(timings.responseAverage)}} ms</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <table class="items">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                                <tfoot></tfoot>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tfoot></tfoot>
+            {{/with}}
+        </table>
+    </body>
+</html>
