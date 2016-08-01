@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+require('../lib/node-version-check');
+
 var _ = require('lodash'),
 
     cli = require('../lib/cli'),
