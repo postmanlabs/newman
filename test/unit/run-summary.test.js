@@ -201,7 +201,7 @@ describe('run summary', function () {
                 summary = null;
             });
 
-            it('should add executions array', function () {
+            it('should add _postman_iterations array', function () {
                 var collection = summary.collection,
                     item = collection.items.one('i1');
 
@@ -214,11 +214,11 @@ describe('run summary', function () {
                     cursor: { iteration: 1 }
                 });
 
-                expect(item).have.property('executions');
-                expect(item.executions).be.an('array');
-                expect(item.executions.length).be(2);
+                expect(item).have.property('_postman_iterations');
+                expect(item._postman_iterations).be.an('array');
+                expect(item._postman_iterations.length).be(2);
 
-                expect(collection.items.one('i2')).not.have.property('executions');
+                expect(collection.items.one('i2')).not.have.property('_postman_iterations');
             });
 
             it('should store request and response', function () {
@@ -232,11 +232,11 @@ describe('run summary', function () {
                     cursor: { iteration: 0 }
                 });
 
-                expect(item).have.property('executions');
-                expect(item.executions).be.an('array');
-                expect(item.executions.length).be(1);
+                expect(item).have.property('_postman_iterations');
+                expect(item._postman_iterations).be.an('array');
+                expect(item._postman_iterations.length).be(1);
 
-                expect(item.executions).to.eql([{
+                expect(item._postman_iterations).to.eql([{
                     request: { id: 'request-1' },
                     requestError: null,
                     response: { id: 'response-1' }
@@ -254,11 +254,11 @@ describe('run summary', function () {
                     cursor: { iteration: 0 }
                 });
 
-                expect(item).have.property('executions');
-                expect(item.executions).be.an('array');
-                expect(item.executions.length).be(1);
+                expect(item).have.property('_postman_iterations');
+                expect(item._postman_iterations).be.an('array');
+                expect(item._postman_iterations.length).be(1);
 
-                expect(item.executions).to.eql([{
+                expect(item._postman_iterations).to.eql([{
                     request: { id: 'request-1' },
                     requestError: null,
                     response: { id: 'response-1' }
