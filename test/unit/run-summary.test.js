@@ -202,7 +202,8 @@ describe('run summary', function () {
             });
 
             it('should add executions array', function () {
-                var item = collection.items.one('i1');
+                var collection = summary.collection,
+                    item = collection.items.one('i1');
 
                 emitter.emit('request', null, {
                     item: item,
@@ -221,7 +222,8 @@ describe('run summary', function () {
             });
 
             it('should store request and response', function () {
-                var item = collection.items.one('i1');
+                var collection = summary.collection,
+                    item = collection.items.one('i1');
 
                 emitter.emit('request', null, {
                     item: item,
@@ -242,7 +244,8 @@ describe('run summary', function () {
             });
 
             it('should store request error with response info even if request is missing', function () {
-                var item = collection.items.one('i1');
+                var collection = summary.collection,
+                    item = collection.items.one('i1');
 
                 emitter.emit('request', null, {
                     item: item,
