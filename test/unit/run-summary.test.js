@@ -32,16 +32,25 @@ describe('run summary', function () {
     it('must have tracking properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(Object.keys(summary)).to.eql(['info', 'collection', 'environment', 'global', 'stats', 'timings',
-            'transfers', 'failures', 'error']);
+        expect(Object.keys(summary)).to.eql(['collection', 'environment', 'global', 'run']);
 
-        expect(summary.info).be.an('object');
         expect(summary.environment.object).be.an('function');
         expect(summary.global.object).be.an('function');
-        expect(summary.failures).be.an('array');
-        expect(summary.stats).be.an('object');
-        expect(summary.timings).be.an('object');
-        expect(summary.transfers).be.an('object');
+        expect(summary.run.failures).be.an('array');
+        expect(summary.run.stats).be.an('object');
+        expect(summary.run.timings).be.an('object');
+        expect(summary.run.transfers).be.an('object');
+    });
+
+    it('must have run related properties', function () {
+        var summary = new Summary(new EventEmitter());
+
+        expect(Object.keys(summary.run)).to.eql(['stats', 'timings', 'transfers', 'failures', 'error']);
+
+        expect(summary.run.failures).be.an('array');
+        expect(summary.run.stats).be.an('object');
+        expect(summary.run.timings).be.an('object');
+        expect(summary.run.transfers).be.an('object');
     });
 
     describe('runtime event statistics', function () {
@@ -49,7 +58,7 @@ describe('run summary', function () {
             var emitter = new EventEmitter(),
                 summary = new Summary(emitter);
 
-            expect(Object.keys(summary.stats)).to.eql(_.map(TRACKED_EVENTS, function (name) {
+            expect(Object.keys(summary.run.stats)).to.eql(_.map(TRACKED_EVENTS, function (name) {
                 return name + 's';
             }));
         });
@@ -64,7 +73,7 @@ describe('run summary', function () {
                 beforeEach(function () {
                     emitter = new EventEmitter();
                     summary = new Summary(emitter);
-                    tracker = summary.stats[eventName + 's'];
+                    tracker = summary.run.stats[eventName + 's'];
                 });
                 afterEach(function () {
                     emitter = null;
@@ -124,7 +133,7 @@ describe('run summary', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.failures.length).be(0);
+                    expect(summary.run.failures.length).be(0);
                 });
             });
         });
@@ -149,17 +158,17 @@ describe('run summary', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.failures.length).be(2);
-                    expect(summary.failures[0].error.message).be(`faux ${beforeEventName} error`);
-                    expect(summary.failures[1].error.message).be(`faux ${eventName} error`);
+                    expect(summary.run.failures.length).be(2);
+                    expect(summary.run.failures[0].error.message).be(`faux ${beforeEventName} error`);
+                    expect(summary.run.failures[1].error.message).be(`faux ${eventName} error`);
                 });
 
                 it('object of "before-*" must have relevant data', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.failures.length).be(2);
-                    var failure = summary.failures[0];
+                    expect(summary.run.failures.length).be(2);
+                    var failure = summary.run.failures[0];
 
                     expect(failure.error.message).be(`faux ${beforeEventName} error`);
                     expect(Object.keys(failure)).to.eql(['error', 'at', 'source', 'parent', 'cursor']);
