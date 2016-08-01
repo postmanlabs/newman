@@ -6,6 +6,7 @@ describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and avergare response time
     var Summary = require('../../lib/summary'),
         EventEmitter = require('eventemitter3'),
+        sdk = require('postman-collection'),
 
         TRACKED_EVENTS = ['iteration', 'item', 'script', 'prerequest', 'request', 'test', 'assertion',
             'testScript', 'prerequestScript'],
@@ -138,6 +139,7 @@ describe('run summary', function () {
                     emitter = new EventEmitter();
                     summary = new Summary(emitter);
                 });
+
                 afterEach(function () {
                     emitter = null;
                     summary = null;
@@ -171,6 +173,96 @@ describe('run summary', function () {
                     expect(failure).have.property('cursor');
                     expect(failure.cursor).be.an('object');
                 });
+            });
+        });
+
+        describe('execution tracking', function () {
+            var emitter,
+                collection,
+                summary;
+
+            beforeEach(function () {
+                collection = new sdk.Collection({
+                    item: [{
+                        id: 'i1', request: 'http://localhost/1'
+                    }, {
+                        id: 'i2', request: 'http://localhost/1'
+                    }]
+                });
+                emitter = new EventEmitter();
+                summary = new Summary(emitter, {
+                    collection: collection
+                });
+            });
+
+            afterEach(function () {
+                collection = null;
+                emitter = null;
+                summary = null;
+            });
+
+            it('should add _postman_iterations array', function () {
+                var collection = summary.collection,
+                    item = collection.items.one('i1');
+
+                emitter.emit('request', null, {
+                    item: item,
+                    cursor: { iteration: 0 }
+                });
+                emitter.emit('request', null, {
+                    item: item,
+                    cursor: { iteration: 1 }
+                });
+
+                expect(item).have.property('_postman_iterations');
+                expect(item._postman_iterations).be.an('array');
+                expect(item._postman_iterations.length).be(2);
+
+                expect(collection.items.one('i2')).not.have.property('_postman_iterations');
+            });
+
+            it('should store request and response', function () {
+                var collection = summary.collection,
+                    item = collection.items.one('i1');
+
+                emitter.emit('request', null, {
+                    item: item,
+                    request: { id: 'request-1' },
+                    response: { id: 'response-1' },
+                    cursor: { iteration: 0 }
+                });
+
+                expect(item).have.property('_postman_iterations');
+                expect(item._postman_iterations).be.an('array');
+                expect(item._postman_iterations.length).be(1);
+
+                expect(item._postman_iterations).to.eql([{
+                    request: { id: 'request-1' },
+                    requestError: null,
+                    response: { id: 'response-1' }
+                }]);
+            });
+
+            it('should store request error with response info even if request is missing', function () {
+                var collection = summary.collection,
+                    item = collection.items.one('i1');
+
+                emitter.emit('request', null, {
+                    item: item,
+                    request: { id: 'request-1' },
+                    response: { id: 'response-1' },
+                    cursor: { iteration: 0 }
+                });
+
+                expect(item).have.property('_postman_iterations');
+                expect(item._postman_iterations).be.an('array');
+                expect(item._postman_iterations.length).be(1);
+
+                expect(item._postman_iterations).to.eql([{
+                    request: { id: 'request-1' },
+                    requestError: null,
+                    response: { id: 'response-1' }
+                }]);
             });
         });
     });
