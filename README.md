@@ -8,10 +8,10 @@ extensibility in mind so that you can easily integrate it with your continuous i
 
 > *BETA RELEASE NOTES*
 >
-> To use newan v3.x beta, ensure that you install using the beta tag: `npm install newman@next`.
+> To use Newman v3.x beta, ensure that you install using the beta tag: `npm install newman@next`.
 >
 > The beta version of `newman v3.x` is currently under development and is not intended for production use. Details
-> outlining the limitations and roadmap of newman v3.x is outlined in [BETA.md](BETA.md).
+> outlining the limitations and road-map of newman v3.x is outlined in [BETA.md](BETA.md).
 
 > To view documentation of current stable 2.x release of Newman, refer to the latest
 > [newman v2.x release](https://github.com/postmanlabs/newman/tree/v2.1.2)
@@ -37,7 +37,7 @@ $ newman run examples/sample-collection.json;
 ```
 
 If your collection file is available as an URL (such as from our [Cloud API service](https://api.getpostman.com/)),
-Newman can fetch youir file and run it as well.
+Newman can fetch your file and run it as well.
 ```terminal
 $ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
 ```
@@ -46,9 +46,9 @@ For the whole list of options refer to the [Commandline Options](#commandline-op
 
 [![terminal-demo](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv.png)](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv?autoplay=1)
 
-### Using Newman programmatically as a NodeJS module
+### Using Newman as a NodeJS module
 
-Newman can be easily used within your JavaScript projects as a NodeJS module. All functionalities of the newman command line is available for programmatic use as well.
+Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well.
 
 The following example runs a collection by reading a JSON collection file stored on disk.
 
@@ -112,7 +112,7 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 
 
 - `--reporter-{{reporter-options}}`<br />
-  Since newman accepts one or more reporters as part of its arguments, reporter specific onfigurations are provided with
+  Since newman accepts one or more reporters as part of its arguments, reporter specific configurations are provided with
   `--reporter-` prefix. When multiple reporters are provided, these options are passed to all the reporters.<br /<br />
   For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
   reporter.
@@ -129,7 +129,7 @@ option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-
 | Option      | Description |
 |-------------|-------------|
 | silent         | The CLI reporter is internally disabled and you see no output to terminal. |
-| no-summary     | The statstical summary table is not shown. |
+| no-summary     | The statistical summary table is not shown. |
 | no-failures    | This prevents the run failures from being separately printed. |
 | no-assertions  | This turns off the request-wise output as they happen. |
 | no-console     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |

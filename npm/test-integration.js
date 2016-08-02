@@ -25,7 +25,7 @@ module.exports = function (exit) {
                 // regex: [0:path, 1:test, 2:syntax, 3:skipped, 4: file-format]
                 var parts = path.match(/(.+)\.postman_([^\.]+)(\.skip)?\.([^\.]{3,})$/i);
 
-                if (!parts) { // if a spec file did not match the pattern, log warining and move on
+                if (!parts) { // if a spec file did not match the pattern, log warning and move on
                     return (console.warn(` - ignored: ${path}`.gray), suites);
                 }
                 else if (parts[3]) { // do not parse skipped files
