@@ -1,15 +1,7 @@
 # Options to be supported
 
 #### Options for the Run Command:
-
-    runParser.addArgument(['--export-environment'], {
-        help: 'Exports the environment to a file after completing the run.'
-    });
-
-    runParser.addArgument(['--export-globals'], {
-        help: 'Specify an output file to dump Globals before exiting'
-    });
-
+    // not needed. added --reporter-no-summary
     runParser.addArgument(['--no-summary'], {
         help: 'Does not print summary for each iteration.',
         action: 'storeTrue'
