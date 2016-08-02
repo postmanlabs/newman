@@ -3,9 +3,9 @@
 ### Why?
 
 Newman v3.0 Beta is a complete rewrite of Newman from the ground up, which works well with other Node libraries, and
-allows flexibility for future features such as parallel collection runs, or parallelizing requests within the same run.
-Above all, Newman now uses [Postman Runtime](https://github.com/postmanlabs/postman-runtime/) in order to provide a
-consistent experience on Postman Apps and on CLI.
+allows flexibility for future features such as parallel collection runs, or performing parallel requests within the
+same run. Above all, Newman now uses [Postman Runtime](https://github.com/postmanlabs/postman-runtime/) in order to
+provide a consistent experience on Postman Apps and on CLI.
 
 Keeping in mind long standing issues such as
 [#381](https://github.com/postmanlabs/newman/issues/381),
@@ -41,9 +41,9 @@ Migrating to Newman v3.x for most simple use cases is a trivial affair. We have 
 Which means, if you upgrade, it should just work! Having said that, we would soon discontinue the older CLI options and
 you should start using the new ones. Furthermore, the new features are only available via the new CLI options.
 
-Since Newman 3.x is a complete rewrite, expect it to have subtle behavorial differences when compared with Newman v2.x,
-your reports will look a bit different, the CLI output is acomplete overhaul, your collection runs will inherit all the
-qualities of the new Postman RUntime (jQuery deprecation, discontinuation of DOM), etc.
+Since Newman 3.x is a complete rewrite, expect it to have subtle behavioural differences when compared with Newman v2.x,
+your reports will look a bit different, the CLI output is a complete overhaul, your collection runs will inherit all the
+qualities of the new Postman Runtime (jQuery deprecation, discontinuation of DOM), etc.
 
 As such, if there is something specific that not working with respect to v2.x or any workaround that you were doing,
 we will be glad to chat and find out if they can still be done. Simply join the #newman channel in our Slack
