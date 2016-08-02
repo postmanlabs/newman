@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Postman Report</title></head>
+{{#with summary}}
+<body>
+
+  <table class="summary">
+    {{#with collection}}
+    <thead>
+      <tr><th colspan="3">
+        <h1>{{todo-show-name-or-id}}</h1>
+      </th></tr>
+    </thead>
+    {{/with}}
+
+    <tbody>
+      <tr class="heading"><th class="tl">&nbsp;</th><th>Total</th><th>Failed</th></tr>
+      {{#with run.stats}}
+      <tr><th>Iterations</th><td>{{iterations.total}}</td><td>{{iterations.failed}}</td></tr>
+      <tr><th>Requests</th><td>{{requests.total}}</td><td>{{requests.failed}}</td></tr>
+      <tr><th>Prerequest Scripts</th><td>{{prerequestScripts.total}}</td><td>{{prerequestScripts.failed}}</td></tr>
+      <tr><th>Test Scripts</th><td>{{testScripts.total}}</td><td>{{testScripts.failed}}</td></tr>
+      <tr><th>Assertions</th><td>{{assertions.total}}</td><td>{{assertions.failed}}</td></tr>
+      {{/with}}
+      <tr><th>Total Failures</th><td colspan="2"></td></tr>
+    </tbody>
+  </table>
+
+
+
+
+  {{#each executions}}
+    <table class="executions execution-{{index}}">
+      <thead>
+      <tr class="heading"><th colspan="3">
+        <h2>{{todo-show-name-or-id}}</h2>
+        <p>http://www.blah.com</p>
+      </th></tr>
+    </thead>
+
+    </table>
+  {{/each}}
+
+</body>
+{{/with}}
+</html>
