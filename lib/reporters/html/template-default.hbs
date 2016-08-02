@@ -22,14 +22,14 @@
       <tr><th>Test Scripts</th><td>{{testScripts.total}}</td><td>{{testScripts.failed}}</td></tr>
       <tr><th>Assertions</th><td>{{assertions.total}}</td><td>{{assertions.failed}}</td></tr>
       {{/with}}
-      <tr><th>Total Failures</th><td colspan="2"></td></tr>
+      <tr><th>Total Failures</th><td colspan="2">{{run.failures.length}}</td></tr>
     </tbody>
   </table>
 
 
 
 
-  {{#each executions}}
+  {{#each run.executions}}
     <table class="executions execution-{{index}}">
       <thead>
       <tr class="heading"><th colspan="3">
