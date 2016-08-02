@@ -55,16 +55,16 @@ describe('run module', function () {
                     collection: 3.14
                 }, function (err) {
                     expect(err).be.ok();
-                    expect(err && err.message).be('newman: expecting a collection to run');
+                    expect(err && err.message).be('newman: collection could not be loaded');
                     next();
                 }).not.throwException();
             },
             function (next) {
                 expect(run).withArgs({
-                    collection: null
+                    collection: '{'
                 }, function (err) {
                     expect(err).be.ok();
-                    expect(err && err.message).be('newman: expecting a collection to run');
+                    expect(err && err.message).be('newman: collection could not be loaded');
                     next();
                 }).not.throwException();
             }
