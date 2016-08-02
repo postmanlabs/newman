@@ -32,7 +32,7 @@ describe('run summary', function () {
     it('must have tracking properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(Object.keys(summary)).to.eql(['collection', 'environment', 'global', 'run']);
+        expect(Object.keys(summary).sort()).to.eql(['collection', 'environment', 'global', 'run', 'exports'].sort());
 
         expect(summary.environment.object).be.an('function');
         expect(summary.global.object).be.an('function');
@@ -45,7 +45,7 @@ describe('run summary', function () {
     it('must have run related properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(Object.keys(summary.run)).to.eql(['stats', 'timings', 'transfers', 'failures', 'error']);
+        expect(Object.keys(summary.run)).to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error']);
 
         expect(summary.run.failures).be.an('array');
         expect(summary.run.stats).be.an('object');
@@ -68,16 +68,21 @@ describe('run summary', function () {
                 var beforeEventName = _.camelCase(`before-${eventName}`),
                     emitter,
                     summary,
-                    tracker;
+                    tracker,
+                    options;
 
                 beforeEach(function () {
                     emitter = new EventEmitter();
                     summary = new Summary(emitter);
+                    options = {
+                        cursor: { ref: 'fake-ref' }
+                    };
                     tracker = summary.run.stats[eventName + 's'];
                 });
                 afterEach(function () {
                     emitter = null;
                     summary = null;
+                    options = null;
                     tracker = null;
                 });
 
@@ -86,26 +91,26 @@ describe('run summary', function () {
                 });
 
                 it(`must bump pending counters when a ${beforeEventName} is fired`, function () {
-                    emitter.emit(beforeEventName, null, {});
+                    emitter.emit(beforeEventName, null, options);
                     expect(tracker).to.eql({ total: 0, pending: 1, failed: 0 });
                 });
 
                 it(`must unbump pending counters when a ${eventName} is fired and add total`, function () {
-                    emitter.emit(beforeEventName, null, {});
-                    emitter.emit(eventName, null, {});
+                    emitter.emit(beforeEventName, null, options);
+                    emitter.emit(eventName, null, options);
 
                     expect(tracker).to.eql({ total: 1, pending: 0, failed: 0 });
                 });
 
                 it(`must directly bump total ${eventName} with no pending ${beforeEventName} event`, function () {
-                    emitter.emit(eventName, null, {});
-                    emitter.emit(eventName, null, {});
+                    emitter.emit(eventName, null, options);
+                    emitter.emit(eventName, null, options);
                     expect(tracker).to.eql({ total: 2, pending: 0, failed: 0 });
                 });
 
                 it(`must bump failure count when ${eventName} has error (1st) argument`, function () {
-                    emitter.emit(beforeEventName, new Error(`faux error on ${beforeEventName}`), {});
-                    emitter.emit(eventName, new Error(`faux error on ${eventName}`), {});
+                    emitter.emit(beforeEventName, new Error(`faux error on ${beforeEventName}`), options);
+                    emitter.emit(eventName, new Error(`faux error on ${eventName}`), options);
                     expect(tracker).to.eql({ total: 1, pending: 0, failed: 1 });
                 });
             });
@@ -210,68 +215,63 @@ describe('run summary', function () {
                 summary = null;
             });
 
-            it('should add _postman_iterations array', function () {
-                var collection = summary.collection,
+            it('should add to the executions array', function () {
+                var executions = summary.run.executions,
                     item = collection.items.one('i1');
 
                 emitter.emit('request', null, {
                     item: item,
-                    cursor: { iteration: 0 }
+                    cursor: { ref: '1', iteration: 0 }
                 });
                 emitter.emit('request', null, {
                     item: item,
-                    cursor: { iteration: 1 }
+                    cursor: { ref: '2', iteration: 1 }
                 });
 
-                expect(item).have.property('_postman_iterations');
-                expect(item._postman_iterations).be.an('array');
-                expect(item._postman_iterations.length).be(2);
-
-                expect(collection.items.one('i2')).not.have.property('_postman_iterations');
+                expect(executions.length).be(2);
+                expect(executions[0].cursor).to.eql({ ref: '1', iteration: 0 });
+                expect(executions[1].cursor).to.eql({ ref: '2', iteration: 1 });
             });
 
             it('should store request and response', function () {
-                var collection = summary.collection,
+                var executions = summary.run.executions,
                     item = collection.items.one('i1');
 
                 emitter.emit('request', null, {
                     item: item,
                     request: { id: 'request-1' },
                     response: { id: 'response-1' },
-                    cursor: { iteration: 0 }
+                    cursor: { ref: '1', iteration: 0 }
                 });
 
-                expect(item).have.property('_postman_iterations');
-                expect(item._postman_iterations).be.an('array');
-                expect(item._postman_iterations.length).be(1);
-
-                expect(item._postman_iterations).to.eql([{
+                expect(executions.length).be(1);
+                expect(executions[0]).to.eql({
+                    cursor: { ref: '1', iteration: 0 },
                     request: { id: 'request-1' },
-                    requestError: null,
-                    response: { id: 'response-1' }
-                }]);
+                    response: { id: 'response-1' },
+                    id: item.id
+                });
             });
 
             it('should store request error with response info even if request is missing', function () {
-                var collection = summary.collection,
+                var executions = summary.run.executions,
                     item = collection.items.one('i1');
 
-                emitter.emit('request', null, {
+                emitter.emit('request', { message: 'failed' }, {
                     item: item,
                     request: { id: 'request-1' },
                     response: { id: 'response-1' },
-                    cursor: { iteration: 0 }
+                    cursor: { ref: '1', iteration: 0 }
                 });
 
-                expect(item).have.property('_postman_iterations');
-                expect(item._postman_iterations).be.an('array');
-                expect(item._postman_iterations.length).be(1);
-
-                expect(item._postman_iterations).to.eql([{
+                expect(executions.length).be(1);
+                expect(executions[0]).to.eql({
+                    cursor: { ref: '1', iteration: 0 },
                     request: { id: 'request-1' },
-                    requestError: null,
-                    response: { id: 'response-1' }
-                }]);
+                    response: { id: 'response-1' },
+                    id: item.id,
+                    requestError: { message: 'failed' }
+                });
             });
         });
     });
