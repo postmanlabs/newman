@@ -1,89 +1,66 @@
 {
   "name": "newman",
-  "version": "2.1.2",
-  "author": "Postman Labs <help@getpostman.com",
-  "main": "index.js",
+  "version": "3.0.0-beta.4",
+  "description": "Command-line companion utility for Postman",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
-  "description": "Command-line utility for Postman",
   "repository": {
     "type": "git",
     "url": "git://github.com/postmanlabs/newman.git"
   },
-  "contributors": [
-    {
-      "name": "Prakhar Srivastav",
-      "email": "prakhar1989@gmail.com",
-      "url": "http://prakhar.me"
-    },
-    {
-      "name": "Arjun Variar",
-      "email": "accioarjun@gmail.com",
-      "url": "http://github.com/viig99"
-    },
-    {
-      "name": "Abhijit Kane",
-      "email": "abhijit@getpostman.com",
-      "url": "http://github.com/abhijitkane"
-    },
-    {
-      "name": "Aniket Panse",
-      "email": "aniket@getpostman.com",
-      "url": "http://github.com/czardoz"
-    }
-  ],
-  "engines": {
-    "node": ">=0.6.x"
-  },
   "keywords": [
+    "newman",
     "postman",
     "api",
+    "testing",
+    "ci",
     "rest-client",
     "rest"
   ],
+  "main": "index.js",
   "bin": {
-    "newman": "./bin/newman"
+    "newman": "./bin/newman.js"
   },
   "preferGlobal": true,
+  "scripts": {
+    "test": "node npm/test.js",
+    "test-system": "node npm/test-system.js",
+    "test-lint": "node npm/test-lint.js",
+    "test-unit": "node npm/test-unit.js",
+    "test-integration": "node npm/test-integration.js"
+  },
+  "author": "Postman Labs <help@getpostman.com> (=)",
+  "license": "Apache-2.0",
   "dependencies": {
-    "atob": "1.1.2",
-    "aws4": "1.3.1",
-    "backbone": "^1.1.2",
-    "btoa": "1.1.2",
-    "cli-color": "0.2.x",
-    "commander": "2.x.x",
-    "crypto-js": "^3.1.5",
-    "dot": "1.0.3",
-    "hawk": "3.1.2",
-    "jquery": "2.1.1",
-    "jsdom": "7.1.0",
-    "jsface": "2.2.x",
-    "json5": "^0.4.0",
-    "lodash": "^3.10.0",
-    "mkdirp": "^0.5.0",
-    "node-uuid": "1.4.1",
-    "postman-collection-transformer": "^1.7.2",
-    "postman_validator": "0.0.4",
-    "request": "2.72.0",
-    "sugar": "1.3.9",
-    "tv4": "^1.1.9",
-    "underscore": ">=1.6.0 <2",
-    "unirest": "^0.4.0",
-    "xml2js": "^0.4.5"
+    "argparse": "1.0.7",
+    "async": "2.0.1",
+    "cli-table2": "0.2.0",
+    "colors": "1.1.2",
+    "csv-parse": "1.1.5",
+    "eventemitter3": "1.2.0",
+    "filesize": "3.3.0",
+    "lodash": "4.13.1",
+    "parse-json": "2.2.0",
+    "postman-collection": "0.4.5",
+    "postman-collection-transformer": "1.7.2",
+    "postman-runtime": "2.2.5",
+    "pretty-ms": "2.1.0",
+    "request": "2.74.0",
+    "semver": "5.3.0",
+    "serialised-error": "1.1.2",
+    "shelljs": "0.7.0",
+    "word-wrap": "1.1.0",
+    "xmlbuilder": "8.2.2"
   },
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt-jsdoc": "^0.6.7",
-    "grunt-mocha-test": "0.12.7",
-    "grunt-run": "~0.2.2",
-    "mocha": "2.3.4",
-    "sinon": "^1.15.4"
+    "eslint": "3.0.0",
+    "eslint-plugin-security": "1.2.0",
+    "expect.js": "0.3.1",
+    "js-yaml": "3.6.1",
+    "mocha": "2.5.3",
+    "nsp": "2.5.0"
   },
-  "scripts": {
-    "test": "grunt test",
-    "preinstall": "node ./scripts/preinstall.js"
-  },
-  "license": "Apache"
+  "engines": {
+    "node": ">=4"
+  }
 }

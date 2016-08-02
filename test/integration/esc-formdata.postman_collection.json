@@ -1,0 +1,47 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Escaped characters in the form body are sent correctly",
+    "_postman_id": "df4d105a-e01b-b219-9a65-266547e02cd0",
+    "description": "A set of tests for proper replacement of form key value pairs with escaped characters",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "r1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "console.log(responseBody);var data=JSON.parse(responseBody);tests[\"Form Key Replaced\"]=data.form.hasOwnProperty(\"hello\"); tests[\"Form val replaced from env\"]=data.form.hello===\"hello\\\\kworld\";"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/post?a={{msg}}",
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "{{msg1}}",
+              "value": "{{msg}}",
+              "type": "text",
+              "enabled": true
+            },
+            {
+              "key": "incollection",
+              "value": "hello\\world",
+              "type": "text",
+              "enabled": true
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
