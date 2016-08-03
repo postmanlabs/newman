@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><title>Postman Report</title></head>
-{{#with summary}}
 <body>
 
-  <table class="summary">
+  <table class="summary" width="100%">
     {{#with collection}}
     <thead>
-      <tr><th colspan="3">
+      <tr class="title"><td class="th" colspan="3">
         <h1>{{todo-show-name-or-id}}</h1>
-      </th></tr>
+      </td></tr>
     </thead>
     {{/with}}
 
     <tbody>
-      <tr class="heading"><th class="tl">&nbsp;</th><th>Total</th><th>Failed</th></tr>
+      <tr class="heading">
+        <td class="th tl" width="40%">&nbsp;</td>
+        <td class="th" width="30%">Total</td>
+        <td class="th" width="30%">Failed</td>
+      </tr>
       {{#with run.stats}}
-      <tr><th>Iterations</th><td>{{iterations.total}}</td><td>{{iterations.failed}}</td></tr>
-      <tr><th>Requests</th><td>{{requests.total}}</td><td>{{requests.failed}}</td></tr>
-      <tr><th>Prerequest Scripts</th><td>{{prerequestScripts.total}}</td><td>{{prerequestScripts.failed}}</td></tr>
-      <tr><th>Test Scripts</th><td>{{testScripts.total}}</td><td>{{testScripts.failed}}</td></tr>
-      <tr><th>Assertions</th><td>{{assertions.total}}</td><td>{{assertions.failed}}</td></tr>
+      <tr class="property"><td class="th">Iterations</td><td>{{iterations.total}}</td><td>{{iterations.failed}}</td></tr>
+      <tr class="property"><td class="th">Requests</td><td>{{requests.total}}</td><td>{{requests.failed}}</td></tr>
+      <tr class="property"><td class="th">Prerequest Scripts</td><td>{{prerequestScripts.total}}</td><td>{{prerequestScripts.failed}}</td></tr>
+      <tr class="property"><td class="th">Test Scripts</td><td>{{testScripts.total}}</td><td>{{testScripts.failed}}</td></tr>
+      <tr class="property"><td class="th">Assertions</td><td>{{assertions.total}}</td><td>{{assertions.failed}}</td></tr>
       {{/with}}
-      <tr><th>Total Failures</th><td colspan="2">{{run.failures.length}}</td></tr>
+      <tr class="property"><td class="th">Total Failures</td><td colspan="2">{{run.failures.length}}</td></tr>
     </tbody>
   </table>
 
@@ -30,17 +33,37 @@
 
 
   {{#each run.executions}}
-    <table class="executions execution-{{index}}">
+    <table class="executions execution-{{@index}}">
       <thead>
-      <tr class="heading"><th colspan="3">
-        <h2>{{todo-show-name-or-id}}</h2>
-        <p>http://www.blah.com</p>
-      </th></tr>
+      <tr class="title"><td class="th" colspan="3">
+        <h2>{{item.name}}</h2>
+        {{#if item.description}}<p class="item description">{{item.description}}</p>{{/if}}
+        <ul class="item meta">
+            <li><span class="item id">{{item.id}}</span></li>
+            <li><span class="item request url"><a href="{{request.url}}" target="_blank">{{request.method}} {{request.url}}</a></span></li>
+        </ul>
+      </td></tr>
     </thead>
+
+    <tbody>
+    <tr class="heading">
+        <td class="th" width="20%"><h3>Response</h3></td>
+        <td class="th" width="80%">&nbsp;</td>
+    </tr>
+    {{#with response}}
+    <tr class="property"><td class="th">Code</td><td>{{code}}</td></tr>
+    <tr class="property"><td class="th">Headers</td><td>{{headers.members}}</td></tr>
+    <tr class="property"><td class="th">Body</td><td><span class="pre">{{body}}</span></td></tr>
+    <tr class="property"><td class="th">Size</td><td>{{responseSize}} bytes</td></tr>
+    <tr class="property"><td class="th">Time</td><td>{{responseTime}} ms</td></tr>
+    {{/with}}
+    <tbody>
+    <tbody>
+      <tr class="property"><td class="th">Response Time</td><td></td><td></td></tr>
+    </tbody>
 
     </table>
   {{/each}}
 
 </body>
-{{/with}}
 </html>
