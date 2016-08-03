@@ -87,6 +87,15 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
   Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
   [Read More](https://www.getpostman.com/docs/multiple_instances)
 
+- `--export-environment <path>`<br />
+  The path to the file where Newman will output the final environment variables file before completing a run.
+
+- `--export-globals <path>`<br />
+  The path to the file where Newman will output the final global variables file before completing a run.
+
+- `--export-collection <path>`<br />
+  The path to the file where Newman will output the final collection file before completing a run.
+
 - `--timeout-request <ms>`<br />
   Specify the time (in milliseconds) to wait for requests to return a response.
 
@@ -108,31 +117,37 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 
 - `--reporters <name>`<br />
   Specify one reporter name as `string` or provide more than one reporter name as an `array`.Available reporters are:
-  `cli`, `html` and `junit`.
-
-
-- `--reporter-{{reporter-options}}`<br />
-  Since newman accepts one or more reporters as part of its arguments, reporter specific configurations are provided with
-  `--reporter-` prefix. When multiple reporters are provided, these options are passed to all the reporters.<br /<br />
-  For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
-  reporter.
+  `cli`, `json`, `html` and `junit`.
 
 - `--reporter-{{reporter-name}}-{{reporter-options}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
   is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
   For example, `... --reporters cli,html --reporter-cli-silent` makes only the CLI reporter as silent
 
+<!-- - `--reporter-{{reporter-options}}`<br />
+  If more than one reporter accepts the same option name, they can be provided using the commin reporter option syntax.
+  <br /<br />
+  For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
+  reporter. -->
+
 ##### CLI reporter options
 These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
 option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
 
-| Option      | Description |
-|-------------|-------------|
-| silent         | The CLI reporter is internally disabled and you see no output to terminal. |
-| no-summary     | The statistical summary table is not shown. |
-| no-failures    | This prevents the run failures from being separately printed. |
-| no-assertions  | This turns off the request-wise output as they happen. |
-| no-console     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+| Option      | Description     |
+|-------------|-----------------|
+| --reporter-cli-silent         | The CLI reporter is internally disabled and you see no output to terminal. |
+| --reporter-cli-no-summary     | The statistical summary table is not shown. |
+| --reporter-cli-no-failures    | This prevents the run failures from being separately printed. |
+| --reporter-cli-no-assertions  | This turns off the request-wise output as they happen. |
+| --reporter-cli-no-console     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+
+##### JSON reporter options
+The built-in JSON reporter is useful in producing a comprehensive output of the run summary. The only option it takes is
+the path to the file where to write the file. The content of this file is exactly same as the `summary` parameter sent
+to the callback when `newman.run()` is executed programmatically.
+
+- `--reporter-json-export <path>`<br />
 
 <!--
 | `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
@@ -150,18 +165,7 @@ option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-
 | `--stop-on [error,test]` | TBD |
 
 | `--export <directory>` | TBD |
-| `--export-environment <path>` | TODO |
-| `--export-globals <path>` | TODO |
-| `--export-collection <path>` | TODO |
-| `--export-pretty` | TODO |
 
-
-
-
-| `--reporters <cli|html>` | TODO |
-| `--reporter-cli-view [result,summary,failures]` | TBD |
-| `--reporter-html-template <path>` | TODO |
-| `--reporter-html-output <path>` | TODO |
 
 -->
 
@@ -187,6 +191,8 @@ The `run` function executes a collection and returns the run result to a callbac
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
 | callback                  | Upon completion of the run, this callback is executed with the `error` argument.<br /><br />_Required_<br />Type: `function` |
+
+<!-- TODO: write about callback summary -->
 
 ## Community Support
 
