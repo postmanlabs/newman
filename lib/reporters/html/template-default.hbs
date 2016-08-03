@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Postman Report</title></head>
+{{#with summary}}
+<body>
+
+  <table class="summary">
+    {{#with collection}}
+    <thead>
+      <tr><th colspan="3">
+        <h1>Collection: {{name}}</h1>
+      </th></tr>
+    </thead>
+    {{/with}}
+
+    <tbody>
+      <tr class="heading"><th class="tl">&nbsp;</th><th>Total</th><th>Failed</th></tr>
+      {{#with run.stats}}
+      <tr><th>Iterations</th><td>{{iterations.total}}</td><td>{{iterations.failed}}</td></tr>
+      <tr><th>Requests</th><td>{{requests.total}}</td><td>{{requests.failed}}</td></tr>
+      <tr><th>Prerequest Scripts</th><td>{{prerequestScripts.total}}</td><td>{{prerequestScripts.failed}}</td></tr>
+      <tr><th>Test Scripts</th><td>{{testScripts.total}}</td><td>{{testScripts.failed}}</td></tr>
+      <tr><th>Assertions</th><td>{{assertions.total}}</td><td>{{assertions.failed}}</td></tr>
+      {{/with}}
+      <tr><th>Average response time</th><td colspan="2">{{run.timings.responseAverage}} ms</td></tr>
+      <tr><th>Total data transferred in</th><td colspan="2">{{run.transfers.responseTotal}} bytes</td></tr>
+      <tr><th>Total Failures</th><td colspan="2">{{run.failures.length}}</td></tr>
+    </tbody>
+  </table>
+
+
+
+
+  {{#each run.executions}}
+    <table class="executions execution-{{@index}}">
+      <thead>
+      <tr class="heading"><th colspan="2">
+        <h2>{{id}}</h2>
+      </th></tr>
+      <tr>
+          <th>Assertions</th><td>{{assertions.length}}</td>
+      </tr>
+    </thead>
+
+      <tbody>
+      <tr class="heading"><th colspan="2">Request</th></tr>
+      {{#with this.request}}
+      <tr><th class="tl">URL</th><td>{{url}}</td></tr>
+      <tr><th class="tl">Method</th><td>{{method}}</td></tr>
+      {{/with}}
+      <tr class="heading"><th colspan="2">Response</th></tr>
+      {{#with this.response}}
+      <tr><th class="tl">Code</th><td>{{code}}</td></tr>
+      <tr><th class="tl">Headers</th><td>{{headers.length}}</td></tr>
+      <tr><th class="tl">Body</th><td><pre>{{body}}</pre></td></tr>
+      <tr><th class="tl">Response size</th><td>{{responseSize}} bytes</td></tr>
+      <tr><th class="tl">Response time</th><td>{{responseTime}} ms</td></tr>
+      {{/with}}
+    </tbody>
+    </table>
+  {{/each}}
+
+</body>
+{{/with}}
+</html>
