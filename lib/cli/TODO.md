@@ -43,14 +43,6 @@
 
 #### Older Execute options
 
-    parser.addArgument(['-E', '--exportEnvironment'], {
-        help: 'Exports the environment to a file after completing the run'
-    });
-
-    parser.addArgument(['-G', '--exportGlobals'], {
-        help: 'Specify an output file to dump Globals before exiting'
-    });
-
     parser.addArgument(['-y', '--delay'], {
         help: 'Specify a delay (in ms) between requests',
         type: Number
