@@ -182,7 +182,7 @@ describe('run summary', function () {
                     expect(failure.at).be(beforeEventName);
 
                     expect(failure).have.property('source');
-                    expect(failure.source).be('<unknown>');
+                    expect(failure.source).be(undefined);
 
                     expect(failure).have.property('cursor');
                     expect(failure.cursor).be.an('object');
