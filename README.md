@@ -176,6 +176,15 @@ The HTML reporter produces a barebone HTML of the Newman run.
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be discontinued. For documentation on the older command options, refer to the README.md in latest v2.x release.
 
+### `newman [options]`
+
+- `-h`, `--help`<br />
+  Show commandline help
+
+- `-v`, `--version`<br />
+  Show commandline help
+
+
 ## API Reference
 
 ### newman.run(options: _object_ , callback: _function_) => run: EventEmitter
