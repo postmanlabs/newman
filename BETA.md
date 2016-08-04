@@ -29,12 +29,13 @@ It is still a work in progress, so there are a few features that are pending
 implementation:
 
 1. -Support for CSV data files-
-2. Support for test reports:
-    1. JUnit XML
-    2. HTML
+2. -Support for test reports:-
+    1. -JUnit XML-
+    2. -HTML-
 3. -Exporting of environment, globals and collection-
 4. Support for stopping a run on failures
 5. Make generic and uncaught exceptions more readable in CLI
+6. Better HTML and JUnit output formatting
 
 ## Migrating from v2.x
 
