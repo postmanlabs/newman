@@ -149,6 +149,11 @@ to the callback when `newman.run()` is executed programmatically.
 
 - `--reporter-json-export <path>`<br />
 
+##### HTML reporter options
+The HTML reporter produces a barebone HTML of the Newman run.
+
+- `--reporter-html-export <path>`<br />
+
 <!--
 | `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
 | `-x --suppress-exitcode` | TODO |
@@ -173,8 +178,9 @@ Older command line options are supported, but are deprecated in favour of the ne
 
 ## API Reference
 
-### newman.run(options: _object_ , callback: _function_)
-The `run` function executes a collection and returns the run result to a callback function provided as parameter.
+### newman.run(options: _object_ , callback: _function_) => run: EventEmitter
+The `run` function executes a collection and returns the run result to a callback function provided as parameter. The
+return of the `newman.run` function is a run instance, which emits run events that can be listened to.
 
 | Parameter | Description   |
 |-----------|---------------|
@@ -190,7 +196,66 @@ The `run` function executes a collection and returns the run result to a callbac
 | options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean` |
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
-| callback                  | Upon completion of the run, this callback is executed with the `error` argument.<br /><br />_Required_<br />Type: `function` |
+| callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
+
+### newman.run~callback(error: _object_ , summary: _object_)
+
+The `callback` parameter of the `newman.run` function receives two arguments: (1) `error` and (2) `summary`
+
+| Argument  | Description   |
+|-----------|---------------|
+| error                     | In case newman faces an error during the run, the error is passed on to this argument of callback. By default, only fatal errors, such as the ones caused by any fault inside Newman is passed on to this argument. However, setting `abortOnError:true` or `abortOnFailure:true` as part of run options will cause newman to treat collection script syntax errors and test failures as fatal errors and be passed down here while stopping the run abruptly at that point.<br /><br />Type: `object` |
+| summary                   | The run summary will contain information pertaining to the run.<br /><br />Type: `object` |
+| summary.error             | <br /><br />Type: `object` |
+| summary.collection        | <br /><br />Type: `object` |
+| summary.environment       | <br /><br />Type: `object` |
+| summary.globals           | <br /><br />Type: `object` |
+| summary.run               | <br /><br />Type: `object` |
+| summary.run.stats         | <br /><br />Type: `object` |
+| summary.run.failures      | <br /><br />Type: `array.<object>` |
+| summary.run.executions    | <br /><br />Type: `array.<object>` |
+
+### newman.run~events
+
+Newman triggers a whole bunch of events during the run.
+
+```javascript
+newman.run({
+    collection: require('./sample-collection.json')
+}).on('start', function (err, args) { // on start of run, log to console
+    console.log('running a collection...');
+}).on('done', function (err, summary) {
+    if (error || summary.error) {
+        console.error('collection run encountered an error.');
+    }
+    else {
+        console.log('collection run completed.');
+    }
+});
+```
+
+All events receive two arguments (1) `error` and (2) `args`. **The list below describes the properties of the second
+argument object.**
+
+| Event     | Description   |
+|-----------|---------------|
+| start                     |  |
+| beforeIteration           |  |
+| beforeItem                |  |
+| beforePrerequest          |  |
+| prerequest                |  |
+| beforeRequest             |  |
+| request                   |  |
+| beforeTest                |  |
+| test                      |  |
+| beforeScript              |  |
+| script                    |  |
+| item                      |  |
+| iteration                 |  |
+| assertion                 |  |
+| console                   |  |
+| exception                 |  |
+| done                      |  |
 
 <!-- TODO: write about callback summary -->
 
