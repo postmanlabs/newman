@@ -6,21 +6,12 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Using Newman one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
 extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
-> *BETA RELEASE NOTES*
->
-> To use Newman v3.x beta, ensure that you install using the beta tag: `npm install newman@next`.
->
-> The beta version of `newman v3.x` is currently under development and is not intended for production use. Details
-> outlining the limitations and road-map of newman v3.x is outlined in [BETA.md](BETA.md).
-
 > To view documentation of current stable 2.x release of Newman, refer to the latest
-> [newman v2.x release](https://github.com/postmanlabs/newman/tree/release/2.x)
+> [Newman v2.x release](https://github.com/postmanlabs/newman/tree/release/2.x)
 
 ## Getting started
 
-Newman is built using NodeJS v4+. To run Newman, make sure you have NodeJS version 4 or above installed. The latest
-version of NodeJS can be easily installed by following instructions mentioned at
-[https://nodejs.org/en/download/package-manager/](https://nodejs.org/en/download/package-manager/).
+To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [https://nodejs.org/en/download/package-manager/](https://nodejs.org/en/download/package-manager/).
 
 The easiest way to install Newman is using NPM. If you have NodeJS installed, it is most likely that you have NPM
 installed as well.
@@ -30,7 +21,7 @@ $ npm install newman --global;
 ```
 
 The `newman run` command allows you to specify a collection to be run. You can easily export your Postman
-Collection as a json file from the Postman App and run it using Newman.
+Collection as a json file from the [Postman App](https://www.getpostman.com/apps) and run it using Newman.
 
 ```terminal
 $ newman run examples/sample-collection.json;
@@ -38,11 +29,12 @@ $ newman run examples/sample-collection.json;
 
 If your collection file is available as an URL (such as from our [Cloud API service](https://api.getpostman.com/)),
 Newman can fetch your file and run it as well.
+
 ```terminal
 $ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
 ```
 
-For the whole list of options refer to the [Commandline Options](#commandline-options) section below.
+For the complete list of options, refer the [Commandline Options](#commandline-options) section below.
 
 [![terminal-demo](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv.png)](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv?autoplay=1)
 
@@ -65,7 +57,7 @@ newman.run({
 });
 ```
 
-The newman v2.x `.execute` function has been deprecated and will be discontinued in future.
+**Note:** The newman v2.x `.execute` function has been deprecated and will be discontinued in future.
 
 ## Commandline Options
 
@@ -79,13 +71,15 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
   Specify file path or URL for global variables. Global variables are similar to environment variables but has a lower
   precedence and can be overridden by environment variables having same name.
 
-- `-n <number`, `--iteration-count <number>`<br />
-  Specifies the number of times the collection has to be run when used in conjunction with iteration data file.<br />
-  <br />
-
 - `-d <source>`, `--iteration-data <source>`<br />
   Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
   [Read More](https://www.getpostman.com/docs/multiple_instances)
+
+- `-n <number`, `--iteration-count <number>`<br />
+  Specifies the number of times the collection has to be run when used in conjunction with iteration data file.
+
+- `--folder <name>`<br />
+  Run requests within a particular folder in a collection.
 
 - `--export-environment <path>`<br />
   The path to the file where Newman will output the final environment variables file before completing a run.
@@ -102,11 +96,17 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 - `-k --insecure`<br />
   Disables SSL verification checks and allows self-signed SSL certificates.
 
-- `--folder <name>`<br />
-  Run requests within a particular folder in a collection.
-
 - `--ignore-redirects`<br />
   Prevents newman from automatically following 3XX redirect responses.
+
+- `--delay-request`<br />
+  Specify the extent of delay between requests (milliseconds).
+
+- `--stop-on-error`<br />
+  Specify whether or not to stop a collection run on encountering the first error.
+
+- `-x --suppress-exit-code`<br />
+  Specify whether or not to override the default exit code for the current run.
 
 - `--no-color`<br />
   Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With
@@ -116,19 +116,18 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 #### Configuring Reporters
 
 - `--reporters <name>`<br />
-  Specify one reporter name as `string` or provide more than one reporter name as an `array`.Available reporters are:
-  `cli`, `json`, `html` and `junit`.
+  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
 
 - `--reporter-{{reporter-name}}-{{reporter-options}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
   is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
-  For example, `... --reporters cli,html --reporter-cli-silent` makes only the CLI reporter as silent
+  For example, `... --reporters cli,html --reporter-cli-silent` would silence the CLI reporter only.
 
-<!-- - `--reporter-{{reporter-options}}`<br />
+- `--reporter-{{reporter-options}}`<br />
   If more than one reporter accepts the same option name, they can be provided using the commin reporter option syntax.
   <br /<br />
   For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
-  reporter. -->
+  reporter.
 
 ##### CLI reporter options
 These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
@@ -155,34 +154,21 @@ The HTML reporter produces a barebone HTML of the Newman run.
 - `--reporter-html-export <path>`<br />
 
 <!--
-| `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
-| `-x --suppress-exitcode` | TODO |
-| `--silent` | TODO |
-| `--verbose` | TODO |
-
 | `--timeout-run <ms>` | TODO |
 | `--timeout-script <ms>` | TODO |
-
-| `--delay-run <ms>` | TODO |
-| `--delay-iteration <ms>` | TODO |
-| `--delay-request <ms>` | TODO |
-
-| `--stop-on [error,test]` | TBD |
-
-| `--export <directory>` | TBD |
-
-
 -->
 
-Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be discontinued. For documentation on the older command options, refer to the README.md in latest v2.x release.
+Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
 ### `newman [options]`
 
-- `-h`, `--help`<br />
-  Show commandline help
+- `-h`, `--help`
 
-- `-v`, `--version`<br />
-  Show commandline help
+  Show commandline help, including a list of options, and sample use cases.
+
+- `-v`, `--version`
+
+  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
 
 ## API Reference
@@ -248,23 +234,24 @@ argument object.**
 
 | Event     | Description   |
 |-----------|---------------|
-| start                     |  |
-| beforeIteration           |  |
+| start                     | This event is emitted at the start of a collection run |
+| beforeIteration           | This event is emitted just before an iteration commences |
 | beforeItem                |  |
-| beforePrerequest          |  |
-| prerequest                |  |
-| beforeRequest             |  |
-| request                   |  |
-| beforeTest                |  |
-| test                      |  |
+| beforePrerequest          | This event is emitted right before a `prerequest` script is executed |
+| prerequest                | This event is emitted right after a `prerequest` script has been run |
+| beforeRequest             | This event is emitted right before a request is intiated |
+| request                   | This event is emitted immediately after a request has completed |
+| beforeTest                | This event is emitted before a test run |
+| test                      | An event emitted after a test run has completed |
 | beforeScript              |  |
 | script                    |  |
 | item                      |  |
-| iteration                 |  |
-| assertion                 |  |
-| console                   |  |
-| exception                 |  |
-| done                      |  |
+| iteration                 | This event is emitted when the current collection run iteration ends  |
+| assertion                 | This event is emitted whenever any assertion is made within test scripts for a collection request |
+| console                   | This event handles console message bubbling to their appropriate layers |
+| exception                 | An event emitted when a run time exception occurs |
+| beforeDone                | A special event emitted to invoke all reporters and export directives |
+| done                      | This event is emitted when a collection run has completed, with or without errors |
 
 <!-- TODO: write about callback summary -->
 
