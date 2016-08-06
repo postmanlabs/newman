@@ -4,7 +4,7 @@ var _ = require('lodash'),
 /* global describe, it */
 describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and avergare response time
-    var Summary = require('../../lib/summary'),
+    var Summary = require('../../lib/run/summary'),
         EventEmitter = require('eventemitter3'),
         sdk = require('postman-collection'),
 
@@ -182,7 +182,7 @@ describe('run summary', function () {
                     expect(failure.at).be(beforeEventName);
 
                     expect(failure).have.property('source');
-                    expect(failure.source).be('<unknown>');
+                    expect(failure.source).be(undefined);
 
                     expect(failure).have.property('cursor');
                     expect(failure.cursor).be.an('object');

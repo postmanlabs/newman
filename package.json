@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.5",
   "description": "Command-line companion utility for Postman",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
@@ -39,6 +39,7 @@
     "csv-parse": "1.1.5",
     "eventemitter3": "1.2.0",
     "filesize": "3.3.0",
+    "handlebars": "4.0.5",
     "lodash": "4.13.1",
     "parse-json": "2.2.0",
     "postman-collection": "0.4.5",

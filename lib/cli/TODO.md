@@ -94,10 +94,6 @@
         help: 'Enable pretty-print while saving imported collections, environments, and globals.'
     });
 
-    parser.addArgument(['-H', '--html'], {
-        help: 'Export a HTML report to a specified file.'
-    });
-
     parser.addArgument(['-W', '--whiteScreen'], {
         help: 'Black text for white screen',
         action: 'storeTrue',

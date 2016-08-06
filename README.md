@@ -14,7 +14,7 @@ extensibility in mind so that you can easily integrate it with your continuous i
 > outlining the limitations and road-map of newman v3.x is outlined in [BETA.md](BETA.md).
 
 > To view documentation of current stable 2.x release of Newman, refer to the latest
-> [newman v2.x release](https://github.com/postmanlabs/newman/tree/v2.1.2)
+> [newman v2.x release](https://github.com/postmanlabs/newman/tree/release/2.x)
 
 ## Getting started
 
