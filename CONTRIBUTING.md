@@ -49,8 +49,8 @@ Installs all `dependencies` listed in `package.json`
 
 The script associated with `npm test` will run all tests that ensures that your commit does not break anything in the
 repository. As such run `npm test` before you push. In addition to performing a few logging and pre-test configuration
-actions, this test bootstrapper will also trigger the various sub test tasks, which include code lint checks, unit and
-integration tests. At present, the following sub tests can be run on a standalone basis:
+actions, this test bootstrap script will also trigger the various sub test tasks, which include code lint checks, unit
+and integration tests. At present, the following sub tests can be run on a standalone basis:
 
 * `npm run test-system`: Runs system tests
 * `npm run test-lint`: Performs code style checks, flagging inconsistencies and other miscellaneous anomalies
@@ -229,10 +229,15 @@ Each of these file names should follow the convention outlined below:
 
 For instance:
 >
+
 file-name.postman_collection.json
+
 file-name.postman_environment.json
+
 file-name.postman_globals.json
+
 file-name.postman_data.json
+
 file-name.postman_data.csv
 
 ## Guidelines for sending a Pull Request
@@ -261,8 +266,8 @@ changing the `version` field in `package.json` for feature pull requests, as `ve
 
 6. In addition, the turn around time for Pull Request would get affected if commit messages are unclear.
 
-7. If you have deadlines to ensure feature completion, send Pull Request ahead of time. Better still, ensure your
-   feature development timeline accounts for PR acceptance.
+7. If you have deadlines to ensure feature completion, send Pull Request ahead of time. Better still, ensure that your
+   feature development time window accounts for PR acceptance time as well.
 
 8. If you have mentioned issue tracker references in Pull Request description, the severity and priority of those issues
    will be taken into account. Otherwise, no Pull Request will take priority over others already in queue - it is

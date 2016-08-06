@@ -8,13 +8,13 @@ extensibility in mind so that you can easily integrate it with your continuous i
 
 > *BETA RELEASE NOTES*
 >
-> To use newan v3.x beta, ensure that you install using the beta tag: `npm install newman@next`.
+> To use Newman v3.x beta, ensure that you install using the beta tag: `npm install newman@next`.
 >
 > The beta version of `newman v3.x` is currently under development and is not intended for production use. Details
-> outlining the limitations and roadmap of newman v3.x is outlined in [BETA.md](BETA.md).
+> outlining the limitations and road-map of newman v3.x is outlined in [BETA.md](BETA.md).
 
 > To view documentation of current stable 2.x release of Newman, refer to the latest
-> [newman v2.x release](https://github.com/postmanlabs/newman/tree/v2.1.2)
+> [newman v2.x release](https://github.com/postmanlabs/newman/tree/release/2.x)
 
 ## Getting started
 
@@ -37,7 +37,7 @@ $ newman run examples/sample-collection.json;
 ```
 
 If your collection file is available as an URL (such as from our [Cloud API service](https://api.getpostman.com/)),
-Newman can fetch youir file and run it as well.
+Newman can fetch your file and run it as well.
 ```terminal
 $ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
 ```
@@ -46,9 +46,9 @@ For the whole list of options refer to the [Commandline Options](#commandline-op
 
 [![terminal-demo](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv.png)](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv?autoplay=1)
 
-### Using Newman programmatically as a NodeJS module
+### Using Newman as a NodeJS module
 
-Newman can be easily used within your JavaScript projects as a NodeJS module. All functionalities of the newman command line is available for programmatic use as well.
+Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well.
 
 The following example runs a collection by reading a JSON collection file stored on disk.
 
@@ -87,6 +87,15 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
   Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
   [Read More](https://www.getpostman.com/docs/multiple_instances)
 
+- `--export-environment <path>`<br />
+  The path to the file where Newman will output the final environment variables file before completing a run.
+
+- `--export-globals <path>`<br />
+  The path to the file where Newman will output the final global variables file before completing a run.
+
+- `--export-collection <path>`<br />
+  The path to the file where Newman will output the final collection file before completing a run.
+
 - `--timeout-request <ms>`<br />
   Specify the time (in milliseconds) to wait for requests to return a response.
 
@@ -108,31 +117,37 @@ The newman v2.x `.execute` function has been deprecated and will be discontinued
 
 - `--reporters <name>`<br />
   Specify one reporter name as `string` or provide more than one reporter name as an `array`.Available reporters are:
-  `cli`, `html` and `junit`.
-
-
-- `--reporter-{{reporter-options}}`<br />
-  Since newman accepts one or more reporters as part of its arguments, reporter specific onfigurations are provided with
-  `--reporter-` prefix. When multiple reporters are provided, these options are passed to all the reporters.<br /<br />
-  For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
-  reporter.
+  `cli`, `json`, `html` and `junit`.
 
 - `--reporter-{{reporter-name}}-{{reporter-options}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
   is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
   For example, `... --reporters cli,html --reporter-cli-silent` makes only the CLI reporter as silent
 
+<!-- - `--reporter-{{reporter-options}}`<br />
+  If more than one reporter accepts the same option name, they can be provided using the commin reporter option syntax.
+  <br /<br />
+  For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
+  reporter. -->
+
 ##### CLI reporter options
 These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
 option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
 
-| Option      | Description |
-|-------------|-------------|
-| silent         | The CLI reporter is internally disabled and you see no output to terminal. |
-| no-summary     | The statstical summary table is not shown. |
-| no-failures    | This prevents the run failures from being separately printed. |
-| no-assertions  | This turns off the request-wise output as they happen. |
-| no-console     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+| Option      | Description     |
+|-------------|-----------------|
+| --reporter-cli-silent         | The CLI reporter is internally disabled and you see no output to terminal. |
+| --reporter-cli-no-summary     | The statistical summary table is not shown. |
+| --reporter-cli-no-failures    | This prevents the run failures from being separately printed. |
+| --reporter-cli-no-assertions  | This turns off the request-wise output as they happen. |
+| --reporter-cli-no-console     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+
+##### JSON reporter options
+The built-in JSON reporter is useful in producing a comprehensive output of the run summary. The only option it takes is
+the path to the file where to write the file. The content of this file is exactly same as the `summary` parameter sent
+to the callback when `newman.run()` is executed programmatically.
+
+- `--reporter-json-export <path>`<br />
 
 <!--
 | `-c --collection <source>` | TODO Specify a collection file path or URL. This is optional and any file or URL provided without options is treated as a collection. |
@@ -150,18 +165,7 @@ option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-
 | `--stop-on [error,test]` | TBD |
 
 | `--export <directory>` | TBD |
-| `--export-environment <path>` | TODO |
-| `--export-globals <path>` | TODO |
-| `--export-collection <path>` | TODO |
-| `--export-pretty` | TODO |
 
-
-
-
-| `--reporters <cli|html>` | TODO |
-| `--reporter-cli-view [result,summary,failures]` | TBD |
-| `--reporter-html-template <path>` | TODO |
-| `--reporter-html-output <path>` | TODO |
 
 -->
 
@@ -176,7 +180,7 @@ The `run` function executes a collection and returns the run result to a callbac
 |-----------|---------------|
 | options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
 | options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an istance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
-| options.environmet        | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
+| options.environment        | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
 | options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object|string` |
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number` |
 | options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
@@ -187,6 +191,8 @@ The `run` function executes a collection and returns the run result to a callbac
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
 | callback                  | Upon completion of the run, this callback is executed with the `error` argument.<br /><br />_Required_<br />Type: `function` |
+
+<!-- TODO: write about callback summary -->
 
 ## Community Support
 

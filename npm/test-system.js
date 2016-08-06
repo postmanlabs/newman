@@ -43,7 +43,7 @@ module.exports = function (exit) {
         },
 
         // execute nsp
-        // programatically executing nsp is a bit tricky as we have to emulate the cli script's usage of internal
+        // In-program usage of nsp is a bit tricky as we have to emulate the cli script's usage of internal
         // nsp functions.
         function (next) {
             var nsp = require('nsp'),
