@@ -6,8 +6,9 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Using Newman one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
 extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
-> To view documentation of current stable 2.x release of Newman, refer to the latest
-> [Newman v2.x release](https://github.com/postmanlabs/newman/tree/release/2.x)
+> For instructions on how to migrate to Newman V3, see our [migration guide](MIGRATION.md)
+>
+> To view documentation of current stable 2.x release of Newman, refer the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md)
 
 ## Getting started
 
@@ -162,12 +163,10 @@ Older command line options are supported, but are deprecated in favour of the ne
 
 ### `newman [options]`
 
-- `-h`, `--help`
-
+- `-h`, `--help`  
   Show commandline help, including a list of options, and sample use cases.
 
-- `-v`, `--version`
-
+- `-v`, `--version`  
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
 
