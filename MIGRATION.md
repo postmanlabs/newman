@@ -8,10 +8,10 @@ same run. Above all, Newman now uses [Postman Runtime](https://github.com/postma
 provide a consistent experience on Postman Apps and on CLI.
 
 Keeping in mind long standing issues such as
-[#381](https://github.com/postmanlabs/newman/issues/381),
-[#47](https://github.com/postmanlabs/newman/issues/347),
+[#168](https://github.com/postmanlabs/newman/issues/168)
 [#290](https://github.com/postmanlabs/newman/issues/290),
-[#168](https://github.com/postmanlabs/newman/issues/168) and a few others, a complete rewrite was the best solution.
+[#347](https://github.com/postmanlabs/newman/issues/347),
+[#381](https://github.com/postmanlabs/newman/issues/381), and a few others, a complete rewrite was the best solution.
 
 ## General overview of features
 
@@ -29,10 +29,9 @@ Keeping in mind long standing issues such as
 It is still a work in progress, so there are a few features that are pending
 implementation:
 
-1. Support for stopping a run on failures
-2. Make generic and uncaught exceptions more readable in CLI
+1. Make generic and uncaught exceptions more readable in CLI
 
-## Migrating from v2.x
+## Changes since v2.x
 
 Migrating to Newman v3.x for most simple use cases is a trivial affair. We have taken care to support older CLI options.
 Which means, if you upgrade, it should just work! Having said that, we would soon discontinue the older CLI options and
@@ -44,7 +43,7 @@ qualities of the new Postman Runtime (jQuery deprecation, discontinuation of DOM
 usage changes across Newman V2 and V3, look at the table provided below.
 
 As such, if there is something specific that not working with respect to v2.x or any workaround that you were doing,
-we will be glad to chat and find out if they can still be done. Simply join the #newman channel in our [Slack
+we will be glad to chat and find out if they can still be done. Simply join the #newman channel on our [Slack
 Community](https://www.getpostman.com/slack-invite).
 
 ### HTML, XML and other outputs are now "reporters"
@@ -60,7 +59,7 @@ any more. However, `--no-color` is still available to force not to use colors in
 
 ### Discontinued CLI Options
 
-#### --disable-unicode
+#### -S --noTestSymbols
 This switch no longer has any effect. Newman v3 effectively handles unicode output on Windows Platform.
 
 #### -p, --pretty
@@ -68,7 +67,7 @@ This switch used to render exported JSON files in newman v2 in a pretty format. 
 format and as such, this switch is now not needed. If you want to use compressed export formats, run the exported files
 through some JSON minifier.
 
-### V2 to V3 migration guide:
+## V2 to V3 migration guide:
 
 The following tables enumerate the options that have either been deprecated / discontinued, or renamed in Newman V3. The
 V3 equivalents provided in the second column are intended for use with the `run` command (described below), and will not
@@ -82,10 +81,33 @@ no longer supported, or is implemented by default.
 Options missing from the migration tables have been left as they were from Newman V2. For the complete list of supported
 options, see [README.md](README.md)
 
-#### CLI
+### CLI
 
-##### Migration table
+#### Sample use cases
 
+##### 1. A collection run with all basic options configured, excluding reporter actions
+
+###### V2 command
+```terminal
+newman --collection collection.json --environment env.json --data data.csv --globals globals.json --number 2 --exportGlobals globalOut.json --exportEnvironment envOut.json --delay 10 --requestTimeout 5000 --noTestSymbols --tls --exitCode --whiteScreen --avoidRedirects
+```
+###### V3 equivalent
+```terminal
+newman run collection.json --environment env.json --iteration-data data.csv --globals globals.json --iteration-count 2 --export-globals globalOut.json --export-environment envOut.json --delay-request 10 --timeout-request 5000 --disable-unicode --suppress-exit-code --ignore-redirects
+```
+
+##### 2. A collection run with various reporter tasks
+
+###### V2 command
+```terminal
+newman --url https://a.com/collection.json --environment-url https://a.com/env.json --noColor --outputFile jsonOut.json --testReportFile xmlOut.xml --html htmlOutput.html --outputFileVerbose verboseOut.log
+```
+###### V3 equivalent
+```terminal
+newman run https://a.com/collection.json --environment https://a.com/env.json --reporters cli,html,json,junit --reporter-json-export jsonOut.json --reporter-junit-export xmlOut.xml --reporter-html-export htmlOutput.html
+```
+
+#### CLI migration table
 | V2 CLI option | V3 equivalent | V2 option Status |
 |---------------|---------------|------------------|
 | -c --collection | N.A | Deprecated (Pass the collection file path without the collection flag) |
@@ -113,48 +135,13 @@ options, see [README.md](README.md)
 | -O --outputFileVerbose | N.A | **Discontinued** |
 | -R --avoidRedirects | --ignore-redirects | Deprecated |
 
-##### Sample use cases
-
-1. V2 command:
-
-```terminal
-newman -c collection.json -e env.json -d data.csv -g globals.json -n 2 -G globalOut.json -E envOut.json -y 10 -r 5000 -S -l -x -w -R
-```
-
-   V3 equivalent:
-
-```terminal
-newman run collection.json -e env.json -d data.csv -g globals.json -n 2 --export-globals globalOut.json --export-environment envOut.json --delay-request 10 --timeout-request 5000 --disable-unicode -x  --ignore-redirects
-```
-
-2. V2 command:
-
-```terminal
-newman -u https://a.com/collection.json --environment-url https://a.com/env.json -C -o jsonOut.json -t xmlOut.xml -H htmlOutput.html -O verboseOut.log
-```
-
-   V3 equivalent:
-
-```terminal
-newman run https://a.com/collection.json -e https://a.com/env.json --reporters cli,html,json,junit --reporter-json-export jsonOut.json --reporter-junit-export xmlOut.xml --reporter-html-export htmlOutput.html
-```
-
-#### Modular usage
-
-| V2 `options` | V3 equivalent | V2 option Status |
-|---------------|---------------|------------------|
-| data | iterationData | Deprecated |
-| number | iterationCount | Deprecated |
-| delay | delayRequest | Deprecated |
-| requestTimeout | timeoutRequest | Deprecated |
-| noTestSymbols | disableUnicode | **Discontinued** |
-| exitCode | supressExitCode | Deprecated |
-| avoidRedirects | ignoreRedirects | Deprecated |
+### Library usage
 
 #### Sample use cases
 
-1. V2 command:
+##### 1. A collection run with all basic options configured, excluding reporter actions
 
+###### V2 command
 ```javascript
 newman.execute({
     collection: 'collection.json',
@@ -174,8 +161,7 @@ newman.execute({
 }, callback);
 ```
 
-   V3 equivalent:
-
+###### V3 equivalent
 ```javascript
 newman.run({
     collection: 'collection.json',
@@ -193,8 +179,9 @@ newman.run({
 }, callback);
 ```
 
-2. V2 command:
+##### 2 A collection run with various reporter tasks
 
+###### V2 command
 ```javascript
 newman.execute({
     collection: 'https://a.com/collection.json',
@@ -206,8 +193,7 @@ newman.execute({
 }, callback);
 ```
 
-   V3 equivalent:
-
+###### V3 equivalent
 ```javascript
 newman.run({
     collection: 'https://a.com/collection.json',
@@ -215,3 +201,14 @@ newman.run({
     // need help on the remaining options
 }, callback);
 ```
+
+#### Library migration table
+| V2 `options` | V3 equivalent | V2 option Status |
+|---------------|---------------|------------------|
+| data | iterationData | Deprecated |
+| number | iterationCount | Deprecated |
+| delay | delayRequest | Deprecated |
+| requestTimeout | timeoutRequest | Deprecated |
+| noTestSymbols | disableUnicode | **Discontinued** |
+| exitCode | supressExitCode | Deprecated |
+| avoidRedirects | ignoreRedirects | Deprecated |
