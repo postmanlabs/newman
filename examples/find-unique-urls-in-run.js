@@ -13,7 +13,10 @@ newman.run({ collection: require('./sample-collection.json') })
         console.log(`Running ${args.cursor.length} request(s) and ${args.cursor.cycles} iteration(s)`);
     })
     .on('request', function (err, args) {
-        if (err) { return; }
+        if (err) {
+            console.error(err);
+            return;
+        }
 
         var url = args.request.url.toString();
 
