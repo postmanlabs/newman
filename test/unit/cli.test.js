@@ -9,9 +9,8 @@ describe('cli parser', function () {
     });
 
     it('should display the current Newman version', function (done) {
-        cli.rawOptions('-v -H -j'.split(' '), 'newmantests', function (err) {
+        cli(['--version'], 'newmantests', function (err) {
             expect(err).to.be(null);
-
             done();
         });
     });
