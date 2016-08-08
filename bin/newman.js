@@ -2,7 +2,6 @@
 require('../lib/node-version-check');
 
 var _ = require('lodash'),
-    semver = require('semver'),
 
     cli = require('../lib/cli'),
     newman = require('../'),
@@ -16,9 +15,6 @@ var _ = require('lodash'),
     dispatch = function (options, callback) {
         var command = options.command;
 
-        if (_.isString(semver.valid(options))) {
-            return callback();
-        }
         if (_.isFunction(newman[command])) {
             newman[command](options[command], callback);
         }
