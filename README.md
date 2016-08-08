@@ -21,7 +21,7 @@ The easiest way to install Newman is using NPM. If you have NodeJS installed, it
 installed as well.
 
 ```terminal
-$ npm install newman --global;
+$ npm install newman@next --global;
 ```
 
 The `newman run` command allows you to specify a collection to be run. You can easily export your Postman

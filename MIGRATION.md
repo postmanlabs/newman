@@ -185,7 +185,31 @@ newman.run({
 ```javascript
 newman.execute({
     collection: 'https://a.com/collection.json',
-    environment: 'https://a.com/env.json',
+    environment: {
+        "id": "my-id",
+        "name": "testEnv",
+        "values": [
+            {
+                "key": "env",
+                "value": "env2",
+            },
+            {
+                "key": "data",
+                "value": "env2",
+            }
+        ]
+    },
+    globals: [
+        {
+            key: "var1",
+            value: "/get",
+            enabled: true
+        },
+        {
+            key: "var2",
+            value: "Global Bar",
+        }
+    ],
     outputFile: 'jsonOut.json',
     testReportFile: 'xmlOut.xml',
     html: 'htmlOutput.html',
@@ -197,8 +221,43 @@ newman.execute({
 ```javascript
 newman.run({
     collection: 'https://a.com/collection.json',
-    environment: 'https://a.com/env.json',
-    // need help on the remaining options
+    environment: {
+        "id": "my-id",
+        "name": "testEnv",
+        "values": [
+            {
+             "key": "env",
+             "value": "env2",
+            },
+            {
+             "key": "data",
+             "value": "env2",
+            }
+        ]
+    },
+    iterationData: [ {a: 1}, {a: 2} ],
+    globals: [
+        {
+            key: "var1",
+            value: "/get",
+            enabled: true
+        },
+        {
+            key: "var2",
+            value: "Global Bar",
+        }
+    ],
+    reporter: {
+        html: {
+            export: 'htmlOutput.html'
+        },
+        junit: {
+            export: 'xmlOut.xml'
+        },
+        json: {
+            export: 'jsonOut.json'
+        }
+    }
 }, callback);
 ```
 
