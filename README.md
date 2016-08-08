@@ -6,9 +6,12 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Using Newman one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
 extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
-> For instructions on how to migrate to Newman V3, see our [migration guide](MIGRATION.md)
+## IMPORTANT NOTICE
+
+> ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options using reference from our [Newman v2 to v3 Migration Guide](MIGRATION.md)
 >
-> To view documentation of current stable 2.x release of Newman, refer the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md)
+> To view documentation of current stable 2.x release of Newman, refer the
+> [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md) of 2.x release.
 
 ## Getting started
 
@@ -58,7 +61,7 @@ newman.run({
 });
 ```
 
-**Note:** The newman v2.x `.execute` function has been deprecated and will be discontinued in future.
+**Note:** The newman v2.x `.execute` function has been discontinued.
 
 ## Commandline Options
 
@@ -134,39 +137,54 @@ newman.run({
 These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
 option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
 
-| Option      | Description     |
-|-------------|-----------------|
-| --reporter-cli-silent         | The CLI reporter is internally disabled and you see no output to terminal. |
-| --reporter-cli-no-summary     | The statistical summary table is not shown. |
-| --reporter-cli-no-failures    | This prevents the run failures from being separately printed. |
-| --reporter-cli-no-assertions  | This turns off the request-wise output as they happen. |
-| --reporter-cli-no-console     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+CLI reporter is enabled by default, you do not need to specifically provide the same as part of `--reporters` option.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
+| `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
+| `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
+| `--reporter-cli-no-assertions`  | This turns off the request-wise output as they happen. |
+| `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 
 ##### JSON reporter options
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. The only option it takes is
 the path to the file where to write the file. The content of this file is exactly same as the `summary` parameter sent
 to the callback when `newman.run()` is executed programmatically.
 
-- `--reporter-json-export <path>`<br />
+To enable JSON reporter, provide `--reporters json` as a CLI option.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+
 
 ##### HTML reporter options
-The HTML reporter produces a barebone HTML of the Newman run.
+The built-in HTML reporter produces and HTML output file outlining the summary and report of the Newman run. To enable
+JSON reporter, provide `--reporters html` as a CLI option.
 
-- `--reporter-html-export <path>`<br />
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
 
-<!--
-| `--timeout-run <ms>` | TODO |
-| `--timeout-script <ms>` | TODO |
--->
+##### JUNIT/XML reporter options
+Newman can output a summary of the collection run to a JUnit compatible XML file. To enable JSON reporter, provide
+`--reporters html` as a CLI option.
 
-Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+
+Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
+discontinued. For documentation on the older command options, refer to
+[README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
 ### `newman [options]`
 
-- `-h`, `--help`  
+- `-h`, `--help`<br />
   Show commandline help, including a list of options, and sample use cases.
 
-- `-v`, `--version`  
+- `-v`, `--version`<br />
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
 
@@ -234,23 +252,23 @@ argument object.**
 
 | Event     | Description   |
 |-----------|---------------|
-| start                     | This event is emitted at the start of a collection run |
-| beforeIteration           | This event is emitted just before an iteration commences |
-| beforeItem                |  |
-| beforePrerequest          | This event is emitted right before a `prerequest` script is executed |
-| prerequest                | This event is emitted right after a `prerequest` script has been run |
-| beforeRequest             | This event is emitted right before a request is intiated |
-| request                   | This event is emitted immediately after a request has completed |
-| beforeTest                | This event is emitted before a test run |
-| test                      | An event emitted after a test run has completed |
-| beforeScript              |  |
-| script                    |  |
-| item                      |  |
-| iteration                 | This event is emitted when the current collection run iteration ends  |
-| assertion                 | This event is emitted whenever any assertion is made within test scripts for a collection request |
-| console                   | This event handles console message bubbling to their appropriate layers |
-| exception                 | An event emitted when a run time exception occurs |
-| beforeDone                | A special event emitted to invoke all reporters and export directives |
+| start                     | The start of a collection run |
+| beforeIteration           | Before an iteration commences |
+| beforeItem                | Before an item execution begins (the set of prerequest->request->test) |
+| beforePrerequest          | Before `prerequest` script is execution starts |
+| prerequest                | After `prerequest` script execution completes |
+| beforeRequest             | Before an HTTP request is sent |
+| request                   | After response of the request is received |
+| beforeTest                | Before `test` script is execution starts |
+| test                      | After `test` script execution completes |
+| beforeScript              | Before any script (of type `test` or `prerequest`) is executed |
+| script                    | After any script (of type `test` or `prerequest`) is executed |
+| item                      | When an item (the whole set of prerequest->request->test) completes |
+| iteration                 | After an iteration completes |
+| assertion                 | This event is trigerred for every test assertion done within `test` scripts |
+| console                   | Every time a `console` function is called from within any script, this event is propagated |
+| exception                 | When any asynchronous error happen in `scripts` this event is trigerred |
+| beforeDone                | An event that is trigerred prior to the completion of the run |
 | done                      | This event is emitted when a collection run has completed, with or without errors |
 
 <!-- TODO: write about callback summary -->
