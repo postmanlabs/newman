@@ -32,7 +32,7 @@ describe('run summary', function () {
     it('must have tracking properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(Object.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run', 'exports'].sort());
+        expect(Object.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run'].sort());
 
         expect(summary.environment.object).be.an('function');
         expect(summary.globals.object).be.an('function');
