@@ -116,7 +116,7 @@ newman.run({
 
 #### Configuring Reporters
 
-- `--reporters <name>`<br />
+- `-r --reporters <name>`<br />
   Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
 
 - `--reporter-{{reporter-name}}-{{reporter-options}}`<br />
