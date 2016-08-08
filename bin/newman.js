@@ -23,7 +23,6 @@ var _ = require('lodash'),
         }
     };
 
-
 cli(process.argv.slice(2), 'newman', function (err, args) {
     if (err) {
         console.log(err.message || err);
