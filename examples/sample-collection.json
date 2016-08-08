@@ -10,7 +10,7 @@
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": "tests['response code is 200'] = (responseCode.code === 200);"
+        "exec": ["tests['response code is 200'] = (responseCode.code === 200);"]
       }
     }],
     "request": {
@@ -29,6 +29,20 @@
       "body": {
         "mode": "raw",
         "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
+      }
+    }
+  }, {
+    "name": "A simple POST request with JSON body",
+    "request": {
+      "url": "https://echo.getpostman.com/post",
+      "method": "POST",
+      "header": [{
+        "key": "Content-Type",
+        "value": "application/json"
+      }],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
       }
     }
   }]
