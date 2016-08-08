@@ -1,0 +1,40 @@
+{
+  "variables": [],
+  "info": {
+    "name": "CSV files are being parsed correctly",
+    "_postman_id": "1b3aa71e-0a61-29a8-d90b-502f89e8c7bf",
+    "description": "A set of tests to check for the correctness of data passed from csv data files",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "r1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"Name with comma sent correctly\"] = data.json.nameAndSurname === \"Abhijit, Kane\";\ntests[\"Name without comma sent correctly\"] = data.json.name === \"Abhijit Kane\";"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/post",
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nameAndSurname\": \"{{nameWithComma}}\",\n    \"name\": \"{{nameWithoutComma}}\"\n}"
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

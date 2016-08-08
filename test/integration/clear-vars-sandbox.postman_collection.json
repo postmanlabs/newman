@@ -1,0 +1,87 @@
+{
+  "variables": [],
+  "info": {
+    "name": "clearEnvironmentVariable and clearGlobalVariable should work",
+    "_postman_id": "29199569-c73e-da26-69f3-c6e644b00e25",
+    "description": "A set of tests to check for proper clearing of environment/global variables in the sandbox",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Before clearing",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "console.log(environment);var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env\"] = (data.args.a===\"2\");\ntests[\"Variable substitution from global\"] = (data.args.b===\"3\");\npostman.clearEnvironmentVariables();\npostman.clearGlobalVariables();"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": "postman.setEnvironmentVariable(\"e\", \"2\");\npostman.setGlobalVariable(\"g\",\"3\");"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?a={{e}}&b={{g}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": "rd"
+      },
+      "response": []
+    },
+    {
+      "name": "After clearing",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env not working after clearing\"] = (data.args.a===\"{{e}}\");\ntests[\"Variable substitution from global not working after clearing\"] = (data.args.b===\"{{g}}\");\npostman.setEnvironmentVariable(\"e\", \"2\");\npostman.setGlobalVariable(\"g\",\"3\");\ntests[\"Recreated vars\"]=environment.e===\"2\" && globals.g===\"3\"\npostman.clearEnvironmentVariable(\"e\");\npostman.clearGlobalVariable(\"g\");"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?a={{e}}&b={{g}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": "rd"
+      },
+      "response": []
+    },
+    {
+      "name": "After clearing",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "console.log(environment);console.log(globals);var data = JSON.parse(responseBody);\ntests[\"Variable substitution from env not working after clearing invididually\"] = (data.args.a===\"{{e}}\");\ntests[\"Variable substitution from global not working after clearing invididually\"] = (data.args.b===\"{{g}}\");"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?a={{e}}&b={{g}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": "rd"
+      },
+      "response": []
+    }
+  ]
+}

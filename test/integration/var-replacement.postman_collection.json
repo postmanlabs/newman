@@ -1,0 +1,41 @@
+{
+  "variables": [],
+  "info": {
+    "name": "testCollection",
+    "_postman_id": "29199569-c73e-da26-69f3-c6e644b00e25",
+    "description": "A set of tests to check for the proper substitution of blank and non-blank variables",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Valid and invalid variables",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"Variable substitution\"] = (data.args.var===\"replaced\");\ntests[\"No blank variable substitution\"] = (data.args.novar===\"{{novar}}\");"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": "postman.setEnvironmentVariable(\"var\", \"replaced\");"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/get?novar={{novar}}&var={{var}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

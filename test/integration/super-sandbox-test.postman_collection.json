@@ -1,0 +1,344 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Testing general sandbox functionality",
+		"_postman_id": "5c94a9d9-b0de-2a5c-9bd9-debadf2d89ad",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "r1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "try {\n    var jsonObject = xml2Json(responseBody);\n    console.log(jsonObject);\n    tests[\"xml2Json\"]=true;\n}\ncatch(e) {\n    console.log(\"xml2Json not supported\");\n    tests[\"xml2Json\"]=false;\n}\n\n\ntry {\n    console.log(postman.getResponseHeader(\"Content-Length\"));\n    tests[\"GetResponseHeader\"]=true;\n} catch(e) {\n    console.log(\"getResponseHeader not supported\");\n    tests[\"GetResponseHeader\"]=false;\n}\n\n\ntry {\n    console.log(postman.getResponseCookie(\"Content-Length\"));\n    tests[\"GetResponseCookie\"]=true;\n} catch(e) {\n    console.log(\"getResponseCookie not supported\");\n    tests[\"GetResponseCookie\"]=false;\n}\n\ntry {\n    console.log(\"RESCOOK: \" , responseCookies);\n} catch(e) {\n    console.log(\"responseCookies not supported\");\n}\n\ntests[\"Correct global\"] = globals.g1==\"0\";\n\nconsole.log(\"Request: \" + JSON.stringify(request));\nconsole.log(\"Environment: \" + JSON.stringify(environment));\nconsole.log(\"Globals: \" + JSON.stringify(globals));\nconsole.log(\"Response hedaers: \" + JSON.stringify(responseHeaders));\nconsole.log(\"Response body: \" + JSON.stringify(responseBody));\nconsole.log(\"Response time: \" + JSON.stringify(responseTime));\nconsole.log(\"Response code: \" + JSON.stringify(responseCode));\n\n\ntry {\n    console.log(postman.clearEnvironmentVariables());\n} catch(e) {\n    console.log(\"clearEnvironmentVariables not supported\");\n}\n\ntry {\n    console.log(postman.clearGlobalVariables());\n} catch(e) {\n    console.log(\"clearGlobalVariables not supported\");\n}\n\npostman.setGlobalVariable(\"g1\", \"0\");\npostman.setEnvironmentVariable(\"e1\", \"0\");\n\ntry {\n    _.each([1], function(v) {tests['Lodash working'] = true;});\n}\ncatch(e) {\n    tests['Lodash working'] = false;\n}\n\n\nvar newString=\"diabetes\";\ntests[\"SugarJS working\"]=newString.has(\"betes\");\n\ntests[\"tv4 present\"] = (typeof tv4.validate === \"function\");\n\ntests[\"CryptoJS md5\"] = (CryptoJS.MD5(\"jasonpurse\") == \"288d14f08b5ad40da43dbe06467729c9\");"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": "postman.setGlobalVariable(\"g1\", \"0\");"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/xml",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "r2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nconsole.log(\"Request for Post: \" + JSON.stringify(request));\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct GUID: \" + jsonData.form.guid] = jsonData.form.guid.length === 36;\ntests[\"Correct Random: \" + jsonData.form.randomInt] = parseInt(jsonData.form.randomInt)>1;\ntests[\"Correct Timestamp: \" + jsonData.form.timestamp] = parseInt(jsonData.form.timestamp)>1000\n\ntests[\"Correct global\"] = jsonData.form.global == \"0\";\ntests[\"Correct global2\"] = jsonData.form.global == globals.g1;\ntests[\"Correct envVar\"] = jsonData.form.envValue == \"0\";\ntests[\"Correct envVar2\"] = jsonData.form.envValue == environment.e1;"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/post",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "k1",
+							"value": "v1",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "k2",
+							"value": "v2",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "guid",
+							"value": "{{$guid}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "timestamp",
+							"value": "{{$timestamp}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "randomInt",
+							"value": "{{$randomInt}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "global",
+							"value": "{{g1}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "envValue",
+							"value": "{{e1}}",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "r3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/put",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "r4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/patch",
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/delete",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "head",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body is correct\"] = responseBody === \"\";"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/get",
+				"method": "HEAD",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "options",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body is correct\"] = responseBody === \"\";"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/get",
+				"method": "OPTIONS",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "r2 copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nconsole.log(\"Request for RAW Post: \" + JSON.stringify(request));\n"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/post",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "RAWDATA"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "BasicAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct aath header\"] = jsonData.headers.Authorization.indexOf(\"YWJoaWppdDprYW5l\")>-1;"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "abhijit",
+						"password": "kane",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "httpbin.org/post",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DigestAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var jsonData = JSON.parse(responseBody);\ntests[\"Correct aath header\"] = jsonData.headers.Authorization.length>10;"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": {
+						"algorithm": "",
+						"username": "aa",
+						"realm": "aa",
+						"password": "aa",
+						"nonce": "",
+						"nonceCount": "",
+						"clientNonce": "",
+						"opaque": "",
+						"qop": ""
+					}
+				},
+				"url": "httpbin.org/post",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Recursive Res",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var jsonData = JSON.parse(responseBody);\n//tests[\"Recur. res. working\"] = jsonData.args.a == \"kane\";"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": "postman.setGlobalVariable(\"name1\", \"kane\");\npostman.setGlobalVariable(\"i\", \"1\");"
+					}
+				}
+			],
+			"request": {
+				"url": "httpbin.org/get?a={{name{{i}}}}",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
