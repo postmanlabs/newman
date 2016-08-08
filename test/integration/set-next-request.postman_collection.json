@@ -1,0 +1,80 @@
+{
+  "variables": [],
+  "info": {
+    "name": "NewmanSetNextRequest",
+    "_postman_id": "d6f7bb29-2258-4e1b-9576-b2315cf5b77e",
+    "description": "A set of tests to verify set and get operations on environment variables",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "postman.setEnvironmentVariable('method', 'get');\npostman.setEnvironmentVariable('count', '1');\nconsole.log('Environment is now: ', environment);\npostman.setNextRequest('method');"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/post",
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "html",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var count = _.parseInt(postman.getEnvironmentVariable('count'));\ncount++;\npostman.setEnvironmentVariable('count', String(count));\n\nif (responseCode.code === 200) {\n    postman.setEnvironmentVariable('method', 'headers');\n    console.log('Setting next request to \"method\"');\n    postman.setNextRequest('method');\n}"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://httpbin.org/html",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "method",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var jsonData = JSON.parse(responseBody);\nvar count = _.parseInt(postman.getEnvironmentVariable('count'));\ncount++;\npostman.setEnvironmentVariable('count', String(count));\n\nif (jsonData.url === 'http://httpbin.org/get') {\n    console.log('Setting next request to \"html\"');\n    postman.setNextRequest('html');\n}\nelse if (!jsonData.url && jsonData.headers) {\n    console.log('Ending shit here.'); tests['Success'] = _.parseInt(postman.getEnvironmentVariable('count')) === 4\n    postman.setNextRequest(null);\n}\nelse {\n    console.log('Not setting next request.. ', responseBody);\n}"
+          }
+        }
+      ],
+      "request": {
+        "url": "httpbin.org/{{method}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

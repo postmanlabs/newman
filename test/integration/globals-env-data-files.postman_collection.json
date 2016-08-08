@@ -1,0 +1,64 @@
+{
+  "variables": [],
+  "info": {
+    "name": "globals+env+data tests",
+    "_postman_id": "dcc7e181-766f-e7ef-4b94-efbfe57189a9",
+    "description": "A set of tests for global and data variable operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "tests[\"Content-Type is present\"] = responseHeaders.hasOwnProperty(\"Content-Type\");var data1 = JSON.parse(responseBody);\ntests[\"testGlobalSetFromPRScript\"] = data1.args.prsG === \"prsG\";\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG\";\n\ntests[\"testEnvSetFromPRScript\"] = data1.args.prsE === \"prsE\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";\n\npostman.setGlobalVariable(\"prsG\", \"prsG1\");\n\npostman.setEnvironmentVariable(\"prsE\", \"prsE1\");"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": "postman.setGlobalVariable(\"prsG\", \"prsG\");\npostman.setGlobalVariable(\"prsE\", \"prsEaRDDDROR\");\npostman.setEnvironmentVariable(\"prsE\", \"prsE\");\n"
+          }
+        }
+      ],
+      "request": {
+        "url": "{{url}}/get?global={{global}}&env={{env}}&data={{data}}&prsE={{prsE}}&prsG={{prsG}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": "Similar to httpbin.org/get. Return GET data."
+      },
+      "response": []
+    },
+    {
+      "name": "GET copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data1 = JSON.parse(responseBody);\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG1\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE1\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";"
+          }
+        }
+      ],
+      "request": {
+        "url": "{{url}}/get?global={{global}}&env={{env}}&data={{data}}",
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": "Similar to httpbin.org/get. Return GET data."
+      },
+      "response": []
+    }
+  ]
+}

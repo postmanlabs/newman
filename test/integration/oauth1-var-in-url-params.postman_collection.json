@@ -1,0 +1,56 @@
+{
+  "variables": [],
+  "info": {
+    "name": "oauth1-params-in-url",
+    "_postman_id": "3cd655fb-f1e6-e06f-73ad-03cf3792a502",
+    "description": "A set of sanity tests to check the validity of set and retrieved OAuth1 tokens",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "https://echo.getpostman.com/oauth1?a={{vala}}",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": "postman.setEnvironmentVariable('vala', 'omg');"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "oauth1",
+          "oauth1": {
+            "consumerKey": "RKCGzna7bv9YD57c",
+            "consumerSecret": "D+EdQ-gs$-%@2Nu7",
+            "token": "",
+            "tokenSecret": "",
+            "signatureMethod": "HMAC-SHA1",
+            "timeStamp": 1461319769,
+            "nonce": "ik3oT5",
+            "version": "1.0",
+            "realm": "",
+            "addParamsToHeader": true,
+            "addEmptyParamsToSign": false
+          }
+        },
+        "url": "https://echo.getpostman.com/oauth1?a={{vala}}",
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "OAuth oauth_consumer_key=\"RKCGzna7bv9YD57c\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1461319769\",oauth_nonce=\"ik3oT5\",oauth_version=\"1.0\",oauth_signature=\"x0gnkYdST73FwY8oAqtV2O9MzGc%3D\"",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
