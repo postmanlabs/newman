@@ -17,6 +17,7 @@ describe('project repository', function () {
             json = JSON.parse(content);
         }
         catch (e) {
+            console.error(e);
             content = '';
             json = {};
         }
