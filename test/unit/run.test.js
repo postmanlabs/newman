@@ -61,10 +61,11 @@ describe('run module', function () {
             },
             function (next) {
                 expect(run).withArgs({
-                    collection: '{'
+                    collection: 'abcd'
                 }, function (err) {
                     expect(err).be.ok();
-                    expect(err && err.message).be('newman: collection could not be loaded');
+                    console.log(err.help);
+                    expect(err && err.help).be('unable to read data from file "abcd"');
                     next();
                 }).not.throwException();
             }
