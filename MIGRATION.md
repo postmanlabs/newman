@@ -1,8 +1,8 @@
-# Newman <sup>beta</sup>
+# Newman
 
 ## Why?
 
-Newman v3.0 Beta is a complete rewrite of Newman from the ground up, which works well with other Node libraries, and
+Newman v3.0 is a complete rewrite of Newman from the ground up, which works well with other Node libraries, and
 allows flexibility for future features such as parallel collection runs, or performing parallel requests within the
 same run. Above all, Newman now uses [Postman Runtime](https://github.com/postmanlabs/postman-runtime/) in order to
 provide a consistent experience on Postman Apps and on CLI.
