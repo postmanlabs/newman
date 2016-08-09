@@ -8,7 +8,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
 
 ## IMPORTANT NOTICE
 
-> ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options using reference from our [Newman v2 to v3 Migration Guide](MIGRATION.md)
+> ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options by referring to our [Newman v2 to v3 Migration Guide](MIGRATION.md)
 >
 > To view documentation of current stable 2.x release of Newman, refer the
 > [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md) of 2.x release.
@@ -21,7 +21,7 @@ The easiest way to install Newman is using NPM. If you have NodeJS installed, it
 installed as well.
 
 ```terminal
-$ npm install newman@next --global;
+$ npm install newman --global;
 ```
 
 The `newman run` command allows you to specify a collection to be run. You can easily export your Postman
