@@ -7,12 +7,6 @@ allows flexibility for future features such as parallel collection runs, or perf
 same run. Above all, Newman now uses [Postman Runtime](https://github.com/postmanlabs/postman-runtime/) in order to
 provide a consistent experience on Postman Apps and on CLI.
 
-Keeping in mind long standing issues such as
-[#168](https://github.com/postmanlabs/newman/issues/168)
-[#290](https://github.com/postmanlabs/newman/issues/290),
-[#347](https://github.com/postmanlabs/newman/issues/347),
-[#381](https://github.com/postmanlabs/newman/issues/381), and a few others, a complete rewrite was the best solution.
-
 ## General overview of features
 
 0. Newman collection runs now happen with the `run` command. See sections below for more examples.
