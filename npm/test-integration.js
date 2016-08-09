@@ -61,7 +61,8 @@ module.exports = function (exit) {
                     collection: test.collectionJSON,
                     environment: test.environmentJSON,
                     globals: test.globalsJSON,
-                    iterationData: test.dataCSV || test.dataJSON
+                    iterationData: test.dataCSV || test.dataJSON,
+                    abortOnFailure: true
                 }, config.run), function (err, summary) {
                     err && (err.source = test); // store the meta in error
                     next(err, summary);
