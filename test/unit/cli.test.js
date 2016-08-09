@@ -37,7 +37,7 @@ describe('cli parser', function () {
                 expect(config.run.collection).to.be('http://a.com/myCollection.json');
                 expect(config.run.environment).to.be('http://a.com/env.json');
 
-                expect(config.run.stopOnError).to.be(false);
+                expect(config.run.bail).to.be(false);
                 expect(config.run.suppressExitCode).to.be(false);
 
                 done();
@@ -157,7 +157,7 @@ describe('cli parser', function () {
             '--delay-request 12000 ' +
             '--timeout-request 5000 ' +
             '--ignore-redirects ' +
-            '--stop-on-error ' +
+            '--bail ' +
             '--suppress-exit-code ' +
             '-k').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
@@ -182,7 +182,7 @@ describe('cli parser', function () {
                 expect(opts.reporters).to.contain('html');
                 expect(opts.reporters).to.not.contain('junit');
 
-                expect(opts.stopOnError).to.be(true);
+                expect(opts.bail).to.be(true);
                 expect(opts.suppressExitCode).to.be(true);
 
                 done();
