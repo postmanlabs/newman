@@ -40,7 +40,7 @@ $ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-79
 
 For the complete list of options, refer the [Commandline Options](#commandline-options) section below.
 
-[![terminal-demo](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv.png)](https://asciinema.org/a/9sb9wrmy5v47j7msb7a7f3osv?autoplay=1)
+![terminal-demo](https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/newman-terminal.gif)
 
 ### Using Newman as a NodeJS module
 
