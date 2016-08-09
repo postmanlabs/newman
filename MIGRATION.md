@@ -83,11 +83,11 @@ options, see [README.md](README.md)
 
 ###### V2 command
 ```terminal
-newman --collection collection.json --environment env.json --data data.csv --globals globals.json --number 2 --exportGlobals globalOut.json --exportEnvironment envOut.json --delay 10 --requestTimeout 5000 --noTestSymbols --tls --exitCode --whiteScreen --avoidRedirects
+newman --collection collection.json --environment env.json --data data.csv --globals globals.json --number 2 --exportGlobals globalOut.json --exportEnvironment envOut.json --delay 10 --requestTimeout 5000 --noTestSymbols --tls --exitCode --whiteScreen --avoidRedirects --stopOnError
 ```
 ###### V3 equivalent
 ```terminal
-newman run collection.json --environment env.json --iteration-data data.csv --globals globals.json --iteration-count 2 --export-globals globalOut.json --export-environment envOut.json --delay-request 10 --timeout-request 5000 --disable-unicode --suppress-exit-code --ignore-redirects
+newman run collection.json --environment env.json --iteration-data data.csv --globals globals.json --iteration-count 2 --export-globals globalOut.json --export-environment envOut.json --delay-request 10 --timeout-request 5000 --disable-unicode --suppress-exit-code --ignore-redirects --bail
 ```
 
 ##### 2. A collection run with various reporter tasks
@@ -116,7 +116,7 @@ newman run https://a.com/collection.json --environment https://a.com/env.json --
 | -E --exportEnvironment | --export-environment | Deprecated |
 | -y --delay | --delay-request | Deprecated |
 | -r --requestTimeout | --timeout-request | Deprecated |
-| -s --stopOnError | **--bail** | Deprecated |
+| -s --stopOnError | --bail | Deprecated |
 | -j --noSummary | --reporter-cli-no-summary | Deprecated |
 | -C --noColour | --no-color | Deprecated |
 | -S --noTestSymbols | --disable-unicode | **Discontinued** |

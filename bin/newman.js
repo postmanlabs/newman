@@ -33,7 +33,7 @@ cli(process.argv.slice(2), 'newman', function (err, args) {
     dispatch(args, function (err) {
         if (err) {
             console.error(err);
-            process.exit(_.toNumber(_.get(args, 'run.suppressExitCode', true)));
+            process.exit(_.get(args, 'run.suppressExitCode') ? 1 : 0);
         }
     });
 });
