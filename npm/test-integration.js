@@ -61,8 +61,7 @@ module.exports = function (exit) {
                     collection: test.collectionJSON,
                     environment: test.environmentJSON,
                     globals: test.globalsJSON,
-                    iterationData: test.dataCSV || test.dataJSON,
-                    abortOnError: true
+                    iterationData: test.dataCSV || test.dataJSON
                 }, config.run), function (err, summary) {
                     err && (err.source = test); // store the meta in error
                     next(err, summary);
@@ -76,7 +75,6 @@ module.exports = function (exit) {
         else {
             console.log('\nintegration test failed:'.red);
             console.dir(_.omit(err, ['stacktrace', 'stack']), { colors: true });
-
         }
 
         exit(err, results);
