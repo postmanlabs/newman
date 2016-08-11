@@ -71,11 +71,11 @@ module.exports = function (exit) {
         }
     ], function (err, results) {
         if (!err) {
-            console.log(`${results.length} integrations ok!`.green);
+            console.log(`\n${results.length} integrations ok!\n`.green);
         }
         else {
-            console.log('\nintegration test failed:'.red);
-            console.dir(_.omit(err, ['stacktrace', 'stack']), { colors: true });
+            console.error('\nintegration test failed:'.red);
+            console.error(_.omit(err, ['stacktrace', 'stack']), { colors: true });
         }
 
         exit(err, results);
