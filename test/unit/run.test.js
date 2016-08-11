@@ -80,8 +80,10 @@ describe('run module', function () {
             function (next) {
                 expect(run).withArgs({
                     collection: sampleCollection
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).be(null);
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(0);
                     next();
                 }).not.throwException();
             },
@@ -90,8 +92,10 @@ describe('run module', function () {
                 expect(run).withArgs({
                     collection: sampleCollection,
                     bail: true
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).be(null);
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(0);
                     next();
                 }).not.throwException();
             },
@@ -100,8 +104,10 @@ describe('run module', function () {
                 expect(run).withArgs({
                     collection: sampleCollection,
                     suppressExitCode: true
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).be(null);
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(0);
                     next();
                 }).not.throwException();
             },
@@ -111,8 +117,10 @@ describe('run module', function () {
                     collection: sampleCollection,
                     bail: true,
                     suppressExitCode: true
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).be(null);
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(0);
                     next();
                 }).not.throwException();
             }
@@ -127,8 +135,10 @@ describe('run module', function () {
             function (next) {
                 expect(run).withArgs({
                     collection: badCollection
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).not.be.ok();
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(1);
                     next();
                 }).not.throwException();
             },
@@ -137,8 +147,10 @@ describe('run module', function () {
                 expect(run).withArgs({
                     collection: badCollection,
                     bail: true
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).not.be.ok();
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(2);
                     next();
                 }).not.throwException();
             },
@@ -147,8 +159,10 @@ describe('run module', function () {
                 expect(run).withArgs({
                     collection: badCollection,
                     suppressExitCode: true
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).be(null);
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(1);
                     next();
                 }).not.throwException();
             },
@@ -158,8 +172,10 @@ describe('run module', function () {
                     collection: badCollection,
                     bail: true,
                     suppressExitCode: true
-                }, function (err) {
+                }, function (err, summary) {
                     expect(err).be(null);
+                    expect(summary.run.error).be(null);
+                    expect(summary.run.failures.length).to.be(2);
                     next();
                 }).not.throwException();
             }

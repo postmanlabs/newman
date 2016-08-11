@@ -14,7 +14,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "tests[\"Failed test\"] = responseCode.code !== 200;"
+						"exec": "tests[\"Passed test\"] = responseCode.code === 200;"
 					}
 				}
 			],

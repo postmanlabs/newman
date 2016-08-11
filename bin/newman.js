@@ -25,16 +25,20 @@ var _ = require('lodash'),
 
 cli(process.argv.slice(2), 'newman', function (err, args) {
     if (err) {
-        console.log(err.message || err);
-        console.log('');
-        err.help && console.log(err.help);  // will print out usage information.
+        err.help && console.log(err.help + '\n');  // will print out usage information.
+        console.error(err.message || err);
         return;
     }
+
     dispatch(args, function (err, summary) {
-        var runError = err || summary.run.failures.length || summary.run.error;
+        var runError = err || summary.run.error || summary.run.failures.length;
+
+        if (err) {
+            err.help && console.log(err.help);  // will print out usage information.
+            console.error(err.message || err);
+        }
 
         if (runError && !_.get(args, 'run.suppressExitCode')) {
-            console.error(runError);
             process.exit(1);
         }
     });
