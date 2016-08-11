@@ -27,7 +27,8 @@
     "test-system": "node npm/test-system.js",
     "test-lint": "node npm/test-lint.js",
     "test-unit": "node npm/test-unit.js",
-    "test-integration": "node npm/test-integration.js"
+    "test-integration": "node npm/test-integration.js",
+    "test-cli": "node npm/test-cli.js"
   },
   "author": "Postman Labs <help@getpostman.com> (=)",
   "license": "Apache-2.0",

@@ -13,7 +13,7 @@ var fs = require('fs'),
 
 module.exports = function (exit) {
     // banner line
-    console.log('Running integration tests using local newman...'.yellow.bold);
+    console.log('Running integration tests using local newman as node module...'.yellow.bold);
 
     async.waterfall([
         // get all files within the spec source directory
