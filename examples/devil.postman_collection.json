@@ -1,0 +1,34 @@
+{
+	"variables": [],
+	"info": {
+		"name": "bad-collection",
+		"_postman_id": "c5d5c77f-9499-b3d9-b118-c5fa15f22537",
+		"description": "This collection comprises a sole request that always errors out, created with the intent of testing correct exit code handling logic.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "echo.getpostman.com/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Failed test\"] = responseCode.code !== 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "echo.getpostman.com/get",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "A request that always fails at the tests"
+			},
+			"response": []
+		}
+	]
+}

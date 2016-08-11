@@ -30,10 +30,12 @@ cli(process.argv.slice(2), 'newman', function (err, args) {
         err.help && console.log(err.help);  // will print out usage information.
         return;
     }
-    dispatch(args, function (err) {
-        if (err) {
-            console.error(err);
-            process.exit(_.get(args, 'run.suppressExitCode') ? 0 : 1);
+    dispatch(args, function (err, summary) {
+        var runError = err || summary.run.failures.length || summary.run.error;
+
+        if (runError && !_.get(args, 'run.suppressExitCode')) {
+            console.error(runError);
+            process.exit(1);
         }
     });
 });
