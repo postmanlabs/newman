@@ -184,7 +184,7 @@ discontinued. For documentation on the older command options, refer to
 - `-h`, `--help`<br />
   Show commandline help, including a list of options, and sample use cases.
 
-- `-v`, `--version`<br />
+- `--version`<br />
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
 

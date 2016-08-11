@@ -1,0 +1,72 @@
+{
+	"id": "8868549d-a872-55bf-138e-4ef9855f4f4c",
+	"name": "regression tests",
+	"description": "",
+	"order": [
+		"13d60357-a26a-659c-9b97-bb8caca389cd",
+		"eeaa5b01-a9f8-f630-e0c7-7c85a74fd60a",
+		"dc930208-754a-bbac-d61e-663e7d5c1f9c"
+	],
+	"folders": [],
+	"timestamp": 1470908553930,
+	"owner": "640245",
+	"public": false,
+	"published": false,
+	"requests": [
+		{
+			"id": "13d60357-a26a-659c-9b97-bb8caca389cd",
+			"headers": "",
+			"url": "https://echo.getpostman.com/cookies/set?foo1={{envKey}}&foo2=bar",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": "var cookies = JSON.parse(responseBody).cookies;\n\ntests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"foo1 cookie is present\"] = cookies[\"foo1\"] == postman.getEnvironmentVariable(\"envKey\");",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1470909701602,
+			"name": "https://echo.getpostman.com/cookies/set?foo1={{temp}}&foo2=bar",
+			"description": "",
+			"collectionId": "8868549d-a872-55bf-138e-4ef9855f4f4c",
+			"responses": []
+		},
+		{
+			"id": "dc930208-754a-bbac-d61e-663e7d5c1f9c",
+			"headers": "//disabled-header: randomHeaderString\n",
+			"url": "https://echo.getpostman.com/headers",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": "var headers = JSON.parse(responseBody).headers;\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n\ntests[\"Disabled header is present\"] = !headers[\"disabled-header\"];",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1470912234116,
+			"name": "https://echo.getpostman.com/headers",
+			"description": "",
+			"collectionId": "8868549d-a872-55bf-138e-4ef9855f4f4c",
+			"responses": []
+		},
+		{
+			"id": "eeaa5b01-a9f8-f630-e0c7-7c85a74fd60a",
+			"headers": "",
+			"url": "https://expired.badssl.com",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1470909678015,
+			"name": "https://expired.badssl.com",
+			"description": "",
+			"collectionId": "8868549d-a872-55bf-138e-4ef9855f4f4c",
+			"responses": []
+		}
+	]
+}
