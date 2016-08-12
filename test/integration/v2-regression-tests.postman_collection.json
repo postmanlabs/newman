@@ -1,0 +1,87 @@
+{
+	"variables": [],
+	"info": {
+		"name": "regression_tests",
+		"_postman_id": "925beee2-97e5-3122-5067-6bb31e07aad2",
+		"description": "A collection to help check backward compatibility and keep previously resolved issue from re-surfacing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Variables as query parameters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var cookies = JSON.parse(responseBody).cookies;\n\ntests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"foo1 cookie is present in the response body\"] = cookies[\"foo1\"] === postman.getEnvironmentVariable(\"envKey\");"
+					}
+				}
+			],
+			"request": {
+				"url": "https://echo.getpostman.com/cookies/set?foo1={{envKey}}&foo2=bar",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "This request checks for the correct handling of variables as query parameters"
+			},
+			"response": []
+		},
+		{
+			"name": "Insecurity checks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "https://expired.badssl.com",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "This request validates running with the insecure option set to true"
+			},
+			"response": []
+		},
+		{
+			"name": "Disabled header",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var headers = JSON.parse(responseBody).headers;\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n\ntests[\"Disabled header is absent\"] = !headers[\"disabled-header\"];"
+					}
+				}
+			],
+			"request": {
+				"url": "https://echo.getpostman.com/headers",
+				"method": "GET",
+				"header": [
+					{
+						"key": "//disabled-header",
+						"value": "randomHeaderString",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "Checks for the absence of disabled headers in the response object"
+			},
+			"response": []
+		}
+	]
+}
