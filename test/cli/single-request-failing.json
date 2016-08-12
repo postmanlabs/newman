@@ -1,0 +1,23 @@
+{
+  "info": {
+    "name": "Example Collection with Failing Tests",
+    "description": "This collection is to illustrate how a typical collection having failing tests run on Newman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+
+  "item": [{
+    "name": "Status Code Test",
+    "description": "Request that returns 404, but test expects 200 status code",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": ["tests['response code is 200'] = (responseCode.code === 200);"]
+      }
+    }],
+    "request": {
+      "url": "https://echo.getpostman.com/status/404",
+      "method": "GET"
+    }
+  }]
+}

@@ -25,15 +25,21 @@ var _ = require('lodash'),
 
 cli(process.argv.slice(2), 'newman', function (err, args) {
     if (err) {
-        console.log(err.message || err);
-        console.log('');
-        err.help && console.log(err.help);  // will print out usage information.
-        return;
+        err.help && console.log(err.help + '\n');  // will print out usage information.
+        console.error(err.message || err);
+        return process.exit(1); // @todo: args do not arrive on CLI error hence cannot read `-x`
     }
-    dispatch(args, function (err) {
+
+    dispatch(args, function (err, summary) {
+        var runError = err || summary.run.error || summary.run.failures.length;
+
         if (err) {
-            console.error(err);
-            process.exit(_.get(args, 'run.suppressExitCode') ? 0 : 1);
+            err.help && console.log(err.help);  // will print out usage information.
+            console.error(err.message || err);
+        }
+
+        if (runError && !_.get(args, 'run.suppressExitCode')) {
+            process.exit(1);
         }
     });
 });
