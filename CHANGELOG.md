@@ -1,5 +1,10 @@
 # Newman Changelog
 
+#### v3.0.1 (Aug 9, 2016)
+
+- Updated Postman Runtime to v2.4.1
+- Newman now exits with a non-zero status code on test failures or errors
+
 #### v3.0.0 (Aug 9, 2016)
 
 - First stable release of Newman v3.0
