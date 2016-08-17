@@ -119,7 +119,7 @@ describe('run module', function () {
                     iterationCount: 3
                 }, function (err, summary) {
                     expect(err).be(null);
-                    expect(summary.run.stats.iterations.total).be(2);
+                    expect(summary.run.stats.iterations.total).be(3);
                     next();
                 }).not.throwException();
             }
