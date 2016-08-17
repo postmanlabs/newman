@@ -10,7 +10,7 @@ var fs = require('fs'),
 
 module.exports = function (exit) {
     // banner line
-    console.log('Running unit tests using mocha...'.yellow.bold);
+    console.info('Running unit tests using mocha...'.yellow.bold);
 
     var mocha = new Mocha();
 

@@ -11,7 +11,7 @@
     // Possible Errors
     "comma-dangle": ["error", "never"],
     "no-cond-assign": "error",
-    "no-console": "off",
+    "no-console": ["error", { allow: ["info", "warn", "error"] }],
     "no-constant-condition": "error",
     "no-control-regex": "error",
     "no-debugger": "error",
