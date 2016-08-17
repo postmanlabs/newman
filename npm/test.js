@@ -12,7 +12,7 @@ require('async').series([
     require('./test-integration'),
     require('./test-cli')
 ], function (code) {
-    console.log(`\nnewman: duration ${prettyms(Date.now() - startedAt)}\nnewman: ${code ? 'not ok' : 'ok'}!`[code ?
+    console.info(`\nnewman: duration ${prettyms(Date.now() - startedAt)}\nnewman: ${code ? 'not ok' : 'ok'}!`[code ?
         'red' : 'green']);
     exit(code && (typeof code === 'number' ? code : 1) || 0);
 });

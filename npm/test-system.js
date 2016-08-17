@@ -22,7 +22,7 @@ var async = require('async'),
 
 module.exports = function (exit) {
     // banner line
-    console.log('\nRunning system tests using mocha and nsp...'.yellow.bold);
+    console.info('\nRunning system tests using mocha and nsp...'.yellow.bold);
 
     async.series([
         // run test specs using mocha
@@ -50,7 +50,7 @@ module.exports = function (exit) {
                 pkg = loadJSON('../package.json'),
                 nsprc = loadJSON('../.nsprc');
 
-            console.log('processing nsp for security vulnerabilities...\n');
+            console.info('processing nsp for security vulnerabilities...\n');
 
             // we do not pass full package for privacy concerns and also to add the ability to ignore exclude packages,
             // hence we customise the package before we send it
@@ -73,7 +73,7 @@ module.exports = function (exit) {
                     return next(1);
                 }
 
-                console.log('nsp ok!\n'.green);
+                console.info('nsp ok!\n'.green);
                 return next();
             });
         }

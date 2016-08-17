@@ -11,7 +11,7 @@ var fs = require('fs'),
 
 module.exports = function (exit) {
     // banner line
-    console.log('Running CLI integration tests using mocha and shelljs...'.yellow.bold);
+    console.info('Running CLI integration tests using mocha and shelljs...'.yellow.bold);
 
     var mocha = new Mocha();
 
