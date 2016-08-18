@@ -6,6 +6,7 @@ var async = require('async'),
     _ = require('lodash'),
     fs = require('fs'),
     path = require('path'),
+    packity = require('packity'),
     Mocha = require('mocha'),
 
     SPEC_SOURCE_DIR = './test/system',
@@ -22,11 +23,19 @@ var async = require('async'),
 
 module.exports = function (exit) {
     // banner line
-    console.info('\nRunning system tests using mocha and nsp...'.yellow.bold);
+    console.info('\nRunning system tests...\n'.yellow.bold);
 
     async.series([
+        // packity to ensure all modules are as per package.json
+        function (next) {
+            console.info('checking installed packages...\n');
+            packity({ path: '.' }, packity.cliReporter({}, next));
+        },
+
         // run test specs using mocha
         function (next) {
+            console.info('\nrunning system specs using mocha...');
+
             var mocha = new Mocha();
 
             fs.readdir(SPEC_SOURCE_DIR, function (err, files) {
