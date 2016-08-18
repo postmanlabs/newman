@@ -275,6 +275,17 @@ argument object.**
 
 <!-- TODO: write about callback summary -->
 
+## Using Newman with the Postman Cloud API
+
+1 [Generate an API key](https://app.getpostman.com/dashboard/integrations)<br/>
+2 Fetch a list of your collections from: `https://api.getpostman.com/collections?apikey=$apiKey`<br/>
+3 Get the collection link via it's `uid`: `https://api.getpostman.com/collections/$uid?apikey=$apiKey`<br/>
+4 Obtain the environment URI from: `https://api.getpostman.com/environments?apikey=$apiKey`<br/>
+5 Using the collection and environment URIs acquired in steps 3 and 4, run the collection as follows:
+```
+newman run <collectionUri> --environment <environmentUri>
+```
+
 ## Community Support
 
 <img src="https://www.getpostman.com/img/v2/icons/slack.svg" align="right" />
