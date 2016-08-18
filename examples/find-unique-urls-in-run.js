@@ -10,7 +10,7 @@ var newman = require('../'), // require('newman')
 // call newman.run to pass `options` object and listen to events
 newman.run({ collection: require('./sample-collection.json') })
     .on('start', function (err, args) {
-        console.log(`Running ${args.cursor.length} request(s) and ${args.cursor.cycles} iteration(s)`);
+        console.info(`Running ${args.cursor.length} request(s) and ${args.cursor.cycles} iteration(s)`);
     })
     .on('request', function (err, args) {
         if (err) { return; }
@@ -29,10 +29,10 @@ newman.run({ collection: require('./sample-collection.json') })
         var urls = Object.keys(uniqueUrls); // get list of all unique urls as an array from the object hash
 
         // now output the result to console
-        console.log(`The collection run completed ${err ? 'with' : 'without'} error(s).`);
-        console.log(`Total ${urls.length} unique URLs requested.`);
+        console.info(`The collection run completed ${err ? 'with' : 'without'} error(s).`);
+        console.info(`Total ${urls.length} unique URLs requested.`);
 
         urls.forEach(function (url) {
-            console.log(`${uniqueUrls[url]}: ${url}`);
+            console.info(`${uniqueUrls[url]}: ${url}`);
         });
     });

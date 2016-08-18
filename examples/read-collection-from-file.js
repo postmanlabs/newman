@@ -11,5 +11,5 @@ newman.run({
     reporters: 'cli'
 }, function (err) {
     if (err) { throw err; }
-    console.log('collection run complete!');
+    console.info('collection run complete!');
 });

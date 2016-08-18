@@ -16,7 +16,7 @@ var async = require('async'),
 
 module.exports = function (exit) {
     // banner line
-    console.log('\nLinting files using eslint...'.yellow.bold);
+    console.info('\nLinting files using eslint...'.yellow.bold);
 
     async.waterfall([
         // execute the CLI engine
@@ -28,9 +28,9 @@ module.exports = function (exit) {
         function (report, next) {
             var errorReport = ESLintCLIEngine.getErrorResults(report.results);
             // log the result to CLI
-            console.log(ESLintCLIEngine.getFormatter()(report.results));
+            console.info(ESLintCLIEngine.getFormatter()(report.results));
             // log the success of the parser if it has no errors
-            (errorReport && !errorReport.length) && console.log('eslint ok!'.green);
+            (errorReport && !errorReport.length) && console.info('eslint ok!'.green);
             // ensure that the exit code is non zero in case there was an error
             next(Number(errorReport && errorReport.length) || 0);
         }
