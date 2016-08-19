@@ -13,7 +13,7 @@ var fs = require('fs'),
 
 module.exports = function (exit) {
     // banner line
-    console.log('Running integration tests using local newman as node module...'.yellow.bold);
+    console.info('Running integration tests using local newman as node module...'.yellow.bold);
 
     async.waterfall([
         // get all files within the spec source directory
@@ -47,11 +47,11 @@ module.exports = function (exit) {
                 return next(new Error(`No test files found in ${SPEC_SOURCE_DIR}`));
             }
 
-            console.log(`\nexecuting ${Object.keys(suites).length} tests in parallel (might take a while)...\n`);
+            console.info(`\nexecuting ${Object.keys(suites).length} tests in parallel (might take a while)...\n`);
 
             // run tests using the consolidated test set as a guide
             async.map(suites, function (test, next) {
-                console.log(` - ${test.name}`);
+                console.info(` - ${test.name}`);
 
                 // load configuration JSON object if it is provided. We do this since this is not part of newman
                 // standard API
@@ -71,7 +71,7 @@ module.exports = function (exit) {
         }
     ], function (err, results) {
         if (!err) {
-            console.log(`\n${results.length} integrations ok!\n`.green);
+            console.info(`\n${results.length} integrations ok!\n`.green);
         }
         else {
             console.error('\nintegration test failed:'.red);
