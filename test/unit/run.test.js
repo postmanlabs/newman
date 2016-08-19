@@ -72,6 +72,7 @@ describe('run module', function () {
         ], done);
     });
 
+    // @todo: run tests with exec and nock instead
     it('must correctly resolve conflicts between iterationData.length and iterationCount', function (done) {
         this.timeout(10000); // set 10s timeout
 
