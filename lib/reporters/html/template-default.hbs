@@ -24,7 +24,7 @@
 </head>
 <body class="container">
   <div class="conatiner">
-  <table class="summary table" width="100%">
+  <table class="summary table table-hover table-striped table-condensed" width="100%">
     {{#with collection}}
     <thead>
       <tr class="title row"><td class="th" colspan="3">
@@ -50,11 +50,8 @@
     </tbody>
   </table>
 
-
-
-
-  {{#each run.executions}}
-    <table class="executions execution-{{@index}} table">
+  {{#each run.aggregations}}
+    <table class="executions execution-{{@index}} table table-hover table-striped table-condensed">
       <thead>
       <tr class="title row"><td class="th" colspan="3">
         <h3>{{item.name}}</h3>
@@ -64,9 +61,8 @@
     </thead>
 
     <tbody>
-    <tr class="heading">
-      <td class="th"><h3>Response</h3></td>
-      <td class="th">&nbsp;</td>
+    <tr class="heading" width="100%">
+      <td class="th" colspan="3"><h3>Response</h3></td>
     </tr>
     {{#with response}}
     <tr class="property row"><th class="th">Code</th><td>{{code}}</td></tr>
@@ -75,7 +71,7 @@
       <tr class="property row">
         <th class="th">Headers</th>
         <td>
-          <table class="headers table">
+          <table class="headers table table-hover table-striped table-condensed">
             <thead><tr class="title row"><th class="th">Key</th><th class="th">Value</th></tr></thead>
 
             <tbody>
@@ -93,6 +89,21 @@
     <tr class="property row"><th class="th">Time</th><td>{{responseTime}} ms</td></tr>
 
     {{/with}}
+
+    {{#if assertions}}
+      <tr class="property row">
+        <th class="th">Assertions</th>
+        <td>
+          <table class="headers table table-hover table-striped table-condensed">
+            <thead><tr class="title row"><th class="th">Passed</th><th class="th">Failed</th></tr></thead>
+
+            <tbody>
+              <tr class="property row"><td>{{assertions.passed}}</td><td>{{assertions.failed}}</td></tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    {{/if}}
     </tbody>
 
     </table>
