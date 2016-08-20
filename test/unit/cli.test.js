@@ -245,7 +245,6 @@ describe('cli parser', function () {
                 expect(opts.reporter.json.output).to.be('./omg.txt');
                 expect(opts.reporter.json.use).to.be('everything');
 
-
                 // Validate HTML reporter configuration
                 expect(opts.reporter.html).to.be.ok();
                 expect(opts.reporter.html.output).to.be('report.html');
