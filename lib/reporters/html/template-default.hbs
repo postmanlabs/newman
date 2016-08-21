@@ -90,15 +90,19 @@
 
     {{/with}}
 
-    {{#if assertions}}
+    {{#if assertions.length}}
       <tr class="property row">
         <th class="th">Assertions</th>
         <td>
           <table class="headers table table-hover table-striped table-condensed">
-            <thead><tr class="title row"><th class="th">Passed</th><th class="th">Failed</th></tr></thead>
+            <thead><tr class="title row"><th class="th">Assertion</th><th class="th">Passed</th><th class="th">Failed</th></tr></thead>
 
             <tbody>
-              <tr class="property row"><td>{{assertions.passed}}</td><td>{{assertions.failed}}</td></tr>
+              {{#each assertions}}
+                {{#with this}}
+                  <tr class="property row"><td>{{name}}</td><td>{{passed}}</td><td>{{failed}}</td></tr>
+                {{/with}}
+              {{/each}}
             </tbody>
           </table>
         </td>
