@@ -27,6 +27,7 @@
     <h3>Newman test report</h3>
     <div class="row">
       <div class="col-md-3">Collection</div><div class="col-md-6">{{collection.name}}</div><br/><br/>
+      {{#if collection.description}}<div class="col-md-3">Description</div><div class="col-md-6">{{collection.description}}</div><br/><br/>{{/if}}
 
       <div class="col-md-3">Stats</div><div class="col-md-3">Total</div><div class="col-md-3">Failed</div><br/>
 
@@ -60,6 +61,11 @@
 
               <div class="col-md-4">Mean time per request</div><div class="col-md-8">{{mean.time}} ms</div><br/>
               <div class="col-md-4">Mean size per request</div><div class="col-md-8">{{mean.size}} bytes</div><br/>
+
+              {{#with cumulativeTests}}
+              <br/><div class="col-md-4">Total passed tests</div><div class="col-md-8">{{passed}}</div>
+              <div class="col-md-4">Total failed tests</div><div class="col-md-8">{{failed}}</div><br/>
+              {{/with}}
 
               {{#with response}}
                 <br/><div class="col-md-4">Status code</div><div class="col-md-8">{{code}}</div><br/>
