@@ -26,60 +26,96 @@
   <div class="container">
     <h3>Newman test report</h3>
     <div class="row">
-      <div class="col-md-3">Collection</div><div class="col-md-6">{{collection.name}}</div><br/><br/>
+      <div class="col-md-3">Collection</div><div class="col-md-6">Sample Postman Collection</div><br/><br/>
 
       <div class="col-md-3">Stats</div><div class="col-md-3">Total</div><div class="col-md-3">Failed</div><br/>
 
-      {{#with run.stats}}
-      <div class="col-md-3">Iterations</div><div class="col-md-3">{{iterations.total}}</div><div class="col-md-3">{{iterations.failed}}</div><br/>
-      <div class="col-md-3">Requests</div><div class="col-md-3">{{requests.total}}</div><div class="col-md-3">{{requests.failed}}</div><br/>
-      <div class="col-md-3">Prerequest Scripts</div><div class="col-md-3">{{prerequestScripts.total}}</div><div class="col-md-3">{{prerequestScripts.failed}}</div><br/>
-      <div class="col-md-3">Test Scripts</div><div class="col-md-3">{{testScripts.total}}</div><div class="col-md-3">{{testScripts.failed}}</div><br/>
-      <div class="col-md-3">Assertions</div><div class="col-md-3">{{assertions.total}}</div><div class="col-md-3">{{assertions.failed}}</div><br/>
-      {{/with}}
+      <div class="col-md-3">Iterations</div><div class="col-md-3">3</div><div class="col-md-3">0</div><br/>
+      <div class="col-md-3">Requests</div><div class="col-md-3">9</div><div class="col-md-3">0</div><br/>
+      <div class="col-md-3">Prerequest Scripts</div><div class="col-md-3">0</div><div class="col-md-3">0</div><br/>
+      <div class="col-md-3">Test Scripts</div><div class="col-md-3">3</div><div class="col-md-3">0</div><br/>
+      <div class="col-md-3">Assertions</div><div class="col-md-3">3</div><div class="col-md-3">0</div><br/>
 
       <br/>
-      <div class="col-md-3">Total Failures</div><div class="col-md-6">{{run.failures.length}}</div>
+      <div class="col-md-3">Total Failures</div><div class="col-md-6">0</div>
     </div>
 
     <br/><h4>Requests</h4>
 
-    {{#each run.aggregations}}
-      <div class="panel-group" id="collapse-request-{{@index}}" role="tablist" aria-multiselectable="true">
+      <div class="panel-group" id="collapse-request-0" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="requestHead-{{@index}}">
+          <div class="panel-heading" role="tab" id="requestHead-0">
             <div class="col-md-6">
-              <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{@index}}" aria-controls="collapseOne">{{item.name}}</a></h4>
+              <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-0" aria-controls="collapseOne">A simple GET request</a></h4>
             </div>
-            <div class="col-mid-6"><a href="{{request.url}}" target="_blank">{{request.method}} {{request.url}}</a></div>
+            <div class="col-mid-6"><a href="https://echo.getpostman.com/get?source&#x3D;newman-sample-github-collection" target="_blank">GET https://echo.getpostman.com/get?source&#x3D;newman-sample-github-collection</a></div>
           </div>
 
-          <div id="requestData-{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-{{@index}}">
+          <div id="requestData-0" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-0">
             <div class="panel-body">
-              {{#if item.description}}<div class="col-md-4">Description</div><div class="col-md-8" style="white-space: pre-wrap;">{{item.description}}</div>{{/if}}
+              
 
-              <div class="col-md-4">Mean time per request</div><div class="col-md-8">{{mean.time}} ms</div><br/>
-              <div class="col-md-4">Mean size per request</div><div class="col-md-8">{{mean.size}} bytes</div><br/>
+              <div class="col-md-4">Mean time per request</div><div class="col-md-8">802.33 ms</div><br/>
+              <div class="col-md-4">Mean size per request</div><div class="col-md-8">379.67 bytes</div><br/>
 
-              {{#with response}}
-                <br/><div class="col-md-4">Status code</div><div class="col-md-8">{{code}}</div><br/>
-              {{/with}}
+                <br/><div class="col-md-4">Status code</div><div class="col-md-8">200</div><br/>
 
-              {{#if assertions.length}}
                 <div class="col-md-4">Tests</div>
 
                 <div class="col-md-8">
                   <table class="table table-responsive table-condensed">
                     <thead><tr><th>Name</th><th>Pass count</th><th>Fail count</th></tr></thead>
-                    <tbody>{{#each assertions}}<tr><td>{{this.name}}</td><td>{{this.passed}}</td><td>{{this.failed}}</td></tr>{{/each}}</tbody>
+                    <tbody><tr><td>response code is 200</td><td>3</td><td>0</td></tr></tbody>
                   </table>
                 </div>
-              {{/if}}
             </div>
           </div>
         </div>
       </div>
-    {{/each}}
+      <div class="panel-group" id="collapse-request-1" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="requestHead-1">
+            <div class="col-md-6">
+              <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-1" aria-controls="collapseOne">A simple POST request</a></h4>
+            </div>
+            <div class="col-mid-6"><a href="https://echo.getpostman.com/post" target="_blank">POST https://echo.getpostman.com/post</a></div>
+          </div>
+
+          <div id="requestData-1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-1">
+            <div class="panel-body">
+              
+
+              <div class="col-md-4">Mean time per request</div><div class="col-md-8">761.67 ms</div><br/>
+              <div class="col-md-4">Mean size per request</div><div class="col-md-8">497.00 bytes</div><br/>
+
+                <br/><div class="col-md-4">Status code</div><div class="col-md-8">200</div><br/>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-group" id="collapse-request-2" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="requestHead-2">
+            <div class="col-md-6">
+              <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-2" aria-controls="collapseOne">A simple POST request with JSON body</a></h4>
+            </div>
+            <div class="col-mid-6"><a href="https://echo.getpostman.com/post" target="_blank">POST https://echo.getpostman.com/post</a></div>
+          </div>
+
+          <div id="requestData-2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-2">
+            <div class="panel-body">
+              
+
+              <div class="col-md-4">Mean time per request</div><div class="col-md-8">395.00 ms</div><br/>
+              <div class="col-md-4">Mean size per request</div><div class="col-md-8">589.33 bytes</div><br/>
+
+                <br/><div class="col-md-4">Status code</div><div class="col-md-8">200</div><br/>
+
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </body>
 </html>
