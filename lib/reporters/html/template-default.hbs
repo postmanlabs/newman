@@ -24,12 +24,12 @@
 </head>
 <body>
   <div class="container">
-    <h3>Newman test report</h3>
+    <h3>Newman Report</h3>
     <div class="row">
-      <div class="col-md-3">Collection</div><div class="col-md-6">{{collection.name}}</div><br/><br/>
-      {{#if collection.description}}<div class="col-md-3">Description</div><div class="col-md-6">{{collection.description}}</div><br/><br/>{{/if}}
+      <div class="col-md-3">Collection</div><div class="col-md-6">{{collection.name}}</div>
+      {{#if collection.description}}<br/><div class="col-md-3">Description</div><div class="col-md-6">{{collection.description}}</div>{{/if}}
 
-      <div class="col-md-3">Stats</div><div class="col-md-3">Total</div><div class="col-md-3">Failed</div><br/>
+      <br/><br/><br/><div class="col-md-3">Stats</div><div class="col-md-3">Total</div><div class="col-md-3">Failed</div><br/>
 
       {{#with run.stats}}
       <div class="col-md-3">Iterations</div><div class="col-md-3">{{iterations.total}}</div><div class="col-md-3">{{iterations.failed}}</div><br/>
@@ -43,33 +43,30 @@
       <div class="col-md-3">Total Failures</div><div class="col-md-6">{{run.failures.length}}</div>
     </div>
 
-    <br/><h4>Requests</h4>
+    <br/><h4>Requests</h4><br/>
 
     {{#each run.aggregations}}
       <div class="panel-group" id="collapse-request-{{@index}}" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="requestHead-{{@index}}">
-            <div class="col-md-6">
-              <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{@index}}" aria-controls="collapseOne">{{item.name}}</a></h4>
-            </div>
-            <div class="col-mid-6"><a href="{{request.url}}" target="_blank">{{request.method}} {{request.url}}</a></div>
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{@index}}" aria-controls="collapseOne">{{item.name}}</a></h4>
           </div>
 
           <div id="requestData-{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-{{@index}}">
             <div class="panel-body">
               {{#if item.description}}<div class="col-md-4">Description</div><div class="col-md-8" style="white-space: pre-wrap;">{{item.description}}</div>{{/if}}
 
-              <div class="col-md-4">Mean time per request</div><div class="col-md-8">{{mean.time}} ms</div><br/>
-              <div class="col-md-4">Mean size per request</div><div class="col-md-8">{{mean.size}} bytes</div><br/>
+              <div class="col-md-4">Request URL</div><div class="col-mid-8"><a href="{{request.url}}" target="_blank">{{request.method}} {{request.url}}</a></div>
+
+              <div class="col-md-4">Mean time per request</div><div class="col-md-8">{{mean.time}}</div><br/>
+              <div class="col-md-4">Mean size per request</div><div class="col-md-8">{{mean.size}}</div><br/>
 
               {{#with cumulativeTests}}
               <br/><div class="col-md-4">Total passed tests</div><div class="col-md-8">{{passed}}</div>
               <div class="col-md-4">Total failed tests</div><div class="col-md-8">{{failed}}</div><br/>
               {{/with}}
 
-              {{#with response}}
-                <br/><div class="col-md-4">Status code</div><div class="col-md-8">{{code}}</div><br/>
-              {{/with}}
+              <br/><div class="col-md-4">Status code</div><div class="col-md-8">{{response.code}}</div><br/>
 
               {{#if assertions.length}}
                 <div class="col-md-4">Tests</div>
