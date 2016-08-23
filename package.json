@@ -64,7 +64,7 @@
     "js-yaml": "3.6.1",
     "mocha": "2.5.3",
     "nsp": "2.5.0",
-    "packity": "0.3.0"
+    "packity": "0.3.2"
   },
   "engines": {
     "node": ">=4"
