@@ -1,5 +1,10 @@
 # Newman Changelog
 
+#### Unreleased
+
+- Fixed issue with environment and globals export format was using wrong property names (GH:553)
+- Fixed issue where `--export-*` CLI option did not work with no parameters
+
 #### v3.0.1 (Aug 9, 2016)
 
 - Updated Postman Runtime to v2.4.1
