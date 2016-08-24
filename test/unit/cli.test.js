@@ -17,7 +17,7 @@ describe('cli parser', function () {
 
     describe('Legacy Arguments', function () {
         it('should load standard arguments (-c and -e)', function (done) {
-            cli.rawOptions('-c myCollection.json -e env.json'.split(' '), 'newmantests', function (err, config) {
+            cli.rawOptions('-c myCollection.json -e env.json --silent'.split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
                 expect(config.command).to.be('run');
                 expect(config.run).to.be.ok();
@@ -30,7 +30,7 @@ describe('cli parser', function () {
 
         it('should support alternative arguments', function (done) {
             cli.rawOptions(('-u http://a.com/myCollection.json ' +
-            '--environment-url http://a.com/env.json').split(' '), 'newmantests', function (err, config) {
+            '--environment-url http://a.com/env.json --silent').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
                 expect(config.command).to.be('run');
                 expect(config.run).to.be.ok();
@@ -67,7 +67,7 @@ describe('cli parser', function () {
             '-t junit.xml ' +
             '-H report.html ' +
             '-W ' +
-            '--stopOnError').split(' '), 'newmantests', function (err, config) {
+            '--stopOnError --silent').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
 
                 var opts = config.run;

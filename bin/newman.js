@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('../lib/node-version-check');
+require('../lib/node-version-check'); // @note that this should not respect CLI --silent
 
 var _ = require('lodash'),
 
