@@ -17,15 +17,16 @@ describe('cli parser', function () {
 
     describe('Legacy Arguments', function () {
         it('should load standard arguments (-c and -e)', function (done) {
-            cli.rawOptions('-c myCollection.json -e env.json --silent'.split(' '), 'newmantests', function (err, config) {
-                expect(err).to.be(null);
-                expect(config.command).to.be('run');
-                expect(config.run).to.be.ok();
-                expect(config.run.collection).to.be('myCollection.json');
-                expect(config.run.environment).to.be('env.json');
+            cli.rawOptions('-c myCollection.json -e env.json --silent'.split(' '), 'newmantests',
+                function (err, config) {
+                    expect(err).to.be(null);
+                    expect(config.command).to.be('run');
+                    expect(config.run).to.be.ok();
+                    expect(config.run.collection).to.be('myCollection.json');
+                    expect(config.run.environment).to.be('env.json');
 
-                done();
-            });
+                    done();
+                });
         });
 
         it('should support alternative arguments', function (done) {
