@@ -10,5 +10,5 @@ max_length = 120
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{json, yml, html}]
+[*.{json, yml, html, hbs}]
 indent_size = 2
