@@ -23,6 +23,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
             1. [CLI reporter options](#cli-reporter-options)
             2. [JSON reporter options](#json-reporter-options)
             3. [HTML reporter options](#html-reporter-options)
+                1. [Custom HTML reporter templates](#custom-html-reporter-templates)
             4. [JUnit reporter options](#junitxml-reporter-options)
 
 4. [API Reference](#api-reference)
@@ -171,6 +172,8 @@ These options are supported by the CLI reporter, use them with appropriate argum
 option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
 
 CLI reporter is enabled by default, you do not need to specifically provide the same as part of `--reporters` option.
+However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in
+such a scenario.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
@@ -193,16 +196,140 @@ To enable JSON reporter, provide `--reporters json` as a CLI option.
 
 
 ##### HTML reporter options
-The built-in HTML reporter produces and HTML output file outlining the summary and report of the Newman run. To enable
-JSON reporter, provide `--reporters html` as a CLI option.
+The built-in HTML reporter produces and HTML output file outlining the summary and report of the Newman run. To enable the
+HTML reporter, provide `--reporters html` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
 | `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
 
+###### Custom HTML reporter templates
+
+Custom templates (currently handlebars only) can be passed to the HTML reporter with `--reporter-html-template <path>`, in conjunction with `--reporters html` and `--reporter-html-export` flags.
+The [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used when the custom template option has been left out. The template receives
+a data object of the following format:
+
+```javascript
+{
+  "timestamp": Date(),
+  "aggregations": [
+    {
+      "item": {
+        "id": <Unique reuest id>,
+        "name": <Request name>,
+        "request": {
+          "url": <Request URL>,
+          "method": <Request Method>
+        },
+        "event": {
+          "listen": <Event listener attached to this event>,
+          "script": {
+            "type": <Content-Type>,
+            "exec": [
+              "tests['response code is 200'] = (responseCode.code === 200);"
+            ]
+          }
+        }
+      },
+      "request": {
+        "url": <Request URL>,
+        "method": <Request Method>,
+        "header": [
+          {
+            "key": <Header name>,
+            "value": <Header value>
+          }
+        ],
+        "body": <Request body>
+        "description": <Description for this request>
+      },
+      "response": {
+        "status": <Response status>,
+        "code": <Numerical response code>,
+        "header": [
+          {
+            "key": <Header name>,
+            "value": <Header value>
+          },
+          "body": <Response body>,
+          "responseTime": <Response time in ms>,
+          "responseSize": <Response size in bytes>,
+          "update": {},
+          "reason": {},
+          "text": {},
+          "json": {},
+          "mime": {},
+          "dataURI": {},
+          "size": {},
+          "describe": {},
+          "toObjectResolved": {},
+          "toJSON": {},
+          "meta": {}
+
+        ]
+      },
+      "mean": { "time": <Prettified time string>, "size": <Prettified size string> },
+      "cumulativeTests": {
+        "passed": <Total number of tests that passed for this request>,
+        "failed": <Total number of tests that failed for this request>
+      },
+      "assertions": [
+        {
+          "name": "Assertion name",
+          "passed": <Total passed count over the collection run>,
+          "failed": <Total failed count over the collection run>
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "stats": {
+      "iterations": { "total": 1, "pending": 0, "failed": 0 },
+      "items": { "total": 23, "pending": 0, "failed": 0 },
+      "scripts": { "total": 23, "pending": 0, "failed": 0 },
+      "prerequests": { "total": 23, "pending": 0, "failed": 0 },
+      "requests": { "total": 23, "pending": 0, "failed": 0 },
+      "tests": { "total": 23, "pending": 0, "failed": 0 },
+      "assertions": { "total": 65, "pending": 0, "failed": 0 },
+      "testScripts": { "total": 23, "pending": 0, "failed": 0 },
+      "prerequestScripts": { "total": 0, "pending": 0, "failed": 0 }
+    },
+    "collection": {
+      "info": {
+        "id": <Unique collection id>,
+        "name": <Collection name>,
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+      },
+      "item": [
+        {
+          "id": <item id>,
+          "name": <item name>,
+          "request": {
+            "url": <Request URL>,
+            "method": <Request method>
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": <Content Type>,
+                "exec": [
+                  "tests['response code is 200'] = (responseCode.code === 200);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "failures": <Total number of failures in the run>
+  },
+}
+```
+
 ##### JUNIT/XML reporter options
-Newman can output a summary of the collection run to a JUnit compatible XML file. To enable JSON reporter, provide
+Newman can output a summary of the collection run to a JUnit compatible XML file. To enable the JUNIT reporter, provide
 `--reporters html` as a CLI option.
 
 | CLI Option  | Description       |
@@ -232,7 +359,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | Parameter | Description   |
 |-----------|---------------|
 | options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
-| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an istance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
+| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an instance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
 | options.environment       | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
 | options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object|string` |
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
