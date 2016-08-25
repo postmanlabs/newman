@@ -173,7 +173,7 @@ JSON reporter, provide `--reporters html` as a CLI option.
 
 ##### JUNIT/XML reporter options
 Newman can output a summary of the collection run to a JUnit compatible XML file. To enable JSON reporter, provide
-`--reporters html` as a CLI option.
+`--reporters junit` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
