@@ -10,16 +10,45 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Using Newman, one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
 extensibility in mind so that you can easily integrate it into your continuous integration servers and build systems.
 
+# Contents
+
+1. [IMPORTANT NOTICE](#important-notice)
+
+2. [Getting Started](#getting-started)
+    1. [Using Newman as a NodeJS module](#using-newman-as-a-nodejs-module)
+
+3. [Command line options](#command-line-options)
+    1. [newman-run](#newman-run-collection-file-source-options)
+        1. [Configuring reporters](#configuring-reporters)
+            1. [CLI reporter options](#cli-reporter-options)
+            2. [JSON reporter options](#json-reporter-options)
+            3. [HTML reporter options](#html-reporter-options)
+            4. [JUnit reporter options](#junitxml-reporter-options)
+
+4. [API Reference](#api-reference)
+    1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
+    2. [Run summary object](#newmanruncallbackerror-object--summary-object)
+    3. [Events emitted during a collection run](#newmanrunevents)
+
+5. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
+
+6. [Communinty Support](#community-support)
+
+7. [License](#license)
+
+---
+
 ## IMPORTANT NOTICE
 
 > ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options by referring to our [Newman v2 to v3 Migration Guide](MIGRATION.md)
 >
-> To view documentation of current stable 2.x release of Newman, refer the
-> [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md) of 2.x release.
+> For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+
+---
 
 ## Getting started
 
-To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [https://nodejs.org/en/download/package-manager/](https://nodejs.org/en/download/package-manager).
+To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [here](https://nodejs.org/en/download/package-manager).
 
 The easiest way to install Newman is using NPM. If you have NodeJS installed, it is most likely that you have NPM
 installed as well.
@@ -48,9 +77,7 @@ For the complete list of options, refer the [Commandline Options](#commandline-o
 
 ### Using Newman as a NodeJS module
 
-Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well.
-
-The following example runs a collection by reading a JSON collection file stored on disk.
+Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well. The following example runs a collection by reading a JSON collection file stored on disk.
 
 ```javascript
 var newman = require('newman'); // require newman in your project
@@ -67,7 +94,9 @@ newman.run({
 
 **Note:** The newman v2.x `.execute` function has been discontinued.
 
-## Commandline Options
+---
+
+## Command line Options
 
 ### `newman run <collection-file-source> [options]`
 
@@ -101,7 +130,7 @@ newman.run({
 - `--timeout-request <ms>`<br />
   Specify the time (in milliseconds) to wait for requests to return a response.
 
-- `-k --insecure`<br />
+- `-k`, `--insecure`<br />
   Disables SSL verification checks and allows self-signed SSL certificates.
 
 - `--ignore-redirects`<br />
@@ -113,7 +142,7 @@ newman.run({
 - `--bail`<br />
   Specify whether or not to stop a collection run on encountering the first error.
 
-- `-x --suppress-exit-code`<br />
+- `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.
 
 - `--no-color`<br />
@@ -123,10 +152,10 @@ newman.run({
 
 #### Configuring Reporters
 
-- `-r --reporters <name>`<br />
+- `-r <reporter-name>`, `--reporters <reporter-name>`<br />
   Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
 
-- `--reporter-{{reporter-name}}-{{reporter-options}}`<br />
+- `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
   is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
   For example, `... --reporters cli,html --reporter-cli-silent` would silence the CLI reporter only.
@@ -170,6 +199,7 @@ JSON reporter, provide `--reporters html` as a CLI option.
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
 
 ##### JUNIT/XML reporter options
 Newman can output a summary of the collection run to a JUnit compatible XML file. To enable JSON reporter, provide
@@ -191,6 +221,7 @@ discontinued. For documentation on the older command options, refer to
 - `--version`<br />
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
+---
 
 ## API Reference
 
@@ -244,7 +275,7 @@ newman.run({
 }).on('start', function (err, args) { // on start of run, log to console
     console.log('running a collection...');
 }).on('done', function (err, summary) {
-    if (error || summary.error) {
+    if (err || summary.error) {
         console.error('collection run encountered an error.');
     }
     else {
@@ -279,6 +310,8 @@ argument object.**
 
 <!-- TODO: write about callback summary -->
 
+---
+
 ## Using Newman with the Postman Cloud API
 
 1 [Generate an API key](https://app.getpostman.com/dashboard/integrations)<br/>
@@ -290,6 +323,8 @@ argument object.**
 newman run <collectionUri> --environment <environmentUri>
 ```
 
+---
+
 ## Community Support
 
 <img src="https://www.getpostman.com/img/v2/icons/slack.svg" align="right" />
@@ -297,6 +332,8 @@ If you are interested in talking to the team and other Newman users, we are ther
 
 Get your invitation for Postman Slack Community from: <a href="https://www.getpostman.com/slack-invite">https://www.getpostman.com/slack-invite</a>.<br />
 Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
+
+---
 
 ## License
 This software is licensed under Apache-2.0. Copyright Postdot Technologies, Inc. See the [LICENSE.md](LICENSE.md) file for more information.
