@@ -241,18 +241,7 @@
           ],
           "body": "{\"args\":{\"source\":\"newman-sample-github-collection\"},\"headers\":{\"host\":\"echo.getpostman.com\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"url\":\"https://echo.getpostman.com/get?source=newman-sample-github-collection\"}",
           "responseTime": 1965,
-          "responseSize": 311,
-          "update": {},
-          "reason": {},
-          "text": {},
-          "json": {},
-          "mime": {},
-          "dataURI": {},
-          "size": {},
-          "describe": {},
-          "toObjectResolved": {},
-          "toJSON": {},
-          "meta": {}
+          "responseSize": 311
         },
         "id": "17d87a3b-fdc8-4b18-9815-950a42d87f59",
         "assertions": [
@@ -385,18 +374,7 @@
           ],
           "body": "{\"args\":{},\"data\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\",\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"69\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"text/plain\",\"cookie\":\"sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":null,\"url\":\"https://echo.getpostman.com/post\"}",
           "responseTime": 273,
-          "responseSize": 495,
-          "update": {},
-          "reason": {},
-          "text": {},
-          "json": {},
-          "mime": {},
-          "dataURI": {},
-          "size": {},
-          "describe": {},
-          "toObjectResolved": {},
-          "toJSON": {},
-          "meta": {}
+          "responseSize": 495
         },
         "id": "45805ccf-86f6-44d1-b1fa-18431f4025e5"
       },
