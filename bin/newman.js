@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('../lib/node-version-check');
+require('../lib/node-version-check'); // @note that this should not respect CLI --silent
 
 var _ = require('lodash'),
 
@@ -25,7 +25,7 @@ var _ = require('lodash'),
 
 cli(process.argv.slice(2), 'newman', function (err, args) {
     if (err) {
-        err.help && console.log(err.help + '\n');  // will print out usage information.
+        err.help && console.info(err.help + '\n');  // will print out usage information.
         console.error(err.message || err);
         return process.exit(1); // @todo: args do not arrive on CLI error hence cannot read `-x`
     }
@@ -34,7 +34,7 @@ cli(process.argv.slice(2), 'newman', function (err, args) {
         var runError = err || summary.run.error || summary.run.failures.length;
 
         if (err) {
-            err.help && console.log(err.help);  // will print out usage information.
+            err.help && console.info(err.help);  // will print out usage information.
             console.error(err.message || err);
         }
 

@@ -1,6 +1,7 @@
 {
   "plugins": [
-    "security"
+    "security",
+    "lodash"
   ],
   "env": {
     "browser": true,
@@ -11,7 +12,7 @@
     // Possible Errors
     "comma-dangle": ["error", "never"],
     "no-cond-assign": "error",
-    "no-console": "off",
+    "no-console": ["error", { allow: ["info", "warn", "error"] }],
     "no-constant-condition": "error",
     "no-control-regex": "error",
     "no-debugger": "error",
@@ -238,6 +239,45 @@
     "require-yield": "error",
     "sort-imports": "off",
     "template-curly-spacing": "error",
-    "yield-star-spacing": "error"
+    "yield-star-spacing": "error",
+
+    // Lodash
+    "lodash/callback-binding": 2,
+    "lodash/chain-style": [2, "as-needed"],
+    "lodash/collection-method-value": 1,
+    "lodash/collection-return": 2,
+    "lodash/consistent-compose": [2, "flow"],
+    "lodash/identity-shorthand": [2, "always"],
+    "lodash/matches-prop-shorthand": [2, "always"],
+    "lodash/matches-shorthand": [2, "always", 3],
+    "lodash/no-commit": 2,
+    "lodash/no-double-unwrap": 2,
+    "lodash/no-extra-args": 2,
+    "lodash/no-single-chain": 2,
+    "lodash/path-style": [2, "string"],
+    "lodash/prefer-chain": [2, 3],
+    "lodash/prefer-compact": 2,
+    // "lodash/prefer-constant": 2,
+    // "lodash/prefer-filter": [2, 3],
+    "lodash/prefer-flat-map": 2,
+    "lodash/prefer-get": [1, 4],
+    // "lodash/prefer-includes": [2, { includeNative: true }],
+    "lodash/prefer-invoke-map": 2,
+    // "lodash/prefer-is-nil": 2,
+    "lodash/prefer-lodash-chain": 2,
+    // "lodash/prefer-lodash-method": 2,
+    // "lodash/prefer-lodash-typecheck": 2,
+    "lodash/prefer-map": 2,
+    // "lodash/prefer-matches": [2, 3],
+    // "lodash/prefer-noop": 2,
+    // "lodash/prefer-over-quantifier": 1,
+    "lodash/prefer-reject": [2, 3],
+    // "lodash/prefer-startswith": 2,
+    "lodash/prefer-thru": 2,
+    // "lodash/prefer-times": 2,
+    "lodash/prefer-wrapper-method": 2,
+    "lodash/preferred-alias": 2,
+    "lodash/prop-shorthand": [2, "always"],
+    "lodash/unwrap": 2
   }
 }

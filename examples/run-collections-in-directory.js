@@ -22,7 +22,7 @@ fs.readdir('./examples', function (err, files) {
             collection: require(`${__dirname}/${file}`)
         }, function (err) {
             // finally, when the collection executes, print the status
-            console.log(`${file}: ${err ? err.name : 'ok'}!`);
+            console.info(`${file}: ${err ? err.name : 'ok'}!`);
         });
     }); // the entire flow can be made more elegant using `async` module
 });

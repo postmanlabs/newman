@@ -1,0 +1,48 @@
+{
+	"variables": [],
+	"info": {
+		"name": "cookie-jar",
+		"_postman_id": "6d4f33fe-5c73-f4e0-b3a2-7310ab6b05da",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set Cookie",
+			"request": {
+				"url": "https://echo.getpostman.com/cookies/set?foo=bar",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "A request to set a cookie `foo` to a value `bar` using Postman Echo as an example."
+			},
+			"response": []
+		},
+		{
+			"name": "Verify cookie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Cookie `foo` exists and has the value bar\"] = postman.getResponseCookie(\"foo\").value === \"bar\";"
+					}
+				}
+			],
+			"request": {
+				"url": "https://echo.getpostman.com/cookies",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "A request to validate the presence of the cookie `foo`, with value `bar`, using Postman Echo."
+			},
+			"response": []
+		}
+	]
+}

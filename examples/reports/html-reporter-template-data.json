@@ -1,0 +1,502 @@
+{
+  "timestamp": "Thu Aug 25 2016 19:52:02 GMT+0530 (IST)",
+  "aggregations": [
+    {
+      "item": {
+        "id": "17d87a3b-fdc8-4b18-9815-950a42d87f59",
+        "name": "A simple GET request",
+        "request": {
+          "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
+          "method": "GET"
+        },
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "tests['response code is 200'] = (responseCode.code === 200);"
+              ]
+            }
+          }
+        ]
+      },
+      "request": {
+        "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "PostmanRuntime/2.4.3"
+          },
+          {
+            "key": "Accept",
+            "value": "*/*"
+          },
+          {
+            "key": "Host",
+            "value": "echo.getpostman.com"
+          },
+          {
+            "key": "accept-encoding",
+            "value": "gzip, deflate"
+          }
+        ],
+        "body": {},
+        "description": {}
+      },
+      "response": {
+        "status": "OK",
+        "code": 200,
+        "header": [
+          {
+            "key": "Access-Control-Allow-Credentials",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Expose-Headers",
+            "value": ""
+          },
+          {
+            "key": "Content-Encoding",
+            "value": "gzip"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Date",
+            "value": "Thu, 25 Aug 2016 14:22:01 GMT"
+          },
+          {
+            "key": "ETag",
+            "value": "W/\"137-PVrRGQ6/XWPrd95mL9VLkA\""
+          },
+          {
+            "key": "Server",
+            "value": "nginx/1.8.1"
+          },
+          {
+            "key": "set-cookie",
+            "value": "sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg; Path=/; HttpOnly"
+          },
+          {
+            "key": "Vary",
+            "value": "Accept-Encoding"
+          },
+          {
+            "key": "Content-Length",
+            "value": "203"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "body": "{\"args\":{\"source\":\"newman-sample-github-collection\"},\"headers\":{\"host\":\"echo.getpostman.com\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"url\":\"https://echo.getpostman.com/get?source=newman-sample-github-collection\"}",
+        "responseTime": 1965,
+        "responseSize": 311
+      },
+      "mean": {
+        "time": "2s",
+        "size": "311B"
+      },
+      "cumulativeTests": {
+        "passed": 1,
+        "failed": 0
+      },
+      "assertions": [
+        {
+          "name": "response code is 200",
+          "passed": 1,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "item": {
+        "id": "45805ccf-86f6-44d1-b1fa-18431f4025e5",
+        "name": "A simple POST request",
+        "request": {
+          "url": "https://echo.getpostman.com/post",
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
+          }
+        }
+      },
+      "request": {
+        "url": "https://echo.getpostman.com/post",
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain"
+          },
+          {
+            "key": "User-Agent",
+            "value": "PostmanRuntime/2.4.3"
+          },
+          {
+            "key": "Accept",
+            "value": "*/*"
+          },
+          {
+            "key": "Host",
+            "value": "echo.getpostman.com"
+          },
+          {
+            "key": "cookie",
+            "value": "sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg"
+          },
+          {
+            "key": "accept-encoding",
+            "value": "gzip, deflate"
+          },
+          {
+            "key": "content-length",
+            "value": 69
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
+        },
+        "description": {}
+      },
+      "response": {
+        "status": "OK",
+        "code": 200,
+        "header": [
+          {
+            "key": "Access-Control-Allow-Credentials",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Expose-Headers",
+            "value": ""
+          },
+          {
+            "key": "Content-Encoding",
+            "value": "gzip"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Date",
+            "value": "Thu, 25 Aug 2016 14:22:02 GMT"
+          },
+          {
+            "key": "ETag",
+            "value": "W/\"1ef-XCjjHFaJKcRm3YHSPLLNSQ\""
+          },
+          {
+            "key": "Server",
+            "value": "nginx/1.8.1"
+          },
+          {
+            "key": "Vary",
+            "value": "X-HTTP-Method-Override, Accept-Encoding"
+          },
+          {
+            "key": "Content-Length",
+            "value": "359"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "body": "{\"args\":{},\"data\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\",\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"69\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"text/plain\",\"cookie\":\"sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":null,\"url\":\"https://echo.getpostman.com/post\"}",
+        "responseTime": 273,
+        "responseSize": 495
+      },
+      "mean": {
+        "time": "273ms",
+        "size": "495B"
+      },
+      "cumulativeTests": {
+        "passed": 0,
+        "failed": 0
+      },
+      "assertions": []
+    },
+    {
+      "item": {
+        "id": "0d5736de-0cf1-46a9-b057-3997c275af4b",
+        "name": "A simple POST request with JSON body",
+        "request": {
+          "url": "https://echo.getpostman.com/post",
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
+          }
+        }
+      },
+      "request": {
+        "url": "https://echo.getpostman.com/post",
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "User-Agent",
+            "value": "PostmanRuntime/2.4.3"
+          },
+          {
+            "key": "Accept",
+            "value": "*/*"
+          },
+          {
+            "key": "Host",
+            "value": "echo.getpostman.com"
+          },
+          {
+            "key": "cookie",
+            "value": "sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg"
+          },
+          {
+            "key": "accept-encoding",
+            "value": "gzip, deflate"
+          },
+          {
+            "key": "content-length",
+            "value": 80
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
+        },
+        "description": {}
+      },
+      "response": {
+        "status": "OK",
+        "code": 200,
+        "header": [
+          {
+            "key": "Access-Control-Allow-Credentials",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": ""
+          },
+          {
+            "key": "Access-Control-Expose-Headers",
+            "value": ""
+          },
+          {
+            "key": "Content-Encoding",
+            "value": "gzip"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Date",
+            "value": "Thu, 25 Aug 2016 14:22:02 GMT"
+          },
+          {
+            "key": "ETag",
+            "value": "W/\"24a-RFanBswLWTX2fy8gBq4Fug\""
+          },
+          {
+            "key": "Server",
+            "value": "nginx/1.8.1"
+          },
+          {
+            "key": "Vary",
+            "value": "X-HTTP-Method-Override, Accept-Encoding"
+          },
+          {
+            "key": "Content-Length",
+            "value": "366"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "body": "{\"args\":{},\"data\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"80\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"application/json\",\"cookie\":\"sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"url\":\"https://echo.getpostman.com/post\"}",
+        "responseTime": 309,
+        "responseSize": 586
+      },
+      "mean": {
+        "time": "309ms",
+        "size": "586B"
+      },
+      "cumulativeTests": {
+        "passed": 0,
+        "failed": 0
+      },
+      "assertions": []
+    }
+  ],
+  "summary": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 0,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "collection": {
+      "info": {
+        "id": "6d031f42-a134-4dba-86c5-ce154f352f33",
+        "name": "Sample Postman Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+      },
+      "item": [
+        {
+          "id": "17d87a3b-fdc8-4b18-9815-950a42d87f59",
+          "name": "A simple GET request",
+          "request": {
+            "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
+            "method": "GET"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests['response code is 200'] = (responseCode.code === 200);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "45805ccf-86f6-44d1-b1fa-18431f4025e5",
+          "name": "A simple POST request",
+          "request": {
+            "url": "https://echo.getpostman.com/post",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
+            }
+          }
+        },
+        {
+          "id": "0d5736de-0cf1-46a9-b057-3997c275af4b",
+          "name": "A simple POST request with JSON body",
+          "request": {
+            "url": "https://echo.getpostman.com/post",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
+            }
+          }
+        }
+      ]
+    },
+    "failures": 0
+  }
+}

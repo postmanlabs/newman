@@ -32,7 +32,7 @@ describe('run summary', function () {
     it('must have tracking properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(Object.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run'].sort());
+        expect(_.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run'].sort());
 
         expect(summary.environment.object).be.an('function');
         expect(summary.globals.object).be.an('function');
@@ -45,7 +45,7 @@ describe('run summary', function () {
     it('must have run related properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(Object.keys(summary.run)).to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error']);
+        expect(_.keys(summary.run)).to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error']);
 
         expect(summary.run.failures).be.an('array');
         expect(summary.run.stats).be.an('object');
@@ -58,7 +58,7 @@ describe('run summary', function () {
             var emitter = new EventEmitter(),
                 summary = new Summary(emitter);
 
-            expect(Object.keys(summary.run.stats)).to.eql(_.map(TRACKED_EVENTS, function (name) {
+            expect(_.keys(summary.run.stats)).to.eql(_.map(TRACKED_EVENTS, function (name) {
                 return name + 's';
             }));
         });
@@ -120,7 +120,7 @@ describe('run summary', function () {
     describe('failure logging', function () {
 
         describe('surrogate (pseudo) event', function () {
-            SURROGATE_EVENTS.forEach(function (eventName) {
+            _.forEach(SURROGATE_EVENTS, function (eventName) {
                 var beforeEventName = _.camelCase(`before-${eventName}`),
                     emitter,
                     summary;
@@ -143,7 +143,7 @@ describe('run summary', function () {
             });
         });
 
-        _.difference(TRACKED_EVENTS, SURROGATE_EVENTS).forEach(function (eventName) {
+        _(TRACKED_EVENTS).difference(SURROGATE_EVENTS).forEach(function (eventName) {
             describe(`${eventName} event`, function () {
                 var beforeEventName = _.camelCase(`before-${eventName}`),
                     emitter,
@@ -176,7 +176,7 @@ describe('run summary', function () {
                     var failure = summary.run.failures[0];
 
                     expect(failure.error.message).be(`faux ${beforeEventName} error`);
-                    expect(Object.keys(failure)).to.eql(['error', 'at', 'source', 'parent', 'cursor']);
+                    expect(_.keys(failure)).to.eql(['error', 'at', 'source', 'parent', 'cursor']);
 
                     expect(failure).have.property('at');
                     expect(failure.at).be(beforeEventName);
