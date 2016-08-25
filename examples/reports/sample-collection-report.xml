@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Sample Postman Collection">
+  <testsuite name="A simple GET request" id="17d87a3b-fdc8-4b18-9815-950a42d87f59" time="1965">
+    <testcase name="response code is 200"/>
+  </testsuite>
+  <testsuite name="A simple POST request" id="45805ccf-86f6-44d1-b1fa-18431f4025e5" time="273"/>
+  <testsuite name="A simple POST request with JSON body" id="0d5736de-0cf1-46a9-b057-3997c275af4b" time="309"/>
+</testsuites>
