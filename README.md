@@ -10,35 +10,6 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Using Newman, one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
 extensibility in mind so that you can easily integrate it into your continuous integration servers and build systems.
 
-# Contents
-
-1. [IMPORTANT NOTICE](#important-notice)
-
-2. [Getting Started](#getting-started)
-    1. [Using Newman as a NodeJS module](#using-newman-as-a-nodejs-module)
-
-3. [Command line options](#command-line-options)
-    1. [newman-run](#newman-run-collection-file-source-options)
-        1. [Configuring reporters](#configuring-reporters)
-            1. [CLI reporter options](#cli-reporter-options)
-            2. [JSON reporter options](#json-reporter-options)
-            3. [HTML reporter options](#html-reporter-options)
-                1. [Custom HTML reporter templates](#custom-html-reporter-templates)
-            4. [JUnit reporter options](#junitxml-reporter-options)
-
-4. [API Reference](#api-reference)
-    1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
-    2. [Run summary object](#newmanruncallbackerror-object--summary-object)
-    3. [Events emitted during a collection run](#newmanrunevents)
-
-5. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
-
-6. [Communinty Support](#community-support)
-
-7. [License](#license)
-
----
-
 ## IMPORTANT NOTICE
 
 > ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options by referring to our [Newman v2 to v3 Migration Guide](MIGRATION.md)
@@ -47,9 +18,35 @@ extensibility in mind so that you can easily integrate it into your continuous i
 
 ---
 
+## Contents
+
+1. [Getting Started](#getting-started)
+    1. [Using Newman as a NodeJS module](#using-newman-as-a-nodejs-module)
+
+2. [Command line options](#command-line-options)
+    1. [newman-run](#newman-run-collection-file-source-options)
+        1. [Configuring reporters](#configuring-reporters)
+            1. [CLI reporter options](#cli-reporter-options)
+            2. [JSON reporter options](#json-reporter-options)
+            3. [HTML reporter options](#html-reporter-options)
+            4. [JUnit reporter options](#junitxml-reporter-options)
+
+3. [API Reference](#api-reference)
+    1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
+    2. [Run summary object](#newmanruncallbackerror-object--summary-object)
+    3. [Events emitted during a collection run](#newmanrunevents)
+
+4. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
+
+5. [Communinty Support](#community-support)
+
+6. [License](#license)
+
+---
+
 ## Getting started
 
-To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [here](https://nodejs.org/en/download/package-manager).
+To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [https://nodejs.org/en/download/package-manager](https://nodejs.org/en/download/package-manager).
 
 The easiest way to install Newman is using NPM. If you have NodeJS installed, it is most likely that you have NPM
 installed as well.
@@ -153,6 +150,8 @@ newman.run({
 
 #### Configuring Reporters
 
+Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
+
 - `-r <reporter-name>`, `--reporters <reporter-name>`<br />
   Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
 
@@ -166,6 +165,8 @@ newman.run({
   <br /<br />
   For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
   reporter.
+
+**Note:** Sample collection reports have been provided in [examples/reports](https://github.com/postmanlabs/newman/blob/develop/examples/reports).
 
 ##### CLI reporter options
 These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
@@ -204,141 +205,19 @@ HTML reporter, provide `--reporters html` as a CLI option.
 | `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
 | `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
 
-###### Custom HTML reporter templates
-
-Custom templates (currently handlebars only) can be passed to the HTML reporter with `--reporter-html-template <path>`, in conjunction with `--reporters html` and `--reporter-html-export` flags.
-The [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used when the custom template option has been left out. The template receives
-a data object of the following format:
-
-```javascript
-{
-  "timestamp": Date(),
-  "aggregations": [
-    {
-      "item": {
-        "id": <Unique reuest id>,
-        "name": <Request name>,
-        "request": {
-          "url": <Request URL>,
-          "method": <Request Method>
-        },
-        "event": {
-          "listen": <Event listener attached to this event>,
-          "script": {
-            "type": <Content-Type>,
-            "exec": [
-              "tests['response code is 200'] = (responseCode.code === 200);"
-            ]
-          }
-        }
-      },
-      "request": {
-        "url": <Request URL>,
-        "method": <Request Method>,
-        "header": [
-          {
-            "key": <Header name>,
-            "value": <Header value>
-          }
-        ],
-        "body": <Request body>
-        "description": <Description for this request>
-      },
-      "response": {
-        "status": <Response status>,
-        "code": <Numerical response code>,
-        "header": [
-          {
-            "key": <Header name>,
-            "value": <Header value>
-          },
-          "body": <Response body>,
-          "responseTime": <Response time in ms>,
-          "responseSize": <Response size in bytes>,
-          "update": {},
-          "reason": {},
-          "text": {},
-          "json": {},
-          "mime": {},
-          "dataURI": {},
-          "size": {},
-          "describe": {},
-          "toObjectResolved": {},
-          "toJSON": {},
-          "meta": {}
-
-        ]
-      },
-      "mean": { "time": <Prettified time string>, "size": <Prettified size string> },
-      "cumulativeTests": {
-        "passed": <Total number of tests that passed for this request>,
-        "failed": <Total number of tests that failed for this request>
-      },
-      "assertions": [
-        {
-          "name": "Assertion name",
-          "passed": <Total passed count over the collection run>,
-          "failed": <Total failed count over the collection run>
-        }
-      ]
-    }
-  ],
-  "summary": {
-    "stats": {
-      "iterations": { "total": 1, "pending": 0, "failed": 0 },
-      "items": { "total": 23, "pending": 0, "failed": 0 },
-      "scripts": { "total": 23, "pending": 0, "failed": 0 },
-      "prerequests": { "total": 23, "pending": 0, "failed": 0 },
-      "requests": { "total": 23, "pending": 0, "failed": 0 },
-      "tests": { "total": 23, "pending": 0, "failed": 0 },
-      "assertions": { "total": 65, "pending": 0, "failed": 0 },
-      "testScripts": { "total": 23, "pending": 0, "failed": 0 },
-      "prerequestScripts": { "total": 0, "pending": 0, "failed": 0 }
-    },
-    "collection": {
-      "info": {
-        "id": <Unique collection id>,
-        "name": <Collection name>,
-        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-      },
-      "item": [
-        {
-          "id": <item id>,
-          "name": <item name>,
-          "request": {
-            "url": <Request URL>,
-            "method": <Request method>
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": <Content Type>,
-                "exec": [
-                  "tests['response code is 200'] = (responseCode.code === 200);"
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
-    "failures": <Total number of failures in the run>
-  },
-}
-```
+Custom templates (currently handlebars only) can be passed to the HTML reporter via `--reporter-html-template <path>` with `--reporters html` and `--reporter-html-export`.
+The [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used in all other cases.
 
 ##### JUNIT/XML reporter options
 Newman can output a summary of the collection run to a JUnit compatible XML file. To enable the JUNIT reporter, provide
-`--reporters html` as a CLI option.
+`--reporters junit` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
-discontinued. For documentation on the older command options, refer to
-[README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
 ### `newman [options]`
 
