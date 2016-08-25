@@ -1,14 +1,8 @@
 language: node_js
 node_js:
-  - "4"
-  - "5"
-before_install: npm install -g grunt-cli
-install: npm install
-# deploy:
-#   provider: npm
-#   email: help@getpostman.com
-#   api_key:
-#     secure: lL/1+mZAroisLT8OCF4vmPVvUz7WDjQbtIMLlbm4aHoYCu8Yg/dY00RCUZsdz0FluMu7C+hgU2nNcKUu5NJe8ve5sLY+ghaK1RAuzyHv055fhbYcw6wcMHs5nBgZW+FSpv+E/jhiWH6iWzj7bcsIDC2NZBdfDV8oOafqJFUp7eU=
-#   on:
-#     tags: true
-#     repo: postmanlabs/newman
+- '4'
+- '5'
+- '6'
+notifications:
+  slack:
+    secure: Fdl/sQMTl86jYN1r1CRRRQRgyFoslvrhkkfnM2JSdx4gODPgyg4nCPSKtU5j9wpSbbkq9A+YBeFv+Suh+xYNviegqa0AZbztydfFzVDS7xw43B/uR9Y4LwaP5Kis1WGuIOHawwFISNO3hTUei6aybKiKKlxvfqrARJaO01+Xxrg=

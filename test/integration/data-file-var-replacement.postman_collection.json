@@ -1,0 +1,63 @@
+{
+  "variables": [],
+  "info": {
+    "name": "{{variable}} works for data file values",
+    "_postman_id": "dd85194f-bdb3-8ce1-fd25-554cac614f89",
+    "description": "A set of checks for variable value population via data files",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "http://echo.getpostman.com/post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"form data populated through env file\"] = (data.form.envFileKey===\"abhijit3\");\ntests[\"form-data populated through prScript\"] = (data.form.prScriptTest==iteration);"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": "postman.setEnvironmentVariable(\"dataVar2\",iteration);"
+          }
+        }
+      ],
+      "request": {
+        "url": "http://{{envFileUrl}}/post",
+        "method": "POST",
+        "header": [
+          {
+            "key": "h1",
+            "value": "v1",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "dataFileKey",
+              "value": "{{dataVar}}",
+              "type": "text"
+            },
+            {
+              "key": "envFileKey",
+              "value": "{{envKey}}",
+              "type": "text"
+            },
+            {
+              "key": "prScriptTest",
+              "value": "{{dataVar2}}",
+              "type": "text"
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

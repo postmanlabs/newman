@@ -1,0 +1,34 @@
+{
+	"variables": [],
+	"info": {
+		"name": "SugarJS and native prototypes work",
+		"_postman_id": "8f31aeff-c5b5-5c42-9540-fae109785538",
+		"description": "A set of requests to test Array, String, Date, and Function prototypes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "objectPrototype",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "// Extended Array prototype tests\ntests[\"Array prototype none\"] = ['a', 'b', 'c'].none('d');\ntests[\"Array prototype any\"] = [ [1,2], [2,3] ].any([2,3]);\ntests[\"Array prototype average\"] = [ 1, 2, 3, 4, 5 ].average() === 3;\n\n// Extended Date prototype tests\ntests[\"Date prototype getTime\"] = Date.now()==(new Date()).getTime();\n\n// Extended Function prototype tests\nvar fCount = 0;\nvar fn = (function() {\n  fCount++;\n}).once(); fn(); fn(); fn();\ntests[\"Function prototype once\"] = fCount===1;\n\n// Extended Number prototype tests\ntests[\"Number prototype hex\"] = (56).hex() === '38';\ntests[\"Number prototype isEven\"] = (56).isEven() === true;\ntests[\"Number prototype ordinalize\"] = (56).ordinalize() === '56th';\ntests[\"Number prototype format\"] = (56789.10).format() === '56,789.1';\n\n// Extended String prototype tests\ntests[\"String prototype endsWith\"] = 'jumpy'.endsWith('py');\ntests[\"String prototype negated endsWith\"] = !('jumpy'.endsWith('MPY'));\ntests[\"String prototype camelize\"] = 'a-beta'.camelize() === 'ABeta';\ntests[\"String prototype repeat\"] = 'a'.repeat(5) === 'aaaaa';\ntests[\"String prototype shift\"] = 'abc'.shift(5) === 'fgh';\ntests[\"String prototype spacify\"] = 'a-b_cD'.spacify() === 'a b c d';"
+					}
+				}
+			],
+			"request": {
+				"url": "echo.getpostman.com/get",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

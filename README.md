@@ -1,218 +1,335 @@
-<img src="https://s3.amazonaws.com/web-artefacts/newman-128.png" />
+[![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman)
+[![Dependency Status](https://david-dm.org/postmanlabs/newman.svg)](https://david-dm.org/postmanlabs/newman)
+[![devDependency Status](https://david-dm.org/postmanlabs/newman/dev-status.svg)](https://david-dm.org/postmanlabs/newman#info=devDependencies)
 
-# Newman [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman)
+<a href="https://www.getpostman.com/"><img src="https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/postman-logo%2Btext-320x132.png" /></a><br />
+_Supercharge your API workflow<br/>Modern software is built on APIs. Postman helps you develop APIs faster._
 
-**Update Feb 25 2016:** Newman v2 (which only works with Node v4.0+) has been released. If you are using Node v0.10 or Node v0.12, check the supported Node versions below.
+# newman <sub>_the cli companion for postman_</sub>
 
-Newman is a command-line collection runner for [Postman](http://getpostman.com). It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
+Using Newman, one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
+extensibility in mind so that you can easily integrate it into your continuous integration servers and build systems.
 
-Newman maintains feature parity with Postman and allows you to run collections just the way they are executed inside the collection runner in Postman.
+## IMPORTANT NOTICE
 
-[![NPM](https://nodei.co/npm/newman.png?downloads=true)](https://nodei.co/npm-dl/newman/)
+> ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options by referring to our [Newman v2 to v3 Migration Guide](MIGRATION.md)
+>
+> For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
+---
 
-## Supported Node Versions
+## Contents
 
-| Node Version    | Newman Version | Installation Command         |
-|-----------------|----------------|------------------------------|
-| 0.10.x - 0.12.x | 1.x.x          | `npm install -g newman@1`    |
-| 4.0+            | 2.x.x+         | `npm install -g newman`      |
+1. [Getting Started](#getting-started)
+    1. [Using Newman as a NodeJS module](#using-newman-as-a-nodejs-module)
 
-##### DOM Deprecation
-Keeping in line with the [Postman Sandbox](https://www.getpostman.com/docs/sandbox) roadmap, the next major version of Newman (`v3.0.0+`) will drop support for DOM (and associated libraries such as jQuery and Backbone) inside the tests. Any tests that you might have, which use these libraries might break.
+2. [Command line options](#command-line-options)
+    1. [newman-run](#newman-run-collection-file-source-options)
+        1. [Configuring reporters](#configuring-reporters)
+            1. [CLI reporter options](#cli-reporter-options)
+            2. [JSON reporter options](#json-reporter-options)
+            3. [HTML reporter options](#html-reporter-options)
+            4. [JUnit reporter options](#junitxml-reporter-options)
 
-## Getting Started
-Newman is built on Node.js. To run Newman, make sure you have Node.js installed. Node.js can be downloaded and installed from [here](http://nodejs.org/download/) on Linux, Windows and Mac OSX.
+3. [API Reference](#api-reference)
+    1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
+    2. [Run summary object](#newmanruncallbackerror-object--summary-object)
+    3. [Events emitted during a collection run](#newmanrunevents)
 
-#### Updating Newman
-If you already have Newman, you can update with a simple command
-```bash
-$ npm update -g newman
+4. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
+
+5. [Communinty Support](#community-support)
+
+6. [License](#license)
+
+---
+
+## Getting started
+
+To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [https://nodejs.org/en/download/package-manager](https://nodejs.org/en/download/package-manager).
+
+The easiest way to install Newman is using NPM. If you have NodeJS installed, it is most likely that you have NPM
+installed as well.
+
+```terminal
+$ npm install newman --global;
 ```
 
-#### Running Newman
-The easiest way to run Newman is to run it with a collection. With the `-c` flag you can run any collection file lying on your file-system. Refer [the collection documentation](http://www.getpostman.com/docs/collections) to learn how to use and download collections.
+The `newman run` command allows you to specify a collection to be run. You can easily export your Postman
+Collection as a json file from the [Postman App](https://www.getpostman.com/apps) and run it using Newman.
 
-```bash
-$ newman -c mycollection.json
+```terminal
+$ newman run examples/sample-collection.json;
 ```
 
-The `-u` flag allows you to pass a postman collection as a URL. Your collection probably uses environment variables. To provide an accompanying set of environment variables, [export them from Postman](http://www.getpostman.com/docs/environments)  and run them with the `-e` flag.
-```bash
-$ newman -u https://www.getpostman.com/collections/cb208e7e64056f5294e5 -e devenvironment.json
+If your collection file is available as an URL (such as from our [Cloud API service](https://api.getpostman.com)),
+Newman can fetch your file and run it as well.
+
+```terminal
+$ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
 ```
 
-## Options
-Newman provides a rich set of options to customize a run. A list of options can be retrieved by running it with the `-h` flag.
+For the complete list of options, refer the [Commandline Options](#commandline-options) section below.
 
-```bash
-$ newman -h
+![terminal-demo](https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/newman-terminal.gif)
 
-Options:
+### Using Newman as a NodeJS module
 
-Utility:
--h, --help                  output usage information
--V, --version               output the version number
-
-Basic setup:
--c, --collection [file]     	Specify a Postman collection as a JSON [file]
--u, --url [url]             	Specify a Postman collection as a [url]
--f, --folder [folderName]   	Specify a single folder to run from a collection. To be used with -c or -u.
--e, --environment [file]    	Specify a Postman environment as a JSON [file]
---environment-url [url]         Specify a Postman environment as a URL [url]
--d, --data [file]           	Specify a data file to use either json or csv
--g, --global [file]         	Specify a Postman globals file as JSON [file]
--n, --number [number]       	Define the number of iterations to run
--i, --import [file]         	Import a Postman backup file, and save collections, environments, and globals. [file]
--p, --pretty                	(Use with -i) Enable pretty-print while saving imported collections, environments, and globals
--G, --exportGlobals [file]      Specify an output file to dump Globals before exiting [file]
--E, --exportEnvironment [file]  Specify an output file to dump the Postman environment before exiting [file]
-
-Request options:
--y, --delay [number]            Specify a delay (in ms) between requests [number]
--r, --requestTimeout [number]   Specify a request timeout (in ms) for a request (Defaults to 15000 if not set)
-
-Misc.:
--s, --stopOnError           Stops the runner when a test case fails
--j, --noSummary             Does not show the summary for each iteration
--C, --noColor               Disable colored output
--S, --noTestSymbols         Disable symbols in test output and use PASS|FAIL instead
--k, --insecure              Disable strict ssl
--l, --tls                   Use TLSv1
--x, --exitCode              Continue running tests even after a failure, but exit with code=1
--W, --whiteScreen           Black text for white screen
-
-
-Output:
--o, --outputFile [file]                 Path to file where output should be written. [file]
--t, --testReportFile [file]             Path to file where results should be written as JUnit XML [file]
--H, --html                              Export a HTML report to a specified file [file]
--O, --outputFileVerbose [file]          Path to file where full request and responses should be logged [file]
-
-```
-
-Use the `-n` option to set the number of iterations you want to run the collection for.
-
-```bash
-$ newman -c mycollection.json -n 10  # runs the collection 10 times
-```
-
-To provide a different set of data i.e. variables for each iteration you can use the `-d` to specify a `json` or `csv` file. For example, a data file such as the one shown below will run *2* iterations, with each iteration using a set of variables.
-```javascript
-[{
-	"url": "http://127.0.0.1:5000",
-	"user_id": "1",
-	"id": "1",
-	"token_id": "123123",
-},
-{
-	"url": "http://dump.getpostman.com",
-	"user_id": "2",
-	"id": "2",
-	"token_id": "899899",
-}]
-```
-
-```bash
-$ newman -c mycollection.json -d data.json
-```
-
-The csv file for the above set of variables would look like
-```
-url, user_id, id, token_id
-http://127.0.0.1:5000, 1, 1, 123123123
-http://dump.getpostman.com, 2, 2, 899899
-```
-
-Newman, by default exits with a status code of 0 if everything runs well i.e. without any exceptions. Continuous integration tools respond to these exit codes and correspondingly pass or fail a build. You can use `-s` flag to tell Newman to halt on a test case error with a status code of 1 which can then be picked up by a CI tool or build system.
-
-```bash
-$ newman -c PostmanCollection.json -e environment.json -s
-
-Iteration 1 of 1
-200 17ms Blog posts http://127.0.0.1:5000/blog/posts
-    ✔ Status code is 200
-404 5ms Blog post http://127.0.0.1:5000/blog/posts/1
-200 4ms New post without token http://127.0.0.1:5000/blog/posts
-    ✔ Body has a message
-    ✔ invalid credentials
-Test case failed: Status code is 404
-```
-
-The results of all tests and requests can be exported into file and later imported in Postman for further analysis. Use the `-o` flag and a file name to save the runner output into a file.
-
-```bash
-$ newman -c mycollection.json -o outputfile.json
-```
-
-Newman can also be used to import a Postman backup file. The collections, environments, and globals will be saved to the 'data' folder. (Use the -p option to enable pretty-print)
-```bash
-newman -i /path/to/Backup.json -p
-```
-
-
-
-**NOTE** Newman allows you to use all [libraries](http://www.getpostman.com/docs/jetpacks_writing_tests) that Postman supports for running tests. For [x2js](https://code.google.com/p/x2js/) however, only  function `xmlToJson` is supported.
-
-## Library
-Newman has been built as a library from the ground-up so that it can be extended and put to varied uses. You can use it like so -
+Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well. The following example runs a collection by reading a JSON collection file stored on disk.
 
 ```javascript
-var Newman = require('newman');
+var newman = require('newman'); // require newman in your project
 
-// read the collectionjson file
-var collectionJson = JSON5.parse(fs.readFileSync("collection.json", 'utf8'));
-
-// define Newman options
-newmanOptions = {
-	envJson: JSON5.parse(fs.readFileSync("envjson.json", "utf-8")), // environment file (in parsed json format)
-	dataFile: data.csv,                    // data file if required
-	iterationCount: 10,                    // define the number of times the runner should run
-	outputFile: "outfile.json",            // the file to export to
-	responseHandler: "TestResponseHandler", // the response handler to use
-	asLibrary: true,         				// this makes sure the exit code is returned as an argument to the callback function
-	stopOnError: true
-}
-
-// Optional Callback function which will be executed once Newman is done executing all its tasks.
-Newman.execute(collectionJson, newmanOptions, callback);
+// call newman.run to pass `options` object and wait for callback
+newman.run({
+    collection: require('./sample-collection.json'),
+    reporters: 'cli'
+}, function (err) {
+	if (err) { throw err; }
+    console.log('collection run complete!');
+});
 ```
 
+**Note:** The newman v2.x `.execute` function has been discontinued.
 
-## Cron
-Want your test suite to run every hour? Newman can be used to schedule tests to run hourly, daily or weekly automatically in combination with the awesome Unix scheduler **CRON**.
+---
 
-Lets setup a simple script called `run_newman` to run our tests
-```bash
-#!/bin/bash
+## Command line Options
 
-timestamp=$(date +"%s")
-collection=/var/www/myapp/tests/collection.json
-env=/var/www/myapp/tests/envfile.json
+### `newman run <collection-file-source> [options]`
 
-# create separate outfile for each run
-outfile=/var/www/myapp/tests/outfile-$timestamp.json
+- `-e <source>`, `--environment <source>`<br />
+  Specify an environment file path or URL. Environments provide a set of variables that one can use within collections.
+  [Read More](https://www.getpostman.com/docs/environments)
 
-# redirect all output to /dev/null
-newman -c $collection -e $env -o $outfile > /dev/null2>&1
+- `-g <source>`, `--globals <source>`<br />
+  Specify file path or URL for global variables. Global variables are similar to environment variables but has a lower
+  precedence and can be overridden by environment variables having same name.
+
+- `-d <source>`, `--iteration-data <source>`<br />
+  Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
+  [Read More](https://www.getpostman.com/docs/multiple_instances)
+
+- `-n <number`, `--iteration-count <number>`<br />
+  Specifies the number of times the collection has to be run when used in conjunction with iteration data file.
+
+- `--folder <name>`<br />
+  Run requests within a particular folder in a collection.
+
+- `--export-environment <path>`<br />
+  The path to the file where Newman will output the final environment variables file before completing a run.
+
+- `--export-globals <path>`<br />
+  The path to the file where Newman will output the final global variables file before completing a run.
+
+- `--export-collection <path>`<br />
+  The path to the file where Newman will output the final collection file before completing a run.
+
+- `--timeout-request <ms>`<br />
+  Specify the time (in milliseconds) to wait for requests to return a response.
+
+- `-k`, `--insecure`<br />
+  Disables SSL verification checks and allows self-signed SSL certificates.
+
+- `--ignore-redirects`<br />
+  Prevents newman from automatically following 3XX redirect responses.
+
+- `--delay-request`<br />
+  Specify the extent of delay between requests (milliseconds).
+
+- `--bail`<br />
+  Specify whether or not to stop a collection run on encountering the first error.
+
+- `-x`, `--suppress-exit-code`<br />
+  Specify whether or not to override the default exit code for the current run.
+
+- `--no-color`<br />
+  Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With
+  this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman
+  that output to console.
+
+#### Configuring Reporters
+
+Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
+
+- `-r <reporter-name>`, `--reporters <reporter-name>`<br />
+  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
+
+- `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
+  When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
+  is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
+  For example, `... --reporters cli,html --reporter-cli-silent` would silence the CLI reporter only.
+
+- `--reporter-{{reporter-options}}`<br />
+  If more than one reporter accepts the same option name, they can be provided using the common reporter option syntax.
+  <br /<br />
+  For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
+  reporter.
+
+**Note:** Sample collection reports have been provided in [examples/reports](https://github.com/postmanlabs/newman/blob/develop/examples/reports).
+
+##### CLI reporter options
+These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
+option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
+
+CLI reporter is enabled by default, you do not need to specifically provide the same as part of `--reporters` option.
+However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in
+such a scenario.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
+| `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
+| `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
+| `--reporter-cli-no-assertions`  | This turns off the request-wise output as they happen. |
+| `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+
+##### JSON reporter options
+The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
+file where to write the file. The content of this file is exactly same as the `summary` parameter sent to the callback
+when Newman is used as a library.
+
+To enable JSON reporter, provide `--reporters json` as a CLI option.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+
+
+##### HTML reporter options
+The built-in HTML reporter produces and HTML output file outlining the summary and report of the Newman run. To enable the
+HTML reporter, provide `--reporters html` as a CLI option.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
+
+Custom templates (currently handlebars only) can be passed to the HTML reporter via `--reporter-html-template <path>` with `--reporters html` and `--reporter-html-export`.
+The [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used in all other cases.
+
+##### JUNIT/XML reporter options
+Newman can output a summary of the collection run to a JUnit compatible XML file. To enable the JUNIT reporter, provide
+`--reporters junit` as a CLI option.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+
+Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
+discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+
+### `newman [options]`
+
+- `-h`, `--help`<br />
+  Show commandline help, including a list of options, and sample use cases.
+
+- `--version`<br />
+  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
+
+---
+
+## API Reference
+
+### newman.run(options: _object_ , callback: _function_) => run: EventEmitter
+The `run` function executes a collection and returns the run result to a callback function provided as parameter. The
+return of the `newman.run` function is a run instance, which emits run events that can be listened to.
+
+| Parameter | Description   |
+|-----------|---------------|
+| options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
+| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an instance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
+| options.environment       | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
+| options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object|string` |
+| options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
+| options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
+| options.folder            | The name or ID of the folder (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string` |
+| options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
+| options.delayRequest      | Specify the time (in milliseconds) to wait for between subsequent requests.<br /><br />_Optional_<br />Type: `number`, Default value: `0` |
+| options.ignoreRedirects   | This specifies whether newman would automatically follow 3xx responses from servers.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
+| options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
+| options.bail              | A boolean switch to specify whether or not to gracefully stop a collection run on encountering the first error. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
+| options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
+| options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
+| options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
+| callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
+
+### newman.run~callback(error: _object_ , summary: _object_)
+
+The `callback` parameter of the `newman.run` function receives two arguments: (1) `error` and (2) `summary`
+
+| Argument  | Description   |
+|-----------|---------------|
+| error                     | In case newman faces an error during the run, the error is passed on to this argument of callback. By default, only fatal errors, such as the ones caused by any fault inside Newman is passed on to this argument. However, setting `abortOnError:true` or `abortOnFailure:true` as part of run options will cause newman to treat collection script syntax errors and test failures as fatal errors and be passed down here while stopping the run abruptly at that point.<br /><br />Type: `object` |
+| summary                   | The run summary will contain information pertaining to the run.<br /><br />Type: `object` |
+| summary.error             | An error object which if exists, contains an error message describing the message <br /><br />Type: `object` |
+| summary.collection        | This object contains information about the collection being run, it's requests, and their associated pre-request scripts and tests.<br /><br />Type: `object` |
+| summary.environment       | An object with environment variables used for the current run, and the usage status for each of those variables.<br /><br />Type: `object` |
+| summary.globals           | This object holds details about the globals used within the collection run namespace.<br /><br />Type: `object` |
+| summary.run               | A cumulative run summary object that provides information on .<br /><br />Type: `object` |
+| summary.run.stats         | An object which provides details about the total, failed, and pending counts for pre request scripts, tests, assertions, requests, and more.<br /><br />Type: `object` |
+| summary.run.failures      | An array of failure objects, with each element holding details, including the assertion that failed, and the request.<br /><br />Type: `array.<object>` |
+| summary.run.executions    | This object contains information about each request, along with it's associated activities within the scope of the current collection run.<br /><br />Type: `array.<object>` |
+
+### newman.run~events
+
+Newman triggers a whole bunch of events during the run.
+
+```javascript
+newman.run({
+    collection: require('./sample-collection.json')
+}).on('start', function (err, args) { // on start of run, log to console
+    console.log('running a collection...');
+}).on('done', function (err, summary) {
+    if (err || summary.error) {
+        console.error('collection run encountered an error.');
+    }
+    else {
+        console.log('collection run completed.');
+    }
+});
 ```
-Make it an executable
-```bash
-$ chmod +x run_newman
+
+All events receive two arguments (1) `error` and (2) `args`. **The list below describes the properties of the second
+argument object.**
+
+| Event     | Description   |
+|-----------|---------------|
+| start                     | The start of a collection run |
+| beforeIteration           | Before an iteration commences |
+| beforeItem                | Before an item execution begins (the set of prerequest->request->test) |
+| beforePrerequest          | Before `prerequest` script is execution starts |
+| prerequest                | After `prerequest` script execution completes |
+| beforeRequest             | Before an HTTP request is sent |
+| request                   | After response of the request is received |
+| beforeTest                | Before `test` script is execution starts |
+| test                      | After `test` script execution completes |
+| beforeScript              | Before any script (of type `test` or `prerequest`) is executed |
+| script                    | After any script (of type `test` or `prerequest`) is executed |
+| item                      | When an item (the whole set of prerequest->request->test) completes |
+| iteration                 | After an iteration completes |
+| assertion                 | This event is triggered for every test assertion done within `test` scripts |
+| console                   | Every time a `console` function is called from within any script, this event is propagated |
+| exception                 | When any asynchronous error happen in `scripts` this event is triggered |
+| beforeDone                | An event that is triggered prior to the completion of the run |
+| done                      | This event is emitted when a collection run has completed, with or without errors |
+
+<!-- TODO: write about callback summary -->
+
+---
+
+## Using Newman with the Postman Cloud API
+
+1 [Generate an API key](https://app.getpostman.com/dashboard/integrations)<br/>
+2 Fetch a list of your collections from: `https://api.getpostman.com/collections?apikey=$apiKey`<br/>
+3 Get the collection link via it's `uid`: `https://api.getpostman.com/collections/$uid?apikey=$apiKey`<br/>
+4 Obtain the environment URI from: `https://api.getpostman.com/environments?apikey=$apiKey`<br/>
+5 Using the collection and environment URIs acquired in steps 3 and 4, run the collection as follows:
+```
+newman run <collectionUri> --environment <environmentUri>
 ```
 
-To run Newman every hour, run `crontab -e` and enter the following -
-```bash
-0 * * * * /path/to/run_newman
-```
-Check your `cron` if it has been setup
-```bash
-$ crontab -l
-0 * * * * /path/to/run_newman
-```
-With this, your Newman is set to run automatically every hour.
-
-Note: Exact location for `cron` is dependent on the linux distribution you are running. See specific `cron` instructions for your distribution. For an introduction to `cron` checkout [this](http://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800) article.
+---
 
 ## Community Support
 
@@ -222,7 +339,9 @@ If you are interested in talking to the team and other Newman users, we are ther
 Get your invitation for Postman Slack Community from: <a href="https://www.getpostman.com/slack-invite">https://www.getpostman.com/slack-invite</a>.<br />
 Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
 
+---
+
 ## License
-Apache-2.0. See the LICENSE file for more information
+This software is licensed under Apache-2.0. Copyright Postdot Technologies, Inc. See the [LICENSE.md](LICENSE.md) file for more information.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman/readme)](https://www.getpostman.com)
