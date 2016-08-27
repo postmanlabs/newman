@@ -57,7 +57,7 @@
     "xmlbuilder": "8.2.2"
   },
   "devDependencies": {
-    "eslint": "3.3.1",
+    "eslint": "3.4.0",
     "eslint-plugin-lodash": "1.10.1",
     "eslint-plugin-security": "1.2.0",
     "expect.js": "0.3.1",
