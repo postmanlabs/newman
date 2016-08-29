@@ -11,7 +11,7 @@ describe('--export-environment', function () {
 
     it('`newman run` should export environment to a file', function (done) {
         // eslint-disable-next-line max-len
-        exec('./bin/newman.js run test/cli/single-get-request.json -e test/cli/simple-variables.json --export-environment out/test-environment.json', function (code) {
+        exec('./bin/newman.js run test/cli/single-get-request.json -e test/cli/simple-environment.json --export-environment out/test-environment.json', function (code) {
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync('out/test-environment.json').toString()); }
@@ -31,7 +31,7 @@ describe('--export-environment', function () {
 
     it('`newman run` should export environment to a file even if collection is failing', function (done) {
         // eslint-disable-next-line max-len
-        exec('./bin/newman.js run test/cli/single-request-failing.json -e test/cli/simple-variables.json --export-environment out/test-environment.json', function (code) {
+        exec('./bin/newman.js run test/cli/single-request-failing.json -e test/cli/simple-environment.json --export-environment out/test-environment.json', function (code) {
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync('out/test-environment.json').toString()); }

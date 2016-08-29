@@ -11,7 +11,7 @@ describe('--export-globals', function () {
 
     it('`newman run` should export globals to a file', function (done) {
         // eslint-disable-next-line max-len
-        exec('./bin/newman.js run test/cli/single-get-request.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('./bin/newman.js run test/cli/single-get-request.json -g test/cli/simple-globals.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync('out/test-globals.json').toString()); }
@@ -19,9 +19,9 @@ describe('--export-globals', function () {
 
             expect(code).be(0);
             expect(globals).be.ok();
-            expect(globals).have.property('_postman_exported_at');
-            expect(globals).have.property('values');
-            expect(globals.values).eql([
+            // expect(globals).have.property('_postman_exported_at'); // Uncomment when formats have been standardized
+            // expect(globals).have.property('values'); // See previous comment
+            expect(globals).eql([
                 { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
                 { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
             ]);
@@ -31,7 +31,7 @@ describe('--export-globals', function () {
 
     it('`newman run` should export globals to a file even if collection is failing', function (done) {
         // eslint-disable-next-line max-len
-        exec('./bin/newman.js run test/cli/single-request-failing.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('./bin/newman.js run test/cli/single-request-failing.json -g test/cli/simple-globals.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync('out/test-globals.json').toString()); }
@@ -39,9 +39,9 @@ describe('--export-globals', function () {
 
             expect(code).not.be(0);
             expect(globals).be.ok();
-            expect(globals).have.property('_postman_exported_at');
-            expect(globals).have.property('values');
-            expect(globals.values).eql([
+            // expect(globals).have.property('_postman_exported_at'); // Uncomment when formats have been standardized
+            // expect(globals).have.property('values'); // See previous comment
+            expect(globals).eql([
                 { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
                 { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
             ]);
