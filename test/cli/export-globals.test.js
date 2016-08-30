@@ -19,9 +19,9 @@ describe('--export-globals', function () {
 
             expect(code).be(0);
             expect(globals).be.ok();
-            // expect(globals).have.property('_postman_exported_at'); // Uncomment when formats have been standardized
-            // expect(globals).have.property('values'); // See previous comment
-            expect(globals).eql([
+            expect(globals).have.property('_postman_exported_at'); // Uncomment when formats have been standardized
+            expect(globals).have.property('values'); // See previous comment
+            expect(globals.values).eql([
                 { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
                 { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
             ]);
@@ -39,9 +39,9 @@ describe('--export-globals', function () {
 
             expect(code).not.be(0);
             expect(globals).be.ok();
-            // expect(globals).have.property('_postman_exported_at'); // Uncomment when formats have been standardized
-            // expect(globals).have.property('values'); // See previous comment
-            expect(globals).eql([
+            expect(globals).have.property('_postman_exported_at'); // Uncomment when formats have been standardized
+            expect(globals).have.property('values'); // See previous comment
+            expect(globals.values).eql([
                 { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
                 { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
             ]);
