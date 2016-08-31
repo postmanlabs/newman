@@ -44,6 +44,7 @@
     "eventemitter3": "1.2.0",
     "filesize": "3.3.0",
     "handlebars": "4.0.5",
+    "has-unicode": "2.0.1",
     "lodash": "4.15.0",
     "mkdirp": "0.5.1",
     "parse-json": "2.2.0",
