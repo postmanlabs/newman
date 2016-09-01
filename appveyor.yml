@@ -6,12 +6,6 @@
 init:
   - git config --global core.autocrlf input
 
-# fetch repository as zip archive
-shallow_clone: true                 # default is "false"
-
-# set clone depth
-clone_depth: 5                      # clone entire repository history if not defined
-
 # environment variables
 environment:
   matrix:
@@ -19,17 +13,9 @@ environment:
     - nodejs_version: "5"
     - nodejs_version: "6"
 
-# build platform, i.e. x86, x64, Any CPU. This setting is optional.
-platform: Any CPU
-
-# build cache to preserve files/folders between builds
-cache:
-  - node_modules -> package.json                   # local npm modules
-
 # scripts that run after cloning repository
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install -g npm
   - npm install
 
 build: off # Disable MSBuilds, not related to the regular build process
