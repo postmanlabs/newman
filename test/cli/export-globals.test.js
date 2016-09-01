@@ -1,20 +1,23 @@
 /* global describe, it, exec, expect */
-var fs = require('fs');
+var fs = require('fs'),
+    path = require('path'),
+
+    exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');
 
 describe('--export-globals', function () {
     this.timeout(1000 * 60); // set 60s timeout
 
     afterEach(function () {
-        try { fs.unlinkSync('out/test-globals.json'); }
+        try { fs.unlinkSync(exportedGlobalsPath); }
         catch (e) { console.error(e); }
     });
 
     it('`newman run` should export globals to a file', function (done) {
         // eslint-disable-next-line max-len
-        exec('./bin/newman.js run test/cli/single-get-request.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/cli/single-get-request.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
-            try { globals = JSON.parse(fs.readFileSync('out/test-globals.json').toString()); }
+            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
             expect(code).be(0);
@@ -31,10 +34,10 @@ describe('--export-globals', function () {
 
     it('`newman run` should export globals to a file even if collection is failing', function (done) {
         // eslint-disable-next-line max-len
-        exec('./bin/newman.js run test/cli/single-request-failing.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/cli/single-request-failing.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
-            try { globals = JSON.parse(fs.readFileSync('out/test-globals.json').toString()); }
+            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
             expect(code).not.be(0);
