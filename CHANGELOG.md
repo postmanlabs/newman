@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### Unreleased
+
+- Added partial support for `--disable-unicde` CLI option (CLI table and console log needs to be included later)
+
 #### v3.1.0 (Aug 25, 2016)
 
 - Fixed issue with environment and globals export format was using wrong property names (GH:553)
