@@ -25,6 +25,26 @@ implementation:
 
 1. Make generic and uncaught exceptions more readable in CLI
 
+## Updating to Newman v3 from older versions
+
+If you're updating from an existing version of Newman, make sure you read the rest of this document, to understand 
+the changes.
+
+##### 1. Remove the existing version of Newman
+```terminal
+$ npm uninstall -g newman
+```
+
+##### 2. Install Newman v3
+```terminal
+$ npm install -g newman  # Install newman globally
+```
+
+##### 3. Check Installation
+```terminal
+$ newman --version  # Should show the latest version of Newman
+```
+
 ## Changes since v2.x
 
 Migrating to Newman v3.x for most simple use cases is a trivial affair. We have taken care to support older CLI options.

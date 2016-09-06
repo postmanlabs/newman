@@ -14,12 +14,39 @@ extensibility in mind so that you can easily integrate it into your continuous i
 
 > ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options by referring to our [Newman v2 to v3 Migration Guide](MIGRATION.md)
 >
-> To view documentation of current stable 2.x release of Newman, refer the
-> [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md) of 2.x release.
+> For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+
+---
+
+## Contents
+
+1. [Getting Started](#getting-started)
+    1. [Using Newman as a NodeJS module](#using-newman-as-a-nodejs-module)
+
+2. [Command line options](#command-line-options)
+    1. [newman-run](#newman-run-collection-file-source-options)
+        1. [Configuring reporters](#configuring-reporters)
+            1. [CLI reporter options](#cli-reporter-options)
+            2. [JSON reporter options](#json-reporter-options)
+            3. [HTML reporter options](#html-reporter-options)
+            4. [JUnit reporter options](#junitxml-reporter-options)
+
+3. [API Reference](#api-reference)
+    1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
+    2. [Run summary object](#newmanruncallbackerror-object--summary-object)
+    3. [Events emitted during a collection run](#newmanrunevents)
+
+4. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
+
+5. [Communinty Support](#community-support)
+
+6. [License](#license)
+
+---
 
 ## Getting started
 
-To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [https://nodejs.org/en/download/package-manager/](https://nodejs.org/en/download/package-manager).
+To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [https://nodejs.org/en/download/package-manager](https://nodejs.org/en/download/package-manager).
 
 The easiest way to install Newman is using NPM. If you have NodeJS installed, it is most likely that you have NPM
 installed as well.
@@ -48,9 +75,7 @@ For the complete list of options, refer the [Commandline Options](#commandline-o
 
 ### Using Newman as a NodeJS module
 
-Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well.
-
-The following example runs a collection by reading a JSON collection file stored on disk.
+Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well. The following example runs a collection by reading a JSON collection file stored on disk.
 
 ```javascript
 var newman = require('newman'); // require newman in your project
@@ -67,7 +92,9 @@ newman.run({
 
 **Note:** The newman v2.x `.execute` function has been discontinued.
 
-## Commandline Options
+---
+
+## Command line Options
 
 ### `newman run <collection-file-source> [options]`
 
@@ -101,7 +128,7 @@ newman.run({
 - `--timeout-request <ms>`<br />
   Specify the time (in milliseconds) to wait for requests to return a response.
 
-- `-k --insecure`<br />
+- `-k`, `--insecure`<br />
   Disables SSL verification checks and allows self-signed SSL certificates.
 
 - `--ignore-redirects`<br />
@@ -113,7 +140,7 @@ newman.run({
 - `--bail`<br />
   Specify whether or not to stop a collection run on encountering the first error.
 
-- `-x --suppress-exit-code`<br />
+- `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.
 
 - `--no-color`<br />
@@ -123,10 +150,12 @@ newman.run({
 
 #### Configuring Reporters
 
-- `-r --reporters <name>`<br />
+Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
+
+- `-r <reporter-name>`, `--reporters <reporter-name>`<br />
   Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
 
-- `--reporter-{{reporter-name}}-{{reporter-options}}`<br />
+- `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
   is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
   For example, `... --reporters cli,html --reporter-cli-silent` would silence the CLI reporter only.
@@ -137,11 +166,15 @@ newman.run({
   For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
   reporter.
 
+**Note:** Sample collection reports have been provided in [examples/reports](https://github.com/postmanlabs/newman/blob/develop/examples/reports).
+
 ##### CLI reporter options
 These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
 option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
 
 CLI reporter is enabled by default, you do not need to specifically provide the same as part of `--reporters` option.
+However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in
+such a scenario.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
@@ -164,15 +197,19 @@ To enable JSON reporter, provide `--reporters json` as a CLI option.
 
 
 ##### HTML reporter options
-The built-in HTML reporter produces and HTML output file outlining the summary and report of the Newman run. To enable
-JSON reporter, provide `--reporters html` as a CLI option.
+The built-in HTML reporter produces and HTML output file outlining the summary and report of the Newman run. To enable the
+HTML reporter, provide `--reporters html` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
+
+Custom templates (currently handlebars only) can be passed to the HTML reporter via `--reporter-html-template <path>` with `--reporters html` and `--reporter-html-export`.
+The [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used in all other cases.
 
 ##### JUNIT/XML reporter options
-Newman can output a summary of the collection run to a JUnit compatible XML file. To enable JSON reporter, provide
+Newman can output a summary of the collection run to a JUnit compatible XML file. To enable the JUNIT reporter, provide
 `--reporters junit` as a CLI option.
 
 | CLI Option  | Description       |
@@ -180,8 +217,7 @@ Newman can output a summary of the collection run to a JUnit compatible XML file
 | `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
-discontinued. For documentation on the older command options, refer to
-[README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
 ### `newman [options]`
 
@@ -191,6 +227,7 @@ discontinued. For documentation on the older command options, refer to
 - `--version`<br />
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
+---
 
 ## API Reference
 
@@ -201,7 +238,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | Parameter | Description   |
 |-----------|---------------|
 | options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
-| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an istance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
+| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an instance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
 | options.environment       | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
 | options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object|string` |
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
@@ -244,7 +281,7 @@ newman.run({
 }).on('start', function (err, args) { // on start of run, log to console
     console.log('running a collection...');
 }).on('done', function (err, summary) {
-    if (error || summary.error) {
+    if (err || summary.error) {
         console.error('collection run encountered an error.');
     }
     else {
@@ -279,6 +316,8 @@ argument object.**
 
 <!-- TODO: write about callback summary -->
 
+---
+
 ## Using Newman with the Postman Cloud API
 
 1 [Generate an API key](https://app.getpostman.com/dashboard/integrations)<br/>
@@ -290,6 +329,8 @@ argument object.**
 newman run <collectionUri> --environment <environmentUri>
 ```
 
+---
+
 ## Community Support
 
 <img src="https://www.getpostman.com/img/v2/icons/slack.svg" align="right" />
@@ -297,6 +338,8 @@ If you are interested in talking to the team and other Newman users, we are ther
 
 Get your invitation for Postman Slack Community from: <a href="https://www.getpostman.com/slack-invite">https://www.getpostman.com/slack-invite</a>.<br />
 Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
+
+---
 
 ## License
 This software is licensed under Apache-2.0. Copyright Postdot Technologies, Inc. See the [LICENSE.md](LICENSE.md) file for more information.
