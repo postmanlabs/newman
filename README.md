@@ -149,6 +149,10 @@ newman.run({
   this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman
   that output to console.
 
+- `--disable-unicode`<br />
+  Specify whether or not to force the unicode disable option. When supplied, all symbols in the output will be replaced
+  by their plain text equivalents.
+
 #### Configuring Reporters
 
 Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
