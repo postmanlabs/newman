@@ -1,7 +1,8 @@
 {
   "plugins": [
     "security",
-    "lodash"
+    "lodash",
+    "mocha"
   ],
   "env": {
     "browser": true,
@@ -37,7 +38,7 @@
     "no-unreachable": "error",
     "no-unsafe-finally": "error",
     "use-isnan": "error",
-    "valid-jsdoc": "off",
+    "valid-jsdoc": "warn",
     "valid-typeof": "error",
 
     // Best Practices
@@ -278,6 +279,23 @@
     "lodash/prefer-wrapper-method": 2,
     "lodash/preferred-alias": 2,
     "lodash/prop-shorthand": [2, "always"],
-    "lodash/unwrap": 2
+    "lodash/unwrap": 2,
+
+    // Mocha
+    "mocha/no-exclusive-tests": 2,
+    "mocha/no-skipped-tests": 1,
+    "mocha/no-pending-tests": 2,
+    "mocha/handle-done-callback": 2,
+    "mocha/no-synchronous-tests": 0,
+    "mocha/no-global-tests": 2,
+    "mocha/no-return-and-callback": 2,
+    "mocha/valid-test-description": 0,
+    "mocha/valid-suite-description": 0,
+    "mocha/no-sibling-hooks": 2,
+    "mocha/no-mocha-arrows": 2,
+    "mocha/no-hooks": 0,
+    "mocha/no-hooks-for-single-case": 1,
+    "mocha/no-top-level-hooks": 1,
+    "mocha/no-identical-title": 2
   }
 }
