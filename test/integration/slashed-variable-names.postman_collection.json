@@ -1,0 +1,33 @@
+{
+	"variables": [],
+	"info": {
+		"name": "slashed variable names",
+		"_postman_id": "03ff9ad8-cdeb-c03b-ba1f-2076fe3faf50",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Slashed variable names test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var args = JSON.parse(responseBody).args;\n\ntests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Forward slash was handled correctly\"] = args[\"foo\"] === \"alpha\";\ntests[\"Backslash was handled correctly\"] = args[\"bar\"] === \"beta\";"
+					}
+				}
+			],
+			"request": {
+				"url": "https://echo.getpostman.com/get?foo={{fo/o}}&bar={{b\\ar}}",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "A GET request to Postman echo with two query parameters, whose values should correctly resolve to environment variables that have slashes in their names."
+			},
+			"response": []
+		}
+	]
+}
