@@ -3,11 +3,11 @@ require('shelljs/global');
 require('colors');
 
 var fs = require('fs'),
-    pathUtils = require('path'),
     _ = require('lodash'),
-    path = require('path'),
+    pathUtils = require('path'),
     async = require('async'),
-    newman = require(path.join(__dirname, '..', 'index')),
+    recursive = require('recursive-readdir'),
+    newman = require(pathUtils.join(__dirname, '..', 'index')),
 
     SPEC_SOURCE_DIR = './test/integration';
 
@@ -17,7 +17,9 @@ module.exports = function (exit) {
 
     async.waterfall([
         // get all files within the spec source directory
-        fs.readdir.bind(fs, SPEC_SOURCE_DIR),
+        function (next) {
+            recursive(SPEC_SOURCE_DIR, next);
+        },
 
         // ensure that we forward only if files exist and has appropriate name conventions
         function (files, next) {
@@ -35,7 +37,7 @@ module.exports = function (exit) {
                 // add the test to the tracking object
                 (suites[parts[1]] || (suites[parts[1]] = {
                     name: parts[1]
-                }))[`${parts[2]}${parts[4].toUpperCase()}`] = pathUtils.join(SPEC_SOURCE_DIR, path);
+                }))[`${parts[2]}${parts[4].toUpperCase()}`] = path;
 
                 return suites;
             }, {}));

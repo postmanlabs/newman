@@ -2,9 +2,8 @@
 require('shelljs/global');
 require('colors');
 
-var fs = require('fs'),
-    path = require('path'),
-    Mocha = require('mocha'),
+var Mocha = require('mocha'),
+    recursive = require('recursive-readdir'),
 
     SPEC_SOURCE_DIR = './test/unit';
 
@@ -14,11 +13,11 @@ module.exports = function (exit) {
 
     var mocha = new Mocha();
 
-    fs.readdir(SPEC_SOURCE_DIR, function (err, files) {
+    recursive(SPEC_SOURCE_DIR, function (err, files) {
         files.filter(function (file) {
             return (file.substr(-8) === '.test.js');
         }).forEach(function (file) {
-            mocha.addFile(path.join(SPEC_SOURCE_DIR, file));
+            mocha.addFile(file);
         });
 
         // start the mocha run
