@@ -1,10 +1,14 @@
 {
-  "name": "globals",
+  "name": "simple-variables",
   "values": [{
     "key": "var-1",
-    "value": "value-1"
+    "name": "var-1",
+    "value": "value-1",
+    "type": "string"
   }, {
     "key": "var-2",
-    "value": "value-2"
+    "name": "var-2",
+    "value": "value-2",
+    "type": "string"
   }]
 }

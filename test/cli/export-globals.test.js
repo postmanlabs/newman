@@ -14,10 +14,10 @@ describe('--export-globals', function () {
 
     it('`newman run` should export globals to a file', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/cli/single-get-request.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec(`node ./bin/newman.js run test/cli/single-get-request.json -g test/cli/simple-variables.json --export-globals ${exportedGlobalsPath}`, function (code) {
             var globals;
 
-            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
+            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); } // could use require here
             catch (e) { console.error(e); }
 
             expect(code).be(0);
@@ -34,10 +34,10 @@ describe('--export-globals', function () {
 
     it('`newman run` should export globals to a file even if collection is failing', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/cli/single-request-failing.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec(`node ./bin/newman.js run test/cli/single-request-failing.json -g test/cli/simple-variables.json --export-globals ${exportedGlobalsPath}`, function (code) {
             var globals;
 
-            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
+            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); } // could use require here
             catch (e) { console.error(e); }
 
             expect(code).not.be(0);
