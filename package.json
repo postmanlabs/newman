@@ -70,7 +70,8 @@
     "mocha": "3.0.2",
     "nsp": "2.6.1",
     "packity": "0.3.2",
-    "postman-jsdoc-theme": "0.0.2"
+    "postman-jsdoc-theme": "0.0.2",
+    "recursive-readdir": "2.0.0"
   },
   "engines": {
     "node": ">=4"
