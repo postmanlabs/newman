@@ -44,7 +44,7 @@
     "eventemitter3": "2.0.0",
     "filesize": "3.3.0",
     "handlebars": "4.0.5",
-    "lodash": "4.15.0",
+    "lodash": "4.16.0",
     "mkdirp": "0.5.1",
     "parse-json": "2.2.0",
     "postman-collection": "0.4.14",
