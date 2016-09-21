@@ -197,6 +197,7 @@ describe('cli parser', function () {
             '-g myGlobals.json ' +
             '-d /path/to/csv.csv ' +
             '--folder myFolder ' +
+            '--disable-unicode ' +
             '--export-environment exported_env.json ' +
             '--export-globals exported_glob.json ' +
             '--reporter-cli-no-summary ' +
@@ -218,9 +219,12 @@ describe('cli parser', function () {
                 expect(opts.collection).to.be('myCollection.json');
                 expect(opts.environment).to.be('myEnv.json');
                 expect(opts.folder).to.be('myFolder');
+                expect(opts.disableUnicode).to.be(true);
+
                 expect(opts.exportEnvironment).to.be('exported_env.json');
                 expect(opts.iterationData).to.be('/path/to/csv.csv');
                 expect(opts.globals).to.be('myGlobals.json');
+
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delayRequest).to.be(12000);
                 expect(opts.timeoutRequest).to.be(5000);

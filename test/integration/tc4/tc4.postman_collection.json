@@ -27,7 +27,7 @@
           "formdata": [
             {
               "key": "content",
-              "src": "test/integration/upload-file.json",
+              "src": "test/integration/tc4/upload-file.json",
               "type": "file"
             }
           ]

@@ -1,7 +1,3 @@
-[![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=master)](https://travis-ci.org/postmanlabs/newman)
-[![Dependency Status](https://david-dm.org/postmanlabs/newman.svg)](https://david-dm.org/postmanlabs/newman)
-[![devDependency Status](https://david-dm.org/postmanlabs/newman/dev-status.svg)](https://david-dm.org/postmanlabs/newman#info=devDependencies)
-
 <a href="https://www.getpostman.com/"><img src="https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/postman-logo%2Btext-320x132.png" /></a><br />
 _Supercharge your API workflow<br/>Modern software is built on APIs. Postman helps you develop APIs faster._
 
@@ -148,6 +144,10 @@ newman.run({
   this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman
   that output to console.
 
+- `--disable-unicode`<br />
+  Specify whether or not to force the unicode disable option. When supplied, all symbols in the output will be replaced
+  by their plain text equivalents.
+
 #### Configuring Reporters
 
 Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
@@ -224,7 +224,7 @@ discontinued. For documentation on the older command options, refer to [README.m
 - `-h`, `--help`<br />
   Show commandline help, including a list of options, and sample use cases.
 
-- `--version`<br />
+- `-v`, `--version`<br />
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
 ---
@@ -251,6 +251,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.bail              | A boolean switch to specify whether or not to gracefully stop a collection run on encountering the first error. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
+| options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /><br />_Optional_<br />Type: `object` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 

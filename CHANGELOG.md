@@ -1,5 +1,13 @@
 # Newman Changelog
 
+#### v3.1.1 (Aug 25, 2016)
+
+- Fixed a bug which caused HTML reporter statistics to be incorrect
+- Added an option `--disable-unicode` to forcibly disable unicode symbols in the output
+- File based options in newman.run (environments, data, globals) can now be specified as JSON objects as well
+- Updated to the latest version of Postman Runtime, which contains a number of memory optimizations
+- Specifying an iteration data file now results in the correct number of iteration runs 
+
 #### v3.1.0 (Aug 25, 2016)
 
 - Fixed issue with environment and globals export format was using wrong property names (GH:553)

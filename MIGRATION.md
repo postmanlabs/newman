@@ -263,6 +263,7 @@ newman.run({
             value: "Global Bar",
         }
     ],
+    reporters: ['html', 'junit', 'json'],
     reporter: {
         html: {
             export: 'htmlOutput.html'
