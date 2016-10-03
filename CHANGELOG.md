@@ -2,6 +2,10 @@
 
 #### v3.1.1 (Aug 25, 2016)
 
+- Updated `postman-runtime`, `postman-collection` and `postman-collection-transformer` dependencies
+
+#### v3.1.1 (Aug 25, 2016)
+
 - Fixed a bug which caused HTML reporter statistics to be incorrect
 - Added an option `--disable-unicode` to forcibly disable unicode symbols in the output
 - File based options in newman.run (environments, data, globals) can now be specified as JSON objects as well
