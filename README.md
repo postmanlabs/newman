@@ -106,7 +106,7 @@ newman.run({
   Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
   [Read More](https://www.getpostman.com/docs/multiple_instances)
 
-- `-n <number`, `--iteration-count <number>`<br />
+- `-n <number>`, `--iteration-count <number>`<br />
   Specifies the number of times the collection has to be run when used in conjunction with iteration data file.
 
 - `--folder <name>`<br />

@@ -73,8 +73,11 @@ describe('project repository', function () {
 
         describe('script definitions', function () {
             it('files must exist', function () {
+                var scriptRegex = /^node\snpm\/.+\.js$/;
+
                 expect(json.scripts).to.be.ok();
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
+                    expect(scriptRegex.test(json.scripts[scriptName])).to.be.ok();
                     expect(fs.existsSync('npm/' + scriptName + '.js')).to.be.ok();
                 });
             });

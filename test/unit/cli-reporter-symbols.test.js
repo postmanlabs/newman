@@ -29,7 +29,7 @@ describe('unicode handling of cli symbol utility module', function () {
             ok: '√',
             error: '×'
         } : {
-            dot: '⠄',
+            dot: '.',
             folder: '❏',
             root: '→',
             sub: '↳',

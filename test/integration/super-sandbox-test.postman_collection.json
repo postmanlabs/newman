@@ -44,7 +44,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nconsole.log(\"Request for Post: \" + JSON.stringify(request));\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct GUID: \" + jsonData.form.guid] = jsonData.form.guid.length === 36;\ntests[\"Correct Random: \" + jsonData.form.randomInt] = parseInt(jsonData.form.randomInt)>1;\ntests[\"Correct Timestamp: \" + jsonData.form.timestamp] = parseInt(jsonData.form.timestamp)>1000\n\ntests[\"Correct global\"] = jsonData.form.global == \"0\";\ntests[\"Correct global2\"] = jsonData.form.global == globals.g1;\ntests[\"Correct envVar\"] = jsonData.form.envValue == \"0\";\ntests[\"Correct envVar2\"] = jsonData.form.envValue == environment.e1;"
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nconsole.log(\"Request for Post: \" + JSON.stringify(request));\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct GUID: \" + jsonData.form.guid] = jsonData.form.guid.length === 36;\ntests[\"Correct Random: \" + jsonData.form.randomInt] = parseInt(jsonData.form.randomInt)>=0;\ntests[\"Correct Timestamp: \" + jsonData.form.timestamp] = parseInt(jsonData.form.timestamp)>1000\n\ntests[\"Correct global\"] = jsonData.form.global == \"0\";\ntests[\"Correct global2\"] = jsonData.form.global == globals.g1;\ntests[\"Correct envVar\"] = jsonData.form.envValue == \"0\";\ntests[\"Correct envVar2\"] = jsonData.form.envValue == environment.e1;"
 					}
 				}
 			],
