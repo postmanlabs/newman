@@ -78,7 +78,7 @@ describe('project repository', function () {
                 expect(json.scripts).to.be.ok();
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
                     expect(scriptRegex.test(json.scripts[scriptName])).to.be.ok();
-                    expect(fs.existsSync('npm/' + scriptName + '.js')).to.be.ok();
+                    expect(fs.statSync('npm/' + scriptName + '.js')).to.be.ok();
                 });
             });
 
@@ -127,16 +127,16 @@ describe('project repository', function () {
         });
 
         describe('main entry script', function () {
-            it('must point to a valid file', function () {
+            it('must point to a valid file', function (done) {
                 expect(json.main).to.equal('index.js');
-                expect(fs.existsSync(json.main)).to.be.ok();
+                fs.stat(json.main, done);
             });
         });
     });
 
     describe('README.md', function () {
-        it('must exist', function () {
-            expect(fs.existsSync('./README.md')).to.be.ok();
+        it('must exist', function (done) {
+            fs.stat('./README.md', done);
         });
 
         it('must have readable content', function () {
@@ -145,8 +145,8 @@ describe('project repository', function () {
     });
 
     describe('LICENSE.md', function () {
-        it('must exist', function () {
-            expect(fs.existsSync('./LICENSE.md')).to.be.ok();
+        it('must exist', function (done) {
+            fs.stat('./LICENSE.md', done);
         });
 
         it('must have readable content', function () {
@@ -155,8 +155,8 @@ describe('project repository', function () {
     });
 
     describe('.gitignore file', function () {
-        it('must exist', function () {
-            expect(fs.existsSync('./.gitignore')).to.be.ok();
+        it('must exist', function (done) {
+            fs.stat('./.gitignore', done);
         });
 
         it('must have readable content', function () {
@@ -165,8 +165,8 @@ describe('project repository', function () {
     });
 
     describe('.npmignore file', function () {
-        it('must exist', function () {
-            expect(fs.existsSync('./.npmignore')).to.be.ok();
+        it('must exist', function (done) {
+            fs.stat('./.npmignore', done);
         });
 
         it('must have readable content', function () {
@@ -179,8 +179,8 @@ describe('project repository', function () {
     });
 
     describe('.eslintrc', function () {
-        it('must exist', function () {
-            expect(fs.existsSync('./.eslintrc')).to.be.ok();
+        it('must exist', function (done) {
+            fs.stat('./.eslintrc', done);
         });
 
         it('must have readable content', function () {
@@ -189,8 +189,8 @@ describe('project repository', function () {
     });
 
     describe('.nsprc', function () {
-        it('must exist', function () {
-            expect(fs.existsSync('./.nsprc')).to.be.ok();
+        it('must exist', function (done) {
+            fs.stat('./.nsprc', done);
         });
 
         it('must have readable content', function () {
