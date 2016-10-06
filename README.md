@@ -153,7 +153,10 @@ newman.run({
 Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
 
 - `-r <reporter-name>`, `--reporters <reporter-name>`<br />
-  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
+  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.<br/><br/>
+Spaces should **not** be used between reporter names / commas whilst specifying a comma separted list of reporters. For instance:<br/><br/>
+:white_check_mark: `-r html,cli,json,junit` <br/>
+:x: `-r html, cli , json,junit`
 
 - `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
