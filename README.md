@@ -26,6 +26,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
             2. [JSON reporter options](#json-reporter-options)
             3. [HTML reporter options](#html-reporter-options)
             4. [JUnit reporter options](#junitxml-reporter-options)
+    2. [Proxy](#proxy)
 
 3. [API Reference](#api-reference)
     1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
@@ -229,6 +230,16 @@ discontinued. For documentation on the older command options, refer to [README.m
 
 - `-v`, `--version`<br />
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
+
+### Proxy
+
+Newman can also be configured to work with proxy settings via the following environment variables:
+
+ * `HTTP_PROXY` / `http_proxy`
+ * `HTTPS_PROXY` / `https_proxy`
+ * `NO_PROXY` / `no_proxy`
+ 
+For more details on using these variables, please see https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables 
 
 ---
 
