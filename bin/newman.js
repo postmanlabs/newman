@@ -7,10 +7,11 @@ var _ = require('lodash'),
     newman = require('../'),
 
     /**
-     * Calls the appropriate Newman command
+     * Calls the appropriate Newman command.
      *
-     * @param options
-     * @param callback
+     * @param {Object} options - The set of options passed via the CLI, including the command, and other details.
+     * @param {Function} callback - The function called to mark the completion of command parsing.
+     * @returns {*}
      */
     dispatch = function (options, callback) {
         var command = options.command;
