@@ -6,6 +6,12 @@ var Mocha = require('mocha'),
     recursive = require('recursive-readdir'),
 
     execOptions = { silent: true },
+
+    /**
+     * The directory containing CLI test specs.
+     *
+     * @type {String}
+     */
     SPEC_SOURCE_DIR = './test/cli';
 
 module.exports = function (exit) {

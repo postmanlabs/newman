@@ -9,13 +9,19 @@ var async = require('async'),
     Mocha = require('mocha'),
     recursive = require('recursive-readdir'),
 
+    /**
+     * The source directory for system test specs.
+     *
+     * @type {String}
+     */
     SPEC_SOURCE_DIR = './test/system',
 
     /**
-     * Load a JSON from file synchronously
+     * Load a JSON from file synchronously, used as an alternative to dynamic requires.
      *
-     * @param {String} file
-     * @returns {String}
+     * @param {String} file - The path to the JSON file to load from.
+     * @returns {Object} - The parsed JSON object contained in the file at the provided path.
+     * @throws {SyntaxError} - Throws an error if the provided JSON file is invalid.
      */
     loadJSON = function (file) {
         return JSON.parse(require('fs').readFileSync(path.join(__dirname, file)).toString());
@@ -26,13 +32,24 @@ module.exports = function (exit) {
     console.info('\nRunning system tests...\n'.yellow.bold);
 
     async.series([
-        // packity to ensure all modules are as per package.json
+
+        /**
+         * Enforces sanity checks on installed packages via packity.
+         *
+         * @param {Function} next - The callback function invoked when the packge sanity check has concluded.
+         * @returns {*}
+         */
         function (next) {
             console.info('checking installed packages...\n');
             packity({ path: '.' }, packity.cliReporter({}, next));
         },
 
-        // run test specs using mocha
+        /**
+         * Runs system tests on SPEC_SOURCE_DIR using Mocha.
+         *
+         * @param {Function} next - The callback invoked to mark the completion of the test run.
+         * @returns {*}
+         */
         function (next) {
             console.info('\nrunning system specs using mocha...');
 
@@ -51,9 +68,13 @@ module.exports = function (exit) {
             });
         },
 
-        // execute nsp
-        // In-program usage of nsp is a bit tricky as we have to emulate the cli script's usage of internal
-        // nsp functions.
+        /**
+         * Execute nsp checks on project dependencies. In-program usage of nsp is a bit tricky as we have to emulate the
+         * cli script's usage of internal nsp functions.
+         *
+         * @param {Function} next - The callback function invoked upon completion of the NSP check.
+         * @returns {*}
+         */
         function (next) {
             var nsp = require('nsp'),
                 pkg = loadJSON('../package.json'),

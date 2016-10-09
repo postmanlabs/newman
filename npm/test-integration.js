@@ -9,6 +9,11 @@ var fs = require('fs'),
     recursive = require('recursive-readdir'),
     newman = require(pathUtils.join(__dirname, '..', 'index')),
 
+    /**
+     * The source directory containing integration test collections and folders.
+     *
+     * @type {String}
+     */
     SPEC_SOURCE_DIR = './test/integration';
 
 module.exports = function (exit) {
@@ -16,12 +21,24 @@ module.exports = function (exit) {
     console.info('Running integration tests using local newman as node module...'.yellow.bold);
 
     async.waterfall([
-        // get all files within the spec source directory
+
+        /**
+         * Fetch all files within SPEC_SOURCE_DIR.
+         *
+         * @param {Function} next - A callback function that is invoked after the files have been fetched.
+         * @returns {*}
+         */
         function (next) {
             recursive(SPEC_SOURCE_DIR, next);
         },
 
-        // ensure that we forward only if files exist and has appropriate name conventions
+        /**
+         * Ensures that we proceed only if files exist and has appropriate name conventions.
+         *
+         * @param {Array} files - An array of strings, each of which represents the path to an integration test file.
+         * @param {Function} next - A callback function whose invocation marks the end of the file processing routine.
+         * @returns {*}
+         */
         function (files, next) {
             next(null, _.reduce(files, function (suites, path) {
                 // regex: [0:path, 1:test, 2:syntax, 3:skipped, 4: file-format]
@@ -43,7 +60,13 @@ module.exports = function (exit) {
             }, {}));
         },
 
-        // execute each test on newman
+        /**
+         * Execute each integration test suite using newman.
+         *
+         * @param {Object} suites - An set of tests, arranged by test group names as keys.
+         * @param {Function} next - A callback function whose invocation marks the end of the integration test run.
+         * @returns {*}
+         */
         function (suites, next) {
             if (_.isEmpty(suites)) { // if no test files found, it is an error
                 return next(new Error(`No test files found in ${SPEC_SOURCE_DIR}`));
@@ -71,7 +94,17 @@ module.exports = function (exit) {
                 });
             }, next);
         }
-    ], function (err, results) {
+    ],
+
+    /**
+     * The integration test exit handler. Recieves the error (if at all) from the integration test runner and exits
+     * accordingly, displaying either a success message or an error message and it's corresponding stacktrace.
+     *
+     * @param {?Error} err - An object that is either null or a standard error object.
+     * @param {Array} results - An array of integration test result objects, one per integration test collection run.
+     * @returns {*}
+     */
+    function (err, results) {
         if (!err) {
             console.info(`\n${results.length} integrations ok!\n`.green);
         }
