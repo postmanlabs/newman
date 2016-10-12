@@ -36,7 +36,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "argparse": "1.0.9",
-    "async": "2.0.1",
+    "async": "2.1.1",
     "cli-progress": "1.2.0",
     "cli-table2": "0.2.0",
     "colors": "1.1.2",
