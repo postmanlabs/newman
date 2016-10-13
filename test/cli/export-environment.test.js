@@ -25,8 +25,8 @@ describe('--export-environment', function () {
             expect(environment).have.property('_postman_exported_at');
             expect(environment).have.property('values');
             expect(environment.values).eql([
-                { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
-                { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
+                { key: 'var-1', value: 'value-1', type: 'any' },
+                { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
             done();
         });
@@ -45,8 +45,8 @@ describe('--export-environment', function () {
             expect(environment).have.property('_postman_exported_at');
             expect(environment).have.property('values');
             expect(environment.values).eql([
-                { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
-                { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
+                { key: 'var-1', value: 'value-1', type: 'any' },
+                { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
             done();
         });
