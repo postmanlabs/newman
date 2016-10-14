@@ -40,6 +40,45 @@ describe('run module', function () {
         }, done).not.throwException();
     });
 
+    it('must provide sdk instances as part of the run', function (done) {
+        expect(run).withArgs({ collection: {} }, function (err, newman) {
+            if (err) {
+                return done(err);
+            }
+
+            expect(newman).be.an('object');
+            expect(newman).have.property('collection');
+            expect(newman).have.property('environment');
+            expect(newman).have.property('globals');
+
+            expect(newman.collection).be.a(sdk.Collection);
+            expect(newman.environment).be.a(sdk.VariableScope);
+            expect(newman.globals).be.a(sdk.VariableScope);
+
+            done();
+        }).not.throwException();
+    });
+
+    it('must retain sdk references from options', function (done) {
+        var options = {
+            collection: new sdk.Collection(),
+            environment: new sdk.VariableScope(),
+            globals: new sdk.VariableScope()
+        };
+
+        expect(run).withArgs(options, function (err, newman) {
+            if (err) {
+                return done(err);
+            }
+
+            expect(newman.collection).eql(options.collection);
+            expect(newman.environment).eql(options.environment);
+            expect(newman.globals).eql(options.globals);
+
+            done();
+        }).not.throwException();
+    });
+
     it('must gracefully send error to callback on garbage collection', function (done) {
         async.parallel([
             function (next) {
