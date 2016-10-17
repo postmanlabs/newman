@@ -28,6 +28,7 @@ describe('--export-globals', function () {
                 { key: 'var-1', value: 'value-1', type: 'any' },
                 { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
             done();
         });
     });
@@ -48,6 +49,7 @@ describe('--export-globals', function () {
                 { key: 'var-1', value: 'value-1', type: 'any' },
                 { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
             done();
         });
     });

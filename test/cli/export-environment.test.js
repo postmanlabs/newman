@@ -28,6 +28,7 @@ describe('--export-environment', function () {
                 { key: 'var-1', value: 'value-1', type: 'any' },
                 { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(environment).have.property('_postman_variable_scope', 'environment');
             done();
         });
     });
@@ -48,6 +49,7 @@ describe('--export-environment', function () {
                 { key: 'var-1', value: 'value-1', type: 'any' },
                 { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(environment).have.property('_postman_variable_scope', 'environment');
             done();
         });
     });
