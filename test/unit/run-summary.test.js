@@ -29,24 +29,17 @@ describe('run summary', function () {
         }).withArgs().not.throwError();
     });
 
-    it('must have tracking properties', function () {
+    it('must have the relevant top-level data structures', function () {
         var summary = new Summary(new EventEmitter());
-
         expect(_.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run'].sort());
-
-        expect(summary.environment.object).be.an('function');
-        expect(summary.globals.object).be.an('function');
-        expect(summary.run.failures).be.an('array');
-        expect(summary.run.stats).be.an('object');
-        expect(summary.run.timings).be.an('object');
-        expect(summary.run.transfers).be.an('object');
     });
 
     it('must have run related properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(_.keys(summary.run)).to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error']);
-
+        expect(summary).have.property('run');
+        expect(_.keys(summary.run).sort())
+            .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
         expect(summary.run.failures).be.an('array');
         expect(summary.run.stats).be.an('object');
         expect(summary.run.timings).be.an('object');

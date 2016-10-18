@@ -14,7 +14,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "try {\n    var jsonObject = xml2Json(responseBody);\n    console.log(jsonObject);\n    tests[\"xml2Json\"]=true;\n}\ncatch(e) {\n    console.log(\"xml2Json not supported\");\n    tests[\"xml2Json\"]=false;\n}\n\n\ntry {\n    console.log(postman.getResponseHeader(\"Content-Length\"));\n    tests[\"GetResponseHeader\"]=true;\n} catch(e) {\n    console.log(\"getResponseHeader not supported\");\n    tests[\"GetResponseHeader\"]=false;\n}\n\n\ntry {\n    console.log(postman.getResponseCookie(\"Content-Length\"));\n    tests[\"GetResponseCookie\"]=true;\n} catch(e) {\n    console.log(\"getResponseCookie not supported\");\n    tests[\"GetResponseCookie\"]=false;\n}\n\ntry {\n    console.log(\"RESCOOK: \" , responseCookies);\n} catch(e) {\n    console.log(\"responseCookies not supported\");\n}\n\ntests[\"Correct global\"] = globals.g1==\"0\";\n\nconsole.log(\"Request: \" + JSON.stringify(request));\nconsole.log(\"Environment: \" + JSON.stringify(environment));\nconsole.log(\"Globals: \" + JSON.stringify(globals));\nconsole.log(\"Response hedaers: \" + JSON.stringify(responseHeaders));\nconsole.log(\"Response body: \" + JSON.stringify(responseBody));\nconsole.log(\"Response time: \" + JSON.stringify(responseTime));\nconsole.log(\"Response code: \" + JSON.stringify(responseCode));\n\n\ntry {\n    console.log(postman.clearEnvironmentVariables());\n} catch(e) {\n    console.log(\"clearEnvironmentVariables not supported\");\n}\n\ntry {\n    console.log(postman.clearGlobalVariables());\n} catch(e) {\n    console.log(\"clearGlobalVariables not supported\");\n}\n\npostman.setGlobalVariable(\"g1\", \"0\");\npostman.setEnvironmentVariable(\"e1\", \"0\");\n\ntry {\n    _.each([1], function(v) {tests['Lodash working'] = true;});\n}\ncatch(e) {\n    tests['Lodash working'] = false;\n}\n\n\nvar newString=\"diabetes\";\ntests[\"SugarJS working\"]=newString.has(\"betes\");\n\ntests[\"tv4 present\"] = (typeof tv4.validate === \"function\");\n\ntests[\"CryptoJS md5\"] = (CryptoJS.MD5(\"jasonpurse\") == \"288d14f08b5ad40da43dbe06467729c9\");"
+						"exec": "try {\n    var jsonObject = xml2Json(responseBody);\n    console.log(jsonObject);\n    tests[\"xml2Json\"]=!!jsonObject;\n}\ncatch(e) {\n    console.log(\"xml2Json not supported\");\n    tests[\"xml2Json\"]=false;\n}\n\n\ntry {\n    console.log(postman.getResponseHeader(\"Content-Length\"));\n    tests[\"GetResponseHeader\"]=true;\n} catch(e) {\n    console.log(\"getResponseHeader not supported\");\n    tests[\"GetResponseHeader\"]=false;\n}\n\n\ntry {\n    console.log(postman.getResponseCookie(\"Content-Length\"));\n    tests[\"GetResponseCookie\"]=true;\n} catch(e) {\n    console.log(\"getResponseCookie not supported\");\n    tests[\"GetResponseCookie\"]=false;\n}\n\ntry {\n    console.log(\"RESCOOK: \" , responseCookies);\n} catch(e) {\n    console.log(\"responseCookies not supported\");\n}\n\ntests[\"Correct global\"] = globals.g1==\"0\";\n\nconsole.log(\"Request: \" + JSON.stringify(request));\nconsole.log(\"Environment: \" + JSON.stringify(environment));\nconsole.log(\"Globals: \" + JSON.stringify(globals));\nconsole.log(\"Response hedaers: \" + JSON.stringify(responseHeaders));\nconsole.log(\"Response body: \" + JSON.stringify(responseBody));\nconsole.log(\"Response time: \" + JSON.stringify(responseTime));\nconsole.log(\"Response code: \" + JSON.stringify(responseCode));\n\n\ntry {\n    console.log(postman.clearEnvironmentVariables());\n} catch(e) {\n    console.log(\"clearEnvironmentVariables not supported\");\n}\n\ntry {\n    console.log(postman.clearGlobalVariables());\n} catch(e) {\n    console.log(\"clearGlobalVariables not supported\");\n}\n\npostman.setGlobalVariable(\"g1\", \"0\");\npostman.setEnvironmentVariable(\"e1\", \"0\");\n\ntry {\n    _.each([1], function(v) {tests['Lodash working'] = true;});\n}\ncatch(e) {\n    tests['Lodash working'] = false;\n}\n\n\nvar newString=\"diabetes\";\ntests[\"SugarJS working\"]=newString.has(\"betes\");\n\ntests[\"tv4 present\"] = (typeof tv4.validate === \"function\");\n\ntests[\"CryptoJS md5\"] = (CryptoJS.MD5(\"jasonpurse\") == \"288d14f08b5ad40da43dbe06467729c9\");"
 					}
 				},
 				{
@@ -26,7 +26,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/xml",
+				"url": "https://echo.getpostman.com/type/xml",
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -49,7 +49,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/post",
+				"url": "https://echo.getpostman.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -115,7 +115,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/put",
+				"url": "https://echo.getpostman.com/put",
 				"method": "PUT",
 				"header": [],
 				"body": {
@@ -138,7 +138,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/patch",
+				"url": "https://echo.getpostman.com/patch",
 				"method": "PATCH",
 				"header": [],
 				"body": {
@@ -161,7 +161,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/delete",
+				"url": "https://echo.getpostman.com/delete",
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -184,7 +184,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/get",
+				"url": "https://echo.getpostman.com/get",
 				"method": "HEAD",
 				"header": [],
 				"body": {
@@ -202,12 +202,12 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body is correct\"] = responseBody === \"\";"
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body is correct\"] = !_.isEmpty(responseBody.split(\",\"));"
 					}
 				}
 			],
 			"request": {
-				"url": "httpbin.org/get",
+				"url": "https://echo.getpostman.com/get",
 				"method": "OPTIONS",
 				"header": [],
 				"body": {
@@ -230,7 +230,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/post",
+				"url": "https://echo.getpostman.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -248,7 +248,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct aath header\"] = jsonData.headers.Authorization.indexOf(\"YWJoaWppdDprYW5l\")>-1;"
+						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct auth header\"] = jsonData.headers.authorization === \"Basic cG9zdG1hbjpwYXNzd29yZA==\";"
 					}
 				}
 			],
@@ -256,13 +256,13 @@
 				"auth": {
 					"type": "basic",
 					"basic": {
-						"username": "abhijit",
-						"password": "kane",
+						"username": "postman",
+						"password": "password",
 						"saveHelperData": true,
 						"showPassword": false
 					}
 				},
-				"url": "httpbin.org/post",
+				"url": "https://echo.getpostman.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -280,7 +280,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "var jsonData = JSON.parse(responseBody);\ntests[\"Correct aath header\"] = jsonData.headers.Authorization.length>10;"
+						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Authenticated\"] = jsonData.authenticated === true;"
 					}
 				}
 			],
@@ -289,18 +289,18 @@
 					"type": "digest",
 					"digest": {
 						"algorithm": "",
-						"username": "aa",
-						"realm": "aa",
-						"password": "aa",
-						"nonce": "",
+						"username": "postman",
+						"realm": "Users",
+						"password": "password",
+						"nonce": "ni1LiL0O37PRRhofWdCLmwFsnEtH1lew",
 						"nonceCount": "",
 						"clientNonce": "",
 						"opaque": "",
 						"qop": ""
 					}
 				},
-				"url": "httpbin.org/post",
-				"method": "POST",
+				"url": "https://echo.getpostman.com/digest-auth",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "formdata",
@@ -329,7 +329,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/get?a={{name{{i}}}}",
+				"url": "https://echo.getpostman.com/get?a={{name{{i}}}}",
 				"method": "GET",
 				"header": [],
 				"body": {

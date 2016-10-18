@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "httpbin.org/post",
+        "url": "https://echo.getpostman.com/post",
         "method": "POST",
         "header": [
           {

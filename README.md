@@ -26,6 +26,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
             2. [JSON reporter options](#json-reporter-options)
             3. [HTML reporter options](#html-reporter-options)
             4. [JUnit reporter options](#junitxml-reporter-options)
+    2. [Proxy](#proxy)
 
 3. [API Reference](#api-reference)
     1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
@@ -153,7 +154,10 @@ newman.run({
 Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
 
 - `-r <reporter-name>`, `--reporters <reporter-name>`<br />
-  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.
+  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.<br/><br/>
+Spaces should **not** be used between reporter names / commas whilst specifying a comma separted list of reporters. For instance:<br/><br/>
+:white_check_mark: `-r html,cli,json,junit` <br/>
+:x: `-r html, cli , json,junit`
 
 - `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
@@ -227,6 +231,16 @@ discontinued. For documentation on the older command options, refer to [README.m
 - `-v`, `--version`<br />
   Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
 
+### Proxy
+
+Newman can also be configured to work with proxy settings via the following environment variables:
+
+ * `HTTP_PROXY` / `http_proxy`
+ * `HTTPS_PROXY` / `https_proxy`
+ * `NO_PROXY` / `no_proxy`
+
+For more details on using these variables, please see https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables
+
 ---
 
 ## API Reference
@@ -278,7 +292,40 @@ Newman triggers a whole bunch of events during the run.
 
 ```javascript
 newman.run({
-    collection: require('./sample-collection.json')
+    collection: require('./sample-collection.json'),
+    data: [{ "var": "data", "var_beta": "other_val" }],
+    globals: {
+        "id": "5bfde907-2a1e-8c5a-2246-4aff74b74236",
+        "name": "test-env",
+        "values": [
+            {
+                "key": "alpha",
+                "value": "beta",
+                "type": "text",
+                "enabled": true
+            }
+        ],
+        "timestamp": 1404119927461,
+        "_postman_variable_scope": "globals",
+        "_postman_exported_at": "2016-10-17T14:31:26.200Z",
+        "_postman_exported_using": "Postman/4.8.0"
+    },
+    environment: {
+        "id": "4454509f-00c3-fd32-d56c-ac1537f31415",
+        "name": "test-env",
+        "values": [
+            {
+                "key": "foo",
+                "value": "bar",
+                "type": "text",
+                "enabled": true
+            }
+        ],
+        "timestamp": 1404119927461,
+        "_postman_variable_scope": "environment",
+        "_postman_exported_at": "2016-10-17T14:26:34.940Z",
+        "_postman_exported_using": "Postman/4.8.0"
+    }
 }).on('start', function (err, args) { // on start of run, log to console
     console.log('running a collection...');
 }).on('done', function (err, summary) {
