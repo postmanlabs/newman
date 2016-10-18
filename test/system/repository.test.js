@@ -2,7 +2,9 @@
  * @fileOverview This test specs runs tests on the package.json file of repository. It has a set of strict tests on the
  * content of the file as well. Any change to package.json must be accompanied by valid test case in this spec-sheet.
  */
-var expect = require('expect.js');
+var _ = require('lodash'),
+    expect = require('expect.js'),
+    parseIgnore = require('parse-gitignore');
 
 /* global describe, it */
 describe('project repository', function () {
@@ -154,27 +156,34 @@ describe('project repository', function () {
         });
     });
 
-    describe('.gitignore file', function () {
-        it('must exist', function (done) {
-            fs.stat('./.gitignore', done);
+    describe('.ignore files', function () {
+        var gitignorePath = '.gitignore',
+            npmignorePath = '.npmignore',
+            npmignore = parseIgnore(npmignorePath),
+            gitignore = parseIgnore(gitignorePath);
+
+        describe(gitignorePath, function () {
+            it('must exist', function (done) {
+                fs.stat(gitignorePath, done);
+            });
+
+            it('must have valid content', function () {
+                expect(_.isEmpty(gitignore)).to.not.be.ok();
+            });
         });
 
-        it('must have readable content', function () {
-            expect(fs.readFileSync('./.gitignore').toString()).to.be.ok();
-        });
-    });
+        describe(npmignorePath, function () {
+            it('must exist', function (done) {
+                fs.stat(npmignorePath, done);
+            });
 
-    describe('.npmignore file', function () {
-        it('must exist', function (done) {
-            fs.stat('./.npmignore', done);
-        });
-
-        it('must have readable content', function () {
-            expect(fs.readFileSync('./.npmignore').toString()).to.be.ok();
+            it('must have valid content', function () {
+                expect(_.isEmpty(npmignore)).to.not.be.ok();
+            });
         });
 
-        it('must match .gitignore', function () {
-            expect(fs.readFileSync('./.npmignore').toString()).to.be(fs.readFileSync('./.gitignore').toString());
+        it('.gitignore coverage must be a subset of .npmignore coverage', function () {
+            expect(_.intersection(gitignore, npmignore)).to.eql(gitignore);
         });
     });
 
