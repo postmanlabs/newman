@@ -5,8 +5,6 @@ var fs = require('fs'),
     exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');
 
 describe('--export-globals', function () {
-    this.timeout(1000 * 60); // set 60s timeout
-
     afterEach(function () {
         try { fs.unlinkSync(exportedGlobalsPath); }
         catch (e) { console.error(e); }

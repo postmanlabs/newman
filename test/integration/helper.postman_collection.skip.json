@@ -36,7 +36,7 @@
             "addEmptyParamsToSign": false
           }
         },
-        "url": "httpbin.org/post",
+        "url": "https://echo.getpostman.com/post",
         "method": "POST",
         "header": [],
         "body": {
@@ -67,7 +67,7 @@
             "showPassword": false
           }
         },
-        "url": "httpbin.org/get",
+        "url": "https://echo.getpostman.com/get",
         "method": "GET",
         "header": [],
         "body": {
@@ -104,7 +104,7 @@
             "qop": "auth"
           }
         },
-        "url": "httpbin.org/get",
+        "url": "https://echo.getpostman.com/get",
         "method": "GET",
         "header": [],
         "body": {

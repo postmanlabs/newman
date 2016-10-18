@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "httpbin.org/get?hi=hello&hi=lolol",
+        "url": "https://echo.getpostman.com/get?hi=hello&hi=lolol",
         "method": "GET",
         "header": [],
         "body": {
@@ -42,7 +42,7 @@
         }
       ],
       "request": {
-        "url": "httpbin.org/post",
+        "url": "https://echo.getpostman.com/post",
         "method": "POST",
         "header": [],
         "body": {
@@ -65,7 +65,7 @@
         }
       ],
       "request": {
-        "url": "httpbin.org/post",
+        "url": "https://echo.getpostman.com/post",
         "method": "POST",
         "header": [],
         "body": {

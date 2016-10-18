@@ -14,12 +14,12 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "var data = JSON.parse(responseBody);\nvar fileData = JSON.parse(data.files.content);\ntests[\"File upload 1\"] = fileData.key1 === \"value1\";\ntests[\"File upload 2\"] = fileData.key2 === 2;"
+            "exec": "var data = JSON.parse(responseBody);\nvar fileData = JSON.parse(data.files['upload-file.json']);\ntests[\"File upload 1\"] = fileData.key1 === \"value1\";\ntests[\"File upload 2\"] = fileData.key2 === 2;"
           }
         }
       ],
       "request": {
-        "url": "http://httpbin.org/post",
+        "url": "https://echo.getpostman.com/post",
         "method": "POST",
         "header": [],
         "body": {
@@ -32,7 +32,7 @@
             }
           ]
         },
-        "description": "Passes when posted to httpbin.org"
+        "description": "Passes when posted to echo.getpostman.com/post"
       },
       "response": []
     }
