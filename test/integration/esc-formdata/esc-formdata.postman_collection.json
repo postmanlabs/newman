@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "httpbin.org/post?a={{msg}}",
+        "url": "https://echo.getpostman.com/post?a={{msg}}",
         "method": "POST",
         "header": [],
         "body": {

@@ -5,8 +5,6 @@ var fs = require('fs'),
     exportedEnvironmentPath = path.join(__dirname, '..', '..', 'out', 'test-environment.json');
 
 describe('--export-environment', function () {
-    this.timeout(1000 * 60); // set 60s timeout
-
     afterEach(function () {
         try { fs.unlinkSync(exportedEnvironmentPath); }
         catch (e) { console.error(e); }

@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "httpbin.org/redirect/1",
+        "url": "https://echo.getpostman.com/status/302",
         "method": "GET",
         "header": [],
         "body": {

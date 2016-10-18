@@ -26,7 +26,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/xml",
+				"url": "https://echo.getpostman.com/status/200",
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -49,7 +49,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/post",
+				"url": "https://echo.getpostman.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -115,7 +115,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/put",
+				"url": "https://echo.getpostman.com/put",
 				"method": "PUT",
 				"header": [],
 				"body": {
@@ -138,7 +138,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/patch",
+				"url": "https://echo.getpostman.com/patch",
 				"method": "PATCH",
 				"header": [],
 				"body": {
@@ -161,7 +161,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/delete",
+				"url": "https://echo.getpostman.com/delete",
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -184,7 +184,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/get",
+				"url": "https://echo.getpostman.com/get",
 				"method": "HEAD",
 				"header": [],
 				"body": {
@@ -202,12 +202,12 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body is correct\"] = responseBody === \"\";"
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Body is correct\"] = !_.isEmpty(responseBody.split(\",\"));"
 					}
 				}
 			],
 			"request": {
-				"url": "httpbin.org/get",
+				"url": "https://echo.getpostman.com/get",
 				"method": "OPTIONS",
 				"header": [],
 				"body": {
@@ -230,7 +230,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/post",
+				"url": "https://echo.getpostman.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -248,7 +248,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct aath header\"] = jsonData.headers.Authorization.indexOf(\"YWJoaWppdDprYW5l\")>-1;"
+						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Authenticated\"] = jsonData.authenticated === true;"
 					}
 				}
 			],
@@ -256,14 +256,14 @@
 				"auth": {
 					"type": "basic",
 					"basic": {
-						"username": "abhijit",
-						"password": "kane",
+						"username": "postman",
+						"password": "password",
 						"saveHelperData": true,
 						"showPassword": false
 					}
 				},
-				"url": "httpbin.org/post",
-				"method": "POST",
+				"url": "https://echo.getpostman.com/basic-auth",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "formdata",
@@ -280,7 +280,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "var jsonData = JSON.parse(responseBody);\ntests[\"Correct aath header\"] = jsonData.headers.Authorization.length>10;"
+						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Authenticated\"] = jsonData.authenticated === true;"
 					}
 				}
 			],
@@ -289,18 +289,18 @@
 					"type": "digest",
 					"digest": {
 						"algorithm": "",
-						"username": "aa",
-						"realm": "aa",
-						"password": "aa",
-						"nonce": "",
+						"username": "postman",
+						"realm": "Users",
+						"password": "password",
+						"nonce": "ni1LiL0O37PRRhofWdCLmwFsnEtH1lew",
 						"nonceCount": "",
 						"clientNonce": "",
 						"opaque": "",
 						"qop": ""
 					}
 				},
-				"url": "httpbin.org/post",
-				"method": "POST",
+				"url": "https://echo.getpostman.com/digest-auth",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "formdata",
@@ -329,7 +329,7 @@
 				}
 			],
 			"request": {
-				"url": "httpbin.org/get?a={{name{{i}}}}",
+				"url": "https://echo.getpostman.com/get?a={{name{{i}}}}",
 				"method": "GET",
 				"header": [],
 				"body": {

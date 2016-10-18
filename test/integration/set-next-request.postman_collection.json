@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "httpbin.org/post",
+        "url": "https://echo.getpostman.com/post",
         "method": "POST",
         "header": [],
         "body": {
@@ -42,7 +42,7 @@
         }
       ],
       "request": {
-        "url": "http://httpbin.org/html",
+        "url": "https://echo.getpostman.com/get",
         "method": "GET",
         "header": [],
         "body": {
@@ -60,12 +60,12 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "var jsonData = JSON.parse(responseBody);\nvar count = _.parseInt(postman.getEnvironmentVariable('count'));\ncount++;\npostman.setEnvironmentVariable('count', String(count));\n\nif (jsonData.url === 'http://httpbin.org/get') {\n    console.log('Setting next request to \"html\"');\n    postman.setNextRequest('html');\n}\nelse if (!jsonData.url && jsonData.headers) {\n    console.log('Ending shit here.'); tests['Success'] = _.parseInt(postman.getEnvironmentVariable('count')) === 4\n    postman.setNextRequest(null);\n}\nelse {\n    console.log('Not setting next request.. ', responseBody);\n}"
+            "exec": "var jsonData = JSON.parse(responseBody);\nvar count = _.parseInt(postman.getEnvironmentVariable('count'));\ncount++;\npostman.setEnvironmentVariable('count', String(count));\n\nif (jsonData.url === 'https://echo.getpostman.com/get') {\n    console.log('Setting next request to \"html\"');\n    postman.setNextRequest('html');\n}\nelse if (!jsonData.url && jsonData.headers) {\n    console.log('Ending shit here.'); tests['Success'] = _.parseInt(postman.getEnvironmentVariable('count')) === 4\n    postman.setNextRequest(null);\n}\nelse {\n    console.log('Not setting next request.. ', responseBody);\n}"
           }
         }
       ],
       "request": {
-        "url": "httpbin.org/{{method}}",
+        "url": "https://echo.getpostman.com/{{method}}",
         "method": "GET",
         "header": [],
         "body": {

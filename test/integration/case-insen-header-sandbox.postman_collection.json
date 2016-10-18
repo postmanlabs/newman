@@ -14,12 +14,12 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "tests[\"Case-insensitive header checking\"] = postman.getResponseHeader(\"contenT-TypE\")===\"application/json\";"
+            "exec": "tests[\"Case-insensitive header checking\"] = postman.getResponseHeader(\"contenT-TypE\")===\"application/json; charset=utf-8\";"
           }
         }
       ],
       "request": {
-        "url": "http://httpbin.org/get",
+        "url": "https://echo.getpostman.com/get",
         "method": "GET",
         "header": [],
         "body": {
