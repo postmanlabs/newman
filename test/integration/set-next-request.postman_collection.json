@@ -42,7 +42,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/get",
+        "url": "https://echo.getpostman.com/type/html",
         "method": "GET",
         "header": [],
         "body": {

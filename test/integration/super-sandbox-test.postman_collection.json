@@ -26,7 +26,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/status/200",
+				"url": "https://echo.getpostman.com/type/xml",
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -248,7 +248,7 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Authenticated\"] = jsonData.authenticated === true;"
+						"exec": "console.log(request.headers);\nvar jsonData = JSON.parse(responseBody);\ntests[\"Correct auth header\"] = jsonData.headers.authorization === \"Basic cG9zdG1hbjpwYXNzd29yZA==\";"
 					}
 				}
 			],
@@ -262,8 +262,8 @@
 						"showPassword": false
 					}
 				},
-				"url": "https://echo.getpostman.com/basic-auth",
-				"method": "GET",
+				"url": "https://echo.getpostman.com/post",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "formdata",
