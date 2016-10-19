@@ -26,7 +26,7 @@
         }
       ],
       "request": {
-        "url": "http://httpbin.org/get?novar={{novar}}&var={{var}}",
+        "url": "https://echo.getpostman.com/get?novar={{novar}}&var={{var}}",
         "method": "GET",
         "header": [],
         "body": {

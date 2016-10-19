@@ -8,8 +8,6 @@ var fs = require('fs'),
     collectionRunPath = path.join(__dirname, '..', '..', 'out', 'iteration-count-test.json');
 
 describe('iterationCount vs iterationData.length conflicts', function () {
-    this.timeout(1000 * 60); // set 60s timeout
-
     afterEach(function () {
         try { fs.unlinkSync(collectionRunPath); }
         catch (e) { console.error(e); }

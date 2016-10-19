@@ -1,7 +1,7 @@
 [
 	{
 		"key": "full_global_url",
-		"value": "http://httpbin.org/get",
+		"value": "https://echo.getpostman.com/get",
 		"type": "text",
 		"name": "full_global_url",
 		"enabled": true

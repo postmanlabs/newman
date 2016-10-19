@@ -18,7 +18,7 @@ module.exports = function (exit) {
     // banner line
     console.info('Running CLI integration tests using mocha and shelljs...'.yellow.bold);
 
-    var mocha = new Mocha();
+    var mocha = new Mocha({ timeout: 60000 });
 
     recursive(SPEC_SOURCE_DIR, function (err, files) {
         var _exec = global.exec; // need to restore it later

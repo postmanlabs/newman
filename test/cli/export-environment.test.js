@@ -5,8 +5,6 @@ var fs = require('fs'),
     exportedEnvironmentPath = path.join(__dirname, '..', '..', 'out', 'test-environment.json');
 
 describe('--export-environment', function () {
-    this.timeout(1000 * 60); // set 60s timeout
-
     afterEach(function () {
         try { fs.unlinkSync(exportedEnvironmentPath); }
         catch (e) { console.error(e); }
@@ -25,9 +23,10 @@ describe('--export-environment', function () {
             expect(environment).have.property('_postman_exported_at');
             expect(environment).have.property('values');
             expect(environment.values).eql([
-                { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
-                { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
+                { key: 'var-1', value: 'value-1', type: 'any' },
+                { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(environment).have.property('_postman_variable_scope', 'environment');
             done();
         });
     });
@@ -45,9 +44,10 @@ describe('--export-environment', function () {
             expect(environment).have.property('_postman_exported_at');
             expect(environment).have.property('values');
             expect(environment.values).eql([
-                { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
-                { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
+                { key: 'var-1', value: 'value-1', type: 'any' },
+                { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(environment).have.property('_postman_variable_scope', 'environment');
             done();
         });
     });

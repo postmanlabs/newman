@@ -19,11 +19,11 @@ module.exports = function (exit) {
         mochaReporter = 'spec',
         istanbulReport = '';
 
-    // for CI, we use simple xunit reporter
-    if (process.env.CI) {
-        mochaReporter = 'xunit';
-        istanbulReport = '--report cobertura';
-    }
+    // for CI, we use simple xunit reporter (not rquired for Travis)
+    // if (process.env.CI) {
+    //     mochaReporter = 'xunit';
+    //     istanbulReport = '--report cobertura';
+    // }
 
     // banner line
     console.info('Running unit tests using mocha...'.yellow.bold);
