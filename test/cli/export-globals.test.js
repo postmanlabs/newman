@@ -5,8 +5,6 @@ var fs = require('fs'),
     exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');
 
 describe('--export-globals', function () {
-    this.timeout(1000 * 60); // set 60s timeout
-
     afterEach(function () {
         try { fs.unlinkSync(exportedGlobalsPath); }
         catch (e) { console.error(e); }
@@ -25,9 +23,10 @@ describe('--export-globals', function () {
             expect(globals).have.property('_postman_exported_at');
             expect(globals).have.property('values');
             expect(globals.values).eql([
-                { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
-                { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
+                { key: 'var-1', value: 'value-1', type: 'any' },
+                { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
             done();
         });
     });
@@ -45,9 +44,10 @@ describe('--export-globals', function () {
             expect(globals).have.property('_postman_exported_at');
             expect(globals).have.property('values');
             expect(globals.values).eql([
-                { key: 'var-1', name: 'var-1', value: 'value-1', type: 'string' },
-                { key: 'var-2', name: 'var-2', value: 'value-2', type: 'string' }
+                { key: 'var-1', value: 'value-1', type: 'any' },
+                { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
             done();
         });
     });

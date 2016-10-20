@@ -1,40 +1,40 @@
 {
-  "variables": [],
-  "info": {
-    "name": "Form data file upload",
-    "_postman_id": "a143ec0d-38e3-c4d4-7030-091145b9bca0",
-    "description": "A collection to test file upload operations",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "POST file test",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": "var data = JSON.parse(responseBody);\nvar fileData = JSON.parse(data.files.content);\ntests[\"File upload 1\"] = fileData.key1 === \"value1\";\ntests[\"File upload 2\"] = fileData.key2 === 2;"
-          }
-        }
-      ],
-      "request": {
-        "url": "http://httpbin.org/post",
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "formdata",
-          "formdata": [
-            {
-              "key": "content",
-              "src": "test/integration/tc4/upload-file.json",
-              "type": "file"
-            }
-          ]
-        },
-        "description": "Passes when posted to httpbin.org"
-      },
-      "response": []
-    }
-  ]
+	"variables": [],
+	"info": {
+		"name": "Form data file upload",
+		"_postman_id": "d1c476fc-b34c-149e-ac26-ffbcb13edc0e",
+		"description": "A collection to test file upload operations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST file test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var file = JSON.parse(responseBody).files[\"upload-file.json\"];\n\ntests[\"File contents are valid\"] = _.startsWith(file, \"data:application/octet-stream;base64,\");"
+					}
+				}
+			],
+			"request": {
+				"url": "https://echo.getpostman.com/post",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"src": "test/integration/tc4/upload-file.json",
+							"type": "file"
+						}
+					]
+				},
+				"description": "Passes when posted to echo.getpostman.com/post"
+			},
+			"response": []
+		}
+	]
 }

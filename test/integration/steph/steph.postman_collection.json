@@ -8,7 +8,7 @@
   },
   "item": [
     {
-      "name": "http://httpbin.org",
+      "name": "https://echo.getpostman.com",
       "event": [
         {
           "listen": "test",
@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "http://httpbin.org/post",
+        "url": "https://echo.getpostman.com/post",
         "method": "POST",
         "header": [],
         "body": {

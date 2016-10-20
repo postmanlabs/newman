@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### v3.2.0 (Oct 18, 2016)
+- Ensure that environment exports are consistent with the app
+- Simplified the importing logic for environment and globals
+
 #### v3.1.1 (Aug 25, 2016)
 
 - Updated `postman-runtime`, `postman-collection` and `postman-collection-transformer` dependencies

@@ -1,7 +1,5 @@
 /* global describe, it, exec, expect */
 describe('--suppress-exit-code', function () {
-    this.timeout(1000 * 60); // set 60s timeout
-
     it('`newman run` must accept the --suppress-exit-code parameter', function (done) {
         exec('node ./bin/newman.js run test/cli/single-get-request.json --suppress-exit-code', function (code) {
             expect(code).be(0);
