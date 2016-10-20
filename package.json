@@ -30,7 +30,9 @@
     "test-integration": "node npm/test-integration.js",
     "test-cli": "node npm/test-cli.js",
     "build-docs": "node npm/build-docs.js",
-    "build-wiki": "node npm/build-wiki.js"
+    "build-wiki": "node npm/build-wiki.js",
+    "publish-docs": "node npm/publish-docs.js",
+    "publish-wiki": "node npm/publish-wiki.js"
   },
   "author": "Postman Labs <help@getpostman.com> (=)",
   "license": "Apache-2.0",
