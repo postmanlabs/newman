@@ -61,7 +61,7 @@
     "xmlbuilder": "8.2.2"
   },
   "devDependencies": {
-    "eslint": "3.7.1",
+    "eslint": "3.8.1",
     "eslint-plugin-lodash": "2.1.3",
     "eslint-plugin-mocha": "4.7.0",
     "eslint-plugin-security": "1.2.0",
