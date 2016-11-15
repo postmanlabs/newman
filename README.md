@@ -36,7 +36,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
 
 4. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
 
-5. [Communinty Support](#community-support)
+5. [Community Support](#community-support)
 
 6. [License](#license)
 
@@ -283,6 +283,9 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /><br />_Optional_<br />Type: `object` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
+| options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
+| options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
+| options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 
 ### newman.run~callback(error: _object_ , summary: _object_)
