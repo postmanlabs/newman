@@ -1,0 +1,23 @@
+{
+  "info": {
+    "name": "Client cert example",
+    "description": "A sample collection to demonstrate client SSL certificate handling",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+
+  "item": [{
+    "name": "A simple GET request",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": ["tests['response code is 200'] = (responseCode.code === 200);"]
+      }
+    }],
+    "request": {
+      "url": "https://localhost:3000",
+      "method": "GET"
+    }
+  }]
+}
+
