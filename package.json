@@ -68,7 +68,7 @@
     "eslint-plugin-security": "1.2.0",
     "expect.js": "0.3.1",
     "istanbul": "0.4.5",
-    "js-yaml": "3.6.1",
+    "js-yaml": "3.7.0",
     "jsdoc": "3.4.3",
     "jsdoc-to-markdown": "2.0.1",
     "mocha": "3.1.2",
