@@ -26,6 +26,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
             2. [JSON reporter options](#json-reporter-options)
             3. [HTML reporter options](#html-reporter-options)
             4. [JUnit reporter options](#junitxml-reporter-options)
+        2. [SSL client certificates](#ssl-client-certificates)
     2. [Proxy](#proxy)
 
 3. [API Reference](#api-reference)
@@ -222,6 +223,21 @@ Newman can output a summary of the collection run to a JUnit compatible XML file
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+
+#### SSL client certificates
+
+Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and a private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
+
+Newman supports SSL client certificates, via the following CLI options:
+
+- `--ssl-client-cert`<br/>
+The path to the public client certificate file.
+
+- `--ssl-client-key`<br/>
+The path to the private client key (optional).
+
+- `--ssl-client-passphrase`<br/>
+The secret passphrase used to protect the private client key (optional).
 
 ### `newman [options]`
 
