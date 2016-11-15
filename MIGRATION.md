@@ -141,7 +141,7 @@ newman run https://a.com/collection.json --environment https://a.com/env.json --
 | -C --noColour | --no-color | Deprecated |
 | -S --noTestSymbols | --disable-unicode | **Discontinued** |
 | -l --tls | N.A | **Discontinued** |
-| -x --exitCode | -x --suppress-exit-code | Deprecated |
+| -x --exitCode | -x --suppress-exit-code | Deprecated (The V3 option takes no arguments, and forces an exit code of 0)|
 | -w --whiteScreen | N.A | **Discontinued** |
 | -o --outputFile | --reporter-json-export | Deprecated |
 | -t --testReportFile | --reporter-junit-export | Deprecated |
