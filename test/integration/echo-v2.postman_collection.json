@@ -408,13 +408,17 @@
           "request": {
             "url": "https://echo.getpostman.com/oauth1",
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "OAuth oauth_consumer_key=\"RKCGzna7bv9YD57c\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1442394747\",oauth_nonce=\"UIGipk\",oauth_version=\"1.0\",oauth_signature=\"CaeyGPr2mns1WCq4Cpm5aLvz6Gs=\"",
-                "description": ""
+            "auth": {
+              "type": "oauth1",
+              "oauth1": {
+                "consumerKey": "RKCGzna7bv9YD57c",
+                "consumerSecret": "D+EdQ-gs$-%@2Nu7",
+                "signatureMethod": "HMAC-SHA1",
+                "version": "1.0",
+                "addParamsToHeader": true,
+                "addEmptyParamsToSign": false
               }
-            ],
+            },
             "body": {
               "mode": "formdata",
               "formdata": [
