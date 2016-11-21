@@ -26,6 +26,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
             2. [JSON reporter options](#json-reporter-options)
             3. [HTML reporter options](#html-reporter-options)
             4. [JUnit reporter options](#junitxml-reporter-options)
+        2. [SSL client certificates](#ssl-client-certificates)
     2. [Proxy](#proxy)
 
 3. [API Reference](#api-reference)
@@ -35,7 +36,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
 
 4. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
 
-5. [Communinty Support](#community-support)
+5. [Community Support](#community-support)
 
 6. [License](#license)
 
@@ -223,6 +224,21 @@ Newman can output a summary of the collection run to a JUnit compatible XML file
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
+#### SSL client certificates
+
+Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and a private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
+
+Newman supports SSL client certificates, via the following CLI options:
+
+- `--ssl-client-cert`<br/>
+The path to the public client certificate file.
+
+- `--ssl-client-key`<br/>
+The path to the private client key (optional).
+
+- `--ssl-client-passphrase`<br/>
+The secret passphrase used to protect the private client key (optional).
+
 ### `newman [options]`
 
 - `-h`, `--help`<br />
@@ -264,9 +280,12 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.bail              | A boolean switch to specify whether or not to gracefully stop a collection run on encountering the first error. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
-| options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
-| options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /><br />_Optional_<br />Type: `object` |
+| options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
+| options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
+| options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
+| options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
+| options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 
 ### newman.run~callback(error: _object_ , summary: _object_)

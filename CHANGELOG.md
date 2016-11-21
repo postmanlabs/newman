@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### v3.3.0 (Nov 21, 2016)
+- Added options to provide client-side SSL certificates on the command line
+- Updated the versions of `postman-runtime` and `postman-collection` libraries
+
 #### v3.2.0 (Oct 18, 2016)
 - Ensure that environment exports are consistent with the app
 - Simplified the importing logic for environment and globals
