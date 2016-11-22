@@ -1,14 +1,16 @@
 {
-  "timestamp": "Thu Aug 25 2016 19:52:02 GMT+0530 (IST)",
+  "timestamp": "Wed Nov 23 2016 01:50:51 GMT+0530 (IST)",
+  "version": "3.3.0",
   "aggregations": [
     {
       "item": {
-        "id": "17d87a3b-fdc8-4b18-9815-950a42d87f59",
+        "id": "d63cd324-9f85-4fb1-99b4-fa30290cf3e5",
         "name": "A simple GET request",
         "request": {
           "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
           "method": "GET"
         },
+        "response": [],
         "event": [
           {
             "listen": "test",
@@ -27,7 +29,7 @@
         "header": [
           {
             "key": "User-Agent",
-            "value": "PostmanRuntime/2.4.3"
+            "value": "PostmanRuntime/3.0.4"
           },
           {
             "key": "Accept",
@@ -43,7 +45,9 @@
           }
         ],
         "body": {},
-        "description": {}
+        "description": {
+          "type": "text/plain"
+        }
       },
       "response": {
         "status": "OK",
@@ -79,11 +83,11 @@
           },
           {
             "key": "Date",
-            "value": "Thu, 25 Aug 2016 14:22:01 GMT"
+            "value": "Tue, 22 Nov 2016 20:20:50 GMT"
           },
           {
             "key": "ETag",
-            "value": "W/\"137-PVrRGQ6/XWPrd95mL9VLkA\""
+            "value": "W/\"137-q0lxUUvKUot4wiPUo3uKCg\""
           },
           {
             "key": "Server",
@@ -91,7 +95,7 @@
           },
           {
             "key": "set-cookie",
-            "value": "sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg; Path=/; HttpOnly"
+            "value": "sails.sid=s%3AW0Ng8epFgCZJpDdMo_odMqH3BbWD38R9.90SxQF2ceaA7UoFSfYDoZnjOhENQDYmyV8Bun6s11OM; Path=/; HttpOnly"
           },
           {
             "key": "Vary",
@@ -99,19 +103,31 @@
           },
           {
             "key": "Content-Length",
-            "value": "203"
+            "value": "204"
           },
           {
             "key": "Connection",
             "value": "keep-alive"
           }
         ],
-        "body": "{\"args\":{\"source\":\"newman-sample-github-collection\"},\"headers\":{\"host\":\"echo.getpostman.com\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"url\":\"https://echo.getpostman.com/get?source=newman-sample-github-collection\"}",
-        "responseTime": 1965,
-        "responseSize": 311
+        "body": "{\"args\":{\"source\":\"newman-sample-github-collection\"},\"headers\":{\"host\":\"echo.getpostman.com\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"url\":\"https://echo.getpostman.com/get?source=newman-sample-github-collection\"}",
+        "cookie": [],
+        "responseTime": 1681,
+        "responseSize": 311,
+        "update": {},
+        "reason": {},
+        "text": {},
+        "json": {},
+        "mime": {},
+        "dataURI": {},
+        "size": {},
+        "describe": {},
+        "toObjectResolved": {},
+        "toJSON": {},
+        "meta": {}
       },
       "mean": {
-        "time": "2s",
+        "time": "1681ms",
         "size": "311B"
       },
       "cumulativeTests": {
@@ -128,7 +144,7 @@
     },
     {
       "item": {
-        "id": "45805ccf-86f6-44d1-b1fa-18431f4025e5",
+        "id": "7a2a3985-e3a4-4402-b34d-5a293e17fccf",
         "name": "A simple POST request",
         "request": {
           "url": "https://echo.getpostman.com/post",
@@ -143,7 +159,9 @@
             "mode": "raw",
             "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
           }
-        }
+        },
+        "response": [],
+        "event": []
       },
       "request": {
         "url": "https://echo.getpostman.com/post",
@@ -155,7 +173,7 @@
           },
           {
             "key": "User-Agent",
-            "value": "PostmanRuntime/2.4.3"
+            "value": "PostmanRuntime/3.0.4"
           },
           {
             "key": "Accept",
@@ -167,7 +185,7 @@
           },
           {
             "key": "cookie",
-            "value": "sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg"
+            "value": "sails.sid=s%3AW0Ng8epFgCZJpDdMo_odMqH3BbWD38R9.90SxQF2ceaA7UoFSfYDoZnjOhENQDYmyV8Bun6s11OM"
           },
           {
             "key": "accept-encoding",
@@ -182,7 +200,9 @@
           "mode": "raw",
           "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
         },
-        "description": {}
+        "description": {
+          "type": "text/plain"
+        }
       },
       "response": {
         "status": "OK",
@@ -218,15 +238,19 @@
           },
           {
             "key": "Date",
-            "value": "Thu, 25 Aug 2016 14:22:02 GMT"
+            "value": "Tue, 22 Nov 2016 20:20:51 GMT"
           },
           {
             "key": "ETag",
-            "value": "W/\"1ef-XCjjHFaJKcRm3YHSPLLNSQ\""
+            "value": "W/\"1ef-e/0XWpXc9SVbRHcy3qwkPg\""
           },
           {
             "key": "Server",
             "value": "nginx/1.8.1"
+          },
+          {
+            "key": "set-cookie",
+            "value": "sails.sid=s%3A7t5klbchBLFRoRArWtdPF45G9vWLbWGQ.gnfG4KfjJccNvT3nO8W7xe2NiMXwud8ztejaOblFayU; Path=/; HttpOnly"
           },
           {
             "key": "Vary",
@@ -234,19 +258,31 @@
           },
           {
             "key": "Content-Length",
-            "value": "359"
+            "value": "363"
           },
           {
             "key": "Connection",
             "value": "keep-alive"
           }
         ],
-        "body": "{\"args\":{},\"data\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\",\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"69\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"text/plain\",\"cookie\":\"sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":null,\"url\":\"https://echo.getpostman.com/post\"}",
-        "responseTime": 273,
-        "responseSize": 495
+        "body": "{\"args\":{},\"data\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\",\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"69\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"text/plain\",\"cookie\":\"sails.sid=s%3AW0Ng8epFgCZJpDdMo_odMqH3BbWD38R9.90SxQF2ceaA7UoFSfYDoZnjOhENQDYmyV8Bun6s11OM\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":null,\"url\":\"https://echo.getpostman.com/post\"}",
+        "cookie": [],
+        "responseTime": 362,
+        "responseSize": 495,
+        "update": {},
+        "reason": {},
+        "text": {},
+        "json": {},
+        "mime": {},
+        "dataURI": {},
+        "size": {},
+        "describe": {},
+        "toObjectResolved": {},
+        "toJSON": {},
+        "meta": {}
       },
       "mean": {
-        "time": "273ms",
+        "time": "362ms",
         "size": "495B"
       },
       "cumulativeTests": {
@@ -257,7 +293,7 @@
     },
     {
       "item": {
-        "id": "0d5736de-0cf1-46a9-b057-3997c275af4b",
+        "id": "143bb96b-c727-4858-bca4-cf3caaecd83c",
         "name": "A simple POST request with JSON body",
         "request": {
           "url": "https://echo.getpostman.com/post",
@@ -272,7 +308,9 @@
             "mode": "raw",
             "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
           }
-        }
+        },
+        "response": [],
+        "event": []
       },
       "request": {
         "url": "https://echo.getpostman.com/post",
@@ -284,7 +322,7 @@
           },
           {
             "key": "User-Agent",
-            "value": "PostmanRuntime/2.4.3"
+            "value": "PostmanRuntime/3.0.4"
           },
           {
             "key": "Accept",
@@ -296,7 +334,7 @@
           },
           {
             "key": "cookie",
-            "value": "sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg"
+            "value": "sails.sid=s%3A7t5klbchBLFRoRArWtdPF45G9vWLbWGQ.gnfG4KfjJccNvT3nO8W7xe2NiMXwud8ztejaOblFayU"
           },
           {
             "key": "accept-encoding",
@@ -311,7 +349,9 @@
           "mode": "raw",
           "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
         },
-        "description": {}
+        "description": {
+          "type": "text/plain"
+        }
       },
       "response": {
         "status": "OK",
@@ -347,15 +387,19 @@
           },
           {
             "key": "Date",
-            "value": "Thu, 25 Aug 2016 14:22:02 GMT"
+            "value": "Tue, 22 Nov 2016 20:20:51 GMT"
           },
           {
             "key": "ETag",
-            "value": "W/\"24a-RFanBswLWTX2fy8gBq4Fug\""
+            "value": "W/\"24a-hvEkRPhnBgpssYbfJlNGew\""
           },
           {
             "key": "Server",
             "value": "nginx/1.8.1"
+          },
+          {
+            "key": "set-cookie",
+            "value": "sails.sid=s%3AZXbrye0a-V9HGR11zy_KloovYPY_G4Q-.nSJkrTRBZiPhUx6XBZLBIkWbYNO%2FuQcPGV5Xm727r5E; Path=/; HttpOnly"
           },
           {
             "key": "Vary",
@@ -363,19 +407,31 @@
           },
           {
             "key": "Content-Length",
-            "value": "366"
+            "value": "362"
           },
           {
             "key": "Connection",
             "value": "keep-alive"
           }
         ],
-        "body": "{\"args\":{},\"data\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"80\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"application/json\",\"cookie\":\"sails.sid=s%3AKWkP8x3Zi5Dw8iEGxf4rtsVeadIVITil.kefDILpoX6Yda98kJa7ksUS8M5y1tUnu4S7yjKZN5Dg\",\"user-agent\":\"PostmanRuntime/2.4.3\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"url\":\"https://echo.getpostman.com/post\"}",
-        "responseTime": 309,
-        "responseSize": 586
+        "body": "{\"args\":{},\"data\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"80\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"application/json\",\"cookie\":\"sails.sid=s%3A7t5klbchBLFRoRArWtdPF45G9vWLbWGQ.gnfG4KfjJccNvT3nO8W7xe2NiMXwud8ztejaOblFayU\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"url\":\"https://echo.getpostman.com/post\"}",
+        "cookie": [],
+        "responseTime": 363,
+        "responseSize": 586,
+        "update": {},
+        "reason": {},
+        "text": {},
+        "json": {},
+        "mime": {},
+        "dataURI": {},
+        "size": {},
+        "describe": {},
+        "toObjectResolved": {},
+        "toJSON": {},
+        "meta": {}
       },
       "mean": {
-        "time": "309ms",
+        "time": "363ms",
         "size": "586B"
       },
       "cumulativeTests": {
@@ -435,18 +491,21 @@
     },
     "collection": {
       "info": {
-        "id": "6d031f42-a134-4dba-86c5-ce154f352f33",
+        "id": "c2f7878c-aacf-45f8-8421-2dc0a8c7ec84",
         "name": "Sample Postman Collection",
         "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
       },
+      "event": [],
+      "variable": [],
       "item": [
         {
-          "id": "17d87a3b-fdc8-4b18-9815-950a42d87f59",
+          "id": "d63cd324-9f85-4fb1-99b4-fa30290cf3e5",
           "name": "A simple GET request",
           "request": {
             "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
             "method": "GET"
           },
+          "response": [],
           "event": [
             {
               "listen": "test",
@@ -460,7 +519,7 @@
           ]
         },
         {
-          "id": "45805ccf-86f6-44d1-b1fa-18431f4025e5",
+          "id": "7a2a3985-e3a4-4402-b34d-5a293e17fccf",
           "name": "A simple POST request",
           "request": {
             "url": "https://echo.getpostman.com/post",
@@ -475,10 +534,12 @@
               "mode": "raw",
               "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
             }
-          }
+          },
+          "response": [],
+          "event": []
         },
         {
-          "id": "0d5736de-0cf1-46a9-b057-3997c275af4b",
+          "id": "143bb96b-c727-4858-bca4-cf3caaecd83c",
           "name": "A simple POST request with JSON body",
           "request": {
             "url": "https://echo.getpostman.com/post",
@@ -493,10 +554,15 @@
               "mode": "raw",
               "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
             }
-          }
+          },
+          "response": [],
+          "event": []
         }
       ]
     },
-    "failures": 0
+    "failures": 0,
+    "responseTotal": "929B",
+    "responseAverage": "802ms",
+    "duration": "2.9s"
   }
 }
