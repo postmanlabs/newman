@@ -8,6 +8,11 @@ describe('unicode handling of cli symbol utility module', function () {
         var symbols = cliUtilsSymbols(true);
 
         expect(symbols).to.eql({
+            console: {
+                top: '-',
+                middle: '|',
+                bottom: '-'
+            },
             dot: '.',
             folder: 'Folder',
             root: 'Root',
@@ -22,6 +27,11 @@ describe('unicode handling of cli symbol utility module', function () {
             isWin = (/^win/).test(process.platform);
 
         expect(symbols).to.eql(isWin ? {
+            console: {
+                top: '\u250C',
+                middle: '\u2502',
+                bottom: '\u2514'
+            },
             dot: '.',
             folder: '□',
             root: '→',
@@ -29,6 +39,11 @@ describe('unicode handling of cli symbol utility module', function () {
             ok: '√',
             error: '×'
         } : {
+            console: {
+                top: '┌',
+                middle: '│',
+                bottom: '└'
+            },
             dot: '.',
             folder: '❏',
             root: '→',
