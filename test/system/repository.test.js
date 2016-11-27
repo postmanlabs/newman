@@ -53,13 +53,12 @@ describe('project repository', function () {
 
             it('must have a valid version string in form of <major>.<minor>.<revision>', function () {
                 // eslint-disable-next-line max-len
-                expect(json.version).to.match(/^((\d+)\.(\d+)\.(\d+))(?:-([\dA-Za-z\-]+(?:\.[\dA-Za-z\-]+)*))?(?:\+([\dA-Za-z\-]+(?:\.[\dA-Za-z\-]+)*))?$/);
+                expect(json.version).to.match(/^((\d+)\.(\d+)\.(\d+))(?:-([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?$/);
             });
         });
 
         describe('binary definitions', function () {
-
-            it('must exits', function () {
+            it('must exist', function () {
                 expect(json.bin).be.ok();
                 expect(json.bin).to.eql({ 'newman': './bin/newman.js' });
             });
@@ -70,7 +69,6 @@ describe('project repository', function () {
                     expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent)).to.be.ok();
                 });
             });
-
         });
 
         describe('script definitions', function () {
