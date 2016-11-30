@@ -34,11 +34,13 @@ extensibility in mind so that you can easily integrate it into your continuous i
     2. [Run summary object](#newmanruncallbackerror-object--summary-object)
     3. [Events emitted during a collection run](#newmanrunevents)
 
-4. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
+4. [File uploads](#file-uploads)
 
-5. [Community Support](#community-support)
+5. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
 
-6. [License](#license)
+6. [Community Support](#community-support)
+
+7. [License](#license)
 
 ---
 
@@ -226,7 +228,7 @@ discontinued. For documentation on the older command options, refer to [README.m
 
 #### SSL client certificates
 
-Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and a private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
+Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and an optional private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
 
 Newman supports SSL client certificates, via the following CLI options:
 
@@ -384,6 +386,64 @@ argument object.**
 <!-- TODO: write about callback summary -->
 
 ---
+
+## File uploads
+
+Newman also supports file uploads. For this to work correctly, the file to be uploaded must be placed in location specified within the collection, relative to the collection file itself. For instance, for the following collection:
+```json
+{
+	"variables": [],
+	"info": {
+		"name": "file-upload",
+		"_postman_id": "9dbfcf22-fdf4-f328-e440-95dbd8e4cfbb",
+		"description": "A set of `POST` requests to upload files as form data fields",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Form data upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody).files[\"sample-file.txt\"];",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"File was uploaded correctly\"] = /^data:application\\/octet-stream;base64/.test(response);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://echo.getpostman.com/post",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"enabled": true,
+							"src": "sample-file.txt"
+						}
+					]
+				},
+				"description": "Uploads a file as a form data field to `https://echo.getpostman.com/post` via a `POST` request."
+			},
+			"response": []
+		}
+	]
+}
+
+```
+The file `sample-file.txt` must be present in the same directory as the collection. The collection can then be run as usual:
+```terminal
+newman run file-upload.postman_collection.json
+```
 
 ## Using Newman with the Postman Cloud API
 
