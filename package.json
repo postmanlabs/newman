@@ -45,14 +45,14 @@
     "csv-parse": "1.1.7",
     "eventemitter3": "2.0.2",
     "filesize": "3.3.0",
-    "handlebars": "4.0.5",
-    "lodash": "4.16.2",
+    "handlebars": "4.0.6",
+    "lodash": "4.17.2",
     "mkdirp": "0.5.1",
     "parse-json": "2.2.0",
     "postman-collection": "0.5.7",
     "postman-collection-transformer": "2.0.4",
     "postman-request": "2.74.1-postman.1",
-    "postman-runtime": "3.0.4",
+    "postman-runtime": "3.0.6",
     "pretty-ms": "2.1.0",
     "semver": "5.3.0",
     "serialised-error": "1.1.2",
@@ -62,13 +62,13 @@
   },
   "devDependencies": {
     "editorconfig": "0.13.2",
-    "eslint": "3.11.0",
-    "eslint-plugin-lodash": "2.1.6",
+    "eslint": "3.11.1",
+    "eslint-plugin-lodash": "2.2.0",
     "eslint-plugin-mocha": "4.7.0",
     "eslint-plugin-security": "1.2.0",
     "expect.js": "0.3.1",
     "istanbul": "0.4.5",
-    "js-yaml": "3.6.1",
+    "js-yaml": "3.7.0",
     "jsdoc": "3.4.3",
     "jsdoc-to-markdown": "2.0.1",
     "mocha": "3.2.0",
@@ -76,7 +76,7 @@
     "packity": "0.3.2",
     "parse-gitignore": "0.3.1",
     "postman-jsdoc-theme": "0.0.2",
-    "recursive-readdir": "2.0.0"
+    "recursive-readdir": "2.1.0"
   },
   "engines": {
     "node": ">=4"
