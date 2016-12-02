@@ -230,7 +230,7 @@ discontinued. For documentation on the older command options, refer to [README.m
 
 Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and an optional private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
 
-Newman supports SSL client certificates, via the following CLI options:
+Newman supports SSL client certificates, via the following CLI options (available with Newman `v3` style `run` only):
 
 - `--ssl-client-cert`<br/>
 The path to the public client certificate file.
@@ -440,7 +440,7 @@ Newman also supports file uploads. For this to work correctly, the file to be up
 }
 
 ```
-The file `sample-file.txt` must be present in the same directory as the collection. The collection can then be run as usual:
+Here, the `src` field indicates the location of the file, relative to the **present working directory**. The collection can then be run as usual:
 ```terminal
 newman run file-upload.postman_collection.json
 ```
