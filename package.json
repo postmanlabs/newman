@@ -51,7 +51,7 @@
     "parse-json": "2.2.0",
     "postman-collection": "0.5.7",
     "postman-collection-transformer": "2.0.4",
-    "postman-request": "2.74.1-postman.1",
+    "postman-request": "2.79.1-postman.1",
     "postman-runtime": "3.0.6",
     "pretty-ms": "2.1.0",
     "semver": "5.3.0",
