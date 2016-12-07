@@ -389,60 +389,43 @@ argument object.**
 
 ## File uploads
 
-Newman also supports file uploads. For this to work correctly, the file to be uploaded must be placed in location specified within the collection, relative to the collection file itself. For instance, for the following collection:
+Newman also supports file uploads for request form data. The files must be present in the
+current working directory. Your collection must also contain the filename in
+the "src" attribute of the request. 
+
+In this collection, `sample-file.txt` should be present in the current working directory.
 ```json
 {
-	"variables": [],
-	"info": {
-		"name": "file-upload",
-		"_postman_id": "9dbfcf22-fdf4-f328-e440-95dbd8e4cfbb",
-		"description": "A set of `POST` requests to upload files as form data fields",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Form data upload",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"var response = JSON.parse(responseBody).files[\"sample-file.txt\"];",
-							"",
-							"tests[\"Status code is 200\"] = responseCode.code === 200;",
-							"tests[\"File was uploaded correctly\"] = /^data:application\\/octet-stream;base64/.test(response);",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"url": "https://echo.getpostman.com/post",
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"type": "file",
-							"enabled": true,
-							"src": "sample-file.txt"
-						}
-					]
-				},
-				"description": "Uploads a file as a form data field to `https://echo.getpostman.com/post` via a `POST` request."
-			},
-			"response": []
-		}
-	]
+    "info": {
+        "name": "file-upload"
+    },
+    "item": [
+        {
+            "request": {
+                "url": "https://echo.getpostman.com/post",
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "file",
+                            "type": "file",
+                            "enabled": true,
+                            "src": "sample-file.txt"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
 }
-
 ```
-Here, the `src` field indicates the location of the file, relative to the **present working directory**. The collection can then be run as usual:
+
 ```terminal
-newman run file-upload.postman_collection.json
+$ ls
+file-upload.postman_collection.json  sample-file.txt
+
+$ newman run file-upload.postman_collection.json
 ```
 
 ## Using Newman with the Postman Cloud API
