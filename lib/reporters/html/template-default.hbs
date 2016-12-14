@@ -30,8 +30,8 @@
         <div class="col-md-3">Collection</div><div class="col-md-9">{{collection.name}}</div>
         {{#if collection.description}}<div class="col-md-3">Description</div><div class="col-md-9">{{collection.description}}&nbsp;</div>{{/if}}
       {{/with}}
-
         <div class="col-md-3">Time</div><div class="col-md-9">{{timestamp}}</div>
+        <div class="col-md-3">Exported with</div><div class="col-md-9">Newman v{{version}}</div>
         <div class="col-md-12">&nbsp;</div>
         <div class="col-md-4">&nbsp;</div><div class="col-md-4"><strong>Total</strong></div><div class="col-md-4"><strong>Failed</strong></div>
 
@@ -43,6 +43,11 @@
           <div class="col-md-4">Test Scripts</div><div class="col-md-4">{{testScripts.total}}</div><div class="col-md-4">{{testScripts.failed}}</div>
           <div class="col-md-4">Assertions</div><div class="col-md-4">{{assertions.total}}</div><div class="col-md-4">{{assertions.failed}}</div>
         {{/with}}
+
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-6">Total run duration</div><div class="col-md-6">{{duration}}</div>
+        <div class="col-md-6">Total data received</div><div class="col-md-6">{{responseTotal}} (approx)</div>
+        <div class="col-md-6">Average response time</div><div class="col-md-6">{{responseAverage}}</div>
 
         <div class="col-md-12">&nbsp;</div>
         <div class="col-md-3"><strong>Total Failures</strong></div><div class="col-md-6"><strong>{{failures}}</strong></div>

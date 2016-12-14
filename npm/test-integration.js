@@ -42,7 +42,7 @@ module.exports = function (exit) {
         function (files, next) {
             next(null, _.reduce(files, function (suites, path) {
                 // regex: [0:path, 1:test, 2:syntax, 3:skipped, 4: file-format]
-                var parts = path.match(/(.+)\.postman_([^\.]+)(\.skip)?\.([^\.]{3,})$/i);
+                var parts = path.match(/(.+)\.postman_([^.]+)(\.skip)?\.([^.]{3,})$/i);
 
                 if (!parts) { // if a spec file did not match the pattern, log warning and move on
                     return (console.warn(` - ignored: ${path}`.gray), suites);

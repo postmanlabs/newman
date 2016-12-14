@@ -34,11 +34,13 @@ extensibility in mind so that you can easily integrate it into your continuous i
     2. [Run summary object](#newmanruncallbackerror-object--summary-object)
     3. [Events emitted during a collection run](#newmanrunevents)
 
-4. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
+4. [File uploads](#file-uploads)
 
-5. [Community Support](#community-support)
+5. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
 
-6. [License](#license)
+6. [Community Support](#community-support)
+
+7. [License](#license)
 
 ---
 
@@ -226,9 +228,9 @@ discontinued. For documentation on the older command options, refer to [README.m
 
 #### SSL client certificates
 
-Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and a private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
+Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and an optional private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
 
-Newman supports SSL client certificates, via the following CLI options:
+Newman supports SSL client certificates, via the following CLI options (available with Newman `v3` style `run` only):
 
 - `--ssl-client-cert`<br/>
 The path to the public client certificate file.
@@ -384,6 +386,47 @@ argument object.**
 <!-- TODO: write about callback summary -->
 
 ---
+
+## File uploads
+
+Newman also supports file uploads for request form data. The files must be present in the
+current working directory. Your collection must also contain the filename in
+the "src" attribute of the request. 
+
+In this collection, `sample-file.txt` should be present in the current working directory.
+```json
+{
+    "info": {
+        "name": "file-upload"
+    },
+    "item": [
+        {
+            "request": {
+                "url": "https://echo.getpostman.com/post",
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "file",
+                            "type": "file",
+                            "enabled": true,
+                            "src": "sample-file.txt"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
+```
+
+```terminal
+$ ls
+file-upload.postman_collection.json  sample-file.txt
+
+$ newman run file-upload.postman_collection.json
+```
 
 ## Using Newman with the Postman Cloud API
 
