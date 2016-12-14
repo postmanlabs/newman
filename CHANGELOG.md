@@ -1,5 +1,10 @@
 # Newman Changelog
 
+#### v3.3.1 (Dec 14, 2016)
+- Added more details to the HTML reporter
+- Updated `postman-collection` to the latest version which contains a bugfix for OAuth1 with realms
+- Updated `postman-runtime` which has a few fixes for browser based workflows
+
 #### v3.3.0 (Nov 21, 2016)
 - Added options to provide client-side SSL certificates on the command line
 - Updated the versions of `postman-runtime` and `postman-collection` libraries
