@@ -9,6 +9,7 @@ describe('SSL Client certificates', function () {
             key: fs.readFileSync('test/fixtures/server.key', 'utf8'),
             cert: fs.readFileSync('test/fixtures/server.crt', 'utf8'),
             ca: fs.readFileSync('test/fixtures/ca.crt', 'utf8'),
+            passphrase: 'password',
             requestCert: true,
             rejectUnauthorized: false
         }, function (req, res) {
