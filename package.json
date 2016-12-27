@@ -49,7 +49,7 @@
     "lodash": "4.17.2",
     "mkdirp": "0.5.1",
     "parse-json": "2.2.0",
-    "postman-collection": "0.5.8",
+    "postman-collection": "0.5.10",
     "postman-collection-transformer": "2.0.6",
     "postman-request": "2.79.1-postman.1",
     "postman-runtime": "3.0.10",
