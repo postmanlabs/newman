@@ -1,9 +1,9 @@
 {{#if folder}}
     <div class="panel-group" id="collapse-folder-{{@index}}" role="tablist" aria-multiselectable="true">
-        <div class="panel-heading" role="tab" id="folderHead-{{@index}}">
-            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{@index}}" aria-controls="collapseOne"><strong>{{folder}}</strong></a></h4>
+        <div role="tab" id="folderHead-{{@index}}">
+            <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{@index}}" aria-controls="collapseOne"><strong>{{folder}}</strong></a></h4>
         </div>
-
+        <br/>
         <div id="folderData-{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="folderHead-{{@index}}">
             {{#each contents}}{{> aggregations}}{{/each}}
         </div>
