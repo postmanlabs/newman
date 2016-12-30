@@ -1,0 +1,56 @@
+{{#if folder}}
+    <div class="panel-group" id="collapse-folder-{{@index}}" role="tablist" aria-multiselectable="true">
+        <div role="tab" id="folderHead-{{@index}}">
+            <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{@index}}" aria-controls="collapseOne"><strong>{{folder}}</strong></a></h4>
+        </div>
+        <br/>
+        <div id="folderData-{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="folderHead-{{@index}}">
+            {{#each contents}}{{> aggregations}}{{/each}}
+        </div>
+    </div>
+{{else}}
+    <div class="panel-group" id="collapse-request-{{item.id}}" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="requestHead-{{item.id}}">
+                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{item.id}}" aria-controls="collapseOne">{{item.name}}</a></h4>
+            </div>
+
+            <div id="requestData-{{item.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-{{item.id}}">
+                <div class="panel-body">
+                    {{#with request}}
+                        {{#if description.content}}
+                            <div class="col-md-4">Description</div><div class="col-md-8" style="white-space: pre-wrap;">{{description.content}}</div>
+                            <div class="col-md-12">&nbsp;</div>
+                        {{/if}}
+
+                        <div class="col-md-4">Method</div><div class="col-md-8">{{method}}</div>
+                        <div class="col-md-4">URL</div><div class="col-md-8"><a href="{{url}}" target="_blank">{{url}}</a></div>
+                    {{/with}}
+
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="col-md-4">Mean time per request</div><div class="col-md-8">{{mean.time}}</div><br/>
+                    <div class="col-md-4">Mean size per request</div><div class="col-md-8">{{mean.size}}</div><br/>
+
+                    <div class="col-md-12">&nbsp;</div>
+                    <br/><div class="col-md-4">Total passed tests</div><div class="col-md-8">{{cumulativeTests.passed}}</div>
+                    <div class="col-md-4">Total failed tests</div><div class="col-md-8">{{cumulativeTests.failed}}</div><br/>
+
+                    <div class="col-md-12">&nbsp;</div>
+                    <br/><div class="col-md-4">Status code</div><div class="col-md-8">{{response.code}}</div><br/>
+
+                    {{#if assertions.length}}
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-md-4">Tests</div>
+
+                        <div class="col-md-8">
+                            <table class="table table-responsive table-condensed">
+                                <thead><tr><th>Name</th><th>Pass count</th><th>Fail count</th></tr></thead>
+                                <tbody>{{#each assertions}}<tr><td>{{this.name}}</td><td>{{this.passed}}</td><td>{{this.failed}}</td></tr>{{/each}}</tbody>
+                            </table>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
