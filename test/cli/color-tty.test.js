@@ -40,9 +40,11 @@ describe('CLI output', function () {
     describe('noTTY', function () {
         var encoding = 'utf-8';
 
-        before(function () {
-            try { fs.mkdirSync('out'); }
-            catch (e) { console.error(e); }
+        before(function (done) {
+            fs.mkdir('out', function (err) {
+                console.error(err);
+                done();
+            });
         });
 
         it('should not produce colored output without any options', function (done) {
@@ -51,9 +53,13 @@ describe('CLI output', function () {
                 expect(code).be(0);
                 expect(stderr).to.be.empty();
                 expect(stdout).to.be.empty();
-                expect(fs.readFileSync('out/notty.txt', encoding)).to.not.match(coloredOutput);
 
-                done(code);
+                fs.readFile('out/notty.txt', encoding, function (err, data) {
+                    if (err) { return done(err); }
+
+                    expect(data).to.not.match(coloredOutput);
+                    done();
+                });
             });
         });
 
@@ -63,9 +69,13 @@ describe('CLI output', function () {
                 expect(code).be(0);
                 expect(stderr).to.be.empty();
                 expect(stdout).to.be.empty();
-                expect(fs.readFileSync('out/notty-color.txt', encoding)).to.match(coloredOutput);
 
-                done(code);
+                fs.readFile('out/notty-color.txt', encoding, function (err, data) {
+                    if (err) { return done(err); }
+
+                    expect(data).to.match(coloredOutput);
+                    done();
+                });
             });
         });
 
@@ -75,9 +85,13 @@ describe('CLI output', function () {
                 expect(code).be(0);
                 expect(stderr).to.be.empty();
                 expect(stdout).to.be.empty();
-                expect(fs.readFileSync('out/notty-no-color.txt', encoding)).to.not.match(coloredOutput);
 
-                done(code);
+                fs.readFile('out/notty-no-color.txt', encoding, function (err, data) {
+                    if (err) { return done(err); }
+
+                    expect(data).to.not.match(coloredOutput);
+                    done();
+                });
             });
         });
     });
