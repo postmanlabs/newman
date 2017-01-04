@@ -1,5 +1,10 @@
 # Newman Changelog
 
+#### v3.4.0 (Dec 29, 2016)
+- Updated `postman-runtime` to v4.0, which has a lot of memory usage improvements
+- HTML reporter now contains folder information
+- Added `--color` option to force colored output in non-TTY environments
+
 #### v3.3.1 (Dec 14, 2016)
 - Added more details to the HTML reporter
 - Updated `postman-collection` to the latest version which contains a bugfix for OAuth1 with realms
@@ -23,7 +28,7 @@
 - Added an option `--disable-unicode` to forcibly disable unicode symbols in the output
 - File based options in newman.run (environments, data, globals) can now be specified as JSON objects as well
 - Updated to the latest version of Postman Runtime, which contains a number of memory optimizations
-- Specifying an iteration data file now results in the correct number of iteration runs 
+- Specifying an iteration data file now results in the correct number of iteration runs
 
 #### v3.1.0 (Aug 25, 2016)
 
