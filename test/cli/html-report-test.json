@@ -1,0 +1,37 @@
+{
+	"variables": [],
+	"info": {
+		"name": "html-report-test",
+		"_postman_id": "bd90e43e-8e25-d630-9098-420853777b21",
+		"description": "A sanity check for HTML report generation, including a check for failed requests.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Failed request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// deliberate TypeError to test proper HTML report generation",
+							"tests[\"Body contains status\"] = undefined.alpha;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://postman-echo.com/status/200",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "A request with a `TypeError` in it's test script"
+			},
+			"response": []
+		}
+	]
+}
