@@ -12,7 +12,7 @@ describe('--export-globals', function () {
 
     it('`newman run` should export globals to a file', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/cli/single-get-request.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
@@ -33,7 +33,7 @@ describe('--export-globals', function () {
 
     it('`newman run` should export globals to a file even if collection is failing', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/cli/single-request-failing.json -g test/cli/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }

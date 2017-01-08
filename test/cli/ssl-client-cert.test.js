@@ -6,9 +6,9 @@ describe('SSL Client certificates', function () {
 
     before(function (done) {
         server = https.createServer({
-            key: fs.readFileSync('test/fixtures/server.key', 'utf8'),
-            cert: fs.readFileSync('test/fixtures/server.crt', 'utf8'),
-            ca: fs.readFileSync('test/fixtures/ca.crt', 'utf8'),
+            key: fs.readFileSync('test/fixtures/ssl/server.key', 'utf8'),
+            cert: fs.readFileSync('test/fixtures/ssl/server.crt', 'utf8'),
+            ca: fs.readFileSync('test/fixtures/ssl/ca.crt', 'utf8'),
             passphrase: 'password',
             requestCert: true,
             rejectUnauthorized: false
@@ -29,7 +29,7 @@ describe('SSL Client certificates', function () {
     // @todo: add .pfx, .pem tests as well
     it('should work correctly with standalone client certificates', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/cli/ssl-client-cert.json --ssl-client-cert test/fixtures/client.crt --ssl-client-key test/fixtures/client.key --ssl-client-passphrase password -k', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
             expect(code).be(0);
             done();
         });
