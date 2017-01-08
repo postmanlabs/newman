@@ -10,7 +10,8 @@ require('async').series([
     require('./test-system'),
     require('./test-unit'),
     require('./test-integration'),
-    require('./test-cli')
+    require('./test-cli'),
+    require('./test-library')
 ], function (code) {
     console.info(`\nnewman: duration ${prettyms(Date.now() - startedAt)}\nnewman: ${code ? 'not ok' : 'ok'}!`[code ?
         'red' : 'green']);
