@@ -115,8 +115,8 @@ describe('run module', function () {
     it('must correctly resolve conflicts between iterationData.length and iterationCount', function (done) {
         this.timeout(10000); // set 10s timeout
 
-        var testData = path.join(__dirname, 'test-data.postman_data.json'),
-            testCollection = path.join(__dirname, '..', 'cli', 'single-get-request.json');
+        var testData = path.join(__dirname, '..', 'fixtures', 'run', 'test-data.postman_data.json'),
+            testCollection = path.join(__dirname, '..', 'fixtures', 'run', 'single-get-request.json');
 
         async.parallel([
             // collection run with neither iterationData, nor iterationCount specified

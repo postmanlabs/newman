@@ -1,6 +1,7 @@
 var fs = require('fs'),
     https = require('https');
 
+/* global describe, it, newman */
 describe('SSL Client certificates', function () {
     var server;
 
@@ -26,16 +27,19 @@ describe('SSL Client certificates', function () {
         server.listen(3000, done);
     });
 
-    // @todo: add .pfx, .pem tests as well
-    it('should work correctly with standalone client certificates', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
-            expect(code).be(0);
-            done();
-        });
+    after(function (done) {
+        server.close();
+        done();
     });
 
-    after(function (done) {
-        server.close(done);
+    // @todo: add .pfx, .pem tests as well
+    it('should work correctly with standalone client certificates', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/ssl-client-cert.json',
+            sslClientCert: 'test/fixtures/ssl/client.crt',
+            sslClientKey: 'test/fixtures/ssl/client.key',
+            sslClientPassphrase: 'password',
+            insecure: true
+        }, done);
     });
 });

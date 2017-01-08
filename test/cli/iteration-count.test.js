@@ -15,7 +15,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
 
     it('should iterate exactly once when no options are specified', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/cli/single-get-request.json -r json --reporter-json-export out/iteration-count-test.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export out/iteration-count-test.json', function (code) {
             var collectionRun;
 
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
@@ -43,7 +43,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
 
     it('should iterate according to iterationCount when specified', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/cli/single-get-request.json --iteration-count 3 -r json --reporter-json-export out/iteration-count-test.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --iteration-count 3 -r json --reporter-json-export out/iteration-count-test.json', function (code) {
             var collectionRun;
 
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
