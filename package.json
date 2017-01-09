@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "Command-line companion utility for Postman",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
@@ -29,6 +29,7 @@
     "test-unit": "node npm/test-unit.js",
     "test-integration": "node npm/test-integration.js",
     "test-cli": "node npm/test-cli.js",
+    "test-library": "node npm/test-library.js",
     "build-docs": "node npm/build-docs.js",
     "build-wiki": "node npm/build-wiki.js",
     "publish-docs": "node npm/publish-docs.js",

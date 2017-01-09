@@ -1,24 +1,40 @@
-/* global describe, it, exec, expect */
 var fs = require('fs'),
-    path = require('path'),
+    path = require('path');
 
-    exportedEnvironmentPath = path.join(__dirname, '..', '..', 'out', 'test-environment.json');
-
+/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('--export-environment', function () {
-    afterEach(function () {
-        try { fs.unlinkSync(exportedEnvironmentPath); }
-        catch (e) { console.error(e); }
+    var environment = 'test/fixtures/run/simple-variables.json',
+        exportedEnvironmentPath = path.join(__dirname, '..', '..', 'out', 'test-environment.json');
+
+    beforeEach(function (done) {
+        fs.stat('out', function (err) {
+            if (err) { return fs.mkdir('out', done); }
+
+            done();
+        });
+    });
+
+    afterEach(function (done) {
+        fs.stat(exportedEnvironmentPath, function (err) {
+            if (err) { return done(); }
+
+            fs.unlink(exportedEnvironmentPath, done);
+        });
     });
 
     it('`newman run` should export environment to a file', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -e test/fixtures/run/simple-variables.json --export-environment out/test-environment.json', function (code) {
+        newman.run({
+            collection: 'test/fixtures/run/single-get-request.json',
+            environment: environment,
+            exportEnvironment: exportedEnvironmentPath
+        }, function (err) {
+            if (err) { return done(err); }
+
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).be(0);
             expect(environment).be.ok();
             expect(environment).have.property('_postman_exported_at');
             expect(environment).have.property('values');
@@ -32,14 +48,18 @@ describe('--export-environment', function () {
     });
 
     it('`newman run` should export environment to a file even if collection is failing', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -e test/fixtures/run/simple-variables.json --export-environment out/test-environment.json', function (code) {
+        newman.run({
+            collection: 'test/fixtures/run/single-request-failing.json',
+            environment: environment,
+            exportEnvironment: exportedEnvironmentPath
+        }, function (err) {
+            if (err) { return done(err); }
+
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).not.be(0);
             expect(environment).be.ok();
             expect(environment).have.property('_postman_exported_at');
             expect(environment).have.property('values');

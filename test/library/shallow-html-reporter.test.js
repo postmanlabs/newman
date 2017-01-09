@@ -1,5 +1,6 @@
 var fs = require('fs');
 
+/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('HTML reporter', function () {
     var outFile = 'out/newman-report.html';
 
@@ -24,28 +25,37 @@ describe('HTML reporter', function () {
     });
 
     it('should correctly generate the html report for a successful run', function (done) {
-        // eslint-disable-next-line max-len
-        exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r html --reporter-html-export ${outFile}`,
-        function (code) {
-            expect(code).be(0);
+        newman.run({
+            collection: 'test/fixtures/run/single-get-request.json',
+            reporters: ['html'],
+            reporter: { html: { export: outFile } }
+        }, function (err) {
+            if (err) { return done(err); }
+
             fs.stat(outFile, done);
         });
     });
 
     it('should correctly generate the html report for a failed run', function (done) {
-        // eslint-disable-next-line max-len
-        exec(`node ./bin/newman.js run test/fixtures/run/single-request-failing.json -r html --reporter-html-export ${outFile}`,
-        function (code) {
-            expect(code).be(1);
+        newman.run({
+            collection: 'test/fixtures/run/single-request-failing.json',
+            reporters: ['html'],
+            reporter: { html: { export: outFile } }
+        }, function (err, summary) {
+            expect(err).to.be(null);
+            expect(summary.run.failures).to.have.length(1);
             fs.stat(outFile, done);
         });
     });
 
     it('should correctly produce the html report for a run with TypeError', function (done) {
-        // eslint-disable-next-line max-len
-        exec(`node ./bin/newman.js run test/fixtures/run/newman-report-test.json -r html --reporter-html-export ${outFile}`,
-        function (code) {
-            expect(code).be(1);
+        newman.run({
+            collection: 'test/fixtures/run/newman-report-test.json',
+            reporters: ['html'],
+            reporter: { html: { export: outFile } }
+        }, function (err, summary) {
+            expect(err).to.be(null);
+            expect(summary.run.failures).to.have.length(1);
             fs.stat(outFile, done);
         });
     });
