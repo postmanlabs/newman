@@ -1,7 +1,7 @@
 # Newman Changelog
 
 #### v3.4.2 (Jan 09, 2017)
-- Fixed a bug which caused the HTML reporter to fail when options were not provided
+- Fixed a bug in the CLI reporter for Newman programmatic usage (#859)
 
 #### v3.4.1 (Jan 06, 2017)
 - Fixed Buffer compatibility issue for Node v4 
