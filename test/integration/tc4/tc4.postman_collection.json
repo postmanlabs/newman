@@ -19,7 +19,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/post",
+				"url": "https://postman-echo.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -32,7 +32,7 @@
 						}
 					]
 				},
-				"description": "Passes when posted to echo.getpostman.com/post"
+				"description": "Passes when posted to postman-echo.com/post"
 			},
 			"response": []
 		}

@@ -19,7 +19,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/cookies/set?foo1={{envKey}}&foo2=bar",
+				"url": "https://postman-echo.com/cookies/set?foo1={{envKey}}&foo2=bar",
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -65,7 +65,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/headers",
+				"url": "https://postman-echo.com/headers",
 				"method": "GET",
 				"header": [
 					{

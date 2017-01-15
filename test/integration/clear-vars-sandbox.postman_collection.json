@@ -26,7 +26,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/get?a={{e}}&b={{g}}",
+        "url": "https://postman-echo.com/get?a={{e}}&b={{g}}",
         "method": "GET",
         "header": [],
         "body": {
@@ -49,7 +49,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/get?a={{e}}&b={{g}}",
+        "url": "https://postman-echo.com/get?a={{e}}&b={{g}}",
         "method": "GET",
         "header": [],
         "body": {
@@ -72,7 +72,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/get?a={{e}}&b={{g}}",
+        "url": "https://postman-echo.com/get?a={{e}}&b={{g}}",
         "method": "GET",
         "header": [],
         "body": {
