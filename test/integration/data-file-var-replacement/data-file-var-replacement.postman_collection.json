@@ -8,7 +8,7 @@
   },
   "item": [
     {
-      "name": "http://echo.getpostman.com/post",
+      "name": "http://postman-echo.com/post",
       "event": [
         {
           "listen": "test",

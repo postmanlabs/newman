@@ -25,7 +25,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/digest-auth",
+            "url": "https://postman-echo.com/digest-auth",
             "method": "GET",
             "header": [],
             "body": {
@@ -94,7 +94,7 @@
                 "qop": ""
               }
             },
-            "url": "https://echo.getpostman.com/digest-auth",
+            "url": "https://postman-echo.com/digest-auth",
             "method": "GET",
             "header": [
               {
@@ -223,7 +223,7 @@
                 "showPassword": false
               }
             },
-            "url": "https://echo.getpostman.com/basic-auth",
+            "url": "https://postman-echo.com/basic-auth",
             "method": "GET",
             "header": [
               {
@@ -406,7 +406,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/oauth1",
+            "url": "https://postman-echo.com/oauth1",
             "method": "GET",
             "auth": {
               "type": "oauth1",
@@ -478,7 +478,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/cookies/set?foo1=bar1&foo2=bar2",
+            "url": "https://postman-echo.com/cookies/set?foo1=bar1&foo2=bar2",
             "method": "GET",
             "header": [],
             "body": {
@@ -585,7 +585,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/cookies",
+            "url": "https://postman-echo.com/cookies",
             "method": "GET",
             "header": [],
             "body": {
@@ -692,7 +692,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/cookies/delete?foo1&foo2",
+            "url": "https://postman-echo.com/cookies/delete?foo1&foo2",
             "method": "GET",
             "header": [],
             "body": {
@@ -806,7 +806,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/headers",
+            "url": "https://postman-echo.com/headers",
             "method": "GET",
             "header": [],
             "body": {
@@ -830,7 +830,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/response-headers?Content-Type=text/html&Server=apibin",
+            "url": "https://postman-echo.com/response-headers?Content-Type=text/html&Server=apibin",
             "method": "GET",
             "header": [],
             "body": {
@@ -892,7 +892,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/get?test=123",
+            "url": "https://postman-echo.com/get?test=123",
             "method": "GET",
             "header": [],
             "body": {
@@ -947,7 +947,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/post",
+            "url": "https://postman-echo.com/post",
             "method": "POST",
             "header": [
               {
@@ -977,7 +977,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/put",
+            "url": "https://postman-echo.com/put",
             "method": "PUT",
             "header": [
               {
@@ -1006,7 +1006,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/patch",
+            "url": "https://postman-echo.com/patch",
             "method": "PATCH",
             "header": [],
             "body": {
@@ -1030,7 +1030,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/delete",
+            "url": "https://postman-echo.com/delete",
             "method": "DELETE",
             "header": [],
             "body": {
@@ -1061,7 +1061,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/status/200",
+            "url": "https://postman-echo.com/status/200",
             "method": "GET",
             "header": [],
             "body": {
@@ -1092,7 +1092,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/stream/10",
+            "url": "https://postman-echo.com/stream/10",
             "method": "GET",
             "header": [],
             "body": {
@@ -1116,7 +1116,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/delay/3",
+            "url": "https://postman-echo.com/delay/3",
             "method": "GET",
             "header": [],
             "body": {
@@ -1147,7 +1147,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/encoding/utf8",
+            "url": "https://postman-echo.com/encoding/utf8",
             "method": "GET",
             "header": [],
             "body": {
@@ -1171,7 +1171,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/gzip",
+            "url": "https://postman-echo.com/gzip",
             "method": "GET",
             "header": [],
             "body": {
@@ -1226,7 +1226,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/deflate",
+            "url": "https://postman-echo.com/deflate",
             "method": "GET",
             "header": [],
             "body": {
@@ -1257,7 +1257,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/oauth2/authtoken?client_id=abc123&response_type=code",
+            "url": "https://postman-echo.com/oauth2/authtoken?client_id=abc123&response_type=code",
             "method": "GET",
             "header": [],
             "body": {
@@ -1395,7 +1395,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/oauth2/token",
+            "url": "https://postman-echo.com/oauth2/token",
             "method": "POST",
             "header": [],
             "body": {
@@ -1439,7 +1439,7 @@
             {
               "name": "401",
               "originalRequest": {
-                "url": "https://echo.getpostman.com/oauth2/token",
+                "url": "https://postman-echo.com/oauth2/token",
                 "method": "POST",
                 "header": [],
                 "body": {
@@ -1556,7 +1556,7 @@
             {
               "name": "200",
               "originalRequest": {
-                "url": "https://echo.getpostman.com/oauth2/token",
+                "url": "https://postman-echo.com/oauth2/token",
                 "method": "POST",
                 "header": [],
                 "body": {
@@ -1691,7 +1691,7 @@
             }
           ],
           "request": {
-            "url": "https://echo.getpostman.com/oauth2/user/info",
+            "url": "https://postman-echo.com/oauth2/user/info",
             "method": "GET",
             "header": [
               {

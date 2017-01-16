@@ -406,7 +406,7 @@ In this collection, `sample-file.txt` should be present in the current working d
     "item": [
         {
             "request": {
-                "url": "https://echo.getpostman.com/post",
+                "url": "https://postman-echo.com/post",
                 "method": "POST",
                 "body": {
                     "mode": "formdata",

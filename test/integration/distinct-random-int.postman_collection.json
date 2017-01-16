@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/get?a={{$randomInt}}",
+        "url": "https://postman-echo.com/get?a={{$randomInt}}",
         "method": "GET",
         "header": [],
         "body": {
@@ -42,7 +42,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/get?a={{$randomInt}}&b={{$guid}}",
+        "url": "https://postman-echo.com/get?a={{$randomInt}}&b={{$guid}}",
         "method": "GET",
         "header": [],
         "body": {

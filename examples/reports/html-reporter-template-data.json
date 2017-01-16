@@ -7,7 +7,7 @@
         "id": "d63cd324-9f85-4fb1-99b4-fa30290cf3e5",
         "name": "A simple GET request",
         "request": {
-          "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
+          "url": "https://postman-echo.com/get?source=newman-sample-github-collection",
           "method": "GET"
         },
         "response": [],
@@ -24,7 +24,7 @@
         ]
       },
       "request": {
-        "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
+        "url": "https://postman-echo.com/get?source=newman-sample-github-collection",
         "method": "GET",
         "header": [
           {
@@ -37,7 +37,7 @@
           },
           {
             "key": "Host",
-            "value": "echo.getpostman.com"
+            "value": "postman-echo.com"
           },
           {
             "key": "accept-encoding",
@@ -110,7 +110,7 @@
             "value": "keep-alive"
           }
         ],
-        "body": "{\"args\":{\"source\":\"newman-sample-github-collection\"},\"headers\":{\"host\":\"echo.getpostman.com\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"url\":\"https://echo.getpostman.com/get?source=newman-sample-github-collection\"}",
+        "body": "{\"args\":{\"source\":\"newman-sample-github-collection\"},\"headers\":{\"host\":\"postman-echo.com\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"url\":\"https://postman-echo.com/get?source=newman-sample-github-collection\"}",
         "cookie": [],
         "responseTime": 773,
         "responseSize": 303
@@ -136,7 +136,7 @@
         "id": "7a2a3985-e3a4-4402-b34d-5a293e17fccf",
         "name": "A simple POST request",
         "request": {
-          "url": "https://echo.getpostman.com/post",
+          "url": "https://postman-echo.com/post",
           "method": "POST",
           "header": [
             {
@@ -153,7 +153,7 @@
         "event": []
       },
       "request": {
-        "url": "https://echo.getpostman.com/post",
+        "url": "https://postman-echo.com/post",
         "method": "POST",
         "header": [
           {
@@ -170,7 +170,7 @@
           },
           {
             "key": "Host",
-            "value": "echo.getpostman.com"
+            "value": "postman-echo.com"
           },
           {
             "key": "cookie",
@@ -254,7 +254,7 @@
             "value": "keep-alive"
           }
         ],
-        "body": "{\"args\":{},\"data\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\",\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"69\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"text/plain\",\"cookie\":\"sails.sid=s%3AW0Ng8epFgCZJpDdMo_odMqH3BbWD38R9.90SxQF2ceaA7UoFSfYDoZnjOhENQDYmyV8Bun6s11OM\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":null,\"url\":\"https://echo.getpostman.com/post\"}",
+        "body": "{\"args\":{},\"data\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\",\"files\":{},\"form\":{},\"headers\":{\"host\":\"postman-echo.com\",\"content-length\":\"69\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"text/plain\",\"cookie\":\"sails.sid=s%3AW0Ng8epFgCZJpDdMo_odMqH3BbWD38R9.90SxQF2ceaA7UoFSfYDoZnjOhENQDYmyV8Bun6s11OM\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}",
         "cookie": [],
         "responseTime": 362,
         "responseSize": 495
@@ -274,7 +274,7 @@
         "id": "143bb96b-c727-4858-bca4-cf3caaecd83c",
         "name": "A simple POST request with JSON body",
         "request": {
-          "url": "https://echo.getpostman.com/post",
+          "url": "https://postman-echo.com/post",
           "method": "POST",
           "header": [
             {
@@ -291,7 +291,7 @@
         "event": []
       },
       "request": {
-        "url": "https://echo.getpostman.com/post",
+        "url": "https://postman-echo.com/post",
         "method": "POST",
         "header": [
           {
@@ -308,7 +308,7 @@
           },
           {
             "key": "Host",
-            "value": "echo.getpostman.com"
+            "value": "postman-echo.com"
           },
           {
             "key": "cookie",
@@ -392,7 +392,7 @@
             "value": "keep-alive"
           }
         ],
-        "body": "{\"args\":{},\"data\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"files\":{},\"form\":{},\"headers\":{\"host\":\"echo.getpostman.com\",\"content-length\":\"80\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"application/json\",\"cookie\":\"sails.sid=s%3A7t5klbchBLFRoRArWtdPF45G9vWLbWGQ.gnfG4KfjJccNvT3nO8W7xe2NiMXwud8ztejaOblFayU\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"url\":\"https://echo.getpostman.com/post\"}",
+        "body": "{\"args\":{},\"data\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"files\":{},\"form\":{},\"headers\":{\"host\":\"postman-echo.com\",\"content-length\":\"80\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip, deflate\",\"content-type\":\"application/json\",\"cookie\":\"sails.sid=s%3A7t5klbchBLFRoRArWtdPF45G9vWLbWGQ.gnfG4KfjJccNvT3nO8W7xe2NiMXwud8ztejaOblFayU\",\"user-agent\":\"PostmanRuntime/3.0.4\",\"x-forwarded-port\":\"443\",\"x-forwarded-proto\":\"https\"},\"json\":{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"},\"url\":\"https://postman-echo.com/post\"}",
         "cookie": [],
         "responseTime": 232,
         "responseSize": 365
@@ -469,7 +469,7 @@
           "id": "d63cd324-9f85-4fb1-99b4-fa30290cf3e5",
           "name": "A simple GET request",
           "request": {
-            "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
+            "url": "https://postman-echo.com/get?source=newman-sample-github-collection",
             "method": "GET"
           },
           "response": [],
@@ -489,7 +489,7 @@
           "id": "7a2a3985-e3a4-4402-b34d-5a293e17fccf",
           "name": "A simple POST request",
           "request": {
-            "url": "https://echo.getpostman.com/post",
+            "url": "https://postman-echo.com/post",
             "method": "POST",
             "header": [
               {
@@ -513,7 +513,7 @@
         {
           "name": "full_global_url",
           "type": "any",
-          "value": "https://echo.getpostman.com/get",
+          "value": "https://postman-echo.com/get",
           "key": "full_global_url"
         },
         {
@@ -589,7 +589,7 @@
         {
           "name": "url",
           "type": "any",
-          "value": "http://echo.getpostman.com",
+          "value": "http://postman-echo.com",
           "key": "url"
         },
         {

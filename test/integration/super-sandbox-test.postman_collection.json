@@ -26,7 +26,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/type/xml",
+				"url": "https://postman-echo.com/type/xml",
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -49,7 +49,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/post",
+				"url": "https://postman-echo.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -115,7 +115,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/put",
+				"url": "https://postman-echo.com/put",
 				"method": "PUT",
 				"header": [],
 				"body": {
@@ -138,7 +138,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/patch",
+				"url": "https://postman-echo.com/patch",
 				"method": "PATCH",
 				"header": [],
 				"body": {
@@ -161,7 +161,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/delete",
+				"url": "https://postman-echo.com/delete",
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -184,7 +184,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/get",
+				"url": "https://postman-echo.com/get",
 				"method": "HEAD",
 				"header": [],
 				"body": {
@@ -207,7 +207,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/get",
+				"url": "https://postman-echo.com/get",
 				"method": "OPTIONS",
 				"header": [],
 				"body": {
@@ -230,7 +230,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/post",
+				"url": "https://postman-echo.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -262,7 +262,7 @@
 						"showPassword": false
 					}
 				},
-				"url": "https://echo.getpostman.com/post",
+				"url": "https://postman-echo.com/post",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -299,7 +299,7 @@
 						"qop": ""
 					}
 				},
-				"url": "https://echo.getpostman.com/digest-auth",
+				"url": "https://postman-echo.com/digest-auth",
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -329,7 +329,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/get?a={{name{{i}}}}",
+				"url": "https://postman-echo.com/get?a={{name{{i}}}}",
 				"method": "GET",
 				"header": [],
 				"body": {
