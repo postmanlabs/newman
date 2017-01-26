@@ -45,7 +45,7 @@
     "colors": "1.1.2",
     "csv-parse": "1.1.7",
     "eventemitter3": "2.0.2",
-    "filesize": "3.3.0",
+    "filesize": "3.5.4",
     "handlebars": "4.0.6",
     "lodash": "4.17.2",
     "mkdirp": "0.5.1",
@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "editorconfig": "0.13.2",
-    "eslint": "3.12.1",
+    "eslint": "3.14.1",
     "eslint-plugin-lodash": "2.3.3",
     "eslint-plugin-mocha": "4.8.0",
     "eslint-plugin-security": "1.2.0",
