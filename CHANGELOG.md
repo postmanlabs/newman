@@ -1,5 +1,12 @@
 # Newman Changelog
 
+#### v3.4.2 (Jan 09, 2017)
+- Fixed a bug in the CLI reporter for Newman programmatic usage (#859)
+
+#### v3.4.1 (Jan 06, 2017)
+- Fixed Buffer compatibility issue for Node v4 
+- HTML reporter works correctly for failed requests
+
 #### v3.4.0 (Dec 29, 2016)
 - Updated `postman-runtime` to v4.0, which has a lot of memory usage improvements
 - HTML reporter now contains folder information

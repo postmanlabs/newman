@@ -33,7 +33,7 @@
           "mode": "formdata",
           "formdata": []
         },
-        "description": "Similar to echo.getpostman.com/get. Return GET data."
+        "description": "Similar to postman-echo.com/get. Return GET data."
       },
       "response": []
     },
@@ -56,7 +56,7 @@
           "mode": "formdata",
           "formdata": []
         },
-        "description": "Similar to echo.getpostman.com/get. Return GET data."
+        "description": "Similar to postman-echo.com/get. Return GET data."
       },
       "response": []
     }

@@ -34,7 +34,7 @@
             "timestamp": ""
           }
         },
-        "url": "http://echo.getpostman.com/auth/hawk",
+        "url": "http://postman-echo.com/auth/hawk",
         "method": "GET",
         "header": [
           {

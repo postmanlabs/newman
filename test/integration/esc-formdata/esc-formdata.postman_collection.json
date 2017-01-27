@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/post?a={{msg}}",
+        "url": "https://postman-echo.com/post?a={{msg}}",
         "method": "POST",
         "header": [],
         "body": {

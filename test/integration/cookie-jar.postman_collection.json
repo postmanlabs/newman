@@ -10,7 +10,7 @@
 		{
 			"name": "Set Cookie",
 			"request": {
-				"url": "https://echo.getpostman.com/cookies/set?foo=bar",
+				"url": "https://postman-echo.com/cookies/set?foo=bar",
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -33,7 +33,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/cookies",
+				"url": "https://postman-echo.com/cookies",
 				"method": "GET",
 				"header": [],
 				"body": {

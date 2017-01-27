@@ -1,24 +1,40 @@
-/* global describe, it, exec, expect */
 var fs = require('fs'),
-    path = require('path'),
+    path = require('path');
 
-    exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');
-
+/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('--export-globals', function () {
-    afterEach(function () {
-        try { fs.unlinkSync(exportedGlobalsPath); }
-        catch (e) { console.error(e); }
+    var globals = 'test/fixtures/run/simple-variables.json',
+        exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');
+
+    beforeEach(function (done) {
+        fs.stat('out', function (err) {
+            if (err) { return fs.mkdir('out', done); }
+
+            done();
+        });
+    });
+
+    afterEach(function (done) {
+        fs.stat(exportedGlobalsPath, function (err) {
+            if (err) { return done(); }
+
+            fs.unlink(exportedGlobalsPath, done);
+        });
     });
 
     it('`newman run` should export globals to a file', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        newman.run({
+            collection: 'test/fixtures/run/single-get-request.json',
+            globals: globals,
+            exportGlobals: exportedGlobalsPath
+        }, function (err) {
+            if (err) { return done(err); }
+
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).be(0);
             expect(globals).be.ok();
             expect(globals).have.property('_postman_exported_at');
             expect(globals).have.property('values');
@@ -32,14 +48,18 @@ describe('--export-globals', function () {
     });
 
     it('`newman run` should export globals to a file even if collection is failing', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        newman.run({
+            collection: 'test/fixtures/run/single-request-failing.json',
+            globals: globals,
+            exportGlobals: exportedGlobalsPath
+        }, function (err) {
+            if (err) { return done(err); }
+
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).not.be(0);
             expect(globals).be.ok();
             expect(globals).have.property('_postman_exported_at');
             expect(globals).have.property('values');

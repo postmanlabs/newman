@@ -18,7 +18,7 @@
 				}
 			],
 			"request": {
-				"url": "https://echo.getpostman.com/get?foo={{fo/o}}&bar={{b\\ar}}",
+				"url": "https://postman-echo.com/get?foo={{fo/o}}&bar={{b\\ar}}",
 				"method": "GET",
 				"header": [],
 				"body": {

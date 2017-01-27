@@ -15,13 +15,13 @@
       }
     }],
     "request": {
-      "url": "https://echo.getpostman.com/get?source=newman-sample-github-collection",
+      "url": "https://postman-echo.com/get?source=newman-sample-github-collection",
       "method": "GET"
     }
   }, {
     "name": "A simple POST request",
     "request": {
-      "url": "https://echo.getpostman.com/post",
+      "url": "https://postman-echo.com/post",
       "method": "POST",
       "header": [{
         "key": "Content-Type",
@@ -35,7 +35,7 @@
   }, {
     "name": "A simple POST request with JSON body",
     "request": {
-      "url": "https://echo.getpostman.com/post",
+      "url": "https://postman-echo.com/post",
       "method": "POST",
       "header": [{
         "key": "Content-Type",
