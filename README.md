@@ -6,9 +6,7 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Using Newman, one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
 extensibility in mind so that you can easily integrate it into your continuous integration servers and build systems.
 
-## IMPORTANT NOTICE
-
-> ### **Newman has been recently upgraded to v3.x.** Although most options from v2.x work as expected, some of them have been deprecated and are scheduled to be discontinued soon. We strongly advise you to migrate to the new v3.x CLI options by referring to our [Newman v2 to v3 Migration Guide](MIGRATION.md)
+> For details on changes across v2 to v3, see the [Newman v2 to v3 Migration Guide](MIGRATION.md)
 >
 > For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
@@ -406,7 +404,7 @@ In this collection, `sample-file.txt` should be present in the current working d
     "item": [
         {
             "request": {
-                "url": "https://echo.getpostman.com/post",
+                "url": "https://postman-echo.com/post",
                 "method": "POST",
                 "body": {
                     "mode": "formdata",

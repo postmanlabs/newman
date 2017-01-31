@@ -1,7 +1,7 @@
 [
 	{
 		"key": "full_global_url",
-		"value": "https://echo.getpostman.com/get",
+		"value": "https://postman-echo.com/get",
 		"type": "text",
 		"name": "full_global_url",
 		"enabled": true

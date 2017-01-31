@@ -26,7 +26,7 @@
         }
       ],
       "request": {
-        "url": "https://echo.getpostman.com/get?novar={{novar}}&var={{var}}",
+        "url": "https://postman-echo.com/get?novar={{novar}}&var={{var}}",
         "method": "GET",
         "header": [],
         "body": {

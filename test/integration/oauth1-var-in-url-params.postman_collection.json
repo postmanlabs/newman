@@ -8,7 +8,7 @@
   },
   "item": [
     {
-      "name": "https://echo.getpostman.com/oauth1?a={{vala}}",
+      "name": "https://postman-echo.com/oauth1?a={{vala}}",
       "event": [
         {
           "listen": "prerequest",
@@ -35,7 +35,7 @@
             "addEmptyParamsToSign": false
           }
         },
-        "url": "https://echo.getpostman.com/oauth1?a={{vala}}",
+        "url": "https://postman-echo.com/oauth1?a={{vala}}",
         "method": "GET",
         "header": [
           {
