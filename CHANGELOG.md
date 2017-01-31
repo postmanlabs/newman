@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### v3.4.3 (Jan 31, 2017)
+- Updated `postman-runtime` to v4.0.3, which contains bugfixes for URL parameter encoding
+- Updated `postman-collection` to v0.5.11, which contains bugfixes for UTF-8 encoded responses, and variables in URL hosts
+
 #### v3.4.2 (Jan 09, 2017)
 - Fixed a bug in the CLI reporter for Newman programmatic usage (#859)
 
