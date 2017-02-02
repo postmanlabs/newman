@@ -64,7 +64,7 @@
   "devDependencies": {
     "editorconfig": "0.13.2",
     "eslint": "3.14.1",
-    "eslint-plugin-lodash": "2.3.3",
+    "eslint-plugin-lodash": "2.3.4",
     "eslint-plugin-mocha": "4.8.0",
     "eslint-plugin-security": "1.2.0",
     "expect.js": "0.3.1",
