@@ -1,7 +1,7 @@
 {
 	"variables": [],
 	"info": {
-		"name": "multi-level-folders",
+		"name": "multi-level-folders-v2",
 		"_postman_id": "e5f2e9cf-173b-c60a-7336-ac804a87d762",
 		"description": "A simple V2 collection to test out multi level folder flows",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
