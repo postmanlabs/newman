@@ -71,7 +71,7 @@
     "istanbul": "0.4.5",
     "js-yaml": "3.7.0",
     "jsdoc": "3.4.3",
-    "jsdoc-to-markdown": "2.0.1",
+    "jsdoc-to-markdown": "3.0.0",
     "mocha": "3.2.0",
     "nsp": "2.6.2",
     "packity": "0.3.2",
