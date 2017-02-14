@@ -24,6 +24,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
             2. [JSON reporter options](#json-reporter-options)
             3. [HTML reporter options](#html-reporter-options)
             4. [JUnit reporter options](#junitxml-reporter-options)
+            5. [Creating and using custom reporters](#creating-and-using-custom-reporters)
         2. [SSL client certificates](#ssl-client-certificates)
     2. [Proxy](#proxy)
 
@@ -226,6 +227,27 @@ Newman can output a summary of the collection run to a JUnit compatible XML file
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+
+##### Creating and using custom reporters
+Newman also supports custom reporters, provided that the reporter works with Newman's event sequence. Working examples on how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters). For instance, to use the [Newman teamcity reporter](https://github.com/leafle/newman-reporter-teamcity):
+
+- Add and install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`.<br/>
+```terminal
+npm install -S newman-reporter-teamcity
+```
+
+- Use the installed reporter, either via the CLI, or programattic usage. Here, the `newman-reporter` prefix is **not** required while specifying the reporter name in the options.<br/>
+```terminal
+newman run /path/to/collection.json -r cli,teamcity
+```
+```javascript
+var newman = require('newman');
+
+newman.run({
+    collection: '/path/to/collection.json',
+    reporters: ['cli', 'teamcity']
+}, process.exit);
+```
 
 #### SSL client certificates
 
