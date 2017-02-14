@@ -231,9 +231,9 @@ discontinued. For documentation on the older command options, refer to [README.m
 ##### Creating and using custom reporters
 Newman also supports custom reporters, provided that the reporter works with Newman's event sequence. Working examples on how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters). For instance, to use the [Newman teamcity reporter](https://github.com/leafle/newman-reporter-teamcity):
 
-- Add and install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`.<br/>
+- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Replace `-g` from the command below with `-S` for a local installation.<br/>
 ```terminal
-npm install -S newman-reporter-teamcity
+npm install -g newman-reporter-teamcity
 ```
 
 - Use the installed reporter, either via the CLI, or programmatic usage. Here, the `newman-reporter` prefix is **not** required while specifying the reporter name in the options.<br/>
