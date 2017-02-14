@@ -236,7 +236,7 @@ Newman also supports custom reporters, provided that the reporter works with New
 npm install -S newman-reporter-teamcity
 ```
 
-- Use the installed reporter, either via the CLI, or programattic usage. Here, the `newman-reporter` prefix is **not** required while specifying the reporter name in the options.<br/>
+- Use the installed reporter, either via the CLI, or programmatic usage. Here, the `newman-reporter` prefix is **not** required while specifying the reporter name in the options.<br/>
 ```terminal
 newman run /path/to/collection.json -r cli,teamcity
 ```
