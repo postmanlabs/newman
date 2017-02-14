@@ -60,8 +60,8 @@
       "headers": "",
       "data": [],
       "rawModeData": "",
-      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
-      "preRequestScript": "",
+      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === 0;",
+      "preRequestScript": "var count = parseInt(postman.getEnvironmentVariable(\"count\"));\npostman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);",
       "url": "https://postman-echo.com/get",
       "responses": []
     },
@@ -74,8 +74,8 @@
       "headers": "",
       "data": [],
       "rawModeData": "",
-      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
-      "preRequestScript": "",
+      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"1\";",
+      "preRequestScript": "var count = parseInt(postman.getEnvironmentVariable(\"count\"));\npostman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);",
       "url": "https://postman-echo.com/get",
       "responses": []
     },
@@ -88,8 +88,8 @@
       "headers": "",
       "data": [],
       "rawModeData": "",
-      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
-      "preRequestScript": "",
+      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"2\"",
+      "preRequestScript": "var count = parseInt(postman.getEnvironmentVariable(\"count\"));\npostman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);",
       "url": "https://postman-echo.com/get",
       "responses": []
     },
@@ -102,8 +102,8 @@
       "headers": "",
       "data": [],
       "rawModeData": "",
-      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
-      "preRequestScript": "",
+      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"3\";",
+      "preRequestScript": "var count = parseInt(postman.getEnvironmentVariable(\"count\"));\npostman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);",
       "url": "https://postman-echo.com/get",
       "responses": []
     },
@@ -116,8 +116,8 @@
       "headers": "",
       "data": [],
       "rawModeData": "",
-      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
-      "preRequestScript": "",
+      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"4\";",
+      "preRequestScript": "var count = parseInt(postman.getEnvironmentVariable(\"count\"));\npostman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);",
       "url": "https://postman-echo.com/get",
       "responses": []
     },
@@ -130,8 +130,8 @@
       "headers": "",
       "data": [],
       "rawModeData": "",
-      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;",
-      "preRequestScript": "",
+      "tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"5\";",
+      "preRequestScript": "var count = parseInt(postman.getEnvironmentVariable(\"count\"));\npostman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);",
       "url": "https://postman-echo.com/get",
       "responses": []
     }

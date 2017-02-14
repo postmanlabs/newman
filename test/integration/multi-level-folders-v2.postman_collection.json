@@ -14,12 +14,23 @@
 				{
 					"name": "F1.R1",
 					"event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var count = parseInt(postman.getEnvironmentVariable(\"count\"));",
+                  "postman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);"
+                ]
+              }
+            },
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === 0;"
 								]
 							}
 						}
@@ -36,12 +47,23 @@
 				{
 					"name": "F1.R2",
 					"event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var count = parseInt(postman.getEnvironmentVariable(\"count\"));",
+                  "postman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);"
+                ]
+              }
+            },
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"1\";"
 								]
 							}
 						}
@@ -58,12 +80,23 @@
 				{
 					"name": "F1.R3",
 					"event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var count = parseInt(postman.getEnvironmentVariable(\"count\"));",
+                  "postman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);"
+                ]
+              }
+            },
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"2\";"
 								]
 							}
 						}
@@ -91,11 +124,22 @@
               "name": "F2.F3.R1",
               "event": [
                 {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var count = parseInt(postman.getEnvironmentVariable(\"count\"));",
+                      "postman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);"
+                    ]
+                  }
+                },
+                {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "tests[\"Status code is 200\"] = responseCode.code === 200;"
+                      "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                      "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"3\";"
                     ]
                   }
                 }
@@ -119,12 +163,23 @@
 				{
 					"name": "F2.R1",
 					"event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var count = parseInt(postman.getEnvironmentVariable(\"count\"));",
+                  "postman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);"
+                ]
+              }
+            },
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"4\";"
 								]
 							}
 						}
@@ -143,12 +198,23 @@
 		{
 			"name": "R1",
 			"event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var count = parseInt(postman.getEnvironmentVariable(\"count\"));",
+              "postman.setEnvironmentVariable(\"count\", isNaN(count) ? 0 : count + 1);"
+            ]
+          }
+        },
 				{
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"5\";"
 						]
 					}
 				}
