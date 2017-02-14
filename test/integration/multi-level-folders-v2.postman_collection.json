@@ -1,19 +1,19 @@
 {
-	"variables": [],
-	"info": {
-		"name": "multi-level-folders-v2",
-		"_postman_id": "e5f2e9cf-173b-c60a-7336-ac804a87d762",
-		"description": "A simple V2 collection to test out multi level folder flows",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "F1",
-			"description": "",
-			"item": [
-				{
-					"name": "F1.R1",
-					"event": [
+  "variables": [],
+  "info": {
+    "name": "multi-level-folders-v2",
+    "_postman_id": "e5f2e9cf-173b-c60a-7336-ac804a87d762",
+    "description": "A simple V2 collection to test out multi level folder flows",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "F1",
+      "description": "",
+      "item": [
+        {
+          "name": "F1.R1",
+          "event": [
             {
               "listen": "prerequest",
               "script": {
@@ -24,29 +24,29 @@
                 ]
               }
             },
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
                   "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === 0;"
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "https://postman-echo.com/get",
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "F1.R2",
-					"event": [
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "https://postman-echo.com/get",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "F1.R2",
+          "event": [
             {
               "listen": "prerequest",
               "script": {
@@ -57,29 +57,29 @@
                 ]
               }
             },
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
                   "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"1\";"
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "https://postman-echo.com/get",
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "F1.R3",
-					"event": [
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "https://postman-echo.com/get",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "F1.R3",
+          "event": [
             {
               "listen": "prerequest",
               "script": {
@@ -90,32 +90,32 @@
                 ]
               }
             },
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
                   "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"2\";"
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "https://postman-echo.com/get",
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "F2",
-			"description": "",
-			"item": [
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "https://postman-echo.com/get",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "F2",
+      "description": "",
+      "item": [
         {
           "name": "F2.F3",
           "description": "",
@@ -160,9 +160,9 @@
           "description": "",
           "item": []
         },
-				{
-					"name": "F2.R1",
-					"event": [
+        {
+          "name": "F2.R1",
+          "event": [
             {
               "listen": "prerequest",
               "script": {
@@ -173,31 +173,31 @@
                 ]
               }
             },
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
                   "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"4\";"
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "https://postman-echo.com/get",
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "R1",
-			"event": [
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "https://postman-echo.com/get",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "R1",
+      "event": [
         {
           "listen": "prerequest",
           "script": {
@@ -208,25 +208,25 @@
             ]
           }
         },
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
               "tests[\"Request executed in correct order\"] = postman.getEnvironmentVariable(\"count\") === \"5\";"
-						]
-					}
-				}
-			],
-			"request": {
-				"url": "https://postman-echo.com/get",
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		}
-	]
+            ]
+          }
+        }
+      ],
+      "request": {
+        "url": "https://postman-echo.com/get",
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "description": ""
+      },
+      "response": []
+    }
+  ]
 }
