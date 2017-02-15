@@ -1,0 +1,52 @@
+{
+	"id": "c5f65caa-9e32-6546-ac10-9167d0996723",
+	"name": "Sample Postman Collection",
+	"description": "A sample collection to demonstrate collections as a set of related requests",
+	"order": [
+		"3845db20-6952-e442-f3b0-6211e2089b71",
+		"ec098f7c-4e22-2fe9-e5c5-26f13016be84",
+		"464bc62d-db90-7c58-1c28-ff0b5eac2f4f"
+	],
+	"folders": [],
+	"owner": "640245",
+	"hasRequests": true,
+	"requests": [
+		{
+			"id": "3845db20-6952-e442-f3b0-6211e2089b71",
+			"name": "A simple GET request",
+			"description": "",
+			"collectionId": "c5f65caa-9e32-6546-ac10-9167d0996723",
+			"method": "GET",
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"tests": "tests['response code is 200'] = (responseCode.code === 200);",
+			"preRequestScript": "",
+			"url": "https://postman-echo.com/get?source=newman-sample-github-collection"
+		},
+		{
+			"id": "464bc62d-db90-7c58-1c28-ff0b5eac2f4f",
+			"name": "A simple POST request with JSON body",
+			"description": "",
+			"collectionId": "c5f65caa-9e32-6546-ac10-9167d0996723",
+			"method": "POST",
+			"headers": "Content-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}",
+			"url": "https://postman-echo.com/post"
+		},
+		{
+			"id": "ec098f7c-4e22-2fe9-e5c5-26f13016be84",
+			"name": "A simple POST request",
+			"description": "",
+			"collectionId": "c5f65caa-9e32-6546-ac10-9167d0996723",
+			"method": "POST",
+			"headers": "Content-Type: text/plain",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...",
+			"url": "https://postman-echo.com/post"
+		}
+	]
+}
