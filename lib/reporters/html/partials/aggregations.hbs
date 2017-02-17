@@ -1,15 +1,4 @@
-{{!-- @todo: remove the clutter when breaking changes can be pushed --}}
-{{#if folder}}
-    <div class="panel-group" id="collapse-folder-{{parent.id}}" role="tablist" aria-multiselectable="true">
-        <div role="tab" id="folderHead-{{parent.id}}">
-            <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{parent.id}}" aria-controls="collapseOne"><strong>{{parent.name}}</strong></a></h4>
-        </div>
-        <br/>
-        <div id="folderData-{{parent.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="folderHead-{{parent.id}}">
-            {{#each contents}}{{> aggregations}}{{/each}}
-        </div>
-    </div>
-{{else if parent.name}}
+{{# if parent.name}}
     <div class="panel-group" id="collapse-folder-{{parent.id}}" role="tablist" aria-multiselectable="true">
         <div role="tab" id="folderHead-{{parent.id}}">
             <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{parent.id}}" aria-controls="collapseOne"><strong>{{parent.name}}</strong></a></h4>
