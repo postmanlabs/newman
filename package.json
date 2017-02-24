@@ -45,7 +45,7 @@
     "colors": "1.1.2",
     "csv-parse": "1.1.12",
     "eventemitter3": "2.0.2",
-    "filesize": "3.5.4",
+    "filesize": "3.5.5",
     "handlebars": "4.0.6",
     "lodash": "4.17.2",
     "mkdirp": "0.5.1",
