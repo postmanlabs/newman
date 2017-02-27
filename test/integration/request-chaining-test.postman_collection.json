@@ -43,10 +43,14 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
+              "var args = JSON.parse(responseBody).args;",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"tests[\"FOO exists\"] = postman.getEnvironmentVariable(\"FOO\") === \"alpha\";",
-							"tests[\"BAR exists\"] = postman.getEnvironmentVariable(\"BAR\") === \"beta\";"
+							"tests[\"BAR exists\"] = postman.getEnvironmentVariable(\"BAR\") === \"beta\";",
+              "",
+              "tests[\"val1 query param was sent correctly\"] = args.val === \"alpha\";",
+              "tests[\"val1 query param was sent correctly\"] = args.val2 === \"beta\";"
 						]
 					}
 				}
