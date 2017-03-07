@@ -1,5 +1,10 @@
 # Newman Changelog
 
+#### v3.5.0 (Mar 07, 2017)
+- Added support for multi level folders in the cli, html and junit reporters
+- Updated `postman-collection` to v1.0.0, which contains helper methods for dealing with multi-level folders
+- Updated many other non-critical packages
+
 #### v3.4.3 (Jan 31, 2017)
 - Updated `postman-runtime` to v4.0.3, which contains bugfixes for URL parameter encoding
 - Updated `postman-collection` to v0.5.11, which contains bugfixes for UTF-8 encoded responses, and variables in URL hosts

@@ -1,0 +1,68 @@
+{
+	"variables": [],
+	"info": {
+		"name": "newman-github-929",
+		"_postman_id": "23e746e4-669b-c32e-0be5-724a07423a82",
+		"description": "https://github.com/postmanlabs/newman/issues/929",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Prelimiary request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"FOO doesn't exist\"] = !postman.getEnvironmentVariable(\"FOO\");",
+							"tests[\"BAR doesn't exist\"] = !postman.getEnvironmentVariable(\"BAR\");",
+							"",
+							"postman.setEnvironmentVariable(\"FOO\", \"alpha\");",
+							"postman.setEnvironmentVariable(\"BAR\", \"beta\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://postman-echo.com/get?val={{FOO}}&val2={{BAR}}",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "A simple GET request to seed environment variables `FOO` and `BAR`."
+			},
+			"response": []
+		},
+		{
+			"name": "Secondary request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+              "var args = JSON.parse(responseBody).args;",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"FOO exists\"] = postman.getEnvironmentVariable(\"FOO\") === \"alpha\";",
+							"tests[\"BAR exists\"] = postman.getEnvironmentVariable(\"BAR\") === \"beta\";",
+              "",
+              "tests[\"val1 query param was sent correctly\"] = args.val === \"alpha\";",
+              "tests[\"val1 query param was sent correctly\"] = args.val2 === \"beta\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://postman-echo.com/get?val={{FOO}}&val2={{BAR}}",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "A simple GET request to use seeded environment variables `FOO` and `BAR`."
+			},
+			"response": []
+		}
+	]
+}
