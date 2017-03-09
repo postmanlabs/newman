@@ -25,4 +25,15 @@ describe('Newman run options', function () {
             done();
         });
     });
+
+    it('should accept iterationData as an array of objects', function (done) {
+        newman.run({
+            collection: 'test/integration/steph/steph.postman_collection.json',
+            iterationData: require('../integration/steph/steph.postman_data.json')
+        }, function (err, summary) {
+            expect(err).to.not.be.ok();
+            expect(summary.run.failures).to.be.empty();
+            done();
+        });
+    });
 });
