@@ -18,4 +18,11 @@ describe('CLI run options', function () {
             done();
         });
     });
+
+    it('should fail a collection run with undefined test cases', function (done) {
+        exec('node ./bin/newman.js run test/fixtures/run/undefined-test-checks.json', function (code) {
+            expect(code).be(1);
+            done();
+        });
+    });
 });

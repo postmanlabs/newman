@@ -26,6 +26,19 @@ describe('Newman run options', function () {
         });
     });
 
+    it('should fail a collection run with undefined test cases', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/undefined-test-checks.json'
+        }, function (err, summary) {
+            if (err) { return done(err); }
+
+            expect(summary.run.failures).to.have.length(1);
+            expect(summary.run.failures[0].error).to.have.property('name', 'AssertionFailure');
+
+            done();
+        });
+    });
+
     it('should accept iterationData as an array of objects', function (done) {
         newman.run({
             collection: 'test/integration/steph/steph.postman_collection.json',
