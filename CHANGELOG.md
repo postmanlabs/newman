@@ -1,5 +1,8 @@
 # Newman Changelog
 
+#### v3.5.2 (Mar 17, 2017)
+- Update `postman-runtime` to v5.0.0, which uses `CertificateList` for client side SSL
+
 #### v3.5.1 (Mar 14, 2017)
 - Fixed a bug which caused some test results to not be displayed (#949)
 - Merged aggregation partial into base HTML reporter template
