@@ -1,6 +1,6 @@
 {
-  "timestamp": "Thu Feb 16 2017 17:46:41 GMT+0530 (IST)",
-  "version": "3.4.3",
+  "timestamp": "Wed Apr 05 2017 13:32:47 GMT+0530 (IST)",
+  "version": "3.5.2",
   "aggregations": [
     {
       "parent": {
@@ -34,7 +34,7 @@
             "header": [
               {
                 "key": "User-Agent",
-                "value": "PostmanRuntime/4.0.3"
+                "value": "PostmanRuntime/6.0.0.beta-4"
               },
               {
                 "key": "Accept",
@@ -168,7 +168,7 @@
               },
               {
                 "key": "User-Agent",
-                "value": "PostmanRuntime/4.0.3"
+                "value": "PostmanRuntime/6.0.0.beta-4"
               },
               {
                 "key": "Accept",
