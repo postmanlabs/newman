@@ -97,7 +97,7 @@ module.exports = function (exit) {
     ],
 
     /**
-     * The integration test exit handler. Recieves the error (if at all) from the integration test runner and exits
+     * The integration test exit handler. Receives the error (if at all) from the integration test runner and exits
      * accordingly, displaying either a success message or an error message and it's corresponding stacktrace.
      *
      * @param {?Error} err - An object that is either null or a standard error object.
