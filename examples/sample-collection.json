@@ -13,7 +13,7 @@
         "type": "text/javascript",
         "exec": [
           "pm.test('expect response be 200', function () {",
-          "    pm.expect(pm.response.code).to.equal(200);",
+          "    pm.response.to.be.ok",
           "})",
           "pm.test('expect response json contain args', function () {",
           "    pm.expect(pm.response.json().args).to.have.property('source')",
