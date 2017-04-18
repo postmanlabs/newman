@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### Unreleased
+- support for second generation scripting sandbox with support for limited `require`, the `pm` global variable and the
+  addition of assertion functions on request and response.
+
 #### v3.5.2 (Mar 17, 2017)
 - Update `postman-runtime` to v5.0.0, which uses `CertificateList` for client side SSL
 
@@ -21,7 +25,7 @@
 - Fixed a bug in the CLI reporter for Newman programmatic usage (#859)
 
 #### v3.4.1 (Jan 06, 2017)
-- Fixed Buffer compatibility issue for Node v4 
+- Fixed Buffer compatibility issue for Node v4
 - HTML reporter works correctly for failed requests
 
 #### v3.4.0 (Dec 29, 2016)
