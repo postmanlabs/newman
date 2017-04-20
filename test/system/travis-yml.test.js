@@ -23,6 +23,11 @@ describe('travis.yml', function () {
     });
 
     describe('strucure', function () {
+        it('must have a valid after_success hook', function () {
+            expect(travisYAML.after_success).to.be.an(Array);
+            expect(travisYAML.after_success[0]).to.be('eval "$(ssh-agent)"');
+        });
+
         it('language must be set to node', function () {
             expect(travisYAML.language).to.be('node_js');
             expect(travisYAML.node_js).to.eql(['4', '6']);

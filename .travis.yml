@@ -2,6 +2,16 @@ language: node_js
 node_js:
 - '4'
 - '6'
+after_success:
+- eval "$(ssh-agent)"
+- |
+  if [ "$TRAVIS_TAG" != "" ] && [ "$TRAVIS_PULL_REQUEST" == false ]; then
+    echo "Publishing Docs";
+    chmod 600 ./.ci/deploy-key;
+    ssh-add ./.ci/deploy-key;
+    openssl aes-256-cbc -K $encrypted_9a2810c1eadf_key -iv $encrypted_9a2810c1eadf_iv -in ./.ci/deploy-key.enc -out ./.ci/deploy-key -d;
+    npm run publish-docs;
+  fi;
 notifications:
   slack:
     secure: Fdl/sQMTl86jYN1r1CRRRQRgyFoslvrhkkfnM2JSdx4gODPgyg4nCPSKtU5j9wpSbbkq9A+YBeFv+Suh+xYNviegqa0AZbztydfFzVDS7xw43B/uR9Y4LwaP5Kis1WGuIOHawwFISNO3hTUei6aybKiKKlxvfqrARJaO01+Xxrg=
