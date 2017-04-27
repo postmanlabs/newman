@@ -1,0 +1,37 @@
+{
+	"variables": [],
+	"info": {
+		"name": "undefined-test-checks",
+		"_postman_id": "2ed7ced1-d834-f473-7d28-aa3a1a7d825f",
+		"description": "A minimalistic collection to ensure that test cases with undefined values do not get ignored.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Simple Echo/get request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"This test should pass\"] = body.url;",
+							"tests[\"This test should fail\"] = body.random_unknown_property;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://postman-echo.com/get",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

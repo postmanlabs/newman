@@ -1,5 +1,13 @@
 # Newman Changelog
 
+#### v3.5.2 (Mar 17, 2017)
+- Update `postman-runtime` to v5.0.0, which uses `CertificateList` for client side SSL
+
+#### v3.5.1 (Mar 14, 2017)
+- Fixed a bug which caused some test results to not be displayed (#949)
+- Merged aggregation partial into base HTML reporter template
+- Allowed `options.iterationData` to be specified as an array of objects in programmatic usage
+
 #### v3.5.0 (Mar 07, 2017)
 - Added support for multi level folders in the cli, html and junit reporters
 - Updated `postman-collection` to v1.0.0, which contains helper methods for dealing with multi-level folders
