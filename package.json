@@ -46,7 +46,7 @@
     "csv-parse": "1.1.12",
     "eventemitter3": "2.0.3",
     "filesize": "3.5.6",
-    "handlebars": "4.0.7",
+    "handlebars": "4.0.8",
     "lodash": "4.17.2",
     "mkdirp": "0.5.1",
     "parse-json": "2.2.0",
