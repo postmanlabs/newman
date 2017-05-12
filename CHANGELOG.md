@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### v3.6.0 (May 12, 2017)
+* :arrow_up: Updated dependencies
+* :tada: Introduced all new `pm.*` API.
+
 #### v3.5.2 (Mar 17, 2017)
 - Update `postman-runtime` to v5.0.0, which uses `CertificateList` for client side SSL
 
