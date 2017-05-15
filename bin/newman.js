@@ -24,6 +24,12 @@ var _ = require('lodash'),
         }
     };
 
+// This hack has been added from https://github.com/nodejs/node/issues/6456#issue-151760275
+// @todo: remove when https://github.com/nodejs/node/issues/6456 has been fixed
+(Number(process.version[1]) >= 6) && [process.stdout, process.stderr].forEach((s) => {
+    s && s.isTTY && s._handle && s._handle.setBlocking && s._handle.setBlocking(true);
+});
+
 cli(process.argv.slice(2), 'newman', function (err, args) {
     if (err) {
         err.help && console.info(err.help + '\n');  // will print out usage information.
