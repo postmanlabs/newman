@@ -1,8 +1,12 @@
 # Newman Changelog
 
 #### Unreleased
-- support for second generation scripting sandbox with support for limited `require`, the `pm` global variable and the
-  addition of assertion functions on request and response.
+- support for second generation scripting sandbox with support for limited `require`
+- addition of assertion functions on request and response.
+
+#### v3.6.0 (May 12, 2017)
+* :arrow_up: Updated dependencies
+* :tada: Introduced all new `pm.*` API.
 
 #### v3.5.2 (Mar 17, 2017)
 - Update `postman-runtime` to v5.0.0, which uses `CertificateList` for client side SSL
