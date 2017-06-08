@@ -47,7 +47,7 @@ describe('appveyor.yml', function () {
 
         it('should have a valid install pipeline', function () {
             expect(appveyorYAML.install[0].ps).to.be('Install-Product node $env:nodejs_version');
-            expect(appveyorYAML.install[1]).to.be('npm cache clean');
+            expect(appveyorYAML.install[1]).to.be('npm cache clean --force');
             expect(appveyorYAML.install[2]).to.be('appveyor-retry npm install');
         });
 
