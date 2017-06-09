@@ -15,7 +15,7 @@ environment:
 # scripts that run after cloning repository
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm cache clean
+  - npm cache clean --force
   - appveyor-retry npm install
 
 build: off # Disable MSBuilds, not related to the regular build process
