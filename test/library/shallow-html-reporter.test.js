@@ -59,4 +59,16 @@ describe('HTML reporter', function () {
             fs.stat(outFile, done);
         });
     });
+
+    it('should correctly produce the html report for a run with one or more failed requests', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/failed-request.json',
+            reporters: ['html'],
+            reporter: { html: { export: outFile } }
+        }, function (err, summary) {
+            expect(err).to.be(null);
+            expect(summary.run.failures).to.have.length(1);
+            fs.stat(outFile, done);
+        });
+    });
 });
