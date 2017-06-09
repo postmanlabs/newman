@@ -14,7 +14,12 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "var data = JSON.parse(responseBody);\ntests[\"Name with comma sent correctly\"] = data.json.nameAndSurname === \"Abhijit, Kane\";\ntests[\"Name without comma sent correctly\"] = data.json.name === \"Abhijit \\\"KDOS\\\" Kane\";"
+            "exec": [
+              "var res = JSON.parse(responseBody);",
+              "tests['Stringified number was parsed correctly'] = data.num === 1;",
+              "tests['Name with comma sent correctly'] = res.json.nameAndSurname === 'Abhijit, Kane';",
+              "tests['Name without comma sent correctly'] = res.json.name === 'Abhijit \"KDOS\" Kane';"
+            ]
           }
         }
       ],
