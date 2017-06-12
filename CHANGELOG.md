@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### Unreleased
+- support for second generation scripting sandbox with support for limited `require`
+- addition of assertion functions on request and response.
+
 #### v3.6.1 (June 9, 2017)
 * :arrow_up: Updated dependencies
 * :bug: Ensured that stdout is flushed on `process.exit` in CLI mode #1026
@@ -31,7 +35,7 @@
 - Fixed a bug in the CLI reporter for Newman programmatic usage (#859)
 
 #### v3.4.1 (Jan 06, 2017)
-- Fixed Buffer compatibility issue for Node v4 
+- Fixed Buffer compatibility issue for Node v4
 - HTML reporter works correctly for failed requests
 
 #### v3.4.0 (Dec 29, 2016)
