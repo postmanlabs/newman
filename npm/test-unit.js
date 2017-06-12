@@ -19,7 +19,7 @@ module.exports = function (exit) {
         mochaReporter = 'spec',
         istanbulReport = '';
 
-    // for CI, we use simple xunit reporter (not rquired for Travis)
+    // for CI, we use simple xunit reporter (not required for Travis)
     // if (process.env.CI) {
     //     mochaReporter = 'xunit';
     //     istanbulReport = '--report cobertura';

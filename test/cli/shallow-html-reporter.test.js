@@ -49,4 +49,13 @@ describe('HTML reporter', function () {
             fs.stat(outFile, done);
         });
     });
+
+    it('should correctly produce the html report for a run with one or more failed requests', function (done) {
+        // eslint-disable-next-line max-len
+        exec(`node ./bin/newman.js run test/fixtures/run/failed-request.json -r html --reporter-html-export ${outFile}`,
+        function (code) {
+            expect(code).be(1);
+            fs.stat(outFile, done);
+        });
+    });
 });
