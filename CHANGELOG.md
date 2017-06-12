@@ -1,5 +1,19 @@
 # Newman Changelog
 
+#### Unreleased
+- support for second generation scripting sandbox with support for limited `require`
+- addition of assertion functions on request and response.
+
+#### v3.6.1 (June 9, 2017)
+* :arrow_up: Updated dependencies
+* :bug: Ensured that stdout is flushed on `process.exit` in CLI mode #1026
+* :bug: Fixed type error for failed requests in the HTML reporter #1062
+* Updated JUnit reporter to add time attribute to testsuites and testcase elements #1039
+
+#### v3.6.0 (May 12, 2017)
+* :arrow_up: Updated dependencies
+* :tada: Introduced all new `pm.*` API.
+
 #### v3.5.2 (Mar 17, 2017)
 - Update `postman-runtime` to v5.0.0, which uses `CertificateList` for client side SSL
 
@@ -21,7 +35,7 @@
 - Fixed a bug in the CLI reporter for Newman programmatic usage (#859)
 
 #### v3.4.1 (Jan 06, 2017)
-- Fixed Buffer compatibility issue for Node v4 
+- Fixed Buffer compatibility issue for Node v4
 - HTML reporter works correctly for failed requests
 
 #### v3.4.0 (Dec 29, 2016)
