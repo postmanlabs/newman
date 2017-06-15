@@ -65,7 +65,7 @@
     "editorconfig": "0.13.2",
     "eslint": "3.19.0",
     "eslint-plugin-lodash": "2.4.2",
-    "eslint-plugin-mocha": "4.9.0",
+    "eslint-plugin-mocha": "4.10.1",
     "eslint-plugin-security": "1.4.0",
     "expect.js": "0.3.1",
     "istanbul": "0.4.5",
