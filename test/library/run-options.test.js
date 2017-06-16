@@ -49,4 +49,22 @@ describe('Newman run options', function () {
             done();
         });
     });
+
+    it('should correctly handle a multitude of responses', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/response-bodies.json'
+        }, function (err, summary) {
+            expect(err).to.not.be.ok();
+            expect(summary.run.failures).to.be.empty();
+
+            var executions = summary.run.executions;
+
+            expect(executions).to.have.length(3);
+            expect(executions[0].response.json()).to.not.be.empty();
+            expect(executions[1].response.text()).to.not.be.empty();
+            expect(executions[2].response.text()).to.not.be.empty();
+
+            done();
+        });
+    });
 });
