@@ -60,9 +60,22 @@ describe('Newman run options', function () {
             var executions = summary.run.executions;
 
             expect(executions).to.have.length(3);
-            expect(executions[0].response.json()).to.not.be.empty();
-            expect(executions[1].response.text()).to.not.be.empty();
-            expect(executions[2].response.text()).to.not.be.empty();
+            expect(executions[0].response.json()).to.eql({
+                args: { source: 'newman-sample-github-collection' },
+                headers: {
+                    host: 'postman-echo.com',
+                    accept: '*/*',
+                    'accept-encoding': 'gzip, deflate',
+                    'user-agent': 'PostmanRuntime/6.2.0', // change this when runtime is bumped
+                    'x-forwarded-port': '443',
+                    'x-forwarded-proto': 'https'
+                },
+                url: 'https://postman-echo.com/get?source=newman-sample-github-collection'
+            });
+            // eslint-disable-next-line max-len
+            expect(executions[1].response.text()).to.be('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
+            // eslint-disable-next-line max-len
+            expect(executions[2].response.text()).to.eql('<?xml version="1.0" encoding="utf-8"?><food><key>Homestyle Breakfast</key><value>950</value></food>');
 
             done();
         });
