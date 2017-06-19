@@ -1,5 +1,8 @@
 # Newman Changelog
 
+#### v3.7.1 (June 19, 2017)
+* Updated `postman-collection-transformer` to `v2.1.4` #1082
+
 #### v3.7.0 (June 19, 2017)
 * Fixed a bug that caused empty results in response.json() / response.text() #1080.
 * Support for second generation scripting sandbox with support for limited `require`.
