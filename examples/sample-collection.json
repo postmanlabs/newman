@@ -11,7 +11,15 @@
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": ["tests['response code is 200'] = (responseCode.code === 200);"]
+        "exec": [
+          "pm.test('expect response be 200', function () {",
+          "    pm.response.to.be.ok",
+          "})",
+          "pm.test('expect response json contain args', function () {",
+          "    pm.expect(pm.response.json().args).to.have.property('source')",
+          "      .and.equal('newman-sample-github-collection')",
+          "})"
+        ]
       }
     }],
     "request": {

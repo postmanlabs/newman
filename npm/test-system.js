@@ -36,7 +36,7 @@ module.exports = function (exit) {
         /**
          * Enforces sanity checks on installed packages via packity.
          *
-         * @param {Function} next - The callback function invoked when the packge sanity check has concluded.
+         * @param {Function} next - The callback function invoked when the package sanity check has concluded.
          * @returns {*}
          */
         function (next) {

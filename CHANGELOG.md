@@ -1,5 +1,12 @@
 # Newman Changelog
 
+#### v3.7.0 (June 19, 2017)
+* Fixed a bug that caused empty results in response.json() / response.text() #1080.
+* Support for second generation scripting sandbox with support for limited `require`.
+* Addition of assertion functions on request and response.
+* Added momentjs to the sandbox.
+* Added support for authorization mechanisms and IO events.
+
 #### v3.6.1 (June 9, 2017)
 * :arrow_up: Updated dependencies
 * :bug: Ensured that stdout is flushed on `process.exit` in CLI mode #1026
@@ -31,7 +38,7 @@
 - Fixed a bug in the CLI reporter for Newman programmatic usage (#859)
 
 #### v3.4.1 (Jan 06, 2017)
-- Fixed Buffer compatibility issue for Node v4 
+- Fixed Buffer compatibility issue for Node v4
 - HTML reporter works correctly for failed requests
 
 #### v3.4.0 (Dec 29, 2016)
