@@ -16,7 +16,7 @@
       }
     }],
     "request": {
-      "url": "https://echo.getpostman.com/status/404",
+      "url": "https://postman-echo.com/status/404",
       "method": "GET"
     }
   }]
