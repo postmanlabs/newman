@@ -1,11 +1,11 @@
 # Newman Changelog
 
-#### Unreleased
-- support for second generation scripting sandbox with support for limited `require`
-- addition of assertion functions on request and response.
-- Added momentjs to the sandbox
-- Added support for authorization mechanisms
-- Added support for IO events
+#### v3.7.0 (June 19, 2017)
+* Fixed a bug that caused empty results in response.json() / response.text() #1080.
+* Support for second generation scripting sandbox with support for limited `require`.
+* Addition of assertion functions on request and response.
+* Added momentjs to the sandbox.
+* Added support for authorization mechanisms and IO events.
 
 #### v3.6.1 (June 9, 2017)
 * :arrow_up: Updated dependencies
