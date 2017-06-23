@@ -1,5 +1,5 @@
 /* global describe, it, newman */
-var runtimeVersion = require('./package').dependencies['postman-runtime'];
+var runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
 
 describe('Newman run options', function () {
     var collection = 'test/fixtures/run/single-get-request.json';
