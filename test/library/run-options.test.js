@@ -1,4 +1,6 @@
 /* global describe, it, newman */
+var runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
+
 describe('Newman run options', function () {
     var collection = 'test/fixtures/run/single-get-request.json';
 
@@ -66,7 +68,7 @@ describe('Newman run options', function () {
                     host: 'postman-echo.com',
                     accept: '*/*',
                     'accept-encoding': 'gzip, deflate',
-                    'user-agent': 'PostmanRuntime/6.2.0', // change this when runtime is bumped
+                    'user-agent': `PostmanRuntime/${runtimeVersion}`, // change this when runtime is bumped
                     'x-forwarded-port': '443',
                     'x-forwarded-proto': 'https'
                 },
