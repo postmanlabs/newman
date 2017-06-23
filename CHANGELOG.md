@@ -1,5 +1,8 @@
 # Newman Changelog
 
+#### v3.7.2 (June 23, 2017)
+* Updated `postman-runtime` to `v6.2.1`, which contains a critical bugfix for authorization with variables
+
 #### v3.7.1 (June 19, 2017)
 * Updated `postman-collection-transformer` to `v2.1.4` #1082
 
