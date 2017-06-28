@@ -64,50 +64,50 @@ describe('CLI output', function () {
 
         it('should not produce colored output without any options', function (done) {
             exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json > ${outFile}`,
-            function (code, stdout, stderr) {
-                expect(code).be(0);
-                expect(stderr).to.be.empty();
-                expect(stdout).to.be.empty();
+                function (code, stdout, stderr) {
+                    expect(code).be(0);
+                    expect(stderr).to.be.empty();
+                    expect(stdout).to.be.empty();
 
-                fs.readFile(outFile, encoding, function (err, data) {
-                    if (err) { return done(err); }
+                    fs.readFile(outFile, encoding, function (err, data) {
+                        if (err) { return done(err); }
 
-                    expect(data).to.not.match(coloredOutput);
-                    done();
+                        expect(data).to.not.match(coloredOutput);
+                        done();
+                    });
                 });
-            });
         });
 
         it('should produce colored output with --color', function (done) {
             exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json --color > ${outFile}`,
-            function (code, stdout, stderr) {
-                expect(code).be(0);
-                expect(stderr).to.be.empty();
-                expect(stdout).to.be.empty();
+                function (code, stdout, stderr) {
+                    expect(code).be(0);
+                    expect(stderr).to.be.empty();
+                    expect(stdout).to.be.empty();
 
-                fs.readFile(outFile, encoding, function (err, data) {
-                    if (err) { return done(err); }
+                    fs.readFile(outFile, encoding, function (err, data) {
+                        if (err) { return done(err); }
 
-                    expect(data).to.match(coloredOutput);
-                    done();
+                        expect(data).to.match(coloredOutput);
+                        done();
+                    });
                 });
-            });
         });
 
         it('should not produce colored output with --no-color', function (done) {
             exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json --no-color > ${outFile}`,
-            function (code, stdout, stderr) {
-                expect(code).be(0);
-                expect(stderr).to.be.empty();
-                expect(stdout).to.be.empty();
+                function (code, stdout, stderr) {
+                    expect(code).be(0);
+                    expect(stderr).to.be.empty();
+                    expect(stdout).to.be.empty();
 
-                fs.readFile(outFile, encoding, function (err, data) {
-                    if (err) { return done(err); }
+                    fs.readFile(outFile, encoding, function (err, data) {
+                        if (err) { return done(err); }
 
-                    expect(data).to.not.match(coloredOutput);
-                    done();
+                        expect(data).to.not.match(coloredOutput);
+                        done();
+                    });
                 });
-            });
         });
     });
 });
