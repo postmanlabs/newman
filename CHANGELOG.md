@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### v3.7.3 (June 28, 2017)
+* Updated dependencies.
+* Restored `response.body` in the data supplied to the HTML reporter template. #1098
+
 #### v3.7.2 (June 23, 2017)
 * Updated `postman-runtime` to `v6.2.1`, which contains a critical bugfix for authorization with variables
 
