@@ -1,5 +1,8 @@
 # Newman Changelog
 
+#### v3.7.4 (June 29, 2017)
+* :bug: Corrected response.body reference in the HTML reporter #1099
+
 #### v3.7.3 (June 28, 2017)
 * Updated dependencies.
 * Restored `response.body` in the data supplied to the HTML reporter template. #1098
