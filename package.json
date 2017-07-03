@@ -80,6 +80,6 @@
     "recursive-readdir": "2.2.1"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   }
 }
