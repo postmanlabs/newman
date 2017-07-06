@@ -82,4 +82,19 @@ describe('Newman run options', function () {
             done();
         });
     });
+
+    it('should correctly handle invalid collection URLs', function (done) {
+        newman.run({
+            collection: 'https://api.getpostman.com/collections/my-collection-uuid?apikey=my-secret-api-key'
+        }, function (err, summary) {
+            expect(err).to.be.ok();
+            expect(err.message).to.be('Invalid API Key. Every request requires a valid API Key to be sent.');
+
+            // eslint-disable-next-line max-len
+            expect(err.help).to.be('Error fetching the collection from the Postman Pro API. Ensure that the url is valid.');
+            expect(summary).to.not.be.ok();
+
+            done();
+        });
+    });
 });
