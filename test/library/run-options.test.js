@@ -91,7 +91,7 @@ describe('Newman run options', function () {
             expect(err.message).to.be('Invalid API Key. Every request requires a valid API Key to be sent.');
 
             // eslint-disable-next-line max-len
-            expect(err.help).to.be('Error fetching the collection from the Postman Pro API. Ensure that the url is valid.');
+            expect(err.help).to.be('Error fetching the collection from the provided URL. Ensure that the URL is valid.');
             expect(summary).to.not.be.ok();
 
             done();
