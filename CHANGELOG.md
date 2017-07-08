@@ -1,8 +1,24 @@
 # Newman Changelog
 
-#### Unreleased
-- support for second generation scripting sandbox with support for limited `require`
-- addition of assertion functions on request and response.
+#### v3.7.4 (June 29, 2017)
+* :bug: Corrected response.body reference in the HTML reporter #1099
+
+#### v3.7.3 (June 28, 2017)
+* Updated dependencies.
+* Restored `response.body` in the data supplied to the HTML reporter template. #1098
+
+#### v3.7.2 (June 23, 2017)
+* Updated `postman-runtime` to `v6.2.1`, which contains a critical bugfix for authorization with variables
+
+#### v3.7.1 (June 19, 2017)
+* Updated `postman-collection-transformer` to `v2.1.4` #1082
+
+#### v3.7.0 (June 19, 2017)
+* Fixed a bug that caused empty results in response.json() / response.text() #1080.
+* Support for second generation scripting sandbox with support for limited `require`.
+* Addition of assertion functions on request and response.
+* Added momentjs to the sandbox.
+* Added support for authorization mechanisms and IO events.
 
 #### v3.6.1 (June 9, 2017)
 * :arrow_up: Updated dependencies

@@ -71,4 +71,24 @@ describe('HTML reporter', function () {
             fs.stat(outFile, done);
         });
     });
+
+    describe('backward compatibility', function () {
+        it('should not mutate the run summary', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/single-get-request.json',
+                reporters: ['html'],
+                reporter: { html: { export: outFile } }
+            }, function (err, summary) {
+                expect(err).to.be(null);
+                expect(summary.run.failures).to.have.length(0);
+
+                summary.run.executions.forEach(function (exec) {
+                    // The body property is only accessible to the HTML reporter
+                    expect(exec.response).to.not.have.property('body');
+                });
+
+                fs.stat(outFile, done);
+            });
+        });
+    });
 });
