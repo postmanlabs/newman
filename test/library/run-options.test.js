@@ -1,4 +1,6 @@
 /* global describe, it, newman */
+var runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
+
 describe('Newman run options', function () {
     var collection = 'test/fixtures/run/single-get-request.json';
 
@@ -66,7 +68,7 @@ describe('Newman run options', function () {
                     host: 'postman-echo.com',
                     accept: '*/*',
                     'accept-encoding': 'gzip, deflate',
-                    'user-agent': 'PostmanRuntime/6.2.0', // change this when runtime is bumped
+                    'user-agent': `PostmanRuntime/${runtimeVersion}`, // change this when runtime is bumped
                     'x-forwarded-port': '443',
                     'x-forwarded-proto': 'https'
                 },
@@ -76,6 +78,21 @@ describe('Newman run options', function () {
             expect(executions[1].response.text()).to.be('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
             // eslint-disable-next-line max-len
             expect(executions[2].response.text()).to.eql('<?xml version="1.0" encoding="utf-8"?><food><key>Homestyle Breakfast</key><value>950</value></food>');
+
+            done();
+        });
+    });
+
+    it('should correctly handle invalid collection URLs', function (done) {
+        newman.run({
+            collection: 'https://api.getpostman.com/collections/my-collection-uuid?apikey=my-secret-api-key'
+        }, function (err, summary) {
+            expect(err).to.be.ok();
+            expect(err.message).to.be('Invalid API Key. Every request requires a valid API Key to be sent.');
+
+            // eslint-disable-next-line max-len
+            expect(err.help).to.be('Error fetching the collection from the provided URL. Ensure that the URL is valid.');
+            expect(summary).to.not.be.ok();
 
             done();
         });

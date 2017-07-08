@@ -33,19 +33,19 @@ async.parallel([
     parallelCollectionRun
 ],
 
-    /**
-     * The
-     *
-     * @param {?Error} err - An Error instance / null that determines whether or not the parallel collection run
-     * succeeded.
-     * @param {Array} result - An array of collection run summary objects.
-     */
-    function (err, results) {
-        err && console.error(err);
+/**
+ * The
+ *
+ * @param {?Error} err - An Error instance / null that determines whether or not the parallel collection run
+ * succeeded.
+ * @param {Array} result - An array of collection run summary objects.
+ */
+function (err, results) {
+    err && console.error(err);
 
-        results.forEach(function (result) {
-            var failures = result.run.failures;
-            console.info(failures.length ? JSON.stringify(failures.failures, null, 2) :
-                         `${result.collection.name} ran successfully.`);
-        });
+    results.forEach(function (result) {
+        var failures = result.run.failures;
+        console.info(failures.length ? JSON.stringify(failures.failures, null, 2) :
+            `${result.collection.name} ran successfully.`);
     });
+});
