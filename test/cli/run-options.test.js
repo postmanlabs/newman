@@ -25,4 +25,12 @@ describe('CLI run options', function () {
             done();
         });
     });
+
+    it('should handle invalid collection URLs correctly', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run https://api.getpostman.com/collections/my-collection-uuid?apikey=my-secret-api-key', function (code) {
+            expect(code).be(1);
+            done();
+        });
+    });
 });
