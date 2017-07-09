@@ -10,6 +10,8 @@ var newman = require('../'), // require('newman')
 // call newman.run to pass `options` object and listen to events
 newman.run({ collection: require('./sample-collection.json') })
     .on('start', function (err, args) {
+        if (err) { return; }
+
         console.info(`Running ${args.cursor.length} request(s) and ${args.cursor.cycles} iteration(s)`);
     })
     .on('request', function (err, args) {

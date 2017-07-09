@@ -38,7 +38,7 @@ async.parallel([
  *
  * @param {?Error} err - An Error instance / null that determines whether or not the parallel collection run
  * succeeded.
- * @param {Array} result - An array of collection run summary objects.
+ * @param {Array} results - An array of collection run summary objects.
  */
 function (err, results) {
     err && console.error(err);
