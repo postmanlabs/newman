@@ -21,6 +21,11 @@ module.exports = function (exit) {
     var mocha = new Mocha({ timeout: 60000 });
 
     recursive(SPEC_SOURCE_DIR, function (err, files) {
+        if (err) {
+            console.error(err);
+            return exit(1);
+        }
+
         var _exec = global.exec; // need to restore it later
 
         files.filter(function (file) {

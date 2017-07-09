@@ -17,11 +17,10 @@ var _ = require('lodash'),
         var command = options.command;
 
         if (_.isFunction(newman[command])) {
-            newman[command](options[command], callback);
+            return newman[command](options[command], callback);
         }
-        else {
-            callback(new Error('Oops, unsupported command: ' + options.command));
-        }
+
+        callback(new Error('Oops, unsupported command: ' + options.command));
     };
 
 // This hack has been added from https://github.com/nodejs/node/issues/6456#issue-151760275
