@@ -21,6 +21,11 @@ module.exports = function (exit) {
     var mocha = new Mocha({ timeout: 60000 });
 
     recursive(SPEC_SOURCE_DIR, function (err, files) {
+        if (err) {
+            console.error(err);
+            return exit(1);
+        }
+
         files.filter(function (file) {
             return (file.substr(-8) === '.test.js');
         }).forEach(function (file) {
