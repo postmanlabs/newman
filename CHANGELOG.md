@@ -1,5 +1,10 @@
 # Newman Changelog
 
+#### v3.7.5 (July 10, 2017)
+* Bumped Collection SDK to v2.0.2, which contains `ProxyConfig` improvements. #1110
+* Ensured that failed fetches from resource URLs result in a non-zero exit code. #1115
+* Fixed a backward compatibility bug related to `Buffer` construction in the HTML reporter. #1105
+
 #### v3.7.4 (June 29, 2017)
 * :bug: Corrected response.body reference in the HTML reporter #1099
 
