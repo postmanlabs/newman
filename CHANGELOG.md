@@ -1,5 +1,9 @@
 # Newman Changelog
 
+#### v3.7.6 (July 19, 2017)
+* Bumped `postman-runtime` to `v6.2.5`, which contains a critical cookie handling bugfix.
+* Updated other dependencies.
+
 #### v3.7.5 (July 10, 2017)
 * Bumped Collection SDK to v2.0.2, which contains `ProxyConfig` improvements. #1110
 * Ensured that failed fetches from resource URLs result in a non-zero exit code. #1115
