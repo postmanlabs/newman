@@ -33,4 +33,12 @@ describe('CLI run options', function () {
             done();
         });
     });
+
+    it('should correctly work with global variable overrides passed with --global-var', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var first=James --global-var last=Bond', function (code) {
+            expect(code).be(0);
+            done();
+        });
+    });
 });
