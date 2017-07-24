@@ -151,9 +151,12 @@ describe('cli parser', function () {
                 });
             });
 
-            it('should throw an error for --global-var values without an `=`', function (done) {
-                cli.rawOptions('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err) {
-                    expect(err.code).to.equal('ARGError');
+            it('should handle --global-var values without an `=`', function (done) {
+                cli.rawOptions('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
+                    expect(err).to.be(null);
+                    expect(res.run.globalVar).to.eql([
+                        { key: 'foo', value: undefined }
+                    ]);
 
                     done();
                 });
