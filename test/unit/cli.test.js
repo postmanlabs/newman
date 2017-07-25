@@ -142,6 +142,27 @@ describe('cli parser', function () {
             });
         });
 
+        describe('--global-var', function () {
+            it('should throw an error for missing --global-var values', function (done) {
+                cli.rawOptions('run myCollection.json --global-var'.split(' '), 'newmantests', function (err) {
+                    expect(err.code).to.equal('ARGError');
+
+                    done();
+                });
+            });
+
+            it('should handle --global-var values without an `=`', function (done) {
+                cli.rawOptions('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
+                    expect(err).to.be(null);
+                    expect(res.run.globalVar).to.eql([
+                        { key: 'foo', value: undefined }
+                    ]);
+
+                    done();
+                });
+            });
+        });
+
         it('should load all arguments (except reporters)', function (done) {
             cli.rawOptions(('run ' +
             'myCollection.json ' +
@@ -154,6 +175,7 @@ describe('cli parser', function () {
             '--reporter-cli-no-summary ' +
             '--iteration-count 23 ' +
             '--reporters json,html ' +
+            '--global-var foo=bar --global-var alpha==beta= ' +
             '--no-color ' +
             '--delay-request 12000 ' +
             '--timeout-request 5000 ' +
@@ -183,6 +205,11 @@ describe('cli parser', function () {
                 expect(opts.reporters).to.contain('html');
                 expect(opts.reporters).to.not.contain('junit');
 
+                expect(opts.globalVar).to.eql([
+                    { key: 'foo', value: 'bar' },
+                    { key: 'alpha', value: '=beta=' }
+                ]);
+
                 expect(opts.bail).to.be(true);
                 expect(opts.suppressExitCode).to.be(true);
 
@@ -208,6 +235,7 @@ describe('cli parser', function () {
             '--timeout-request 5000 ' +
             '--ignore-redirects ' +
             '-k ' +
+            '--global-var foo=bar --global-var alpha==beta= ' +
             '--reporter-json-output ./omg.txt ' +
             '--reporter-html-output report.html ' +
             '--reporter-html-template ./mytemplate.html ' +
@@ -230,6 +258,11 @@ describe('cli parser', function () {
                 expect(opts.timeoutRequest).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
+
+                expect(opts.globalVar).to.eql([
+                    { key: 'foo', value: 'bar' },
+                    { key: 'alpha', value: '=beta=' }
+                ]);
 
                 expect(opts.noColor).to.be(true);
 

@@ -154,6 +154,10 @@ newman.run({
   Specify whether or not to force the unicode disable option. When supplied, all symbols in the output will be replaced
   by their plain text equivalents.
 
+- `--global-var "<global-variable-name>=<global-variable-value>"`<br />
+  Allows the specification of global variables via the command line, in a key=value format. Multiple CLI global variables
+  can be added by using `--global-var` multiple times, like so: `--global-var "foo=bar" --global-var "alpha=beta"`.
+
 #### Configuring Reporters
 
 Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
