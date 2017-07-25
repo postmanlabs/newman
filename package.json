@@ -55,7 +55,7 @@
     "postman-request": "2.81.1-postman.2",
     "postman-runtime": "6.2.5",
     "pretty-ms": "3.0.0",
-    "semver": "5.3.0",
+    "semver": "5.4.0",
     "serialised-error": "1.1.2",
     "shelljs": "0.7.8",
     "word-wrap": "1.2.3",
