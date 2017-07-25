@@ -1,5 +1,8 @@
 # Newman Changelog
 
+#### v3.8.0 (July 25, 2017)
+* :tada: Added support for global variable specification via the CLI #1142
+
 #### v3.7.6 (July 19, 2017)
 * Bumped `postman-runtime` to `v6.2.5`, which contains a critical cookie handling bugfix.
 * Updated other dependencies.
