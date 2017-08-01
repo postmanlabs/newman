@@ -73,7 +73,7 @@
     "js-yaml": "3.9.1",
     "jsdoc": "3.5.3",
     "jsdoc-to-markdown": "3.0.0",
-    "mocha": "3.4.2",
+    "mocha": "3.5.0",
     "nsp": "2.7.0",
     "packity": "0.3.2",
     "parse-gitignore": "0.4.0",
