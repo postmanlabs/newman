@@ -62,7 +62,7 @@
     "xmlbuilder": "9.0.1"
   },
   "devDependencies": {
-    "editorconfig": "0.13.2",
+    "editorconfig": "0.13.3",
     "eslint": "4.4.1",
     "eslint-plugin-jsdoc": "3.1.2",
     "eslint-plugin-lodash": "2.4.4",
