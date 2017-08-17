@@ -49,7 +49,7 @@
     "handlebars": "4.0.10",
     "lodash": "4.17.2",
     "mkdirp": "0.5.1",
-    "parse-json": "2.2.0",
+    "parse-json": "3.0.0",
     "postman-collection": "2.1.0",
     "postman-collection-transformer": "2.1.5",
     "postman-request": "2.81.1-postman.2",
