@@ -1,5 +1,9 @@
 # Newman Changelog
 
+### v3.8.1 (August 18, 2017)
+* :arrow_up: Updated `postman-runtime` to `v6.2.6` #1173
+* :arrow_up: Updated `postman-collection` to `v2.1.1` #1172
+
 #### v3.8.0 (July 25, 2017)
 * :tada: Added support for global variable specification via the CLI #1142
 
