@@ -15,7 +15,7 @@ Thumbs.db
 
 # Prevent IDE stuff
 .idea
-
+.vscode
 
 # PROJECT
 # =======
