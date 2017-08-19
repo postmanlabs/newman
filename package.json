@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "editorconfig": "0.14.1",
-    "eslint": "4.4.1",
+    "eslint": "4.5.0",
     "eslint-plugin-jsdoc": "3.1.2",
     "eslint-plugin-lodash": "2.4.4",
     "eslint-plugin-mocha": "4.11.0",
