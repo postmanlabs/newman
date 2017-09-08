@@ -342,7 +342,7 @@ Newman triggers a whole bunch of events during the run.
 ```javascript
 newman.run({
     collection: require('./sample-collection.json'),
-    data: [{ "var": "data", "var_beta": "other_val" }],
+    iterationData: [{ "var": "data", "var_beta": "other_val" }],
     globals: {
         "id": "5bfde907-2a1e-8c5a-2246-4aff74b74236",
         "name": "test-env",
@@ -419,7 +419,7 @@ argument object.**
 
 Newman also supports file uploads for request form data. The files must be present in the
 current working directory. Your collection must also contain the filename in
-the "src" attribute of the request. 
+the "src" attribute of the request.
 
 In this collection, `sample-file.txt` should be present in the current working directory.
 ```json
