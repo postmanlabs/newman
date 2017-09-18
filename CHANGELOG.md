@@ -1,6 +1,12 @@
 # Newman Changelog
 
-### v3.8.1 (August 18, 2017)
+#### v3.8.2 (September 18, 2017)
+* :arrow_up: Updated dependencies.
+* :bug: Fixed a bug that caused csv files with comma spaces to be processed incorrectly. #1202
+* :scroll: Corrected programmatic `iterationData` usage in README. #1191
+* :scroll: Fixed broken link in `parallel-collection-runs.js` #1197
+
+#### v3.8.1 (August 18, 2017)
 * :arrow_up: Updated `postman-runtime` to `v6.2.6` #1173
 * :arrow_up: Updated `postman-collection` to `v2.1.1` #1172
 
