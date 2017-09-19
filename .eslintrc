@@ -338,7 +338,7 @@
     "jsdoc/require-description-complete-sentence": "off",
     "jsdoc/require-example": "off",
     "jsdoc/require-hyphen-before-param-description": "off",
-    "jsdoc/require-param": "error",
+    "jsdoc/require-param": "warn",
     "jsdoc/require-param-description": "error",
     "jsdoc/require-param-type": "error",
     "jsdoc/require-returns-description": "off",
