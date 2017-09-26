@@ -1,0 +1,12 @@
+ {
+  "name": "globals",
+  "values": [{
+    "key": "var-1",
+    "type": "any",
+    "value": "value-1"
+  }, {
+    "key": "var-2",
+    "type": "any",
+    "value": "value-2"
+  }]
+}
