@@ -3,7 +3,8 @@
  */
 
 var expect = require('expect.js'),
-    fs = require('fs');
+    fs = require('fs'),
+    _ = require('lodash');
 
 /* global describe, it, before */
 describe('nsp', function () {
@@ -28,8 +29,16 @@ describe('nsp', function () {
             expect(nsprc.exceptions).to.eql([]);
         });
 
-        it('must exclude only a known set of packages', function () {
-            expect(nsprc.exclusions).to.eql([]);
+        it('must exclude only a known set of packages (prevent erroneous exclusions)', function () {
+            expect(nsprc.exclusions).to.eql({
+                'postman-runtime': '6.3.2',
+                'postman-collection': '3.0.0'
+            });
+        });
+
+        it('dependency version in package.json should match .nsprc (time to remove exclusion?)', function () {
+            var pkg = _.pick(require('../../package').dependencies, _.keys(nsprc.exclusions));
+            expect(pkg).to.eql(nsprc.exclusions);
         });
 
         // if you are changing the version here, most probably you are better of removing the exclusion in first place.
