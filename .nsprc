@@ -1,4 +1,7 @@
 {
   "exceptions": [],
-  "exclusions": []
+  "exclusions": {
+    "postman-runtime": "6.4.0",
+    "postman-collection": "3.0.0"
+  }
 }
