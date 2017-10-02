@@ -1,0 +1,15 @@
+{
+  "item": [{
+    "event": [{
+      "listen": "prerequest",
+      "script": "setTimeout(function () {}, 400);"
+    },{
+      "listen": "test",
+      "script": "for(var i = 0; i++ < 1e8;); // 0.3 s"
+    }],
+    "request": {
+      "url": "https://postman-echo.com/get",
+      "method": "GET"
+    }
+  }]
+}

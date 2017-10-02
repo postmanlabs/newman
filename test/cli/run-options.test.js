@@ -41,4 +41,23 @@ describe('CLI run options', function () {
             done();
         });
     });
+
+    describe('script timeouts', function () {
+        it('should be handled correctly when breached', function (done) {
+            // eslint-disable-next-line max-len
+            exec('node ./bin/newman.js run test/integration/script-timeout/script-timeout.postman_collection.json --timeout-script 5', function (code) {
+                // .to.be.(1) is not used as the windows exit code can be an arbitrary non-zero value
+                expect(code).be.above(0);
+                done();
+            });
+        });
+
+        it('should be handled correctly when not breached', function (done) {
+            // eslint-disable-next-line max-len
+            exec('node ./bin/newman.js run test/integration/script-timeout/script-timeout.postman_collection.json --timeout-script 500', function (code) {
+                expect(code).be(0);
+                done();
+            });
+        });
+    });
 });
