@@ -179,6 +179,7 @@ describe('cli parser', function () {
             '--no-color ' +
             '--delay-request 12000 ' +
             '--timeout-request 5000 ' +
+            '--timeout-script 5000 ' +
             '--ignore-redirects ' +
             '--bail ' +
             '--suppress-exit-code ' +
@@ -196,6 +197,7 @@ describe('cli parser', function () {
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delayRequest).to.be(12000);
                 expect(opts.timeoutRequest).to.be(5000);
+                expect(opts.timeoutScript).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
 
@@ -233,6 +235,7 @@ describe('cli parser', function () {
             '--no-color ' +
             '--delay-request 12000 ' +
             '--timeout-request 5000 ' +
+            '--timeout-script 5000 ' +
             '--ignore-redirects ' +
             '-k ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
@@ -256,6 +259,7 @@ describe('cli parser', function () {
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delayRequest).to.be(12000);
                 expect(opts.timeoutRequest).to.be(5000);
+                expect(opts.timeoutScript).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
 

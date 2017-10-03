@@ -92,7 +92,7 @@ module.exports = function (exit) {
             nsp.check({
                 offline: false,
                 package: _.merge({
-                    dependencies: _.omit(pkg.dependencies, nsprc.exclusions || [])
+                    dependencies: _.omit(pkg.dependencies, _.keys(nsprc.exclusions) || [])
                 }, _.pick(pkg, ['name', 'version', 'homepage', 'repository']))
             }, function (err, result) {
                 // if processing nsp had an error, simply print that and exit
