@@ -1,5 +1,11 @@
 # Newman Changelog
 
+#### v3.8.3 (October 4, 2017)
+* Updated dependencies :arrow_up:
+* #1227 Added `timeout-script` to extend default sandbox script execution timeouts :tada:
+* #1206 Corrected failure table handle in non TTY environments :bug:
+* #1218 Made JSON parsing more robust :bug:
+
 #### v3.8.2 (September 18, 2017)
 * :arrow_up: Updated dependencies.
 * :bug: Fixed a bug that caused csv files with comma spaces to be processed incorrectly. #1202
