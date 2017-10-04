@@ -157,6 +157,9 @@ newman.run({
   Specify whether or not to force the unicode disable option. When supplied, all symbols in the output will be replaced
   by their plain text equivalents.
 
+- `--terminal-width`<br />
+  Specify a desired terminal width (in characters).
+
 - `--global-var "<global-variable-name>=<global-variable-value>"`<br />
   Allows the specification of global variables via the command line, in a key=value format. Multiple CLI global variables
   can be added by using `--global-var` multiple times, like so: `--global-var "foo=bar" --global-var "alpha=beta"`.
@@ -317,6 +320,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
 | options.color             | Forces colored CLI output (for use in CI / non TTY environments).<br /><br />_Optional_<br />Type: `boolean` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
+| options.terminalWidth     | Enforce a desired terminal width (in characters).<br /><br />_Optional_<br />Type: `number` |
 | options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
