@@ -177,6 +177,7 @@ describe('cli parser', function () {
             '--reporters json,html ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--no-color ' +
+            '--terminal-width 100 ' +
             '--delay-request 12000 ' +
             '--timeout-request 5000 ' +
             '--timeout-script 5000 ' +
@@ -202,6 +203,7 @@ describe('cli parser', function () {
                 expect(opts.insecure).to.be(true);
 
                 expect(opts.noColor).to.be(true);
+                expect(opts.terminalWidth).to.be(100);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.contain('html');
@@ -233,6 +235,7 @@ describe('cli parser', function () {
             '--iteration-count 23 ' +
             '--reporters json,html ' +
             '--no-color ' +
+            '--terminal-width 100 ' +
             '--delay-request 12000 ' +
             '--timeout-request 5000 ' +
             '--timeout-script 5000 ' +
@@ -269,6 +272,7 @@ describe('cli parser', function () {
                 ]);
 
                 expect(opts.noColor).to.be(true);
+                expect(opts.terminalWidth).to.be(100);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('verbose');
