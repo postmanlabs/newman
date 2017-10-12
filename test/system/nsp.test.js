@@ -32,7 +32,7 @@ describe('nsp', function () {
         it('must exclude only a known set of packages (prevent erroneous exclusions)', function () {
             expect(nsprc.exclusions).to.eql({
                 'postman-runtime': '6.4.0',
-                'postman-collection': '3.0.0'
+                'postman-collection': '3.0.1'
             });
         });
 
