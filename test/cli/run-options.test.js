@@ -42,6 +42,15 @@ describe('CLI run options', function () {
         });
     });
 
+    it('should throw an error for missing --global-var values', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var', function (code, stdout, stderr) {
+            expect(code).be(1);
+            expect(stderr).to.be('\n  error: option `--global-var <value>\' argument missing\n\n');
+            done();
+        });
+    });
+
     describe('script timeouts', function () {
         it('should be handled correctly when breached', function (done) {
             // eslint-disable-next-line max-len
