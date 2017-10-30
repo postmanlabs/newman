@@ -1,7 +1,18 @@
+var newmanVersion = require('../../package.json').version;
+
 /* globals it, describe, exec */
 describe('CLI run options', function () {
     it('should work correctly without any extra options', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', done);
+    });
+
+    it('should display the current Newman version correctly', function (done) {
+        exec('node ./bin/newman.js --version', function (code, stdout, stderr) {
+            expect(code).be(0);
+            expect(stdout).be(`${newmanVersion}\n`);
+            expect(stderr).be('');
+            done();
+        });
     });
 
     it('should not work without a collection', function (done) {
