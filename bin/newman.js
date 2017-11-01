@@ -170,8 +170,8 @@ var _ = require('lodash'),
      * @returns {Object} - An object of formatted options.
      */
     formatOptions = function (options) {
-        var command = (_.includes('version', options.rawArgs[0]) ||
-            _.includes('-v', options.rawArgs[0]) || _.includes('-V', options.rawArgs[0])) ?
+        var command = (_.includes(options.rawArgs[0], 'version') ||
+        _.includes(options.rawArgs[0], '-v') || _.includes(options.rawArgs[0], '-V')) ?
                 'version' : options._name,
             optionsObj;
 
@@ -233,7 +233,7 @@ var _ = require('lodash'),
                 }
             });
 
-            if (_.isEmpty(procArgv) || _.includes('-h', procArgv) || _.includes('--help', procArgv)) {
+            if (_.isEmpty(procArgv) || _.includes(procArgv, '-h') || _.includes(procArgv, '--help')) {
                 return result.outputHelp();
             }
         }
