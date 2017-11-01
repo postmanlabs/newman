@@ -238,7 +238,7 @@ var _ = require('lodash'),
             }
         }
         catch (error) {
-            return callback(_.set(error, 'help', result.outputHelp()));
+            return callback(_.set(error, 'help', program.outputHelp()));
         }
 
         // Handle the reporter Names
