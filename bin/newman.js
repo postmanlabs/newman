@@ -12,7 +12,7 @@ var _ = require('lodash'),
      * @param {String} arg - The stringified number argument pulled from the CLI arguments list.
      * @returns {Number} - The supplied argument, casted to an integer.
      */
-    Integer = (arg) => {
+    Integer = function (arg) {
         var num = Number(arg);
 
         if (!_.isSafeInteger(num) || num <= 0) {
@@ -29,7 +29,7 @@ var _ = require('lodash'),
      * @param {Array} allArgs - An array of strings, each coresponding to a CLI argument.
      * @returns {Object} - An object with reporter and regular argument key-values.
      */
-    separateReporterArgs = (allArgs) => {
+    separateReporterArgs = function (allArgs) {
         var reporterArgs = [],
             args = [],
             i;
@@ -53,6 +53,26 @@ var _ = require('lodash'),
     },
 
     /**
+     *  used for collecting global key=value variables supplied through command line
+     *
+     * --global-var "foo=bar" --global-var "alpha=beta"
+     * 
+     * @param {String} val - The argument provided to `--global-var`.
+     * @param {String} memo - The array that is populated by key value pairs.
+     * @returns {{key, value}} - The object representation of the current CLI variable.
+    */
+    collect = function (val, memo) {
+        var arg = val,
+            eqIndex = arg.indexOf('='),
+            hasEq = eqIndex !== -1;
+        // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
+        arg = hasEq ? { key: arg.slice(0, eqIndex), value: arg.slice(eqIndex + 1) } :
+            { key: arg, value: undefined };
+        memo.push(arg);
+        return memo;
+    },
+
+    /**
      * Creates a parser capable of handling options typically given to "newman run" command.
      *  
      * @param  {Object} rawArgs - The rawArgs supplied to rawOptions, to be passed to program.parse()
@@ -61,30 +81,13 @@ var _ = require('lodash'),
      * @private
      */
 
-    _run = (rawArgs) => {
-        /**
-             *  used for collecting global key=value variables supplied through command line
-             *
-             * --global-var "foo=bar" --global-var "alpha=beta"
-             * 
-             * @param {String} val - The argument provided to `--global-var`.
-             * @param {String} memo - The array that is populated by key value pairs.
-             * @returns {{key, value}} - The object representation of the current CLI variable.
-        */
-        function collect (val, memo) {
-            var arg = val,
-                eqIndex = arg.indexOf('='),
-                hasEq = eqIndex !== -1;
-            // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
-            arg = hasEq ? { key: arg.slice(0, eqIndex), value: arg.slice(eqIndex + 1) } :
-                { key: arg, value: undefined };
-            memo.push(arg);
-            return memo;
-        }
+    run = function (rawArgs) {
+
+        program
+            .version(version);
 
         program
             .command('run <collection>')
-            .version(version)
             .description('URL or path to a Postman Collection.')
             .option('-e, --environment <path>', 'Specify a URL or Path to a Postman Environment.')
             .option('-g, --globals <path>', 'Specify a URL or Path to a file containing Postman Globals.')
@@ -226,7 +229,7 @@ var _ = require('lodash'),
         rawArgs = separateReporterArgs(procArgv);
 
         try {
-            _run(rawArgs.argv);
+            run(rawArgs.argv);
             program.commands.forEach((command) => {
                 if (command._name === 'run') {
                     result = command;
@@ -285,7 +288,18 @@ var _ = require('lodash'),
     s && s.isTTY && s._handle && s._handle.setBlocking && s._handle.setBlocking(true);
 });
 
-rawOptions(process.argv.slice(2), 'newman', function (err, args) {
+/**
+ * Loads resources from the network, and then calls the callback.
+ *
+ * @param {Array} procArgv - The array of tokenised CLI argument strings.
+ * @param {String} programName - The displayed program name during runs.
+ * @param {Function} callback - The callback function whose invocation marks the end of the CLI parsing routine.
+ * @returns {*}
+ */
+module.exports = rawOptions;
+
+
+!module.parent && module.exports(process.argv.slice(2), 'newman', function (err, args) {
     if (err) {
         err.help && console.info(err.help + '\n'); // will print out usage information.
         console.error(err.message || err);

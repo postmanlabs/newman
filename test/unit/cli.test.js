@@ -2,7 +2,7 @@ var expect = require('expect.js');
 
 /* global describe, it */
 describe('cli parser', function () {
-    var cli = require('../../lib/cli');
+    var cli = require('../../bin/newman');
 
     it('must export a function', function () {
         expect(cli).be.a('function');
@@ -17,7 +17,7 @@ describe('cli parser', function () {
 
     describe('Run Command', function () {
         it('should handle standard run command (run collection.json and -e)', function (done) {
-            cli.rawOptions('run myCollection.json --environment env.json -n 2'.split(' '), 'newmantests',
+            cli('run myCollection.json --environment env.json -n 2'.split(' '), 'newmantests',
                 function (err, config) {
                     expect(err).to.be(null);
                     expect(config.command).to.be('run');
@@ -31,7 +31,7 @@ describe('cli parser', function () {
         });
 
         it('should throw an error for invalid --iteration-count values', function (done) {
-            cli.rawOptions('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
+            cli('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
                 expect(err.message).to.be('The value must be a positive integer.');
 
                 done();
@@ -43,7 +43,7 @@ describe('cli parser', function () {
             // cli/run-options.test.js since commander throws custom error in case of argument
             //  mismatch and that is better handled through exec and stderr check. 
             it('should handle --global-var values without an `=`', function (done) {
-                cli.rawOptions('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
+                cli('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
                     expect(err).to.be(null);
                     expect(res.run.globalVar).to.eql([
                         { key: 'foo', value: undefined }
@@ -55,7 +55,7 @@ describe('cli parser', function () {
         });
 
         it('should load all arguments (except reporters)', function (done) {
-            cli.rawOptions(('run ' +
+            cli(('run ' +
             'myCollection.json ' +
             '-e myEnv.json ' +
             '-g myGlobals.json ' +
@@ -111,7 +111,7 @@ describe('cli parser', function () {
         });
 
         it('should load all arguments (including reporters)', function (done) {
-            cli.rawOptions(('run ' +
+            cli(('run ' +
             'myCollection.json ' +
             '-e myEnv.json ' +
             '-g myGlobals.json ' +
