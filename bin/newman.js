@@ -98,7 +98,7 @@ var _ = require('lodash'),
             .option('--export-environment <path>', 'Exports the environment to a file after completing the run.')
             .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
             .option('--export-collection <path>', 'Specify an output file to save the executed collection')
-            .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', Integer)
+            .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', Integer, 0)
             .option('--bail',
                 'Specify whether or not to gracefully stop a collection run on encountering the first error.')
             .option('-x , --suppress-exit-code',
@@ -200,7 +200,7 @@ var _ = require('lodash'),
         optionsObj[command].exportEnvironment = options.exportEnvironment || null;
         optionsObj[command].exportGlobals = options.exportGlobals || null;
         optionsObj[command].exportCollection = options.exportCollection || null;
-        optionsObj[command].delayRequest = options.delayRequest || 0;
+        optionsObj[command].delayRequest = options.delayRequest;
         optionsObj[command].bail = options.bail || false;
         optionsObj[command].suppressExitCode = options.suppressExitCode || false;
         optionsObj[command].silent = options.silent || false;
@@ -288,17 +288,18 @@ var _ = require('lodash'),
     s && s.isTTY && s._handle && s._handle.setBlocking && s._handle.setBlocking(true);
 });
 
-/**
- * Loads resources from the network, and then calls the callback.
- *
- * @param {Array} procArgv - The array of tokenised CLI argument strings.
- * @param {String} programName - The displayed program name during runs.
- * @param {Function} callback - The callback function whose invocation marks the end of the CLI parsing routine.
- * @returns {*}
- */
 module.exports = rawOptions;
 
-
+/**
+* Loads resources from the network, and then calls the callback.
+*
+* @param {Array} procArgv - The array of tokenised CLI argument strings.
+* @param {String} programName - The displayed program name during runs.
+* @param {Function} callback - The callback function whose invocation marks the end of the CLI parsing routine.
+* @returns {*}
+*/
+// ensure we run this script exports if this is a direct stdin
+// exported rawOptions above for cases when required as a module for eg tests.
 !module.parent && module.exports(process.argv.slice(2), 'newman', function (err, args) {
     if (err) {
         err.help && console.info(err.help + '\n'); // will print out usage information.
