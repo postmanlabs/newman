@@ -92,7 +92,7 @@ describe('cli parser', function () {
                 expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
 
-                expect(opts.noColor).to.be(true);
+                expect(opts.color).to.be(false);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.contain('html');
@@ -159,7 +159,7 @@ describe('cli parser', function () {
                     { key: 'alpha', value: '=beta=' }
                 ]);
 
-                expect(opts.noColor).to.be(true);
+                expect(opts.color).to.be(false);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('verbose');
