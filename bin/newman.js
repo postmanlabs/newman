@@ -176,39 +176,29 @@ var _ = require('lodash'),
         var command = (_.includes(options.rawArgs[0], 'version') ||
         _.includes(options.rawArgs[0], '-v') || _.includes(options.rawArgs[0], '-V')) ?
                 'version' : options._name,
-            optionsObj;
+            optionsObj, optionName, prop,
+            optionNames = [];
+
+        options.options.forEach(function (option) {
+            optionName = option.long;
+            optionName = optionName.replace('--', '');
+            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+            optionNames.push(optionName);
+        });
 
         optionsObj = { [command]: {} };
-
-        optionsObj.version = options._version || false;
-        optionsObj[command].noColor = !options.color || false;
-        optionsObj[command].color = options.color || false;
-        optionsObj[command].timeoutRequest = options.timeoutRequest || null;
-        optionsObj[command].timeoutScript = options.timeoutScript || null;
-        optionsObj[command].ignoreRedirects = options.ignoreRedirects || false;
-        optionsObj[command].insecure = options.insecure || false;
-        optionsObj[command].sslClientCert = options.sslClientCert || null;
-        optionsObj[command].sslClientKey = options.sslClientKey || null;
-        optionsObj[command].sslClientPassphrase = options.sslClientPassphrase || null;
-        optionsObj[command].collection = options.args || options.rawArgs ? options.args[1] || options.rawArgs[1] : null;
-        optionsObj[command].environment = options.environment || null;
-        optionsObj[command].globals = options.globals || null;
-        optionsObj[command].folder = options.folder || null;
-        optionsObj[command].reporters = options.reporters || [];
-        optionsObj[command].iterationCount = options.iterationCount || null;
-        optionsObj[command].iterationData = options.iterationData || null;
-        optionsObj[command].exportEnvironment = options.exportEnvironment || null;
-        optionsObj[command].exportGlobals = options.exportGlobals || null;
-        optionsObj[command].exportCollection = options.exportCollection || null;
-        optionsObj[command].delayRequest = options.delayRequest;
-        optionsObj[command].bail = options.bail || false;
-        optionsObj[command].suppressExitCode = options.suppressExitCode || false;
-        optionsObj[command].silent = options.silent || false;
-        optionsObj[command].disableUnicode = options.disableUnicode || false;
-        optionsObj[command].globalVar = options.globalVar || null;
-        optionsObj[command].reporterOptions = options.reporterOptions || {};
-        optionsObj[command].reporter = options.reporter || {};
         optionsObj.command = command;
+        optionsObj.version = options.parent._version || false;
+        optionsObj[command].collection = options.args || options.rawArgs ? options.args[1] || options.rawArgs[1] : null;
+        optionsObj[command].reporter = options.reporter || {};
+        optionsObj[command].reporterOptions = options.reporterOptions || {};
+
+        for (prop in options) {
+            if (_.includes(optionNames, String(prop))) {
+                optionsObj[command][prop] = options[prop];
+            }
+        }
+
         return optionsObj;
     },
 
@@ -230,11 +220,12 @@ var _ = require('lodash'),
 
         try {
             run(rawArgs.argv);
-            program.commands.forEach((command) => {
+            program.commands.forEach(function (command) {
                 if (command._name === 'run') {
                     result = command;
                 }
             });
+
 
             if (_.isEmpty(procArgv) || _.includes(procArgv, '-h') || _.includes(procArgv, '--help')) {
                 return result.outputHelp();
