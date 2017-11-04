@@ -41,7 +41,7 @@ describe('cli parser', function () {
         describe('--global-var', function () {
             // test for 'should throw an error for missing --global-var values' has been moved to
             // cli/run-options.test.js since commander throws custom error in case of argument
-            //  mismatch and that is better handled through exec and stderr check. 
+            //  mismatch and that is better handled through exec and stderr check.
             it('should handle --global-var values without an `=`', function (done) {
                 cli('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
                     expect(err).to.be(null);

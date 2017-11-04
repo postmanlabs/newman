@@ -56,7 +56,7 @@ var _ = require('lodash'),
      *  used for collecting global key=value variables supplied through command line
      *
      * --global-var "foo=bar" --global-var "alpha=beta"
-     * 
+     *
      * @param {String} val - The argument provided to `--global-var`.
      * @param {String} memo - The array that is populated by key value pairs.
      * @returns {{key, value}} - The object representation of the current CLI variable.
@@ -74,9 +74,9 @@ var _ = require('lodash'),
 
     /**
      * Creates a parser capable of handling options typically given to "newman run" command.
-     *  
+     *
      * @param  {Object} rawArgs - The rawArgs supplied to rawOptions, to be passed to program.parse()
-     * 
+     *
      *  Adds run command options to the common commander program instance.
      * @private
      */
@@ -108,7 +108,7 @@ var _ = require('lodash'),
                 'Forces unicode compliant symbols to be replaced by their plain text equivalents')
             .option('--global-var <value>',
                 'Allows the specification of global variables via the command line, in a key=value format', collect, [])
-            // commander had some issue with flags starting with --no, thus camelCased 
+            // commander had some issue with flags starting with --no, thus camelCased
             // resolved https://github.com/tj/commander.js/pull/709
             .option('--color', 'Force colored output (for use in CI environments).')
             .option('--no-color', 'Disable colored output.')
