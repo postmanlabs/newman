@@ -5,6 +5,7 @@ var _ = require('lodash'),
     program = require('commander'),
     version = require('../package.json').version,
     newman = require('../'),
+    colors = require('colors'),
 
     /**
      * A CLI parser helper to process stringified numbers into integers, perform safety checks, and return the result.
@@ -224,6 +225,93 @@ var _ = require('lodash'),
     },
 
     /**
+     * Formats the legacy options to the required format for the dispatch function.
+     *
+     * @param {Object} options - The options populated through CLI.
+     * @returns {Object} - An object of formatted legacy options.
+     */
+    formatLegacyOptions = function (options) {
+        var optionsObj = {},
+            optionName,
+            prop,
+            run = {},
+            optionNames = [],
+            reporter = {},
+            reporters = ['cli'];
+
+        options.options.forEach(function (option) {
+            optionName = option.long;
+            optionName = optionName.replace('--', '');
+            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+            optionNames.push(optionName);
+        });
+
+        for (prop in options) {
+            if (_.includes(optionNames, String(prop))) {
+                run[prop] = options[prop];
+            }
+        }
+
+        if (run.url && !run.collection) {
+            run.collection = run.url;
+        }
+        if (run.environmentUrl && !run.environment) {
+            run.environment = run.environmentUrl;
+        }
+        if (run.html) {
+            run.reporterHtmlExport = run.html;
+        }
+        if (run.testReportFile) {
+            run.reporterJunitExport = run.testReportFile;
+        }
+        if (run.outputFile) {
+            run.reporterJsonExport = run.outputFile;
+        }
+        if (run.noSummary) {
+            run.reporterCliNoSummary = run.noSummary;
+        }
+        if (!run.noColor && run.whiteScreen) {
+            run.noColor = run.whiteScreen;
+        }
+        if (!options.color || options.noColor) {
+            run.color = false;
+        }
+        if (run.number) {
+            run.iterationCount = run.number;
+        }
+        if (run.noTestSymbols) {
+            run.disableUnicode = run.noTestSymbols;
+        }
+        if (run.stopOnError) {
+            run.bail = run.stopOnError;
+        }
+        if (run.exitCode) {
+            run.suppressExitCode = run.exitCode;
+        }
+        if (run.outputFile && _.set(reporter, 'json.output', run.outputFile)) {
+            reporters.push('json');
+        }
+        if (run.outputFileVerbose && _.set(reporter, 'verbose.output', run.outputFileVerbose)) {
+            reporters.push('verbose');
+        }
+        if (run.testReportFile && _.set(reporter, 'junit.output', run.testReportFile)) {
+            reporters.push('junit');
+        }
+        if (run.html && _.set(reporter, 'html.output', run.html)) {
+            reporters.push('html');
+        }
+
+        run.reporter = reporter;
+        run.reporters = reporters;
+
+        optionsObj.command = 'run';
+        optionsObj.run = run;
+
+        console.log(optionsObj);
+        return optionsObj;
+    },
+
+    /**
      * Formats the options to the required format for the dispatch function.
      *
      * @param {Object} options - The options populated through CLI.
@@ -274,9 +362,10 @@ var _ = require('lodash'),
             reporterArgs,
             rawArgs,
             result,
-            checkForColor;
-        rawArgs = separateReporterArgs(procArgv);
+            checkForColor,
+            shiftedArr;
 
+        rawArgs = separateReporterArgs(procArgv);
         try {
             if (!legacyMode) {
                 run(rawArgs.argv);
@@ -287,7 +376,9 @@ var _ = require('lodash'),
                 });
             }
             else {
-                result = legacy(rawArgs.argv);
+                shiftedArr = ['', '', ...rawArgs.argv];
+                legacy(shiftedArr);
+                result = program;
             }
 
             if (_.isEmpty(procArgv) || _.includes(procArgv, '-h') || _.includes(procArgv, '--help')) {
@@ -321,7 +412,7 @@ var _ = require('lodash'),
         if (checkForColor) {
             result.color = true;
         }
-        if (!result.color) { result.color = false; }
+        if (!result.color || result.noColor) { result.color = false; }
         if (!legacyMode) {
             result = formatOptions(result);
         }
