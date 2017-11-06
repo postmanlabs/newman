@@ -73,6 +73,63 @@ var _ = require('lodash'),
     },
 
     /**
+     * Creates a parser capable of handling legacy options.
+     *
+     * @param  {Object} rawArgs - The rawArgs supplied to rawOptions, to be passed to program.parse()
+     *
+     *  Adds legacy options to the common commander program instance.
+     * @private
+     */
+    legacy = function (rawArgs) {
+        program
+            .version(version)
+            .option('-c, --collection <path>', 'DEPRECATED: Specify a Postman collection as a JSON file')
+            .option('-u, --url <path>', 'DEPRECATED: Specify a Postman collection as a URL')
+            .option('-e, --environment <path>', 'DEPRECATED: Specify a Postman environment as a JSON file')
+            .option('--environment-url <path>', 'DEPRECATED: Specify a Postman environment as a URL')
+            .option('-g, --global <path>', 'DEPRECATED: Specify Postman Globals as a JSON file')
+            .option('-n, --number <n>', 'DEPRECATED: Define the number of iterations to run', Integer)
+            .option('-f, --folder <path>',
+                'DEPRECATED: Run a single folder from a collection. To be used with -c or -u')
+            .option('-r, --requestTimeout <n>', 'DEPRECATED: Specify a request timeout (in ms) for requests', Integer)
+            .option('-y, --delay <n>',
+                'DEPRECATED: Specify the extent of delay between requests (milliseconds)', Integer, 0)
+            .option('-R, --avoidRedirects', 'DEPRECATED: Prevents Newman from automatically following redirects')
+            .option('-k, --insecure', 'DEPRECATED: Disable strict ssl', false)
+            .option('-d, --data <path>', 'DEPRECATED: Specify a data file to use for iterations (either json or csv)')
+            .option('-E, --exportEnvironment <path>',
+                'DEPRECATED: Exports the environment to a file after completing the run')
+            .option('-G, --exportGlobals <path>', 'DEPRECATED: Specify an output file to dump Globals before exiting')
+            .option('-H, --html <path>', 'DEPRECATED: Export a HTML report to a specified file')
+            .option('-j, --no-summary', 'DEPRECATED: Prohibits any output from being logged', false)
+            .option('-C, --noColor', 'DEPRECATED: Disables coloured output', false)
+            .option('-S, --noTestSymbols',
+                'DISCONTINUED: Disables tick and cross symbols for the output, reverting to PASS|FAIL instead', false)
+            .option('-l, --tls', 'DISCONTINUED: Specifies whether to use TLS v1 or not', false)
+            .option('-N, --encoding <choice>', 'DEPRECATED: Specifies and encoding for the response',
+                /^(ascii|utf8|utf16le|ucs2|base64|binary|hex)$/i, false)
+            .option('-o, --outputFile <path>', 'DEPRECATED: Path to file for writing output to')
+            .option('-O, --outputFileVerbose <path>',
+                'DISCONTINUED: Path to file for writing the full collection run details to')
+            .option('-t, --testReportFile <path>', 'DEPRECATED: Path to file for writing JUnit XML results to')
+            .option('-i, --import <path>',
+                'DEPRECATED: Import a Postman backup file, and save collections, environments, globals, and data')
+            .option('-p, --pretty', 'DEPRECATED: Enabled pretty print while displaying collection run information')
+            .option('-W, --whiteScreen', 'DISCONTINUED: Inverts the color scheme for collection run output', false)
+            .option('-L, --recurseLimit <n>',
+                'DEPRECATED: Limits recursive variable resolution for collection runs', Integer, 20)
+            .option('-s, --stopOnError',
+                'DEPRECATED: Stops the runner with a non-zero exit code when any test assertion fails', false)
+            .option('-x, --exitCode',
+                'DEPRECATED: Continues running tests despite test failures, but exit with code 1', false)
+            .option('--silent', 'Prevents newman from showing output to CLI', false)
+            .option('--no-color', 'Disable colored output', false)
+            .option('--color', 'Force colored output (for use in CI environments)')
+            .option('collection <path>', 'URL or path to a Postman Collection')
+            .parse(rawArgs);
+    },
+
+    /**
      * Creates a parser capable of handling options typically given to "newman run" command.
      *
      * @param  {Object} rawArgs - The rawArgs supplied to rawOptions, to be passed to program.parse()
@@ -212,20 +269,26 @@ var _ = require('lodash'),
      * @returns {*}
      */
     rawOptions = function (procArgv, programName, callback) {
-        var reporterArgs,
+        var legacyMode = (procArgv.length && _.startsWith(procArgv[0], '-') &&
+        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[0])),
+            reporterArgs,
             rawArgs,
             result,
             checkForColor;
         rawArgs = separateReporterArgs(procArgv);
 
         try {
-            run(rawArgs.argv);
-            program.commands.forEach(function (command) {
-                if (command._name === 'run') {
-                    result = command;
-                }
-            });
-
+            if (!legacyMode) {
+                run(rawArgs.argv);
+                program.commands.forEach(function (command) {
+                    if (command._name === 'run') {
+                        result = command;
+                    }
+                });
+            }
+            else {
+                result = legacy(rawArgs.argv);
+            }
 
             if (_.isEmpty(procArgv) || _.includes(procArgv, '-h') || _.includes(procArgv, '--help')) {
                 return result.outputHelp();
@@ -233,6 +296,13 @@ var _ = require('lodash'),
         }
         catch (error) {
             return callback(_.set(error, 'help', program.outputHelp()));
+        }
+
+        if (legacyMode && !result.silent) {
+            // @todo: add a link to the migration guide just before releasing V3
+            // eslint-disable-next-line max-len
+            console.warn(`${colors.yellow('newman:')} the v2.x CLI options are deprecated. You should use newman run <path> [options] instead.`);
+            console.warn('        refer https://github.com/postmanlabs/newman/blob/develop/MIGRATION.md for details.');
         }
 
         // Handle the reporter Names
@@ -252,7 +322,12 @@ var _ = require('lodash'),
             result.color = true;
         }
         if (!result.color) { result.color = false; }
-        result = formatOptions(result);
+        if (!legacyMode) {
+            result = formatOptions(result);
+        }
+        else {
+            result = formatLegacyOptions(result);
+        }
         return callback(null, result);
     },
 
