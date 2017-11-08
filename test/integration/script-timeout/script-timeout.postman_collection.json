@@ -2,7 +2,14 @@
   "item": [{
     "event": [{
       "listen": "test",
-      "script": "var now = Date.now(), later = now + 300; while(Date.now() < later);"
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "var now = Date.now(),",
+          "    later = now + 300;",
+          "while(Date.now() < later);"
+        ]
+      }
     }],
     "request": {
       "url": "https://postman-echo.com/delay/2",
