@@ -190,8 +190,9 @@ var _ = require('lodash'),
             // resolved https://github.com/tj/commander.js/pull/709
             .option('--color', 'Force colored output (for use in CI environments).')
             .option('--no-color', 'Disable colored output.')
-            .option('--timeout-request <n>', 'Specify a timeout for requests (in milliseconds).', Integer)
-            .option('--timeout-script <n>', 'Specify a timeout for script (in milliseconds).', Integer)
+            .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', Integer, 0)
+            .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', Integer, 0)
+            .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', Integer, 0)
             .option('--ignore-redirects', 'If present, Newman will not follow HTTP Redirects.')
             .option('-k, --insecure', 'Disables SSL validations.')
             .option('--ssl-client-cert <path>',
