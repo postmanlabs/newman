@@ -58,12 +58,12 @@ var _ = require('lodash'),
      * --global-var "foo=bar" --global-var "alpha=beta"
      *
      * @param {String} val - The argument provided to `--global-var`.
-     * @param {String} memo - The array that is populated by key value pairs.
-     * @returns {{key, value}} - The object representation of the current CLI variable.
+     * @param {Array} memo - The array that is populated by key value pairs.
+     * @returns {Array} - [{key, value}] - The object representation of the current CLI variable.
     */
     collect = function (val, memo) {
-        var arg = val,
-            eqIndex = arg.indexOf('='),
+        var arg,
+            eqIndex = val.indexOf('='),
             hasEq = eqIndex !== -1;
         // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
         arg = hasEq ? { key: arg.slice(0, eqIndex), value: arg.slice(eqIndex + 1) } :
