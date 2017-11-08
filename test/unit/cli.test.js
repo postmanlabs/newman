@@ -54,8 +54,6 @@ describe('cli parser', function () {
             '-g myGlobals.json ' +
             '-G exported_glob.json ' +
             '--delay 12000 ' +
-            // @todo We have two conflicting commands for -r (--reporters and --requestTimeout).
-            // Since for --requestTimeout is deprecated in favor of --timeout-request, we could remove that.
             '-r 5000 ' +
             '-R ' +
             '-j ' +
