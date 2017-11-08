@@ -124,6 +124,9 @@ newman.run({
 - `--export-collection <path>`<br />
   The path to the file where Newman will output the final collection file before completing a run.
 
+- `--timeout-global <ms>`<br />
+  Specify the time (in milliseconds) to wait for the entire collection run to complete execution.
+
 - `--timeout-request <ms>`<br />
   Specify the time (in milliseconds) to wait for requests to return a response.
 
@@ -306,6 +309,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
 | options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
 | options.folder            | The name or ID of the folder (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string` |
+| options.timeoutGlobal     | Specify the time (in milliseconds) to wait for the entire collection run to complete execution.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutScript     | Specify the time (in milliseconds) to wait for scripts to return a response.<br /><br />_Optional_<br />Type: `number` |
 | options.delayRequest      | Specify the time (in milliseconds) to wait for between subsequent requests.<br /><br />_Optional_<br />Type: `number`, Default value: `0` |
