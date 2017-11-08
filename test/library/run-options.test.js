@@ -102,7 +102,7 @@ describe('Newman run options', function () {
         // @todo: Unskip this when the underlying runtime behaviour has been fixed
         it.skip('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 5
             }, function (err, summary) {
                 expect(err.message).to.be('Script execution timed out.');
@@ -113,7 +113,7 @@ describe('Newman run options', function () {
 
         it('should be handled correctly when not breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 500
             }, function (err, summary) {
                 expect(err).to.be(null);
@@ -127,7 +127,7 @@ describe('Newman run options', function () {
         // @todo: Unskip this when the underlying runtime behaviour has been fixed
         it.skip('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutRequest: 500
             }, function (err, summary) {
                 expect(err.message).to.be('ESOCKETTIMEDOUT');
@@ -138,7 +138,7 @@ describe('Newman run options', function () {
 
         it('should be handled correctly when not breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutRequest: 5000
             }, function (err, summary) {
                 expect(err).to.be(null);
@@ -151,7 +151,7 @@ describe('Newman run options', function () {
     describe('global timeouts', function () {
         it('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeout: 1000
             }, function (err, summary) {
                 expect(err.message).to.be('callback timed out');
@@ -162,7 +162,7 @@ describe('Newman run options', function () {
 
         it('should be handled correctly when not breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeout: 10000
             }, function (err, summary) {
                 expect(err).to.be(null);
