@@ -17,7 +17,7 @@ describe('cli parser', function () {
 
     describe('Legacy Arguments', function () {
         it('should load standard arguments (-c and -e)', function (done) {
-            cli('--collection myCollection.json --environment env.json --silent'.split(' '), 'newmantests',
+            cli('-c myCollection.json -e env.json --silent'.split(' '), 'newmantests',
                 function (err, config) {
                     expect(err).to.be(null);
                     expect(config.command).to.be('run');
@@ -30,7 +30,7 @@ describe('cli parser', function () {
         });
 
         it('should support alternative arguments', function (done) {
-            cli(('--url http://a.com/myCollection.json ' +
+            cli(('-u http://a.com/myCollection.json ' +
             '--environment-url http://a.com/env.json --silent').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
                 expect(config.command).to.be('run');
@@ -46,29 +46,29 @@ describe('cli parser', function () {
         });
 
         it('should load all arguments', function (done) {
-            cli(('--collection myCollection.json ' +
-            '--environment myEnv.json ' +
-            '--folder myFolder ' +
+            cli(('-c myCollection.json ' +
+            '-e myEnv.json ' +
+            '-f myFolder ' +
             '--exportEnvironment exported_env.json ' +
-            '--data /path/to/csv.csv ' +
-            '--global myGlobals.json ' +
-            '--exportGlobals exported_glob.json ' +
-            '-y 12000 ' +
-            '--requestTimeout 5000 ' +
-            '--avoidRedirects ' +
-            '--no-summary ' +
-            '---iteration-count 2000 ' +
-            '---noColor ' +
-            '--noTestSymbols ' +
-            '--insecure ' +
-            '--tls ' +
-            '--encoding binary ' +
-            '--outputFile ./omg.txt ' +
-            '--outputFileVerbose LOTSOFSTUFF.log ' +
-            '--testReportFile junit.xml ' +
-            '--html report.html ' +
-            '--whiteScreen ' +
-            ' --stopOnError --silent').split(' '), 'newmantests', function (err, config) {
+            '-d /path/to/csv.csv ' +
+            '-g myGlobals.json ' +
+            '-G exported_glob.json ' +
+            '--delay 12000 ' +
+            '-r 5000 ' +
+            '-R ' +
+            '-j ' +
+            '-n 2000 ' +
+            '-C ' +
+            '-S ' +
+            '-k ' +
+            '-l ' +
+            '-N binary ' +
+            '-o ./omg.txt ' +
+            '-O LOTSOFSTUFF.log ' +
+            '-t junit.xml ' +
+            '-H report.html ' +
+            '-W ' +
+            '--stopOnError --silent').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
 
                 var opts = config.run;

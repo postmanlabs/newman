@@ -73,6 +73,27 @@ var _ = require('lodash'),
     },
 
     /**
+     *  used for resetting the program instance for consecutive runs.
+     *
+     * @param {Object} program - The command commander program instance.
+    */
+    resetProgram = function (program) {
+        for (var prop in program) {
+            if (_.has(program, prop)) {
+                if (program[prop] instanceof Array) {
+                    program[prop] = [];
+                }
+                else if (program[prop] instanceof Object) {
+                    program[prop] = {};
+                }
+                else {
+                    delete program[prop];
+                }
+            }
+        }
+    },
+
+    /**
      * Creates a parser capable of handling legacy options.
      *
      * @param  {Object} rawArgs - The rawArgs supplied to rawOptions, to be passed to program.parse()
@@ -81,6 +102,7 @@ var _ = require('lodash'),
      * @private
      */
     legacy = function (rawArgs) {
+        resetProgram(program);
         program
             .version(version)
             .option('-c, --collection <path>', 'DEPRECATED: Specify a Postman collection as a JSON file')
@@ -92,7 +114,8 @@ var _ = require('lodash'),
             .option('-f, --folder <path>',
                 'DEPRECATED: Run a single folder from a collection. To be used with -c or -u')
             .option('-r, --requestTimeout <n>', 'DEPRECATED: Specify a request timeout (in ms) for requests', Integer)
-            .option('-y, --delay [n]', 'DEPRECATED: Specify the extent of delay between requests (milliseconds)', Integer, 0)
+            .option('-y, --delay [n]',
+                'DEPRECATED: Specify the extent of delay between requests (milliseconds)', Integer, 0)
             .option('-R, --avoidRedirects', 'DEPRECATED: Prevents Newman from automatically following redirects')
             .option('-k, --insecure', 'DEPRECATED: Disable strict ssl', false)
             .option('-d, --data <path>', 'DEPRECATED: Specify a data file to use for iterations (either json or csv)')
@@ -137,7 +160,7 @@ var _ = require('lodash'),
      */
 
     run = function (rawArgs) {
-
+        resetProgram(program);
         program
             .version(version);
 
@@ -252,7 +275,6 @@ var _ = require('lodash'),
         if (!run.collection && (options.rawArgs || options.args)) {
             run.collection = options.rawArgs[1] || options.args[0];
         }
-
         if (run.url && !run.collection) {
             run.collection = run.url;
         }
@@ -262,7 +284,7 @@ var _ = require('lodash'),
         if (run.data && !run.iterationData) {
             run.iterationData = run.data;
         }
-        if (run.global && run.globals.length === 0) {
+        if (run.global && (!run.globals || run.globals.length === 0)) {
             run.globals = run.global;
         }
         if (run.delay && !run.delayRequest) {
@@ -283,8 +305,8 @@ var _ = require('lodash'),
         if (run.outputFile && !run.reporterJsonExport) {
             run.reporterJsonExport = run.outputFile;
         }
-        if (!run.summary && !run.reporterCliNoSummary) {
-            run.reporterCliNoSummary = !run.summary;
+        if (options.summary === false && !run.reporterCliNoSummary) {
+            run.reporterCliNoSummary = true;
         }
         if (!run.noColor && run.whiteScreen) {
             run.noColor = run.whiteScreen;
