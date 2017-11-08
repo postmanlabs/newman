@@ -66,8 +66,8 @@ var _ = require('lodash'),
             eqIndex = val.indexOf('='),
             hasEq = eqIndex !== -1;
         // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
-        arg = hasEq ? { key: arg.slice(0, eqIndex), value: arg.slice(eqIndex + 1) } :
-            { key: arg, value: undefined };
+        arg = hasEq ? { key: val.slice(0, eqIndex), value: val.slice(eqIndex + 1) } :
+            { key: val, value: undefined };
         memo.push(arg);
         return memo;
     },
