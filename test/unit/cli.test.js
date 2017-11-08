@@ -180,7 +180,7 @@ describe('cli parser', function () {
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--no-color ' +
             '--delay-request 12000 ' +
-            '--timeout-global 10000 ' +
+            '--timeout 10000 ' +
             '--timeout-request 5000 ' +
             '--timeout-script 5000 ' +
             '--ignore-redirects ' +
@@ -199,7 +199,7 @@ describe('cli parser', function () {
                 expect(opts.globals).to.be('myGlobals.json');
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delayRequest).to.be(12000);
-                expect(opts.timeoutGlobal).to.be(10000);
+                expect(opts.timeout).to.be(10000);
                 expect(opts.timeoutRequest).to.be(5000);
                 expect(opts.timeoutScript).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
@@ -238,7 +238,7 @@ describe('cli parser', function () {
             '--reporters json,html ' +
             '--no-color ' +
             '--delay-request 12000 ' +
-            '--timeout-global 10000 ' +
+            '--timeout 10000 ' +
             '--timeout-request 5000 ' +
             '--timeout-script 5000 ' +
             '--ignore-redirects ' +
@@ -263,7 +263,7 @@ describe('cli parser', function () {
 
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delayRequest).to.be(12000);
-                expect(opts.timeoutGlobal).to.be(10000);
+                expect(opts.timeout).to.be(10000);
                 expect(opts.timeoutRequest).to.be(5000);
                 expect(opts.timeoutScript).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
