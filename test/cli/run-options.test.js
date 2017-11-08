@@ -1,7 +1,18 @@
+var newmanVersion = require('../../package.json').version;
+
 /* globals it, describe, exec */
 describe('CLI run options', function () {
     it('should work correctly without any extra options', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', done);
+    });
+
+    it('should display the current Newman version correctly', function (done) {
+        exec('node ./bin/newman.js --version', function (code, stdout, stderr) {
+            expect(code).be(0);
+            expect(stdout).be(`${newmanVersion}\n`);
+            expect(stderr).be('');
+            done();
+        });
     });
 
     it('should not work without a collection', function (done) {
@@ -38,6 +49,15 @@ describe('CLI run options', function () {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var first=James --global-var last=Bond', function (code) {
             expect(code).be(0);
+            done();
+        });
+    });
+
+    it('should throw an error for missing --global-var values', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var', function (code, stdout, stderr) {
+            expect(code).be(1);
+            expect(stderr).to.be('\n  error: option `--global-var <value>\' argument missing\n\n');
             done();
         });
     });
