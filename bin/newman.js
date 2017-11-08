@@ -15,7 +15,6 @@ var _ = require('lodash'),
      */
     Integer = function (arg) {
         var num = Number(arg);
-
         if (!_.isSafeInteger(num) || num <= 0) {
             throw new Error('The value must be a positive integer.');
         }
@@ -93,8 +92,7 @@ var _ = require('lodash'),
             .option('-f, --folder <path>',
                 'DEPRECATED: Run a single folder from a collection. To be used with -c or -u')
             .option('-r, --requestTimeout <n>', 'DEPRECATED: Specify a request timeout (in ms) for requests', Integer)
-            .option('-y, --delay <n>',
-                'DEPRECATED: Specify the extent of delay between requests (milliseconds)', Integer, 0)
+            .option('-y, --delay [n]', 'DEPRECATED: Specify the extent of delay between requests (milliseconds)', Integer, 0)
             .option('-R, --avoidRedirects', 'DEPRECATED: Prevents Newman from automatically following redirects')
             .option('-k, --insecure', 'DEPRECATED: Disable strict ssl', false)
             .option('-d, --data <path>', 'DEPRECATED: Specify a data file to use for iterations (either json or csv)')
@@ -124,7 +122,6 @@ var _ = require('lodash'),
             .option('-x, --exitCode',
                 'DEPRECATED: Continues running tests despite test failures, but exit with code 1', false)
             .option('--silent', 'Prevents newman from showing output to CLI', false)
-            .option('--no-color', 'Disable colored output', false)
             .option('--color', 'Force colored output (for use in CI environments)')
             .option('collection <path>', 'URL or path to a Postman Collection')
             .parse(rawArgs);
@@ -232,12 +229,12 @@ var _ = require('lodash'),
      */
     formatLegacyOptions = function (options) {
         var optionsObj = {},
-            optionName,
             prop,
+            optionName,
             run = {},
-            optionNames = [],
             reporter = {},
-            reporters = ['cli'];
+            reporters = ['cli'],
+            optionNames = [];
 
         options.options.forEach(function (option) {
             optionName = option.long;
@@ -252,40 +249,59 @@ var _ = require('lodash'),
             }
         }
 
+        if (!run.collection && (options.rawArgs || options.args)) {
+            run.collection = options.rawArgs[1] || options.args[0];
+        }
+
         if (run.url && !run.collection) {
             run.collection = run.url;
         }
         if (run.environmentUrl && !run.environment) {
             run.environment = run.environmentUrl;
         }
-        if (run.html) {
+        if (run.data && !run.iterationData) {
+            run.iterationData = run.data;
+        }
+        if (run.global && run.globals.length === 0) {
+            run.globals = run.global;
+        }
+        if (run.delay && !run.delayRequest) {
+            run.delayRequest = run.delay;
+        }
+        if (run.requestTimeout && !run.timeoutRequest) {
+            run.timeoutRequest = run.requestTimeout;
+        }
+        if (run.avoidRedirects && !run.ignoreRedirects) {
+            run.ignoreRedirects = run.avoidRedirects;
+        }
+        if (run.html && !run.reporterHtmlExport) {
             run.reporterHtmlExport = run.html;
         }
-        if (run.testReportFile) {
+        if (run.testReportFile && !run.reporterJunitExport) {
             run.reporterJunitExport = run.testReportFile;
         }
-        if (run.outputFile) {
+        if (run.outputFile && !run.reporterJsonExport) {
             run.reporterJsonExport = run.outputFile;
         }
-        if (run.noSummary) {
-            run.reporterCliNoSummary = run.noSummary;
+        if (!run.summary && !run.reporterCliNoSummary) {
+            run.reporterCliNoSummary = !run.summary;
         }
         if (!run.noColor && run.whiteScreen) {
             run.noColor = run.whiteScreen;
         }
-        if (!options.color || options.noColor) {
+        if (!options.color || run.noColor) {
             run.color = false;
         }
-        if (run.number) {
+        if (run.numbe && !run.iterationCount) {
             run.iterationCount = run.number;
         }
-        if (run.noTestSymbols) {
+        if (run.noTestSymbols && !run.disableUnicode) {
             run.disableUnicode = run.noTestSymbols;
         }
-        if (run.stopOnError) {
+        if (run.stopOnError && !run.bail) {
             run.bail = run.stopOnError;
         }
-        if (run.exitCode) {
+        if (run.exitCode && !run.suppressExitCode) {
             run.suppressExitCode = run.exitCode;
         }
         if (run.outputFile && _.set(reporter, 'json.output', run.outputFile)) {
@@ -306,8 +322,6 @@ var _ = require('lodash'),
 
         optionsObj.command = 'run';
         optionsObj.run = run;
-
-        console.log(optionsObj);
         return optionsObj;
     },
 
@@ -362,8 +376,7 @@ var _ = require('lodash'),
             reporterArgs,
             rawArgs,
             result,
-            checkForColor,
-            shiftedArr;
+            checkForColor;
 
         rawArgs = separateReporterArgs(procArgv);
         try {
@@ -376,8 +389,7 @@ var _ = require('lodash'),
                 });
             }
             else {
-                shiftedArr = ['', '', ...rawArgs.argv];
-                legacy(shiftedArr);
+                legacy(rawArgs.argv);
                 result = program;
             }
 
@@ -408,11 +420,15 @@ var _ = require('lodash'),
         // eslint-disable-next-line max-len
         // This hack has been added from //https://github.com/mochajs/mocha/blob/961c5392480a6e9ca730e43a4e86fde0d4420fc9/bin/_mocha#L20//2-L211
         // @todo remove when https://github.com/tj/commander.js/issues/691 is fixed.
-        checkForColor = _.includes(process.argv, '--color');
+        checkForColor = _.includes(rawArgs.argv, '--no-color') || _.includes(rawArgs.argv, '--noColor');
         if (checkForColor) {
-            result.color = true;
+            result.color = false;
+            result.noColor = true;
         }
-        if (!result.color || result.noColor) { result.color = false; }
+        else {
+            result.color = true;
+            result.noColor = false;
+        }
         if (!legacyMode) {
             result = formatOptions(result);
         }
