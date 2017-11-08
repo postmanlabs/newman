@@ -5,7 +5,14 @@
       "script": "setTimeout(function () {}, 400);"
     },{
       "listen": "test",
-      "script": "for(var i = 0; i++ < 1e8;); // 0.3 s"
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "var now = Date.now(),",
+          "    later = now + 300;",
+          "while(Date.now() < later);"
+        ]
+      }
     }],
     "request": {
       "url": "https://postman-echo.com/get",
