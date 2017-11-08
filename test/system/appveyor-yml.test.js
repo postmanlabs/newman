@@ -9,14 +9,14 @@ describe('appveyor.yml', function () {
         appveyorYAMLError;
 
     try {
-        appveyorYAML = yaml.safeLoad(fs.readFileSync('appveyor.yml').toString());
+        appveyorYAML = yaml.safeLoad(fs.readFileSync('.appveyor.yml').toString());
     }
     catch (e) {
         appveyorYAMLError = e;
     }
 
     it('must exist', function (done) {
-        fs.stat('appveyor.yml', done);
+        fs.stat('.appveyor.yml', done);
     });
 
     it('must be a valid yml', function () {
