@@ -1,5 +1,7 @@
 {
-  "timeout": {
-    "config": 500
+  "run": {
+    "timeoutGlobal": 10000,
+    "timeoutRequest": 3000,
+    "timeoutScript": 500
   }
 }
