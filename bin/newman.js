@@ -274,15 +274,20 @@ var _ = require('lodash'),
         if (!run.collection && (options.rawArgs || options.args)) {
             run.collection = options.rawArgs[1] || options.args[0];
         }
-        args = [{ alt: 'url', target: 'collection' }, { alt: 'environmentUrl', target: 'environment' },
-            { alt: 'data', target: 'iterationData' }, { alt: 'global', target: 'globals' },
-            { alt: 'delay', target: 'delayRequest' }, { alt: 'requestTimeout',
-                target: 'timeoutRequest' }, { alt: 'avoidRedirects',
-                target: 'ignoreRedirects' },
-            { alt: 'html', target: 'reporterHtmlExport' }, { alt: 'testReportFile',
-                target: 'reporterJunitExport' }, { alt: 'whiteScreen', target: 'noColor' },
-            { alt: 'number', target: 'iterationCount' }, { alt: 'noTestSymbols',
-                target: 'disableUnicode' }, { alt: 'stopOnError', target: 'bail' },
+        args = [
+            { alt: 'url', target: 'collection' },
+            { alt: 'environmentUrl', target: 'environment' },
+            { alt: 'data', target: 'iterationData' },
+            { alt: 'global', target: 'globals' },
+            { alt: 'delay', target: 'delayRequest' },
+            { alt: 'requestTimeout', target: 'timeoutRequest' },
+            { alt: 'avoidRedirects', target: 'ignoreRedirects' },
+            { alt: 'html', target: 'reporterHtmlExport' },
+            { alt: 'testReportFile', target: 'reporterJunitExport' },
+            { alt: 'whiteScreen', target: 'noColor' },
+            { alt: 'number', target: 'iterationCount' },
+            { alt: 'noTestSymbols', target: 'disableUnicode' },
+            { alt: 'stopOnError', target: 'bail' },
             { alt: 'exitCode', target: 'suppressExitCode' }
         ];
 
