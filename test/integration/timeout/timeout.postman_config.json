@@ -1,0 +1,7 @@
+{
+  "run": {
+    "timeout": 10000,
+    "timeoutRequest": 3000,
+    "timeoutScript": 500
+  }
+}

@@ -1,9 +1,6 @@
 {
   "item": [{
     "event": [{
-      "listen": "prerequest",
-      "script": "setTimeout(function () {}, 400);"
-    },{
       "listen": "test",
       "script": {
         "type": "text/javascript",
@@ -15,7 +12,7 @@
       }
     }],
     "request": {
-      "url": "https://postman-echo.com/get",
+      "url": "https://postman-echo.com/delay/2",
       "method": "GET"
     }
   }]
