@@ -25,7 +25,6 @@ var _ = require('lodash'),
     /**
      * Separates reporter specific arguments from the rest.
      *
-     * @todo Figure out a better way! (Or submit a PR to argparse).
      * @param {Array} allArgs - An array of strings, each coresponding to a CLI argument.
      * @returns {Object} - An object with reporter and regular argument key-values.
      */
@@ -74,10 +73,8 @@ var _ = require('lodash'),
 
     /**
      *  used for resetting the program instance for consecutive runs.
-     *
-     * @param {Object} program - The command commander program instance.
     */
-    resetProgram = function (program) {
+    resetProgram = function () {
         for (var prop in program) {
             if (_.has(program, prop)) {
                 if (program[prop] instanceof Array) {
@@ -258,7 +255,8 @@ var _ = require('lodash'),
             run = {},
             reporter = {},
             reporters = ['cli'],
-            optionNames = [];
+            optionNames = [],
+            args;
 
         options.options.forEach(function (option) {
             optionName = option.long;
@@ -276,56 +274,27 @@ var _ = require('lodash'),
         if (!run.collection && (options.rawArgs || options.args)) {
             run.collection = options.rawArgs[1] || options.args[0];
         }
-        if (run.url && !run.collection) {
-            run.collection = run.url;
-        }
-        if (run.environmentUrl && !run.environment) {
-            run.environment = run.environmentUrl;
-        }
-        if (run.data && !run.iterationData) {
-            run.iterationData = run.data;
-        }
-        if (run.global && (!run.globals || run.globals.length === 0)) {
-            run.globals = run.global;
-        }
-        if (run.delay && !run.delayRequest) {
-            run.delayRequest = run.delay;
-        }
-        if (run.requestTimeout && !run.timeoutRequest) {
-            run.timeoutRequest = run.requestTimeout;
-        }
-        if (run.avoidRedirects && !run.ignoreRedirects) {
-            run.ignoreRedirects = run.avoidRedirects;
-        }
-        if (run.html && !run.reporterHtmlExport) {
-            run.reporterHtmlExport = run.html;
-        }
-        if (run.testReportFile && !run.reporterJunitExport) {
-            run.reporterJunitExport = run.testReportFile;
-        }
-        if (run.outputFile && !run.reporterJsonExport) {
-            run.reporterJsonExport = run.outputFile;
-        }
+        args = [{ alt: 'url', target: 'collection' }, { alt: 'environmentUrl', target: 'environment' },
+            { alt: 'data', target: 'iterationData' }, { alt: 'global', target: 'globals' },
+            { alt: 'delay', target: 'delayRequest' }, { alt: 'requestTimeout',
+                target: 'timeoutRequest' }, { alt: 'avoidRedirects',
+                target: 'ignoreRedirects' },
+            { alt: 'html', target: 'reporterHtmlExport' }, { alt: 'testReportFile',
+                target: 'reporterJunitExport' }, { alt: 'whiteScreen', target: 'noColor' },
+            { alt: 'number', target: 'iterationCount' }, { alt: 'noTestSymbols',
+                target: 'disableUnicode' }, { alt: 'stopOnError', target: 'bail' },
+            { alt: 'exitCode', target: 'suppressExitCode' }
+        ];
+
+        args.forEach(function (arg) {
+            run[arg.alt] && _.isEmpty(run[arg.target]) && (run[arg.target] = run[arg.alt]);
+        });
+
         if (options.summary === false && !run.reporterCliNoSummary) {
             run.reporterCliNoSummary = true;
         }
-        if (!run.noColor && run.whiteScreen) {
-            run.noColor = run.whiteScreen;
-        }
         if (!options.color || run.noColor) {
             run.color = false;
-        }
-        if (run.numbe && !run.iterationCount) {
-            run.iterationCount = run.number;
-        }
-        if (run.noTestSymbols && !run.disableUnicode) {
-            run.disableUnicode = run.noTestSymbols;
-        }
-        if (run.stopOnError && !run.bail) {
-            run.bail = run.stopOnError;
-        }
-        if (run.exitCode && !run.suppressExitCode) {
-            run.suppressExitCode = run.exitCode;
         }
         if (run.outputFile && _.set(reporter, 'json.output', run.outputFile)) {
             reporters.push('json');
