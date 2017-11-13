@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "3.9.0-beta.1",
+  "version": "3.9.0-beta.2",
   "description": "Command-line companion utility for Postman",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
@@ -43,6 +43,7 @@
     "cli-progress": "1.6.0",
     "cli-table2": "0.2.0",
     "colors": "1.1.2",
+    "commander": "2.11.0",
     "csv-parse": "1.2.4",
     "eventemitter3": "2.0.3",
     "filesize": "3.5.11",
@@ -63,7 +64,7 @@
   },
   "devDependencies": {
     "editorconfig": "0.15.0",
-    "eslint": "4.10.0",
+    "eslint": "4.11.0",
     "eslint-plugin-jsdoc": "3.2.0",
     "eslint-plugin-lodash": "2.5.0",
     "eslint-plugin-mocha": "4.11.0",
