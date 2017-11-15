@@ -99,7 +99,7 @@ var _ = require('lodash'),
      * @private
      */
     legacy = function (rawArgs) {
-        resetProgram(program);
+        resetProgram();
         program
             .version(version)
             .option('-c, --collection <path>', 'DEPRECATED: Specify a Postman collection as a JSON file')
@@ -157,13 +157,14 @@ var _ = require('lodash'),
      */
 
     run = function (rawArgs) {
-        resetProgram(program);
+        resetProgram();
         program
             .version(version);
 
         program
             .command('run <collection>')
             .description('URL or path to a Postman Collection.')
+            .usage('<collection> [options]')
             .option('-e, --environment <path>', 'Specify a URL or Path to a Postman Environment.')
             .option('-g, --globals <path>', 'Specify a URL or Path to a file containing Postman Globals.')
             .option('--folder <path>', 'Run a single folder from a collection.')
@@ -373,7 +374,8 @@ var _ = require('lodash'),
             reporterArgs,
             rawArgs,
             result,
-            checkForColor;
+            checkForColor,
+            vPos;
 
         rawArgs = separateReporterArgs(procArgv);
         try {
@@ -418,6 +420,10 @@ var _ = require('lodash'),
         // This hack has been added from //https://github.com/mochajs/mocha/blob/961c5392480a6e9ca730e43a4e86fde0d4420fc9/bin/_mocha#L20//2-L211
         // @todo remove when https://github.com/tj/commander.js/issues/691 is fixed.
         checkForColor = _.includes(rawArgs.argv, '--no-color') || _.includes(rawArgs.argv, '--noColor');
+        vPos = rawArgs.argv.indexOf('-v');
+        if (vPos > -1) {
+            rawArgs.argv[vPos] = '-V';
+        }
         if (checkForColor) {
             result.color = false;
             result.noColor = true;
