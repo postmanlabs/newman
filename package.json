@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "editorconfig": "0.15.0",
-    "eslint": "4.10.0",
+    "eslint": "4.11.0",
     "eslint-plugin-jsdoc": "3.2.0",
     "eslint-plugin-lodash": "2.5.0",
     "eslint-plugin-mocha": "4.11.0",
@@ -71,7 +71,7 @@
     "expect.js": "0.3.1",
     "js-yaml": "3.10.0",
     "jsdoc": "3.5.5",
-    "jsdoc-to-markdown": "3.0.1",
+    "jsdoc-to-markdown": "3.0.2",
     "mocha": "4.0.1",
     "nsp": "2.8.1",
     "nyc": "11.3.0",
