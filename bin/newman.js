@@ -161,6 +161,8 @@ var _ = require('lodash'),
         program
             .version(version);
 
+        program.name = 'newman';
+
         program
             .command('run <collection>')
             .description('URL or path to a Postman Collection.')
@@ -420,9 +422,8 @@ var _ = require('lodash'),
         // This hack has been added from //https://github.com/mochajs/mocha/blob/961c5392480a6e9ca730e43a4e86fde0d4420fc9/bin/_mocha#L20//2-L211
         // @todo remove when https://github.com/tj/commander.js/issues/691 is fixed.
         checkForColor = _.includes(rawArgs.argv, '--no-color') || _.includes(rawArgs.argv, '--noColor');
-        vPos = rawArgs.argv.indexOf('-v');
-        if (vPos > -1) {
-            rawArgs.argv[vPos] = '-V';
+        if ((vPos = rawArgs.argv.indexOf('-v')) > -1) {
+            rawArgs[vPos] = '-V';
         }
         if (checkForColor) {
             result.color = false;
