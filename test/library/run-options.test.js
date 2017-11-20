@@ -35,7 +35,7 @@ describe('Newman run options', function () {
             if (err) { return done(err); }
 
             expect(summary.run.failures).to.have.length(1);
-            expect(summary.run.failures[0].error).to.have.property('name', 'AssertionFailure');
+            expect(summary.run.failures[0].error).to.have.property('name', 'AssertionError');
 
             done();
         });
