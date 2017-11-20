@@ -2,7 +2,7 @@
   "name": "newman",
   "version": "3.9.0-beta.2",
   "description": "Command-line companion utility for Postman",
-  "man": "./man/newman.1.gz",
+  "man": "./man/newman.1",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
   "repository": {
@@ -34,7 +34,8 @@
     "build-docs": "node npm/build-docs.js",
     "build-wiki": "node npm/build-wiki.js",
     "publish-docs": "node npm/publish-docs.js",
-    "publish-wiki": "node npm/publish-wiki.js"
+    "publish-wiki": "node npm/publish-wiki.js",
+    "prepublishOnly": "node npm/prepublishOnly.js"
   },
   "author": "Postman Labs <help@getpostman.com> (=)",
   "license": "Apache-2.0",
@@ -56,6 +57,7 @@
     "postman-request": "2.81.1-postman.3",
     "postman-runtime": "7.0.0",
     "pretty-ms": "3.0.1",
+    "readme-to-man-page": "0.6.0",
     "semver": "5.4.1",
     "serialised-error": "1.1.2",
     "shelljs": "0.7.8",
