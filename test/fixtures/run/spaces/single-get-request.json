@@ -1,21 +1,33 @@
  {
-  "info": {
-    "name": "Example Collection with a single GET request",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
+   "info": {
+     "name": "Example Collection with a single GET request",
+     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+   },
 
-  "item": [{
-    "name": "A simple GET request",
-    "event": [{
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": ["tests['response code is 200'] = (responseCode.code === 200);"]
-      }
-    }],
-    "request": {
-      "url": "https://postman-echo.com/get?source=newman-sample-github-collection",
-      "method": "GET"
-    }
-  }]
-}
+   "item": [{
+     "name": "A simple GET request",
+     "event": [{
+       "listen": "test",
+       "script": {
+         "type": "text/javascript",
+         "exec": ["tests['response code is 200'] = (responseCode.code === 200);"]
+       }
+     }],
+     "request": {
+       "url": {
+         "host": [
+           "postman-echo",
+           "com"
+         ],
+         "path": ["get"],
+         "protocol": "https",
+         "query": [{
+           "key": "source",
+           "value": "newman-sample-github-collection"
+         }],
+         "variable": []
+       },
+       "method": "GET"
+     }
+   }]
+ }
