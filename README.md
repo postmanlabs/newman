@@ -472,8 +472,8 @@ $ newman run file-upload.postman_collection.json
 4 Obtain the environment URI from: `https://api.getpostman.com/environments?apikey=$apiKey`<br/>
 5 Using the collection and environment URIs acquired in steps 3 and 4, run the collection as follows:
 ```
-newman run https://api.getpostman.com/collections/$uid?apikey=$apiKey \
-    --environment https://api.getpostman.com/environments/$uid?apikey=$apiKey
+newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
+    --environment "https://api.getpostman.com/environments/$uid?apikey=$apiKey"
 ```
 
 ---
