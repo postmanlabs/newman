@@ -57,7 +57,6 @@
     "postman-request": "2.81.1-postman.3",
     "postman-runtime": "7.0.0",
     "pretty-ms": "3.1.0",
-    "readme-to-man-page": "0.6.0",
     "semver": "5.4.1",
     "serialised-error": "1.1.2",
     "shelljs": "0.7.8",
@@ -81,6 +80,7 @@
     "packity": "0.3.2",
     "parse-gitignore": "0.4.0",
     "postman-jsdoc-theme": "0.0.3",
+    "readme-to-man-page": "0.6.0",
     "recursive-readdir": "2.2.1"
   },
   "engines": {
