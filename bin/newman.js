@@ -102,6 +102,8 @@ var _ = require('lodash'),
         resetProgram();
         program
             .version(version)
+            .name('newman')
+            .usage('[options] <collection>')
             .option('-c, --collection <path>', 'DEPRECATED: Specify a Postman collection as a JSON file')
             .option('-u, --url <path>', 'DEPRECATED: Specify a Postman collection as a URL')
             .option('-e, --environment <path>', 'DEPRECATED: Specify a Postman environment as a JSON file')
@@ -155,7 +157,6 @@ var _ = require('lodash'),
      *  Adds run command options to the common commander program instance.
      * @private
      */
-
     run = function (rawArgs) {
         resetProgram();
         program
@@ -246,6 +247,24 @@ var _ = require('lodash'),
     },
 
     /**
+     * Traverses the options object to populate a name array.
+     *
+     * @param {Object} options - The options populated through CLI.
+     * @returns {Array} - An array of option names in camelCase format.
+     */
+    getOptionNames = function (options) {
+        var optionName,
+            optionNames = [];
+        options.options.forEach(function (option) {
+            optionName = option.long;
+            optionName = optionName.replace('--', '');
+            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+            optionNames.push(optionName);
+        });
+        return optionNames;
+    },
+
+    /**
      * Formats the legacy options to the required format for the dispatch function.
      *
      * @param {Object} options - The options populated through CLI.
@@ -254,19 +273,13 @@ var _ = require('lodash'),
     formatLegacyOptions = function (options) {
         var optionsObj = {},
             prop,
-            optionName,
             run = {},
             reporter = {},
             reporters = ['cli'],
             optionNames = [],
             args;
 
-        options.options.forEach(function (option) {
-            optionName = option.long;
-            optionName = optionName.replace('--', '');
-            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-            optionNames.push(optionName);
-        });
+        optionNames = getOptionNames(options);
 
         for (prop in options) {
             if (_.includes(optionNames, String(prop))) {
@@ -335,15 +348,10 @@ var _ = require('lodash'),
         var command = (_.includes(options.rawArgs[0], 'version') ||
         _.includes(options.rawArgs[0], '-v') || _.includes(options.rawArgs[0], '-V')) ?
                 'version' : options._name,
-            optionsObj, optionName, prop,
+            optionsObj, prop,
             optionNames = [];
 
-        options.options.forEach(function (option) {
-            optionName = option.long;
-            optionName = optionName.replace('--', '');
-            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-            optionNames.push(optionName);
-        });
+        optionNames = getOptionNames(options);
 
         optionsObj = { [command]: {} };
         optionsObj.command = command;
@@ -362,6 +370,17 @@ var _ = require('lodash'),
     },
 
     /**
+     * Logs the message passed as a warning and then exits.
+     *
+     * @param {String} msg - The message to be logged.
+     *
+     */
+    customError = function (msg) {
+        console.warn(msg);
+        process.exit(0);
+    },
+
+    /**
      * Loads the raw options for Newman, without loading special options such as collection, environment etc. This
      * function does not access the network or the file-system.
      *
@@ -377,13 +396,17 @@ var _ = require('lodash'),
             rawArgs,
             result,
             checkForColor,
-            vPos;
+            checkForVersion,
+            checkForCommand,
+            vPos,
+            validCommands = [];
 
         rawArgs = separateReporterArgs(procArgv);
         try {
             if (!legacyMode) {
                 run(rawArgs.argv);
                 program.commands.forEach(function (command) {
+                    validCommands.push(command._name);
                     if (command._name === 'run') {
                         result = command;
                     }
@@ -397,6 +420,15 @@ var _ = require('lodash'),
             if (_.isEmpty(procArgv) || _.includes(procArgv, '-h') || _.includes(procArgv, '--help')) {
                 return result.outputHelp();
             }
+            checkForVersion = _.includes(rawArgs.argv, '--version') ||
+                _.includes(rawArgs.argv, '-v') ||
+                _.includes(rawArgs.argv, '-V');
+            checkForCommand = _.includes(validCommands, rawArgs.argv[0]);
+
+            !checkForVersion && !legacyMode && !checkForCommand &&
+            customError('\nNewman: Invalid command or parameter.\n\n' +
+            'Example:\nnewman run my-api.json -e variables.json\n\n' +
+            'For more information, run:\nnewman --help\n');
         }
         catch (error) {
             return callback(_.set(error, 'help', program.outputHelp()));
