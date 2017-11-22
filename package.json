@@ -51,7 +51,7 @@
     "mkdirp": "0.5.1",
     "parse-json": "3.0.0",
     "postman-collection": "3.0.4",
-    "postman-collection-transformer": "2.4.0",
+    "postman-collection-transformer": "2.5.0",
     "postman-request": "2.81.1-postman.3",
     "postman-runtime": "7.1.0",
     "pretty-ms": "3.1.0",
