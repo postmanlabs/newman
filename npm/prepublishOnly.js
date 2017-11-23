@@ -17,7 +17,7 @@ var fs = require('fs'),
     manPath,
     manPageContent;
 
-manPath = path.resolve(path.join(__dirname, '../man/newman.1'));
+manPath = path.resolve(path.join(__dirname, '../man'));
 
 module.exports = function (exit) {
 
@@ -31,7 +31,10 @@ module.exports = function (exit) {
     });
 
     // write the generated content to the specified path
-    fs.writeFile(manPath, manPageContent, function (err) {
+    if (!fs.existsSync(manPath)) {
+        mkdir(manPath);
+    }
+    fs.writeFile(manPath + '/newman.1', manPageContent, function (err) {
         console.info(err ? err : colors.green.bold(`- man page generated at "${manPath}"`));
         exit(err ? 1 : 0);
     });
