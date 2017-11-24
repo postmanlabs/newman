@@ -72,6 +72,22 @@ var _ = require('lodash'),
     },
 
     /**
+     *  used for converting host names to the required object format.
+     *
+     * --block-hosts 192.168.1.1
+     *
+     * @param {Array} hosts - The array of host name to block
+     * @returns {Object} - {host : true} - The object representation of the host names.
+    */
+    hostCollect = function (hosts) {
+        var obj = {};
+        hosts.split(',').forEach(function (host) {
+            obj[host] = true;
+        });
+        return obj;
+    },
+
+    /**
      *  used for resetting the program instance for consecutive runs.
     */
     resetProgram = function () {
@@ -202,6 +218,9 @@ var _ = require('lodash'),
                 'Specify the path to the Client SSL key (not needed for .pfx files)')
             .option('--ssl-client-passphrase <path>',
                 'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
+            .option('--abort-on-error', 'Abruptly halts the run on errors, and directly calls the done callback')
+            .option('--delay-iteration [n]', 'Configure delays (in ms) between iterations', Integer, 1000)
+            .option('--block-hosts [hosts]', 'Allows restricting IP/host in requests', hostCollect, {})
             .parse(rawArgs);
     },
 
