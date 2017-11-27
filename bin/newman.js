@@ -217,6 +217,7 @@ var _ = require('lodash'),
             .option('--restricted-addresses <hosts>', 'Allows restricting IP/host in requests', arrayCollect)
             .option('--entrypoint-execute <id>', 'Execute a folder/request using id or name')
             .option('--entrypoint-path <path>', 'Execute a folder/request using a path', arrayCollect)
+            .option('--execute-strategy [name]', 'Specify the execution strategy to be followed', 'path')
             .parse(rawArgs);
     },
 

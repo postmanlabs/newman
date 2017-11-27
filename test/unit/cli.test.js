@@ -183,6 +183,7 @@ describe('cli parser', function () {
             '--delay-iteration 2000 ' +
             '--restricted-addresses 192.168.1.1,192.168.1.2 ' +
             '--entrypoint-execute folderName ' +
+            '--execute-strategy idOrName ' +
             '--entrypoint-path grand_parent_folder_id,parent_folder_id ' +
             '-k').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
@@ -193,6 +194,7 @@ describe('cli parser', function () {
                 expect(opts.environment).to.be('myEnv.json');
                 expect(opts.folder).to.be('myFolder');
                 expect(opts.entrypointExecute).to.be('folderName');
+                expect(opts.executeStrategy).to.be('idOrName');
                 expect(opts.exportEnvironment).to.be('exported_env.json');
                 expect(opts.iterationData).to.be('path/to/csv.csv');
                 expect(opts.globals).to.be('myGlobals.json');
