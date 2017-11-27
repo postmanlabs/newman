@@ -72,19 +72,13 @@ var _ = require('lodash'),
     },
 
     /**
-     *  used for converting host names to the required object format.
+     *  used for converting string of host names to an array
      *
-     * --block-hosts 192.168.1.1
-     *
-     * @param {Array} hosts - The array of host name to block
-     * @returns {Object} - {host : true} - The object representation of the host names.
+     * @param {String} list - The string of host names
+     * @returns {Array} - The array representation of the host names.
     */
-    hostCollect = function (hosts) {
-        var obj = {};
-        hosts.split(',').forEach(function (host) {
-            obj[host] = true;
-        });
-        return obj;
+    arrayCollect = function (list) {
+        return list.split(',');
     },
 
     /**
@@ -220,7 +214,9 @@ var _ = require('lodash'),
                 'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
             .option('--abort-on-error', 'Abruptly halts the run on errors, and directly calls the done callback')
             .option('--delay-iteration [n]', 'Configure delays (in ms) between iterations', Integer, 1000)
-            .option('--block-hosts [hosts]', 'Allows restricting IP/host in requests', hostCollect, {})
+            .option('--restricted-addresses <hosts>', 'Allows restricting IP/host in requests', arrayCollect)
+            .option('--entrypoint-execute <id>', 'Execute a folder/request using id or name')
+            .option('--entrypoint-path <path>', 'Execute a folder/request using a path', arrayCollect)
             .parse(rawArgs);
     },
 

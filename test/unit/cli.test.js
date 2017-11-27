@@ -179,6 +179,11 @@ describe('cli parser', function () {
             '--ignore-redirects ' +
             '--bail ' +
             '--suppress-exit-code ' +
+            '--abort-on-error ' +
+            '--delay-iteration 2000 ' +
+            '--restricted-addresses 192.168.1.1,192.168.1.2 ' +
+            '--entrypoint-execute folderName ' +
+            '--entrypoint-path grand_parent_folder_id,parent_folder_id ' +
             '-k').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
 
@@ -187,6 +192,7 @@ describe('cli parser', function () {
                 expect(opts.collection).to.be('myCollection.json');
                 expect(opts.environment).to.be('myEnv.json');
                 expect(opts.folder).to.be('myFolder');
+                expect(opts.entrypointExecute).to.be('folderName');
                 expect(opts.exportEnvironment).to.be('exported_env.json');
                 expect(opts.iterationData).to.be('path/to/csv.csv');
                 expect(opts.globals).to.be('myGlobals.json');
@@ -197,6 +203,7 @@ describe('cli parser', function () {
                 expect(opts.timeoutScript).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
+                expect(opts.delayIteration).to.be(2000);
 
                 expect(opts.color).to.be(false);
 
@@ -208,9 +215,18 @@ describe('cli parser', function () {
                     { key: 'foo', value: 'bar' },
                     { key: 'alpha', value: '=beta=' }
                 ]);
+                expect(opts.restrictedAddresses).to.eql([
+                    '192.168.1.1',
+                    '192.168.1.2'
+                ]);
+                expect(opts.entrypointPath).to.eql([
+                    'grand_parent_folder_id',
+                    'parent_folder_id'
+                ]);
 
                 expect(opts.bail).to.be(true);
                 expect(opts.suppressExitCode).to.be(true);
+                expect(opts.abortOnError).to.be(true);
 
                 done();
             });
