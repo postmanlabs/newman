@@ -72,6 +72,16 @@ var _ = require('lodash'),
     },
 
     /**
+     *  used for converting a comma separated string to an array
+     *
+     * @param {String} list - The comma separated string
+     * @returns {Array} - The array representation of the string.
+    */
+    arrayCollect = function (list) {
+        return list.split(',');
+    },
+
+    /**
      *  used for resetting the program instance for consecutive runs.
     */
     resetProgram = function () {
@@ -202,6 +212,12 @@ var _ = require('lodash'),
                 'Specify the path to the Client SSL key (not needed for .pfx files)')
             .option('--ssl-client-passphrase <path>',
                 'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
+            .option('--abort-on-error', 'Abruptly halts the run on errors, and directly calls the done callback')
+            .option('--delay-iteration [n]', 'Configure delays (in ms) between iterations', Integer, 1000)
+            .option('--restricted-addresses <hosts>', 'Allows restricting IP/host in requests', arrayCollect)
+            .option('--entrypoint-execute <id>', 'Execute a folder/request using id or name')
+            .option('--entrypoint-path <path>', 'Execute a folder/request using a path', arrayCollect)
+            .option('--execute-strategy [name]', 'Specify the execution strategy to be followed', 'path')
             .parse(rawArgs);
     },
 
