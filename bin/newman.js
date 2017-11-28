@@ -72,10 +72,10 @@ var _ = require('lodash'),
     },
 
     /**
-     *  used for converting string of host names to an array
+     *  used for converting a comma separated string to an array
      *
-     * @param {String} list - The string of host names
-     * @returns {Array} - The array representation of the host names.
+     * @param {String} list - The comma separated string
+     * @returns {Array} - The array representation of the string.
     */
     arrayCollect = function (list) {
         return list.split(',');
