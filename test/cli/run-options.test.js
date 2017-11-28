@@ -62,6 +62,14 @@ describe('CLI run options', function () {
         });
     });
 
+    it('should throw an error in case of invalid entrypoint value when --abort-on-error is true', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/failed-request.json --entrypoint-execute randomName --abort-on-error', function (code) {
+            expect(code).be(1);
+            done();
+        });
+    });
+
     describe('script timeouts', function () {
         it('should be handled correctly when breached', function (done) {
             // eslint-disable-next-line max-len
