@@ -202,7 +202,8 @@ var _ = require('lodash'),
                 'Specify the path to the Client SSL key (not needed for .pfx files)')
             .option('--ssl-client-passphrase <path>',
                 'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
-            .option('--abort-on-error', 'Abruptly halts the run on errors, and directly calls the done callback')
+            .option('--abort-on-error',
+                'Skips the collection run on encountering an error and end the run with the error.')
             .parse(rawArgs);
     },
 
