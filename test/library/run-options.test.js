@@ -98,6 +98,18 @@ describe('Newman run options', function () {
         });
     });
 
+    it('should skip collection run in case of error when --abort-on-error is true', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/failed-request.json',
+            abortOnError: true
+        }, function (err) {
+            expect(err).to.be.ok();
+            expect(err.message).to.be('getaddrinfo ENOTFOUND 123.random.z 123.random.z:443');
+
+            done();
+        });
+    });
+
     describe('script timeouts', function () {
         // @todo: Unskip this when the underlying runtime behaviour has been fixed
         it.skip('should be handled correctly when breached', function (done) {
