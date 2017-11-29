@@ -179,6 +179,7 @@ describe('cli parser', function () {
             '--ignore-redirects ' +
             '--bail ' +
             '--suppress-exit-code ' +
+            '--abort-on-error ' +
             '-k').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
 
@@ -211,6 +212,7 @@ describe('cli parser', function () {
 
                 expect(opts.bail).to.be(true);
                 expect(opts.suppressExitCode).to.be(true);
+                expect(opts.abortOnError).to.be(true);
 
                 done();
             });
