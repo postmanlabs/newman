@@ -236,6 +236,7 @@ describe('cli parser', function () {
             '--timeout-script 5000 ' +
             '--ignore-redirects ' +
             '-k ' +
+            '--bail folder,failure ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--reporter-json-output ./omg.txt ' +
             '--reporter-html-output report.html ' +
@@ -265,6 +266,10 @@ describe('cli parser', function () {
                 expect(opts.globalVar).to.eql([
                     { key: 'foo', value: 'bar' },
                     { key: 'alpha', value: '=beta=' }
+                ]);
+                expect(opts.bail).to.eql([
+                    'folder',
+                    'failure'
                 ]);
 
                 expect(opts.color).to.be(false);

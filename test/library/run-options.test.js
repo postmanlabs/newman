@@ -98,6 +98,31 @@ describe('Newman run options', function () {
         });
     });
 
+    describe('bail modifiers', function () {
+        it('should skip collection run in case of error when folder is specified', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/failed-request.json',
+                bail: ['folder']
+            }, function (err) {
+                expect(err).to.be.ok();
+                expect(err.message).to.be('getaddrinfo ENOTFOUND 123.random.z 123.random.z:443');
+
+                done();
+            });
+        });
+
+        it('should gracefully stop a collection run in case of error with no additional modifiers', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/failed-request.json',
+                bail: true
+            }, function (err) {
+                expect(err).to.not.be.ok();
+
+                done();
+            });
+        });
+    });
+
     describe('script timeouts', function () {
         // @todo: Unskip this when the underlying runtime behaviour has been fixed
         it.skip('should be handled correctly when breached', function (done) {
