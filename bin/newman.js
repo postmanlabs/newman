@@ -80,7 +80,7 @@ var _ = require('lodash'),
      * @returns {Array} - [item1, item2] - The array representation of the passed string.
     */
     arrayCollect = function (list) {
-        return list.split(',');
+        return _.split(list, ',');
     },
 
     /**
