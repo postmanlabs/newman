@@ -125,10 +125,11 @@ describe('Newman run options', function () {
         it('should skip collection run in case of error when both folder and failure are specified', function (done) {
             newman.run({
                 collection: 'test/fixtures/run/failed-request.json',
+                folder: 'invalidName',
                 bail: ['folder', 'failure']
             }, function (err) {
                 expect(err).to.be.ok();
-                expect(err.message).to.be('getaddrinfo ENOTFOUND 123.random.z 123.random.z:443');
+                expect(err.message).to.be('Unable to find a folder or request: invalidName');
 
                 done();
             });
