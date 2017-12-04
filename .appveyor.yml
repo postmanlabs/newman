@@ -11,6 +11,7 @@ environment:
   matrix:
     - nodejs_version: "4"
     - nodejs_version: "6"
+    - nodejs_version: "8"
 
 # scripts that run after cloning repository
 install:

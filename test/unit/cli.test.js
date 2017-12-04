@@ -2,7 +2,7 @@ var expect = require('expect.js');
 
 /* global describe, it */
 describe('cli parser', function () {
-    var cli = require('../../lib/cli');
+    var cli = require('../../bin/newman');
 
     it('must export a function', function () {
         expect(cli).be.a('function');
@@ -17,7 +17,7 @@ describe('cli parser', function () {
 
     describe('Legacy Arguments', function () {
         it('should load standard arguments (-c and -e)', function (done) {
-            cli.rawOptions('-c myCollection.json -e env.json --silent'.split(' '), 'newmantests',
+            cli('-c myCollection.json -e env.json --silent'.split(' '), 'newmantests',
                 function (err, config) {
                     expect(err).to.be(null);
                     expect(config.command).to.be('run');
@@ -30,7 +30,7 @@ describe('cli parser', function () {
         });
 
         it('should support alternative arguments', function (done) {
-            cli.rawOptions(('-u http://a.com/myCollection.json ' +
+            cli(('-u http://a.com/myCollection.json ' +
             '--environment-url http://a.com/env.json --silent').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be(null);
                 expect(config.command).to.be('run');
@@ -38,15 +38,15 @@ describe('cli parser', function () {
                 expect(config.run.collection).to.be('http://a.com/myCollection.json');
                 expect(config.run.environment).to.be('http://a.com/env.json');
 
-                expect(config.run.bail).to.be(false);
-                expect(config.run.suppressExitCode).to.be(false);
+                expect(config.run.bail).to.be(undefined);
+                expect(config.run.suppressExitCode).to.be(undefined);
 
                 done();
             });
         });
 
         it('should load all arguments', function (done) {
-            cli.rawOptions(('-c myCollection.json ' +
+            cli(('-c myCollection.json ' +
             '-e myEnv.json ' +
             '-f myFolder ' +
             '--exportEnvironment exported_env.json ' +
@@ -121,7 +121,7 @@ describe('cli parser', function () {
 
     describe('Run Command', function () {
         it('should handle standard run command (run collection.json and -e)', function (done) {
-            cli.rawOptions('run myCollection.json --environment env.json -n 2'.split(' '), 'newmantests',
+            cli('run myCollection.json --environment env.json -n 2'.split(' '), 'newmantests',
                 function (err, config) {
                     expect(err).to.be(null);
                     expect(config.command).to.be('run');
@@ -135,24 +135,19 @@ describe('cli parser', function () {
         });
 
         it('should throw an error for invalid --iteration-count values', function (done) {
-            cli.rawOptions('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
-                expect(err.code).to.equal('ARGError');
+            cli('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
+                expect(err.message).to.be('The value must be a positive integer.');
 
                 done();
             });
         });
 
         describe('--global-var', function () {
-            it('should throw an error for missing --global-var values', function (done) {
-                cli.rawOptions('run myCollection.json --global-var'.split(' '), 'newmantests', function (err) {
-                    expect(err.code).to.equal('ARGError');
-
-                    done();
-                });
-            });
-
+            // test for 'should throw an error for missing --global-var values' has been moved to
+            // cli/run-options.test.js since commander throws custom error in case of argument
+            //  mismatch and that is better handled through exec and stderr check.
             it('should handle --global-var values without an `=`', function (done) {
-                cli.rawOptions('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
+                cli('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
                     expect(err).to.be(null);
                     expect(res.run.globalVar).to.eql([
                         { key: 'foo', value: undefined }
@@ -164,7 +159,7 @@ describe('cli parser', function () {
         });
 
         it('should load all arguments (except reporters)', function (done) {
-            cli.rawOptions(('run ' +
+            cli(('run ' +
             'myCollection.json ' +
             '-e myEnv.json ' +
             '-g myGlobals.json ' +
@@ -178,6 +173,7 @@ describe('cli parser', function () {
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--no-color ' +
             '--delay-request 12000 ' +
+            '--timeout 10000 ' +
             '--timeout-request 5000 ' +
             '--timeout-script 5000 ' +
             '--ignore-redirects ' +
@@ -196,12 +192,13 @@ describe('cli parser', function () {
                 expect(opts.globals).to.be('myGlobals.json');
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delayRequest).to.be(12000);
+                expect(opts.timeout).to.be(10000);
                 expect(opts.timeoutRequest).to.be(5000);
                 expect(opts.timeoutScript).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
                 expect(opts.insecure).to.be(true);
 
-                expect(opts.noColor).to.be(true);
+                expect(opts.color).to.be(false);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.contain('html');
@@ -220,7 +217,7 @@ describe('cli parser', function () {
         });
 
         it('should load all arguments (including reporters)', function (done) {
-            cli.rawOptions(('run ' +
+            cli(('run ' +
             'myCollection.json ' +
             '-e myEnv.json ' +
             '-g myGlobals.json ' +
@@ -234,10 +231,12 @@ describe('cli parser', function () {
             '--reporters json,html ' +
             '--no-color ' +
             '--delay-request 12000 ' +
+            '--timeout 10000 ' +
             '--timeout-request 5000 ' +
             '--timeout-script 5000 ' +
             '--ignore-redirects ' +
             '-k ' +
+            '--bail folder,failure ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--reporter-json-output ./omg.txt ' +
             '--reporter-html-output report.html ' +
@@ -258,6 +257,7 @@ describe('cli parser', function () {
 
                 expect(opts.exportGlobals).to.be('exported_glob.json');
                 expect(opts.delayRequest).to.be(12000);
+                expect(opts.timeout).to.be(10000);
                 expect(opts.timeoutRequest).to.be(5000);
                 expect(opts.timeoutScript).to.be(5000);
                 expect(opts.ignoreRedirects).to.be(true);
@@ -267,8 +267,12 @@ describe('cli parser', function () {
                     { key: 'foo', value: 'bar' },
                     { key: 'alpha', value: '=beta=' }
                 ]);
+                expect(opts.bail).to.eql([
+                    'folder',
+                    'failure'
+                ]);
 
-                expect(opts.noColor).to.be(true);
+                expect(opts.color).to.be(false);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('verbose');

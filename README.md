@@ -124,6 +124,9 @@ newman.run({
 - `--export-collection <path>`<br />
   The path to the file where Newman will output the final collection file before completing a run.
 
+- `--timeout <ms>`<br />
+  Specify the time (in milliseconds) to wait for the entire collection run to complete execution.
+
 - `--timeout-request <ms>`<br />
   Specify the time (in milliseconds) to wait for requests to return a response.
 
@@ -139,8 +142,12 @@ newman.run({
 - `--delay-request`<br />
   Specify the extent of delay between requests (milliseconds).
 
-- `--bail`<br />
-  Specify whether or not to stop a collection run on encountering the first error.
+- `--bail [optional modifiers]`<br />
+  Specify whether or not to stop a collection run on encountering the first error.<br />
+  Can optionally accept modifiers, currently include `folder` and `failure`.<br />
+  `folder` allows you to skip the entire collection run in case an invalid folder 
+  was specified using the `--folder` option or an error was encountered in general.<br />
+  `failure` would gracefully stop a collection run on the first test failure.
 
 - `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.
@@ -306,8 +313,9 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
 | options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
 | options.folder            | The name or ID of the folder (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string` |
+| options.timeout           | Specify the time (in milliseconds) to wait for the entire collection run to complete execution.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
-| options.timeoutScript     | Specify the time (in milliseconds) to wait for scripts to return a response.<br /><br />_Optional_<br />Type: `number` |
+| options.timeoutScript     | Specify the time (in milliseconds) to wait for scripts to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.delayRequest      | Specify the time (in milliseconds) to wait for between subsequent requests.<br /><br />_Optional_<br />Type: `number`, Default value: `0` |
 | options.ignoreRedirects   | This specifies whether newman would automatically follow 3xx responses from servers.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
@@ -468,8 +476,8 @@ $ newman run file-upload.postman_collection.json
 4 Obtain the environment URI from: `https://api.getpostman.com/environments?apikey=$apiKey`<br/>
 5 Using the collection and environment URIs acquired in steps 3 and 4, run the collection as follows:
 ```
-newman run https://api.getpostman.com/collections/$uid?apikey=$apiKey \
-    --environment https://api.getpostman.com/environments/$uid?apikey=$apiKey
+newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
+    --environment "https://api.getpostman.com/environments/$uid?apikey=$apiKey"
 ```
 
 ---

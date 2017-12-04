@@ -1,0 +1,197 @@
+{
+  "variable": [{
+      "key": "collection-var",
+      "value": "collection level variable"
+    },
+    {
+      "key": "collectionVariablesURL",
+      "value": "https://postman-echo.com/get?test=collection_variable"
+    },
+    {
+      "key": "duplicate-var",
+      "value": "incorrect"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [{
+      "key": "username",
+      "value": "postman"
+    }, {
+      "key": "password",
+      "value": "password"
+    }]
+  },
+  "event": [{
+    "listen": "prerequest",
+    "script": {
+      "exec": [
+        "pm.environment.set('collectionScriptURL', 'https://postman-echo.com/get?test=collection_script');"
+      ]
+    }
+  }],
+  "name": "Inherited Entities",
+  "item": [{
+      "name": "Collection level stuff",
+      "item": [{
+          "name": "Variables",
+          "request": "{{collectionVariablesURL}}",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "pm.test('request should get collection level variables', function() {",
+                "  pm.expect(pm.request.url.toString()).to.equal('https://postman-echo.com/get?test=collection_variable');",
+                "  pm.expect(pm.variables.get('collection-var')).to.equal('collection level variable');",
+                "  pm.expect(pm.variables.get('env-var')).to.equal('environment value');",
+                "});"
+              ]
+            }
+          }]
+        }, {
+          "name": "Auth",
+          "request": "https://postman-echo.com/basic-auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "pm.test('request can be authenticated with collection level auth', function() {",
+                "  pm.expect(pm.response.code).to.equal(200);",
+                "});"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "Events",
+          "request": "{{collectionScriptURL}}",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "pm.test('request should have run collection level prerequest script', function() {",
+                "  pm.expect(pm.request.url.toString()).to.equal('https://postman-echo.com/get?test=collection_script');",
+                "});",
+                "pm.environment.unset('collectionScriptURL');"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "Folder level stuff",
+      "auth": {
+        "type": "digest",
+        "digest": [{
+          "key": "username",
+          "value": "postman"
+        }, {
+          "key": "password",
+          "value": "password"
+        }]
+      },
+      "event": [{
+        "listen": "prerequest",
+        "script": {
+          "exec": [
+            "pm.environment.set('folderScriptURL', 'https://postman-echo.com/get?test=folder_script')"
+          ]
+        }
+      }],
+      "item": [{
+          "request": "https://postman-echo.com/digest-auth",
+          "name": "Auth",
+          "event": {
+            "listen": "test",
+            "script": {
+              "exec": [
+                "pm.test('request should use folder level auth, over collection level auth', function() {",
+                "  pm.response.to.have.status(200);",
+                "});"
+              ]
+            }
+          }
+        },
+        {
+          "request": "{{folderScriptURL}}",
+          "name": "Event",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "pm.test('request should have run folder level prerequest script', function() {",
+                "  pm.expect(pm.request.url.toString()).to.equal('https://postman-echo.com/get?test=folder_script');",
+                "});",
+                "pm.environment.unset('folderScriptURL');"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "Request level stuff",
+      "item": [{
+        "name": "Auth",
+        "request": {
+          "url": "https://postman-echo.com/digest-auth",
+          "auth": {
+            "type": "digest",
+            "digest": [{
+              "key": "username",
+              "value": "postman"
+            }, {
+              "key": "password",
+              "value": "password"
+            }]
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "pm.test('request should use request level auth, over collection level auth', function () {",
+                "  pm.response.to.have.status(200);",
+                "});"
+              ]
+            }
+          }]
+        }
+      }]
+    },
+    {
+      "name": "Auth override",
+      "request": {
+        "url": "https://postman-echo.com/basic-auth",
+        "auth": {
+          "type": "noauth"
+        }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('request should be able disable collection auth by setting noauth', function () {",
+            "  pm.response.to.have.status(401);",
+            "  pm.expect(pm.response.headers.has('Authorization')).to.equal(false);",
+            "});"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "Environment override",
+      "request": "https://postman-echo.com/get",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('environment variables should override collection variables', function () {",
+            "  pm.expect(pm.variables.get('duplicate-var')).to.equal('correct');",
+            "});"
+          ]
+        }
+      }]
+    }
+  ]
+}
