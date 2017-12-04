@@ -142,8 +142,12 @@ newman.run({
 - `--delay-request`<br />
   Specify the extent of delay between requests (milliseconds).
 
-- `--bail`<br />
-  Specify whether or not to stop a collection run on encountering the first error.
+- `--bail [optional modifiers]`<br />
+  Specify whether or not to stop a collection run on encountering the first error.<br />
+  Can optionally accept modifiers, currently include `folder` and `failure`.<br />
+  `folder` allows you to skip the entire collection run in case an invalid folder 
+  was specified using the `--folder` option or an error was encountered in general.<br />
+  `failure` would gracefully stop a collection run on the first test failure.
 
 - `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.

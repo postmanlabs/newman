@@ -192,7 +192,7 @@ var _ = require('lodash'),
             .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', Integer, 0)
             .option('--bail [modifiers]',
                 'Specify whether or not to gracefully stop a collection run on encountering an error' +
-                'or if the specified modifier is invalid.',
+                'and whether to end the run with an error based on the optional modifier.',
                 arrayCollect)
             .option('-x , --suppress-exit-code',
                 'Specify whether or not to override the default exit code for the current run.')
