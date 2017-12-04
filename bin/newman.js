@@ -72,6 +72,18 @@ var _ = require('lodash'),
     },
 
     /**
+     *  used for converting a comma separated string to an array.
+     *
+     * eg. item1,item2
+     *
+     * @param {String} list - The comma separated string.
+     * @returns {Array} - [item1, item2] - The array representation of the passed string.
+    */
+    arrayCollect = function (list) {
+        return _.split(list, ',');
+    },
+
+    /**
      *  used for resetting the program instance for consecutive runs.
     */
     resetProgram = function () {
@@ -178,8 +190,10 @@ var _ = require('lodash'),
             .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
             .option('--export-collection <path>', 'Specify an output file to save the executed collection')
             .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', Integer, 0)
-            .option('--bail',
-                'Specify whether or not to gracefully stop a collection run on encountering the first error.')
+            .option('--bail [modifiers]',
+                'Specify whether or not to gracefully stop a collection run on encountering an error' +
+                'and whether to end the run with an error based on the optional modifier.',
+                arrayCollect)
             .option('-x , --suppress-exit-code',
                 'Specify whether or not to override the default exit code for the current run.')
             .option('--silent', 'Prevents newman from showing output to CLI.')
