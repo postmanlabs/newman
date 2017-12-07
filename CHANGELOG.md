@@ -1,5 +1,14 @@
 # Newman Changelog
 
+#### v3.9.0 (December 5, 2017)
+* #1320 Extended `--bail`` to work with a `folder` option :tada:
+* #1298 Improved help text for incorrect usage :scroll:
+* #1292 Added a `name` field to all applicable errors :tada:
+* #1278 Migrated from `argparse` to `commander` :tada:
+* #1277 Added support for a global timeout option :tada:
+* #1275 Migrated from `istanbul` to `nyc` :tada:
+* #1273 Tests now run on Node v8 as well :arrow_up:
+
 #### v3.8.3 (October 4, 2017)
 * Updated dependencies :arrow_up:
 * #1227 Added `timeout-script` to extend default sandbox script execution timeouts :tada:
