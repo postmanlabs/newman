@@ -12,7 +12,7 @@ Version and environment information:
  3. Did you encounter this recently, or has this bug always been there:
  4. Expected behaviour:
  5. Command / script used to run Newman:
- 6. Sample collection, and auxilliary files (minus the sensitive details):
+ 6. Sample collection, and auxiliary files (minus the sensitive details):
  7. Screenshots (if applicable):
 
 <!--

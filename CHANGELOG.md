@@ -1,5 +1,10 @@
 # Newman Changelog
 
+#### v3.9.1 (December 8, 2017)
+* #1326 Fixed folder option handling :bug:
+* #1323 Updated documentation for `--bail` and `options.bail` :scroll:
+* #1325 Fixed typographical error in issue template :bug:
+
 #### v3.9.0 (December 5, 2017)
 * #1320 Extended `--bail`` to work with a `folder` option :tada:
 * #1298 Improved help text for incorrect usage :scroll:
