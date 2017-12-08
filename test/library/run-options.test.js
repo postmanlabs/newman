@@ -129,7 +129,7 @@ describe('Newman run options', function () {
                 bail: ['folder', 'failure']
             }, function (err) {
                 expect(err).to.be.ok();
-                expect(err.message).to.contain('Unable to find a folder or request');
+                expect(err.message).to.be('Unable to find a folder or request: invalidName');
 
                 done();
             });
