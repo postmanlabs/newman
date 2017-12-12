@@ -472,8 +472,8 @@ var _ = require('lodash'),
      * @returns {*}
      */
     rawOptions = function (procArgv, programName, callback) {
-        var legacyMode = !_.includes(procArgv, 'run') &&
-        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]),
+        var versionHelpCheck = _.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]),
+            legacyMode = !_.includes(procArgv, 'run') && !versionHelpCheck,
             reporterArgs,
             rawArgs,
             result,
@@ -484,7 +484,7 @@ var _ = require('lodash'),
             validCommands = [];
 
         !legacyMode && !module.parent && (procArgv = procArgv.slice(2));
-        !legacyMode && (procArgv = updateCollectionPosition(procArgv));
+        !versionHelpCheck && !legacyMode && (procArgv = updateCollectionPosition(procArgv));
         rawArgs = separateReporterArgs(procArgv);
         try {
             if (!legacyMode) {
