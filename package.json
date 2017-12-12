@@ -39,7 +39,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "async": "2.6.0",
-    "cli-progress": "1.6.0",
+    "cli-progress": "1.6.1",
     "cli-table2": "0.2.0",
     "colors": "1.1.2",
     "commander": "2.12.2",
