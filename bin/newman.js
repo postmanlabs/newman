@@ -389,9 +389,7 @@ var _ = require('lodash'),
      * @returns {Array} - The array with the modified positions.
      */
     move = function (arr, fromIndex, toIndex) {
-        var element = arr[fromIndex];
-        arr.splice(fromIndex, 1);
-        arr.splice(toIndex, 0, element);
+        arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
         return arr;
     },
 
@@ -402,15 +400,29 @@ var _ = require('lodash'),
      * @returns {Array} - The modified array with all boolean options at the end.
      */
     updateBooleanFlags = function (arr) {
-        // list of all single options that takes a file path.
-        // @todo: find a better way so that new added options don't have to be added here.
-        var singlePathOptions = ['-e', '-g', '-n', '-d'],
+        var booleanFlags = [
+                '--bail',
+                '-x', '--suppress-exit-code',
+                '--silent',
+                '--disable-unicode',
+                '--color',
+                '--no-color',
+                '--ignore-redirects',
+                '-k', '--insecure'
+            ],
+            bailOptions = ['folder', 'failure'],
+            nextToBail,
             boolArr = [];
 
         arr.forEach(function (item, index) {
-            // adds all boolean options starting to boolArr
-            if (_.startsWith(item, '--') && (index === arr.length - 1 || !fs.lstatSync(arr[index + 1]).isFile()) ||
-                (_.startsWith(item, '-') && !_.isEqual(item[1], '-') && !_.includes(singlePathOptions, item))) {
+            if (_.includes(booleanFlags, item)) {
+                if (_.isEqual(item, '--bail')) {
+                    nextToBail = arr[index + 1];
+                    if (_.includes(bailOptions, nextToBail)) {
+                        boolArr.push(item);
+                        boolArr.push(nextToBail);
+                    }
+                }
                 boolArr.push(item);
             }
         });
@@ -435,13 +447,8 @@ var _ = require('lodash'),
         if (_.startsWith(slicedArr[0], '-')) {
             slicedArr = updateBooleanFlags(slicedArr);
             slicedArr.forEach(function (option, index) {
-                // since app exported collections have the postfix postman_collection.json
-                if (_.includes('collection', option)) {
-                    options = move(options, index + 1, 1);
-                    return options;
-                }
                 // checks for non options path args
-                else if (!_.includes(option, '-') && !_.includes(slicedArr[index - 1], '-') &&
+                if (!_.includes(option, '-') && !_.includes(slicedArr[index - 1], '-') &&
                     fs.lstatSync(option).isFile()) {
                     slicedArr = move(slicedArr, index, 0);
                 }
