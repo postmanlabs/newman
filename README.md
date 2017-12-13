@@ -415,6 +415,7 @@ argument object.**
 | test                      | After `test` script execution completes |
 | beforeScript              | Before any script (of type `test` or `prerequest`) is executed |
 | script                    | After any script (of type `test` or `prerequest`) is executed |
+| io                        | When any IO related operation happens (Files, HTTP/HTTPS requests, etc.) |
 | item                      | When an item (the whole set of prerequest->request->test) completes |
 | iteration                 | After an iteration completes |
 | assertion                 | This event is triggered for every test assertion done within `test` scripts |
