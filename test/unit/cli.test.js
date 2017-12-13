@@ -134,6 +134,22 @@ describe('cli parser', function () {
                 });
         });
 
+        it('should handle cases where collection path is not followed directly by run', function (done) {
+            cli('run -e env.json -n 2 --insecure --no-color examples/sample-collection.json'.split(' '), 'newmantests',
+                function (err, config) {
+                    expect(err).to.be(null);
+                    expect(config.command).to.be('run');
+                    expect(config.run).to.be.ok();
+                    expect(config.run.iterationCount).to.be(2);
+                    expect(config.run.collection).to.be('examples/sample-collection.json');
+                    expect(config.run.environment).to.be('env.json');
+                    expect(config.run.insecure).to.be(true);
+                    expect(config.run.color).to.be(false);
+
+                    done();
+                });
+        });
+
         it('should throw an error for invalid --iteration-count values', function (done) {
             cli('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
                 expect(err.message).to.be('The value must be a positive integer.');

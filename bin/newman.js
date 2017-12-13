@@ -448,7 +448,7 @@ var _ = require('lodash'),
             slicedArr = updateBooleanFlags(slicedArr);
             slicedArr.forEach(function (option, index) {
                 // checks for non options path args
-                if (!_.includes(option, '-') && !_.includes(slicedArr[index - 1], '-') &&
+                if (!_.startsWith(option, '-') && !_.startsWith(slicedArr[index - 1], '-') &&
                     fs.lstatSync(option).isFile()) {
                     slicedArr = move(slicedArr, index, 0);
                 }
