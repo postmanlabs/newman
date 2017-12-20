@@ -74,7 +74,7 @@
     "jsdoc-to-markdown": "3.0.2",
     "mocha": "4.0.1",
     "nsp": "2.8.1",
-    "nyc": "11.3.0",
+    "nyc": "11.4.1",
     "packity": "0.3.2",
     "parse-gitignore": "0.4.0",
     "postman-jsdoc-theme": "0.0.3",
