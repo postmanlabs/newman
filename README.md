@@ -484,11 +484,10 @@ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 
 ## Community Support
 
-<img src="https://www.getpostman.com/img/v2/icons/slack.svg" align="right" />
-If you are interested in talking to the team and other Newman users, we are there on <a href="https://www.getpostman.com/slack-invite" target="_blank">Slack</a>. Feel free to drop by and say hello. Our upcoming features and beta releases are discussed here along with world peace.
+<img src="https://avatars1.githubusercontent.com/u/3220138?v=3&s=120" align="right" />
+If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.  
 
-Get your invitation for Postman Slack Community from: <a href="https://www.getpostman.com/slack-invite">https://www.getpostman.com/slack-invite</a>.<br />
-Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
+Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.getpostman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 
 ---
 
