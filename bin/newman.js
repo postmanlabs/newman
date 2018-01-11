@@ -100,6 +100,9 @@ var _ = require('lodash'),
                 }
             }
         }
+        program
+            .version(version)
+            .name('newman');
     },
 
     /**
@@ -113,8 +116,6 @@ var _ = require('lodash'),
     legacy = function (rawArgs) {
         resetProgram();
         program
-            .version(version)
-            .name('newman')
             .usage('[options] <collection>')
             .option('-c, --collection <path>', 'DEPRECATED: Specify a Postman collection as a JSON file')
             .option('-u, --url <path>', 'DEPRECATED: Specify a Postman collection as a URL')
@@ -171,11 +172,6 @@ var _ = require('lodash'),
      */
     run = function (rawArgs) {
         resetProgram();
-        program
-            .version(version);
-
-        program.name = 'newman';
-
         program
             .command('run <collection>')
             .description('URL or path to a Postman Collection.')
@@ -404,8 +400,8 @@ var _ = require('lodash'),
      * @returns {*}
      */
     rawOptions = function (procArgv, programName, callback) {
-        var legacyMode = (procArgv.length && _.startsWith(procArgv[0], '-') &&
-        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[0])),
+        var legacyMode = !_.includes(procArgv, 'run') &&
+        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]),
             reporterArgs,
             rawArgs,
             result,
@@ -415,6 +411,7 @@ var _ = require('lodash'),
             vPos,
             validCommands = [];
 
+        !legacyMode && !module.parent && (procArgv = procArgv.slice(2));
         rawArgs = separateReporterArgs(procArgv);
         try {
             if (!legacyMode) {
@@ -523,7 +520,7 @@ module.exports = rawOptions;
 */
 // ensure we run this script exports if this is a direct stdin
 // exported rawOptions above for cases when required as a module for eg tests.
-!module.parent && module.exports(process.argv.slice(2), 'newman', function (err, args) {
+!module.parent && module.exports(process.argv, 'newman', function (err, args) {
     if (err) {
         err.help && console.info(err.help + '\n'); // will print out usage information.
         console.error(err.message || err);
