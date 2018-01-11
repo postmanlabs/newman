@@ -1,5 +1,11 @@
 # Newman Changelog
 
+#### v3.9.2 (January 11, 2018)
+* :arrow_up: Updated dependencies
+* #1366 Replaced deprecated Slack community link in the readme with the shiny new [Postman community](https://community.getpostman.com) :scroll:
+* #1350 Added setNextRequest information to the CLI reporter :tada:
+* #1331 Fixed a bug that caused legacy arguments to be processed out of order :bug:
+
 #### v3.9.1 (December 8, 2017)
 * #1326 Fixed folder option handling :bug:
 * #1323 Updated documentation for `--bail` and `options.bail` :scroll:
