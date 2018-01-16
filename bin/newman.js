@@ -6,6 +6,7 @@ var _ = require('lodash'),
     version = require('../package.json').version,
     newman = require('../'),
     colors = require('colors'),
+    fs = require('fs'),
 
     /**
      * A CLI parser helper to process stringified numbers into integers, perform safety checks, and return the result.
@@ -380,6 +381,84 @@ var _ = require('lodash'),
     },
 
     /**
+     * Moves the item from one index to another in an array, shifting subsequent items.
+     *
+     * @param {Array} arr - The array of items.
+     * @param {Number} fromIndex - The position from which item is to be moved.
+     * @param {Number} toIndex - The position to which item is to be moved
+     * @returns {Array} - The array with the modified positions.
+     */
+    move = function (arr, fromIndex, toIndex) {
+        arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
+        return arr;
+    },
+
+    /**
+     * Moves all the boolean flags to the end of the options list.
+     *
+     * @param {Array} arr - The array of supplied CLI options.
+     * @returns {Array} - The modified array with all boolean options at the end.
+     */
+    updateBooleanFlags = function (arr) {
+        var booleanFlags = [
+                '--bail',
+                '-x', '--suppress-exit-code',
+                '--silent',
+                '--disable-unicode',
+                '--color',
+                '--no-color',
+                '--ignore-redirects',
+                '-k', '--insecure'
+            ],
+            bailOptions = ['folder', 'failure'],
+            nextToBail,
+            boolArr = [];
+
+        arr.forEach(function (item, index) {
+            if (_.includes(booleanFlags, item)) {
+                if (_.isEqual(item, '--bail')) {
+                    nextToBail = arr[index + 1];
+                    if (_.includes(bailOptions, nextToBail)) {
+                        boolArr.push(item);
+                        boolArr.push(nextToBail);
+                    }
+                }
+                boolArr.push(item);
+            }
+        });
+
+        arr = arr.filter(function (el) {
+            return !_.includes(boolArr, el);
+        });
+
+        arr = arr.concat(boolArr);
+        return arr;
+    },
+
+    /**
+     * Updates the position of the collection path to just after run no matter where it is specified.
+     *
+     * @param {Array} options - The array of supplied CLI options.
+     * @returns {Array} - The modified array with collection path specified just after run.
+     */
+    updateCollectionPosition = function (options) {
+        var slicedArr = options.slice(1);
+
+        if (_.startsWith(slicedArr[0], '-')) {
+            slicedArr = updateBooleanFlags(slicedArr);
+            slicedArr.forEach(function (option, index) {
+                // checks for non options path args
+                if (!_.startsWith(option, '-') && !_.startsWith(slicedArr[index - 1], '-') &&
+                    fs.lstatSync(option).isFile()) {
+                    slicedArr = move(slicedArr, index, 0);
+                }
+            });
+        }
+        slicedArr.unshift('run');
+        return slicedArr;
+    },
+
+    /**
      * Logs the message passed as a warning and then exits.
      *
      * @param {String} msg - The message to be logged.
@@ -400,8 +479,8 @@ var _ = require('lodash'),
      * @returns {*}
      */
     rawOptions = function (procArgv, programName, callback) {
-        var legacyMode = !_.includes(procArgv, 'run') &&
-        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]),
+        var versionHelpCheck = _.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]),
+            legacyMode = !_.includes(procArgv, 'run') && !versionHelpCheck,
             reporterArgs,
             rawArgs,
             result,
@@ -412,6 +491,7 @@ var _ = require('lodash'),
             validCommands = [];
 
         !legacyMode && !module.parent && (procArgv = procArgv.slice(2));
+        !versionHelpCheck && !legacyMode && (procArgv = updateCollectionPosition(procArgv));
         rawArgs = separateReporterArgs(procArgv);
         try {
             if (!legacyMode) {
