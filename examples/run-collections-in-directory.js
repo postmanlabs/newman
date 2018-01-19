@@ -11,7 +11,7 @@ fs.readdir('./examples', function (err, files) {
 
     // we filter all files with JSON file extension
     files = files.filter(function (file) {
-        return (file.substr(-5) === '.json');
+        return (/^((?!(package(-lock)?))|.+)\.json/).test(file);
     });
 
     // now wer iterate on each file name and call newman.run using each file name
