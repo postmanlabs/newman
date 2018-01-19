@@ -14,7 +14,11 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "var response = JSON.parse(responseBody); tests['Hawk auth should pass'] = response.status === 'pass';"
+            "exec": [
+              "pm.test('should authenticate correctly', function () {",
+              " pm.response.to.have.jsonBody('message', 'Hawk Authentication Successful');",
+              "});"
+            ]
           }
         }
       ],
