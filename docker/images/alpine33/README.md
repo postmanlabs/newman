@@ -1,6 +1,6 @@
 # newman_alpine33
 
-This image runs newman 3.9.0 on node 4.3.0 on Alpine 3.3
+This image runs newman on node 4.3.2 on Alpine 3.3
 
 Build the image:
 
@@ -11,7 +11,7 @@ docker build -t postman/newman_alpine33 .
 Or get it from [Docker Hub](https://registry.hub.docker.com/u/postman/newman_alpine33/):
 
 ```terminal
-docker pull postman/newman_alpine33:3.9.0
+docker pull postman/newman_alpine33
 ```
 
 Then run it:

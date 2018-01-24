@@ -1,6 +1,6 @@
 # newman_ubuntu1404
 
-This image runs newman 3.9.0 on node 4.3.0 on Ubuntu 14.04.2
+This image runs newman on node v8 on Ubuntu 14.04.2
 
 Build the image,
 
@@ -11,7 +11,7 @@ docker build -t postman/newman_ubuntu1404 .
 Or get it from [docker hub](https://registry.hub.docker.com/u/postman/newman_ubuntu1404/)
 
 ```terminal
-docker pull postman/newman_ubuntu1404:3.9.0
+docker pull postman/newman_ubuntu1404
 ```
 
 then run it

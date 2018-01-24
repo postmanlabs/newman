@@ -17,6 +17,8 @@ RUN mkdir newman
 
 ADD . /newman
 
+RUN ln -s /newman/examples /etc/newman
+
 RUN npm install -g /newman
 
 # Set workdir to /etc/newman
