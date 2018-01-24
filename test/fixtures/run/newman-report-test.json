@@ -15,8 +15,12 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-              "tests[\"Status code is 200\"] = responseCode.code === 200;",\
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
               "",
+              "// deliberate AssertionError to test proper JUnit report generation",
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
 							"// deliberate TypeError to test proper HTML report generation",
 							"tests[\"Body contains status\"] = undefined.alpha;",
 							""
