@@ -17,10 +17,9 @@ function build_docker_image {
     fi
 }
 
-NODE_V=$(node -v | grep -o "v.")
-
 IMAGES_BASE_PATH="./docker/images"
-if [ -n "$TRAVIS_TAG" ] && [ "$NODE_V" = "v8" ]; then
+EXTRACTED_TAG=$(echo $TRAVIS_TAG | grep -o "[0-9]\+.[0-9]\+.[0-9]\+")
+if [ -n "$TRAVIS_TAG" ] && [ "$TRAVIS_TAG" = "$EXTRACTED_TAG" ] && [ "$TRAVIS_NODE_VERSION" = "8" ]; then
     for image in $IMAGES_BASE_PATH/*; do
         if [ -d "${image}" ] && [ -f "${image}/Dockerfile" ]; then
             cp "${image}/Dockerfile" .
