@@ -16,9 +16,7 @@ function build_docker_image {
 	fi
 }
 
-echo "$TRAVIS_TAG"
 NODE_V=$(node -v | grep -o "v.")
-echo "$NODE_V"
 
 IMAGES_BASE_PATH="./docker/images"
 if [ -n "$TRAVIS_TAG" ] && [ "$NODE_V" = "v8" ]; then
