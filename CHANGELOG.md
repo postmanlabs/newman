@@ -1,8 +1,11 @@
 # Newman Changelog
 
+#### Unreleased
+* :bug: Improved failure table reporting details #1390
+
 #### v3.9.3 (January 19, 2018)
 * :arrow_up: Updated dependencies
-* #1385 Fixed mintor formatting issues in the readme. :scroll:
+* #1385 Fixed minor formatting issues in the readme. :scroll:
 * #1368 Updated folder collection runner example to exclude `package*.json` files :bug:
 
 #### v3.9.2 (January 11, 2018)
