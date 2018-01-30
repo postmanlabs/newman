@@ -13,13 +13,11 @@ ENV LANGUAGE en_US.UTF-8
 # Install node
 RUN apk add --update nodejs=${NODE_VERSION}-r1;
 
-RUN mkdir newman
+ARG newman_version=default_value
+ENV NEWMAN_VERSION=$newman_version
 
-ADD . /newman
-
-RUN ln -s /newman/examples /etc/newman
-
-RUN npm install -g /newman
+# Install newman
+RUN npm install -g newman@${NEWMAN_VERSION};
 
 # Set workdir to /etc/newman
 # When running the image, mount the directory containing your collection to this location
