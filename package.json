@@ -66,7 +66,7 @@
     "editorconfig": "0.15.0",
     "eslint": "4.16.0",
     "eslint-plugin-jsdoc": "3.3.1",
-    "eslint-plugin-lodash": "2.5.1",
+    "eslint-plugin-lodash": "2.6.0",
     "eslint-plugin-mocha": "4.11.0",
     "eslint-plugin-security": "1.4.0",
     "expect.js": "0.3.1",
