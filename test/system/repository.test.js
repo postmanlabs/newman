@@ -73,25 +73,36 @@ describe('project repository', function () {
 
         describe('script definitions', function () {
             it('files must exist', function () {
-                var scriptRegexJS = /^node\snpm\/.+\.js$/,
-                    scriptRegexSH = /^\.\/npm\/.+\.sh$/;
                 expect(json.scripts).to.be.ok();
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-                    expect(scriptRegexJS.test(json.scripts[scriptName]) ||
-                        scriptRegexSH.test(json.scripts[scriptName])).to.be.ok();
-                    expect(fs.existsSync('npm/' + scriptName + '.js') ||
-                        fs.existsSync('npm/' + scriptName + '.sh')).to.be.ok();
+                    var name = json.scripts[scriptName];
+                    name = name.replace(/^(node\s|\.\/)/, '');
+                    fs.stat(name, function (err) {
+                        var fileDetails = path.parse(name);
+                        expect(err).to.equal(null);
+                        expect(fileDetails.ext).to.be.oneOf(['.sh', '.js']);
+                    });
                 });
             });
 
             it('must have the hashbang defined', function () {
+                expect(json.scripts).to.be.ok();
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-                    fs.readFile('npm/' + scriptName + '.js', function (err, fileContent) {
-                        if (err) {
-                            fileContent = fs.readFileSync('npm/' + scriptName + '.sh');
-                        }
-                        fileContent = fileContent.toString();
-                        expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent)).to.be.ok();
+                    var name = json.scripts[scriptName];
+                    name = name.replace(/^(node\s|\.\/)/, '');
+                    fs.stat(name, function (err) {
+                        var fileDetails = path.parse(name);
+                        expect(err).to.equal(null);
+                        expect(fileDetails.ext).to.be.oneOf(['.sh', '.js']);
+                        fs.readFile(name, function (error, content) {
+                            expect(error).to.equal(null);
+                            if (fileDetails.ext === '.sh') {
+                                expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content)).to.be.ok();
+                            }
+                            else {
+                                expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content)).to.be.ok();
+                            }
+                        });
                     });
                 });
             });
