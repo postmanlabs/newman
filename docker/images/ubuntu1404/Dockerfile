@@ -3,9 +3,11 @@ MAINTAINER Postman Labs <help@getpostman.com>
 
 # Install curl and npm
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    npm;
+RUN apt-get install -y curl;
+
+RUN curl -sS https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+RUN apt-get clean && apt-get upgrade -y && apt-get update -y --fix-missing && apt-get install -y nodejs
 
 # Set node version
 ENV NODE_VERSION 8
