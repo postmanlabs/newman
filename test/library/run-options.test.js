@@ -10,6 +10,21 @@ describe('Newman run options', function () {
         }, done);
     });
 
+    it('should correctly send the test name as a part of error information for failed assertions', function (done) {
+        newman
+            .run({
+                collection: 'test/fixtures/run/single-request-failing.json'
+            }, done)
+            .on('assertion', function (err) {
+                expect(err).to.be.ok();
+                expect(err).to.have.property('name', 'AssertionError');
+                expect(err).to.have.property('index', 0);
+                expect(err).to.have.property('test', 'response code is 200');
+                expect(err).to.have.property('message', 'expected false to be truthy');
+                expect(err).to.have.property('stack');
+            });
+    });
+
     it('should not work without a collection', function (done) {
         newman.run({
             environment: 'test/fixtures/run/simple-variables.json'
