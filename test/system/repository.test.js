@@ -73,19 +73,26 @@ describe('project repository', function () {
 
         describe('script definitions', function () {
             it('files must exist', function () {
-                var scriptRegex = /^node\snpm\/.+\.js$/;
-
+                var scriptRegexJS = /^node\snpm\/.+\.js$/,
+                    scriptRegexSH = /^\.\/npm\/.+\.sh$/;
                 expect(json.scripts).to.be.ok();
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-                    expect(scriptRegex.test(json.scripts[scriptName])).to.be.ok();
-                    expect(fs.statSync('npm/' + scriptName + '.js')).to.be.ok();
+                    expect(scriptRegexJS.test(json.scripts[scriptName]) ||
+                        scriptRegexSH.test(json.scripts[scriptName])).to.be.ok();
+                    expect(fs.existsSync('npm/' + scriptName + '.js') ||
+                        fs.existsSync('npm/' + scriptName + '.sh')).to.be.ok();
                 });
             });
 
             it('must have the hashbang defined', function () {
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-                    var fileContent = fs.readFileSync('npm/' + scriptName + '.js').toString();
-                    expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent)).to.be.ok();
+                    fs.readFile('npm/' + scriptName + '.js', function (err, fileContent) {
+                        if (err) {
+                            fileContent = fs.readFileSync('npm/' + scriptName + '.sh');
+                        }
+                        fileContent = fileContent.toString();
+                        expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent)).to.be.ok();
+                    });
                 });
             });
         });
