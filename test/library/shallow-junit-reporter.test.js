@@ -48,14 +48,14 @@ describe('JUnit reporter', function () {
         });
     });
 
-    it('should correctly produce the JUnit report for a run with TypeError', function (done) {
+    it('should correctly produce the JUnit report for a run with AssertionError/TypeError', function (done) {
         newman.run({
             collection: 'test/fixtures/run/newman-report-test.json',
             reporters: ['junit'],
             reporter: { junit: { export: outFile } }
         }, function (err, summary) {
             expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(1);
+            expect(summary.run.failures).to.have.length(2);
             fs.stat(outFile, done);
         });
     });
