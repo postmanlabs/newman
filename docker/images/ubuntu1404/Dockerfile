@@ -21,7 +21,7 @@ ENV LANGUAGE en_US.UTF-8
 RUN npm install -g n;
 RUN n ${NODE_VERSION};
 
-ARG newman_version=default_value
+ARG newman_version
 ENV NEWMAN_VERSION=$newman_version
 
 # Install newman

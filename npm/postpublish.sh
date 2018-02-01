@@ -3,14 +3,14 @@ function build_docker_image {
     BASENAME=$(basename $1);
     TAG="$2";
     IMAGE_NAME="newman_$BASENAME";
-    docker build -t "$DOCKER_ID_USER/$IMAGE_NAME:$TAG" -t "$DOCKER_ID_USER/$IMAGE_NAME:latest" --build-arg newman_version="$TAG" .;
-    if docker images | grep -q "$DOCKER_ID_USER/$IMAGE_NAME"; then
+    docker build -t "$DOCKER_USER/$IMAGE_NAME:$TAG" -t "$DOCKER_USER/$IMAGE_NAME:latest" --build-arg newman_version="$TAG" .;
+    if docker images | grep -q "$DOCKER_USER/$IMAGE_NAME"; then
         echo "Image built";
         PWD=$(pwd);
-        if docker run -v "$PWD/examples:/etc/newman" -t "$DOCKER_ID_USER/$IMAGE_NAME:$TAG" run "sample-collection.json"; then
+        if docker run -v "$PWD/examples:/etc/newman" -t "$DOCKER_USER/$IMAGE_NAME:$TAG" run "sample-collection.json"; then
             echo "Collection run successfully";
-            docker login -u "$DOCKER_ID_USER" -p "$DOCKER_ID_PASSWORD";
-            docker push "$DOCKER_ID_USER/$IMAGE_NAME:$TAG" "$DOCKER_ID_USER/$IMAGE_NAME:latest";
+            docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD";
+            docker push "$DOCKER_USER/$IMAGE_NAME:$TAG" "$DOCKER_USER/$IMAGE_NAME:latest";
         else
             echo "Collection not run successfully";
         fi
