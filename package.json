@@ -45,7 +45,7 @@
     "commander": "2.13.0",
     "csv-parse": "1.2.4",
     "eventemitter3": "3.0.0",
-    "filesize": "3.5.11",
+    "filesize": "3.6.0",
     "handlebars": "4.0.11",
     "lodash": "4.17.2",
     "mkdirp": "0.5.1",
