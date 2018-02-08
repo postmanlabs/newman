@@ -59,7 +59,7 @@
     "serialised-error": "1.1.2",
     "shelljs": "0.8.1",
     "word-wrap": "1.2.3",
-    "xmlbuilder": "9.0.4"
+    "xmlbuilder": "9.0.6"
   },
   "devDependencies": {
     "editorconfig": "0.15.0",
