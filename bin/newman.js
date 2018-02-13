@@ -401,7 +401,8 @@ var _ = require('lodash'),
      */
     rawOptions = function (procArgv, programName, callback) {
         var legacyMode = !_.includes(procArgv, 'run') &&
-        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]),
+        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]) &&
+        !_.isEmpty(procArgv.slice(2)),
             reporterArgs,
             rawArgs,
             result,
