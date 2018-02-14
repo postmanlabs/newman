@@ -1,0 +1,55 @@
+{
+	"info": {
+		"name": "Named request",
+		"_postman_id": "b6190539-ceaa-7637-1723-ce0128aaf1fc",
+		"description": "A simple request to check folder behaviour.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "correct",
+			"description": "",
+			"item": [
+				{
+					"name": "correct_name",
+					"description": "",
+					"item": [
+						{
+							"name": "https://google.com",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c6617b37-1818-4375-87d5-21983a30896a",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://google.com",
+									"protocol": "https",
+									"host": [
+										"google",
+										"com"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}

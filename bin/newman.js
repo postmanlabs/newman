@@ -72,6 +72,18 @@ var _ = require('lodash'),
     },
 
     /**
+     *  used for converting a comma separated string to an array.
+     *
+     * eg. item1,item2
+     *
+     * @param {String} list - The comma separated string.
+     * @returns {Array} - [item1, item2] - The array representation of the passed string.
+    */
+    arrayCollect = function (list) {
+        return _.split(list, ',');
+    },
+
+    /**
      *  used for resetting the program instance for consecutive runs.
     */
     resetProgram = function () {
@@ -88,6 +100,9 @@ var _ = require('lodash'),
                 }
             }
         }
+        program
+            .version(version)
+            .name('newman');
     },
 
     /**
@@ -101,7 +116,7 @@ var _ = require('lodash'),
     legacy = function (rawArgs) {
         resetProgram();
         program
-            .version(version)
+            .usage('[options] <collection>')
             .option('-c, --collection <path>', 'DEPRECATED: Specify a Postman collection as a JSON file')
             .option('-u, --url <path>', 'DEPRECATED: Specify a Postman collection as a URL')
             .option('-e, --environment <path>', 'DEPRECATED: Specify a Postman environment as a JSON file')
@@ -155,14 +170,8 @@ var _ = require('lodash'),
      *  Adds run command options to the common commander program instance.
      * @private
      */
-
     run = function (rawArgs) {
         resetProgram();
-        program
-            .version(version);
-
-        program.name = 'newman';
-
         program
             .command('run <collection>')
             .description('URL or path to a Postman Collection.')
@@ -177,8 +186,10 @@ var _ = require('lodash'),
             .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
             .option('--export-collection <path>', 'Specify an output file to save the executed collection')
             .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', Integer, 0)
-            .option('--bail',
-                'Specify whether or not to gracefully stop a collection run on encountering the first error.')
+            .option('--bail [modifiers]',
+                'Specify whether or not to gracefully stop a collection run on encountering an error' +
+                'and whether to end the run with an error based on the optional modifier.',
+                arrayCollect)
             .option('-x , --suppress-exit-code',
                 'Specify whether or not to override the default exit code for the current run.')
             .option('--silent', 'Prevents newman from showing output to CLI.')
@@ -246,6 +257,24 @@ var _ = require('lodash'),
     },
 
     /**
+     * Traverses the options object to populate a name array.
+     *
+     * @param {Object} options - The options populated through CLI.
+     * @returns {Array} - An array of option names in camelCase format.
+     */
+    getOptionNames = function (options) {
+        var optionName,
+            optionNames = [];
+        options.options.forEach(function (option) {
+            optionName = option.long;
+            optionName = optionName.replace('--', '');
+            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+            optionNames.push(optionName);
+        });
+        return optionNames;
+    },
+
+    /**
      * Formats the legacy options to the required format for the dispatch function.
      *
      * @param {Object} options - The options populated through CLI.
@@ -254,19 +283,13 @@ var _ = require('lodash'),
     formatLegacyOptions = function (options) {
         var optionsObj = {},
             prop,
-            optionName,
             run = {},
             reporter = {},
             reporters = ['cli'],
             optionNames = [],
             args;
 
-        options.options.forEach(function (option) {
-            optionName = option.long;
-            optionName = optionName.replace('--', '');
-            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-            optionNames.push(optionName);
-        });
+        optionNames = getOptionNames(options);
 
         for (prop in options) {
             if (_.includes(optionNames, String(prop))) {
@@ -335,15 +358,10 @@ var _ = require('lodash'),
         var command = (_.includes(options.rawArgs[0], 'version') ||
         _.includes(options.rawArgs[0], '-v') || _.includes(options.rawArgs[0], '-V')) ?
                 'version' : options._name,
-            optionsObj, optionName, prop,
+            optionsObj, prop,
             optionNames = [];
 
-        options.options.forEach(function (option) {
-            optionName = option.long;
-            optionName = optionName.replace('--', '');
-            optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-            optionNames.push(optionName);
-        });
+        optionNames = getOptionNames(options);
 
         optionsObj = { [command]: {} };
         optionsObj.command = command;
@@ -362,6 +380,17 @@ var _ = require('lodash'),
     },
 
     /**
+     * Logs the message passed as a warning and then exits.
+     *
+     * @param {String} msg - The message to be logged.
+     *
+     */
+    customError = function (msg) {
+        console.warn(msg);
+        process.exit(0);
+    },
+
+    /**
      * Loads the raw options for Newman, without loading special options such as collection, environment etc. This
      * function does not access the network or the file-system.
      *
@@ -371,19 +400,24 @@ var _ = require('lodash'),
      * @returns {*}
      */
     rawOptions = function (procArgv, programName, callback) {
-        var legacyMode = (procArgv.length && _.startsWith(procArgv[0], '-') &&
-        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[0])),
+        var legacyMode = !_.includes(procArgv, 'run') &&
+        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]),
             reporterArgs,
             rawArgs,
             result,
             checkForColor,
-            vPos;
+            checkForVersion,
+            checkForCommand,
+            vPos,
+            validCommands = [];
 
+        !legacyMode && !module.parent && (procArgv = procArgv.slice(2));
         rawArgs = separateReporterArgs(procArgv);
         try {
             if (!legacyMode) {
                 run(rawArgs.argv);
                 program.commands.forEach(function (command) {
+                    validCommands.push(command._name);
                     if (command._name === 'run') {
                         result = command;
                     }
@@ -397,6 +431,15 @@ var _ = require('lodash'),
             if (_.isEmpty(procArgv) || _.includes(procArgv, '-h') || _.includes(procArgv, '--help')) {
                 return result.outputHelp();
             }
+            checkForVersion = _.includes(rawArgs.argv, '--version') ||
+                _.includes(rawArgs.argv, '-v') ||
+                _.includes(rawArgs.argv, '-V');
+            checkForCommand = _.includes(validCommands, rawArgs.argv[0]);
+
+            !checkForVersion && !legacyMode && !checkForCommand &&
+            customError('\nNewman: Invalid command or parameter.\n\n' +
+            'Example:\nnewman run my-api.json -e variables.json\n\n' +
+            'For more information, run:\nnewman --help\n');
         }
         catch (error) {
             return callback(_.set(error, 'help', program.outputHelp()));
@@ -477,7 +520,7 @@ module.exports = rawOptions;
 */
 // ensure we run this script exports if this is a direct stdin
 // exported rawOptions above for cases when required as a module for eg tests.
-!module.parent && module.exports(process.argv.slice(2), 'newman', function (err, args) {
+!module.parent && module.exports(process.argv, 'newman', function (err, args) {
     if (err) {
         err.help && console.info(err.help + '\n'); // will print out usage information.
         console.error(err.message || err);

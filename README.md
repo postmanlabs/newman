@@ -35,7 +35,7 @@ extensibility in mind so that you can easily integrate it into your continuous i
 
 4. [File uploads](#file-uploads)
 
-5. [Using Newman with the Postman Cloud API](#using-newman-with-the-postman-cloud-api)
+5. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
 
 6. [Community Support](#community-support)
 
@@ -142,8 +142,12 @@ newman.run({
 - `--delay-request`<br />
   Specify the extent of delay between requests (milliseconds).
 
-- `--bail`<br />
-  Specify whether or not to stop a collection run on encountering the first error.
+- `--bail [optional modifiers]`<br />
+  Specify whether or not to stop a collection run on encountering the first error.<br />
+  Can optionally accept modifiers, currently include `folder` and `failure`.<br />
+  `folder` allows you to skip the entire collection run in case an invalid folder 
+  was specified using the `--folder` option or an error was encountered in general.<br />
+  `failure` would gracefully stop a collection run on the first test failure.
 
 - `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.
@@ -200,7 +204,7 @@ such a scenario.
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
-| `--reporter-cli-no-assertions`  | This turns off the request-wise output as they happen. |
+| `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 
 ##### JSON reporter options
@@ -303,9 +307,9 @@ return of the `newman.run` function is a run instance, which emits run events th
 | Parameter | Description   |
 |-----------|---------------|
 | options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
-| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an instance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object|string|`[PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
-| options.environment       | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object|string` |
-| options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object|string` |
+| options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an instance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object\|string` [PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
+| options.environment       | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object\|string` |
+| options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object\|string` |
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
 | options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
 | options.folder            | The name or ID of the folder (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string` |
@@ -315,7 +319,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.delayRequest      | Specify the time (in milliseconds) to wait for between subsequent requests.<br /><br />_Optional_<br />Type: `number`, Default value: `0` |
 | options.ignoreRedirects   | This specifies whether newman would automatically follow 3xx responses from servers.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
-| options.bail              | A boolean switch to specify whether or not to gracefully stop a collection run on encountering the first error. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
+| options.bail              | A switch to specify whether or not to gracefully stop a collection run on encountering the first error. Takes additional modifiers as arguments to specify whether to end the run with an error for invalid name or path.<br /><br/>Available modifiers: `folder` and `failure`.<br />eg. `bail : ['folder']`<br /><br />_Optional_<br />Type: `boolean\|object`, Default value: `false` |
 | options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
@@ -464,7 +468,7 @@ file-upload.postman_collection.json  sample-file.txt
 $ newman run file-upload.postman_collection.json
 ```
 
-## Using Newman with the Postman Pro API
+## Using Newman with the Postman API
 
 1 [Generate an API key](https://app.getpostman.com/dashboard/integrations)<br/>
 2 Fetch a list of your collections from: `https://api.getpostman.com/collections?apikey=$apiKey`<br/>
@@ -480,11 +484,10 @@ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 
 ## Community Support
 
-<img src="https://www.getpostman.com/img/v2/icons/slack.svg" align="right" />
-If you are interested in talking to the team and other Newman users, we are there on <a href="https://www.getpostman.com/slack-invite" target="_blank">Slack</a>. Feel free to drop by and say hello. Our upcoming features and beta releases are discussed here along with world peace.
+<img src="https://avatars1.githubusercontent.com/u/3220138?v=3&s=120" align="right" />
+If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.  
 
-Get your invitation for Postman Slack Community from: <a href="https://www.getpostman.com/slack-invite">https://www.getpostman.com/slack-invite</a>.<br />
-Already member? Sign in at <a href="https://postmancommunity.slack.com">https://postmancommunity.slack.com</a>
+Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.getpostman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 
 ---
 
