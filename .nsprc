@@ -1,4 +1,7 @@
 {
   "exceptions": [],
-  "exclusions": {}
+  "exclusions": {
+    "postman-request": "2.81.1-postman.4",
+    "postman-runtime": "7.1.3"
+  }
 }
