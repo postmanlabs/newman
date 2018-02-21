@@ -78,7 +78,8 @@
     "packity": "0.3.2",
     "parse-gitignore": "0.4.0",
     "postman-jsdoc-theme": "0.0.3",
-    "recursive-readdir": "2.2.1"
+    "recursive-readdir": "2.2.1",
+    "xml2js": "0.4.19"
   },
   "engines": {
     "node": ">=4"
