@@ -7,62 +7,62 @@ master:
 3.9.3:
   date: 2018-01-19
   fixed bugs:
-    - '⬆️ Updated dependencies'
-    - '#1385 Fixed minor formatting issues in the readme. 📜'
-    - '#1368 Updated folder collection runner example to exclude package*.json files 🐛'
+    - 'Updated dependencies'
+    - '#1385 Fixed minor formatting issues in the readme.'
+    - '#1368 Updated folder collection runner example to exclude package*.json files'
 
 3.9.2:
   date: 2018-01-11
   fixed bugs:
-    - '⬆️ Updated dependencies'
-    - '#1366 Replaced deprecated Slack community link in the readme with the shiny new Postman community 📜'
-    - '#1350 Added setNextRequest information to the CLI reporter 🎉'
-    - '#1331 Fixed a bug that caused legacy arguments to be processed out of order 🐛'
+    - 'Updated dependencies'
+    - '#1366 Replaced deprecated Slack community link in the readme with the shiny new Postman community'
+    - '#1350 Added setNextRequest information to the CLI reporter'
+    - '#1331 Fixed a bug that caused legacy arguments to be processed out of order'
 
 3.9.1:
   date: 2017-12-08
   fixed bugs:
-    - '#1326 Fixed folder option handling 🐛'
-    - '#1323 Updated documentation for --bail and options.bail 📜'
-    - '#1325 Fixed typographical error in issue template 🐛'
+    - '#1326 Fixed folder option handling'
+    - '#1323 Updated documentation for --bail and options.bail'
+    - '#1325 Fixed typographical error in issue template'
 
 3.9.0:
   date: 2017-12-05
   new features:
-    - '#1320 Extended --bail`` to work with afolder` option 🎉'
-    - '#1298 Improved help text for incorrect usage 📜'
-    - '#1292 Added a name field to all applicable errors 🎉'
-    - '#1278 Migrated from argparse to commander 🎉'
-    - '#1277 Added support for a global timeout option 🎉'
-    - '#1275 Migrated from istanbul to nyc 🎉'
-    - '#1273 Tests now run on Node v8 as well ⬆️'
+    - '#1320 Extended --bail`` to work with afolder` option'
+    - '#1298 Improved help text for incorrect usage'
+    - '#1292 Added a name field to all applicable errors'
+    - '#1278 Migrated from argparse to commander'
+    - '#1277 Added support for a global timeout option'
+    - '#1275 Migrated from istanbul to nyc'
+    - '#1273 Tests now run on Node v8 as well'
 
 3.8.3:
   date: 2017-10-04
   fixed bugs:
-    - 'Updated dependencies ⬆️'
-    - '#1227 Added timeout-script to extend default sandbox script execution timeouts 🎉'
-    - '#1206 Corrected failure table handle in non TTY environments 🐛'
-    - '#1218 Made JSON parsing more robust 🐛'
+    - 'Updated dependencies'
+    - '#1227 Added timeout-script to extend default sandbox script execution timeouts'
+    - '#1206 Corrected failure table handle in non TTY environments'
+    - '#1218 Made JSON parsing more robust'
 
 3.8.2:
   date: 2017-09-18
   fixed bugs:
-    - '⬆️ Updated dependencies.'
-    - '🐛 Fixed a bug that caused csv files with comma spaces to be processed incorrectly. #1202'
-    - '📜 Corrected programmatic iterationData usage in README. #1191'
-    - '📜 Fixed broken link in parallel-collection-runs.js #1197'
+    - 'Updated dependencies.'
+    - 'Fixed a bug that caused csv files with comma spaces to be processed incorrectly. #1202'
+    - 'Corrected programmatic iterationData usage in README. #1191'
+    - 'Fixed broken link in parallel-collection-runs.js #1197'
 
 3.8.1:
   date: 2017-08-18
   fixed bugs:
-    - '⬆️ Updated postman-runtime to v6.2.6 #1173'
-    - '⬆️ Updated postman-collection to v2.1.1 #1172'
+    - 'Updated postman-runtime to v6.2.6 #1173'
+    - 'Updated postman-collection to v2.1.1 #1172'
 
 3.8.0:
   date: 2017-06-25
   new features:
-    - '🎉 Added support for global variable specification via the CLI #1142'
+    - 'Added support for global variable specification via the CLI #1142'
 
 3.7.6:
   date: 2017-06-19
@@ -80,7 +80,7 @@ master:
 3.7.4:
   date: 2017-06-29
   fixed bugs:
-    - '🐛 Corrected response.body reference in the HTML reporter #1099'
+    - 'Corrected response.body reference in the HTML reporter #1099'
 
 3.7.3:
   date: 2017-06-28
@@ -110,16 +110,16 @@ master:
 3.6.1:
   date: 2017-06-09
   fixed bugs:
-    - '⬆️ Updated dependencies'
-    - '🐛 Ensured that stdout is flushed on process.exit in CLI mode #1026'
-    - '🐛 Fixed type error for failed requests in the HTML reporter #1062'
+    - 'Updated dependencies'
+    - 'Ensured that stdout is flushed on process.exit in CLI mode #1026'
+    - 'Fixed type error for failed requests in the HTML reporter #1062'
     - 'Updated JUnit reporter to add time attribute to testsuites and testcase elements #1039'
 
 3.6.0:
   date: 2017-03-12
   new features:
-    - '⬆️ Updated dependencies'
-    - '🎉 Introduced all new pm.* API.'
+    - 'Updated dependencies'
+    - 'Introduced all new pm.* API.'
 
 3.5.2:
   date: 2017-03-17
