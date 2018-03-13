@@ -42,7 +42,7 @@
     "cli-progress": "1.8.0",
     "cli-table2": "0.2.0",
     "colors": "1.1.2",
-    "commander": "2.14.1",
+    "commander": "2.15.0",
     "csv-parse": "1.2.4",
     "eventemitter3": "3.0.1",
     "filesize": "3.6.0",
