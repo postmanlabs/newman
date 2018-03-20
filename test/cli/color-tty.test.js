@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 describe('CLI output', function () {
-    var coloredOutput = /\u001b\[/;
+    var coloredOutput = /\u001b\[/; // eslint-disable-line no-control-regex
 
     describe('TTY', function () {
         // @todo: Change to assert colored output after https://github.com/shelljs/shelljs/pull/524 is released
