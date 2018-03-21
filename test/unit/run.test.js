@@ -1,4 +1,5 @@
-var path = require('path'),
+var _ = require('lodash'),
+    path = require('path'),
     expect = require('expect.js'),
     sdk = require('postman-collection'),
     async = require('async');
@@ -71,7 +72,7 @@ describe('run module', function () {
                 return done(err);
             }
 
-            expect(newman.collection).eql(options.collection);
+            expect(_.omit(newman.collection.toJSON(), '_')).eql(options.collection.toJSON());
             expect(newman.environment).eql(options.environment);
             expect(newman.globals).eql(options.globals);
 
