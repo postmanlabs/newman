@@ -31,7 +31,6 @@ describe('nsp', function () {
 
         it('must not have exclusions (prevent erroneous exclusions)', function () {
             expect(nsprc.exclusions).to.eql({
-                'postman-request': '2.81.1-postman.4',
                 'postman-runtime': '7.1.3'
             });
         });
