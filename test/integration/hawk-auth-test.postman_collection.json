@@ -16,7 +16,7 @@
             "type": "text/javascript",
             "exec": [
               "pm.test('should authenticate correctly', function () {",
-              " pm.response.to.have.jsonBody('message', 'Hawk Authentication Successful');",
+              " pm.response.to.be.ok;",
               "});"
             ]
           }
