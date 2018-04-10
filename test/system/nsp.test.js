@@ -30,9 +30,7 @@ describe('nsp', function () {
         });
 
         it('must not have exclusions (prevent erroneous exclusions)', function () {
-            expect(nsprc.exclusions).to.eql({
-                'postman-runtime': '7.1.3'
-            });
+            expect(nsprc.exclusions).to.eql({});
         });
 
         it('dependency version in package.json should match .nsprc (time to remove exclusion?)', function () {
