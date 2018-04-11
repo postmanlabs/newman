@@ -159,6 +159,7 @@ var _ = require('lodash'),
             .option('--silent', 'Prevents newman from showing output to CLI', false)
             .option('--color', 'Force colored output (for use in CI environments)')
             .option('collection <path>', 'URL or path to a Postman Collection')
+            .option('--disable-wait-output', 'Remove the wait output that uses backslash b to reduce unnecessary output in some environments')
             .parse(rawArgs);
     },
 
@@ -200,6 +201,7 @@ var _ = require('lodash'),
             // commander had some issue with flags starting with --no, thus camelCased
             // resolved https://github.com/tj/commander.js/pull/709
             .option('--color', 'Force colored output (for use in CI environments).')
+            .option('--disable-wait-output', 'Remove the wait output that uses backslash b to reduce unnecessary output in some environments')
             .option('--no-color', 'Disable colored output.')
             .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', Integer, 0)
             .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', Integer, 0)
