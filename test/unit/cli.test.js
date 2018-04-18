@@ -227,6 +227,7 @@ describe('cli parser', function () {
             '--export-environment exported_env.json ' +
             '--export-globals exported_glob.json ' +
             '--reporter-cli-no-summary ' +
+            '--reporter-cli-no-success-assertions ' +
             '--iteration-count 23 ' +
             '--reporters json,html ' +
             '--no-color ' +
