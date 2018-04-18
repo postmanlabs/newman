@@ -283,6 +283,7 @@ describe('cli parser', function () {
                 // Generic reporter options
                 expect(opts.reporterOptions).to.be.ok();
                 expect(opts.reporterOptions.use).to.be('everything');
+                expect(opts.reporterOptions.cliNoSuccessAssertions).to.be(true);
 
                 // Individual reporter options
                 expect(opts.reporter).to.be.ok();
