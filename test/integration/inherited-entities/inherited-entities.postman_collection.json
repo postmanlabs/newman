@@ -50,7 +50,7 @@
           }]
         }, {
           "name": "Auth",
-          "request": "https://postman-echo.com/auth/basic",
+          "request": "https://postman-echo.com/basic-auth",
           "event": [{
             "listen": "test",
             "script": {
@@ -100,7 +100,7 @@
         }
       }],
       "item": [{
-          "request": "https://postman-echo.com/auth/digest",
+          "request": "https://postman-echo.com/digest-auth",
           "name": "Auth",
           "event": {
             "listen": "test",
@@ -135,7 +135,7 @@
       "item": [{
         "name": "Auth",
         "request": {
-          "url": "https://postman-echo.com/auth/digest",
+          "url": "https://postman-echo.com/digest-auth",
           "auth": {
             "type": "digest",
             "digest": [{
@@ -162,7 +162,7 @@
     {
       "name": "Auth override",
       "request": {
-        "url": "https://postman-echo.com/auth/basic",
+        "url": "https://postman-echo.com/basic-auth",
         "auth": {
           "type": "noauth"
         }

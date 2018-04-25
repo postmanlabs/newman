@@ -10,6 +10,21 @@ describe('Newman run options', function () {
         }, done);
     });
 
+    it('should correctly send the test name as a part of error information for failed assertions', function (done) {
+        newman
+            .run({
+                collection: 'test/fixtures/run/single-request-failing.json'
+            }, done)
+            .on('assertion', function (err) {
+                expect(err).to.be.ok();
+                expect(err).to.have.property('name', 'AssertionError');
+                expect(err).to.have.property('index', 0);
+                expect(err).to.have.property('test', 'response code is 200');
+                expect(err).to.have.property('message', 'expected false to be truthy');
+                expect(err).to.have.property('stack');
+            });
+    });
+
     it('should not work without a collection', function (done) {
         newman.run({
             environment: 'test/fixtures/run/simple-variables.json'
@@ -35,7 +50,7 @@ describe('Newman run options', function () {
             if (err) { return done(err); }
 
             expect(summary.run.failures).to.have.length(1);
-            expect(summary.run.failures[0].error).to.have.property('name', 'AssertionFailure');
+            expect(summary.run.failures[0].error).to.have.property('name', 'AssertionError');
 
             done();
         });
@@ -98,11 +113,49 @@ describe('Newman run options', function () {
         });
     });
 
+    describe('bail modifiers', function () {
+        it('should skip collection run in case of error when folder is specified', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/failed-request.json',
+                bail: ['folder']
+            }, function (err) {
+                expect(err).to.be.ok();
+                expect(err.message).to.be('getaddrinfo ENOTFOUND 123.random.z 123.random.z:443');
+
+                done();
+            });
+        });
+
+        it('should gracefully stop a collection run in case of error with no additional modifiers', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/failed-request.json',
+                bail: true
+            }, function (err) {
+                expect(err).to.not.be.ok();
+
+                done();
+            });
+        });
+
+        it('should skip collection run in case of error when both folder and failure are specified', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/failed-request.json',
+                folder: 'invalidName',
+                bail: ['folder', 'failure']
+            }, function (err) {
+                expect(err).to.be.ok();
+                expect(err.message).to.be('Unable to find a folder or request: invalidName');
+
+                done();
+            });
+        });
+    });
+
     describe('script timeouts', function () {
         // @todo: Unskip this when the underlying runtime behaviour has been fixed
         it.skip('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 5
             }, function (err, summary) {
                 expect(err.message).to.be('Script execution timed out.');
@@ -113,8 +166,57 @@ describe('Newman run options', function () {
 
         it('should be handled correctly when not breached', function (done) {
             newman.run({
-                collection: 'test/integration/script-timeout/script-timeout.postman_collection.json',
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 500
+            }, function (err, summary) {
+                expect(err).to.be(null);
+                expect(summary).to.be.ok();
+                done();
+            });
+        });
+    });
+
+    describe('request timeouts', function () {
+        // @todo: Unskip this when the underlying runtime behaviour has been fixed
+        it.skip('should be handled correctly when breached', function (done) {
+            newman.run({
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
+                timeoutRequest: 500
+            }, function (err, summary) {
+                expect(err.message).to.be('ESOCKETTIMEDOUT');
+                expect(summary).to.be.ok();
+                done();
+            });
+        });
+
+        it('should be handled correctly when not breached', function (done) {
+            newman.run({
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
+                timeoutRequest: 5000
+            }, function (err, summary) {
+                expect(err).to.be(null);
+                expect(summary).to.be.ok();
+                done();
+            });
+        });
+    });
+
+    describe('global timeouts', function () {
+        it('should be handled correctly when breached', function (done) {
+            newman.run({
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
+                timeout: 1000
+            }, function (err, summary) {
+                expect(err.message).to.be('callback timed out');
+                expect(summary).to.be.ok();
+                done();
+            });
+        });
+
+        it('should be handled correctly when not breached', function (done) {
+            newman.run({
+                collection: 'test/integration/timeout/timeout.postman_collection.json',
+                timeout: 10000
             }, function (err, summary) {
                 expect(err).to.be(null);
                 expect(summary).to.be.ok();
