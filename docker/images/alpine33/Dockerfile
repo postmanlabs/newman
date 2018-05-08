@@ -1,20 +1,22 @@
 FROM alpine:3.3
 MAINTAINER Postman Labs <help@getpostman.com>
 
-# Set node version
-# Can't upgrade to nodev8 because it isn't supported in alpine 3.3
+ARG newman_version
+# Bail out early if NODE_VERSION is not provided
+RUN if [ ! $(echo $newman_version | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then \
+        echo "\033[0;31mA valid semver Newman version is required in the newman_version build-arg\033[0m"; \
+        exit 1; \
+    fi
+
+# Can't upgrade to node v8 because it isn't supported in alpine 3.3
 ENV NODE_VERSION 4.3.2
 
-# Set locale
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
-
 # Install node
-RUN apk add --update nodejs=${NODE_VERSION}-r1;
+RUN echo -e "http://nl.alpinelinux.org/alpine/v3.3/main\nhttp://nl.alpinelinux.org/alpine/v3.3/community" > /etc/apk/repositories && \
+    apk add --update nodejs=${NODE_VERSION}-r1;
 
-ARG newman_version
-ENV NEWMAN_VERSION=$newman_version
+# Set environment variables
+ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" NEWMAN_VERSION=$newman_version
 
 # Install newman
 RUN npm install -g newman@${NEWMAN_VERSION};
@@ -27,7 +29,6 @@ RUN npm install -g newman@${NEWMAN_VERSION};
 # In case you mount your collections directory to a different location, you will need to give absolute paths to any
 # collection, environment files you want to pass to newman, and if you want newman reports to be saved to your disk.
 # Or you can change the workdir by using the -w or --workdir flag
-
 WORKDIR /etc/newman
 
 # Set newman as the default container command
@@ -36,5 +37,4 @@ WORKDIR /etc/newman
 # docker run -v /home/collections:/etc/newman -t postman/newman_alpine33 -c YourCollection.json.postman_collection \
 #                                                                        -e YourEnvironment.postman_environment \
 #                                                                        -H newman_report.html
-
 ENTRYPOINT ["newman"]
