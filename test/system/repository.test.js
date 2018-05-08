@@ -2,7 +2,9 @@
  * @fileOverview This test specs runs tests on the package.json file of repository. It has a set of strict tests on the
  * content of the file as well. Any change to package.json must be accompanied by valid test case in this spec-sheet.
  */
-var _ = require('lodash'),
+var path = require('path'),
+
+    _ = require('lodash'),
     expect = require('expect.js'),
     parseIgnore = require('parse-gitignore');
 
@@ -80,7 +82,7 @@ describe('project repository', function () {
                     fs.stat(name, function (err) {
                         var fileDetails = path.parse(name);
                         expect(err).to.equal(null);
-                        expect(fileDetails.ext).to.be.oneOf(['.sh', '.js']);
+                        expect(fileDetails.ext).to.match(/^\.(sh|js)$/);
                     });
                 });
             });
@@ -88,21 +90,20 @@ describe('project repository', function () {
             it('must have the hashbang defined', function () {
                 expect(json.scripts).to.be.ok();
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-                    var name = json.scripts[scriptName];
-                    name = name.replace(/^(node\s|\.\/)/, '');
-                    fs.stat(name, function (err) {
-                        var fileDetails = path.parse(name);
-                        expect(err).to.equal(null);
-                        expect(fileDetails.ext).to.be.oneOf(['.sh', '.js']);
-                        fs.readFile(name, function (error, content) {
-                            expect(error).to.equal(null);
-                            if (fileDetails.ext === '.sh') {
-                                expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content)).to.be.ok();
-                            }
-                            else {
-                                expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content)).to.be.ok();
-                            }
-                        });
+                    var fileDetails,
+                        name = json.scripts[scriptName].replace(/^(node\s|\.\/)/, '');
+
+                    fileDetails = path.parse(name);
+                    expect(fileDetails.ext).to.match(/^\.(sh|js)$/);
+
+                    fs.readFile(name, function (error, content) {
+                        expect(error).to.equal(null);
+                        if (fileDetails.ext === '.sh') {
+                            expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content)).to.be.ok();
+                        }
+                        else {
+                            expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content)).to.be.ok();
+                        }
                     });
                 });
             });
