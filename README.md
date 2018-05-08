@@ -143,11 +143,11 @@ newman.run({
   Specify the extent of delay between requests (milliseconds).
 
 - `--bail [optional modifiers]`<br />
-  Specify whether or not to stop a collection run on encountering the first error.<br />
+  Specify whether or not to stop a collection run on encountering the first test script error.<br />
   Can optionally accept modifiers, currently include `folder` and `failure`.<br />
   `folder` allows you to skip the entire collection run in case an invalid folder 
   was specified using the `--folder` option or an error was encountered in general.<br />
-  `failure` would gracefully stop a collection run on the first test failure.
+  On the failure of a test, `failure` would gracefully stop a collection run after completing the current test script.
 
 - `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.
@@ -205,6 +205,7 @@ such a scenario.
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
+| `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 
 ##### JSON reporter options
@@ -319,7 +320,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.delayRequest      | Specify the time (in milliseconds) to wait for between subsequent requests.<br /><br />_Optional_<br />Type: `number`, Default value: `0` |
 | options.ignoreRedirects   | This specifies whether newman would automatically follow 3xx responses from servers.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
-| options.bail              | A switch to specify whether or not to gracefully stop a collection run on encountering the first error. Takes additional modifiers as arguments to specify whether to end the run with an error for invalid name or path.<br /><br/>Available modifiers: `folder` and `failure`.<br />eg. `bail : ['folder']`<br /><br />_Optional_<br />Type: `boolean\|object`, Default value: `false` |
+| options.bail              | A switch to specify whether or not to gracefully stop a collection run (after completing the current test script) on encountering the first error. Takes additional modifiers as arguments to specify whether to end the run with an error for invalid name or path.<br /><br/>Available modifiers: `folder` and `failure`.<br />eg. `bail : ['folder']`<br /><br />_Optional_<br />Type: `boolean\|object`, Default value: `false` |
 | options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
