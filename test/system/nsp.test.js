@@ -30,7 +30,9 @@ describe('nsp', function () {
         });
 
         it('must not have exclusions (prevent erroneous exclusions)', function () {
-            expect(nsprc.exclusions).to.eql({});
+            expect(nsprc.exclusions).to.eql({
+                'cli-table2': '0.2.0'
+            });
         });
 
         it('dependency version in package.json should match .nsprc (time to remove exclusion?)', function () {
