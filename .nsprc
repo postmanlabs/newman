@@ -1,4 +1,6 @@
 {
   "exceptions": [],
-  "exclusions": {}
+  "exclusions": {
+    "cli-table2": "0.2.0"
+  }
 }
