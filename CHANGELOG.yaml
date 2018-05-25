@@ -1,8 +1,19 @@
 # Newman Changelog
 
-master:
+3.9.4:
+  date: 2018-05-25
   fixed bugs:
     - 'Improved failure table reporting details #1390'
+    - 'Fixed no-assertions behaviour for the CLI reporter #1389'
+    - 'Corrected help text for missing arguments #1428'
+    - 'Added postpublish script for automated Docker image pushing #1397'
+    = 'Corrected Postman API reference link #1416'
+    - 'Switched to a YAML changelog 1448'
+    - 'Corrected error representation in JUnit reports #1443'
+    - 'Removed wait spinner from CLI output when --disable-unicode is present #1496'
+    - 'Added support for --no-success-assertions #1450'
+    - 'Made folder and request IDs unique in generated HTML reports #1528'
+    - 'Updated dependencies'
 
 3.9.3:
   date: 2018-01-19
