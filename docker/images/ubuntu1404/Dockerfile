@@ -13,7 +13,7 @@ ENV NODE_VERSION 8
 
 # Install node
 ADD https://deb.nodesource.com/setup_$NODE_VERSION.x /opt/install_node.sh
-RUN bash /opt/install_node.sh && apt-get install -y nodejs
+RUN bash /opt/install_node.sh && apt-get install -y nodejs && rm /opt/install_node.sh
 
 # Set environment variables
 ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" NEWMAN_VERSION=$newman_version
