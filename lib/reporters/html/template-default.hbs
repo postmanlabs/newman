@@ -58,12 +58,12 @@
 
     {{#each aggregations}}
         {{#if parent.name}}
-        <div class="panel-group" id="collapse-folder-{{parent.id}}-aggregation-{{@index}}" role="tablist" aria-multiselectable="true">
-            <div role="tab" id="folderHead-{{parent.id}}-aggregation-{{@index}}">
-                <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{parent.id}}-aggregation-{{@index}}" aria-controls="collapseOne"><strong>{{parent.name}}</strong></a></h4>
+        <div class="panel-group" id="collapse-folder-{{parent.id}}" role="tablist" aria-multiselectable="true">
+            <div role="tab" id="folderHead-{{parent.id}}">
+                <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{parent.id}}" aria-controls="collapseOne"><strong>{{parent.name}}</strong></a></h4>
             </div>
             <br/>
-            <div id="folderData-{{parent.id}}-aggregation-{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="folderHead-{{parent.id}}-aggregation-{{@index}}">
+            <div id="folderData-{{parent.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="folderHead-{{parent.id}}">
             {{> aggregations}}
             </div>
         </div>
@@ -77,13 +77,13 @@
 
 {{#*inline "aggregations"}}
     {{#each executions}}
-        <div class="panel-group" id="collapse-request-{{item.id}}-aggregation-{{@../index}}" role="tablist" aria-multiselectable="true">
+        <div class="panel-group" id="collapse-request-{{item.id}}" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="requestHead-{{item.id}}-aggregation-{{@../index}}">
-                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{item.id}}-aggregation-{{@../index}}" aria-controls="collapseOne">{{item.name}}</a></h4>
+                <div class="panel-heading" role="tab" id="requestHead-{{item.id}}">
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{item.id}}" aria-controls="collapseOne">{{item.name}}</a></h4>
                 </div>
 
-                <div id="requestData-{{item.id}}-aggregation-{{@../index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-{{item.id}}-aggregation-{{@../index}}">
+                <div id="requestData-{{item.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-{{item.id}}">
                     <div class="panel-body">
                         {{#with request}}
                             {{#if description.content}}
