@@ -53,6 +53,10 @@ describe('project repository', function () {
                 expect(json.engines).to.eql({ node: '>=4' });
             });
 
+            it('must ignore applicable dependencies for GreenKeeper pull requests', function () {
+                expect(json.greenkeeper).to.eql({ ignore: ['cli-progress', 'csv-parse'] });
+            });
+
             it('must have a valid version string in form of <major>.<minor>.<revision>', function () {
                 // eslint-disable-next-line max-len
                 expect(json.version).to.match(/^((\d+)\.(\d+)\.(\d+))(?:-([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?$/);
