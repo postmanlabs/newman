@@ -8,12 +8,16 @@ RUN if [ ! $(echo $newman_version | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
         exit 1; \
     fi
 
-# Can't upgrade to node v8 because it isn't supported in alpine 3.3
-ENV NODE_VERSION 4.3.2
+ENV NODE_VERSION 8.11.2
 
 # Install node
 RUN echo -e "http://nl.alpinelinux.org/alpine/v3.3/main\nhttp://nl.alpinelinux.org/alpine/v3.3/community" > /etc/apk/repositories && \
-    apk add --update nodejs=${NODE_VERSION}-r1;
+    apk add --update --no-cache libgcc libstdc++;
+
+ADD https://github.com/oznu/alpine-node/releases/download/${NODE_VERSION}/node-v${NODE_VERSION}-linux-x86_64-alpine.tar.gz /opt/node-${NODE_VERSION}.tar.gz
+
+RUN tar -xzf /opt/node-${NODE_VERSION}.tar.gz -C /usr --no-same-owner && \
+    rm /opt/node-${NODE_VERSION}.tar.gz;
 
 # Set environment variables
 ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" NEWMAN_VERSION=$newman_version
