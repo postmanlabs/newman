@@ -20,8 +20,9 @@ function build_docker_image {
     echo "";
     echo -e "$BLUE Building docker image for $DOCKER_USER/$IMAGE_NAME:$TAG, latest $NO_COLOUR";
     docker build \
+        --no-cache --force-rm --squash \
         -t "$DOCKER_USER/$IMAGE_NAME:$TAG" -t "$DOCKER_USER/$IMAGE_NAME:latest" \
-        --no-cache --force-rm --file="docker/images/$BASENAME/Dockerfile" --build-arg newman_version="$TAG" .;
+        --file="docker/images/$BASENAME/Dockerfile" --build-arg newman_version="$TAG" .;
 
     echo -e "$BLUE Running docker image test for $DOCKER_USER/$IMAGE_NAME:$TAG, latest $NO_COLOUR";
     docker run -v "$PWD/examples:/etc/newman" -t "$DOCKER_USER/$IMAGE_NAME:$TAG" run "sample-collection.json";
