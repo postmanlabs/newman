@@ -22,7 +22,7 @@ function build_docker_image {
     docker build \
         --no-cache --force-rm --squash \
         -t "$DOCKER_USER/$IMAGE_NAME:$TAG" -t "$DOCKER_USER/$IMAGE_NAME:latest" \
-        --file="docker/images/$BASENAME/Dockerfile" --build-arg newman_version="$TAG" .;
+        --file="docker/images/$BASENAME/Dockerfile" --build-arg NEWMAN_VERSION="$TAG" .;
 
     echo -e "$BLUE Running docker image test for $DOCKER_USER/$IMAGE_NAME:$TAG, latest $NO_COLOUR";
     docker run -v "$PWD/examples:/etc/newman" -t "$DOCKER_USER/$IMAGE_NAME:$TAG" run "sample-collection.json";
