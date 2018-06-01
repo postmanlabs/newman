@@ -71,4 +71,63 @@ describe('--export-globals', function () {
             done();
         });
     });
+
+    it('`newman run` should export globals with a name if the input file doesn\'t have one', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/single-request-failing.json',
+            globals: {
+                values: [{ key: 'var-1', value: 'value-1' }]
+            },
+            exportGlobals: exportedGlobalsPath
+        }, function (err) {
+            if (err) { return done(err); }
+
+            var globals;
+
+            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
+            catch (e) { console.error(e); }
+
+            expect(globals).be.ok();
+            expect(globals).have.property('_postman_exported_at');
+            expect(globals).have.property('values');
+            expect(globals).have.property('name', 'globals');
+            expect(globals.values).eql([
+                { key: 'var-1', value: 'value-1', type: 'any' }
+            ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
+            done();
+        });
+    });
+
+    it('`newman run` should export globals with a name when no input file is provided', function (done) {
+        newman.run({
+            collection: {
+                item: [{
+                    event: [{
+                        listen: 'test',
+                        script: 'pm.globals.set("var-1", "value-1");'
+                    }],
+                    request: 'https://postman-echo.com/get?source=newman-sample-github-collection'
+                }]
+            },
+            exportGlobals: exportedGlobalsPath
+        }, function (err) {
+            if (err) { return done(err); }
+
+            var globals;
+
+            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
+            catch (e) { console.error(e); }
+
+            expect(globals).be.ok();
+            expect(globals).have.property('_postman_exported_at');
+            expect(globals).have.property('values');
+            expect(globals).have.property('name', 'globals');
+            expect(globals.values).eql([
+                { key: 'var-1', value: 'value-1', type: 'any' }
+            ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
+            done();
+        });
+    });
 });
