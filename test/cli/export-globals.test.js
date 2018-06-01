@@ -73,4 +73,25 @@ describe('--export-globals', function () {
             done();
         });
     });
+
+    it('`newman run` should export globals with a name when provided under --global-var', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json --global-var foo=bar --export-globals out/test-globals.json', function (code) {
+            var globals;
+
+            try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
+            catch (e) { console.error(e); }
+
+            expect(code).not.be(0);
+            expect(globals).be.ok();
+            expect(globals).have.property('_postman_exported_at');
+            expect(globals).have.property('values');
+            expect(globals).have.property('name', 'globals');
+            expect(globals.values).eql([
+                { key: 'foo', value: 'bar', type: 'any' }
+            ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
+            done();
+        });
+    });
 });
