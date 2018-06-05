@@ -517,7 +517,7 @@ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 ---
 
 ## Using Newman in Docker
-See https://github.com/postmanlabs/newman/tree/develop/docker/images/
+See https://github.com/postmanlabs/newman/tree/develop/docker/
 
 ---
 
