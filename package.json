@@ -63,6 +63,7 @@
     "xmlbuilder": "10.0.0"
   },
   "devDependencies": {
+    "dockerfile_lint": "0.3.2",
     "editorconfig": "0.15.0",
     "eslint": "4.19.1",
     "eslint-plugin-jsdoc": "3.7.1",
