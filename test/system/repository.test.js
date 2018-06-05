@@ -2,16 +2,16 @@
  * @fileOverview This test specs runs tests on the package.json file of repository. It has a set of strict tests on the
  * content of the file as well. Any change to package.json must be accompanied by valid test case in this spec-sheet.
  */
-var path = require('path'),
+var fs = require('fs'),
+    path = require('path'),
 
     _ = require('lodash'),
+    yml = require('js-yaml'),
     expect = require('expect.js'),
     parseIgnore = require('parse-gitignore');
 
 /* global describe, it */
 describe('project repository', function () {
-    var fs = require('fs');
-
     describe('package.json', function () {
         var content,
             json;
@@ -215,6 +215,16 @@ describe('project repository', function () {
 
         it('must have readable content', function () {
             expect(fs.readFileSync('./.eslintrc').toString()).to.be.ok();
+        });
+    });
+
+    describe('CHANGELOG.yaml', function () {
+        it('must exist', function (done) {
+            fs.stat('./CHANGELOG.yaml', done);
+        });
+
+        it('must have readable content', function () {
+            expect(yml.safeLoad(fs.readFileSync('./CHANGELOG.yaml'))).to.be.ok();
         });
     });
 
