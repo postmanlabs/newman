@@ -1,7 +1,7 @@
 FROM alpine:3.3
 MAINTAINER Postman Labs <help@getpostman.com>
 
-ARG NODE_VERSION=8
+ARG NODE_VERSION=10
 ARG NEWMAN_VERSION
 
 # Set environment variables
