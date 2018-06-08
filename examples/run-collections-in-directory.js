@@ -14,7 +14,7 @@ fs.readdir('./examples', function (err, files) {
         return (/^((?!(package(-lock)?))|.+)\.json/).test(file);
     });
 
-    // now wer iterate on each file name and call newman.run using each file name
+    // now we iterate on each file name and call newman.run using each file name
     files.forEach(function (file) {
         newman.run({
             // we load collection using require. for better validation and handling
