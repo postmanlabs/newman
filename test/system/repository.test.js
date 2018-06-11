@@ -54,7 +54,7 @@ describe('project repository', function () {
             });
 
             it('must ignore applicable dependencies for GreenKeeper pull requests', function () {
-                expect(json.greenkeeper).to.eql({ ignore: ['cli-progress', 'csv-parse'] });
+                expect(json.greenkeeper).to.eql({ ignore: ['cli-progress', 'cli-table3', 'csv-parse'] });
             });
 
             it('must have a valid version string in form of <major>.<minor>.<revision>', function () {
