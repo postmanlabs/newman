@@ -89,6 +89,7 @@
   "greenkeeper": {
     "ignore": [
       "cli-progress",
+      "cli-table3",
       "csv-parse"
     ]
   }
