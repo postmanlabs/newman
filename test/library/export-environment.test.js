@@ -4,7 +4,7 @@ var fs = require('fs'),
     sh = require('shelljs');
 
 /* global beforeEach, afterEach, describe, it, expect, newman */
-describe.only('--export-environment', function () {
+describe('--export-environment', function () {
     var outDir = 'out',
         environment = 'test/fixtures/run/simple-variables.json',
         exportedEnvironmentPath = path.join(__dirname, '..', '..', outDir, 'test-environment.json');
