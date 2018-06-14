@@ -42,8 +42,13 @@ describe('JUnit reporter', function () {
                     expect(error).to.not.be.ok();
 
                     var suite = _.get(result.testsuites, 'testsuite.0');
+
+                    expect(result.testsuites.$).to.not.be.empty();
+                    expect(result.testsuites.$.time).to.match(/^\d+\.\d{3}$/);
+
                     expect(suite).to.not.be.empty();
                     expect(suite.$).to.not.be.empty();
+                    expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(suite.testcase).to.not.be.empty();
 
                     expect(suite.$).to.have.property('tests', '1');
@@ -73,8 +78,12 @@ describe('JUnit reporter', function () {
                     var testcase,
                         suite = _.get(result.testsuites, 'testsuite.0');
 
+                    expect(result.testsuites.$).to.not.be.empty();
+                    expect(result.testsuites.$.time).to.match(/^\d+\.\d{3}$/);
+
                     expect(suite).to.not.be.empty();
                     expect(suite.$).to.not.be.empty();
+                    expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(suite.testcase).to.not.be.empty();
 
                     expect(suite.$).to.have.property('tests', '1');
@@ -85,6 +94,7 @@ describe('JUnit reporter', function () {
                     expect(testcase).to.not.be.empty();
 
                     expect(testcase.$).to.have.property('classname', 'JUnitXmlReporter.constructor');
+                    expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(testcase.failure).to.not.be.empty();
                     expect(testcase.failure[0]._).to.not.be.empty();
                     expect(testcase.failure[0].$).to.have.property('type', 'AssertionFailure');
@@ -113,8 +123,12 @@ describe('JUnit reporter', function () {
                     var testcase,
                         suite = _.get(result.testsuites, 'testsuite.0');
 
+                    expect(result.testsuites.$).to.not.be.empty();
+                    expect(result.testsuites.$.time).to.match(/^\d+\.\d{3}$/);
+
                     expect(suite).to.not.be.empty();
                     expect(suite.$).to.not.be.empty();
+                    expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(suite.testcase).to.not.be.empty();
 
                     expect(suite.$).to.have.property('tests', '2');
@@ -125,6 +139,7 @@ describe('JUnit reporter', function () {
                     expect(testcase).to.not.be.empty();
 
                     expect(testcase.$).to.have.property('classname', 'JUnitXmlReporter.constructor');
+                    expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(testcase.failure).to.not.be.empty();
                     expect(testcase.failure[0]._).to.not.be.empty();
                     expect(testcase.failure[0].$).to.have.property('type', 'AssertionFailure');
