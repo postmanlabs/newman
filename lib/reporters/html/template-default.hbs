@@ -131,6 +131,15 @@
                         {{/with}}
 
                         <div class="col-md-12">&nbsp;</div>
+                        {{#if requestError}}
+                            <div class="col-md-4"><b>Error</b></div><div class="col-md-8"><b>There was an error sending this request</b></div>
+                            <div class="col-md-4"><b>Error code</b></div><div class="col-md-8"><b>{{requestError.code}}</b></div>
+                            {{#if requestError.connect}}
+                                <div class="col-md-4"><b>Details</b></div><div class="col-md-8"><b>A connection to the host could not be established within the stipulated timeout</b></div>
+                            {{/if}}
+                        {{/if}}
+
+                        <div class="col-md-12">&nbsp;</div>
                         <div class="col-md-4">Mean time per request</div><div class="col-md-8">{{mean.time}}</div><br/>
                         <div class="col-md-4">Mean size per request</div><div class="col-md-8">{{mean.size}}</div><br/>
 
