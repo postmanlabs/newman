@@ -3,11 +3,10 @@
  * on the content of the file as well. Any change to .jsdoc-config.json must be accompanied by valid test case in this
  * spec-sheet.
  */
-/* global describe, it */
+/* global describe, it, expect */
 describe('JSDoc configuration', function () {
     var fs = require('fs'),
         _ = require('lodash'),
-        expect = require('chai').expect,
 
         json,
         content,

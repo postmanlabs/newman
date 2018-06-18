@@ -1,6 +1,4 @@
-/* global describe, it */
-var expect = require('chai').expect;
-
+/* global describe, it, expect */
 describe('travis.yml', function () {
     var fs = require('fs'),
         yaml = require('js-yaml'),

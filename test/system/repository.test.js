@@ -4,13 +4,11 @@
  */
 var fs = require('fs'),
     path = require('path'),
-
     _ = require('lodash'),
     yml = require('js-yaml'),
-    expect = require('chai').expect,
     parseIgnore = require('parse-gitignore');
 
-/* global describe, it */
+/* global describe, it, expect */
 describe('project repository', function () {
     describe('package.json', function () {
         var content,

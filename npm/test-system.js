@@ -6,6 +6,7 @@ var async = require('async'),
     _ = require('lodash'),
     path = require('path'),
     packity = require('packity'),
+    expect = require('chai').expect,
     Mocha = require('mocha'),
     recursive = require('recursive-readdir'),
 
@@ -68,7 +69,13 @@ module.exports = function (exit) {
                 });
 
                 // start the mocha run
-                mocha.run(next);
+                global.expect = expect; // for easy reference
+
+                mocha.run(function (err) {
+                    // clear references and overrides
+                    delete global.expect;
+                    next(err);
+                });
                 mocha = null; // cleanup
             });
         },

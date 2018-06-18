@@ -2,8 +2,7 @@
  * @fileOverview Ensures that editorconfig settings are appropriate
  */
 
-var expect = require('chai').expect,
-    editorconfig = require('editorconfig'),
+var editorconfig = require('editorconfig'),
 
     /**
      * The width (in spaces) of tabs used for indentation throughout the project
@@ -11,7 +10,7 @@ var expect = require('chai').expect,
      */
     TAB_WIDTH = 4;
 
-/* global describe, it */
+/* global describe, it, expect */
 describe('.editorconfig', function () {
     var config = editorconfig.parseSync('.editorconfig'); // eslint-disable-line no-sync
 

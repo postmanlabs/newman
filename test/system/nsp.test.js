@@ -2,11 +2,10 @@
  * @fileOverview Ensures nsprc is as expected
  */
 
-var expect = require('chai').expect,
-    fs = require('fs'),
+var fs = require('fs'),
     _ = require('lodash');
 
-/* global describe, it, before */
+/* global describe, it, before, expect */
 describe('nsp', function () {
     var nsprc,
         pkg;

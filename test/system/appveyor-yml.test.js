@@ -1,5 +1,4 @@
-/* global describe, it */
-var expect = require('chai').expect;
+/* global describe, it, expect */
 
 describe('appveyor.yml', function () {
     var fs = require('fs'),

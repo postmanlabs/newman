@@ -4,11 +4,9 @@
 
 var fs = require('fs'),
     path = require('path'),
-
-    expect = require('chai').expect,
     DockerFileValidator = require('dockerfile_lint');
 
-/* global describe, it */
+/* global describe, it, expect */
 describe('Validate Dockerfiles', function () {
     var imagesBaseDirectory = path.join(__dirname, '../../docker/images'),
         images = fs.readdirSync(imagesBaseDirectory).filter(function (item) {
