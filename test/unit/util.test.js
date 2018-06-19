@@ -40,12 +40,12 @@ describe('utility helpers', function () {
             };
 
         it('should handle empty input correctly', function () {
-            expect(util.getFullName()).to.not.be.ok;
-            expect(util.getFullName(false)).to.not.be.ok;
-            expect(util.getFullName(0)).to.not.be.ok;
-            expect(util.getFullName('')).to.not.be.ok;
-            expect(util.getFullName([])).to.not.be.ok;
-            expect(util.getFullName({})).to.not.be.ok;
+            expect(util.getFullName(), 'should handle empty input correctly').to.not.be.ok;
+            expect(util.getFullName(false), 'should handle `false` input correctly').to.not.be.ok;
+            expect(util.getFullName(0), 'should handle `0` input correctly').to.not.be.ok;
+            expect(util.getFullName(''), 'should handle `\'\'` input correctly').to.not.be.ok;
+            expect(util.getFullName([]), 'should handle `[]` input correctly').to.not.be.ok;
+            expect(util.getFullName({}), 'should handle `{}` input correctly').to.not.be.ok;
         });
 
         it('should handle items correctly', function () {

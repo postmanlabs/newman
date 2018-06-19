@@ -130,7 +130,7 @@ describe('run summary', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.run.failures).to.have.lengthOf(0);
+                    expect(summary.run.failures, 'should have 0 failures').to.have.lengthOf(0);
                 });
             });
         });
@@ -155,7 +155,7 @@ describe('run summary', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.run.failures).to.have.lengthOf(2);
+                    expect(summary.run.failures, 'should have 2 failures').to.have.lengthOf(2);
                     expect(summary.run.failures[0].error.message).to.equal(`faux ${beforeEventName} error`);
                     expect(summary.run.failures[1].error.message).to.equal(`faux ${eventName} error`);
                 });
@@ -164,7 +164,7 @@ describe('run summary', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.run.failures).to.have.lengthOf(2);
+                    expect(summary.run.failures, 'should have 2 failures').to.have.lengthOf(2);
                     var failure = summary.run.failures[0];
 
                     expect(failure.error.message).to.equal(`faux ${beforeEventName} error`);
@@ -220,7 +220,7 @@ describe('run summary', function () {
                     cursor: { ref: '2', iteration: 1 }
                 });
 
-                expect(executions).to.have.lengthOf(2);
+                expect(executions, 'should have 2 executions').to.have.lengthOf(2);
                 expect(executions[0].cursor).to.eql({ ref: '1', iteration: 0 });
                 expect(executions[1].cursor).to.eql({ ref: '2', iteration: 1 });
             });
@@ -236,7 +236,7 @@ describe('run summary', function () {
                     cursor: { ref: '1', iteration: 0 }
                 });
 
-                expect(executions).to.have.lengthOf(1);
+                expect(executions, 'should have 1 executions').to.have.lengthOf(1);
                 expect(executions[0]).to.eql({
                     cursor: { ref: '1', iteration: 0 },
                     request: { id: 'request-1' },
@@ -256,7 +256,7 @@ describe('run summary', function () {
                     cursor: { ref: '1', iteration: 0 }
                 });
 
-                expect(executions).to.have.lengthOf(1);
+                expect(executions, 'should have 1 executions').to.have.lengthOf(1);
                 expect(executions[0]).to.eql({
                     cursor: { ref: '1', iteration: 0 },
                     request: { id: 'request-1' },

@@ -62,9 +62,9 @@ describe('run module', function () {
                 expect(newman).to.have.property('environment');
                 expect(newman).to.have.property('globals');
 
-                expect(newman.collection).to.be.an.instanceof(sdk.Collection);
-                expect(newman.environment).to.be.an.instanceof(sdk.VariableScope);
-                expect(newman.globals).to.be.an.instanceof(sdk.VariableScope);
+                expect(newman.collection, 'should be an instance of PostmanCollection').to.be.an.instanceof(sdk.Collection);
+                expect(newman.environment, 'should be an instance of PostmanVariableScope').to.be.an.instanceof(sdk.VariableScope);
+                expect(newman.globals, 'should be an instance of PostmanVariableScope').to.be.an.instanceof(sdk.VariableScope);
 
                 done();
             });
