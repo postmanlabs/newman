@@ -70,7 +70,8 @@ describe('project repository', function () {
             it('should have valid node shebang', function () {
                 json.bin && Object.keys(json.bin).forEach(function (scriptName) {
                     var fileContent = fs.readFileSync(json.bin[scriptName]).toString();
-                    expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent)).to.be.ok;
+                    expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent),
+                        `invalid or missing shebang in ${json.bin[scriptName]}`).to.be.ok;
                 });
             });
         });
@@ -101,10 +102,12 @@ describe('project repository', function () {
                     fs.readFile(name, function (error, content) {
                         expect(error).to.equal(null);
                         if (fileDetails.ext === '.sh') {
-                            expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content)).to.be.ok;
+                            expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content),
+                                `invalid or missing hashbang in ${name}`).to.be.ok;
                         }
                         else {
-                            expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content)).to.be.ok;
+                            expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content),
+                                `invalid or missing hashbang in ${name}`).to.be.ok;
                         }
                     });
                 });
@@ -187,7 +190,7 @@ describe('project repository', function () {
             });
 
             it('should have valid content', function () {
-                expect(_.isEmpty(gitignore)).to.not.be.ok;
+                expect(gitignore).to.not.be.empty;
             });
         });
 
@@ -197,7 +200,7 @@ describe('project repository', function () {
             });
 
             it('should have valid content', function () {
-                expect(_.isEmpty(npmignore)).to.not.be.ok;
+                expect(npmignore).to.not.be.empty;
             });
         });
 
@@ -222,7 +225,7 @@ describe('project repository', function () {
         });
 
         it('should have readable content', function () {
-            expect(yml.safeLoad(fs.readFileSync('./CHANGELOG.yaml'))).to.be.ok;
+            expect(yml.safeLoad(fs.readFileSync('./CHANGELOG.yaml')), 'not a valid yaml').to.be.ok;
         });
     });
 

@@ -23,7 +23,7 @@ describe('Validate Dockerfiles', function () {
                 faults = result.error.count + result.warn.count;
 
             faults && console.error(JSON.stringify(result, null, 4)); // Helps debugging on the CI
-            expect(faults).to.equal(0);
+            expect(faults, `there are ${faults} error(s)`).to.equal(0);
         });
     });
 });

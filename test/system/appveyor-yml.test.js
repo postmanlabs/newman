@@ -58,7 +58,8 @@ describe('appveyor.yml', function () {
         it('should have notifications configured correctly', function () {
             expect(appveyorYAML.notifications).to.be.an('array');
             expect(appveyorYAML.notifications[0].provider).to.equal('Slack');
-            expect(appveyorYAML.notifications[0].incoming_webhook.secure).to.be.ok;
+            expect(appveyorYAML.notifications[0].incoming_webhook.secure,
+                '"secure" not configured in incoming_webhook').to.be.ok;
         });
     });
 });
