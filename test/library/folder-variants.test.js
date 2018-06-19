@@ -38,7 +38,7 @@ describe('folder variants', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(_.get(collectionRun, iterationProperty)).be(1);
+            expect(_.get(collectionRun, iterationProperty, 'should have 1 iteration')).to.equal(1);
             done();
         });
     });
@@ -57,7 +57,7 @@ describe('folder variants', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(_.get(collectionRun, iterationProperty)).be(0);
+            expect(_.get(collectionRun, iterationProperty), 'should have 0 iteration').to.equal(0);
             done();
         });
     });
