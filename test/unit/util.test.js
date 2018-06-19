@@ -1,4 +1,4 @@
-var expect = require('expect.js'),
+var expect = require('chai').expect,
     sdk = require('postman-collection'),
 
     util = require('../../lib/util');
@@ -41,23 +41,23 @@ describe('utility helpers', function () {
             };
 
         it('should handle empty input correctly', function () {
-            expect(util.getFullName()).to.not.be.ok();
-            expect(util.getFullName(false)).to.not.be.ok();
-            expect(util.getFullName(0)).to.not.be.ok();
-            expect(util.getFullName('')).to.not.be.ok();
-            expect(util.getFullName([])).to.not.be.ok();
-            expect(util.getFullName({})).to.not.be.ok();
+            expect(util.getFullName()).to.not.be.ok;
+            expect(util.getFullName(false)).to.not.be.ok;
+            expect(util.getFullName(0)).to.not.be.ok;
+            expect(util.getFullName('')).to.not.be.ok;
+            expect(util.getFullName([])).to.not.be.ok;
+            expect(util.getFullName({})).to.not.be.ok;
         });
 
         it('should handle items correctly', function () {
             collection.forEachItem(function (item) {
-                expect(util.getFullName(item)).to.be(fullNames[item.name]);
+                expect(util.getFullName(item)).to.equal(fullNames[item.name]);
             });
         });
 
         it('should handle item groups correctly', function () {
             collection.forEachItemGroup(function (itemGroup) {
-                expect(util.getFullName(itemGroup)).to.be(fullNames[itemGroup.name]);
+                expect(util.getFullName(itemGroup)).to.equal(fullNames[itemGroup.name]);
             });
         });
     });
