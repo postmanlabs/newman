@@ -4,13 +4,11 @@
  */
 var fs = require('fs'),
     path = require('path'),
-
     _ = require('lodash'),
     yml = require('js-yaml'),
-    expect = require('expect.js'),
     parseIgnore = require('parse-gitignore');
 
-/* global describe, it */
+/* global describe, it, expect */
 describe('project repository', function () {
     describe('package.json', function () {
         var content,
@@ -26,13 +24,13 @@ describe('project repository', function () {
             json = {};
         }
 
-        it('must have readable JSON content', function () {
-            expect(content).to.be.ok();
+        it('should have readable JSON content', function () {
+            expect(content).to.be.ok;
             expect(json).to.not.eql({});
         });
 
         describe('package.json JSON data', function () {
-            it('must have valid name, description and author', function () {
+            it('should have valid name, description and author', function () {
                 expect(json).to.have.property('name', 'newman');
                 expect(json).to.have.property('description', 'Command-line companion utility for Postman');
                 expect(json).to.have.property('author', 'Postman Labs <help@getpostman.com> (=)');
@@ -53,33 +51,34 @@ describe('project repository', function () {
                 expect(json.engines).to.eql({ node: '>=4' });
             });
 
-            it('must ignore applicable dependencies for GreenKeeper pull requests', function () {
+            it('should ignore applicable dependencies for GreenKeeper pull requests', function () {
                 expect(json.greenkeeper).to.eql({ ignore: ['cli-progress', 'cli-table3', 'csv-parse'] });
             });
 
-            it('must have a valid version string in form of <major>.<minor>.<revision>', function () {
+            it('should have a valid version string in form of <major>.<minor>.<revision>', function () {
                 // eslint-disable-next-line max-len
                 expect(json.version).to.match(/^((\d+)\.(\d+)\.(\d+))(?:-([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?$/);
             });
         });
 
         describe('binary definitions', function () {
-            it('must exist', function () {
-                expect(json.bin).be.ok();
+            it('should exist', function () {
+                expect(json.bin).be.ok;
                 expect(json.bin).to.eql({ 'newman': './bin/newman.js' });
             });
 
-            it('must have valid node shebang', function () {
+            it('should have valid node shebang', function () {
                 json.bin && Object.keys(json.bin).forEach(function (scriptName) {
                     var fileContent = fs.readFileSync(json.bin[scriptName]).toString();
-                    expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent)).to.be.ok();
+                    expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent),
+                        `invalid or missing shebang in ${json.bin[scriptName]}`).to.be.ok;
                 });
             });
         });
 
         describe('script definitions', function () {
-            it('files must exist', function () {
-                expect(json.scripts).to.be.ok();
+            it('should exist', function () {
+                expect(json.scripts).to.be.ok;
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
                     var name = json.scripts[scriptName];
                     name = name.replace(/^(node\s|\.\/)/, '');
@@ -91,8 +90,8 @@ describe('project repository', function () {
                 });
             });
 
-            it('must have the hashbang defined', function () {
-                expect(json.scripts).to.be.ok();
+            it('should have the hashbang defined', function () {
+                expect(json.scripts).to.be.ok;
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
                     var fileDetails,
                         name = json.scripts[scriptName].replace(/^(node\s|\.\/)/, '');
@@ -103,10 +102,12 @@ describe('project repository', function () {
                     fs.readFile(name, function (error, content) {
                         expect(error).to.equal(null);
                         if (fileDetails.ext === '.sh') {
-                            expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content)).to.be.ok();
+                            expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content),
+                                `invalid or missing hashbang in ${name}`).to.be.ok;
                         }
                         else {
-                            expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content)).to.be.ok();
+                            expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content),
+                                `invalid or missing hashbang in ${name}`).to.be.ok;
                         }
                     });
                 });
@@ -114,11 +115,11 @@ describe('project repository', function () {
         });
 
         describe('dependencies', function () {
-            it('must exist', function () {
-                expect(json.dependencies).to.be.a('object');
+            it('should exist', function () {
+                expect(json.dependencies).to.be.an('object');
             });
 
-            it('must point to a valid and precise (no * or ^) semver', function () {
+            it('should point to a valid and precise (no * or ^) semver', function () {
                 json.dependencies && Object.keys(json.dependencies).forEach(function (item) {
                     expect(json.dependencies[item]).to.match(new RegExp('^((\\d+)\\.(\\d+)\\.(\\d+))(?:-' +
                         '([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?$'));
@@ -127,11 +128,11 @@ describe('project repository', function () {
         });
 
         describe('devDependencies', function () {
-            it('must exist', function () {
-                expect(json.devDependencies).to.be.a('object');
+            it('should exist', function () {
+                expect(json.devDependencies).to.be.an('object');
             });
 
-            it('must point to a valid and precise (no * or ^) semver', function () {
+            it('should point to a valid and precise (no * or ^) semver', function () {
                 json.devDependencies && Object.keys(json.devDependencies).forEach(function (item) {
                     expect(json.devDependencies[item]).to.match(new RegExp('^((\\d+)\\.(\\d+)\\.(\\d+))(?:-' +
                         '([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?$'));
@@ -150,7 +151,7 @@ describe('project repository', function () {
         });
 
         describe('main entry script', function () {
-            it('must point to a valid file', function (done) {
+            it('should point to a valid file', function (done) {
                 expect(json.main).to.equal('index.js');
                 fs.stat(json.main, done);
             });
@@ -158,22 +159,22 @@ describe('project repository', function () {
     });
 
     describe('README.md', function () {
-        it('must exist', function (done) {
+        it('should exist', function (done) {
             fs.stat('./README.md', done);
         });
 
-        it('must have readable content', function () {
-            expect(fs.readFileSync('./README.md').toString()).to.be.ok();
+        it('should have readable content', function () {
+            expect(fs.readFileSync('./README.md').toString()).to.be.ok;
         });
     });
 
     describe('LICENSE.md', function () {
-        it('must exist', function (done) {
+        it('should exist', function (done) {
             fs.stat('./LICENSE.md', done);
         });
 
-        it('must have readable content', function () {
-            expect(fs.readFileSync('./LICENSE.md').toString()).to.be.ok();
+        it('should have readable content', function () {
+            expect(fs.readFileSync('./LICENSE.md').toString()).to.be.ok;
         });
     });
 
@@ -184,57 +185,57 @@ describe('project repository', function () {
             gitignore = parseIgnore(gitignorePath);
 
         describe(gitignorePath, function () {
-            it('must exist', function (done) {
+            it('should exist', function (done) {
                 fs.stat(gitignorePath, done);
             });
 
-            it('must have valid content', function () {
-                expect(_.isEmpty(gitignore)).to.not.be.ok();
+            it('should have valid content', function () {
+                expect(gitignore).to.not.be.empty;
             });
         });
 
         describe(npmignorePath, function () {
-            it('must exist', function (done) {
+            it('should exist', function (done) {
                 fs.stat(npmignorePath, done);
             });
 
-            it('must have valid content', function () {
-                expect(_.isEmpty(npmignore)).to.not.be.ok();
+            it('should have valid content', function () {
+                expect(npmignore).to.not.be.empty;
             });
         });
 
-        it('.gitignore coverage must be a subset of .npmignore coverage', function () {
+        it('should have .gitignore coverage to be a subset of .npmignore coverage', function () {
             expect(_.intersection(gitignore, npmignore)).to.eql(gitignore);
         });
     });
 
     describe('.eslintrc', function () {
-        it('must exist', function (done) {
+        it('should exist', function (done) {
             fs.stat('./.eslintrc', done);
         });
 
-        it('must have readable content', function () {
-            expect(fs.readFileSync('./.eslintrc').toString()).to.be.ok();
+        it('should have readable content', function () {
+            expect(fs.readFileSync('./.eslintrc').toString()).to.be.ok;
         });
     });
 
     describe('CHANGELOG.yaml', function () {
-        it('must exist', function (done) {
+        it('should exist', function (done) {
             fs.stat('./CHANGELOG.yaml', done);
         });
 
-        it('must have readable content', function () {
-            expect(yml.safeLoad(fs.readFileSync('./CHANGELOG.yaml'))).to.be.ok();
+        it('should have readable content', function () {
+            expect(yml.safeLoad(fs.readFileSync('./CHANGELOG.yaml')), 'not a valid yaml').to.be.ok;
         });
     });
 
     describe('.nsprc', function () {
-        it('must exist', function (done) {
+        it('should exist', function (done) {
             fs.stat('./.nsprc', done);
         });
 
-        it('must have readable content', function () {
-            expect(fs.readFileSync('./.nsprc').toString()).to.be.ok();
+        it('should have readable content', function () {
+            expect(fs.readFileSync('./.nsprc').toString()).to.be.ok;
         });
     });
 });
