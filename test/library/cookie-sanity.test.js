@@ -7,12 +7,12 @@ describe('Cookie sanity', function () {
         newman.run({
             collection: collection
         }, function (err, summary) {
-            expect(err).to.be(null);
+            expect(err).to.be.null;
 
-            expect(summary.run.executions[0].response.cookies.reference).to.be.empty();
+            expect(summary.run.executions[0].response.cookies.reference).to.be.empty;
             expect(summary.run.executions[0].request.headers.get('cookie')).to.match(/foo=bar;/);
 
-            expect(summary.run.executions[1].response.cookies.reference).to.be.empty();
+            expect(summary.run.executions[1].response.cookies.reference).to.be.empty;
             expect(summary.run.executions[1].request.headers.get('cookie')).to.match(/foo=bar;/);
 
             done();
