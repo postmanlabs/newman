@@ -1,6 +1,4 @@
-var expect = require('chai').expect;
-
-/* global describe, it */
+/* global describe, it, expect */
 describe('unicode handling of cli symbol utility module', function () {
     var cliUtilsSymbols = require('../../lib/reporters/cli/cli-utils-symbols.js');
 

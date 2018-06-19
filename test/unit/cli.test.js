@@ -1,6 +1,4 @@
-var expect = require('chai').expect;
-
-/* global describe, it */
+/* global describe, it, expect */
 describe('cli parser', function () {
     var cli = require('../../bin/newman');
 

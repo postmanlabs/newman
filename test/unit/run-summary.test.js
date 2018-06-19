@@ -1,7 +1,6 @@
-var _ = require('lodash'),
-    expect = require('chai').expect;
+var _ = require('lodash');
 
-/* global describe, it */
+/* global describe, it, expect */
 describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and average response time
     var Summary = require('../../lib/run/summary'),

@@ -1,10 +1,9 @@
 var _ = require('lodash'),
     path = require('path'),
-    expect = require('chai').expect,
     sdk = require('postman-collection'),
     async = require('async');
 
-/* global describe, it */
+/* global describe, it, expect */
 describe('run module', function () {
     var run = require('../../lib/run');
 

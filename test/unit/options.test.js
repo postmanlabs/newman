@@ -1,7 +1,7 @@
 var _ = require('lodash'),
-    expect = require('chai').expect,
     options = require('../../lib/run/options');
 
+/* global describe, it, expect */
 describe('options', function () {
     describe('JSON with spaces', function () {
         it('should be handled correctly for collections', function (done) {
