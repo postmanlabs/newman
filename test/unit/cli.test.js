@@ -281,7 +281,8 @@ describe('cli parser', function () {
                 // Generic reporter options
                 expect(opts.reporterOptions).to.be.ok;
                 expect(opts.reporterOptions.use).to.equal('everything');
-                expect(opts.reporterOptions.cliNoSuccessAssertions, 'should have cliNoSuccessAssertions to be true').to.equal(true);
+                expect(opts.reporterOptions.cliNoSuccessAssertions
+                    , 'should have cliNoSuccessAssertions to be true').to.equal(true);
 
                 // Individual reporter options
                 expect(opts.reporter).to.be.ok;
