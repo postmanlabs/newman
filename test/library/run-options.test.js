@@ -1,4 +1,4 @@
-/* global describe, it, newman */
+/* global describe, it, expect, newman */
 var runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
 
 describe('Newman run options', function () {
@@ -16,7 +16,7 @@ describe('Newman run options', function () {
                 collection: 'test/fixtures/run/single-request-failing.json'
             }, done)
             .on('assertion', function (err) {
-                expect(err).to.be.ok();
+                expect(err).to.be.ok;
                 expect(err).to.have.property('name', 'AssertionError');
                 expect(err).to.have.property('index', 0);
                 expect(err).to.have.property('test', 'response code is 200');
@@ -29,7 +29,7 @@ describe('Newman run options', function () {
         newman.run({
             environment: 'test/fixtures/run/simple-variables.json'
         }, function (err) {
-            expect(err).to.be.ok();
+            expect(err).to.be.ok;
             expect(err.message).to.eql('newman: expecting a collection to run');
             done();
         });
@@ -37,7 +37,7 @@ describe('Newman run options', function () {
 
     it('should not work with empty options', function (done) {
         newman.run({}, function (err) {
-            expect(err).to.be.ok();
+            expect(err).to.be.ok;
             expect(err.message).to.eql('newman: expecting a collection to run');
             done();
         });
@@ -49,7 +49,7 @@ describe('Newman run options', function () {
         }, function (err, summary) {
             if (err) { return done(err); }
 
-            expect(summary.run.failures).to.have.length(1);
+            expect(summary.run.failures, 'should have 1 failure').to.have.a.lengthOf(1);
             expect(summary.run.failures[0].error).to.have.property('name', 'AssertionError');
 
             done();
@@ -61,8 +61,8 @@ describe('Newman run options', function () {
             collection: 'test/integration/steph/steph.postman_collection.json',
             iterationData: require('../integration/steph/steph.postman_data.json')
         }, function (err, summary) {
-            expect(err).to.not.be.ok();
-            expect(summary.run.failures).to.be.empty();
+            expect(err).to.not.be.ok;
+            expect(summary.run.failures).to.be.empty;
             done();
         });
     });
@@ -71,12 +71,12 @@ describe('Newman run options', function () {
         newman.run({
             collection: 'test/fixtures/run/response-bodies.json'
         }, function (err, summary) {
-            expect(err).to.not.be.ok();
-            expect(summary.run.failures).to.be.empty();
+            expect(err).to.not.be.ok;
+            expect(summary.run.failures).to.be.empty;
 
             var executions = summary.run.executions;
 
-            expect(executions).to.have.length(3);
+            expect(executions, 'should have 3 executions').to.have.lengthOf(3);
             expect(executions[0].response.json()).to.eql({
                 args: { source: 'newman-sample-github-collection' },
                 headers: {
@@ -90,7 +90,7 @@ describe('Newman run options', function () {
                 url: 'https://postman-echo.com/get?source=newman-sample-github-collection'
             });
             // eslint-disable-next-line max-len
-            expect(executions[1].response.text()).to.be('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
+            expect(executions[1].response.text()).to.equal('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
             // eslint-disable-next-line max-len
             expect(executions[2].response.text()).to.eql('<?xml version="1.0" encoding="utf-8"?><food><key>Homestyle Breakfast</key><value>950</value></food>');
 
@@ -102,12 +102,12 @@ describe('Newman run options', function () {
         newman.run({
             collection: 'https://api.getpostman.com/collections/my-collection-uuid?apikey=my-secret-api-key'
         }, function (err, summary) {
-            expect(err).to.be.ok();
-            expect(err.message).to.be('Invalid API Key. Every request requires a valid API Key to be sent.');
+            expect(err).to.be.ok;
+            expect(err.message).to.equal('Invalid API Key. Every request requires a valid API Key to be sent.');
 
             // eslint-disable-next-line max-len
-            expect(err.help).to.be('Error fetching the collection from the provided URL. Ensure that the URL is valid.');
-            expect(summary).to.not.be.ok();
+            expect(err.help).to.equal('Error fetching the collection from the provided URL. Ensure that the URL is valid.');
+            expect(summary).to.not.be.ok;
 
             done();
         });
@@ -119,8 +119,8 @@ describe('Newman run options', function () {
                 collection: 'test/fixtures/run/failed-request.json',
                 bail: ['folder']
             }, function (err) {
-                expect(err).to.be.ok();
-                expect(err.message).to.be('getaddrinfo ENOTFOUND 123.random.z 123.random.z:443');
+                expect(err).to.be.ok;
+                expect(err.message).to.equal('getaddrinfo ENOTFOUND 123.random.z 123.random.z:443');
 
                 done();
             });
@@ -131,7 +131,7 @@ describe('Newman run options', function () {
                 collection: 'test/fixtures/run/failed-request.json',
                 bail: true
             }, function (err) {
-                expect(err).to.not.be.ok();
+                expect(err).to.not.be.ok;
 
                 done();
             });
@@ -143,8 +143,8 @@ describe('Newman run options', function () {
                 folder: 'invalidName',
                 bail: ['folder', 'failure']
             }, function (err) {
-                expect(err).to.be.ok();
-                expect(err.message).to.be('Unable to find a folder or request: invalidName');
+                expect(err).to.be.ok;
+                expect(err.message).to.equal('Unable to find a folder or request: invalidName');
 
                 done();
             });
@@ -158,8 +158,8 @@ describe('Newman run options', function () {
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 5
             }, function (err, summary) {
-                expect(err.message).to.be('Script execution timed out.');
-                expect(summary).to.be.ok();
+                expect(err.message).to.equal('Script execution timed out.');
+                expect(summary).to.be.ok;
                 done();
             });
         });
@@ -169,8 +169,8 @@ describe('Newman run options', function () {
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 500
             }, function (err, summary) {
-                expect(err).to.be(null);
-                expect(summary).to.be.ok();
+                expect(err).to.be.null;
+                expect(summary).to.be.ok;
                 done();
             });
         });
@@ -183,8 +183,8 @@ describe('Newman run options', function () {
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutRequest: 500
             }, function (err, summary) {
-                expect(err.message).to.be('ESOCKETTIMEDOUT');
-                expect(summary).to.be.ok();
+                expect(err.message).to.equal('ESOCKETTIMEDOUT');
+                expect(summary).to.be.ok;
                 done();
             });
         });
@@ -194,8 +194,8 @@ describe('Newman run options', function () {
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutRequest: 5000
             }, function (err, summary) {
-                expect(err).to.be(null);
-                expect(summary).to.be.ok();
+                expect(err).to.be.null;
+                expect(summary).to.be.ok;
                 done();
             });
         });
@@ -207,8 +207,8 @@ describe('Newman run options', function () {
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeout: 1000
             }, function (err, summary) {
-                expect(err.message).to.be('callback timed out');
-                expect(summary).to.be.ok();
+                expect(err.message).to.equal('callback timed out');
+                expect(summary).to.be.ok;
                 done();
             });
         });
@@ -218,8 +218,8 @@ describe('Newman run options', function () {
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeout: 10000
             }, function (err, summary) {
-                expect(err).to.be(null);
-                expect(summary).to.be.ok();
+                expect(err).to.be.null;
+                expect(summary).to.be.ok;
                 done();
             });
         });
