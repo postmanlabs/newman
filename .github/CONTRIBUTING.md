@@ -193,7 +193,7 @@ one method, with a given set of parameters. Note that multiple `it` blocks can e
 method may need to be assessed for a variety of runtime conditions.
 
 Within each `it` block, correctness checks for expected method behaviour are done using `expect` calls. For more on
-`expect`, check out [Expect.js](https://github.com/Automattic/expect.js)
+`expect`, check out [Chai Expect](http://www.chaijs.com/api/bdd)
 
 Lastly, the information provided within `describe` and `it` blocks should form a cogent sentence when combined.
 
