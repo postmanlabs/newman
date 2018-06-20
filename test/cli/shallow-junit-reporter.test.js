@@ -137,4 +137,13 @@ describe('JUnit reporter', function () {
                 });
             });
     });
+
+    it('should correctly handle the `--reporter-junit-export=` argument', function (done) {
+        // eslint-disable-next-line max-len
+        exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r junit --reporter-junit-export=${outFile}`,
+            function (code) {
+                expect(code, 'should have exit code of 0').to.equal(0);
+                fs.stat(outFile, done);
+            });
+    });
 });
