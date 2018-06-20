@@ -1,3 +1,4 @@
+/* global describe, it, exec, expect */
 var fs = require('fs'),
     https = require('https');
 
@@ -30,7 +31,7 @@ describe('SSL Client certificates', function () {
     it('should work correctly with standalone client certificates', function (done) {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
-            expect(code).be(0);
+            expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
     });

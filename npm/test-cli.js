@@ -3,6 +3,7 @@ require('shelljs/global');
 require('colors');
 
 var Mocha = require('mocha'),
+    expect = require('chai').expect,
     recursive = require('recursive-readdir'),
 
     execOptions = { silent: true },
@@ -35,7 +36,7 @@ module.exports = function (exit) {
         });
 
         // start the mocha run
-        global.expect = require('expect.js'); // for easy reference
+        global.expect = expect; // for easy reference
         global.exec = function (cmd, done) { // override exec for it to become silent by default
             return _exec(cmd, execOptions, done);
         };
