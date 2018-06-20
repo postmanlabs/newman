@@ -15,8 +15,6 @@ software development. Visit
 <a href="https://www.docker.com/whatisdocker" target="_blank">https://www.docker.com/whatisdocker</a> to read more about
 how docker can drastically simplify development and deployment.
 
-**Search light image?** Look to the alpine image <a href="https://hub.docker.com/r/postman/newman_alpine33/">here</a> (<a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">documentation</a>).
-
 ## Using the docker image
 
 The docker image for Newman is available for download from our docker hub. You must have Docker installed in your
@@ -140,5 +138,18 @@ docker run -t postman/newman_ubuntu1404 run "https://www.getpostman.com/collecti
 All official Newman Docker images will be shipped with the current Node LTS (Long Term Support) version. To learn more
 about the Node release schedule, see https://github.com/nodejs/Release#release-schedule. More details about individual
 Docker images can be found in their individual READMEs in this folder.
+
+**The is two available images for docker**
+* Alpine 3.3 (lightweight):
+
+   <a href="https://hub.docker.com/r/postman/newman_alpine33/">Details on the docker hub</a>
+   
+   <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">Documentation</a>
+  
+* Ubuntu 14.04:
+
+   <a href="https://hub.docker.com/r/postman/newman_ubuntu1404/">Details on the docker hub</a>
+   
+   <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu1404">Documentation</a>
 
 [![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman-docker/readme)](https://www.getpostman.com)
