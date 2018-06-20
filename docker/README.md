@@ -17,11 +17,11 @@ how docker can drastically simplify development and deployment.
 
 ## The are two available images for docker
 ### Alpine 3.3 (lightweight):
-   * <a href="https://hub.docker.com/r/postman/newman_alpine33/">Details on the docker hub</a>
+   * <a href="https://hub.docker.com/r/postman/newman_alpine33/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">Documentation</a>
 
 ### Ubuntu 14.04:
-   * <a href="https://hub.docker.com/r/postman/newman_ubuntu1404/">Details on the docker hub</a>
+   * <a href="https://hub.docker.com/r/postman/newman_ubuntu1404/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu1404">Documentation</a>
 
 ## Using the docker image
