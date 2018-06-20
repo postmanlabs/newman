@@ -15,7 +15,7 @@ software development. Visit
 <a href="https://www.docker.com/whatisdocker" target="_blank">https://www.docker.com/whatisdocker</a> to read more about
 how docker can drastically simplify development and deployment.
 
-## The are two available images for docker
+## There are two available Docker images for Newman
 ### Alpine 3.3 (lightweight):
    * <a href="https://hub.docker.com/r/postman/newman_alpine33/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">Documentation</a>
