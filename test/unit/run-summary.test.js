@@ -1,7 +1,6 @@
-var _ = require('lodash'),
-    expect = require('expect.js');
+var _ = require('lodash');
 
-/* global describe, it */
+/* global describe, it, expect */
 describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and average response time
     var Summary = require('../../lib/run/summary'),
@@ -12,42 +11,42 @@ describe('run summary', function () {
             'testScript', 'prerequestScript'],
         SURROGATE_EVENTS = ['testScript', 'prerequestScript'];
 
-    it('must require only an EventEmitter during construction', function () {
+    it('should require only an EventEmitter during construction', function () {
         expect(function () {
             var summary = new Summary();
-            expect(summary).not.be.ok();
-        }).withArgs().to.throwError();
+            expect(summary).not.be.ok;
+        }).to.throw();
 
         expect(function () {
             var summary = new Summary(new EventEmitter());
-            expect(summary).be.ok();
-        }).withArgs().not.throwError();
+            expect(summary).be.ok;
+        }).to.not.throw();
 
         expect(function () {
             var summary = new Summary(new EventEmitter(), {});
-            expect(summary).be.ok();
-        }).withArgs().not.throwError();
+            expect(summary).be.ok;
+        }).to.not.throw();
     });
 
-    it('must have the relevant top-level data structures', function () {
+    it('should have the relevant top-level data structures', function () {
         var summary = new Summary(new EventEmitter());
         expect(_.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run'].sort());
     });
 
-    it('must have run related properties', function () {
+    it('should have run related properties', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(summary).have.property('run');
+        expect(summary).to.have.property('run');
         expect(_.keys(summary.run).sort())
             .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
-        expect(summary.run.failures).be.an('array');
-        expect(summary.run.stats).be.an('object');
-        expect(summary.run.timings).be.an('object');
-        expect(summary.run.transfers).be.an('object');
+        expect(summary.run.failures).to.be.an('array');
+        expect(summary.run.stats).to.be.an('object');
+        expect(summary.run.timings).to.be.an('object');
+        expect(summary.run.transfers).to.be.an('object');
     });
 
     describe('runtime event statistics', function () {
-        it('must track relevant events', function () {
+        it('should track relevant events', function () {
             var emitter = new EventEmitter(),
                 summary = new Summary(emitter);
 
@@ -79,29 +78,29 @@ describe('run summary', function () {
                     tracker = null;
                 });
 
-                it('must have initial counters', function () {
+                it('should have initial counters', function () {
                     expect(tracker).to.eql({ total: 0, pending: 0, failed: 0 });
                 });
 
-                it(`must bump pending counters when a ${beforeEventName} is fired`, function () {
+                it(`should bump pending counters when a ${beforeEventName} is fired`, function () {
                     emitter.emit(beforeEventName, null, options);
                     expect(tracker).to.eql({ total: 0, pending: 1, failed: 0 });
                 });
 
-                it(`must unbump pending counters when a ${eventName} is fired and add total`, function () {
+                it(`should unbump pending counters when a ${eventName} is fired and add total`, function () {
                     emitter.emit(beforeEventName, null, options);
                     emitter.emit(eventName, null, options);
 
                     expect(tracker).to.eql({ total: 1, pending: 0, failed: 0 });
                 });
 
-                it(`must directly bump total ${eventName} with no pending ${beforeEventName} event`, function () {
+                it(`should directly bump total ${eventName} with no pending ${beforeEventName} event`, function () {
                     emitter.emit(eventName, null, options);
                     emitter.emit(eventName, null, options);
                     expect(tracker).to.eql({ total: 2, pending: 0, failed: 0 });
                 });
 
-                it(`must bump failure count when ${eventName} has error (1st) argument`, function () {
+                it(`should bump failure count when ${eventName} has error (1st) argument`, function () {
                     emitter.emit(beforeEventName, new Error(`faux error on ${beforeEventName}`), options);
                     emitter.emit(eventName, new Error(`faux error on ${eventName}`), options);
                     expect(tracker).to.eql({ total: 1, pending: 0, failed: 1 });
@@ -127,11 +126,11 @@ describe('run summary', function () {
                     summary = null;
                 });
 
-                it(`${eventName}must not track errors`, function () {
+                it(`should not track errors in ${eventName}`, function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.run.failures.length).be(0);
+                    expect(summary.run.failures, 'should have 0 failures').to.have.lengthOf(0);
                 });
             });
         });
@@ -152,33 +151,33 @@ describe('run summary', function () {
                     summary = null;
                 });
 
-                it('must append event failure arguments to failures array', function () {
+                it('should append event failure arguments to failures array', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.run.failures.length).be(2);
-                    expect(summary.run.failures[0].error.message).be(`faux ${beforeEventName} error`);
-                    expect(summary.run.failures[1].error.message).be(`faux ${eventName} error`);
+                    expect(summary.run.failures, 'should have 2 failures').to.have.lengthOf(2);
+                    expect(summary.run.failures[0].error.message).to.equal(`faux ${beforeEventName} error`);
+                    expect(summary.run.failures[1].error.message).to.equal(`faux ${eventName} error`);
                 });
 
-                it('object of "before-*" must have relevant data', function () {
+                it('should have relevant data in object of "before-*"', function () {
                     emitter.emit(beforeEventName, new Error(`faux ${beforeEventName} error`), {});
                     emitter.emit(eventName, new Error(`faux ${eventName} error`), {});
 
-                    expect(summary.run.failures.length).be(2);
+                    expect(summary.run.failures, 'should have 2 failures').to.have.lengthOf(2);
                     var failure = summary.run.failures[0];
 
-                    expect(failure.error.message).be(`faux ${beforeEventName} error`);
+                    expect(failure.error.message).to.equal(`faux ${beforeEventName} error`);
                     expect(_.keys(failure)).to.eql(['error', 'at', 'source', 'parent', 'cursor']);
 
-                    expect(failure).have.property('at');
-                    expect(failure.at).be(beforeEventName);
+                    expect(failure).to.have.property('at');
+                    expect(failure.at).to.equal(beforeEventName);
 
-                    expect(failure).have.property('source');
-                    expect(failure.source).be(undefined);
+                    expect(failure).to.have.property('source');
+                    expect(failure.source).to.be.undefined;
 
-                    expect(failure).have.property('cursor');
-                    expect(failure.cursor).be.an('object');
+                    expect(failure).to.have.property('cursor');
+                    expect(failure.cursor).to.be.an('object');
                 });
             });
         });
@@ -221,7 +220,7 @@ describe('run summary', function () {
                     cursor: { ref: '2', iteration: 1 }
                 });
 
-                expect(executions.length).be(2);
+                expect(executions, 'should have 2 executions').to.have.lengthOf(2);
                 expect(executions[0].cursor).to.eql({ ref: '1', iteration: 0 });
                 expect(executions[1].cursor).to.eql({ ref: '2', iteration: 1 });
             });
@@ -237,7 +236,7 @@ describe('run summary', function () {
                     cursor: { ref: '1', iteration: 0 }
                 });
 
-                expect(executions.length).be(1);
+                expect(executions, 'should have 1 executions').to.have.lengthOf(1);
                 expect(executions[0]).to.eql({
                     cursor: { ref: '1', iteration: 0 },
                     request: { id: 'request-1' },
@@ -257,7 +256,7 @@ describe('run summary', function () {
                     cursor: { ref: '1', iteration: 0 }
                 });
 
-                expect(executions.length).be(1);
+                expect(executions, 'should have 1 executions').to.have.lengthOf(1);
                 expect(executions[0]).to.eql({
                     cursor: { ref: '1', iteration: 0 },
                     request: { id: 'request-1' },

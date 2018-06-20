@@ -15,6 +15,15 @@ software development. Visit
 <a href="https://www.docker.com/whatisdocker" target="_blank">https://www.docker.com/whatisdocker</a> to read more about
 how docker can drastically simplify development and deployment.
 
+## There are two available Docker images for Newman
+### Alpine 3.3 (lightweight):
+   * <a href="https://hub.docker.com/r/postman/newman_alpine33/">DockerHub</a>
+   * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">Documentation</a>
+
+### Ubuntu 14.04:
+   * <a href="https://hub.docker.com/r/postman/newman_ubuntu1404/">DockerHub</a>
+   * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu1404">Documentation</a>
+
 ## Using the docker image
 
 The docker image for Newman is available for download from our docker hub. You must have Docker installed in your

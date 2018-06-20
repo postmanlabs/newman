@@ -9,6 +9,7 @@ require('colors');
 
 // set directories and files for test and coverage report
 var path = require('path'),
+    expect = require('chai').expect,
 
     NYC = require('nyc'),
     recursive = require('recursive-readdir'),
@@ -41,7 +42,13 @@ module.exports = function (exit) {
             return (file.substr(-8) === '.test.js');
         }).forEach(mocha.addFile.bind(mocha));
 
+        // start the mocha run
+        global.expect = expect; // for easy reference
+
         mocha.run(function (runError) {
+            // clear references and overrides
+            delete global.expect;
+
             runError && console.error(runError.stack || runError);
 
             nyc.reset();

@@ -1,3 +1,4 @@
+/* global describe, it, exec, expect */
 var fs = require('fs'),
 
     sh = require('shelljs');
@@ -19,7 +20,7 @@ describe('HTML reporter', function () {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r html --reporter-html-export ${outFile}`,
             function (code) {
-                expect(code).be(0);
+                expect(code, 'should have exit code of 0').to.equal(0);
                 fs.stat(outFile, done);
             });
     });
@@ -28,7 +29,7 @@ describe('HTML reporter', function () {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-request-failing.json -r html --reporter-html-export ${outFile}`,
             function (code) {
-                expect(code).be(1);
+                expect(code, 'should have exit code of 1').to.equal(1);
                 fs.stat(outFile, done);
             });
     });
@@ -37,7 +38,7 @@ describe('HTML reporter', function () {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/newman-report-test.json -r html --reporter-html-export ${outFile}`,
             function (code) {
-                expect(code).be(1);
+                expect(code, 'should have exit code of 1').to.equal(1);
                 fs.stat(outFile, done);
             });
     });
@@ -46,7 +47,7 @@ describe('HTML reporter', function () {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/failed-request.json -r html --reporter-html-export ${outFile}`,
             function (code) {
-                expect(code).be(1);
+                expect(code, 'should have exit code of 1').to.equal(1);
                 fs.stat(outFile, done);
             });
     });
@@ -55,7 +56,7 @@ describe('HTML reporter', function () {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r html --reporter-html-export out',
             function (code) {
-                expect(code).be(0);
+                expect(code).equal(0);
 
                 var dir = fs.readdirSync(outDir),
                     file = dir[0];

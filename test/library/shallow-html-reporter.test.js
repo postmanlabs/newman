@@ -34,8 +34,8 @@ describe('HTML reporter', function () {
             reporters: ['html'],
             reporter: { html: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(1);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 1 failure').to.have.lengthOf(1);
             fs.stat(outFile, done);
         });
     });
@@ -46,8 +46,8 @@ describe('HTML reporter', function () {
             reporters: ['html'],
             reporter: { html: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(2);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 2 failures').to.have.lengthOf(2);
             fs.stat(outFile, done);
         });
     });
@@ -58,8 +58,8 @@ describe('HTML reporter', function () {
             reporters: ['html'],
             reporter: { html: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(1);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 1 failure').to.have.lengthOf(1);
             fs.stat(outFile, done);
         });
     });
@@ -70,7 +70,7 @@ describe('HTML reporter', function () {
             reporters: ['html'],
             reporter: { html: { export: outDir } }
         }, function (err) {
-            expect(err).to.be(null);
+            expect(err).to.be.null;
 
             var dir = fs.readdirSync(outDir),
                 file = dir[0];
@@ -87,8 +87,8 @@ describe('HTML reporter', function () {
                 reporters: ['html'],
                 reporter: { html: { export: outFile } }
             }, function (err, summary) {
-                expect(err).to.be(null);
-                expect(summary.run.failures).to.have.length(0);
+                expect(err).to.be.null;
+                expect(summary.run.failures, 'should have 0 failures').to.have.lengthOf(0);
 
                 summary.run.executions.forEach(function (exec) {
                     // The body property is only accessible to the HTML reporter

@@ -27,20 +27,20 @@ describe('JUnit reporter', function () {
             if (err) { return done(err); }
 
             fs.readFile(outFile, function (err, data) {
-                expect(err).to.not.be.ok();
+                expect(err).to.not.be.ok;
 
                 parseXml(data, function (error, result) {
-                    expect(error).to.not.be.ok();
+                    expect(error).to.not.be.ok;
 
                     var suite = _.get(result.testsuites, 'testsuite.0');
 
-                    expect(result.testsuites.$).to.not.be.empty();
+                    expect(result.testsuites.$).to.not.be.empty;
                     expect(result.testsuites.$.time).to.match(/^\d+\.\d{3}$/);
 
-                    expect(suite).to.not.be.empty();
-                    expect(suite.$).to.not.be.empty();
+                    expect(suite).to.not.be.empty;
+                    expect(suite.$).to.not.be.empty;
                     expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
-                    expect(suite.testcase).to.not.be.empty();
+                    expect(suite.testcase).to.not.be.empty;
 
                     expect(suite.$).to.have.property('tests', '1');
                     expect(suite.$).to.have.property('failures', '0');
@@ -58,39 +58,39 @@ describe('JUnit reporter', function () {
             reporters: ['junit'],
             reporter: { junit: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(1);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 1 failure').to.have.lengthOf(1);
             fs.readFile(outFile, function (err, data) {
-                expect(err).to.not.be.ok();
+                expect(err).to.not.be.ok;
 
                 parseXml(data, function (error, result) {
-                    expect(error).to.not.be.ok();
+                    expect(error).to.not.be.ok;
 
                     var testcase,
                         suite = _.get(result.testsuites, 'testsuite.0');
 
-                    expect(result.testsuites.$).to.not.be.empty();
+                    expect(result.testsuites.$).to.not.be.empty;
                     expect(result.testsuites.$.time).to.match(/^\d+\.\d{3}$/);
 
-                    expect(suite).to.not.be.empty();
-                    expect(suite.$).to.not.be.empty();
+                    expect(suite).to.not.be.empty;
+                    expect(suite.$).to.not.be.empty;
                     expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
-                    expect(suite.testcase).to.not.be.empty();
+                    expect(suite.testcase).to.not.be.empty;
 
                     expect(suite.$).to.have.property('tests', '1');
                     expect(suite.$).to.have.property('failures', '1');
                     expect(suite.$).to.have.property('errors', '0');
 
                     testcase = suite.testcase[0];
-                    expect(testcase).to.not.be.empty();
+                    expect(testcase).to.not.be.empty;
 
                     expect(testcase.$).to.have.property('classname', 'JUnitXmlReporter.constructor');
                     expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
-                    expect(testcase.failure).to.not.be.empty();
-                    expect(testcase.failure[0]._).to.not.be.empty();
+                    expect(testcase.failure).to.not.be.empty;
+                    expect(testcase.failure[0]._).to.not.be.empty;
                     expect(testcase.failure[0].$).to.have.property('type', 'AssertionFailure');
 
-                    expect(testcase.failure).to.not.be.empty();
+                    expect(testcase.failure).to.not.be.empty;
                     done();
                 });
             });
@@ -103,36 +103,36 @@ describe('JUnit reporter', function () {
             reporters: ['junit'],
             reporter: { junit: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(2);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 2 failures').to.have.lengthOf(2);
             fs.readFile(outFile, function (err, data) {
-                expect(err).to.not.be.ok();
+                expect(err).to.not.be.ok;
 
                 parseXml(data, function (error, result) {
-                    expect(error).to.not.be.ok();
+                    expect(error).to.not.be.ok;
 
                     var testcase,
                         suite = _.get(result.testsuites, 'testsuite.0');
 
-                    expect(result.testsuites.$).to.not.be.empty();
+                    expect(result.testsuites.$).to.not.be.empty;
                     expect(result.testsuites.$.time).to.match(/^\d+\.\d{3}$/);
 
-                    expect(suite).to.not.be.empty();
-                    expect(suite.$).to.not.be.empty();
+                    expect(suite).to.not.be.empty;
+                    expect(suite.$).to.not.be.empty;
                     expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
-                    expect(suite.testcase).to.not.be.empty();
+                    expect(suite.testcase).to.not.be.empty;
 
                     expect(suite.$).to.have.property('tests', '2');
                     expect(suite.$).to.have.property('failures', '1');
                     expect(suite.$).to.have.property('errors', '1');
 
                     testcase = suite.testcase[0];
-                    expect(testcase).to.not.be.empty();
+                    expect(testcase).to.not.be.empty;
 
                     expect(testcase.$).to.have.property('classname', 'JUnitXmlReporter.constructor');
                     expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
-                    expect(testcase.failure).to.not.be.empty();
-                    expect(testcase.failure[0]._).to.not.be.empty();
+                    expect(testcase.failure).to.not.be.empty;
+                    expect(testcase.failure[0]._).to.not.be.empty;
                     expect(testcase.failure[0].$).to.have.property('type', 'AssertionFailure');
 
                     done();
@@ -147,7 +147,7 @@ describe('JUnit reporter', function () {
             reporters: ['junit'],
             reporter: { junit: { export: outDir } }
         }, function (err) {
-            expect(err).to.be(null);
+            expect(err).to.be.null;
 
             var dir = fs.readdirSync(outDir),
                 file = dir[0];

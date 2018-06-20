@@ -4,7 +4,7 @@ var fs = require('fs'),
     sh = require('shelljs');
 
 /* global beforeEach, afterEach, describe, it, expect, newman */
-describe('--export-globals', function () {
+describe('newman.run exportGlobals', function () {
     var outDir = 'out',
         globals = 'test/fixtures/run/simple-variables.json',
         exportedGlobalsPath = path.join(__dirname, '..', '..', outDir, 'test-globals.json');
@@ -18,7 +18,7 @@ describe('--export-globals', function () {
         sh.rm('-rf', outDir);
     });
 
-    it('`newman run` should export globals to a file', function (done) {
+    it('should export globals to a file', function (done) {
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             globals: globals,
@@ -31,19 +31,19 @@ describe('--export-globals', function () {
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(globals).be.ok();
-            expect(globals).have.property('_postman_exported_at');
-            expect(globals).have.property('values');
-            expect(globals.values).eql([
+            expect(globals).to.be.ok;
+            expect(globals).to.have.property('_postman_exported_at');
+            expect(globals).to.have.property('values');
+            expect(globals.values).to.eql([
                 { key: 'var-1', value: 'value-1', type: 'any' },
                 { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
-            expect(globals).have.property('_postman_variable_scope', 'globals');
+            expect(globals).to.have.property('_postman_variable_scope', 'globals');
             done();
         });
     });
 
-    it('`newman run` should export globals to a file even if collection is failing', function (done) {
+    it('should export globals to a file even if collection is failing', function (done) {
         newman.run({
             collection: 'test/fixtures/run/single-request-failing.json',
             globals: globals,
@@ -56,14 +56,14 @@ describe('--export-globals', function () {
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(globals).be.ok();
-            expect(globals).have.property('_postman_exported_at');
-            expect(globals).have.property('values');
-            expect(globals.values).eql([
+            expect(globals).to.be.ok;
+            expect(globals).to.have.property('_postman_exported_at');
+            expect(globals).to.have.property('values');
+            expect(globals.values).to.eql([
                 { key: 'var-1', value: 'value-1', type: 'any' },
                 { key: 'var-2', value: 'value-2', type: 'any' }
             ]);
-            expect(globals).have.property('_postman_variable_scope', 'globals');
+            expect(globals).to.have.property('_postman_variable_scope', 'globals');
             done();
         });
     });
@@ -85,7 +85,7 @@ describe('--export-globals', function () {
             try { globals = JSON.parse(fs.readFileSync(outDir + '/' + file).toString()); }
             catch (e) { console.error(e); }
 
-            expect(globals).be.ok();
+            expect(globals).to.be.ok;
             expect(globals).have.property('_postman_exported_at');
             expect(globals).have.property('values');
             expect(globals.values).eql([
@@ -97,7 +97,7 @@ describe('--export-globals', function () {
         });
     });
 
-    it('`newman run` should export globals with a name if the input file doesn\'t have one', function (done) {
+    it('should export globals with a name if the input file doesn\'t have one', function (done) {
         newman.run({
             collection: 'test/fixtures/run/single-request-failing.json',
             globals: {
@@ -112,19 +112,19 @@ describe('--export-globals', function () {
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(globals).be.ok();
-            expect(globals).have.property('_postman_exported_at');
-            expect(globals).have.property('values');
-            expect(globals).have.property('name', 'globals');
+            expect(globals).to.be.ok;
+            expect(globals).to.have.property('_postman_exported_at');
+            expect(globals).to.have.property('values');
+            expect(globals).to.have.property('name', 'globals');
             expect(globals.values).eql([
                 { key: 'var-1', value: 'value-1', type: 'any' }
             ]);
-            expect(globals).have.property('_postman_variable_scope', 'globals');
+            expect(globals).to.have.property('_postman_variable_scope', 'globals');
             done();
         });
     });
 
-    it('`newman run` should export globals with a name when no input file is provided', function (done) {
+    it('should export globals with a name when no input file is provided', function (done) {
         newman.run({
             collection: {
                 item: [{
@@ -144,13 +144,14 @@ describe('--export-globals', function () {
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(globals).be.ok();
-            expect(globals).have.property('_postman_exported_at');
-            expect(globals).have.property('values');
-            expect(globals.values).eql([
+            expect(globals).to.be.ok;
+            expect(globals).to.have.property('_postman_exported_at');
+            expect(globals).to.have.property('values');
+            expect(globals).to.have.property('name', 'globals');
+            expect(globals.values).to.eql([
                 { key: 'var-1', value: 'value-1', type: 'any' }
             ]);
-            expect(globals).have.property('_postman_variable_scope', 'globals');
+            expect(globals).to.have.property('_postman_variable_scope', 'globals');
             done();
         });
     });
