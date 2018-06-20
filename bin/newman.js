@@ -31,18 +31,33 @@ var _ = require('lodash'),
     separateReporterArgs = function (allArgs) {
         var reporterArgs = [],
             args = [],
+            arg,
+            index,
             i;
 
         // Separate the reporter arguments from the rest
         for (i = 0; i < allArgs.length; i++) {
-            if (_.startsWith(allArgs[i], '--reporter-')) {
-                reporterArgs.push(allArgs[i]);
+            // Remove trailing whitespace
+            arg = _.trim(allArgs[i]);
 
+            if (!_.startsWith(arg, '--reporter-')) {
+                args.push(arg);
+                continue;
+            }
+
+            // Remove "--reporter-"
+            arg = arg.replace('--reporter-', '');
+
+            if (allArgs[i + 1] && !_.startsWith(allArgs[i + 1], '-')) {
                 // Also push the next parameter if it's not an option.
-                allArgs[i + 1] && !_.startsWith(allArgs[i + 1], '-') && reporterArgs.push(allArgs[++i]);
+                reporterArgs.push(arg, allArgs[++i]);
+            }
+            else if (~(index = arg.indexOf('='))) {
+                // Split the attribute if its like key=value
+                reporterArgs.push(arg.slice(0, index), arg.slice(index + 1));
             }
             else {
-                args.push(allArgs[i]);
+                reporterArgs.push(arg);
             }
         }
         return {
@@ -235,11 +250,7 @@ var _ = require('lodash'),
         _.forEach(reporters, (reporter) => { parsed[reporter] = {}; });
 
         for (i = 0; i < args.length; i++) {
-            // Remove trailing whitespace
-            arg = _.trim(args[i]);
-
-            // Remove "--reporter-"
-            arg = arg.replace('--reporter-', '');
+            arg = args[i];
 
             name = _.split(arg, '-', 1)[0]; // Reporter Name.
 
