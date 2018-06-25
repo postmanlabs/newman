@@ -158,7 +158,7 @@ newman.run({
 - `--bail [optional modifiers]`<br />
   Specify whether or not to stop a collection run on encountering the first test script error.<br />
   Can optionally accept modifiers, currently include `folder` and `failure`.<br />
-  `folder` allows you to skip the entire collection run in case an invalid folder 
+  `folder` allows you to skip the entire collection run in case an invalid folder
   was specified using the `--folder` option or an error was encountered in general.<br />
   On the failure of a test, `failure` would gracefully stop a collection run after completing the current test script.
 
@@ -198,7 +198,7 @@ Spaces should **not** be used between reporter names / commas whilst specifying 
 
 - `--reporter-{{reporter-options}}`<br />
   If more than one reporter accepts the same option name, they can be provided using the common reporter option syntax.
-  <br /<br />
+  <br /><br />
   For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
   reporter.
 
@@ -220,6 +220,7 @@ such a scenario.
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
 | `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+| `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
 
 ##### JSON reporter options
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
@@ -524,7 +525,7 @@ See https://github.com/postmanlabs/newman/tree/develop/docker/
 ## Community Support
 
 <img src="https://avatars1.githubusercontent.com/u/3220138?v=3&s=120" align="right" />
-If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.  
+If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.
 
 Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.getpostman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 
