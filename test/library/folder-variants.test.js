@@ -61,5 +61,4 @@ describe('folder variants', function () {
             done();
         });
     });
-
 });

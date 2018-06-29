@@ -64,12 +64,13 @@ describe('project repository', function () {
         describe('binary definitions', function () {
             it('should exist', function () {
                 expect(json.bin).be.ok;
-                expect(json.bin).to.eql({ 'newman': './bin/newman.js' });
+                expect(json.bin).to.eql({ newman: './bin/newman.js' });
             });
 
             it('should have valid node shebang', function () {
                 json.bin && Object.keys(json.bin).forEach(function (scriptName) {
                     var fileContent = fs.readFileSync(json.bin[scriptName]).toString();
+
                     expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent),
                         `invalid or missing shebang in ${json.bin[scriptName]}`).to.be.ok;
                 });
@@ -81,9 +82,11 @@ describe('project repository', function () {
                 expect(json.scripts).to.be.ok;
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
                     var name = json.scripts[scriptName];
+
                     name = name.replace(/^(node\s|\.\/)/, '');
                     fs.stat(name, function (err) {
                         var fileDetails = path.parse(name);
+
                         expect(err).to.equal(null);
                         expect(fileDetails.ext).to.match(/^\.(sh|js)$/);
                     });

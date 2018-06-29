@@ -6,7 +6,7 @@ describe('Newman run options', function () {
 
     it('should work correctly without any extra options', function (done) {
         newman.run({
-            collection: collection
+            collection
         }, done);
     });
 
