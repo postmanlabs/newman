@@ -15,6 +15,7 @@ var _ = require('lodash'),
      */
     Integer = function (arg) {
         var num = Number(arg);
+
         if (!_.isSafeInteger(num) || num <= 0) {
             throw new Error('The value must be a positive integer.');
         }
@@ -58,6 +59,7 @@ var _ = require('lodash'),
                 reporterArgs.push(arg);
             }
         }
+
         return {
             reporter: reporterArgs,
             argv: args
@@ -77,10 +79,12 @@ var _ = require('lodash'),
         var arg,
             eqIndex = val.indexOf('='),
             hasEq = eqIndex !== -1;
+
         // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
         arg = hasEq ? { key: val.slice(0, eqIndex), value: val.slice(eqIndex + 1) } :
             { key: val, value: undefined };
         memo.push(arg);
+
         return memo;
     },
 
@@ -266,6 +270,7 @@ var _ = require('lodash'),
             // otherwise set it to the next arg.
             _.set(parsed, path, (!args[i + 1] || _.startsWith(args[i + 1], '-')) ? true : args[++i]);
         }
+
         return parsed;
     },
 
@@ -278,12 +283,14 @@ var _ = require('lodash'),
     getOptionNames = function (options) {
         var optionName,
             optionNames = [];
+
         options.options.forEach(function (option) {
             optionName = option.long;
             optionName = optionName.replace('--', '');
             optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
             optionNames.push(optionName);
         });
+
         return optionNames;
     },
 
@@ -358,6 +365,7 @@ var _ = require('lodash'),
 
         optionsObj.command = 'run';
         optionsObj.run = run;
+
         return optionsObj;
     },
 
@@ -497,6 +505,7 @@ var _ = require('lodash'),
         else {
             result = formatLegacyOptions(result);
         }
+
         return callback(null, result);
     },
 
@@ -539,6 +548,7 @@ module.exports = rawOptions;
     if (err) {
         err.help && console.info(err.help + '\n'); // will print out usage information.
         console.error(err.message || err);
+
         return process.exit(1); // @todo: args do not arrive on CLI error hence cannot read `-x`
     }
 
