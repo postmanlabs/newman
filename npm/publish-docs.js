@@ -2,6 +2,8 @@
 /* eslint-env node, es6 */
 require('shelljs/global');
 
+/* global cd, config, exec, exit */
+
 var async = require('async'),
     colors = require('colors/safe');
 
@@ -37,6 +39,7 @@ module.exports = function (exit) {
             }
             catch (e) {
                 console.error(e.stack || e);
+
                 return next(e ? 1 : 0);
             }
 

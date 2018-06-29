@@ -2,6 +2,8 @@
 require('shelljs/global');
 require('colors');
 
+/* global exit */
+
 var async = require('async'),
     _ = require('lodash'),
     path = require('path'),
@@ -59,6 +61,7 @@ module.exports = function (exit) {
             recursive(SPEC_SOURCE_DIR, function (err, files) {
                 if (err) {
                     console.error(err);
+
                     return exit(1);
                 }
 

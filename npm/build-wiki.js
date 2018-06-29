@@ -6,6 +6,8 @@
 
 require('shelljs/global');
 
+/* global exit, mkdir, rm, test */
+
 var fs = require('fs'),
 
     colors = require('colors/safe'),

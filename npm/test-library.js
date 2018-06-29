@@ -2,6 +2,8 @@
 require('shelljs/global');
 require('colors');
 
+/* global exit */
+
 var Mocha = require('mocha'),
     newman = require('../index'),
     expect = require('chai').expect,
@@ -23,6 +25,7 @@ module.exports = function (exit) {
     recursive(SPEC_SOURCE_DIR, function (err, files) {
         if (err) {
             console.error(err);
+
             return exit(1);
         }
 

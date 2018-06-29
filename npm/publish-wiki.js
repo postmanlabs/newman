@@ -3,6 +3,8 @@
 require('shelljs/global');
 require('colors');
 
+/* global colors, config, exec, exit, mkdir, popd, pushd, rm */
+
 var fs = require('fs'),
     path = require('path'),
     async = require('async'),
@@ -12,7 +14,6 @@ var fs = require('fs'),
     WIKI_VERSION = exec('git describe --always').stdout;
 
 module.exports = function (exit) {
-
     async.series([
         // build the reference MD
         require('./build-wiki'),

@@ -2,6 +2,8 @@
 require('shelljs/global');
 require('colors');
 
+/* global exit */
+
 var prettyms = require('pretty-ms'),
     startedAt = Date.now();
 

@@ -2,6 +2,8 @@
 require('shelljs/global');
 require('colors');
 
+/* global exit */
+
 var async = require('async'),
     ESLintCLIEngine = require('eslint').CLIEngine,
 
@@ -45,6 +47,7 @@ module.exports = function (exit) {
          */
         function (report, next) {
             var errorReport = ESLintCLIEngine.getErrorResults(report.results);
+
             // log the result to CLI
             console.info(ESLintCLIEngine.getFormatter()(report.results));
             // log the success of the parser if it has no errors
