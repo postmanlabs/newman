@@ -87,10 +87,6 @@
     "node": ">=6"
   },
   "greenkeeper": {
-    "ignore": [
-      "cli-progress",
-      "cli-table3",
-      "csv-parse"
-    ]
+    "ignore": []
   }
 }
