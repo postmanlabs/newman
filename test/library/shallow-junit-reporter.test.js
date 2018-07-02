@@ -3,7 +3,6 @@ var fs = require('fs'),
     _ = require('lodash'),
     parseXml = require('xml2js').parseString;
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('JUnit reporter', function () {
     var outFile = 'out/newman-report.xml';
 

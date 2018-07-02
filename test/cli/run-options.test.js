@@ -1,6 +1,5 @@
 var newmanVersion = require('../../package.json').version;
 
-/* globals it, describe, exec, expect */
 describe('CLI run options', function () {
     it('should work correctly without any extra options', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', done);

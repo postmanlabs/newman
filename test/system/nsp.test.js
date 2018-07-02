@@ -5,7 +5,6 @@
 var fs = require('fs'),
     _ = require('lodash');
 
-/* global describe, it, before, expect */
 describe('nsp', function () {
     var nsprc,
         pkg;
@@ -34,6 +33,7 @@ describe('nsp', function () {
 
         it('should match dependency version in package.json to .nsprc (time to remove exclusion?)', function () {
             var pkg = _.pick(require('../../package').dependencies, _.keys(nsprc.exclusions));
+
             expect(pkg).to.eql(nsprc.exclusions);
         });
 

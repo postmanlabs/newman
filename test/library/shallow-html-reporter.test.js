@@ -1,6 +1,5 @@
 var fs = require('fs');
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('HTML reporter', function () {
     var outFile = 'out/newman-report.html';
 

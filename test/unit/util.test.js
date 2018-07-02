@@ -2,7 +2,6 @@ var sdk = require('postman-collection'),
 
     util = require('../../lib/util');
 
-/* global describe, it, expect */
 describe('utility helpers', function () {
     describe('getFullName', function () {
         var collection = new sdk.Collection({

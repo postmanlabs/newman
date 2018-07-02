@@ -34,7 +34,11 @@ module.exports = function (exit) {
     nyc.wrap();
     // add all spec files to mocha
     recursive(SPEC_SOURCE_DIR, function (err, files) {
-        if (err) { console.error(err); return exit(1); }
+        if (err) {
+            console.error(err);
+
+            return exit(1);
+        }
 
         var mocha = new Mocha({ timeout: 1000 * 60 });
 

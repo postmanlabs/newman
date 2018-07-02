@@ -1,4 +1,3 @@
-/* global describe, it, expect */
 describe('cli parser', function () {
     var cli = require('../../bin/newman');
 
@@ -70,6 +69,7 @@ describe('cli parser', function () {
                 expect(err).to.be.null;
 
                 var opts = config.run;
+
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
@@ -181,6 +181,7 @@ describe('cli parser', function () {
                 expect(err).to.be.null;
 
                 var opts = config.run;
+
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
@@ -244,6 +245,7 @@ describe('cli parser', function () {
                 expect(err).to.be.null;
 
                 var opts = config.run;
+
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');

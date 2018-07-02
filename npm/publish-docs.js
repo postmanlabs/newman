@@ -37,6 +37,7 @@ module.exports = function (exit) {
             }
             catch (e) {
                 console.error(e.stack || e);
+
                 return next(e ? 1 : 0);
             }
 

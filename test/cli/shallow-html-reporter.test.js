@@ -1,4 +1,3 @@
-/* global describe, it, exec, expect */
 var fs = require('fs');
 
 describe('HTML reporter', function () {
