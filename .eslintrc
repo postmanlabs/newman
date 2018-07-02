@@ -2,8 +2,7 @@
     "plugins": [
         "jsdoc",
         "lodash",
-        "security",
-        "mocha"
+        "security"
     ],
     "env": {
         "browser": false,
@@ -396,7 +395,7 @@
         "jsdoc/require-returns-type": "error",
 
         // Security
-        "security/detect-unsafe-regex": "warn",
+        "security/detect-unsafe-regex": "error",
         "security/detect-buffer-noassert": "error",
         "security/detect-child-process": "error",
         "security/detect-disable-mustache-escape": "error",
