@@ -1,5 +1,3 @@
-/* global describe, expect, it, newman */
-
 describe('Cookie sanity', function () {
     var collection = 'test/integration/cookie-jar.postman_collection.json';
 

@@ -1,7 +1,6 @@
 var fs = require('fs'),
     path = require('path');
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('newman.run exportGlobals', function () {
     var globals = 'test/fixtures/run/simple-variables.json',
         exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');

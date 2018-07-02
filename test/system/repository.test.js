@@ -9,7 +9,6 @@ var fs = require('fs'),
     semver = require('semver'),
     parseIgnore = require('parse-gitignore');
 
-/* global describe, it, expect */
 describe('project repository', function () {
     describe('package.json', function () {
         var content,

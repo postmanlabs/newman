@@ -1,4 +1,3 @@
-/* global describe, it, exec, expect */
 describe('CLI reporter no success assertions', function () {
     var noSuccessOutput = /response\s+code\s+is\s+200/;
 

@@ -1,4 +1,3 @@
-/* global describe, it, exec, expect */
 describe('newman run --suppress-exit-code', function () {
     it('should accept the --suppress-exit-code parameter', function (done) {
         // eslint-disable-next-line max-len

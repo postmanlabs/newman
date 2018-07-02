@@ -5,7 +5,6 @@
 var fs = require('fs'),
     _ = require('lodash');
 
-/* global describe, it, before, expect */
 describe('nsp', function () {
     var nsprc,
         pkg;

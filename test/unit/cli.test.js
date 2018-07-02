@@ -1,4 +1,3 @@
-/* global describe, it, expect */
 describe('cli parser', function () {
     var cli = require('../../bin/newman');
 
