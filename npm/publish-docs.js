@@ -2,8 +2,6 @@
 /* eslint-env node, es6 */
 require('shelljs/global');
 
-/* global cd, config, exec, exit */
-
 var async = require('async'),
     colors = require('colors/safe');
 

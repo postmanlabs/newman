@@ -2,8 +2,6 @@
 require('shelljs/global');
 require('colors');
 
-/* global exit */
-
 var Mocha = require('mocha'),
     newman = require('../index'),
     expect = require('chai').expect,

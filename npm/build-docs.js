@@ -6,8 +6,6 @@
 require('shelljs/global');
 require('colors');
 
-/* global echo, exec, rm, set, test */
-
 // stop on encountering the first error
 set('-e');
 echo('-e', 'Generating documentation...');

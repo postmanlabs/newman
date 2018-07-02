@@ -1,0 +1,16 @@
+{
+    "globals": {
+        "cd": true,
+        "colors": true,
+        "config": true,
+        "echo": true,
+        "exec": true,
+        "exit": true,
+        "mkdir": true,
+        "popd": true,
+        "pushd": true,
+        "rm": true,
+        "set": true,
+        "test": true
+    }
+}

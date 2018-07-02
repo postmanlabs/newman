@@ -3,8 +3,6 @@
 require('shelljs/global');
 require('colors');
 
-/* global colors, config, exec, exit, mkdir, popd, pushd, rm */
-
 var fs = require('fs'),
     path = require('path'),
     async = require('async'),

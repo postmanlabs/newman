@@ -2,8 +2,6 @@
 require('shelljs/global');
 require('colors');
 
-/* global exit */
-
 var fs = require('fs'),
     _ = require('lodash'),
     pathUtils = require('path'),

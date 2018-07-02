@@ -2,8 +2,6 @@
 require('shelljs/global');
 require('colors');
 
-/* global exit */
-
 var Mocha = require('mocha'),
     expect = require('chai').expect,
     recursive = require('recursive-readdir'),

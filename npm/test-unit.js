@@ -7,8 +7,6 @@
 require('shelljs/global');
 require('colors');
 
-/* global exit, mkdir, rm, test */
-
 // set directories and files for test and coverage report
 var path = require('path'),
     expect = require('chai').expect,
