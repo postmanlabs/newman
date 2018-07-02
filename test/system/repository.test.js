@@ -6,6 +6,7 @@ var fs = require('fs'),
     path = require('path'),
     _ = require('lodash'),
     yml = require('js-yaml'),
+    semver = require('semver'),
     parseIgnore = require('parse-gitignore');
 
 /* global describe, it, expect */
@@ -56,8 +57,7 @@ describe('project repository', function () {
             });
 
             it('should have a valid version string in form of <major>.<minor>.<revision>', function () {
-                // eslint-disable-next-line max-len
-                expect(json.version).to.match(/^((\d+)\.(\d+)\.(\d+))(?:-([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?$/);
+                expect(semver.valid(json.version), `version:${json.version} should be a valid semver`).to.not.be.null;
             });
         });
 
@@ -124,8 +124,8 @@ describe('project repository', function () {
 
             it('should point to a valid and precise (no * or ^) semver', function () {
                 json.dependencies && Object.keys(json.dependencies).forEach(function (item) {
-                    expect(json.dependencies[item]).to.match(new RegExp('^((\\d+)\\.(\\d+)\\.(\\d+))(?:-' +
-                        '([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?$'));
+                    expect(semver.valid(json.dependencies[item]),
+                        `${item}:${json.dependencies[item]} should be a valid semver`).to.not.be.null;
                 });
             });
         });
@@ -137,8 +137,8 @@ describe('project repository', function () {
 
             it('should point to a valid and precise (no * or ^) semver', function () {
                 json.devDependencies && Object.keys(json.devDependencies).forEach(function (item) {
-                    expect(json.devDependencies[item]).to.match(new RegExp('^((\\d+)\\.(\\d+)\\.(\\d+))(?:-' +
-                        '([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?$'));
+                    expect(semver.valid(json.devDependencies[item]),
+                        `${item}:${json.devDependencies[item]} should be a valid semver`).to.not.be.null;
                 });
             });
 
