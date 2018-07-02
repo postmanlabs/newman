@@ -301,5 +301,16 @@ describe('cli parser', function () {
                 done();
             });
         });
+
+        it('should turn off newman banner if --reporter-cli-no-banner is set', function (done) {
+            cli('run myCollection.json --reporter-cli-no-banner'.split(' '), 'newmantests', function (err, res) {
+                expect(err).to.be.null;
+                expect(res.command).to.equal('run');
+                expect(res.run).to.be.ok;
+                expect(res.run.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
+
+                done();
+            });
+        });
     });
 });
