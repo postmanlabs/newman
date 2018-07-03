@@ -2,12 +2,19 @@
 var fs = require('fs'),
     path = require('path'),
 
+    sh = require('shelljs'),
+
+    outDir = 'out',
     exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');
 
 describe('newman run --export-globals', function () {
+    beforeEach(function () {
+        sh.test('-d', outDir) && sh.rm('-rf', outDir);
+        sh.mkdir('-p', outDir);
+    });
+
     afterEach(function () {
-        try { fs.unlinkSync(exportedGlobalsPath); }
-        catch (e) { console.error(e); }
+        sh.rm('-rf', outDir);
     });
 
     it('should export globals to a file', function (done) {
@@ -70,6 +77,31 @@ describe('newman run --export-globals', function () {
                 { key: 'foo', value: 'bar', type: 'any' }
             ]);
             expect(globals).to.have.property('_postman_variable_scope', 'globals');
+            done();
+        });
+    });
+
+    it('`newman run` should export globals to a file in a pre-existing directory', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out', function (code) {
+            var globals,
+                dir = fs.readdirSync(outDir),
+                file = dir[0];
+
+            expect(dir).to.have.length(1);
+
+            try { globals = JSON.parse(fs.readFileSync(outDir + '/' + file).toString()); }
+            catch (e) { console.error(e); }
+
+            expect(code).to.equal(0);
+            expect(globals).to.be.ok;
+            expect(globals).have.property('_postman_exported_at');
+            expect(globals).have.property('values');
+            expect(globals.values).eql([
+                { key: 'var-1', value: 'value-1', type: 'any' },
+                { key: 'var-2', value: 'value-2', type: 'any' }
+            ]);
+            expect(globals).have.property('_postman_variable_scope', 'globals');
             done();
         });
     });

@@ -34,8 +34,8 @@ The current Node version compatibility can also be seen from the `engines.node` 
             3. [HTML reporter options](#html-reporter-options)
             4. [JUnit reporter options](#junitxml-reporter-options)
             5. [Custom reporters](#custom-reporters)
-                a. [Using custom reporters](#using-custom-reporters)
-                b. [Creating custom reporters](#creating-custom-reporters)
+                1. [Using custom reporters](#using-custom-reporters)
+                2. [Creating custom reporters](#creating-custom-reporters)
         2. [SSL client certificates](#ssl-client-certificates)
     2. [Proxy](#proxy)
 
@@ -231,7 +231,7 @@ To enable JSON reporter, provide `--reporters json` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
-| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
 
 ##### HTML reporter options
@@ -240,7 +240,7 @@ HTML reporter, provide `--reporters html` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
-| `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 | `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
 
 Custom templates (currently handlebars only) can be passed to the HTML reporter via `--reporter-html-template <path>` with `--reporters html` and `--reporter-html-export`.
@@ -252,7 +252,7 @@ Newman can output a summary of the collection run to a JUnit compatible XML file
 
 | CLI Option  | Description       |
 |-------------|-------------------|
-| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
