@@ -1,5 +1,24 @@
 # Newman Changelog
 
+3.10.0:
+  date: 2018-07-04
+  new features:
+    - '#1596 Added --reporter-cli-no-banner option'
+    - '#1551 Bumped Alpine Docker image Node version to v8'
+    - '#1555 Added failure list to HTML reports'
+  fixed bugs:
+    - '#1612 Fixed JUnit reports for failed cases'
+    - '#1576 Accounted for cases where the export path is a pre-existing directory'
+    - '#1601 Reversed reporter lookup logic'
+    - '#1584 Improved timeout messaging in HTML reports'
+    - '#1594 Fixed a bug that caused reporter flags to break with `=`'
+    - '#1592 Added a link to the Alpine Docker image'
+    - '#1583 Capped JUnit timing precision to 3 decimal places'
+    - '#1563 Ensured that all exported variable files have a valid name'
+    - '#1578 Switched to cli-table3'
+    - '#1575 Fixed typo in directory collection runner example'
+    - '#1553 Fixed a bug that caused HTML reports to incorrectly duplicate requests across multiple iterations'
+
 3.9.4:
   date: 2018-05-25
   fixed bugs:
@@ -7,7 +26,7 @@
     - 'Fixed no-assertions behaviour for the CLI reporter #1389'
     - 'Corrected help text for missing arguments #1428'
     - 'Added postpublish script for automated Docker image pushing #1397'
-    = 'Corrected Postman API reference link #1416'
+    - 'Corrected Postman API reference link #1416'
     - 'Switched to a YAML changelog 1448'
     - 'Corrected error representation in JUnit reports #1443'
     - 'Removed wait spinner from CLI output when --disable-unicode is present #1496'
@@ -196,7 +215,7 @@
 
 3.1.2:
   date: 2016-08-25
-  fixed bugs: 
+  fixed bugs:
     - 'Updated postman-runtime, postman-collection and postman-collection-transformer dependencies'
 
 3.1.1:

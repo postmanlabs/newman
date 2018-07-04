@@ -1,16 +1,14 @@
-var expect = require('expect.js');
-
-/* global describe, it */
+/* global describe, it, expect */
 describe('cli parser', function () {
     var cli = require('../../bin/newman');
 
-    it('must export a function', function () {
-        expect(cli).be.a('function');
+    it('should export a function', function () {
+        expect(cli).to.be.a('function');
     });
 
     it('should display the current Newman version', function (done) {
         cli(['--version'], 'newmantests', function (err) {
-            expect(err).to.be(null);
+            expect(err).to.be.null;
             done();
         });
     });
@@ -19,11 +17,11 @@ describe('cli parser', function () {
         it('should load standard arguments (-c and -e)', function (done) {
             cli('-c myCollection.json -e env.json --silent'.split(' '), 'newmantests',
                 function (err, config) {
-                    expect(err).to.be(null);
-                    expect(config.command).to.be('run');
-                    expect(config.run).to.be.ok();
-                    expect(config.run.collection).to.be('myCollection.json');
-                    expect(config.run.environment).to.be('env.json');
+                    expect(err).to.be.null;
+                    expect(config.command).to.equal('run');
+                    expect(config.run).to.be.ok;
+                    expect(config.run.collection).to.equal('myCollection.json');
+                    expect(config.run.environment).to.equal('env.json');
 
                     done();
                 });
@@ -32,14 +30,14 @@ describe('cli parser', function () {
         it('should support alternative arguments', function (done) {
             cli(('-u http://a.com/myCollection.json ' +
             '--environment-url http://a.com/env.json --silent').split(' '), 'newmantests', function (err, config) {
-                expect(err).to.be(null);
-                expect(config.command).to.be('run');
-                expect(config.run).to.be.ok();
-                expect(config.run.collection).to.be('http://a.com/myCollection.json');
-                expect(config.run.environment).to.be('http://a.com/env.json');
+                expect(err).to.be.null;
+                expect(config.command).to.equal('run');
+                expect(config.run).to.be.ok;
+                expect(config.run.collection).to.equal('http://a.com/myCollection.json');
+                expect(config.run.environment).to.equal('http://a.com/env.json');
 
-                expect(config.run.bail).to.be(undefined);
-                expect(config.run.suppressExitCode).to.be(undefined);
+                expect(config.run.bail).to.be.undefined;
+                expect(config.run.suppressExitCode).to.be.undefined;
 
                 done();
             });
@@ -69,50 +67,50 @@ describe('cli parser', function () {
             '-H report.html ' +
             '-W ' +
             '--stopOnError --silent').split(' '), 'newmantests', function (err, config) {
-                expect(err).to.be(null);
+                expect(err).to.be.null;
 
                 var opts = config.run;
-                expect(opts).to.be.ok();
-                expect(opts.collection).to.be('myCollection.json');
-                expect(opts.environment).to.be('myEnv.json');
-                expect(opts.folder).to.be('myFolder');
-                expect(opts.exportEnvironment).to.be('exported_env.json');
-                expect(opts.iterationData).to.be('/path/to/csv.csv');
-                expect(opts.globals).to.be('myGlobals.json');
-                expect(opts.exportGlobals).to.be('exported_glob.json');
-                expect(opts.delayRequest).to.be(12000);
-                expect(opts.timeoutRequest).to.be(5000);
-                expect(opts.ignoreRedirects).to.be(true);
-                expect(opts.insecure).to.be(true);
-                expect(opts.noColor).to.be(true);
+                expect(opts).to.be.ok;
+                expect(opts.collection).to.equal('myCollection.json');
+                expect(opts.environment).to.equal('myEnv.json');
+                expect(opts.folder).to.equal('myFolder');
+                expect(opts.exportEnvironment).to.equal('exported_env.json');
+                expect(opts.iterationData).to.equal('/path/to/csv.csv');
+                expect(opts.globals).to.equal('myGlobals.json');
+                expect(opts.exportGlobals).to.equal('exported_glob.json');
+                expect(opts.delayRequest, 'should have delayRequest of 12000').to.equal(12000);
+                expect(opts.timeoutRequest, 'should have timeoutRequest of 5000').to.equal(5000);
+                expect(opts.ignoreRedirects, 'should have ignoreRedirects to be true').to.equal(true);
+                expect(opts.insecure, 'should have insecure to be true').to.equal(true);
+                expect(opts.noColor, 'should have noColor to be true').to.equal(true);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.contain('verbose');
                 expect(opts.reporters).to.contain('junit');
                 expect(opts.reporters).to.contain('html');
 
-                expect(opts.reporter).to.be.ok();
-                expect(opts.reporterCliNoSummary).to.be(true);
+                expect(opts.reporter).to.be.ok;
+                expect(opts.reporterCliNoSummary, 'should have reporterCliNoSummary to be true').to.equal(true);
 
                 // Validate JSON reporter configuration
-                expect(opts.reporter.json).to.be.ok();
-                expect(opts.reporter.json.output).to.be('./omg.txt');
+                expect(opts.reporter.json).to.be.ok;
+                expect(opts.reporter.json.output).to.equal('./omg.txt');
 
                 // Validate verbose reporter configuration
-                expect(opts.reporter.verbose).to.be.ok();
-                expect(opts.reporter.verbose.output).to.be('LOTSOFSTUFF.log');
+                expect(opts.reporter.verbose).to.be.ok;
+                expect(opts.reporter.verbose.output).to.equal('LOTSOFSTUFF.log');
 
                 // Validate junit reporter configuration
-                expect(opts.reporter.junit).to.be.ok();
-                expect(opts.reporter.junit.output).to.be('junit.xml');
+                expect(opts.reporter.junit).to.be.ok;
+                expect(opts.reporter.junit.output).to.equal('junit.xml');
 
                 // Validate HTML reporter configuration
-                expect(opts.reporter.html).to.be.ok();
-                expect(opts.reporter.html.output).to.be('report.html');
+                expect(opts.reporter.html).to.be.ok;
+                expect(opts.reporter.html.output).to.equal('report.html');
 
                 // Validate HTML reporter configuration
-                expect(opts.reporter.html).to.be.ok();
-                expect(opts.reporter.html.output).to.be('report.html');
+                expect(opts.reporter.html).to.be.ok;
+                expect(opts.reporter.html.output).to.equal('report.html');
 
                 done();
             });
@@ -123,12 +121,12 @@ describe('cli parser', function () {
         it('should handle standard run command (run collection.json and -e)', function (done) {
             cli('run myCollection.json --environment env.json -n 2'.split(' '), 'newmantests',
                 function (err, config) {
-                    expect(err).to.be(null);
-                    expect(config.command).to.be('run');
-                    expect(config.run).to.be.ok();
-                    expect(config.run.iterationCount).to.be(2);
-                    expect(config.run.collection).to.be('myCollection.json');
-                    expect(config.run.environment).to.be('env.json');
+                    expect(err).to.be.null;
+                    expect(config.command).to.equal('run');
+                    expect(config.run).to.be.ok;
+                    expect(config.run.iterationCount, 'should have iterationCount of 2').to.equal(2);
+                    expect(config.run.collection).to.equal('myCollection.json');
+                    expect(config.run.environment).to.equal('env.json');
 
                     done();
                 });
@@ -136,7 +134,7 @@ describe('cli parser', function () {
 
         it('should throw an error for invalid --iteration-count values', function (done) {
             cli('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
-                expect(err.message).to.be('The value must be a positive integer.');
+                expect(err.message).to.equal('The value must be a positive integer.');
 
                 done();
             });
@@ -148,7 +146,7 @@ describe('cli parser', function () {
             //  mismatch and that is better handled through exec and stderr check.
             it('should handle --global-var values without an `=`', function (done) {
                 cli('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
-                    expect(err).to.be(null);
+                    expect(err).to.be.null;
                     expect(res.run.globalVar).to.eql([
                         { key: 'foo', value: undefined }
                     ]);
@@ -180,25 +178,25 @@ describe('cli parser', function () {
             '--bail ' +
             '--suppress-exit-code ' +
             '-k').split(' '), 'newmantests', function (err, config) {
-                expect(err).to.be(null);
+                expect(err).to.be.null;
 
                 var opts = config.run;
-                expect(opts).to.be.ok();
-                expect(opts.collection).to.be('myCollection.json');
-                expect(opts.environment).to.be('myEnv.json');
-                expect(opts.folder).to.be('myFolder');
-                expect(opts.exportEnvironment).to.be('exported_env.json');
-                expect(opts.iterationData).to.be('path/to/csv.csv');
-                expect(opts.globals).to.be('myGlobals.json');
-                expect(opts.exportGlobals).to.be('exported_glob.json');
-                expect(opts.delayRequest).to.be(12000);
-                expect(opts.timeout).to.be(10000);
-                expect(opts.timeoutRequest).to.be(5000);
-                expect(opts.timeoutScript).to.be(5000);
-                expect(opts.ignoreRedirects).to.be(true);
-                expect(opts.insecure).to.be(true);
+                expect(opts).to.be.ok;
+                expect(opts.collection).to.equal('myCollection.json');
+                expect(opts.environment).to.equal('myEnv.json');
+                expect(opts.folder).to.equal('myFolder');
+                expect(opts.exportEnvironment).to.equal('exported_env.json');
+                expect(opts.iterationData).to.equal('path/to/csv.csv');
+                expect(opts.globals).to.equal('myGlobals.json');
+                expect(opts.exportGlobals).to.equal('exported_glob.json');
+                expect(opts.delayRequest, 'should have delayRequest of 12000').to.equal(12000);
+                expect(opts.timeout, 'should have timeout of 10000').to.equal(10000);
+                expect(opts.timeoutRequest, 'should have timeoutRequest of 5000').to.equal(5000);
+                expect(opts.timeoutScript, 'should have timeoutScript of 5000').to.equal(5000);
+                expect(opts.ignoreRedirects, 'should have ignoreRedirects to be true').to.equal(true);
+                expect(opts.insecure, 'shoudl have insecure to be true').to.equal(true);
 
-                expect(opts.color).to.be(false);
+                expect(opts.color, 'should have color to be false').to.equal(false);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.contain('html');
@@ -209,8 +207,8 @@ describe('cli parser', function () {
                     { key: 'alpha', value: '=beta=' }
                 ]);
 
-                expect(opts.bail).to.be(true);
-                expect(opts.suppressExitCode).to.be(true);
+                expect(opts.bail, 'should have bail to be true').to.equal(true);
+                expect(opts.suppressExitCode, 'should have suppressExitCode to be true').to.equal(true);
 
                 done();
             });
@@ -243,26 +241,26 @@ describe('cli parser', function () {
             '--reporter-html-output report.html ' +
             '--reporter-html-template ./mytemplate.html ' +
             '--reporter-use everything').split(' '), 'newmantests', function (err, config) {
-                expect(err).to.be(null);
+                expect(err).to.be.null;
 
                 var opts = config.run;
-                expect(opts).to.be.ok();
-                expect(opts.collection).to.be('myCollection.json');
-                expect(opts.environment).to.be('myEnv.json');
-                expect(opts.folder).to.be('myFolder');
-                expect(opts.disableUnicode).to.be(true);
+                expect(opts).to.be.ok;
+                expect(opts.collection).to.equal('myCollection.json');
+                expect(opts.environment).to.equal('myEnv.json');
+                expect(opts.folder).to.equal('myFolder');
+                expect(opts.disableUnicode, 'should have disableUnicode to be true').to.equal(true);
 
-                expect(opts.exportEnvironment).to.be('exported_env.json');
-                expect(opts.iterationData).to.be('/path/to/csv.csv');
-                expect(opts.globals).to.be('myGlobals.json');
+                expect(opts.exportEnvironment).to.equal('exported_env.json');
+                expect(opts.iterationData).to.equal('/path/to/csv.csv');
+                expect(opts.globals).to.equal('myGlobals.json');
 
-                expect(opts.exportGlobals).to.be('exported_glob.json');
-                expect(opts.delayRequest).to.be(12000);
-                expect(opts.timeout).to.be(10000);
-                expect(opts.timeoutRequest).to.be(5000);
-                expect(opts.timeoutScript).to.be(5000);
-                expect(opts.ignoreRedirects).to.be(true);
-                expect(opts.insecure).to.be(true);
+                expect(opts.exportGlobals).to.equal('exported_glob.json');
+                expect(opts.delayRequest, 'should have delayRequest of 12000').to.equal(12000);
+                expect(opts.timeout, 'should have timeout of 10000').to.equal(10000);
+                expect(opts.timeoutRequest, 'should have timeoutRequest of 5000').to.equal(5000);
+                expect(opts.timeoutScript, 'should have timeoutScript of 5000').to.equal(5000);
+                expect(opts.ignoreRedirects, 'should have ignoreRedirects to be true').to.equal(true);
+                expect(opts.insecure, 'should have insecure to be true').to.equal(true);
 
                 expect(opts.globalVar).to.eql([
                     { key: 'foo', value: 'bar' },
@@ -273,7 +271,7 @@ describe('cli parser', function () {
                     'failure'
                 ]);
 
-                expect(opts.color).to.be(false);
+                expect(opts.color, 'should have color to be false').to.equal(false);
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('verbose');
@@ -281,23 +279,35 @@ describe('cli parser', function () {
                 expect(opts.reporters).to.contain('html');
 
                 // Generic reporter options
-                expect(opts.reporterOptions).to.be.ok();
-                expect(opts.reporterOptions.use).to.be('everything');
-                expect(opts.reporterOptions.cliNoSuccessAssertions).to.be(true);
+                expect(opts.reporterOptions).to.be.ok;
+                expect(opts.reporterOptions.use).to.equal('everything');
+                expect(opts.reporterOptions.cliNoSuccessAssertions
+                    , 'should have cliNoSuccessAssertions to be true').to.equal(true);
 
                 // Individual reporter options
-                expect(opts.reporter).to.be.ok();
+                expect(opts.reporter).to.be.ok;
 
                 // Validate JSON reporter configuration
-                expect(opts.reporter.json).to.be.ok();
-                expect(opts.reporter.json.output).to.be('./omg.txt');
-                expect(opts.reporter.json.use).to.be('everything');
+                expect(opts.reporter.json).to.be.ok;
+                expect(opts.reporter.json.output).to.equal('./omg.txt');
+                expect(opts.reporter.json.use).to.equal('everything');
 
                 // Validate HTML reporter configuration
-                expect(opts.reporter.html).to.be.ok();
-                expect(opts.reporter.html.output).to.be('report.html');
-                expect(opts.reporter.html.template).to.be('./mytemplate.html');
-                expect(opts.reporter.html.use).to.be('everything');
+                expect(opts.reporter.html).to.be.ok;
+                expect(opts.reporter.html.output).to.equal('report.html');
+                expect(opts.reporter.html.template).to.equal('./mytemplate.html');
+                expect(opts.reporter.html.use).to.equal('everything');
+
+                done();
+            });
+        });
+
+        it('should turn off newman banner if --reporter-cli-no-banner is set', function (done) {
+            cli('run myCollection.json --reporter-cli-no-banner'.split(' '), 'newmantests', function (err, res) {
+                expect(err).to.be.null;
+                expect(res.command).to.equal('run');
+                expect(res.run).to.be.ok;
+                expect(res.run.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
 
                 done();
             });

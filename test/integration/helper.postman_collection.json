@@ -1,0 +1,106 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Helper Tests",
+    "_postman_id": "34783f86-4a67-d3bd-ba5b-148495fa2f72",
+    "description": "A set of tests to verify generated OAuth1 and Digest Auth signatures",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "OAuth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('should authorize correctly', function () {",
+              "  pm.response.to.have.jsonBody({",
+              "    status: 'pass',",
+              "    message: 'OAuth-1.0a signature verification was successful'",
+              "  })",
+              "  pm.request.to.have.header('Authorization');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "oauth1",
+          "oauth1": {
+            "consumerKey": "RKCGzna7bv9YD57c",
+            "consumerSecret": "D+EdQ-gs$-%@2Nu7",
+            "token": "",
+            "tokenSecret": "",
+            "signatureMethod": "HMAC-SHA1",
+            "timeStamp": 1461319769,
+            "nonce": "ik3oT5",
+            "version": "1.0",
+            "realm": "",
+            "addParamsToHeader": true,
+            "addEmptyParamsToSign": false
+          }
+        },
+        "url": "https://postman-echo.com/oauth1",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "basicAuth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Should authorize correctly', function () {",
+              "  pm.request.to.have.header('Authorization', 'Basic cG9zdG1hbjpwYXNzd29yZA==');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": {
+            "username": "postman",
+            "password": "password"
+          }
+        },
+        "url": "https://postman-echo.com/basic-auth",
+        "method": "GET"
+      },
+      "response": []
+    },
+    {
+      "name": "DigestAuth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('should authorize correctly', function () {",
+              "  pm.response.to.have.jsonBody({ authenticated: true });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "digest",
+          "digest": {
+            "algorithm": "MD5",
+            "username": "postman",
+            "password": "password"
+          }
+        },
+        "url": "https://postman-echo.com/digest-auth"
+      }
+    }
+  ]
+}

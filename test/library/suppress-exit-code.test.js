@@ -1,23 +1,23 @@
 /* global describe, it, expect, newman */
-describe('--suppress-exit-code', function () {
-    it('`newman run` must accept the --suppress-exit-code parameter', function (done) {
+describe('newman.run suppressExitCode', function () {
+    it('should accept the suppressExitCode parameter', function (done) {
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             suppressExitCode: true
         }, done);
     });
 
-    it('`newman run` exit non-zero if -x parameter is absent on a failing collection', function (done) {
+    it('should fail if suppressExitCode parameter is absent on a failing collection', function (done) {
         newman.run({
             collection: 'test/fixtures/run/single-request-failing.json'
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(1);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 1 failure').to.have.lengthOf(1);
             done();
         });
     });
 
-    it('`newman run` exit with code zero if -x parameter is present on a failing collection', function (done) {
+    it('should not fail if suppressExitCode parameter is present on a failing collection', function (done) {
         newman.run({
             collection: 'test/fixtures/run/single-request-failing.json',
             suppressExitCode: true

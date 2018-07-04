@@ -1,27 +1,19 @@
-var fs = require('fs');
+var fs = require('fs'),
+
+    sh = require('shelljs');
 
 /* global beforeEach, afterEach, describe, it, expect, newman */
 describe('HTML reporter', function () {
-    var outFile = 'out/newman-report.html';
+    var outDir = 'out',
+        outFile = outDir + '/newman-report.html';
 
-    beforeEach(function (done) {
-        fs.stat('out', function (err) {
-            if (err) {
-                return fs.mkdir('out', done);
-            }
-
-            done();
-        });
+    beforeEach(function () {
+        sh.test('-d', outDir) && sh.rm('-rf', outDir);
+        sh.mkdir('-p', outDir);
     });
 
-    afterEach(function (done) {
-        fs.stat(outFile, function (err) {
-            if (err) {
-                return done();
-            }
-
-            fs.unlink(outFile, done);
-        });
+    afterEach(function () {
+        sh.rm('-rf', outDir);
     });
 
     it('should correctly generate the html report for a successful run', function (done) {
@@ -42,8 +34,8 @@ describe('HTML reporter', function () {
             reporters: ['html'],
             reporter: { html: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(1);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 1 failure').to.have.lengthOf(1);
             fs.stat(outFile, done);
         });
     });
@@ -54,8 +46,8 @@ describe('HTML reporter', function () {
             reporters: ['html'],
             reporter: { html: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(2);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 2 failures').to.have.lengthOf(2);
             fs.stat(outFile, done);
         });
     });
@@ -66,9 +58,25 @@ describe('HTML reporter', function () {
             reporters: ['html'],
             reporter: { html: { export: outFile } }
         }, function (err, summary) {
-            expect(err).to.be(null);
-            expect(summary.run.failures).to.have.length(1);
+            expect(err).to.be.null;
+            expect(summary.run.failures, 'should have 1 failure').to.have.lengthOf(1);
             fs.stat(outFile, done);
+        });
+    });
+
+    it('should correctly produce the html report in a pre-existing directory', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/single-get-request.json',
+            reporters: ['html'],
+            reporter: { html: { export: outDir } }
+        }, function (err) {
+            expect(err).to.be.null;
+
+            var dir = fs.readdirSync(outDir),
+                file = dir[0];
+
+            expect(dir).to.have.length(1);
+            fs.stat(outDir + '/' + file, done);
         });
     });
 
@@ -79,8 +87,8 @@ describe('HTML reporter', function () {
                 reporters: ['html'],
                 reporter: { html: { export: outFile } }
             }, function (err, summary) {
-                expect(err).to.be(null);
-                expect(summary.run.failures).to.have.length(0);
+                expect(err).to.be.null;
+                expect(summary.run.failures, 'should have 0 failures').to.have.lengthOf(0);
 
                 summary.run.executions.forEach(function (exec) {
                     // The body property is only accessible to the HTML reporter

@@ -6,6 +6,15 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Using Newman, one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
 extensibility in mind so that you can easily integrate it into your continuous integration servers and build systems.
 
+## Node version compatibility
+
+|      Newman       |    Node    |
+|:-----------------:|:----------:|
+|       v3.x        | &gt;= v4.x |
+| v4.x (unreleased) | &gt;= v6.x |
+
+The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
+
 > For details on changes across v2 to v3, see the [Newman v2 to v3 Migration Guide](MIGRATION.md)
 >
 > For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
@@ -24,7 +33,9 @@ extensibility in mind so that you can easily integrate it into your continuous i
             2. [JSON reporter options](#json-reporter-options)
             3. [HTML reporter options](#html-reporter-options)
             4. [JUnit reporter options](#junitxml-reporter-options)
-            5. [Creating and using custom reporters](#creating-and-using-custom-reporters)
+            5. [Custom reporters](#custom-reporters)
+                1. [Using custom reporters](#using-custom-reporters)
+                2. [Creating custom reporters](#creating-custom-reporters)
         2. [SSL client certificates](#ssl-client-certificates)
     2. [Proxy](#proxy)
 
@@ -37,9 +48,11 @@ extensibility in mind so that you can easily integrate it into your continuous i
 
 5. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
 
-6. [Community Support](#community-support)
+6. [Using Newman in Docker](#using-newman-in-docker)
 
-7. [License](#license)
+7. [Community Support](#community-support)
+
+8. [License](#license)
 
 ---
 
@@ -145,7 +158,7 @@ newman.run({
 - `--bail [optional modifiers]`<br />
   Specify whether or not to stop a collection run on encountering the first test script error.<br />
   Can optionally accept modifiers, currently include `folder` and `failure`.<br />
-  `folder` allows you to skip the entire collection run in case an invalid folder 
+  `folder` allows you to skip the entire collection run in case an invalid folder
   was specified using the `--folder` option or an error was encountered in general.<br />
   On the failure of a test, `failure` would gracefully stop a collection run after completing the current test script.
 
@@ -185,7 +198,7 @@ Spaces should **not** be used between reporter names / commas whilst specifying 
 
 - `--reporter-{{reporter-options}}`<br />
   If more than one reporter accepts the same option name, they can be provided using the common reporter option syntax.
-  <br /<br />
+  <br /><br />
   For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
   reporter.
 
@@ -207,6 +220,7 @@ such a scenario.
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
 | `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+| `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
 
 ##### JSON reporter options
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
@@ -217,7 +231,7 @@ To enable JSON reporter, provide `--reporters json` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
-| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
 
 ##### HTML reporter options
@@ -226,7 +240,7 @@ HTML reporter, provide `--reporters html` as a CLI option.
 
 | CLI Option  | Description       |
 |-------------|-------------------|
-| `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 | `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
 
 Custom templates (currently handlebars only) can be passed to the HTML reporter via `--reporter-html-template <path>` with `--reporters html` and `--reporter-html-export`.
@@ -238,13 +252,17 @@ Newman can output a summary of the collection run to a JUnit compatible XML file
 
 | CLI Option  | Description       |
 |-------------|-------------------|
-| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. |
+| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
-##### Creating and using custom reporters
-Newman also supports custom reporters, provided that the reporter works with Newman's event sequence. Working examples on how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters). For instance, to use the [Newman teamcity reporter](https://github.com/leafle/newman-reporter-teamcity):
+##### Custom reporters
+
+###### Using custom reporters
+Newman also supports custom reporters, provided that the reporter works with Newman's event sequence. Working examples on
+how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
+For instance, to use the [Newman teamcity reporter](https://github.com/leafle/newman-reporter-teamcity):
 
 - Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Replace `-g` from the command below with `-S` for a local installation.<br/>
 ```terminal
@@ -263,6 +281,22 @@ newman.run({
     reporters: ['cli', 'teamcity']
 }, process.exit);
 ```
+
+###### Creating custom reporters
+A custom reporter is a Node module with a name of the form `newman-reporter-<name>`. To create a custom reporter:
+1. Navigate to a directory of your choice, and create a blank npm package with `npm init`.
+2. Add an `index.js` file, that exports a function of the following form:
+```javascript
+function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
+  // emitter is is an event emitter that triggers the following events: https://github.com/postmanlabs/newman#newmanrunevents
+  // reporterOptions is an object of the reporter specific options. See usage examples below for more details.
+  // collectionRunOptions is an object of all the collection run options: https://github.com/postmanlabs/newman#newmanrunoptions-object--callback-function--run-eventemitter
+}
+```
+
+3. Publish your reporter using `npm publish`, or use your reporter locally [see usage instructions](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
+
+Scoped reporter package names like `@myorg/newman-reporter-<name>` are also supported. Working reporter examples can be found in [working reporter examples](#).
 
 #### SSL client certificates
 
@@ -483,10 +517,15 @@ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 
 ---
 
+## Using Newman in Docker
+See https://github.com/postmanlabs/newman/tree/develop/docker/
+
+---
+
 ## Community Support
 
 <img src="https://avatars1.githubusercontent.com/u/3220138?v=3&s=120" align="right" />
-If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.  
+If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.
 
 Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.getpostman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 

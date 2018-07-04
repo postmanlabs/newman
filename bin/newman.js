@@ -31,18 +31,31 @@ var _ = require('lodash'),
     separateReporterArgs = function (allArgs) {
         var reporterArgs = [],
             args = [],
+            arg,
+            index,
             i;
 
         // Separate the reporter arguments from the rest
         for (i = 0; i < allArgs.length; i++) {
-            if (_.startsWith(allArgs[i], '--reporter-')) {
-                reporterArgs.push(allArgs[i]);
+            arg = allArgs[i];
 
+            if (!_.startsWith(arg, '--reporter-')) {
+                args.push(arg);
+                continue;
+            }
+
+            index = arg.indexOf('=');
+
+            if (index !== -1) {
+                // Split the attribute if its like key=value
+                reporterArgs.push(arg.slice(0, index), arg.slice(index + 1));
+            }
+            else if (allArgs[i + 1] && !_.startsWith(allArgs[i + 1], '-')) {
                 // Also push the next parameter if it's not an option.
-                allArgs[i + 1] && !_.startsWith(allArgs[i + 1], '-') && reporterArgs.push(allArgs[++i]);
+                reporterArgs.push(arg, allArgs[++i]);
             }
             else {
-                args.push(allArgs[i]);
+                reporterArgs.push(arg);
             }
         }
         return {

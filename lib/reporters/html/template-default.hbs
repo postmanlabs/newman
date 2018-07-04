@@ -50,7 +50,7 @@
         <div class="col-md-6">Average response time</div><div class="col-md-6">{{responseAverage}}</div>
 
         <div class="col-md-12">&nbsp;</div>
-        <div class="col-md-3"><strong>Total Failures</strong></div><div class="col-md-6"><strong>{{failures}}</strong></div>
+        <div class="col-md-3"><strong>Total Failures</strong></div><div class="col-md-6"><strong>{{failures.length}}</strong></div>
       {{/with}}
     </div>
 
@@ -58,12 +58,12 @@
 
     {{#each aggregations}}
         {{#if parent.name}}
-        <div class="panel-group" id="collapse-folder-{{parent.id}}-aggregation-{{@index}}" role="tablist" aria-multiselectable="true">
-            <div role="tab" id="folderHead-{{parent.id}}-aggregation-{{@index}}">
-                <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{parent.id}}-aggregation-{{@index}}" aria-controls="collapseOne"><strong>{{parent.name}}</strong></a></h4>
+        <div class="panel-group" id="collapse-folder-{{parent.id}}" role="tablist" aria-multiselectable="true">
+            <div role="tab" id="folderHead-{{parent.id}}">
+                <h4 style="font-size: 18px;" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#folderData-{{parent.id}}" aria-controls="collapseOne"><strong>{{parent.name}}</strong></a></h4>
             </div>
             <br/>
-            <div id="folderData-{{parent.id}}-aggregation-{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="folderHead-{{parent.id}}-aggregation-{{@index}}">
+            <div id="folderData-{{parent.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="folderHead-{{parent.id}}">
             {{> aggregations}}
             </div>
         </div>
@@ -71,19 +71,54 @@
         {{> aggregations}}
         {{/if}}
     {{/each}}
+
+    {{#if summary.failures.length}}
+        <br/><h4>Failures</h4>
+
+        {{#each summary.failures}}
+            <div class="panel-group" id="collapse-failure-{{@index}}" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="failureHead-{{@index}}">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#failureData-{{@index}}" aria-controls="collapseOne">
+                                {{error.name}}: {{#if error.test}}{{error.test}}{{else}}{{error.message}}{{/if}}
+                            </a>
+                        </h4>
+                    </div>
+
+                    <div id="failureData-{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="failureHead-{{@index}}">
+                        <div class="panel-body">
+                            <div class="col-md-12">&nbsp;</div>
+                            {{#if error.test}}
+                                <div class="col-md-4">Description</div><div class="col-md-8">{{error.message}}</div><br/>
+                            {{/if}}
+
+                            <div class="col-md-4">Location</div><div class="col-md-8">{{at}}</div><br/>
+                            <div class="col-md-4">Request</div><div class="col-md-8">
+                                <a href="#collapse-request-{{source.id}}">{{source.name}}</a>
+                            </div>
+                            {{#gt cursor.cycles 1}}
+                                <div class="col-md-4">Iteration</div><div class="col-md-8">{{add cursor.iteration 1}}</div><br/>
+                            {{/gt}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {{/if}}
   </div>
 </body>
 </html>
 
 {{#*inline "aggregations"}}
     {{#each executions}}
-        <div class="panel-group" id="collapse-request-{{item.id}}-aggregation-{{@../index}}" role="tablist" aria-multiselectable="true">
+        <div class="panel-group" id="collapse-request-{{item.id}}" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="requestHead-{{item.id}}-aggregation-{{@../index}}">
-                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{item.id}}-aggregation-{{@../index}}" aria-controls="collapseOne">{{item.name}}</a></h4>
+                <div class="panel-heading" role="tab" id="requestHead-{{item.id}}">
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#requestData-{{item.id}}" aria-controls="collapseOne">{{item.name}}</a></h4>
                 </div>
 
-                <div id="requestData-{{item.id}}-aggregation-{{@../index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-{{item.id}}-aggregation-{{@../index}}">
+                <div id="requestData-{{item.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="requestHead-{{item.id}}">
                     <div class="panel-body">
                         {{#with request}}
                             {{#if description.content}}
@@ -94,6 +129,15 @@
                             <div class="col-md-4">Method</div><div class="col-md-8">{{method}}</div>
                             <div class="col-md-4">URL</div><div class="col-md-8"><a href="{{url}}" target="_blank">{{url}}</a></div>
                         {{/with}}
+
+                        <div class="col-md-12">&nbsp;</div>
+                        {{#if requestError}}
+                            <div class="col-md-4"><b>Error</b></div><div class="col-md-8"><b>There was an error sending this request</b></div>
+                            <div class="col-md-4"><b>Error code</b></div><div class="col-md-8"><b>{{requestError.code}}</b></div>
+                            {{#if requestError.connect}}
+                                <div class="col-md-4"><b>Details</b></div><div class="col-md-8"><b>A connection to the host could not be established within the stipulated timeout</b></div>
+                            {{/if}}
+                        {{/if}}
 
                         <div class="col-md-12">&nbsp;</div>
                         <div class="col-md-4">Mean time per request</div><div class="col-md-8">{{mean.time}}</div><br/>

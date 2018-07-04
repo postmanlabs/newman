@@ -1,3 +1,4 @@
+/* global describe, it, exec, expect */
 var fs = require('fs'),
     path = require('path'),
 
@@ -21,8 +22,8 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).be(0);
-            expect(_.get(collectionRun, ITERATION_PROPERTY)).be(1);
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(_.get(collectionRun, ITERATION_PROPERTY), 'should have 1 iteration').to.equal(1);
             done();
         });
     });
@@ -35,8 +36,8 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).be(0);
-            expect(_.get(collectionRun, ITERATION_PROPERTY)).be(2);
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(_.get(collectionRun, ITERATION_PROPERTY), 'should have 2 iterations').to.equal(2);
             done();
         });
     });
@@ -49,8 +50,8 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).be(0);
-            expect(_.get(collectionRun, ITERATION_PROPERTY)).be(3);
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(_.get(collectionRun, ITERATION_PROPERTY), 'should have 3 iterations').to.equal(3);
             done();
         });
     });
@@ -63,8 +64,8 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(code).be(0);
-            expect(_.get(collectionRun, ITERATION_PROPERTY)).be(3);
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(_.get(collectionRun, ITERATION_PROPERTY), 'should have 3 iterations').to.equal(3);
             done();
         });
     });
