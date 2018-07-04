@@ -1,29 +1,20 @@
 var fs = require('fs'),
 
     _ = require('lodash'),
+    sh = require('shelljs'),
     parseXml = require('xml2js').parseString;
 
 describe('JUnit reporter', function () {
-    var outFile = 'out/newman-report.xml';
+    var outDir = 'out',
+        outFile = outDir + '/newman-report.xml';
 
-    beforeEach(function (done) {
-        fs.stat('out', function (err) {
-            if (err) {
-                return fs.mkdir('out', done);
-            }
-
-            done();
-        });
+    beforeEach(function () {
+        sh.test('-d', outDir) && sh.rm('-rf', outDir);
+        sh.mkdir('-p', outDir);
     });
 
-    afterEach(function (done) {
-        fs.stat(outFile, function (err) {
-            if (err) {
-                return done();
-            }
-
-            fs.unlink(outFile, done);
-        });
+    afterEach(function () {
+        sh.rm('-rf', outDir);
     });
 
     it('should correctly generate the junit report for a successful run', function (done) {
@@ -134,6 +125,20 @@ describe('JUnit reporter', function () {
                         done();
                     });
                 });
+            });
+    });
+
+    it('should correctly produce the JUnit report in a pre-existing directory', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r junit --reporter-junit-export out',
+            function (code) {
+                expect(code).to.equal(0);
+
+                var dir = fs.readdirSync(outDir),
+                    file = dir[0];
+
+                expect(dir).to.have.property('length', 1);
+                fs.stat(outDir + '/' + file, done);
             });
     });
 
