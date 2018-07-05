@@ -1,5 +1,24 @@
 # Newman Changelog
 
+3.10.0:
+  date: 2018-07-04
+  new features:
+    - '#1596 Added --reporter-cli-no-banner option'
+    - '#1551 Bumped Alpine Docker image Node version to v8'
+    - '#1555 Added failure list to HTML reports'
+  fixed bugs:
+    - '#1612 Fixed JUnit reports for failed cases'
+    - '#1576 Accounted for cases where the export path is a pre-existing directory'
+    - '#1601 Reversed reporter lookup logic'
+    - '#1584 Improved timeout messaging in HTML reports'
+    - '#1594 Fixed a bug that caused reporter flags to break with `=`'
+    - '#1592 Added a link to the Alpine Docker image'
+    - '#1583 Capped JUnit timing precision to 3 decimal places'
+    - '#1563 Ensured that all exported variable files have a valid name'
+    - '#1578 Switched to cli-table3'
+    - '#1575 Fixed typo in directory collection runner example'
+    - '#1553 Fixed a bug that caused HTML reports to incorrectly duplicate requests across multiple iterations'
+
 3.9.4:
   date: 2018-05-25
   fixed bugs:

@@ -62,7 +62,7 @@ describe('cli parser', function () {
             '--export-globals exported_glob.json ' +
             '--reporter-cli-no-summary ' +
             '--iteration-count 23 ' +
-            '--reporters json,html ' +
+            '--reporters json ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--no-color ' +
             '--delay-request 12000 ' +
@@ -95,7 +95,6 @@ describe('cli parser', function () {
                 expect(opts.color, 'should have color to be false').to.equal(false);
 
                 expect(opts.reporters).to.contain('json');
-                expect(opts.reporters).to.contain('html');
                 expect(opts.reporters).to.not.contain('junit');
 
                 expect(opts.globalVar).to.eql([
@@ -123,7 +122,7 @@ describe('cli parser', function () {
             '--reporter-cli-no-summary ' +
             '--reporter-cli-no-success-assertions ' +
             '--iteration-count 23 ' +
-            '--reporters json,html ' +
+            '--reporters json ' +
             '--no-color ' +
             '--delay-request 12000 ' +
             '--timeout 10000 ' +
@@ -134,8 +133,6 @@ describe('cli parser', function () {
             '--bail folder,failure ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--reporter-json-output ./omg.txt ' +
-            '--reporter-html-output report.html ' +
-            '--reporter-html-template ./mytemplate.html ' +
             '--reporter-use everything').split(' '), 'newmantests', function (err, config) {
                 expect(err).to.be.null;
 
@@ -173,7 +170,6 @@ describe('cli parser', function () {
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('verbose');
                 expect(opts.reporters).to.not.contain('junit');
-                expect(opts.reporters).to.contain('html');
 
                 // Generic reporter options
                 expect(opts.reporterOptions).to.be.ok;
@@ -188,12 +184,6 @@ describe('cli parser', function () {
                 expect(opts.reporter.json).to.be.ok;
                 expect(opts.reporter.json.output).to.equal('./omg.txt');
                 expect(opts.reporter.json.use).to.equal('everything');
-
-                // Validate HTML reporter configuration
-                expect(opts.reporter.html).to.be.ok;
-                expect(opts.reporter.html.output).to.equal('report.html');
-                expect(opts.reporter.html.template).to.equal('./mytemplate.html');
-                expect(opts.reporter.html.use).to.equal('everything');
 
                 done();
             });
