@@ -1,9 +1,9 @@
 {
 	"variables": [],
 	"info": {
-		"name": "html-report-test",
+		"name": "assertion-error-test",
 		"_postman_id": "bd90e43e-8e25-d630-9098-420853777b21",
-		"description": "A sanity check for HTML report generation, including a check for failed requests.",
+		"description": "A sanity check for report generation, including a check for failed requests.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -17,11 +17,11 @@
 						"exec": [
               "tests[\"Status code is 200\"] = responseCode.code === 200;",
               "",
-              "// deliberate AssertionError to test proper JUnit report generation",
+              "// deliberate AssertionError to test proper report generation",
               "pm.test(\"Status code is 400\", function () {",
               "    pm.response.to.have.status(400);",
               "});",
-							"// deliberate TypeError to test proper HTML report generation",
+							"// deliberate TypeError to test proper report generation",
 							"tests[\"Body contains status\"] = undefined.alpha;",
 							""
 						]
