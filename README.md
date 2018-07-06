@@ -5,58 +5,44 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 
 Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
----
 
-## Contents
+## Table of Contents
 
 1. [Getting Started](#getting-started)
-
 2. [Usage](#usage)
     1. [Using Newman CLI](#using-newman-cli)
     2. [Using Newman as a Library](#using-newman-as-a-library)
     3. [Using Reporters with Newman](#using-reporters-with-newman)
-
 3. [Command Line Options](#command-line-options)
     1. [newman-options](#newman-options)
     2. [newman-run](#newman-run-collection-file-source-options)
     3. [SSL Client Certificates](#ssl-client-certificates)
-    3. [Configuring Proxy](#configuring-proxy)
-
+    4. [Configuring Proxy](#configuring-proxy)
 4. [API Reference](#api-reference)
     1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
     2. [Run summary object](#newmanruncallbackerror-object--summary-object)
     3. [Events emitted during a collection run](#newmanrunevents)
-
 5. [Reporters](#reporters)
     1. [Configuring Reporters](#configuring-reporters)
     2. [CLI Reporter](#cli-reporter)
     3. [JSON Reporter](#json-reporter)
     4. [JUnit Reporter](#junitxml-reporter)
     5. [HTML Reporter](#html-reporter)
-
 6. [External Reporters](#external-reporters)
     1. [Using External Reporters](#using-external-reporters)
     2. [Creating Your Own Reporter](#creating-your-own-reporter)
-
 7. [File Uploads](#file-uploads)
-
 8. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
-
 9. [Using Newman in Docker](#using-newman-in-docker)
-
-10. [Compatibility](#Compatibility)
-
+10. [Compatibility](#compatibility)
 11. [Contributing](#contributing)
-
 12. [Community Support](#community-support)
-
 13. [License](#license)
 
----
 
 ## Getting started
 
-To run Newman, ensure that you have Node.js >= v6. [Install Node.js via package manager](https://nodej.jsorg/en/download/package-manager).
+To run Newman, ensure that you have Node.js >= v6. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
 ### Installation
 The easiest way to install Newman is using NPM. If you have Node.js installed, it is most likely that you have NPM installed as well.
@@ -66,7 +52,6 @@ $ npm install -g newman
 ```
 This installs Newman globally on your system allowing you to run it from anywhere. If you want to install it locally, replace `-g` with `-S` flag.
 
----
 
 ## Usage
 
@@ -119,7 +104,6 @@ $ newman run examples/sample-collection.json -r cli,json
 
 For more details on [Reporters](#reporters) and writing your own [External Reporters](#external-reporters) refer their corresponding sections below.
 
----
 
 ## Command Line Options
 
@@ -228,9 +212,8 @@ Newman can also be configured to work with proxy settings via the following envi
  * `HTTPS_PROXY` / `https_proxy`
  * `NO_PROXY` / `no_proxy`
 
-For more details on using these variables, please see https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables
+For more details on using these variables, [refer here](https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables).
 
----
 
 ## API Reference
 
@@ -359,7 +342,6 @@ argument object.**
 
 <!-- TODO: write about callback summary -->
 
----
 
 ## Reporters
 
@@ -428,7 +410,6 @@ discontinued. For documentation on the older command options, refer to [README.m
 Its an external reporter which can be installed via `npm install -g newman-reporter-html`.
 The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once HTML reporter is installed you can provide `--reporters html` as a CLI option.
 
----
 
 ## External Reporters
 
@@ -475,7 +456,6 @@ function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
 
 Scoped reporter package names like `@myorg/newman-reporter-<name>` are also supported. Working reporter examples can be found in [lib/reporters](lib/reporters).
 
----
 
 ## File uploads
 
@@ -518,6 +498,7 @@ file-upload.postman_collection.json  sample-file.txt
 $ newman run file-upload.postman_collection.json
 ```
 
+
 ## Using Newman with the Postman API
 
 1 [Generate an API key](https://app.getpostman.com/dashboard/integrations)<br/>
@@ -530,12 +511,10 @@ $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
     --environment "https://api.getpostman.com/environments/$uid?apikey=$apiKey"
 ```
 
----
 
 ## Using Newman in Docker
 To use Newman in Docker check our [docker documentation](https://github.com/postmanlabs/newman/tree/develop/docker/).
 
----
 
 ### Compatibility
 
@@ -550,13 +529,11 @@ The current Node version compatibility can also be seen from the `engines.node` 
 >
 > For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
----
 
 ## Contributing
 Please take a moment to Read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
 Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss potential changes/additions.
 
----
 
 ## Community Support
 
@@ -565,7 +542,6 @@ If you are interested in talking to the Postman team and fellow Newman users, yo
 
 Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.getpostman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 
----
 
 ## License
 This software is licensed under Apache-2.0. Copyright Postdot Technologies, Inc. See the [LICENSE.md](LICENSE.md) file for more information.
