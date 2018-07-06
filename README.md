@@ -6,7 +6,7 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
 
-## Table of Contents
+## Table of contents
 
 1. [Getting Started](#getting-started)
 2. [Usage](#usage)
@@ -52,6 +52,7 @@ $ npm install -g newman
 ```
 This installs Newman globally on your system allowing you to run it from anywhere. If you want to install it locally, replace `-g` with `-S` flag.
 
+[back to top](#table-of-contents)
 
 ## Usage
 
@@ -104,6 +105,7 @@ $ newman run examples/sample-collection.json -r cli,json
 
 For more details on [Reporters](#reporters) and writing your own [External Reporters](#external-reporters) refer their corresponding sections below.
 
+[back to top](#table-of-contents)
 
 ## Command Line Options
 
@@ -214,6 +216,7 @@ Newman can also be configured to work with proxy settings via the following envi
 
 For more details on using these variables, [refer here](https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables).
 
+[back to top](#table-of-contents)
 
 ## API Reference
 
@@ -342,6 +345,7 @@ argument object.**
 
 <!-- TODO: write about callback summary -->
 
+[back to top](#table-of-contents)
 
 ## Reporters
 
@@ -410,6 +414,7 @@ discontinued. For documentation on the older command options, refer to [README.m
 Its an external reporter which can be installed via `npm install -g newman-reporter-html`.
 The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once HTML reporter is installed you can provide `--reporters html` as a CLI option.
 
+[back to top](#table-of-contents)
 
 ## External Reporters
 
@@ -456,6 +461,7 @@ function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
 
 Scoped reporter package names like `@myorg/newman-reporter-<name>` are also supported. Working reporter examples can be found in [lib/reporters](lib/reporters).
 
+[back to top](#table-of-contents)
 
 ## File uploads
 
@@ -498,6 +504,7 @@ file-upload.postman_collection.json  sample-file.txt
 $ newman run file-upload.postman_collection.json
 ```
 
+[back to top](#table-of-contents)
 
 ## Using Newman with the Postman API
 
@@ -511,6 +518,7 @@ $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
     --environment "https://api.getpostman.com/environments/$uid?apikey=$apiKey"
 ```
 
+[back to top](#table-of-contents)
 
 ## Using Newman in Docker
 To use Newman in Docker check our [docker documentation](https://github.com/postmanlabs/newman/tree/develop/docker/).
@@ -529,11 +537,13 @@ The current Node version compatibility can also be seen from the `engines.node` 
 >
 > For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
+[back to top](#table-of-contents)
 
 ## Contributing
 Please take a moment to Read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
 Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss potential changes/additions.
 
+[back to top](#table-of-contents)
 
 ## Community Support
 
