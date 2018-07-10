@@ -50,7 +50,7 @@ The easiest way to install Newman is using NPM. If you have Node.js installed, i
 ```console
 $ npm install -g newman
 ```
-This installs Newman globally on your system allowing you to run it from anywhere. If you want to install it locally, replace `-g` with `-S` flag.
+This installs Newman globally on your system allowing you to run it from anywhere. If you want to install it locally, Just remove the `-g` flag.
 
 [back to top](#table-of-contents)
 
@@ -423,7 +423,7 @@ Newman also supports external reporters, provided that the reporter works with N
 how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
 For instance, to use the [Newman HTML Reporter](https://github.com/postmanlabs/newman-reporter-html):
 
-- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Replace `-g` from the command below with `-S` for a local installation.<br/>
+- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.<br/>
 ```console
 $ npm install -g newman-reporter-html
 ```
@@ -441,7 +441,7 @@ newman.run({
 }, process.exit);
 ```
 
-#### Know External Reporters
+#### Community Maintained Reporters
 - [HTML](https://github.com/postmanlabs/newman-reporter-html)
 - [TeamCity](https://github.com/leafle/newman-reporter-teamcity)
 - [JSON-Light](https://github.com/Paramagnetic/newman-reporter-json-light)
