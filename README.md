@@ -97,7 +97,7 @@ For the complete list of options, refer the [API Reference](#api-reference) sect
 Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
 Reporters can be configured using the `-r` or `--reporters` options. Inbuilt reporters in newman are: `cli`, `json`, `junit`, `progress` and `emojitrain`.
 
-CLI reporter is enabled by default, you do not need to specifically provide the same as part of reporters option. However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in such a scenario. Check the example given below using the CLI and JSON reporters:
+CLI reporter is enabled by default when Newman is used as a CLI, you do not need to specifically provide the same as part of reporters option. However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in such a scenario. Check the example given below using the CLI and JSON reporters:
 
 ```console
 $ newman run examples/sample-collection.json -r cli,json
@@ -374,7 +374,7 @@ argument object.**
 The built-in CLI reporter supports the following options, use them with appropriate argument switch prefix. For example, the
 option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
 
-CLI reporter is enabled by default, you do not need to specifically provide the same as part of `--reporters` option.
+CLI reporter is enabled by default when Newman is used as a CLI, you do not need to specifically provide the same as part of `--reporters` option.
 However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in
 such a scenario.
 
