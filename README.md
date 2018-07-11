@@ -3,94 +3,83 @@ _Supercharge your API workflow<br/>Modern software is built on APIs. Postman hel
 
 # newman <sub>_the cli companion for postman_</sub>
 
-Using Newman, one can effortlessly run and test a Postman Collections directly from the command-line. It is built with
-extensibility in mind so that you can easily integrate it into your continuous integration servers and build systems.
+Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
-## Node version compatibility
 
-|      Newman       |    Node    |
-|:-----------------:|:----------:|
-|       v3.x        | &gt;= v4.x |
-| v4.x (unreleased) | &gt;= v6.x |
-
-The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
-
-> For details on changes across v2 to v3, see the [Newman v2 to v3 Migration Guide](MIGRATION.md)
->
-> For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
-
----
-
-## Contents
+## Table of contents
 
 1. [Getting Started](#getting-started)
-    1. [Using Newman as a NodeJS module](#using-newman-as-a-nodejs-module)
-
-2. [Command line options](#command-line-options)
-    1. [newman-run](#newman-run-collection-file-source-options)
-        1. [Configuring reporters](#configuring-reporters)
-            1. [CLI reporter options](#cli-reporter-options)
-            2. [JSON reporter options](#json-reporter-options)
-            3. [HTML reporter options](#html-reporter-options)
-            4. [JUnit reporter options](#junitxml-reporter-options)
-            5. [Custom reporters](#custom-reporters)
-                1. [Using custom reporters](#using-custom-reporters)
-                2. [Creating custom reporters](#creating-custom-reporters)
-        2. [SSL client certificates](#ssl-client-certificates)
-    2. [Proxy](#proxy)
-
-3. [API Reference](#api-reference)
+2. [Usage](#usage)
+    1. [Using Newman CLI](#using-newman-cli)
+    2. [Using Newman as a Library](#using-newman-as-a-library)
+    3. [Using Reporters with Newman](#using-reporters-with-newman)
+3. [Command Line Options](#command-line-options)
+    1. [newman-options](#newman-options)
+    2. [newman-run](#newman-run-collection-file-source-options)
+    3. [SSL Client Certificates](#ssl-client-certificates)
+    4. [Configuring Proxy](#configuring-proxy)
+4. [API Reference](#api-reference)
     1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
     2. [Run summary object](#newmanruncallbackerror-object--summary-object)
     3. [Events emitted during a collection run](#newmanrunevents)
+5. [Reporters](#reporters)
+    1. [Configuring Reporters](#configuring-reporters)
+    2. [CLI Reporter](#cli-reporter)
+    3. [JSON Reporter](#json-reporter)
+    4. [JUnit Reporter](#junitxml-reporter)
+    5. [HTML Reporter](#html-reporter)
+6. [External Reporters](#external-reporters)
+    1. [Using External Reporters](#using-external-reporters)
+    2. [Creating Your Own Reporter](#creating-your-own-reporter)
+7. [File Uploads](#file-uploads)
+8. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
+9. [Using Newman in Docker](#using-newman-in-docker)
+10. [Compatibility](#compatibility)
+11. [Contributing](#contributing)
+12. [Community Support](#community-support)
+13. [License](#license)
 
-4. [File uploads](#file-uploads)
-
-5. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
-
-6. [Using Newman in Docker](#using-newman-in-docker)
-
-7. [Community Support](#community-support)
-
-8. [License](#license)
-
----
 
 ## Getting started
 
-To run Newman, ensure that you have NodeJS >= v4. A copy of the NodeJS installable can be downloaded from [https://nodejs.org/en/download/package-manager](https://nodejs.org/en/download/package-manager).
+To run Newman, ensure that you have Node.js >= v6. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
-The easiest way to install Newman is using NPM. If you have NodeJS installed, it is most likely that you have NPM
-installed as well.
+### Installation
+The easiest way to install Newman is using NPM. If you have Node.js installed, it is most likely that you have NPM installed as well.
 
-```terminal
-$ npm install newman --global;
+```console
+$ npm install -g newman
 ```
+This installs Newman globally on your system allowing you to run it from anywhere. If you want to install it locally, Just remove the `-g` flag.
 
+[back to top](#table-of-contents)
+
+## Usage
+
+### Using Newman CLI
 The `newman run` command allows you to specify a collection to be run. You can easily export your Postman
 Collection as a json file from the [Postman App](https://www.getpostman.com/apps) and run it using Newman.
 
-```terminal
-$ newman run examples/sample-collection.json;
+```console
+$ newman run examples/sample-collection.json
 ```
 
 If your collection file is available as an URL (such as from our [Cloud API service](https://api.getpostman.com)),
 Newman can fetch your file and run it as well.
 
-```terminal
-$ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv;
+```console
+$ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv
 ```
 
-For the complete list of options, refer the [Commandline Options](#commandline-options) section below.
+For the complete list of options, refer the [Command Line Options](#command-line-options) section below.
 
 ![terminal-demo](https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/newman-terminal.gif)
 
-### Using Newman as a NodeJS module
-
-Newman can be easily used within your JavaScript projects as a NodeJS module. The entire set of Newman CLI functionality is available for programmatic use as well. The following example runs a collection by reading a JSON collection file stored on disk.
+### Using Newman as a Library
+Newman can be easily used within your JavaScript projects as a Node.js module. The entire set of Newman CLI functionality is available for programmatic use as well. The following example runs a collection by reading a JSON collection file stored on disk.
 
 ```javascript
-var newman = require('newman'); // require newman in your project
+const newman = require('newman'); // require newman in your project
 
 // call newman.run to pass `options` object and wait for callback
 newman.run({
@@ -102,11 +91,32 @@ newman.run({
 });
 ```
 
-**Note:** The newman v2.x `.execute` function has been discontinued.
+For the complete list of options, refer the [API Reference](#api-reference) section below.
 
----
+### Using Reporters with Newman
+Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
+Reporters can be configured using the `-r` or `--reporters` options. Inbuilt reporters in newman are: `cli`, `json`, `junit`, `progress` and `emojitrain`.
 
-## Command line Options
+CLI reporter is enabled by default when Newman is used as a CLI, you do not need to specifically provide the same as part of reporters option. However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in such a scenario. Check the example given below using the CLI and JSON reporters:
+
+```console
+$ newman run examples/sample-collection.json -r cli,json
+```
+
+For more details on [Reporters](#reporters) and writing your own [External Reporters](#external-reporters) refer their corresponding sections below.
+
+[back to top](#table-of-contents)
+
+## Command Line Options
+
+### `newman [options]`
+
+- `-h`, `--help`<br />
+  Show command line help, including a list of options, and sample use cases.
+
+- `-v`, `--version`<br />
+  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
+
 
 ### `newman run <collection-file-source> [options]`
 
@@ -181,124 +191,7 @@ newman.run({
   Allows the specification of global variables via the command line, in a key=value format. Multiple CLI global variables
   can be added by using `--global-var` multiple times, like so: `--global-var "foo=bar" --global-var "alpha=beta"`.
 
-#### Configuring Reporters
-
-Reporters provide information about the current collection run in a format that is easy to both: disseminate and assimilate.
-
-- `-r <reporter-name>`, `--reporters <reporter-name>`<br />
-  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `html` and `junit`.<br/><br/>
-Spaces should **not** be used between reporter names / commas whilst specifying a comma separted list of reporters. For instance:<br/><br/>
-:white_check_mark: `-r html,cli,json,junit` <br/>
-:x: `-r html, cli , json,junit`
-
-- `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
-  When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
-  is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
-  For example, `... --reporters cli,html --reporter-cli-silent` would silence the CLI reporter only.
-
-- `--reporter-{{reporter-options}}`<br />
-  If more than one reporter accepts the same option name, they can be provided using the common reporter option syntax.
-  <br /><br />
-  For example, `... --reporters cli,html --reporter-silent` passes the `silent: true` option to both HTML and CLI
-  reporter.
-
-**Note:** Sample collection reports have been provided in [examples/reports](https://github.com/postmanlabs/newman/blob/develop/examples/reports).
-
-##### CLI reporter options
-These options are supported by the CLI reporter, use them with appropriate argument switch prefix. For example, the
-option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
-
-CLI reporter is enabled by default, you do not need to specifically provide the same as part of `--reporters` option.
-However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in
-such a scenario.
-
-| CLI Option  | Description       |
-|-------------|-------------------|
-| `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
-| `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
-| `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
-| `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
-| `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
-| `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
-| `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
-
-##### JSON reporter options
-The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
-file where to write the file. The content of this file is exactly same as the `summary` parameter sent to the callback
-when Newman is used as a library.
-
-To enable JSON reporter, provide `--reporters json` as a CLI option.
-
-| CLI Option  | Description       |
-|-------------|-------------------|
-| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
-
-
-##### HTML reporter options
-The built-in HTML reporter produces and HTML output file outlining the summary and report of the Newman run. To enable the
-HTML reporter, provide `--reporters html` as a CLI option.
-
-| CLI Option  | Description       |
-|-------------|-------------------|
-| `--reporter-html-export <path>` | Specify a path where the output HTML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
-| `--reporter-html-template <path>` | Specify a path to the custom template which will be used to render the HTML report. This option depends on `--reporter html` and `--reporter-html-export` being present in the run command. If this option is not specified, the [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used |
-
-Custom templates (currently handlebars only) can be passed to the HTML reporter via `--reporter-html-template <path>` with `--reporters html` and `--reporter-html-export`.
-The [default template](https://github.com/postmanlabs/newman/blob/develop/lib/reporters/html/template-default.hbs) is used in all other cases.
-
-##### JUNIT/XML reporter options
-Newman can output a summary of the collection run to a JUnit compatible XML file. To enable the JUNIT reporter, provide
-`--reporters junit` as a CLI option.
-
-| CLI Option  | Description       |
-|-------------|-------------------|
-| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
-
-Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
-discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
-
-##### Custom reporters
-
-###### Using custom reporters
-Newman also supports custom reporters, provided that the reporter works with Newman's event sequence. Working examples on
-how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
-For instance, to use the [Newman teamcity reporter](https://github.com/leafle/newman-reporter-teamcity):
-
-- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Replace `-g` from the command below with `-S` for a local installation.<br/>
-```terminal
-npm install -g newman-reporter-teamcity
-```
-
-- Use the installed reporter, either via the CLI, or programmatic usage. Here, the `newman-reporter` prefix is **not** required while specifying the reporter name in the options.<br/>
-```terminal
-newman run /path/to/collection.json -r cli,teamcity
-```
-```javascript
-var newman = require('newman');
-
-newman.run({
-    collection: '/path/to/collection.json',
-    reporters: ['cli', 'teamcity']
-}, process.exit);
-```
-
-###### Creating custom reporters
-A custom reporter is a Node module with a name of the form `newman-reporter-<name>`. To create a custom reporter:
-1. Navigate to a directory of your choice, and create a blank npm package with `npm init`.
-2. Add an `index.js` file, that exports a function of the following form:
-```javascript
-function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
-  // emitter is is an event emitter that triggers the following events: https://github.com/postmanlabs/newman#newmanrunevents
-  // reporterOptions is an object of the reporter specific options. See usage examples below for more details.
-  // collectionRunOptions is an object of all the collection run options: https://github.com/postmanlabs/newman#newmanrunoptions-object--callback-function--run-eventemitter
-}
-```
-
-3. Publish your reporter using `npm publish`, or use your reporter locally [see usage instructions](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
-
-Scoped reporter package names like `@myorg/newman-reporter-<name>` are also supported. Working reporter examples can be found in [working reporter examples](#).
-
-#### SSL client certificates
+### SSL Client Certificates
 
 Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and an optional private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
 
@@ -313,15 +206,7 @@ The path to the private client key (optional).
 - `--ssl-client-passphrase`<br/>
 The secret passphrase used to protect the private client key (optional).
 
-### `newman [options]`
-
-- `-h`, `--help`<br />
-  Show commandline help, including a list of options, and sample use cases.
-
-- `-v`, `--version`<br />
-  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
-
-### Proxy
+### Configuring Proxy
 
 Newman can also be configured to work with proxy settings via the following environment variables:
 
@@ -329,9 +214,9 @@ Newman can also be configured to work with proxy settings via the following envi
  * `HTTPS_PROXY` / `https_proxy`
  * `NO_PROXY` / `no_proxy`
 
-For more details on using these variables, please see https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables
+For more details on using these variables, [refer here](https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables).
 
----
+[back to top](#table-of-contents)
 
 ## API Reference
 
@@ -356,7 +241,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.bail              | A switch to specify whether or not to gracefully stop a collection run (after completing the current test script) on encountering the first error. Takes additional modifiers as arguments to specify whether to end the run with an error for invalid name or path.<br /><br/>Available modifiers: `folder` and `failure`.<br />eg. `bail : ['folder']`<br /><br />_Optional_<br />Type: `boolean\|object`, Default value: `false` |
 | options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
-| options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `html` and `junit`.<br /><br />_Optional_<br />Type: `string|array` |
+| options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `junit`, `progress` and `emojitrain`.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
 | options.color             | Forces colored CLI output (for use in CI / non TTY environments).<br /><br />_Optional_<br />Type: `boolean` |
 | options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
@@ -460,7 +345,123 @@ argument object.**
 
 <!-- TODO: write about callback summary -->
 
----
+[back to top](#table-of-contents)
+
+## Reporters
+
+### Configuring Reporters
+
+- `-r <reporter-name>`, `--reporters <reporter-name>`<br />
+  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `junit`, `progress` and `emojitrain`.<br/><br/>
+  Spaces should **not** be used between reporter names / commas whilst specifying a comma separated list of reporters. For instance:<br/><br/>
+  :white_check_mark: `-r cli,json,junit`<br/>
+  :x: `-r cli , json,junit`
+
+- `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
+  When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
+  is achieved by prefixing the option with `--reporter-{{reporter-name}}-`.<br /><br />
+  For example, `... --reporters cli,json --reporter-cli-silent` would silence the CLI reporter only.
+
+- `--reporter-{{reporter-options}}`<br />
+  If more than one reporter accepts the same option name, they can be provided using the common reporter option syntax.
+  <br /><br />
+  For example, `... --reporters cli,json --reporter-silent` passes the `silent: true` option to both JSON and CLI
+  reporter.
+
+**Note:** Sample collection reports have been provided in [examples/reports](https://github.com/postmanlabs/newman/blob/develop/examples/reports).
+
+### CLI Reporter
+The built-in CLI reporter supports the following options, use them with appropriate argument switch prefix. For example, the
+option `no-summary` can be passed as `--reporter-no-summary` or `--reporter-cli-no-summary`.
+
+CLI reporter is enabled by default when Newman is used as a CLI, you do not need to specifically provide the same as part of `--reporters` option.
+However, enabling one or more of the other reporters will result in no CLI output. Explicitly enable the CLI option in
+such a scenario.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
+| `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
+| `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
+| `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
+| `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
+| `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
+| `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
+
+### JSON Reporter
+The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
+file where to write the file. The content of this file is exactly same as the `summary` parameter sent to the callback
+when Newman is used as a library.
+
+To enable JSON reporter, provide `--reporters json` as a CLI option.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-json-export <path>` | Specify a path where the output JSON file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
+
+### JUNIT/XML Reporter
+The built-in JUnit reporter can output a summary of the collection run to a JUnit compatible XML file. To enable the JUNIT reporter, provide
+`--reporters junit` as a CLI option.
+
+| CLI Option  | Description       |
+|-------------|-------------------|
+| `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
+
+Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
+discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+
+### HTML Reporter
+Its an external reporter which can be installed via `npm install -g newman-reporter-html`.
+The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once HTML reporter is installed you can provide `--reporters html` as a CLI option.
+
+[back to top](#table-of-contents)
+
+## External Reporters
+
+### Using External Reporters
+Newman also supports external reporters, provided that the reporter works with Newman's event sequence. Working examples on
+how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
+For instance, to use the [Newman HTML Reporter](https://github.com/postmanlabs/newman-reporter-html):
+
+- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.<br/>
+```console
+$ npm install -g newman-reporter-html
+```
+
+- Use the installed reporter, either via the CLI, or programmatic usage. Here, the `newman-reporter` prefix is **not** required while specifying the reporter name in the options.<br/>
+```console
+$ newman run /path/to/collection.json -r cli,html
+```
+```javascript
+const newman = require('newman');
+
+newman.run({
+    collection: '/path/to/collection.json',
+    reporters: ['cli', 'html']
+}, process.exit);
+```
+
+#### Community Maintained Reporters
+- [HTML](https://github.com/postmanlabs/newman-reporter-html)
+- [TeamCity](https://github.com/leafle/newman-reporter-teamcity)
+- [JSON-Light](https://github.com/Paramagnetic/newman-reporter-json-light)
+
+### Creating Your Own Reporter
+A custom reporter is a Node module with a name of the form `newman-reporter-<name>`. To create a custom reporter:
+1. Navigate to a directory of your choice, and create a blank npm package with `npm init`.
+2. Add an `index.js` file, that exports a function of the following form:
+```javascript
+function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
+  // emitter is is an event emitter that triggers the following events: https://github.com/postmanlabs/newman#newmanrunevents
+  // reporterOptions is an object of the reporter specific options. See usage examples below for more details.
+  // collectionRunOptions is an object of all the collection run options: https://github.com/postmanlabs/newman#newmanrunoptions-object--callback-function--run-eventemitter
+}
+```
+3. Publish your reporter using `npm publish`, or use your reporter locally [see usage instructions](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
+
+Scoped reporter package names like `@myorg/newman-reporter-<name>` are also supported. Working reporter examples can be found in [lib/reporters](lib/reporters).
+
+[back to top](#table-of-contents)
 
 ## File uploads
 
@@ -496,12 +497,14 @@ In this collection, `sample-file.txt` should be present in the current working d
 }
 ```
 
-```terminal
+```console
 $ ls
 file-upload.postman_collection.json  sample-file.txt
 
 $ newman run file-upload.postman_collection.json
 ```
+
+[back to top](#table-of-contents)
 
 ## Using Newman with the Postman API
 
@@ -510,17 +513,37 @@ $ newman run file-upload.postman_collection.json
 3 Get the collection link via it's `uid`: `https://api.getpostman.com/collections/$uid?apikey=$apiKey`<br/>
 4 Obtain the environment URI from: `https://api.getpostman.com/environments?apikey=$apiKey`<br/>
 5 Using the collection and environment URIs acquired in steps 3 and 4, run the collection as follows:
-```
-newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
+```console
+$ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
     --environment "https://api.getpostman.com/environments/$uid?apikey=$apiKey"
 ```
 
----
+[back to top](#table-of-contents)
 
 ## Using Newman in Docker
-See https://github.com/postmanlabs/newman/tree/develop/docker/
+To use Newman in Docker check our [docker documentation](https://github.com/postmanlabs/newman/tree/develop/docker/).
 
----
+
+### Compatibility
+
+|      Newman       |    Node    |
+|:-----------------:|:----------:|
+|       v3.x        |  >= v4.x   |
+|       v4.x        |  >= v6.x   |
+
+The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
+
+> For details on changes across v2 to v3, see the [Newman v2 to v3 Migration Guide](MIGRATION.md)
+>
+> For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
+
+[back to top](#table-of-contents)
+
+## Contributing
+Please take a moment to Read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
+Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss potential changes/additions.
+
+[back to top](#table-of-contents)
 
 ## Community Support
 
@@ -529,7 +552,6 @@ If you are interested in talking to the Postman team and fellow Newman users, yo
 
 Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.getpostman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 
----
 
 ## License
 This software is licensed under Apache-2.0. Copyright Postdot Technologies, Inc. See the [LICENSE.md](LICENSE.md) file for more information.
