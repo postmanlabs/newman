@@ -10,28 +10,25 @@ module.exports = {
      * @returns {Object} - Extracted options from command
      */
     commanderToObject: (command) => {
-        let obj = {
+        return _.reduce(command, (result, value, key) => {
+            // Exclude command's private `_` variables and other objects
+            if (!_.startsWith(key, '_') && !_.includes(['commands', 'options', 'parent'], key)) {
+                result[key] = value;
+            }
+
+            return result;
+        }, {
             command: command.name(),
             version: command.parent._version || false
-        };
-
-        // Iterate over all the command properties
-        _.forEach(Object.keys(command), (prop) => {
-            // Exclude command's private `_` variables and other objects
-            if (!_.startsWith(prop, '_') && !_.includes(['commands', 'options', 'parent'], prop)) {
-                obj[prop] = command[prop];
-            }
         });
-
-        return obj;
     },
 
     /**
      * Remove nested options having the provided prefix from `process.argv`.
      *
-     * @param {Array} argv - Argument vector.
+     * @param {String[]} argv - Argument vector.
      * @param {String} optionPrefix - Argument prefix to search for.
-     * @returns {Array} - All arguments without prefixed options and their values
+     * @returns {String[]} - All arguments without prefixed options and their values
      */
     omitNestedOptions: (argv, optionPrefix) => {
         let args = [],
@@ -56,9 +53,9 @@ module.exports = {
     /**
      * Parse nested options having the provided prefix from `process.argv`.
      *
-     * @param {Array} argv - Argument vector.
+     * @param {String[]} argv - Argument vector.
      * @param {String} optionPrefix - Argument prefix to search for.
-     * @param {Array} options - Selected options.
+     * @param {String[]} options - Selected options.
      * @returns {Object} Parsed object with nested options.
      *
      * @example
@@ -79,13 +76,12 @@ module.exports = {
             name,
             path,
             len,
-            arg,
             eqIndex,
             i;
 
         // Extract prefixed arguments from argv
         for (i = 0, len = argv.length; i < len; i++) {
-            arg = argv[i];
+            const arg = argv[i];
 
             if (!_.startsWith(arg, optionPrefix)) { continue; } // skip non-prefixed args
 
@@ -109,7 +105,7 @@ module.exports = {
 
         // Parse nested options
         for (i = 0, len = args.length; i < len; i++) {
-            arg = args[i].replace(optionPrefix, '');
+            const arg = args[i].replace(optionPrefix, '');
 
             name = _.split(arg, '-', 1)[0]; // eg. `cli` in --reporter-cli-silent
 

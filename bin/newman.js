@@ -9,7 +9,7 @@ const _ = require('lodash'),
     util = require('./util'),
 
     /**
-     * Commander coercion to process stringified numbers into integers.
+     * Helper to coerce number like strings into integers.
      * Perform safety checks, and return the result.
      *
      * @param {String} arg - The stringified number argument.
@@ -26,7 +26,7 @@ const _ = require('lodash'),
     },
 
     /**
-     *  Commander coercion for collecting global key=value variables
+     * Helper for collecting global key=value variables
      *
      * --global-var "foo=bar" --global-var "alpha=beta"
      *
@@ -36,11 +36,10 @@ const _ = require('lodash'),
      */
     memoize = (val, memo) => {
         let arg,
-            eqIndex = val.indexOf('='),
-            hasEq = eqIndex !== -1;
+            eqIndex = val.indexOf('=');
 
         // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
-        arg = hasEq ? {
+        arg = eqIndex !== -1 ? {
             key: val.slice(0, eqIndex),
             value: val.slice(eqIndex + 1)
         } : {
@@ -54,7 +53,7 @@ const _ = require('lodash'),
     },
 
     /**
-     *  Commander coercion for converting a comma separated string to an array.
+     * Helper to coerce comma separated string to an array.
      *
      * eg. item1,item2
      *
@@ -94,8 +93,7 @@ program
     .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', integer, 0)
     .option('--bail [modifiers]',
         'Specify whether or not to gracefully stop a collection run on encountering an error' +
-        'and whether to end the run with an error based on the optional modifier.',
-        csvParse)
+        'and whether to end the run with an error based on the optional modifier.', csvParse)
     .option('-x , --suppress-exit-code',
         'Specify whether or not to override the default exit code for the current run.')
     .option('--silent', 'Prevents newman from showing output to CLI.')
@@ -162,6 +160,6 @@ catch (error) {
 }
 
 // If no argument is passed, Log help and then exits.
-if (program.args.length === 0) {
+if (!program.args.length) {
     program.help();
 }
