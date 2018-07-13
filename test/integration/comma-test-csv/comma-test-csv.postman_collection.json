@@ -16,9 +16,11 @@
             "type": "text/javascript",
             "exec": [
               "var res = JSON.parse(responseBody);",
-              "tests['Stringified number was parsed correctly'] = data.num === 1;",
               "tests['Name with comma sent correctly'] = res.json.nameAndSurname === 'Abhijit, Kane';",
-              "tests['Name without comma sent correctly'] = res.json.name === 'Abhijit \"KDOS\" Kane';"
+              "tests['Name without comma sent correctly'] = res.json.name === 'Abhijit \"KDOS\" Kane';",
+              "tests['Number with leading zeros in quotes should not get parsed'] = data.numberWithQuotes === '00123';",
+              "tests['Number without quotes should parse correctly'] = data.numberWithoutQuotes === 7890;",
+              "tests['Long Number in quotes should not get parsed'] = data.longNumber === '89111702272002019559';"
             ]
           }
         }
