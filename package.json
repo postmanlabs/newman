@@ -2,6 +2,7 @@
   "name": "newman",
   "version": "3.10.0",
   "description": "Command-line companion utility for Postman",
+  "man": "./man/newman.1",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
   "repository": {
@@ -80,6 +81,7 @@
     "packity": "0.3.2",
     "parse-gitignore": "0.5.1",
     "postman-jsdoc-theme": "0.0.3",
+    "readme-to-man-page": "0.6.0",
     "recursive-readdir": "2.2.2",
     "xml2js": "0.4.19"
   },
