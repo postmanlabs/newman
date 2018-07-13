@@ -37,7 +37,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(_.get(collectionRun, iterationProperty)).be(1);
+            expect(_.get(collectionRun, iterationProperty), 'should have 1 iteration').to.equal(1);
             done();
         });
     });
@@ -56,7 +56,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(_.get(collectionRun, iterationProperty)).be(2);
+            expect(_.get(collectionRun, iterationProperty), 'should have 2 iterations').to.equal(2);
             done();
         });
     });
@@ -75,7 +75,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(_.get(collectionRun, iterationProperty)).be(3);
+            expect(_.get(collectionRun, iterationProperty), 'should have 3 iterations').to.equal(3);
             done();
         });
     });
@@ -95,7 +95,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
             catch (e) { console.error(e); }
 
-            expect(_.get(collectionRun, iterationProperty)).be(3);
+            expect(_.get(collectionRun, iterationProperty), 'should have 3 iteration').to.equal(3);
             done();
         });
     });

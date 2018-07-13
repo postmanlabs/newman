@@ -1,7 +1,7 @@
 var _ = require('lodash'),
-    expect = require('expect.js'),
     options = require('../../lib/run/options');
 
+/* global describe, it, expect */
 describe('options', function () {
     describe('JSON with spaces', function () {
         it('should be handled correctly for collections', function (done) {
@@ -10,12 +10,13 @@ describe('options', function () {
             options({
                 collection: './test/fixtures/run/spaces/single-get-request.json'
             }, function (err, result) {
-                expect(err).to.be(null);
+                expect(err).to.be.null;
 
                 // remove undefined properties
                 result = JSON.parse(JSON.stringify(result.collection.toJSON()));
                 expect(_.omit(result,
-                    ['event', 'info.id', 'variable', 'item.0.id', 'item.0.response', 'item.0.event.0.script.id']))
+                    // eslint-disable-next-line max-len
+                    ['event', 'info._postman_id', 'variable', 'item.0.id', 'item.0.response', 'item.0.event.0.script.id']))
                     .to.eql(collection);
                 done();
             });
@@ -27,7 +28,7 @@ describe('options', function () {
             options({
                 environment: './test/fixtures/run/spaces/simple-variables.json'
             }, function (err, result) {
-                expect(err).to.be(null);
+                expect(err).to.be.null;
 
                 expect(_.omit(result.environment.toJSON(), 'id')).to.eql(environment);
                 done();
@@ -40,7 +41,7 @@ describe('options', function () {
             options({
                 globals: './test/fixtures/run/spaces/simple-variables.json'
             }, function (err, result) {
-                expect(err).to.be(null);
+                expect(err).to.be.null;
 
                 expect(_.omit(result.globals.toJSON(), 'id')).to.eql(globals);
                 done();
@@ -53,7 +54,7 @@ describe('options', function () {
             options({
                 iterationData: './test/fixtures/run/spaces/data.json'
             }, function (err, result) {
-                expect(err).to.be(null);
+                expect(err).to.be.null;
                 expect(result.iterationData).to.eql(data);
                 done();
             });

@@ -1,6 +1,4 @@
-/* global describe, it */
-var expect = require('expect.js');
-
+/* global describe, it, expect */
 describe('travis.yml', function () {
     var fs = require('fs'),
         yaml = require('js-yaml'),
@@ -14,17 +12,17 @@ describe('travis.yml', function () {
         travisYAMLError = e;
     }
 
-    it('must exist', function (done) {
+    it('should exist', function (done) {
         fs.stat('.travis.yml', done);
     });
 
-    it('must be a valid yml', function () {
-        expect(travisYAMLError && travisYAMLError.message || travisYAMLError).to.not.be.ok();
+    it('should be a valid yml', function () {
+        expect(travisYAMLError && travisYAMLError.message || travisYAMLError).to.not.be.ok;
     });
 
     describe('strucure', function () {
-        it('language must be set to node', function () {
-            expect(travisYAML.language).to.be('node_js');
+        it('should have language to be set to node', function () {
+            expect(travisYAML.language).to.equal('node_js');
             expect(travisYAML.node_js).to.eql(['4', '6', '8']);
         });
     });

@@ -1,10 +1,8 @@
-var expect = require('expect.js');
-
-/* global describe, it */
+/* global describe, it, expect */
 describe('unicode handling of cli symbol utility module', function () {
     var cliUtilsSymbols = require('../../lib/reporters/cli/cli-utils-symbols.js');
 
-    it('must revert to text alternatives when disableUnicode parameter is set to true', function () {
+    it('should revert to text alternatives when disableUnicode parameter is set to true', function () {
         var symbols = cliUtilsSymbols(true);
 
         expect(symbols).to.eql({
@@ -22,7 +20,7 @@ describe('unicode handling of cli symbol utility module', function () {
         });
     });
 
-    it('must provide the platform-specific default symbol map when no options are passed', function () {
+    it('should provide the platform-specific default symbol map when no options are passed', function () {
         var symbols = cliUtilsSymbols(),
             isWin = (/^win/).test(process.platform);
 

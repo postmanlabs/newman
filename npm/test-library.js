@@ -4,7 +4,7 @@ require('colors');
 
 var Mocha = require('mocha'),
     newman = require('../index'),
-    expect = require('expect.js'),
+    expect = require('chai').expect,
     recursive = require('recursive-readdir'),
 
     /**
