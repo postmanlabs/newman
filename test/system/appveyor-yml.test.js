@@ -1,5 +1,3 @@
-/* global describe, it, expect */
-
 describe('appveyor.yml', function () {
     var fs = require('fs'),
         yaml = require('js-yaml'),

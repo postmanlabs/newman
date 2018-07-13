@@ -5,7 +5,6 @@ var _ = require('lodash'),
     program = require('commander'),
     version = require('../package.json').version,
     newman = require('../'),
-    colors = require('colors'),
 
     /**
      * A CLI parser helper to process stringified numbers into integers, perform safety checks, and return the result.
@@ -15,6 +14,7 @@ var _ = require('lodash'),
      */
     Integer = function (arg) {
         var num = Number(arg);
+
         if (!_.isSafeInteger(num) || num <= 0) {
             throw new Error('The value must be a positive integer.');
         }
@@ -58,6 +58,7 @@ var _ = require('lodash'),
                 reporterArgs.push(arg);
             }
         }
+
         return {
             reporter: reporterArgs,
             argv: args
@@ -77,10 +78,12 @@ var _ = require('lodash'),
         var arg,
             eqIndex = val.indexOf('='),
             hasEq = eqIndex !== -1;
+
         // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
         arg = hasEq ? { key: val.slice(0, eqIndex), value: val.slice(eqIndex + 1) } :
             { key: val, value: undefined };
         memo.push(arg);
+
         return memo;
     },
 
@@ -116,63 +119,6 @@ var _ = require('lodash'),
         program
             .version(version)
             .name('newman');
-    },
-
-    /**
-     * Creates a parser capable of handling legacy options.
-     *
-     * @param  {Object} rawArgs - The rawArgs supplied to rawOptions, to be passed to program.parse()
-     *
-     *  Adds legacy options to the common commander program instance.
-     * @private
-     */
-    legacy = function (rawArgs) {
-        resetProgram();
-        program
-            .usage('[options] <collection>')
-            .option('-c, --collection <path>', 'DEPRECATED: Specify a Postman collection as a JSON file')
-            .option('-u, --url <path>', 'DEPRECATED: Specify a Postman collection as a URL')
-            .option('-e, --environment <path>', 'DEPRECATED: Specify a Postman environment as a JSON file')
-            .option('--environment-url <path>', 'DEPRECATED: Specify a Postman environment as a URL')
-            .option('-g, --global <path>', 'DEPRECATED: Specify Postman Globals as a JSON file')
-            .option('-n, --number <n>', 'DEPRECATED: Define the number of iterations to run', Integer)
-            .option('-f, --folder <path>',
-                'DEPRECATED: Run a single folder from a collection. To be used with -c or -u')
-            .option('-r, --requestTimeout <n>', 'DEPRECATED: Specify a request timeout (in ms) for requests', Integer)
-            .option('-y, --delay [n]',
-                'DEPRECATED: Specify the extent of delay between requests (milliseconds)', Integer, 0)
-            .option('-R, --avoidRedirects', 'DEPRECATED: Prevents Newman from automatically following redirects')
-            .option('-k, --insecure', 'DEPRECATED: Disable strict ssl', false)
-            .option('-d, --data <path>', 'DEPRECATED: Specify a data file to use for iterations (either json or csv)')
-            .option('-E, --exportEnvironment <path>',
-                'DEPRECATED: Exports the environment to a file after completing the run')
-            .option('-G, --exportGlobals <path>', 'DEPRECATED: Specify an output file to dump Globals before exiting')
-            .option('-H, --html <path>', 'DEPRECATED: Export a HTML report to a specified file')
-            .option('-j, --no-summary', 'DEPRECATED: Prohibits any output from being logged', false)
-            .option('-C, --noColor', 'DEPRECATED: Disables coloured output', false)
-            .option('-S, --noTestSymbols',
-                'DISCONTINUED: Disables tick and cross symbols for the output, reverting to PASS|FAIL instead', false)
-            .option('-l, --tls', 'DISCONTINUED: Specifies whether to use TLS v1 or not', false)
-            .option('-N, --encoding <choice>', 'DEPRECATED: Specifies and encoding for the response',
-                /^(ascii|utf8|utf16le|ucs2|base64|binary|hex)$/i, false)
-            .option('-o, --outputFile <path>', 'DEPRECATED: Path to file for writing output to')
-            .option('-O, --outputFileVerbose <path>',
-                'DISCONTINUED: Path to file for writing the full collection run details to')
-            .option('-t, --testReportFile <path>', 'DEPRECATED: Path to file for writing JUnit XML results to')
-            .option('-i, --import <path>',
-                'DEPRECATED: Import a Postman backup file, and save collections, environments, globals, and data')
-            .option('-p, --pretty', 'DEPRECATED: Enabled pretty print while displaying collection run information')
-            .option('-W, --whiteScreen', 'DISCONTINUED: Inverts the color scheme for collection run output', false)
-            .option('-L, --recurseLimit <n>',
-                'DEPRECATED: Limits recursive variable resolution for collection runs', Integer, 20)
-            .option('-s, --stopOnError',
-                'DEPRECATED: Stops the runner with a non-zero exit code when any test assertion fails', false)
-            .option('-x, --exitCode',
-                'DEPRECATED: Continues running tests despite test failures, but exit with code 1', false)
-            .option('--silent', 'Prevents newman from showing output to CLI', false)
-            .option('--color', 'Force colored output (for use in CI environments)')
-            .option('collection <path>', 'URL or path to a Postman Collection')
-            .parse(rawArgs);
     },
 
     /**
@@ -266,6 +212,7 @@ var _ = require('lodash'),
             // otherwise set it to the next arg.
             _.set(parsed, path, (!args[i + 1] || _.startsWith(args[i + 1], '-')) ? true : args[++i]);
         }
+
         return parsed;
     },
 
@@ -278,87 +225,15 @@ var _ = require('lodash'),
     getOptionNames = function (options) {
         var optionName,
             optionNames = [];
+
         options.options.forEach(function (option) {
             optionName = option.long;
             optionName = optionName.replace('--', '');
             optionName = optionName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
             optionNames.push(optionName);
         });
+
         return optionNames;
-    },
-
-    /**
-     * Formats the legacy options to the required format for the dispatch function.
-     *
-     * @param {Object} options - The options populated through CLI.
-     * @returns {Object} - An object of formatted legacy options.
-     */
-    formatLegacyOptions = function (options) {
-        var optionsObj = {},
-            prop,
-            run = {},
-            reporter = {},
-            reporters = ['cli'],
-            optionNames = [],
-            args;
-
-        optionNames = getOptionNames(options);
-
-        for (prop in options) {
-            if (_.includes(optionNames, String(prop))) {
-                run[prop] = options[prop];
-            }
-        }
-
-        if (!run.collection && (options.rawArgs || options.args)) {
-            run.collection = options.rawArgs[1] || options.args[0];
-        }
-        args = [
-            { alt: 'url', target: 'collection' },
-            { alt: 'environmentUrl', target: 'environment' },
-            { alt: 'data', target: 'iterationData' },
-            { alt: 'global', target: 'globals' },
-            { alt: 'delay', target: 'delayRequest' },
-            { alt: 'requestTimeout', target: 'timeoutRequest' },
-            { alt: 'avoidRedirects', target: 'ignoreRedirects' },
-            { alt: 'html', target: 'reporterHtmlExport' },
-            { alt: 'testReportFile', target: 'reporterJunitExport' },
-            { alt: 'whiteScreen', target: 'noColor' },
-            { alt: 'number', target: 'iterationCount' },
-            { alt: 'noTestSymbols', target: 'disableUnicode' },
-            { alt: 'stopOnError', target: 'bail' },
-            { alt: 'exitCode', target: 'suppressExitCode' }
-        ];
-
-        args.forEach(function (arg) {
-            run[arg.alt] && _.isEmpty(run[arg.target]) && (run[arg.target] = run[arg.alt]);
-        });
-
-        if (options.summary === false && !run.reporterCliNoSummary) {
-            run.reporterCliNoSummary = true;
-        }
-        if (!options.color || run.noColor) {
-            run.color = false;
-        }
-        if (run.outputFile && _.set(reporter, 'json.output', run.outputFile)) {
-            reporters.push('json');
-        }
-        if (run.outputFileVerbose && _.set(reporter, 'verbose.output', run.outputFileVerbose)) {
-            reporters.push('verbose');
-        }
-        if (run.testReportFile && _.set(reporter, 'junit.output', run.testReportFile)) {
-            reporters.push('junit');
-        }
-        if (run.html && _.set(reporter, 'html.output', run.html)) {
-            reporters.push('html');
-        }
-
-        run.reporter = reporter;
-        run.reporters = reporters;
-
-        optionsObj.command = 'run';
-        optionsObj.run = run;
-        return optionsObj;
     },
 
     /**
@@ -414,9 +289,6 @@ var _ = require('lodash'),
      */
     rawOptions = function (procArgv, programName, callback) {
         var slicedArgs = procArgv.slice(2),
-            legacyMode = !_.includes(procArgv, 'run') &&
-        !_.includes(['--help', '-h', '--version', '-v', '-V'], procArgv[2]) &&
-        !_.isEmpty(slicedArgs),
             reporterArgs,
             rawArgs,
             result,
@@ -426,22 +298,16 @@ var _ = require('lodash'),
             vPos,
             validCommands = [];
 
-        !legacyMode && !module.parent && (procArgv = slicedArgs);
+        !module.parent && (procArgv = slicedArgs);
         rawArgs = separateReporterArgs(procArgv);
         try {
-            if (!legacyMode) {
-                run(rawArgs.argv);
-                program.commands.forEach(function (command) {
-                    validCommands.push(command._name);
-                    if (command._name === 'run') {
-                        result = command;
-                    }
-                });
-            }
-            else {
-                legacy(rawArgs.argv);
-                result = program;
-            }
+            run(rawArgs.argv);
+            program.commands.forEach(function (command) {
+                validCommands.push(command._name);
+                if (command._name === 'run') {
+                    result = command;
+                }
+            });
 
             if (_.isEmpty(procArgv) || _.includes(procArgv, '-h') || _.includes(procArgv, '--help')) {
                 return result.outputHelp();
@@ -451,20 +317,13 @@ var _ = require('lodash'),
                 _.includes(rawArgs.argv, '-V');
             checkForCommand = _.includes(validCommands, rawArgs.argv[0]);
 
-            !checkForVersion && !legacyMode && !checkForCommand &&
+            !checkForVersion && !checkForCommand &&
             customError('\nNewman: Invalid command or parameter.\n\n' +
             'Example:\nnewman run my-api.json -e variables.json\n\n' +
             'For more information, run:\nnewman --help\n');
         }
         catch (error) {
             return callback(_.set(error, 'help', program.outputHelp()));
-        }
-
-        if (legacyMode && !result.silent) {
-            // @todo: add a link to the migration guide just before releasing V3
-            // eslint-disable-next-line max-len
-            console.warn(`${colors.yellow('newman:')} the v2.x CLI options are deprecated. You should use newman run <path> [options] instead.`);
-            console.warn('        refer https://github.com/postmanlabs/newman/blob/develop/MIGRATION.md for details.');
         }
 
         // Handle the reporter Names
@@ -491,12 +350,8 @@ var _ = require('lodash'),
             result.color = true;
             result.noColor = false;
         }
-        if (!legacyMode) {
-            result = formatOptions(result);
-        }
-        else {
-            result = formatLegacyOptions(result);
-        }
+        result = formatOptions(result);
+
         return callback(null, result);
     },
 
@@ -539,6 +394,7 @@ module.exports = rawOptions;
     if (err) {
         err.help && console.info(err.help + '\n'); // will print out usage information.
         console.error(err.message || err);
+
         return process.exit(1); // @todo: args do not arrive on CLI error hence cannot read `-x`
     }
 
