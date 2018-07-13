@@ -1,35 +1,62 @@
-describe.skip('cli parser', function () {
-    var cli;
-    // var cli = require('../../bin/newman');
+describe('cli parser', function () {
+    var _ = require('lodash'),
+        sinon = require('sinon'),
+        newman = require('../../'),
+        newmanCLI,
+
+        /**
+         * Wrap newmanCLI callback to extract options passed to sinon `newman` stub.
+         *
+         * @param {String[]} argv - Argument vector.
+         * @param {String} command - Newman command name, used for `sinon` result lookup.
+         * @param {Function} callback - The callback function invoked on the completion of commander parsing.
+         */
+        cli = (argv, command, callback) => {
+            newmanCLI(argv, (err) => {
+                callback(err, _.get(newman, [command, 'lastCall', 'returnValue']));
+            });
+        };
+
+    // delete require cache to use program instance for consecutive runs.
+    beforeEach(function () {
+        delete require.cache[require.resolve('../../bin/newman')];
+        newmanCLI = require('../../bin/newman');
+    });
 
     it('should export a function', function () {
         expect(cli).to.be.a('function');
     });
 
-    it('should display the current Newman version', function (done) {
-        cli(['--version'], 'newmantests', function (err) {
-            expect(err).to.be.null;
-            done();
-        });
-    });
 
     describe('Run Command', function () {
+        // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
+        before(function () {
+            sinon.stub(newman, 'run').callsFake((options) => {
+                return options;
+            });
+        });
+
+        // restore original `newman.run` function.
+        after(function () {
+            newman.run.restore();
+        });
+
         it('should handle standard run command (run collection.json and -e)', function (done) {
-            cli('run myCollection.json --environment env.json -n 2'.split(' '), 'newmantests',
-                function (err, config) {
+            cli('node newman.js run myCollection.json --environment env.json -n 2'.split(' '), 'run',
+                function (err, opts) {
                     expect(err).to.be.null;
-                    expect(config.command).to.equal('run');
-                    expect(config.run).to.be.ok;
-                    expect(config.run.iterationCount, 'should have iterationCount of 2').to.equal(2);
-                    expect(config.run.collection).to.equal('myCollection.json');
-                    expect(config.run.environment).to.equal('env.json');
+                    expect(opts.command).to.equal('run');
+                    expect(opts).to.be.ok;
+                    expect(opts.iterationCount, 'should have iterationCount of 2').to.equal(2);
+                    expect(opts.collection).to.equal('myCollection.json');
+                    expect(opts.environment).to.equal('env.json');
 
                     done();
                 });
         });
 
         it('should throw an error for invalid --iteration-count values', function (done) {
-            cli('run myCollection.json -n -3.14'.split(' '), 'newmantests', function (err) {
+            cli('node newman.js run myCollection.json -n -3.14'.split(' '), 'run', function (err) {
                 expect(err.message).to.equal('The value must be a positive integer.');
 
                 done();
@@ -41,9 +68,9 @@ describe.skip('cli parser', function () {
             // cli/run-options.test.js since commander throws custom error in case of argument
             //  mismatch and that is better handled through exec and stderr check.
             it('should handle --global-var values without an `=`', function (done) {
-                cli('run myCollection.json --global-var foo'.split(' '), 'newmantests', function (err, res) {
+                cli('node newman.js run myCollection.json --global-var foo'.split(' '), 'run', function (err, opts) {
                     expect(err).to.be.null;
-                    expect(res.run.globalVar).to.eql([
+                    expect(opts.globalVar).to.eql([
                         { key: 'foo', value: undefined }
                     ]);
 
@@ -53,7 +80,7 @@ describe.skip('cli parser', function () {
         });
 
         it('should load all arguments (except reporters)', function (done) {
-            cli(('run ' +
+            cli(('node newman.js run ' +
             'myCollection.json ' +
             '-e myEnv.json ' +
             '-g myGlobals.json ' +
@@ -73,10 +100,8 @@ describe.skip('cli parser', function () {
             '--ignore-redirects ' +
             '--bail ' +
             '--suppress-exit-code ' +
-            '-k').split(' '), 'newmantests', function (err, config) {
+            '-k').split(' '), 'run', function (err, opts) {
                 expect(err).to.be.null;
-
-                var opts = config.run;
 
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
@@ -111,7 +136,7 @@ describe.skip('cli parser', function () {
         });
 
         it('should load all arguments (including reporters)', function (done) {
-            cli(('run ' +
+            cli(('node newman.js run ' +
             'myCollection.json ' +
             '-e myEnv.json ' +
             '-g myGlobals.json ' +
@@ -134,10 +159,8 @@ describe.skip('cli parser', function () {
             '--bail folder,failure ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
             '--reporter-json-output ./omg.txt ' +
-            '--reporter-use everything').split(' '), 'newmantests', function (err, config) {
+            '--reporter-use everything').split(' '), 'run', function (err, opts) {
                 expect(err).to.be.null;
-
-                var opts = config.run;
 
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
@@ -191,14 +214,15 @@ describe.skip('cli parser', function () {
         });
 
         it('should turn off newman banner if --reporter-cli-no-banner is set', function (done) {
-            cli('run myCollection.json --reporter-cli-no-banner'.split(' '), 'newmantests', function (err, res) {
-                expect(err).to.be.null;
-                expect(res.command).to.equal('run');
-                expect(res.run).to.be.ok;
-                expect(res.run.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
+            cli('node newman.js run myCollection.json --reporter-cli-no-banner'.split(' '), 'run',
+                function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts.command).to.equal('run');
+                    expect(opts).to.be.ok;
+                    expect(opts.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
 
-                done();
-            });
+                    done();
+                });
         });
     });
 });
