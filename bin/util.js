@@ -2,6 +2,64 @@ const _ = require('lodash');
 
 module.exports = {
 
+    cast: {
+        /**
+         * Helper to coerce number like strings into integers.
+         * Perform safety checks, and return the result.
+         *
+         * @param {String} arg - The stringified number argument.
+         * @returns {Number} - The supplied argument, casted to an integer.
+         */
+        integer: (arg) => {
+            const num = Number(arg);
+
+            if (!_.isSafeInteger(num) || num <= 0) {
+                throw new Error('The value must be a positive integer.');
+            }
+
+            return num.valueOf();
+        },
+
+        /**
+         * Helper for collecting global key=value variables
+         *
+         * --global-var "foo=bar" --global-var "alpha=beta"
+         *
+         * @param {String} val - The argument provided to `--global-var`.
+         * @param {Array} memo - The array that is populated by key value pairs.
+         * @returns {Array} - [{key, value}] - The object representation of the current CLI variable.
+         */
+        memoize: (val, memo) => {
+            let arg,
+                eqIndex = val.indexOf('=');
+
+            // This is done instead of splitting by `=` to avoid chopping off `=` that could be present in the value
+            arg = eqIndex !== -1 ? {
+                key: val.slice(0, eqIndex),
+                value: val.slice(eqIndex + 1)
+            } : {
+                key: val,
+                value: undefined
+            };
+
+            memo.push(arg);
+
+            return memo;
+        },
+
+        /**
+         * Helper to coerce comma separated string to an array.
+         *
+         * eg. item1,item2
+         *
+         * @param {String} list - The comma separated string.
+         * @returns {Array} - [item1, item2] - The array representation of the passed string.
+         */
+        csvParse: (list) => {
+            return _.split(list, ',');
+        }
+    },
+
     /**
      * Extract selected options in the provided command.
      * Omits commander private variables and other objects.
@@ -102,7 +160,6 @@ module.exports = {
 
         // ensure that whatever option is provided a blank options object is forwarded
         _.forEach(options, (option) => { parsed[option] = {}; });
-
         // Parse nested options
         for (i = 0, len = args.length; i < len; i++) {
             const arg = args[i].replace(optionPrefix, '');
