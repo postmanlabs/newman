@@ -3,6 +3,18 @@ node_js:
 - '6'
 - '8'
 - '10'
+addons:
+  apt:
+    packages:
+      - gnome-keyring
+      - libsecret-1-dev
+      - python-gnomekeyring
+before_install:
+  - |
+    dbus-launch /usr/bin/python -c "import gnomekeyring;gnomekeyring.create_sync('login', '');"
+    eval $(echo -n "" | /usr/bin/gnome-keyring-daemon --login)
+    eval $(/usr/bin/gnome-keyring-daemon --components=secrets --start)
+    export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 notifications:
   slack:
     secure: Fdl/sQMTl86jYN1r1CRRRQRgyFoslvrhkkfnM2JSdx4gODPgyg4nCPSKtU5j9wpSbbkq9A+YBeFv+Suh+xYNviegqa0AZbztydfFzVDS7xw43B/uR9Y4LwaP5Kis1WGuIOHawwFISNO3hTUei6aybKiKKlxvfqrARJaO01+Xxrg=
