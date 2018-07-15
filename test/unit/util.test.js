@@ -61,7 +61,7 @@ describe('utility helpers', function () {
         });
     });
 
-    describe('fetchApiKey', function () {
+    describe('getApiKey', function () {
         const SERVICE = 'newman',
             USER = process.env.USER || 'user'; // eslint-disable-line no-process-env
 
