@@ -81,6 +81,7 @@
     "parse-gitignore": "0.5.1",
     "postman-jsdoc-theme": "0.0.3",
     "recursive-readdir": "2.2.2",
+    "sinon": "6.1.3",
     "xml2js": "0.4.19"
   },
   "engines": {
