@@ -1,4 +1,5 @@
-var sdk = require('postman-collection'),
+const keytar = require('keytar'),
+    sdk = require('postman-collection'),
 
     util = require('../../lib/util');
 
@@ -57,6 +58,39 @@ describe('utility helpers', function () {
             collection.forEachItemGroup(function (itemGroup) {
                 expect(util.getFullName(itemGroup)).to.equal(fullNames[itemGroup.name]);
             });
+        });
+    });
+
+    describe('getApiKey', function () {
+        const SERVICE = 'newman',
+            USER = process.env.USER || 'user'; // eslint-disable-line no-process-env
+
+        beforeEach(function (done) {
+            keytar
+                .deletePassword(SERVICE, USER)
+                .then(() => { done(); }, done)
+                .catch(done);
+        });
+
+        it('should return false for invalid credentials', function (done) {
+            util.getApiKey((apiKey) => {
+                expect(apiKey).not.to.be.ok;
+                done();
+            });
+        });
+
+        it('should return true for valid credentials', function (done) {
+            const apiKey = 'super-secret-postman-api-key';
+
+            keytar
+                .setPassword(SERVICE, USER, apiKey)
+                .then(() => {
+                    util.getApiKey((apiKey) => {
+                        expect(apiKey).to.equal(apiKey);
+                        done();
+                    });
+                }, done)
+                .catch(done);
         });
     });
 });
