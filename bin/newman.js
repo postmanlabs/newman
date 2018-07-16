@@ -95,13 +95,15 @@ function run (argv, callback) {
             next(null, util.omitNestedOptions(argv, '--reporter-'));
         },
         (args, next) => {
+            let error = null;
+
             try {
                 program.parse(args);
             }
-            catch (error) {
-                return next(error);
+            catch (err) {
+                error = err;
             }
-            next(null);
+            next(error);
         },
         (next) => {
             // throw error if no argument is provided.
