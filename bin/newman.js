@@ -27,7 +27,7 @@ program
     .option('--export-environment <path>', 'Exports the environment to a file after completing the run.')
     .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
     .option('--export-collection <path>', 'Specify an output file to save the executed collection')
-    .option('--postman-api-key <apiKey>', 'Postman cloud API Key to load the resource from Postman Cloud using UID.')
+    .option('--postman-api-key <apiKey>', 'API Key used to load the resources via UID from the Postman Cloud.')
     .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', util.cast.integer, 0)
     .option('--bail [modifiers]',
         'Specify whether or not to gracefully stop a collection run on encountering an error' +
