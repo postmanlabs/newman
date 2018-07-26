@@ -78,7 +78,7 @@
     "nsp": "2.8.1",
     "nyc": "12.0.2",
     "packity": "0.3.2",
-    "parse-gitignore": "0.5.1",
+    "parse-gitignore": "1.0.1",
     "postman-jsdoc-theme": "0.0.3",
     "recursive-readdir": "2.2.2",
     "xml2js": "0.4.19"
