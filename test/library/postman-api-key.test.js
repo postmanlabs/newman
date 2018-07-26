@@ -1,32 +1,35 @@
-describe('newman.run postmanApiKey', function () {
-    const fs = require('fs'),
-        nock = require('nock'),
-        sinon = require('sinon'),
-        request = require('postman-request'),
-        COLLECTION = {
-            id: 'C1',
-            name: 'Collection',
-            item: [{
-                id: 'ID1',
-                name: 'R1',
-                request: 'https://postman-echo.com/get'
-            }]
-        },
-        VARIABLE = {
-            id: 'V1',
-            name: 'Variable',
-            values: [{ key: 'foo', value: 'bar' }]
-        };
+const fs = require('fs'),
+    nock = require('nock'),
+    sinon = require('sinon'),
+    request = require('postman-request'),
+    COLLECTION = {
+        id: 'C1',
+        name: 'Collection',
+        item: [{
+            id: 'ID1',
+            name: 'R1',
+            request: 'https://postman-echo.com/get'
+        }]
+    },
+    VARIABLE = {
+        id: 'V1',
+        name: 'Variable',
+        values: [{
+            key: 'foo',
+            value: 'bar'
+        }]
+    };
 
+describe('newman.run postmanApiKey', function () {
     before(function () {
         nock('https://api.getpostman.com')
+            .persist()
             .get(/^\/collections/)
-            .times(Infinity)
             .reply(200, COLLECTION);
 
         nock('https://api.getpostman.com')
+            .persist()
             .get(/^\/environments/)
-            .times(Infinity)
             .reply(200, VARIABLE);
     });
 
