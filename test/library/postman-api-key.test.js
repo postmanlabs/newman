@@ -57,8 +57,8 @@ describe('newman.run postmanApiKey', function () {
 
             expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
 
-            expect(requestArg.url).to.be.a('string')
-                .that.is.equal('https://api.getpostman.com/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
+            expect(requestArg.url)
+                .to.equal('https://api.getpostman.com/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
 
             expect(requestArg.headers).to.be.an('object')
                 .that.has.property('X-Api-Key', '12345678');
@@ -66,6 +66,9 @@ describe('newman.run postmanApiKey', function () {
             expect(summary).to.be.an('object')
                 .that.has.property('collection').to.be.an('object')
                 .and.include({ id: 'C1', name: 'Collection' });
+
+            expect(summary.run.failures).to.be.empty;
+            expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
 
             done();
         });
@@ -84,8 +87,8 @@ describe('newman.run postmanApiKey', function () {
 
             expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
 
-            expect(requestArg.url).to.be.a('string')
-                .that.is.equal('https://api.getpostman.com/environments/1234-931c1484-fd1e-4ceb-81d0-2aa102ca8b5f');
+            expect(requestArg.url)
+                .to.equal('https://api.getpostman.com/environments/1234-931c1484-fd1e-4ceb-81d0-2aa102ca8b5f');
 
             expect(requestArg.headers).to.be.an('object')
                 .that.has.property('X-Api-Key', '12345678');
@@ -93,6 +96,9 @@ describe('newman.run postmanApiKey', function () {
             expect(summary).to.be.an('object')
                 .that.has.property('environment').to.be.an('object')
                 .and.include({ id: 'E1', name: 'Environment' });
+
+            expect(summary.run.failures).to.be.empty;
+            expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
 
             done();
         });
@@ -111,6 +117,9 @@ describe('newman.run postmanApiKey', function () {
 
             expect(summary.collection).to.include({ id: 'C1', name: 'Collection' });
             expect(summary.environment).to.include({ id: 'E1', name: 'Environment' });
+
+            expect(summary.run.failures).to.be.empty;
+            expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
 
             done();
         });
@@ -159,6 +168,9 @@ describe('newman.run postmanApiKey', function () {
                 expect(summary).to.be.an('object')
                     .that.has.property('collection').to.be.an('object')
                     .and.include({ id: 'C1', name: 'Collection' });
+
+                expect(summary.run.failures).to.be.empty;
+                expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
 
                 done();
             });
