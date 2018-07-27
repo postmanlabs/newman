@@ -20,7 +20,7 @@ program
     .usage('<collection> [options]')
     .option('-e, --environment <path>', 'Specify a URL or Path to a Postman Environment.')
     .option('-g, --globals <path>', 'Specify a URL or Path to a file containing Postman Globals.')
-    .option('--folder <path>', 'Run a single folder from a collection.')
+    .option('--folder <path>', 'Specify folder to run from a collection.', util.cast.memoize, [])
     .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run.', util.cast.csvParse, ['cli'])
     .option('-n, --iteration-count <n>', 'Define the number of iterations to run.', util.cast.integer)
     .option('-d, --iteration-data <path>', 'Specify a data file to use for iterations (either json or csv).')
@@ -38,7 +38,7 @@ program
         'Forces unicode compliant symbols to be replaced by their plain text equivalents')
     .option('--global-var <value>',
         'Allows the specification of global variables via the command line, in a key=value format',
-        util.cast.memoize, [])
+        util.cast.memoizeKeyVal, [])
     .option('--color', 'Force colored output (for use in CI environments).')
     .option('--no-color', 'Disable colored output.', false)
     .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
