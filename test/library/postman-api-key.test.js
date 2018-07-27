@@ -130,7 +130,7 @@ describe('newman.run postmanApiKey', function () {
         });
     });
 
-    it('should throw error if UID is passed without postmanApiKey and there\'s no such file exists', function (done) {
+    it('should end with an error if UID is passed without postmanApiKey and no such file exists', function (done) {
         newman.run({
             collection: '1234-588025f9-2497-46f7-b849-47f58b865807'
         }, function (err) {
