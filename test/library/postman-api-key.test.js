@@ -141,7 +141,30 @@ describe('newman.run postmanApiKey', function () {
         });
     });
 
-    it('should not pass API Key header with URL ', function (done) {
+    it('should not pass API Key header for Postman Cloud URLs', function (done) {
+        newman.run({
+            collection: 'https://api.getpostman.com/collections?apikey=12345678',
+            postmanApiKey: '12345678'
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            sinon.assert.calledOnce(request.get);
+
+            let requestArg = request.get.firstCall.args[0];
+
+            expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
+
+            expect(requestArg.url).to.equal('https://api.getpostman.com/collections?apikey=12345678');
+
+            expect(requestArg.headers).to.not.have.property('X-Api-Key');
+
+            expect(summary.run.failures).to.be.empty;
+            expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
+
+            done();
+        });
+    });
+
+    it('should not pass API Key header for non Postman Cloud URLs', function (done) {
         newman.run({
             collection: 'https://example.com/collection.json',
             postmanApiKey: '12345678'
