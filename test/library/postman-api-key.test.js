@@ -130,7 +130,7 @@ describe('newman.run postmanApiKey', function () {
         });
     });
 
-    it('should throw error without postmanApiKey', function (done) {
+    it('should throw error if UID is passed without postmanApiKey and there\'s no such file exists', function (done) {
         newman.run({
             collection: '1234-588025f9-2497-46f7-b849-47f58b865807'
         }, function (err) {
@@ -141,7 +141,7 @@ describe('newman.run postmanApiKey', function () {
         });
     });
 
-    it('should not pass API Key header for Postman Cloud URLs', function (done) {
+    it('should not pass API Key header for Postman API URLs', function (done) {
         newman.run({
             collection: 'https://api.getpostman.com/collections?apikey=12345678',
             postmanApiKey: '12345678'
@@ -164,7 +164,7 @@ describe('newman.run postmanApiKey', function () {
         });
     });
 
-    it('should not pass API Key header for non Postman Cloud URLs', function (done) {
+    it('should not pass API Key header for non Postman API URLs', function (done) {
         newman.run({
             collection: 'https://example.com/collection.json',
             postmanApiKey: '12345678'
