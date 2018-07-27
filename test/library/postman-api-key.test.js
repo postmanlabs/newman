@@ -31,6 +31,11 @@ describe('newman.run postmanApiKey', function () {
             .persist()
             .get(/^\/environments/)
             .reply(200, VARIABLE);
+
+        nock('https://example.com')
+            .persist()
+            .get('/collection.json')
+            .reply(200, COLLECTION);
     });
 
     after(function () {
@@ -131,6 +136,29 @@ describe('newman.run postmanApiKey', function () {
         }, function (err) {
             expect(err).to.be.ok.that.match(/no such file or directory/);
             sinon.assert.notCalled(request.get);
+
+            done();
+        });
+    });
+
+    it('should not pass API Key header with URL ', function (done) {
+        newman.run({
+            collection: 'https://example.com/collection.json',
+            postmanApiKey: '12345678'
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            sinon.assert.calledOnce(request.get);
+
+            let requestArg = request.get.firstCall.args[0];
+
+            expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
+
+            expect(requestArg.url).to.equal('https://example.com/collection.json');
+
+            expect(requestArg.headers).to.not.have.property('X-Api-Key');
+
+            expect(summary.run.failures).to.be.empty;
+            expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
 
             done();
         });
