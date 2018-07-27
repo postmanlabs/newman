@@ -88,6 +88,7 @@ describe('cli parser', function () {
             '--folder myFolder ' +
             '--export-environment exported_env.json ' +
             '--export-globals exported_glob.json ' +
+            '--postman-api-key POSTMAN_API_KEY ' +
             '--reporter-cli-no-summary ' +
             '--iteration-count 23 ' +
             '--reporters json ' +
@@ -111,6 +112,7 @@ describe('cli parser', function () {
                 expect(opts.iterationData).to.equal('path/to/csv.csv');
                 expect(opts.globals).to.equal('myGlobals.json');
                 expect(opts.exportGlobals).to.equal('exported_glob.json');
+                expect(opts.postmanApiKey).to.equal('POSTMAN_API_KEY');
                 expect(opts.delayRequest, 'should have delayRequest of 12000').to.equal(12000);
                 expect(opts.timeout, 'should have timeout of 10000').to.equal(10000);
                 expect(opts.timeoutRequest, 'should have timeoutRequest of 5000').to.equal(5000);
