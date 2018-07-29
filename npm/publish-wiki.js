@@ -12,7 +12,6 @@ var fs = require('fs'),
     WIKI_VERSION = exec('git describe --always').stdout;
 
 module.exports = function (exit) {
-
     async.series([
         // build the reference MD
         require('./build-wiki'),

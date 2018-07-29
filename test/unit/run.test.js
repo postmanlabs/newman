@@ -3,7 +3,6 @@ var _ = require('lodash'),
     sdk = require('postman-collection'),
     async = require('async');
 
-/* global describe, it, expect */
 describe('run module', function () {
     var run = require('../../lib/run');
 

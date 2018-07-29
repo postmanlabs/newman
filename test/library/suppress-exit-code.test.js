@@ -1,4 +1,3 @@
-/* global describe, it, expect, newman */
 describe('newman.run suppressExitCode', function () {
     it('should accept the suppressExitCode parameter', function (done) {
         newman.run({

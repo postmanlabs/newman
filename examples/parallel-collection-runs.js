@@ -45,6 +45,7 @@ function (err, results) {
 
     results.forEach(function (result) {
         var failures = result.run.failures;
+
         console.info(failures.length ? JSON.stringify(failures.failures, null, 2) :
             `${result.collection.name} ran successfully.`);
     });

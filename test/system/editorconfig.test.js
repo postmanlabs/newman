@@ -10,7 +10,6 @@ var editorconfig = require('editorconfig'),
      */
     TAB_WIDTH = 4;
 
-/* global describe, it, expect */
 describe('.editorconfig', function () {
     var config = editorconfig.parseSync('.editorconfig'); // eslint-disable-line no-sync
 

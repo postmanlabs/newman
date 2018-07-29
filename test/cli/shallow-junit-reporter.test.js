@@ -1,4 +1,3 @@
-/* global describe, it, exec, expect */
 var fs = require('fs'),
 
     _ = require('lodash'),
