@@ -106,7 +106,7 @@ describe('cli parser', function () {
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
-                expect(opts.folder).to.equal('myFolder');
+                expect(opts.folder).to.eql(['myFolder']);
                 expect(opts.exportEnvironment).to.equal('exported_env.json');
                 expect(opts.iterationData).to.equal('path/to/csv.csv');
                 expect(opts.globals).to.equal('myGlobals.json');
@@ -165,7 +165,7 @@ describe('cli parser', function () {
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
-                expect(opts.folder).to.equal('myFolder');
+                expect(opts.folder).to.eql(['myFolder']);
                 expect(opts.disableUnicode, 'should have disableUnicode to be true').to.equal(true);
 
                 expect(opts.exportEnvironment).to.equal('exported_env.json');
