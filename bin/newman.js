@@ -41,7 +41,7 @@ program
         'Allows the specification of global variables via the command line, in a key=value format',
         util.cast.memoize, [])
     .option('--color', 'Force colored output (for use in CI environments).')
-    .option('--no-color', 'Disable colored output.', false)
+    .option('--no-color', 'Disable colored output.')
     .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
     .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer, 0)
     .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer, 0)
@@ -65,6 +65,10 @@ program
         options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
             acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
         }, {});
+
+        // explicitly set color if `--color` flag is passed.
+        // reference: https://github.com/mochajs/mocha/blob/v5.2.0/bin/_mocha#L378
+        _.includes(process.argv, '--color') && (options.color = true);
 
         newman.run(options, function (err, summary) {
             const runError = err || summary.run.error || summary.run.failures.length;
