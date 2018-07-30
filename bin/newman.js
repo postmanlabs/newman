@@ -68,7 +68,7 @@ program
 
         // explicitly set color if `--color` flag is passed.
         // reference: https://github.com/mochajs/mocha/blob/v5.2.0/bin/_mocha#L378
-        _.includes(process.argv, '--color') && (options.color = true);
+        _.includes(program._originalArgs, '--color') && (options.color = true);
 
         newman.run(options, function (err, summary) {
             const runError = err || summary.run.error || summary.run.failures.length;
