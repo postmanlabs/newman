@@ -66,9 +66,13 @@ program
             acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
         }, {});
 
-        // explicitly set color if `--color` flag is passed.
-        // reference: https://github.com/mochajs/mocha/blob/v5.2.0/bin/_mocha#L378
-        _.includes(program._originalArgs, '--color') && (options.color = true);
+        // color is set to `true` by default. if any of the color argument is passed, it becomes false.
+        // assign color property properly based on the arguments passed.
+        if (!options.color) {
+            // always priorities --no-color over --color
+            options.color = !_.includes(program._originalArgs, '--no-color') &&
+                _.includes(program._originalArgs, '--color');
+        }
 
         newman.run(options, function (err, summary) {
             const runError = err || summary.run.error || summary.run.failures.length;
