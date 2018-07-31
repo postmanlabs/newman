@@ -527,13 +527,8 @@ To use Newman in Docker check our [docker documentation](https://github.com/post
 
 ## Migration Guide
 
-- **From v3 to v4:**
-  - [Newman v3 to v4 Migration Guide](MIGRATION.md)
-  - [Newman v3.x Documentation](https://github.com/postmanlabs/newman/blob/release/3.x/README.md)
-
-- **From v2 to v3:**
-  - [Newman v2 to v3 Migration Guide](https://github.com/postmanlabs/newman/blob/release/3.x/MIGRATION.md)
-  - [Newman v2.x Documentation](https://github.com/postmanlabs/newman/blob/release/2.x/README.md)
+- [Newman v3 to v4 Migration Guide](MIGRATION.md)
+- [Newman v3.x Documentation](https://github.com/postmanlabs/newman/blob/release/3.x/README.md)
 
 
 ## Compatibility
