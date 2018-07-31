@@ -38,11 +38,19 @@ Installation should be global if newman is installed globally, local otherwise. 
 The complete installation and usage guide is available here: https://github.com/postmanlabs/newman-reporter-html
 
 ### CSV auto parse
-A [fix](1609) has been made to avoid parsing numbers inside quotes.<br/>
-So, `"000123"` will not be parsed to `123` like before.
+A [fix][pr1609] has been made to avoid parsing numbers inside quotes.<br/>
+Example, `"000123"` will not be parsed to `123` like before.
 
-Fixes issues: [#1100](1100), [#1215](1215) & [#1346](1346)
+Fixes issues: [#1100][i1100], [#1215][i1215] & [#1346][i1346]
 
 ### Default timeouts
 The default timeout values are changed from 0 to infinity.<br/>
-A [fix](1630) has been made to fix the issue [#1626](1626).
+A [fix][pr1630] has been made to fix the issue [#1626][i1626].
+
+[i1100]: https://github.com/postmanlabs/newman/issues/1100
+[i1215]: https://github.com/postmanlabs/newman/issues/1215
+[i1346]: https://github.com/postmanlabs/newman/issues/1346
+[i1626]: https://github.com/postmanlabs/newman/issues/1626
+
+[pr1609]: https://github.com/postmanlabs/newman/pull/1609
+[pr1630]: https://github.com/postmanlabs/newman/pull/1630
