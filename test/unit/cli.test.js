@@ -2,6 +2,7 @@ describe('cli parser', function () {
     var _ = require('lodash'),
         sinon = require('sinon'),
         newman = require('../../'),
+        commander = require('commander'),
         newmanCLI,
 
         /**
@@ -17,8 +18,11 @@ describe('cli parser', function () {
             });
         };
 
-    // delete require cache to use program instance for consecutive runs.
     beforeEach(function () {
+        // removes all listeners assigned previously to avoid exceeding MaxListeners.
+        commander.removeAllListeners();
+
+        // delete require cache to use program instance for consecutive runs.
         delete require.cache[require.resolve('../../bin/newman')];
         newmanCLI = require('../../bin/newman');
     });
@@ -104,6 +108,17 @@ describe('cli parser', function () {
 
             it('should have color disabled with --no-color flag', function (done) {
                 cli('node newman.js run myCollection.json --no-color'.split(' '), 'run',
+                    function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts.command).to.equal('run');
+                        expect(opts.color, 'should have color to be false').to.equal(false);
+
+                        done();
+                    });
+            });
+
+            it('should have color disabled if both --color & --no-color flags are passed', function (done) {
+                cli('node newman.js run myCollection.json --color --no-color'.split(' '), 'run',
                     function (err, opts) {
                         expect(err).to.be.null;
                         expect(opts.command).to.equal('run');
