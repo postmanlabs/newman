@@ -2,12 +2,11 @@
 
 ## Why?
 
-Newman v4.0 has major breaking changes which will affect you if you are using deprecated CLI options or running Newman on Node v4.
-It drops support for Node v4 and deprecated v2 CLI options. Also, inbuilt HTML reporter is moved to a standalone reporter.
+Newman v4.0 drops support for Node v4 and deprecated v2 CLI options. Also, inbuilt HTML reporter is moved to a standalone reporter.
 
 ## Updating to Newman v4 from older versions
 
-If you're updating from an existing version of Newman, make sure you read the rest of this document, to understand the changes.
+If you're updating from an older version of Newman, make sure you read the rest of this document, to understand the changes.
 
 #### 1. Install Newman v4
 ```console
@@ -44,13 +43,10 @@ Example, `"000123"` will not be parsed to `123` like before.
 Fixes issues: [#1100][i1100], [#1215][i1215] & [#1346][i1346]
 
 ### Default timeouts
-The default timeout values are changed from 0 to infinity.<br/>
-A [fix][pr1630] has been made to fix the issue [#1626][i1626].
-
-[i1100]: https://github.com/postmanlabs/newman/issues/1100
-[i1215]: https://github.com/postmanlabs/newman/issues/1215
-[i1346]: https://github.com/postmanlabs/newman/issues/1346
-[i1626]: https://github.com/postmanlabs/newman/issues/1626
+All timeouts now have the default value of infinity. [#1630](pr1630)
 
 [pr1609]: https://github.com/postmanlabs/newman/pull/1609
 [pr1630]: https://github.com/postmanlabs/newman/pull/1630
+[i1100]: https://github.com/postmanlabs/newman/issues/1100
+[i1215]: https://github.com/postmanlabs/newman/issues/1215
+[i1346]: https://github.com/postmanlabs/newman/issues/1346
