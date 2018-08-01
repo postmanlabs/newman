@@ -34,10 +34,11 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 7. [File Uploads](#file-uploads)
 8. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
 9. [Using Newman in Docker](#using-newman-in-docker)
-10. [Compatibility](#compatibility)
-11. [Contributing](#contributing)
-12. [Community Support](#community-support)
-13. [License](#license)
+10. [Migration Guide](#migration-guide)
+11. [Compatibility](#compatibility)
+12. [Contributing](#contributing)
+13. [Community Support](#community-support)
+14. [License](#license)
 
 
 ## Getting started
@@ -423,7 +424,7 @@ Newman also supports external reporters, provided that the reporter works with N
 how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
 For instance, to use the [Newman HTML Reporter](https://github.com/postmanlabs/newman-reporter-html):
 
-- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.<br/>
+- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.)<br/>
 ```console
 $ npm install -g newman-reporter-html
 ```
@@ -524,7 +525,13 @@ $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 To use Newman in Docker check our [docker documentation](https://github.com/postmanlabs/newman/tree/develop/docker/).
 
 
-### Compatibility
+## Migration Guide
+
+- [Newman v3 to v4 Migration Guide](MIGRATION.md)
+- [Newman v3.x Documentation](https://github.com/postmanlabs/newman/blob/release/3.x/README.md)
+
+
+## Compatibility
 
 |      Newman       |    Node    |
 |:-----------------:|:----------:|
@@ -533,17 +540,12 @@ To use Newman in Docker check our [docker documentation](https://github.com/post
 
 The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
 
-> For details on changes across v2 to v3, see the [Newman v2 to v3 Migration Guide](MIGRATION.md)
->
-> For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
-
 [back to top](#table-of-contents)
 
 ## Contributing
-Please take a moment to Read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
+Please take a moment to read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
 Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss potential changes/additions.
 
-[back to top](#table-of-contents)
 
 ## Community Support
 
