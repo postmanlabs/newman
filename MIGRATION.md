@@ -2,7 +2,7 @@
 
 ## Why?
 
-Newman v4.0 drops support for Node v4 and deprecated v2 CLI options. Also, inbuilt HTML reporter is moved to a standalone reporter.
+Newman v4.0 drops support for Node v4 and deprecated v2 CLI options. Also, the inbuilt HTML reporter has been moved to a standalone reporter.
 
 ## Updating to Newman v4 from older versions
 
