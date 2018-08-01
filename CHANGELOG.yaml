@@ -4,7 +4,7 @@ unreleased:
   new features:
     - '#1633 Added ability to run collection via Postman API UID reference'
   breaking changes:
-    - '#1605 Dropped support for Node v4'
+    - '#1605 Dropped support for Node < v6'
     - '#1610 Dropped support for v2 CLI options'
     - '#1616 Moved inbuilt HTML reporter to a standalone reporter: https://github.com/postmanlabs/newman-reporter-html'
   fixed bugs:
