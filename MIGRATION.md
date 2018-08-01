@@ -17,7 +17,8 @@ $ npm update -g newman
 
 #### 2. Check Installation
 ```console
-$ newman --version  # Should show the latest version of Newman
+$ newman --version          # Should show the latest version of Newman
+$ npm show newman version   # Should show the same version as of above
 ```
 
 ---
@@ -68,21 +69,14 @@ provide a consistent experience on Postman Apps and on CLI.
 
 ### General overview of features
 
-0. Newman collection runs now happen with the `run` command. See sections below for more examples.
-1. More informative terminal output with colourful details of what went wrong, and most importantly, where it went
+1. Newman collection runs now happen with the `run` command. See sections below for more examples.
+2. More informative terminal output with colourful details of what went wrong, and most importantly, where it went
    wrong.
-2. Ability to load environment, globals, collections as well as iteration data from urls.
-3. Friendlier usage as a library. A lot of use-cases depend on the use of Newman as a Node library, and v3.0 is written
+3. Ability to load environment, globals, collections as well as iteration data from urls.
+4. Friendlier usage as a library. A lot of use-cases depend on the use of Newman as a Node library, and v3.0 is written
    with a library-first mindset.
-4. Internally things (by things, we usually mean code) have been better organised to allow faster implementation of
+5. Internally things (by things, we usually mean code) have been better organised to allow faster implementation of
    features.
-
-### Todo
-
-It is still a work in progress, so there are a few features that are pending
-implementation:
-
-1. Make generic and uncaught exceptions more readable in CLI
 
 ### Changes since v2.x
 
