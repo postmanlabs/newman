@@ -35,13 +35,13 @@ Newman v4 drops support for all the deprecated v2 CLI options, check [V2 to V3 M
 For the complete list of supported options, see the [README](README.md)
 
 #### --no-color
-This option is dropped in favor of changes made in `color` option. A detailed guide on color option is available below.
+This option is dropped because of the changes made to the `color` option. See the section below for more details.
 
 ### Using `color` option
-The behaviour of this option is changed in both CLI and Library. Unlike previously, this option alone can be used to enable
+The behaviour of this option is changed in both CLI and Library. Unlike Newman v3.x, this option alone can be used to enable
 or disable colored CLI output.
 
-#### Migrations in CLI
+#### CLI
 
 ##### 1. Enabling colored output
 
@@ -67,7 +67,7 @@ $ newman run collection.json --no-color
 $ newman run collection.json --color off
 ```
 
-#### Migrations in Library
+#### Library
 
 ##### 1. Enabling colored output
 
@@ -110,8 +110,8 @@ newman.run({
 ```
 
 **Note:**
-The default color value is set to `auto` so, Newman attempts to automatically turn color on or off based on the colors support in the terminal.
-This behaviour can be modified by using the `on` or `off` value accordingly.
+The default behaviour is to detect color support for the terminal and act accordingly.
+This behaviour can be modified by setting the color option to `on` or `off` respectively.
 
 ### Using HTML Reporter
 The inbuilt HTML reporter has been moved to a standalone reporter. Install it with:

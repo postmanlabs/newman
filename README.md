@@ -178,7 +178,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 
 - `--color <value>`<br />
   Enable or Disable colored CLI output. The color value can be any of the three: `on`, `off` or `auto`*(default)*.<br/>
-  With `auto`, Newman attempts to automatically turn color on or off based on the colors support in the terminal.
+  With `auto`, Newman attempts to automatically turn color on or off based on the color support in the terminal.
   This behaviour can be modified by using the `on` or `off` value accordingly.
 
 - `--disable-unicode`<br />
