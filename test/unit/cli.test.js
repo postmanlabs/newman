@@ -93,6 +93,7 @@ describe('cli parser', function () {
                         done();
                     });
             });
+
             it('should have color enabled with `--color on`', function (done) {
                 cli('node newman.js run myCollection.json --color on'.split(' '), 'run',
                     function (err, opts) {
@@ -102,6 +103,7 @@ describe('cli parser', function () {
                         done();
                     });
             });
+
             it('should have color disabled with `--color off`', function (done) {
                 cli('node newman.js run myCollection.json --color off'.split(' '), 'run',
                     function (err, opts) {
