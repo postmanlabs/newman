@@ -5,6 +5,7 @@ describe('CLI output', function () {
 
     describe('TTY', function () {
         // @todo: Change to assert colored output after https://github.com/shelljs/shelljs/pull/524 is released
+        // figure out a way to have `process.stdout.isTTY` true for the child process.
         it.skip('should produce colored output without any options', function (done) {
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
