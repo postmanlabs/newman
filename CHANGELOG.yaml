@@ -7,6 +7,7 @@ unreleased:
     - '#1605 Dropped support for Node < v6'
     - '#1610 Dropped support for v2 CLI options'
     - '#1616 Moved inbuilt HTML reporter to a standalone reporter: https://github.com/postmanlabs/newman-reporter-html'
+    - '#1653 Updated `color` option behaviour'
   fixed bugs:
     - '#1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes'
     - '#1630 Updated default timeout values to Infinity'
