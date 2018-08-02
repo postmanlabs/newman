@@ -34,6 +34,85 @@ Newman v4 requires Node.js >= v6. [Install Node.js via package manager](https://
 Newman v4 drops support for all the deprecated v2 CLI options, check [V2 to V3 Migration Guide](#v2-to-v3-migration-guide).<br/>
 For the complete list of supported options, see the [README](README.md)
 
+#### --no-color
+This option is dropped in favor of changes made in `color` option. A detailed guide on color option is available below.
+
+### Using `color` option
+The behaviour of this option is changed in both CLI and Library. Unlike previously, this option alone can be used to enable
+or disable colored CLI output.
+
+#### Migrations in CLI
+
+##### 1. Enabling colored output
+
+###### V3 command
+```console
+$ newman run collection.json --color
+```
+
+###### V4 equivalent
+```console
+$ newman run collection.json --color on
+```
+
+##### 2. Disabling colored output
+
+###### V3 command
+```console
+$ newman run collection.json --no-color
+```
+
+###### V4 equivalent
+```console
+$ newman run collection.json --color off
+```
+
+#### Migrations in Library
+
+##### 1. Enabling colored output
+
+###### Using V3
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: true
+}, callback);
+```
+
+###### V4 equivalent
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: 'on'
+}, callback);
+```
+
+##### 2. Disabling colored output
+
+###### Using V3
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    noColor: true
+}, callback);
+```
+
+###### V4 equivalent
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: 'off'
+}, callback);
+```
+
+**Note:**
+The default color value is set to `auto` so, Newman attempts to automatically turn color on or off based on the colors support in the terminal.
+This behaviour can be modified by using the `on` or `off` value accordingly.
+
 ### Using HTML Reporter
 The inbuilt HTML reporter has been moved to a standalone reporter. Install it with:
 ```console
