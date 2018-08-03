@@ -72,7 +72,6 @@ describe('cli parser', function () {
             cli('node newman.js run myCollection.json --environment env.json -n 2'.split(' '), 'run',
                 function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts.command).to.equal('run');
                     expect(opts).to.be.ok;
                     expect(opts.iterationCount, 'should have iterationCount of 2').to.equal(2);
                     expect(opts.collection).to.equal('myCollection.json');
@@ -111,7 +110,6 @@ describe('cli parser', function () {
                 cli('node newman.js run myCollection.json'.split(' '), 'run',
                     function (err, opts) {
                         expect(err).to.be.null;
-                        expect(opts.command).to.equal('run');
                         expect(opts.color).to.equal('auto');
                         done();
                     });
@@ -121,7 +119,6 @@ describe('cli parser', function () {
                 cli('node newman.js run myCollection.json --color on'.split(' '), 'run',
                     function (err, opts) {
                         expect(err).to.be.null;
-                        expect(opts.command).to.equal('run');
                         expect(opts.color).to.equal('on');
                         done();
                     });
@@ -131,7 +128,6 @@ describe('cli parser', function () {
                 cli('node newman.js run myCollection.json --color off'.split(' '), 'run',
                     function (err, opts) {
                         expect(err).to.be.null;
-                        expect(opts.command).to.equal('run');
                         expect(opts.color).to.equal('off');
                         done();
                     });
@@ -278,7 +274,6 @@ describe('cli parser', function () {
             cli('node newman.js run myCollection.json --reporter-cli-no-banner'.split(' '), 'run',
                 function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts.command).to.equal('run');
                     expect(opts).to.be.ok;
                     expect(opts.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
 
