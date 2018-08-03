@@ -26,8 +26,8 @@ module.exports = {
          * --folder f1 --folder f2
          *
          * @param {String} val - The argument value.
-         * @param {Array} memo - The array that is populated by argument values.
-         * @returns {Array} - The array of argument values collected.
+         * @param {String[]} memo - The array that is populated by argument values.
+         * @returns {String[]} - The array of argument values collected.
          */
         memoize: (val, memo) => {
             memo.push(val);
@@ -68,7 +68,7 @@ module.exports = {
          * eg. item1,item2
          *
          * @param {String} list - The comma separated string.
-         * @returns {Array} - [item1, item2] - The array representation of the passed string.
+         * @returns {String[]} - [item1, item2] - The array representation of the passed string.
          */
         csvParse: (list) => {
             return _.split(list, ',');
