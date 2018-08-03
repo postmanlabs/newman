@@ -31,6 +31,14 @@ describe('cli parser', function () {
         expect(cli).to.be.a('function');
     });
 
+    it('should throw an error if no argument is provided', function (done) {
+        cli('node newman.js'.split(' '), null, function (err) {
+            expect(err).to.have.property('message', 'no arguments provided');
+
+            done();
+        });
+    });
+
 
     describe('Run Command', function () {
         // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
@@ -83,7 +91,7 @@ describe('cli parser', function () {
 
         it('should throw an error for invalid --iteration-count values', function (done) {
             cli('node newman.js run myCollection.json -n -3.14'.split(' '), 'run', function (err) {
-                expect(err.message).to.equal('The value must be a positive integer.');
+                expect(err).to.have.property('message', 'The value must be a positive integer.');
 
                 done();
             });
