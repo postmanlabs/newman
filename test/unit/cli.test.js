@@ -45,6 +45,29 @@ describe('cli parser', function () {
             newman.run.restore();
         });
 
+        it('should pass default options correctly', function (done) {
+            cli('node newman.js run collection.json'.split(' '), 'run',
+                function (err, opts) {
+                    expect(err).to.be.null;
+
+                    // explicitly match object to track addition/deletion of properties.
+                    expect(opts).to.eql({
+                        collection: 'collection.json',
+                        reporters: ['cli'],
+                        delayRequest: 0,
+                        globalVar: [],
+                        color: 'auto',
+                        timeout: 0,
+                        timeoutRequest: 0,
+                        timeoutScript: 0,
+                        reporterOptions: {},
+                        reporter: { cli: {} }
+                    });
+
+                    done();
+                });
+        });
+
         it('should handle standard run command (run collection.json and -e)', function (done) {
             cli('node newman.js run myCollection.json --environment env.json -n 2'.split(' '), 'run',
                 function (err, opts) {
