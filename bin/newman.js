@@ -27,6 +27,7 @@ program
     .option('--export-environment <path>', 'Exports the environment to a file after completing the run.')
     .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
     .option('--export-collection <path>', 'Specify an output file to save the executed collection')
+    .option('--postman-api-key <apiKey>', 'API Key used to load the resources from the Postman API.')
     .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', util.cast.integer, 0)
     .option('--bail [modifiers]',
         'Specify whether or not to gracefully stop a collection run on encountering an error' +
@@ -38,9 +39,8 @@ program
         'Forces unicode compliant symbols to be replaced by their plain text equivalents')
     .option('--global-var <value>',
         'Allows the specification of global variables via the command line, in a key=value format',
-        util.cast.memoizeKeyVal, [])
-    .option('--color', 'Force colored output (for use in CI environments).')
-    .option('--no-color', 'Disable colored output.', false)
+        util.cast.memoize, [])
+    .option('--color <value>', 'Enable/Disable colored output. (auto|on|off)', /^(auto|on|off)$/, 'auto')
     .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
     .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer, 0)
     .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer, 0)

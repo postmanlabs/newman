@@ -1,5 +1,22 @@
 # Newman Changelog
 
+unreleased:
+  new features:
+    - '#1633 Added ability to run collection via Postman API UID reference'
+  breaking changes:
+    - '#1605 Dropped support for Node < v6'
+    - '#1610 Dropped support for v2 CLI options'
+    - '#1616 Moved inbuilt HTML reporter to a standalone reporter: https://github.com/postmanlabs/newman-reporter-html'
+    - '#1653 Updated `color` option behaviour, dropped support for --no-color'
+  fixed bugs:
+    - '#1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes'
+    - '#1630 Updated default timeout values to Infinity'
+  chores:
+    - '#1623 Refactored Newman CLI'
+    - '#1608 Updated ESLint rules'
+    - '#1618 Reformatted README'
+    - 'Updated Dependencies'
+
 3.10.0:
   date: 2018-07-04
   new features:

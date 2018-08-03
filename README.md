@@ -34,10 +34,11 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 7. [File Uploads](#file-uploads)
 8. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
 9. [Using Newman in Docker](#using-newman-in-docker)
-10. [Compatibility](#compatibility)
-11. [Contributing](#contributing)
-12. [Community Support](#community-support)
-13. [License](#license)
+10. [Migration Guide](#migration-guide)
+11. [Compatibility](#compatibility)
+12. [Contributing](#contributing)
+13. [Community Support](#community-support)
+14. [License](#license)
 
 
 ## Getting started
@@ -175,13 +176,10 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 - `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.
 
-- `--color`<br />
-  Use this option to force colored CLI output (for use in CLI for CI / non TTY environments).
-
-- `--no-color`<br />
-  Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With
-  this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman
-  that output to console.
+- `--color <value>`<br />
+  Enable or Disable colored CLI output. The color value can be any of the three: `on`, `off` or `auto`*(default)*.<br/>
+  With `auto`, Newman attempts to automatically turn color on or off based on the color support in the terminal.
+  This behaviour can be modified by using the `on` or `off` value accordingly.
 
 - `--disable-unicode`<br />
   Specify whether or not to force the unicode disable option. When supplied, all symbols in the output will be replaced
@@ -243,8 +241,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `junit`, `progress` and `emojitrain`.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
-| options.color             | Forces colored CLI output (for use in CI / non TTY environments).<br /><br />_Optional_<br />Type: `boolean` |
-| options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
+| options.color             | Enable or Disable colored CLI output.<br/><br/>Available options: `on`, `off` and `auto`<br /><br />_Optional_<br />Type: `string`, Default value: `auto` |
 | options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
@@ -423,7 +420,7 @@ Newman also supports external reporters, provided that the reporter works with N
 how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
 For instance, to use the [Newman HTML Reporter](https://github.com/postmanlabs/newman-reporter-html):
 
-- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.<br/>
+- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.)<br/>
 ```console
 $ npm install -g newman-reporter-html
 ```
@@ -524,7 +521,13 @@ $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 To use Newman in Docker check our [docker documentation](https://github.com/postmanlabs/newman/tree/develop/docker/).
 
 
-### Compatibility
+## Migration Guide
+
+- [Newman v3 to v4 Migration Guide](MIGRATION.md)
+- [Newman v3.x Documentation](https://github.com/postmanlabs/newman/blob/release/3.x/README.md)
+
+
+## Compatibility
 
 |      Newman       |    Node    |
 |:-----------------:|:----------:|
@@ -533,17 +536,12 @@ To use Newman in Docker check our [docker documentation](https://github.com/post
 
 The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
 
-> For details on changes across v2 to v3, see the [Newman v2 to v3 Migration Guide](MIGRATION.md)
->
-> For Newman v2.x release documentation, see the [Newman v2.x README](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
-
 [back to top](#table-of-contents)
 
 ## Contributing
-Please take a moment to Read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
+Please take a moment to read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
 Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss potential changes/additions.
 
-[back to top](#table-of-contents)
 
 ## Community Support
 
