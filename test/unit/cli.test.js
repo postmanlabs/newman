@@ -31,6 +31,14 @@ describe('cli parser', function () {
         expect(cli).to.be.a('function');
     });
 
+    it('should throw an error if no argument is provided', function (done) {
+        cli('node newman.js'.split(' '), null, function (err) {
+            expect(err).to.have.property('message', 'no arguments provided');
+
+            done();
+        });
+    });
+
 
     describe('Run Command', function () {
         // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
@@ -45,11 +53,33 @@ describe('cli parser', function () {
             newman.run.restore();
         });
 
+        it('should pass default options correctly', function (done) {
+            cli('node newman.js run collection.json'.split(' '), 'run',
+                function (err, opts) {
+                    expect(err).to.be.null;
+
+                    // explicitly match object to track addition/deletion of properties.
+                    expect(opts).to.eql({
+                        collection: 'collection.json',
+                        reporters: ['cli'],
+                        delayRequest: 0,
+                        globalVar: [],
+                        color: 'auto',
+                        timeout: 0,
+                        timeoutRequest: 0,
+                        timeoutScript: 0,
+                        reporterOptions: {},
+                        reporter: { cli: {} }
+                    });
+
+                    done();
+                });
+        });
+
         it('should handle standard run command (run collection.json and -e)', function (done) {
             cli('node newman.js run myCollection.json --environment env.json -n 2'.split(' '), 'run',
                 function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts.command).to.equal('run');
                     expect(opts).to.be.ok;
                     expect(opts.iterationCount, 'should have iterationCount of 2').to.equal(2);
                     expect(opts.collection).to.equal('myCollection.json');
@@ -61,7 +91,7 @@ describe('cli parser', function () {
 
         it('should throw an error for invalid --iteration-count values', function (done) {
             cli('node newman.js run myCollection.json -n -3.14'.split(' '), 'run', function (err) {
-                expect(err.message).to.equal('The value must be a positive integer.');
+                expect(err).to.have.property('message', 'The value must be a positive integer.');
 
                 done();
             });
@@ -88,7 +118,6 @@ describe('cli parser', function () {
                 cli('node newman.js run myCollection.json'.split(' '), 'run',
                     function (err, opts) {
                         expect(err).to.be.null;
-                        expect(opts.command).to.equal('run');
                         expect(opts.color).to.equal('auto');
                         done();
                     });
@@ -98,7 +127,6 @@ describe('cli parser', function () {
                 cli('node newman.js run myCollection.json --color on'.split(' '), 'run',
                     function (err, opts) {
                         expect(err).to.be.null;
-                        expect(opts.command).to.equal('run');
                         expect(opts.color).to.equal('on');
                         done();
                     });
@@ -108,7 +136,6 @@ describe('cli parser', function () {
                 cli('node newman.js run myCollection.json --color off'.split(' '), 'run',
                     function (err, opts) {
                         expect(err).to.be.null;
-                        expect(opts.command).to.equal('run');
                         expect(opts.color).to.equal('off');
                         done();
                     });
@@ -255,7 +282,6 @@ describe('cli parser', function () {
             cli('node newman.js run myCollection.json --reporter-cli-no-banner'.split(' '), 'run',
                 function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts.command).to.equal('run');
                     expect(opts).to.be.ok;
                     expect(opts.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
 
