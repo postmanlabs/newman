@@ -34,6 +34,85 @@ Newman v4 requires Node.js >= v6. [Install Node.js via package manager](https://
 Newman v4 drops support for all the deprecated v2 CLI options, check [V2 to V3 Migration Guide](#v2-to-v3-migration-guide).<br/>
 For the complete list of supported options, see the [README](README.md)
 
+#### --no-color
+This option is dropped because of the changes made to the `color` option. See the section below for more details.
+
+### Using `color` option
+The behaviour of this option is changed in both CLI and Library. Unlike Newman v3.x, this option alone can be used to enable
+or disable colored CLI output.
+
+#### CLI
+
+##### 1. Enabling colored output
+
+###### V3 command
+```console
+$ newman run collection.json --color
+```
+
+###### V4 equivalent
+```console
+$ newman run collection.json --color on
+```
+
+##### 2. Disabling colored output
+
+###### V3 command
+```console
+$ newman run collection.json --no-color
+```
+
+###### V4 equivalent
+```console
+$ newman run collection.json --color off
+```
+
+#### Library
+
+##### 1. Enabling colored output
+
+###### Using V3
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: true
+}, callback);
+```
+
+###### V4 equivalent
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: 'on'
+}, callback);
+```
+
+##### 2. Disabling colored output
+
+###### Using V3
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    noColor: true
+}, callback);
+```
+
+###### V4 equivalent
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: 'off'
+}, callback);
+```
+
+**Note:**
+The default behaviour is to detect color support for the terminal and act accordingly.
+This behaviour can be modified by setting the color option to `on` or `off` respectively.
+
 ### Using HTML Reporter
 The inbuilt HTML reporter has been moved to a standalone reporter. Install it with:
 ```console

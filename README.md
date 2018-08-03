@@ -176,13 +176,10 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 - `-x`, `--suppress-exit-code`<br />
   Specify whether or not to override the default exit code for the current run.
 
-- `--color`<br />
-  Use this option to force colored CLI output (for use in CLI for CI / non TTY environments).
-
-- `--no-color`<br />
-  Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With
-  this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman
-  that output to console.
+- `--color <value>`<br />
+  Enable or Disable colored CLI output. The color value can be any of the three: `on`, `off` or `auto`*(default)*.<br/>
+  With `auto`, Newman attempts to automatically turn color on or off based on the color support in the terminal.
+  This behaviour can be modified by using the `on` or `off` value accordingly.
 
 - `--disable-unicode`<br />
   Specify whether or not to force the unicode disable option. When supplied, all symbols in the output will be replaced
@@ -244,8 +241,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.suppressExitCode  | If present, allows overriding the default exit code from the current collection run, useful for bypassing collection result failures. Takes no arguments.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `junit`, `progress` and `emojitrain`.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
-| options.color             | Forces colored CLI output (for use in CI / non TTY environments).<br /><br />_Optional_<br />Type: `boolean` |
-| options.noColor           | Newman attempts to automatically turn off color output to terminals when it detects the lack of color support. With this property, one can forcibly turn off the usage of color in terminal output for reporters and other parts of Newman that output to console.<br /><br />_Optional_<br />Type: `boolean` |
+| options.color             | Enable or Disable colored CLI output.<br/><br/>Available options: `on`, `off` and `auto`<br /><br />_Optional_<br />Type: `string`, Default value: `auto` |
 | options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
