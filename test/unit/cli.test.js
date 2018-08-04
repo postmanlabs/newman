@@ -2,6 +2,7 @@ describe('cli parser', function () {
     var _ = require('lodash'),
         sinon = require('sinon'),
         newman = require('../../'),
+        commander = require('commander'),
         newmanCLI,
 
         /**
@@ -17,14 +18,27 @@ describe('cli parser', function () {
             });
         };
 
+    beforeEach(function () {
+        // removes all listeners assigned previously to avoid exceeding MaxListeners.
+        commander.removeAllListeners();
+
+        // delete require cache to use program instance for consecutive runs.
+        delete require.cache[require.resolve('../../bin/newman')];
+        newmanCLI = require('../../bin/newman');
+    });
+
     // delete require cache to use program instance for consecutive runs.
     beforeEach(function () {
         delete require.cache[require.resolve('../../bin/newman')];
         newmanCLI = require('../../bin/newman');
     });
 
-    it('should export a function', function () {
-        expect(cli).to.be.a('function');
+    it('should throw an error if no argument is provided', function (done) {
+        cli('node newman.js'.split(' '), null, function (err) {
+            expect(err).to.have.property('message', 'no arguments provided');
+
+            done();
+        });
     });
 
 
@@ -41,11 +55,33 @@ describe('cli parser', function () {
             newman.run.restore();
         });
 
+        it('should pass default options correctly', function (done) {
+            cli('node newman.js run collection.json'.split(' '), 'run',
+                function (err, opts) {
+                    expect(err).to.be.null;
+
+                    // explicitly match object to track addition/deletion of properties.
+                    expect(opts).to.eql({
+                        collection: 'collection.json',
+                        reporters: ['cli'],
+                        delayRequest: 0,
+                        globalVar: [],
+                        color: 'auto',
+                        timeout: 0,
+                        timeoutRequest: 0,
+                        timeoutScript: 0,
+                        reporterOptions: {},
+                        reporter: { cli: {} }
+                    });
+
+                    done();
+                });
+        });
+
         it('should handle standard run command (run collection.json and -e)', function (done) {
             cli('node newman.js run myCollection.json --environment env.json -n 2'.split(' '), 'run',
                 function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts.command).to.equal('run');
                     expect(opts).to.be.ok;
                     expect(opts.iterationCount, 'should have iterationCount of 2').to.equal(2);
                     expect(opts.collection).to.equal('myCollection.json');
@@ -57,7 +93,7 @@ describe('cli parser', function () {
 
         it('should throw an error for invalid --iteration-count values', function (done) {
             cli('node newman.js run myCollection.json -n -3.14'.split(' '), 'run', function (err) {
-                expect(err.message).to.equal('The value must be a positive integer.');
+                expect(err).to.have.property('message', 'The value must be a positive integer.');
 
                 done();
             });
@@ -79,6 +115,35 @@ describe('cli parser', function () {
             });
         });
 
+        describe('--color', function () {
+            it('should have color `auto` by default', function (done) {
+                cli('node newman.js run myCollection.json'.split(' '), 'run',
+                    function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts.color).to.equal('auto');
+                        done();
+                    });
+            });
+
+            it('should have color enabled with `--color on`', function (done) {
+                cli('node newman.js run myCollection.json --color on'.split(' '), 'run',
+                    function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts.color).to.equal('on');
+                        done();
+                    });
+            });
+
+            it('should have color disabled with `--color off`', function (done) {
+                cli('node newman.js run myCollection.json --color off'.split(' '), 'run',
+                    function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts.color).to.equal('off');
+                        done();
+                    });
+            });
+        });
+
         it('should load all arguments (except reporters)', function (done) {
             cli(('node newman.js run ' +
             'myCollection.json ' +
@@ -93,7 +158,7 @@ describe('cli parser', function () {
             '--iteration-count 23 ' +
             '--reporters json ' +
             '--global-var foo=bar --global-var alpha==beta= ' +
-            '--no-color ' +
+            '--color off ' +
             '--delay-request 12000 ' +
             '--timeout 10000 ' +
             '--timeout-request 5000 ' +
@@ -120,7 +185,7 @@ describe('cli parser', function () {
                 expect(opts.ignoreRedirects, 'should have ignoreRedirects to be true').to.equal(true);
                 expect(opts.insecure, 'shoudl have insecure to be true').to.equal(true);
 
-                expect(opts.color, 'should have color to be false').to.equal(false);
+                expect(opts.color).to.equal('off');
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('junit');
@@ -151,7 +216,7 @@ describe('cli parser', function () {
             '--reporter-cli-no-success-assertions ' +
             '--iteration-count 23 ' +
             '--reporters json ' +
-            '--no-color ' +
+            '--color on ' +
             '--delay-request 12000 ' +
             '--timeout 10000 ' +
             '--timeout-request 5000 ' +
@@ -191,7 +256,7 @@ describe('cli parser', function () {
                     'failure'
                 ]);
 
-                expect(opts.color, 'should have color to be false').to.equal(false);
+                expect(opts.color).to.equal('on');
 
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('verbose');
@@ -219,7 +284,6 @@ describe('cli parser', function () {
             cli('node newman.js run myCollection.json --reporter-cli-no-banner'.split(' '), 'run',
                 function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts.command).to.equal('run');
                     expect(opts).to.be.ok;
                     expect(opts.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
 

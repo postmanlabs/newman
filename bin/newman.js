@@ -40,8 +40,7 @@ program
     .option('--global-var <value>',
         'Allows the specification of global variables via the command line, in a key=value format',
         util.cast.memoize, [])
-    .option('--color', 'Force colored output (for use in CI environments).')
-    .option('--no-color', 'Disable colored output.', false)
+    .option('--color <value>', 'Enable/Disable colored output. (auto|on|off)', /^(auto|on|off)$/, 'auto')
     .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
     .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer, 0)
     .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer, 0)
@@ -108,9 +107,7 @@ function run (argv, callback) {
         },
         (next) => {
             // throw error if no argument is provided.
-            const error = !program.args.length && new Error('no arguments provided');
-
-            next(error ? error : null);
+            next(program.args.length ? null : new Error('no arguments provided'));
         }
     ], (error) => {
         // invoke callback if this is required as module, used in tests.
