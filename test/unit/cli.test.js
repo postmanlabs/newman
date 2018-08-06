@@ -27,12 +27,6 @@ describe('cli parser', function () {
         newmanCLI = require('../../bin/newman');
     });
 
-    // delete require cache to use program instance for consecutive runs.
-    beforeEach(function () {
-        delete require.cache[require.resolve('../../bin/newman')];
-        newmanCLI = require('../../bin/newman');
-    });
-
     it('should throw an error if no argument is provided', function (done) {
         cli('node newman.js'.split(' '), null, function (err) {
             expect(err).to.have.property('message', 'no arguments provided');
