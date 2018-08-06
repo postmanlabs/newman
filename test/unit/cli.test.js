@@ -27,14 +27,6 @@ describe('cli parser', function () {
         newmanCLI = require('../../bin/newman');
     });
 
-    it('should throw an error if no argument is provided', function (done) {
-        cli('node newman.js'.split(' '), null, function (err) {
-            expect(err).to.have.property('message', 'no arguments provided');
-
-            done();
-        });
-    });
-
     describe('Run Command', function () {
         // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
         before(function () {
