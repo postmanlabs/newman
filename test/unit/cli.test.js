@@ -35,8 +35,7 @@ describe('cli parser', function () {
         });
     });
 
-
-    describe('Run Command', function () {
+  describe('Run Command', function () {
         // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
         before(function () {
             sinon.stub(newman, 'run').callsFake((options) => {
