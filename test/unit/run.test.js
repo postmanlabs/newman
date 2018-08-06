@@ -49,14 +49,16 @@ describe('run module', function () {
             }]
         };
 
-        expect(function () {
-            run({ collection: v1Collection }, function (err) {
-                expect(err).be.ok;
-                expect(err && err.message).to.equal('Newman >= v4 does not support the v1 collection format');
+        run({
+            collection: v1Collection
+        }, function (err) {
+            expect(err).be.ok;
+            expect(err).to.have.property('message', 'Newman >= v4 does not support the v1 collection format');
+            expect(err).to.have.property('friendly',
+                'Use the Postman Native app to export collections in the v2 format');
 
-                done();
-            });
-        }).to.not.throw();
+            done();
+        });
     });
 
     it('should start a run with empty collection as plain object', function (done) {

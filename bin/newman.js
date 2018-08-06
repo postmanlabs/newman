@@ -68,7 +68,10 @@ program
         newman.run(options, function (err, summary) {
             const runError = err || summary.run.error || summary.run.failures.length;
 
-            err && console.error(`\n  error: ${err.message || err}\n`);
+            if (err) {
+                console.error(`\n  error: ${err.message || err}\n`);
+                err.friendly && console.error(`  ${err.friendly}\n`);
+            }
             runError && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
