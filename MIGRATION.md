@@ -122,6 +122,10 @@ Installation should be global if newman is installed globally, local otherwise. 
 
 The complete installation and usage guide is available here: https://github.com/postmanlabs/newman-reporter-html
 
+### Updating v1 Postman Collection format
+Newman >= v4 drops support for v1 collection format.
+Use [Postman native application](pm-app) to convert v1 collection format to v2 collection format.
+
 ### CSV auto parse
 A [fix][pr1609] has been made to avoid parsing numbers inside quotes.<br/>
 Example, `"000123"` will not be parsed to `123` like before.
@@ -131,6 +135,7 @@ Fixes issues: [#1100][i1100], [#1215][i1215] & [#1346][i1346]
 ### Default timeouts
 All timeouts now have the default value of infinity. [#1630](pr1630)
 
+[pm-app]: https://www.getpostman.com/apps
 [pr1609]: https://github.com/postmanlabs/newman/pull/1609
 [pr1630]: https://github.com/postmanlabs/newman/pull/1630
 [i1100]: https://github.com/postmanlabs/newman/issues/1100
