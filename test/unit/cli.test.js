@@ -27,19 +27,6 @@ describe('cli parser', function () {
         newmanCLI = require('../../bin/newman');
     });
 
-    it('should export a function', function () {
-        expect(cli).to.be.a('function');
-    });
-
-    it('should throw an error if no argument is provided', function (done) {
-        cli('node newman.js'.split(' '), null, function (err) {
-            expect(err).to.have.property('message', 'no arguments provided');
-
-            done();
-        });
-    });
-
-
     describe('Run Command', function () {
         // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
         before(function () {
@@ -144,27 +131,27 @@ describe('cli parser', function () {
 
         it('should load all arguments (except reporters)', function (done) {
             cli(('node newman.js run ' +
-            'myCollection.json ' +
-            '-e myEnv.json ' +
-            '-g myGlobals.json ' +
-            '-d path/to/csv.csv ' +
-            '--folder myFolder ' +
-            '--export-environment exported_env.json ' +
-            '--export-globals exported_glob.json ' +
-            '--postman-api-key POSTMAN_API_KEY ' +
-            '--reporter-cli-no-summary ' +
-            '--iteration-count 23 ' +
-            '--reporters json ' +
-            '--global-var foo=bar --global-var alpha==beta= ' +
-            '--color off ' +
-            '--delay-request 12000 ' +
-            '--timeout 10000 ' +
-            '--timeout-request 5000 ' +
-            '--timeout-script 5000 ' +
-            '--ignore-redirects ' +
-            '--bail ' +
-            '--suppress-exit-code ' +
-            '-k').split(' '), 'run', function (err, opts) {
+                'myCollection.json ' +
+                '-e myEnv.json ' +
+                '-g myGlobals.json ' +
+                '-d path/to/csv.csv ' +
+                '--folder myFolder ' +
+                '--export-environment exported_env.json ' +
+                '--export-globals exported_glob.json ' +
+                '--postman-api-key POSTMAN_API_KEY ' +
+                '--reporter-cli-no-summary ' +
+                '--iteration-count 23 ' +
+                '--reporters json ' +
+                '--global-var foo=bar --global-var alpha==beta= ' +
+                '--color off ' +
+                '--delay-request 12000 ' +
+                '--timeout 10000 ' +
+                '--timeout-request 5000 ' +
+                '--timeout-script 5000 ' +
+                '--ignore-redirects ' +
+                '--bail ' +
+                '--suppress-exit-code ' +
+                '-k').split(' '), 'run', function (err, opts) {
                 expect(err).to.be.null;
 
                 expect(opts).to.be.ok;
@@ -202,29 +189,29 @@ describe('cli parser', function () {
 
         it('should load all arguments (including reporters)', function (done) {
             cli(('node newman.js run ' +
-            'myCollection.json ' +
-            '-e myEnv.json ' +
-            '-g myGlobals.json ' +
-            '-d /path/to/csv.csv ' +
-            '--folder myFolder ' +
-            '--disable-unicode ' +
-            '--export-environment exported_env.json ' +
-            '--export-globals exported_glob.json ' +
-            '--reporter-cli-no-summary ' +
-            '--reporter-cli-no-success-assertions ' +
-            '--iteration-count 23 ' +
-            '--reporters json ' +
-            '--color on ' +
-            '--delay-request 12000 ' +
-            '--timeout 10000 ' +
-            '--timeout-request 5000 ' +
-            '--timeout-script 5000 ' +
-            '--ignore-redirects ' +
-            '-k ' +
-            '--bail folder,failure ' +
-            '--global-var foo=bar --global-var alpha==beta= ' +
-            '--reporter-json-output ./omg.txt ' +
-            '--reporter-use everything').split(' '), 'run', function (err, opts) {
+                'myCollection.json ' +
+                '-e myEnv.json ' +
+                '-g myGlobals.json ' +
+                '-d /path/to/csv.csv ' +
+                '--folder myFolder ' +
+                '--disable-unicode ' +
+                '--export-environment exported_env.json ' +
+                '--export-globals exported_glob.json ' +
+                '--reporter-cli-no-summary ' +
+                '--reporter-cli-no-success-assertions ' +
+                '--iteration-count 23 ' +
+                '--reporters json ' +
+                '--color on ' +
+                '--delay-request 12000 ' +
+                '--timeout 10000 ' +
+                '--timeout-request 5000 ' +
+                '--timeout-script 5000 ' +
+                '--ignore-redirects ' +
+                '-k ' +
+                '--bail folder,failure ' +
+                '--global-var foo=bar --global-var alpha==beta= ' +
+                '--reporter-json-output ./omg.txt ' +
+                '--reporter-use everything').split(' '), 'run', function (err, opts) {
                 expect(err).to.be.null;
 
                 expect(opts).to.be.ok;

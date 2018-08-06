@@ -387,7 +387,7 @@ such a scenario.
 
 ### JSON Reporter
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
-file where to write the file. The content of this file is exactly the same as the `summary` parameter sent to the callback
+file where to write the report. The content of this file is exactly the same as the `summary` parameter sent to the callback
 when Newman is used as a library.
 
 To enable JSON reporter, provide `--reporters json` as a CLI option.
@@ -541,7 +541,6 @@ The current Node version compatibility can also be seen from the `engines.node` 
 ## Contributing
 Please take a moment to read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
 Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss potential changes/additions.
-
 
 ## Community Support
 
