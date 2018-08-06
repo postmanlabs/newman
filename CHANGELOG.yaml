@@ -6,6 +6,7 @@ unreleased:
   breaking changes:
     - '#1605 Dropped support for Node < v6'
     - '#1610 Dropped support for v2 CLI options'
+    - '#1660 Dropped support for v1 Postman Collection format'
     - '#1616 Moved inbuilt HTML reporter to a standalone reporter: https://github.com/postmanlabs/newman-reporter-html'
     - '#1653 Updated `color` option behaviour, dropped support for --no-color'
   fixed bugs:
