@@ -1,6 +1,7 @@
 # Newman Changelog
 
-unreleased:
+4.0.0:
+  date: 2018-08-06
   new features:
     - '#1633 Added ability to run collection via Postman API UID reference'
   breaking changes:
