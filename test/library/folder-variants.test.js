@@ -3,7 +3,6 @@ var fs = require('fs'),
 
     _ = require('lodash');
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('folder variants', function () {
     var iterationProperty = 'run.stats.iterations.total',
         collectionRunPath = path.join(__dirname, '..', '..', 'out', 'folder-variants-test.json');
@@ -61,5 +60,4 @@ describe('folder variants', function () {
             done();
         });
     });
-
 });

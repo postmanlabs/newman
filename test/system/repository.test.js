@@ -6,9 +6,9 @@ var fs = require('fs'),
     path = require('path'),
     _ = require('lodash'),
     yml = require('js-yaml'),
+    semver = require('semver'),
     parseIgnore = require('parse-gitignore');
 
-/* global describe, it, expect */
 describe('project repository', function () {
     describe('package.json', function () {
         var content,
@@ -48,28 +48,28 @@ describe('project repository', function () {
                 expect(json.keywords).to.eql(['newman', 'postman', 'api', 'testing', 'ci', 'rest-client', 'rest']);
 
                 expect(json).to.have.property('engines');
-                expect(json.engines).to.eql({ node: '>=4' });
+                expect(json.engines).to.eql({ node: '>=6' });
             });
 
             it('should ignore applicable dependencies for GreenKeeper pull requests', function () {
-                expect(json.greenkeeper).to.eql({ ignore: ['cli-progress', 'cli-table3', 'csv-parse'] });
+                expect(json.greenkeeper).to.eql({ ignore: [] });
             });
 
             it('should have a valid version string in form of <major>.<minor>.<revision>', function () {
-                // eslint-disable-next-line max-len
-                expect(json.version).to.match(/^((\d+)\.(\d+)\.(\d+))(?:-([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?$/);
+                expect(semver.valid(json.version), `version:${json.version} should be a valid semver`).to.not.be.null;
             });
         });
 
         describe('binary definitions', function () {
             it('should exist', function () {
                 expect(json.bin).be.ok;
-                expect(json.bin).to.eql({ 'newman': './bin/newman.js' });
+                expect(json.bin).to.eql({ newman: './bin/newman.js' });
             });
 
             it('should have valid node shebang', function () {
                 json.bin && Object.keys(json.bin).forEach(function (scriptName) {
                     var fileContent = fs.readFileSync(json.bin[scriptName]).toString();
+
                     expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent),
                         `invalid or missing shebang in ${json.bin[scriptName]}`).to.be.ok;
                 });
@@ -81,9 +81,11 @@ describe('project repository', function () {
                 expect(json.scripts).to.be.ok;
                 json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
                     var name = json.scripts[scriptName];
+
                     name = name.replace(/^(node\s|\.\/)/, '');
                     fs.stat(name, function (err) {
                         var fileDetails = path.parse(name);
+
                         expect(err).to.equal(null);
                         expect(fileDetails.ext).to.match(/^\.(sh|js)$/);
                     });
@@ -121,8 +123,8 @@ describe('project repository', function () {
 
             it('should point to a valid and precise (no * or ^) semver', function () {
                 json.dependencies && Object.keys(json.dependencies).forEach(function (item) {
-                    expect(json.dependencies[item]).to.match(new RegExp('^((\\d+)\\.(\\d+)\\.(\\d+))(?:-' +
-                        '([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?$'));
+                    expect(semver.valid(json.dependencies[item]),
+                        `${item}:${json.dependencies[item]} should be a valid semver`).to.not.be.null;
                 });
             });
         });
@@ -134,8 +136,8 @@ describe('project repository', function () {
 
             it('should point to a valid and precise (no * or ^) semver', function () {
                 json.devDependencies && Object.keys(json.devDependencies).forEach(function (item) {
-                    expect(json.devDependencies[item]).to.match(new RegExp('^((\\d+)\\.(\\d+)\\.(\\d+))(?:-' +
-                        '([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?$'));
+                    expect(semver.valid(json.devDependencies[item]),
+                        `${item}:${json.devDependencies[item]} should be a valid semver`).to.not.be.null;
                 });
             });
 
@@ -181,8 +183,8 @@ describe('project repository', function () {
     describe('.ignore files', function () {
         var gitignorePath = '.gitignore',
             npmignorePath = '.npmignore',
-            npmignore = parseIgnore(npmignorePath),
-            gitignore = parseIgnore(gitignorePath);
+            npmignore = parseIgnore(fs.readFileSync(npmignorePath)),
+            gitignore = parseIgnore(fs.readFileSync(gitignorePath));
 
         describe(gitignorePath, function () {
             it('should exist', function (done) {

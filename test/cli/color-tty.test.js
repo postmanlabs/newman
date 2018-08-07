@@ -1,4 +1,3 @@
-/* global describe, it, exec, expect */
 var fs = require('fs');
 
 describe('CLI output', function () {
@@ -6,7 +5,8 @@ describe('CLI output', function () {
 
     describe('TTY', function () {
         // @todo: Change to assert colored output after https://github.com/shelljs/shelljs/pull/524 is released
-        it('should produce colored output without any options', function (done) {
+        // figure out a way to have `process.stdout.isTTY` true for the child process.
+        it.skip('should produce colored output without any options', function (done) {
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
@@ -16,9 +16,9 @@ describe('CLI output', function () {
             });
         });
 
-        it('should produce colored output with --color', function (done) {
+        it('should produce colored output with `--color on`', function (done) {
             // eslint-disable-next-line max-len
-            exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color', function (code, stdout, stderr) {
+            exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color on', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
                 expect(stdout).to.match(coloredOutput);
@@ -27,9 +27,9 @@ describe('CLI output', function () {
             });
         });
 
-        it('should not produce colored output with --no-color', function (done) {
+        it('should not produce colored output with `--color off`', function (done) {
             // eslint-disable-next-line max-len
-            exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --no-color', function (code, stdout, stderr) {
+            exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color off', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
                 expect(stdout).to.not.match(coloredOutput);
@@ -63,7 +63,9 @@ describe('CLI output', function () {
             });
         });
 
-        it('should produce colored output without any options', function (done) {
+        // @todo figure out a way to have `process.stdout.isTTY` true for the child process.
+        // using `tty.WriteStream` might solve the problem.
+        it.skip('should produce colored output without any options', function (done) {
             exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json > ${outFile}`,
                 function (code, stdout, stderr) {
                     expect(code, 'should have exit code of 0').to.equal(0);
@@ -79,8 +81,8 @@ describe('CLI output', function () {
                 });
         });
 
-        it('should produce colored output with --color', function (done) {
-            exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json --color > ${outFile}`,
+        it('should produce colored output with `--color on`', function (done) {
+            exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json --color on > ${outFile}`,
                 function (code, stdout, stderr) {
                     expect(code, 'should have exit code of 0').to.equal(0);
                     expect(stderr).to.be.empty;
@@ -95,8 +97,8 @@ describe('CLI output', function () {
                 });
         });
 
-        it('should not produce colored output with --no-color', function (done) {
-            exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json --no-color > ${outFile}`,
+        it('should not produce colored output with `--color off`', function (done) {
+            exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json --color off > ${outFile}`,
                 function (code, stdout, stderr) {
                     expect(code, 'should have exit code of 0').to.equal(0);
                     expect(stderr).to.be.empty;

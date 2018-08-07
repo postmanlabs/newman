@@ -1,4 +1,3 @@
-/* global describe, it, expect, newman */
 var runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
 
 describe('Newman run options', function () {
@@ -6,7 +5,7 @@ describe('Newman run options', function () {
 
     it('should work correctly without any extra options', function (done) {
         newman.run({
-            collection: collection
+            collection
         }, done);
     });
 

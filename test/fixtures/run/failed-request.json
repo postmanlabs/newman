@@ -3,7 +3,7 @@
 	"info": {
 		"name": "failed-request",
 		"_postman_id": "2ed7ced1-d834-f473-7d28-aa3a1a7d825f",
-		"description": "A minimalistic collection to ensure that failed requests do not cause HTML reporter exceptions",
+		"description": "A minimalistic collection with a failing request",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [

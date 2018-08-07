@@ -1,7 +1,6 @@
 var fs = require('fs'),
     https = require('https');
 
-/* global describe, it, newman */
 describe('SSL Client certificates', function () {
     var server;
 
