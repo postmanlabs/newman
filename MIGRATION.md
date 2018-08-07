@@ -122,6 +122,10 @@ Installation should be global if newman is installed globally, local otherwise. 
 
 The complete installation and usage guide is available here: https://github.com/postmanlabs/newman-reporter-html
 
+### Dropped support for the v1 collection format
+Newman >= v4 drops support for the v1 collection format.<br/>
+Use the [Postman Native app](https://www.getpostman.com/apps) to export collections in the v2 format.
+
 ### CSV auto parse
 A [fix][pr1609] has been made to avoid parsing numbers inside quotes.<br/>
 Example, `"000123"` will not be parsed to `123` like before.

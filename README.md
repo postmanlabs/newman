@@ -104,7 +104,7 @@ CLI reporter is enabled by default when Newman is used as a CLI, you do not need
 $ newman run examples/sample-collection.json -r cli,json
 ```
 
-For more details on [Reporters](#reporters) and writing your own [External Reporters](#external-reporters) refer their corresponding sections below.
+For more details on [Reporters](#reporters) and writing your own [External Reporters](#external-reporters) refer to their corresponding sections below.
 
 [back to top](#table-of-contents)
 
@@ -126,8 +126,8 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   [Read More](https://www.getpostman.com/docs/environments)
 
 - `-g <source>`, `--globals <source>`<br />
-  Specify file path or URL for global variables. Global variables are similar to environment variables but has a lower
-  precedence and can be overridden by environment variables having same name.
+  Specify the file path or URL for global variables. Global variables are similar to environment variables but have a lower
+  precedence and can be overridden by environment variables having the same name.
 
 - `-d <source>`, `--iteration-data <source>`<br />
   Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
@@ -387,7 +387,7 @@ such a scenario.
 
 ### JSON Reporter
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
-file where to write the file. The content of this file is exactly same as the `summary` parameter sent to the callback
+file where to write the report. The content of this file is exactly the same as the `summary` parameter sent to the callback
 when Newman is used as a library.
 
 To enable JSON reporter, provide `--reporters json` as a CLI option.
@@ -449,7 +449,7 @@ A custom reporter is a Node module with a name of the form `newman-reporter-<nam
 2. Add an `index.js` file, that exports a function of the following form:
 ```javascript
 function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
-  // emitter is is an event emitter that triggers the following events: https://github.com/postmanlabs/newman#newmanrunevents
+  // emitter is an event emitter that triggers the following events: https://github.com/postmanlabs/newman#newmanrunevents
   // reporterOptions is an object of the reporter specific options. See usage examples below for more details.
   // collectionRunOptions is an object of all the collection run options: https://github.com/postmanlabs/newman#newmanrunoptions-object--callback-function--run-eventemitter
 }
@@ -541,7 +541,6 @@ The current Node version compatibility can also be seen from the `engines.node` 
 ## Contributing
 Please take a moment to read our [contributing guide](.github/CONTRIBUTING.md) to learn about our development process.
 Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss potential changes/additions.
-
 
 ## Community Support
 

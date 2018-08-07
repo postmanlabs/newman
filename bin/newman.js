@@ -68,7 +68,10 @@ program
         newman.run(options, function (err, summary) {
             const runError = err || summary.run.error || summary.run.failures.length;
 
-            err && console.error(`\n  error: ${err.message || err}\n`);
+            if (err) {
+                console.error(`\n  error: ${err.message || err}\n`);
+                err.friendly && console.error(`  ${err.friendly}\n`);
+            }
             runError && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
@@ -107,9 +110,7 @@ function run (argv, callback) {
         },
         (next) => {
             // throw error if no argument is provided.
-            const error = !program.args.length && new Error('no arguments provided');
-
-            next(error ? error : null);
+            next(program.args.length ? null : new Error('no arguments provided'));
         }
     ], (error) => {
         // invoke callback if this is required as module, used in tests.

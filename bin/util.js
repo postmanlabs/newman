@@ -90,10 +90,7 @@ module.exports = {
             validProp && (result[key] = value);
 
             return result;
-        }, {
-            command: command.name(),
-            version: command.parent._version || false
-        });
+        }, {});
     },
 
     /**
