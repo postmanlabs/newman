@@ -1,13 +1,21 @@
 var newmanVersion = require('../../package.json').version;
 
-/* globals it, describe, exec, expect */
 describe('CLI run options', function () {
     it('should work correctly without any extra options', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', done);
     });
 
-    it('should display the current Newman version correctly', function (done) {
+    it('should display the current Newman version with `--version`', function (done) {
         exec('node ./bin/newman.js --version', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stdout).to.equal(`${newmanVersion}\n`);
+            expect(stderr).to.equal('');
+            done();
+        });
+    });
+
+    it('should display the current Newman version with `-v`', function (done) {
+        exec('node ./bin/newman.js -v', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stdout).to.equal(`${newmanVersion}\n`);
             expect(stderr).to.equal('');

@@ -3,7 +3,6 @@ var fs = require('fs'),
 
     _ = require('lodash');
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('iterationCount vs iterationData.length conflicts', function () {
     var iterationProperty = 'run.stats.iterations.total',
         collectionRunPath = path.join(__dirname, '..', '..', 'out', 'iteration-count-test.json');

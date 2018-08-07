@@ -3,7 +3,6 @@ var fs = require('fs'),
 
     sh = require('shelljs');
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('newman.run exportEnvironment', function () {
     var outDir = 'out',
         environment = 'test/fixtures/run/simple-variables.json',

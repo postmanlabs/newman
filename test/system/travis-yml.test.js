@@ -1,4 +1,3 @@
-/* global describe, it, expect */
 describe('travis.yml', function () {
     var fs = require('fs'),
         yaml = require('js-yaml'),
@@ -23,7 +22,7 @@ describe('travis.yml', function () {
     describe('strucure', function () {
         it('should have language to be set to node', function () {
             expect(travisYAML.language).to.equal('node_js');
-            expect(travisYAML.node_js).to.eql(['4', '6', '8']);
+            expect(travisYAML.node_js).to.eql(['6', '8', '10']);
         });
     });
 });

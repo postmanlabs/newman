@@ -4,7 +4,6 @@ var fs = require('fs'),
     sh = require('shelljs'),
     parseXml = require('xml2js').parseString;
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('JUnit reporter', function () {
     var outDir = 'out',
         outFile = outDir + '/newman-report.xml';
