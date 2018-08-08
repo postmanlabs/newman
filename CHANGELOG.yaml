@@ -1,6 +1,7 @@
 # Newman Changelog
 
-unreleased:
+4.0.1:
+  date: 2018-08-08
   fixed bugs:
     - '#1669 Deprecated support for the v1 Postman Collection format'
     - '#1670 Throw proper error message for invalid --color values'
