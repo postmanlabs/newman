@@ -127,6 +127,14 @@ describe('cli parser', function () {
                         done();
                     });
             });
+
+            it('should throw an error for invalid --color values', function (done) {
+                cli('node newman.js run myCollection.json --color --disable-unicode'.split(' '), 'run', function (err) {
+                    expect(err).to.have.property('message', 'invalid value `--disable-unicode` for option color');
+
+                    done();
+                });
+            });
         });
 
         it('should load all arguments (except reporters)', function (done) {
