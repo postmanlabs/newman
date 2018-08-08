@@ -48,7 +48,7 @@ docker pull postman/newman_ubuntu1404
 Run newman commands on the image:
 
 ```terminal
-docker run -t postman/newman_ubuntu1404 run "https://www.getpostman.com/collections/8a0c9bc08f062d12dcda"
+docker run -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
 ```
 
 ### Build the docker image from this repository
@@ -75,7 +75,7 @@ docker build -t postman/newman_ubuntu1404 ubuntu1404
 Run a collection using the newman image:
 
 ```terminal
-docker run -t postman/newman_ubuntu1404 run "https://www.getpostman.com/collections/8a0c9bc08f062d12dcda"
+docker run -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
 ```
 
 
@@ -100,20 +100,20 @@ To know more about mounting volumes, visit
 
 ## Examples
 
-Run a local collection, pass an environment to it, and save the HTML report on the host.
+Run a local collection, pass an environment to it, and save the JSON report on the host.
 
 ```terminal
 docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 \
     run "HTTPBinNewmanTest.json.postman_collection" \
     --environment="HTTPBinNewmanTestEnv.json.postman_environment" \
-    --reporters="html,cli" --reporter-html-export="newman-results.html"
+    --reporters="json,cli" --reporter-json-export="newman-results.json"
 ```
 
 <br />Run a remote collection, pass it a local environment, and save JUnit XML test report on the host
 
 ```terminal
 docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 \
-    run "https://www.getpostman.com/collections/8a0c9bc08f062d12dcda" \
+    run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda \
     --environment="HTTPBinNewmanTestEnv.json.postman_environment" \
     --reporters="junit,cli" --reporter-junit-export="newman-report.xml"
 ```
@@ -140,7 +140,29 @@ function onExit {
 # call onExit when the script exits
 trap onExit EXIT;
 
-docker run -t postman/newman_ubuntu1404 run "https://www.getpostman.com/collections/8a0c9bc08f062d12dcda" --suppress-exit-code;
+docker run --entrypoint -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda --suppress-exit-code;
+```
+
+## Using Newman Docker images with custom reporters
+Newman Docker images can also be used with custom Newman reporters, as follows:
+```console
+docker run -v "<collection-directory>:/etc/newman" --entrypoint /bin/<bash-or-sh> <image:tag> -c "npm i -g newman-reporter-<reporter-name>; newman run sample-collection.json -r <reporter-name>"
+```
+
+In the above example,
+* `<collection-directory>` is the source directory for collections. This directory will also be used to write Newman reports.
+* `<image>` is a combination of the image name (and optional tag). For instance, `postman/newman_ubuntu1404` or `postman/newman_alpine33`
+* `<reporter-name>` is the reporter that has to be installed and loaded for the `newman run ...`
+
+### Alpine 3.3
+Note that the entrypoint here is `/bin/sh`, and **not** `/bin/bash`
+```console
+docker run -v "~/collections:/etc/newman" --entrypoint /bin/sh postman/newman_alpine33 -c "npm i -g newman-reporter-html; newman run sample-collection.json -r html"
+```
+
+### Ubuntu 14.04:
+```console
+docker run -v "~/collections:/etc/newman" --entrypoint /bin/bash postman/newman_ubuntu1404 -c "npm i -g newman-reporter-html; newman run sample-collection.json -r html"
 ```
 
 ## Node version
