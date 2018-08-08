@@ -59,9 +59,9 @@ module.exports = {
             return _.split(list, ',');
         },
 
-        color: (value) => {
+        colorOptions: (value) => {
             if (!(/^(auto|on|off)$/).test(value)) {
-                throw new Error(`invalid value \`${value}\` for option color`);
+                throw new Error(`invalid value \`${value}\` for --color. Expected: auto|on|off`);
             }
 
             return value;
