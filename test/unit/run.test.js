@@ -31,36 +31,6 @@ describe('run module', function () {
         }).to.not.throw();
     });
 
-    it('should error out if v1 collection is passed', function (done) {
-        const v1Collection = {
-            id: 'a4f4a069-00a2-4f70-a792-513877241083',
-            name: 'C1',
-            order: ['3e5349fa-a259-4ac2-a920-b694e6f8c1e6'],
-            requests: [{
-                id: '3e5349fa-a259-4ac2-a920-b694e6f8c1e6',
-                name: 'R1',
-                collectionId: '5adbd3b7-80cb-43cc-bf1e-8578ab3c9b15',
-                method: 'GET',
-                url: 'https://postman-echo.com/get',
-                responses: [],
-                pathVariableData: [],
-                queryParams: [],
-                headerData: []
-            }]
-        };
-
-        run({
-            collection: v1Collection
-        }, function (err) {
-            expect(err).be.ok;
-            expect(err).to.have.property('message', 'Newman >= v4 does not support the v1 collection format');
-            expect(err).to.have.property('friendly',
-                'Use the Postman Native app to export collections in the v2 format');
-
-            done();
-        });
-    });
-
     it('should start a run with empty collection as plain object', function (done) {
         expect(function () {
             run({
