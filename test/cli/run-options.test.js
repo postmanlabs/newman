@@ -74,7 +74,7 @@ describe('CLI run options', function () {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/multi-level-folders-v1.postman_collection.json', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 0').to.equal(0);
-            expect(stderr).to.equal('newman warning: Newman >= v4 deprecates support for the v1 collection format\n' +
+            expect(stderr).to.equal('newman: Newman v4 deprecates support for the v1 collection format\n' +
                 '  Use the Postman Native app to export collections in the v2 format\n\n');
 
             done();
