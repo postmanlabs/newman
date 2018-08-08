@@ -48,7 +48,7 @@ docker pull postman/newman_ubuntu1404
 Run newman commands on the image:
 
 ```terminal
-docker run -t postman/newman_ubuntu1404 run "URL that returns Postman collections in v2 format"
+docker run -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
 ```
 
 ### Build the docker image from this repository
@@ -75,7 +75,7 @@ docker build -t postman/newman_ubuntu1404 ubuntu1404
 Run a collection using the newman image:
 
 ```terminal
-docker run -t postman/newman_ubuntu1404 run "URL that returns Postman collections in the v2 format"
+docker run -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
 ```
 
 
@@ -113,7 +113,7 @@ docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 \
 
 ```terminal
 docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 \
-    run "URL that returns Postman collections in the v2 format" \
+    run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda \
     --environment="HTTPBinNewmanTestEnv.json.postman_environment" \
     --reporters="junit,cli" --reporter-junit-export="newman-report.xml"
 ```
@@ -140,7 +140,7 @@ function onExit {
 # call onExit when the script exits
 trap onExit EXIT;
 
-docker run --entrypoint -t postman/newman_ubuntu1404 run "URL that returns collection in v2 format" --suppress-exit-code;
+docker run --entrypoint -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda --suppress-exit-code;
 ```
 
 ## Using Newman Docker images with custom reporters

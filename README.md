@@ -71,7 +71,7 @@ If your collection file is available as an URL (such as from our [Cloud API serv
 Newman can fetch your file and run it as well.
 
 ```console
-$ newman run <URL that returns Postman collections in the v2 format>
+$ newman run https://www.getpostman.com/collections/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65-JsLv
 ```
 
 For the complete list of options, refer the [Command Line Options](#command-line-options) section below.
