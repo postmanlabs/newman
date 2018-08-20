@@ -72,6 +72,14 @@ module.exports = {
          */
         csvParse: (list) => {
             return _.split(list, ',');
+        },
+
+        colorOptions: (value) => {
+            if (!(/^(auto|on|off)$/).test(value)) {
+                throw new Error(`invalid value \`${value}\` for --color. Expected: auto|on|off`);
+            }
+
+            return value;
         }
     },
 

@@ -1,3 +1,5 @@
+### Newman v4 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v3-to-v4) and [changelog](https://github.com/postmanlabs/newman/blob/v4.0.0/CHANGELOG.yaml#L3) for more details.
+
 <a href="https://www.getpostman.com/"><img src="https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/postman-logo%2Btext-320x132.png" /></a><br />
 _Supercharge your API workflow<br/>Modern software is built on APIs. Postman helps you develop APIs faster._
 

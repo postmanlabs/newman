@@ -1,6 +1,18 @@
 # Newman Changelog
 
-unreleased:
+4.0.2:
+  date: 2018-08-09
+  fixed bugs:
+    - '#1673 Fixed a bug that prevented request errors from showing up in CLI reports'
+
+4.0.1:
+  date: 2018-08-08
+  fixed bugs:
+    - '#1669 Deprecated support for the v1 Postman Collection format'
+    - '#1670 Throw proper error message for invalid --color values'
+
+4.0.0:
+  date: 2018-08-06
   new features:
     - '#1633 Added ability to run collection via Postman API UID reference'
   breaking changes:
