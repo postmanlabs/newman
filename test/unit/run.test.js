@@ -230,6 +230,7 @@ describe('run module', function () {
 
     describe('Runner.run options', function () {
         before(function () {
+            // stub runtime.Runner and override `run` to return options argument as error to stop further execution.
             sinon.stub(runtime, 'Runner').prototype.run = (collection, options, callback) => {
                 callback(options);
             };
