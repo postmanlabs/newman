@@ -248,6 +248,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
+| options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 
 ### newman.run~callback(error: _object_ , summary: _object_)
