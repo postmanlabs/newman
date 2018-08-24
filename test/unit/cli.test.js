@@ -203,7 +203,8 @@ describe('cli parser', function () {
                 '-e myEnv.json ' +
                 '-g myGlobals.json ' +
                 '-d /path/to/csv.csv ' +
-                '--folder myFolder ' +
+                '--folder myFolder1 ' +
+                '--folder myFolder2 ' +
                 '--disable-unicode ' +
                 '--export-environment exported_env.json ' +
                 '--export-globals exported_glob.json ' +
@@ -227,7 +228,7 @@ describe('cli parser', function () {
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
-                expect(opts.folder).to.eql(['myFolder']);
+                expect(opts.folder).to.eql(['myFolder1', 'myFolder2']);
                 expect(opts.disableUnicode, 'should have disableUnicode to be true').to.equal(true);
 
                 expect(opts.exportEnvironment).to.equal('exported_env.json');
