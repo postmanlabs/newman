@@ -1,4 +1,11 @@
 # Newman Changelog
+master:
+  new features:
+    - '#1654 Added ability to select multiple folders for collection run'
+  chores:
+    - '#1687 Added `newmanVersion` in collection run options'
+    - '#1684 Fixed flaky tests'
+    - 'Updated Dependencies'
 
 4.0.2:
   date: 2018-08-09
