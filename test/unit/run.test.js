@@ -1,7 +1,9 @@
 var _ = require('lodash'),
     path = require('path'),
+    async = require('async'),
+    sinon = require('sinon'),
     sdk = require('postman-collection'),
-    async = require('async');
+    runtime = require('postman-runtime');
 
 describe('run module', function () {
     var run = require('../../lib/run');
@@ -224,5 +226,51 @@ describe('run module', function () {
                 }).to.not.throw();
             }
         ], done);
+    });
+
+    describe('Runner.run options', function () {
+        before(function () {
+            // stub runtime.Runner and override `run` to return options argument as error to stop further execution.
+            sinon.stub(runtime, 'Runner').prototype.run = (collection, options, callback) => {
+                callback(options);
+            };
+        });
+
+        after(function () {
+            runtime.Runner.restore();
+        });
+
+        describe('entrypoint', function () {
+            it('should be undefined by default', function (done) {
+                run({ collection: {} }, function (options) {
+                    expect(options).to.have.property('entrypoint').to.be.undefined;
+                    done();
+                });
+            });
+
+            it('should handle options.folder passed as string correctly', function (done) {
+                run({ collection: {}, folder: 'f1' }, function (options) {
+                    expect(options).to.have.deep.property('entrypoint', { execute: 'f1' });
+                    done();
+                });
+            });
+
+            it('should use multipleIdOrName strategy if options.folder is passed as an array', function (done) {
+                run({ collection: {}, folder: ['f1', 'f2'] }, function (options) {
+                    expect(options).to.have.deep.property('entrypoint', {
+                        execute: ['f1', 'f2'],
+                        lookupStrategy: 'multipleIdOrName'
+                    });
+                    done();
+                });
+            });
+
+            it('should not use multipleIdOrName strategy if options.folder is a single item array', function (done) {
+                run({ collection: {}, folder: ['f1'] }, function (options) {
+                    expect(options).to.have.property('entrypoint').to.eql({ execute: 'f1' });
+                    done();
+                });
+            });
+        });
     });
 });
