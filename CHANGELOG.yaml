@@ -1,5 +1,6 @@
 # Newman Changelog
-master:
+4.1.0:
+  date: 2018-08-29
   new features:
     - '#1654 Added ability to select multiple folders for collection run'
   chores:
