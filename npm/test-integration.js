@@ -75,7 +75,7 @@ module.exports = function (exit) {
             console.info(`\nexecuting ${Object.keys(suites).length} tests in parallel (might take a while)...\n`);
 
             // run tests using the consolidated test set as a guide
-            async.map(suites, function (test, next) {
+            async.mapLimit(suites, 10, function (test, next) {
                 console.info(` - ${test.name}`);
 
                 // load configuration JSON object if it is provided. We do this since this is not part of newman

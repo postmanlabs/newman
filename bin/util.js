@@ -21,15 +21,30 @@ module.exports = {
         },
 
         /**
-         * Helper for collecting global key=value variables
+         * Helper for collecting argument passed multiple times.
+         *
+         * --folder f1 --folder f2
+         *
+         * @param {String} val - The argument value.
+         * @param {String[]} memo - The array that is populated by argument values.
+         * @returns {String[]} - The array of argument values collected.
+         */
+        memoize: (val, memo) => {
+            memo.push(val);
+
+            return memo;
+        },
+
+        /**
+         * Helper for collecting argument passed multiple times as key=value.
          *
          * --global-var "foo=bar" --global-var "alpha=beta"
          *
-         * @param {String} val - The argument provided to `--global-var`.
+         * @param {String} val - The argument value, passed as key=value.
          * @param {Array} memo - The array that is populated by key value pairs.
          * @returns {Array} - [{key, value}] - The object representation of the current CLI variable.
          */
-        memoize: (val, memo) => {
+        memoizeKeyVal: (val, memo) => {
             let arg,
                 eqIndex = val.indexOf('=');
 
@@ -53,7 +68,7 @@ module.exports = {
          * eg. item1,item2
          *
          * @param {String} list - The comma separated string.
-         * @returns {Array} - [item1, item2] - The array representation of the passed string.
+         * @returns {String[]} - [item1, item2] - The array representation of the passed string.
          */
         csvParse: (list) => {
             return _.split(list, ',');
