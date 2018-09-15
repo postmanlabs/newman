@@ -34,5 +34,5 @@ docker run --volume="/home/postman/collections:/etc/newman" -t postman/newman_al
 In case you don't need to save newman's report to the host, and your collection is available online and does not require any environment, then you can forgo mounting your collections directory and directly pass the collection URL to newman:
 
 ```terminal
-docker run -t postman/newman_alpine https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
+docker run -t postman/newman_alpine run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
 ```
