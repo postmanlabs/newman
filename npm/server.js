@@ -1,4 +1,4 @@
-var net = require('net');
+const net = require('net');
 
 /**
  * Echo raw request message to test

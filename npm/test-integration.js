@@ -11,7 +11,7 @@ var fs = require('fs'),
 
     server = require('./server').createRawEchoServer(),
 
-    ECHO_PORT = 4041,
+    LOCAL_TEST_ECHO_PORT = 4041,
 
     /**
      * The source directory containing integration test collections and folders.
@@ -72,7 +72,7 @@ module.exports = function (exit) {
          * @returns {*}
          */
         function (suites, next) {
-            server.listen(ECHO_PORT, function (err) {
+            server.listen(LOCAL_TEST_ECHO_PORT, function (err) {
                 next(err, suites);
             });
         },
