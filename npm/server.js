@@ -19,9 +19,9 @@ function createRawEchoServer () {
     var server;
 
     server = net.createServer(function (socket) {
-        // wait 300ms for data
+        // wait 1s for data
         // @todo find better way to check data end
-        socket.setTimeout(300);
+        socket.setTimeout(1000);
 
         socket.on('data', function (chunk) {
             !this.data && (this.data = '');
