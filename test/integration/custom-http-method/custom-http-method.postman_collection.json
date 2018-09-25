@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "ace7fe4a-c765-48b6-b578-02aa634ad5d0",
+		"name": "custom-http-method",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "form-data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "088721b0-c2e6-47fa-85b0-8a4f79c71f82",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response Body: form-data\", function () {",
+							"    var response = pm.response.text();",
+							"    pm.expect(response).to.contain('POSTMAN / HTTP/1.1');",
+							"    pm.expect(response).to.contain('content-type: multipart/form-data');",
+							"    pm.expect(response).to.contain('Content-Disposition: form-data; name=\"dataKey\"');",
+							"    pm.expect(response).to.contain('Content-Disposition: form-data; name=\"dataFile\"');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POSTMAN",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "dataKey",
+							"value": "dataValue",
+							"type": "text"
+						},
+						{
+							"key": "dataFile",
+							"src": "test/integration/custom-http-method/upload-file.csv",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4041",
+					"host": [
+						"localhost"
+					],
+					"port": "4041"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "raw",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36aee6c6-7565-412b-ad9b-0b48a1e3271f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response Body: raw\", function () {",
+							"    var response = pm.response.text();",
+							"    pm.expect(response).to.contain('POSTMAN / HTTP/1.1');",
+							"    pm.expect(response).to.contain('content-type: application/json');",
+							"    pm.expect(response).to.contain('content-length: 16');",
+							"    pm.expect(response).to.contain('{ \"foo\": \"bar\" }');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POSTMAN",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"foo\": \"bar\" }"
+				},
+				"url": {
+					"raw": "localhost:4041",
+					"host": [
+						"localhost"
+					],
+					"port": "4041"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "body disabled",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7ddebe16-dce1-487e-8558-161704d9bb8d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response Body: body disabled\", function () {",
+							"    var response = pm.response.text();",
+							"    pm.expect(response).to.contain('POSTMAN / HTTP/1.1');",
+							"    pm.expect(response).to.not.contain('content-type');",
+							"    pm.expect(response).to.contain('content-length: 0');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POSTMAN",
+				"header": [],
+				"body": {
+          "disabled": true,
+					"mode": "raw",
+					"raw": "foo=bar"
+				},
+				"url": {
+					"raw": "localhost:4041",
+					"host": [
+						"localhost"
+					],
+					"port": "4041"
+				}
+			},
+			"response": []
+		}
+	]
+}
