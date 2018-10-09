@@ -70,7 +70,7 @@ program
             const runError = err || summary.run.error || summary.run.failures.length;
 
             if (err) {
-                console.error(`\n  error: ${err.message || err}\n`);
+                console.error(`error: ${err.message || err}\n`);
                 err.friendly && console.error(`  ${err.friendly}\n`);
             }
             runError && !_.get(options, 'suppressExitCode') && process.exit(1);
@@ -79,7 +79,7 @@ program
 
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {
-    console.error(`\n  error: invalid command \`${command}\`\n`);
+    console.error(`error: invalid command \`${command}\`\n`);
     program.help();
 });
 
@@ -119,7 +119,7 @@ function run (argv, callback) {
 
         // in case of an error, log error message and print help message.
         if (error) {
-            console.error(`\n  error: ${error.message || error}\n`);
+            console.error(`error: ${error.message || error}\n`);
             program.help();
         }
     });
