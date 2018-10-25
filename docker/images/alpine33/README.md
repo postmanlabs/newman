@@ -1,4 +1,4 @@
-# newman_alpine33
+# newman_alpine33 (deprecated)
 
 This image runs newman on node v8 on Alpine 3.3
 
