@@ -24,7 +24,7 @@ how docker can drastically simplify development and deployment.
    * <a href="https://hub.docker.com/r/postman/newman_ubuntu/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu">Documentation</a>
 
-### Alpine 3.3 (lightweight deprecated):
+### Alpine 3.3 (lightweight, deprecated):
    * <a href="https://hub.docker.com/r/postman/newman_alpine33/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">Documentation</a>
 
@@ -33,7 +33,7 @@ how docker can drastically simplify development and deployment.
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu1404">Documentation</a>
 
 ### Note:
-The Docker images Alpine 3.3 and Ubuntu 14.04 for Newman are deprecated in the upcoming Newman versions. It is advised to use the Docker images Alpine (lightweight) and Ubuntu for Newman.
+The Docker images Alpine 3.3 and Ubuntu 14.04 for Newman are deprecated in the upcoming Newman versions. It is advised to use the Docker images postman/newman_alpine and postman/newman_ubuntu for Newman.
 
 ## Using the docker image
 
