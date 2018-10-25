@@ -16,24 +16,24 @@ software development. Visit
 how docker can drastically simplify development and deployment.
 
 ## There are four available Docker images for Newman
-### Alpine (lightweight):
+### postman/newman_alpine (lightweight):
    * <a href="https://hub.docker.com/r/postman/newman_alpine/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine">Documentation</a>
 
-### Ubuntu:
+### postman/newman_ubuntu:
    * <a href="https://hub.docker.com/r/postman/newman_ubuntu/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu">Documentation</a>
 
-### Alpine 3.3 (lightweight, deprecated):
+### postman/newman_alpine33 (lightweight, deprecated):
    * <a href="https://hub.docker.com/r/postman/newman_alpine33/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">Documentation</a>
 
-### Ubuntu 14.04 (deprecated):
+### postman/newman_ubuntu1404 (deprecated):
    * <a href="https://hub.docker.com/r/postman/newman_ubuntu1404/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu1404">Documentation</a>
 
 ### Note:
-The Docker images Alpine 3.3 and Ubuntu 14.04 for Newman are deprecated in the upcoming Newman versions. It is advised to use the Docker images postman/newman_alpine and postman/newman_ubuntu for Newman.
+The Docker images postman/newman_alpine33 and postman/newman_ubuntu1404 for Newman are deprecated. It is advised to use the Docker images postman/newman_alpine and postman/newman_ubuntu for Newman.
 
 ## Using the docker image
 
