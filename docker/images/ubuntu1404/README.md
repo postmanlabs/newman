@@ -1,4 +1,4 @@
-# newman_ubuntu1404
+# newman_ubuntu1404 (deprecated)
 
 This image runs newman on node v8 on Ubuntu 14.04.2
 
