@@ -1,6 +1,6 @@
 # newman_ubuntu
 
-This image runs newman on node v8 on Ubuntu
+This image runs newman on node v8 on Ubuntu 18.04
 
 Build the image,
 
