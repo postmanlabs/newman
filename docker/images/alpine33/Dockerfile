@@ -1,5 +1,5 @@
 FROM alpine:3.3
-MAINTAINER Postman Labs <help@getpostman.com>
+LABEL maintainer="Postman Labs <help@getpostman.com>"
 
 ARG NODE_VERSION=8
 ARG NEWMAN_VERSION
