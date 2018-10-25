@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Postman Labs <help@getpostman.com>
+LABEL maintainer="Postman Labs <help@getpostman.com>"
 
 ARG NODE_VERSION=8
 ARG NEWMAN_VERSION
@@ -14,6 +14,7 @@ RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
 ADD https://deb.nodesource.com/setup_$NODE_VERSION.x /opt/install_node.sh
 
 RUN apt-get update -y && \
+    apt-get upgrade -y && \
     apt-get install -y gnupg && \
     bash /opt/install_node.sh && \
     apt-get install -y nodejs && \
