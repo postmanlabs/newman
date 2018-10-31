@@ -1,0 +1,5 @@
+# Set the default behavior
+* text=auto
+
+# JavaScript files will always have LF line endings
+*.js text eol=lf
