@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.8
 LABEL maintainer="Postman Labs <help@getpostman.com>"
 
 ARG NODE_VERSION=8
@@ -13,9 +13,11 @@ RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
         exit 1; \
     fi && \
     # Add the latest Alpine Linux package to the repositories list
-    echo -e "http://nl.alpinelinux.org/alpine/v3.3/main\nhttp://nl.alpinelinux.org/alpine/v3.3/community" > /etc/apk/repositories && \
-    # Update existing packages and install Node dependencies
-    apk add --update --no-cache libgcc libstdc++ jq curl && \
+    echo -e "http://nl.alpinelinux.org/alpine/v3.8/main\nhttp://nl.alpinelinux.org/alpine/v3.8/community" > /etc/apk/repositories && \
+    # Update existing packages
+    apk update --no-cache && \
+    # Install Node dependencies
+    apk add libgcc libstdc++ jq curl && \
     # Determine the complete Semver Node version for the provided Node major version in $NODE_VERSION
     FULL_NODE_VERSION=$(curl --silent "https://api.github.com/repos/${ALPINE_NODE_REPO}/releases" | jq -r '.[].tag_name' | grep -oE "^${NODE_VERSION}\.\d+\.\d+$" | sort -r -t. -k 1,1nr -k 2,2nr -k 3,3nr | head -n1) && \
     # Download the appropriate Node binary for Alpine Linux
@@ -42,7 +44,7 @@ WORKDIR /etc/newman
 # Set newman as the default container command
 # Now you can run the container via
 #
-# docker run -v /home/collections:/etc/newman -t postman/newman_alpine33 -c YourCollection.json.postman_collection \
+# docker run -v /home/collections:/etc/newman -t postman/newman_alpine -c YourCollection.json.postman_collection \
 #                                                                        -e YourEnvironment.postman_environment \
 #                                                                        -H newman_report.html
 ENTRYPOINT ["newman"]
