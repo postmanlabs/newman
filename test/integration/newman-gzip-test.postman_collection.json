@@ -8,7 +8,7 @@
   },
   "item": [
     {
-      "name": "http://postman-echo.com/gzip",
+      "name": "https://postman-echo.com/gzip",
       "event": [
         {
           "listen": "test",
@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "http://postman-echo.com/gzip",
+        "url": "https://postman-echo.com/gzip",
         "method": "GET",
         "header": [],
         "body": {

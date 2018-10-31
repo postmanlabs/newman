@@ -70,7 +70,7 @@ describe('project repository', function () {
                 json.bin && Object.keys(json.bin).forEach(function (scriptName) {
                     var fileContent = fs.readFileSync(json.bin[scriptName]).toString();
 
-                    expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent),
+                    expect((/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g).test(fileContent),
                         `invalid or missing shebang in ${json.bin[scriptName]}`).to.be.ok;
                 });
             });
@@ -104,11 +104,11 @@ describe('project repository', function () {
                     fs.readFile(name, function (error, content) {
                         expect(error).to.equal(null);
                         if (fileDetails.ext === '.sh') {
-                            expect(/^#!\/bin\/bash[\r\n][\W\w]*$/g.test(content),
+                            expect((/^#!\/bin\/bash[\r\n][\W\w]*$/g).test(content),
                                 `invalid or missing hashbang in ${name}`).to.be.ok;
                         }
                         else {
-                            expect(/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g.test(content),
+                            expect((/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g).test(content),
                                 `invalid or missing hashbang in ${name}`).to.be.ok;
                         }
                     });

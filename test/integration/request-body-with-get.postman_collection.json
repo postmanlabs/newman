@@ -1,0 +1,123 @@
+{
+  "info": {
+    "_postman_id": "ecb63307-fc41-4180-a0f9-fc3d2abb5103",
+    "name": "request-body-with-get",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [{
+      "name": "default",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "b1617a42-0135-40e7-b7c1-d8e6cba90bf8",
+          "type": "text/javascript",
+          "exec": [
+            "pm.test(\"Response Body: default\", function () {",
+            "    var response = pm.response.text();",
+            "    pm.expect(response).to.contain('GET / HTTP/1.1');",
+            "    pm.expect(response).to.not.contain('content-type');",
+            "});"
+          ]
+        }
+      }],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"foo\": \"bar\" }"
+        },
+        "url": {
+          "raw": "localhost:4041",
+          "host": [
+            "localhost"
+          ],
+          "port": "4041"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "form-data",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "540f949d-5861-4067-8211-b17d51fba726",
+          "type": "text/javascript",
+          "exec": [
+            "pm.test(\"Response Body: form-data\", function () {",
+            "    var response = pm.response.text();",
+            "    pm.expect(response).to.contain('GET / HTTP/1.1');",
+            "    pm.expect(response).to.contain('content-type: multipart/form-data');",
+            "    pm.expect(response).to.contain('Content-Disposition: form-data; name=\"dataKey\"');",
+            "});"
+          ]
+        }
+      }],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [{
+            "key": "dataKey",
+            "value": "dataValue",
+            "type": "text"
+          }]
+        },
+        "url": {
+          "raw": "localhost:4041",
+          "host": [
+            "localhost"
+          ],
+          "port": "4041"
+        }
+      },
+      "response": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "name": "raw",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "36aee6c6-7565-412b-ad9b-0b48a1e3271f",
+          "type": "text/javascript",
+          "exec": [
+            "pm.test(\"Response Body: raw\", function () {",
+            "    var response = pm.response.text();",
+            "    pm.expect(response).to.contain('GET / HTTP/1.1');",
+            "    pm.expect(response).to.contain('content-type: application/json');",
+            "    pm.expect(response).to.contain('content-length: 16');",
+            "    pm.expect(response).to.contain('{ \"foo\": \"bar\" }');",
+            "});"
+          ]
+        }
+      }],
+      "request": {
+        "method": "GET",
+        "header": [{
+          "key": "content-type",
+          "value": "application/json"
+        }],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"foo\": \"bar\" }"
+        },
+        "url": {
+          "raw": "localhost:4041",
+          "host": [
+            "localhost"
+          ],
+          "port": "4041"
+        }
+      },
+      "response": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ]
+}
