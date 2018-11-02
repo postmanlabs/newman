@@ -1,7 +1,7 @@
 FROM alpine:3.8
 LABEL maintainer="Postman Labs <help@getpostman.com>"
 
-ARG NODE_VERSION=8
+ARG NODE_VERSION=10
 ARG NEWMAN_VERSION
 
 # Set environment variables
@@ -13,7 +13,7 @@ RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
         exit 1; \
     fi && \
     # Add the latest Alpine Linux package to the repositories list
-    echo -e "http://nl.alpinelinux.org/alpine/v3.8/main\nhttp://nl.alpinelinux.org/alpine/v3.8/community" > /etc/apk/repositories && \
+    echo -e "https://nl.alpinelinux.org/alpine/v3.8/main/\nhttps://nl.alpinelinux.org/alpine/v3.8/community/" > /etc/apk/repositories && \
     # Update existing packages
     apk update --no-cache && \
     # Install Node dependencies
