@@ -1,11 +1,12 @@
 # newman_alpine33 (deprecated)
+## Use postman/newman:alpine instead. See https://hub.docker.com/r/postman/newman/ for more available tags
 
 This image runs newman on node v8 on Alpine 3.3
 
 Build the image:
 
 ```terminal
-docker build -t postman/newman_alpine33 .
+docker build -t postman/newman_alpine33 --build-arg NEWMAN_VERSION="full semver version" .
 ```
 
 Or get it from [Docker Hub](https://registry.hub.docker.com/u/postman/newman_alpine33/):

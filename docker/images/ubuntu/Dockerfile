@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 LABEL maintainer="Postman Labs <help@getpostman.com>"
 
-ARG NODE_VERSION=8
+ARG NODE_VERSION=10
 ARG NEWMAN_VERSION
 
 # Bail out early if NODE_VERSION is not provided

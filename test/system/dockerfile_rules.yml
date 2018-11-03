@@ -24,7 +24,7 @@
     multiline_regex: /\\$/
   line_rules:
     FROM:
-      paramSyntaxRegex: /^[a-z0-9./-]+(:[a-z0-9.]+)?$/
+      paramSyntaxRegex: /^[a-z0-9./-]+(:[a-z0-9.-]+)?$/
       rules:
         -
           label: "is_latest_tag"
@@ -44,9 +44,6 @@
           reference_url:
             - "https://docs.docker.com/reference/builder/"
             - "#from"
-    MAINTAINER:
-      paramSyntaxRegex: /.+/
-      rules: []
     RUN:
       paramSyntaxRegex: /.+/
       rules:
