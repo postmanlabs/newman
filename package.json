@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Command-line companion utility for Postman",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
@@ -53,7 +53,7 @@
     "postman-collection": "3.3.0",
     "postman-collection-transformer": "2.8.0",
     "postman-request": "2.88.1-postman.1",
-    "postman-runtime": "7.4.0",
+    "postman-runtime": "7.4.1",
     "pretty-ms": "4.0.0",
     "semver": "5.6.0",
     "serialised-error": "1.1.3",
