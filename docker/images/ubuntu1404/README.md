@@ -1,11 +1,12 @@
-# newman_ubuntu1404
+# newman_ubuntu1404 (deprecated)
+## Use postman/newman:ubuntu instead. See https://hub.docker.com/r/postman/newman/ for more available tags
 
-This image runs newman on node v8 on Ubuntu 14.04.2
+This image runs newman on node v10 on Ubuntu 14.04.2
 
 Build the image,
 
 ```terminal
-docker build -t postman/newman_ubuntu1404 .
+docker build -t postman/newman_ubuntu1404 --build-arg NEWMAN_VERSION="full semver version" .
 ```
 
 Or get it from [docker hub](https://registry.hub.docker.com/u/postman/newman_ubuntu1404/)

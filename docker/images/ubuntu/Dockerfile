@@ -1,4 +1,4 @@
-FROM ubuntu:14.04.2
+FROM ubuntu:18.04
 LABEL maintainer="Postman Labs <help@getpostman.com>"
 
 ARG NODE_VERSION=10
@@ -13,10 +13,14 @@ RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
 # Install node
 ADD https://deb.nodesource.com/setup_$NODE_VERSION.x /opt/install_node.sh
 
-RUN bash /opt/install_node.sh && \
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y gnupg && \
+    bash /opt/install_node.sh && \
     apt-get install -y nodejs && \
     npm install -g newman@${NEWMAN_VERSION} && \
-    rm /opt/install_node.sh;
+    rm /opt/install_node.sh && \
+    apt-get purge -y gnupg;
 
 # Set environment variables
 ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8"
@@ -34,7 +38,7 @@ WORKDIR /etc/newman
 # Set newman as the default container command
 # Now you can run the container via
 #
-# docker run -v /home/collections:/etc/newman -t postman/newman_ubuntu1404 -c YourCollection.json.postman_collection \
+# docker run -v /home/collections:/etc/newman -t postman/newman_ubuntu -c YourCollection.json.postman_collection \
 #                                                                          -e YourEnvironment.postman_environment \
 #                                                                          -H newman_report.html
 ENTRYPOINT ["newman"]

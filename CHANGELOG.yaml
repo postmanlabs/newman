@@ -1,4 +1,14 @@
 # Newman Changelog
+4.2.0:
+  date: 2018-11-03
+    - '#1776 Introduced the generic postman/newman Docker image, bumped Node version to 10'
+    - '#1770 Shifted to Travis for Windows builds'
+    - '#1769 Added .gitattributes to enforce consistent line endings for .js files'
+    - '#1743 Updated CLI reporter left padding to account for commander v2.19 changes'
+    - '#1731 Added support for custom HTTP verbs'
+    - '#1717 Updated Docker image documentation'
+    - 'Updated dependencies'
+
 4.1.0:
   date: 2018-08-29
   new features:

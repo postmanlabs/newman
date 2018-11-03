@@ -15,14 +15,25 @@ software development. Visit
 <a href="https://www.docker.com/whatisdocker" target="_blank">https://www.docker.com/whatisdocker</a> to read more about
 how docker can drastically simplify development and deployment.
 
-## There are two available Docker images for Newman
-### Alpine 3.3 (lightweight):
+## There are four available Docker images for Newman
+### postman/newman:alpine (lightweight):
+   * <a href="https://hub.docker.com/r/postman/newman/">DockerHub</a>
+   * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine">Documentation</a>
+
+### postman/newman:ubuntu:
+   * <a href="https://hub.docker.com/r/postman/newman/">DockerHub</a>
+   * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu">Documentation</a>
+
+### postman/newman_alpine33 (lightweight, deprecated):
    * <a href="https://hub.docker.com/r/postman/newman_alpine33/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/alpine33">Documentation</a>
 
-### Ubuntu 14.04:
+### postman/newman_ubuntu1404 (deprecated):
    * <a href="https://hub.docker.com/r/postman/newman_ubuntu1404/">DockerHub</a>
    * <a href="https://github.com/postmanlabs/newman/tree/develop/docker/images/ubuntu1404">Documentation</a>
+
+### Note:
+The Docker images postman/newman_alpine33 and postman/newman_ubuntu1404 for Newman are deprecated. It is advised to use [postman/newman](https://hub.docker.com/r/postman/newman/) instead.
 
 ## Using the docker image
 
@@ -36,11 +47,11 @@ popular operating systems</a>. Choose your operating system and follow the instr
 
 **Step 1:**
 
-Pull the <a href="https://registry.hub.docker.com/u/postman/newman_ubuntu1404/" target="_blank">newman docker
+Pull the <a href="https://registry.hub.docker.com/u/postman/newman:ubuntu/" target="_blank">newman docker
 image</a> from docker hub:
 
 ```terminal
-docker pull postman/newman_ubuntu1404
+docker pull postman/newman:ubuntu
 ```
 
 **Step 2:**
@@ -48,7 +59,7 @@ docker pull postman/newman_ubuntu1404
 Run newman commands on the image:
 
 ```terminal
-docker run -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
+docker run -t postman/newman:ubuntu run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
 ```
 
 ### Build the docker image from this repository
@@ -59,7 +70,7 @@ docker run -t postman/newman_ubuntu1404 run https://www.getpostman.com/collectio
 Clone this repository:
 
 ```terminal
-git clone https://github.com/postmanlabs/newman-docker.git
+git clone https://github.com/postmanlabs/newman.git
 ```
 
 **Step 2:**
@@ -67,7 +78,7 @@ git clone https://github.com/postmanlabs/newman-docker.git
 Build the image:
 
 ```terminal
-docker build -t postman/newman_ubuntu1404 ubuntu1404
+docker build -t postman/newman:ubuntu --build-arg NEWMAN_VERSION="full semver version" .;
 ```
 
 **Step 3:**
@@ -75,7 +86,7 @@ docker build -t postman/newman_ubuntu1404 ubuntu1404
 Run a collection using the newman image:
 
 ```terminal
-docker run -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
+docker run -t postman/newman:ubuntu run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda
 ```
 
 
@@ -88,7 +99,7 @@ directory of your collection files into that location and provide the file refer
 ```terminal
 # Mount host collections folder ~/collections, onto /etc/newman on the docker image, so that newman
 # has access to collections
-docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 run "HTTPBinNewmanTestNoEnv.json.postman_collection"
+docker run -v ~/collections:/etc/newman -t postman/newman:ubuntu run "HTTPBinNewmanTestNoEnv.json.postman_collection"
 ```
 
 You are not required to mount a volume if you do not need to save newman report to the host, and your collection is
@@ -103,7 +114,7 @@ To know more about mounting volumes, visit
 Run a local collection, pass an environment to it, and save the JSON report on the host.
 
 ```terminal
-docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 \
+docker run -v ~/collections:/etc/newman -t postman/newman:ubuntu \
     run "HTTPBinNewmanTest.json.postman_collection" \
     --environment="HTTPBinNewmanTestEnv.json.postman_environment" \
     --reporters="json,cli" --reporter-json-export="newman-results.json"
@@ -112,7 +123,7 @@ docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 \
 <br />Run a remote collection, pass it a local environment, and save JUnit XML test report on the host
 
 ```terminal
-docker run -v ~/collections:/etc/newman -t postman/newman_ubuntu1404 \
+docker run -v ~/collections:/etc/newman -t postman/newman:ubuntu \
     run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda \
     --environment="HTTPBinNewmanTestEnv.json.postman_environment" \
     --reporters="junit,cli" --reporter-junit-export="newman-report.xml"
@@ -140,7 +151,7 @@ function onExit {
 # call onExit when the script exits
 trap onExit EXIT;
 
-docker run --entrypoint -t postman/newman_ubuntu1404 run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda --suppress-exit-code;
+docker run --entrypoint -t postman/newman:ubuntu run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda --suppress-exit-code;
 ```
 
 ## Using Newman Docker images with custom reporters
@@ -151,18 +162,18 @@ docker run -v "<collection-directory>:/etc/newman" --entrypoint /bin/<bash-or-sh
 
 In the above example,
 * `<collection-directory>` is the source directory for collections. This directory will also be used to write Newman reports.
-* `<image>` is a combination of the image name (and optional tag). For instance, `postman/newman_ubuntu1404` or `postman/newman_alpine33`
+* `<image>` is a combination of the image name (and optional tag). For instance, `postman/newman:ubuntu` or `postman/newman:alpine`
 * `<reporter-name>` is the reporter that has to be installed and loaded for the `newman run ...`
 
-### Alpine 3.3
+### Alpine
 Note that the entrypoint here is `/bin/sh`, and **not** `/bin/bash`
 ```console
-docker run -v "~/collections:/etc/newman" --entrypoint /bin/sh postman/newman_alpine33 -c "npm i -g newman-reporter-html; newman run sample-collection.json -r html"
+docker run -v "~/collections:/etc/newman" --entrypoint /bin/sh postman/newman:alpine -c "npm i -g newman-reporter-html; newman run sample-collection.json -r html"
 ```
 
-### Ubuntu 14.04:
+### Ubuntu
 ```console
-docker run -v "~/collections:/etc/newman" --entrypoint /bin/bash postman/newman_ubuntu1404 -c "npm i -g newman-reporter-html; newman run sample-collection.json -r html"
+docker run -v "~/collections:/etc/newman" --entrypoint /bin/bash postman/newman:ubuntu -c "npm i -g newman-reporter-html; newman run sample-collection.json -r html"
 ```
 
 ## Node version

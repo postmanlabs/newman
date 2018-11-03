@@ -1,25 +1,18 @@
-FROM ubuntu:14.04.2
+FROM node:10-alpine
 LABEL maintainer="Postman Labs <help@getpostman.com>"
 
-ARG NODE_VERSION=10
 ARG NEWMAN_VERSION
+
+# Set environment variables
+ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" ALPINE_NODE_REPO="oznu/alpine-node"
 
 # Bail out early if NODE_VERSION is not provided
 RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then \
         echo "\033[0;31mA valid semver Newman version is required in the NEWMAN_VERSION build-arg\033[0m"; \
         exit 1; \
-    fi
-
-# Install node
-ADD https://deb.nodesource.com/setup_$NODE_VERSION.x /opt/install_node.sh
-
-RUN bash /opt/install_node.sh && \
-    apt-get install -y nodejs && \
-    npm install -g newman@${NEWMAN_VERSION} && \
-    rm /opt/install_node.sh;
-
-# Set environment variables
-ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8"
+    fi && \
+    # Install Newman globally
+    npm install --global newman@${NEWMAN_VERSION};
 
 # Set workdir to /etc/newman
 # When running the image, mount the directory containing your collection to this location
@@ -34,7 +27,7 @@ WORKDIR /etc/newman
 # Set newman as the default container command
 # Now you can run the container via
 #
-# docker run -v /home/collections:/etc/newman -t postman/newman_ubuntu1404 -c YourCollection.json.postman_collection \
-#                                                                          -e YourEnvironment.postman_environment \
-#                                                                          -H newman_report.html
+# docker run -v /home/collections:/etc/newman -t postman/newman_alpine -c YourCollection.json.postman_collection \
+#                                                                        -e YourEnvironment.postman_environment \
+#                                                                        -H newman_report.html
 ENTRYPOINT ["newman"]
