@@ -1,4 +1,9 @@
 # Newman Changelog
+4.2.2:
+  date: 2018-11-07
+  fixed bugs:
+    - '#1784 Updated postman-runtime to v7.4.2, which fixes a hawk security vulnerability'
+
 4.2.1:
   date: 2018-11-04
   fixed bugs:
