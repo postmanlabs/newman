@@ -78,7 +78,6 @@ function createRedirectServer () {
         var hops,
             data = '';
 
-
         // path: /{n}
         if ((/^\/\d+$/).test(req.url)) {
             hops = parseInt(req.url.substring(1), 10) - 1;
