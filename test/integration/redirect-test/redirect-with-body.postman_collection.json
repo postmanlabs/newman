@@ -1,0 +1,198 @@
+{
+  "info": {
+    "_postman_id": "9f20bc41-541b-420c-a0dc-0e25d019e241",
+    "name": "redirect-with-body",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [{
+      "name": "PUT 307 + FormData",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "05db1385-6c2d-4432-998c-3dfd60f06102",
+          "exec": [
+            "const responseJSON = pm.response.json();",
+            "",
+            "pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);",
+            "});",
+            "",
+            "",
+            "pm.test(\"Response body sanity\", function () {",
+            "    pm.expect(responseJSON).to.have.property('url', '/');",
+            "    pm.expect(responseJSON).to.have.property('method', 'PUT');",
+            "    pm.expect(responseJSON).to.have.property('data');",
+            "    pm.expect(responseJSON.data)",
+            "        .to.include('Content-Disposition: form-data; name=\"key1\"')",
+            "        .and.include('POSTMAN');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [{
+            "key": "key1",
+            "value": "POSTMAN",
+            "type": "text"
+          }]
+        },
+        "url": {
+          "raw": "localhost:4042/status/307",
+          "host": [
+            "localhost"
+          ],
+          "port": "4042",
+          "path": [
+            "status",
+            "307"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST 307 + Raw",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "05db1385-6c2d-4432-998c-3dfd60f06102",
+          "exec": [
+            "const responseJSON = pm.response.json();",
+            "",
+            "pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);",
+            "});",
+            "",
+            "",
+            "pm.test(\"Response body sanity\", function () {",
+            "    pm.expect(responseJSON).to.have.property('url', '/');",
+            "    pm.expect(responseJSON).to.have.property('method', 'POST');",
+            "    pm.expect(responseJSON).to.have.property('data', 'POSTMAN');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "POSTMAN"
+        },
+        "url": {
+          "raw": "localhost:4042/status/307",
+          "host": [
+            "localhost"
+          ],
+          "port": "4042",
+          "path": [
+            "status",
+            "307"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST 308 + FormData",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "05db1385-6c2d-4432-998c-3dfd60f06102",
+          "exec": [
+            "const responseJSON = pm.response.json();",
+            "",
+            "pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);",
+            "});",
+            "",
+            "",
+            "pm.test(\"Response body sanity\", function () {",
+            "    pm.expect(responseJSON).to.have.property('url', '/');",
+            "    pm.expect(responseJSON).to.have.property('method', 'POST');",
+            "    pm.expect(responseJSON).to.have.property('data');",
+            "    pm.expect(responseJSON.data)",
+            "        .to.include('Content-Disposition: form-data; name=\"key1\"')",
+            "        .and.include('POSTMAN');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [{
+            "key": "key1",
+            "value": "POSTMAN",
+            "type": "text"
+          }]
+        },
+        "url": {
+          "raw": "localhost:4042/status/308",
+          "host": [
+            "localhost"
+          ],
+          "port": "4042",
+          "path": [
+            "status",
+            "308"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT 308 + Raw",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "05db1385-6c2d-4432-998c-3dfd60f06102",
+          "exec": [
+            "const responseJSON = pm.response.json();",
+            "",
+            "pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);",
+            "});",
+            "",
+            "",
+            "pm.test(\"Response body sanity\", function () {",
+            "    pm.expect(responseJSON).to.have.property('url', '/');",
+            "    pm.expect(responseJSON).to.have.property('method', 'PUT');",
+            "    pm.expect(responseJSON).to.have.property('data', 'POSTMAN');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "POSTMAN"
+        },
+        "url": {
+          "raw": "localhost:4042/status/308",
+          "host": [
+            "localhost"
+          ],
+          "port": "4042",
+          "path": [
+            "status",
+            "308"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

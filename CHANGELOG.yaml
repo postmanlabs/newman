@@ -1,4 +1,9 @@
 # Newman Changelog
+4.2.3:
+  date: 2018-12-15
+  fixed bugs:
+    - '#1823 Added missing skipped flag to assertion information aggregator'
+
 4.2.2:
   date: 2018-11-07
   fixed bugs:

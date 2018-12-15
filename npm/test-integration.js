@@ -9,9 +9,11 @@ var fs = require('fs'),
     recursive = require('recursive-readdir'),
     newman = require(pathUtils.join(__dirname, '..', 'index')),
 
-    server = require('./server').createRawEchoServer(),
+    echoServer = require('./server').createRawEchoServer(),
+    redirectServer = require('./server').createRedirectServer(),
 
     LOCAL_TEST_ECHO_PORT = 4041,
+    LOCAL_TEST_REDIRECT_PORT = 4042,
 
     /**
      * The source directory containing integration test collections and folders.
@@ -65,15 +67,22 @@ module.exports = function (exit) {
         },
 
         /**
-         * Start local echo server used in collections (custom HTTP method, body with GET).
+         * Start local server used in collections
+         *   - echoServer = custom HTTP method, body with GET
+         *   - redirectServer = protocol profile behavior
          *
          * @param {Object} suites - An set of tests, arranged by test group names as keys.
          * @param {Function} next - A callback function whose invocation marks the end of the integration test run.
          * @returns {*}
          */
         function (suites, next) {
-            server.listen(LOCAL_TEST_ECHO_PORT, function (err) {
-                next(err, suites);
+            // start echoServer first
+            echoServer.listen(LOCAL_TEST_ECHO_PORT, function (err) {
+                if (err) { return next(err); }
+                // start redirectServer once echoServer is started
+                redirectServer.listen(LOCAL_TEST_REDIRECT_PORT, function (err) {
+                    next(err, suites);
+                });
             });
         },
 
@@ -130,8 +139,13 @@ module.exports = function (exit) {
             console.error(_.omit(err, ['stacktrace', 'stack']), { colors: true });
         }
 
-        server.close(function () {
-            exit(err, results);
+        // close echoServer
+        echoServer.close(function () {
+            // close redirectServer
+            redirectServer.close(function () {
+                // exit once both the local server are stopped
+                exit(err, results);
+            });
         });
     });
 };
