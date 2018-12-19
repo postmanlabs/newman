@@ -407,6 +407,7 @@ The built-in JUnit reporter can output a summary of the collection run to a JUni
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
+| `--reporter-junit-collection-as-class-name` | Sets the `classname` attribute on the `testsuite` element to be the name of the collection suffixed with `.postman_collection.json` |
 
 Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
