@@ -3,8 +3,6 @@ require('shelljs/global');
 require('colors');
 
 var async = require('async'),
-    _ = require('lodash'),
-    path = require('path'),
     packity = require('packity'),
     expect = require('chai').expect,
     Mocha = require('mocha'),
@@ -15,18 +13,7 @@ var async = require('async'),
      *
      * @type {String}
      */
-    SPEC_SOURCE_DIR = './test/system',
-
-    /**
-     * Load a JSON from file synchronously, used as an alternative to dynamic requires.
-     *
-     * @param {String} file - The path to the JSON file to load from.
-     * @returns {Object} - The parsed JSON object contained in the file at the provided path.
-     * @throws {SyntaxError} - Throws an error if the provided JSON file is invalid.
-     */
-    loadJSON = function (file) {
-        return JSON.parse(require('fs').readFileSync(path.join(__dirname, file)).toString());
-    };
+    SPEC_SOURCE_DIR = './test/system';
 
 module.exports = function (exit) {
     // banner line
@@ -79,54 +66,6 @@ module.exports = function (exit) {
                 });
                 mocha = null; // cleanup
             });
-        },
-
-        /**
-         * Execute nsp checks on project dependencies. In-program usage of nsp is a bit tricky as we have to emulate the
-         * cli script's usage of internal nsp functions.
-         *
-         * @param {Function} next - The callback function invoked upon completion of the NSP check.
-         * @returns {*}
-         */
-        function (next) {
-            var nsp = require('nsp'),
-                reporter = require('nsp/reporters').load('table'),
-                pkg = loadJSON('../package.json'),
-                nsprc = loadJSON('../.nsprc'),
-                opts = _.merge(nsp.sanitizeParameters({}), {
-                    offline: false,
-                    pkg: _.merge({
-                        dependencies: _.omit(pkg.dependencies, _.keys(nsprc.exclusions) || [])
-                    }, _.pick(pkg, ['name', 'version', 'homepage', 'repository']))
-                });
-
-            console.info('processing nsp for security vulnerabilities...\n');
-
-            // we do not pass full package for privacy concerns and also to add the ability to ignore exclude packages,
-            // hence we customise the package before we send it
-            nsp
-                .check(opts)
-                .then(function (result) {
-                    // in case an nsp violation is found, we raise an error
-                    if (!(result && result.data && result.data.length)) {
-                        console.info('nsp ok!\n'.green);
-
-                        return next();
-                    }
-
-                    console.error(reporter.check.success(result, opts));
-
-                    return next(1);
-                }, function (err) {
-                    console.error('There was an error processing NSP!\n'.red + (err.message || err).gray + '\n\n' +
-                        'Since NSP server failure is not a blocker for tests, tests are not marked as failure!');
-
-                    next();
-                })
-                .catch(function (err) {
-                    console.error('Error processing NSP!\n'.red + (err.message || err).gray);
-                    next(err);
-                });
         }
     ], exit);
 };
