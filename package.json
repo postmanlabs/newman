@@ -75,7 +75,6 @@
     "jsdoc-to-markdown": "4.0.1",
     "mocha": "5.2.0",
     "nock": "10.0.5",
-    "nsp": "3.2.1",
     "nyc": "13.0.1",
     "packity": "0.3.2",
     "parse-gitignore": "1.0.1",
