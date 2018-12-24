@@ -240,14 +240,4 @@ describe('project repository', function () {
             expect(yml.safeLoad(fs.readFileSync('./CHANGELOG.yaml')), 'not a valid yaml').to.be.ok;
         });
     });
-
-    describe('.nsprc', function () {
-        it('should exist', function (done) {
-            fs.stat('./.nsprc', done);
-        });
-
-        it('should have readable content', function () {
-            expect(fs.readFileSync('./.nsprc').toString()).to.be.ok;
-        });
-    });
 });
