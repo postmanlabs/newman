@@ -1,4 +1,12 @@
 # Newman Changelog
+4.3.0:
+  date: 2018-12-26
+  new features:
+    - 'Added AJV to the script sandbox'
+  fixed bugs:
+    - 'Respected form data field ordering'
+    - 'Fixed a bug that caused requests to fail when the URL protocol is not in lowercase'
+
 4.2.3:
   date: 2018-12-15
   fixed bugs:
