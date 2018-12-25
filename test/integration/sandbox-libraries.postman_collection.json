@@ -52,11 +52,6 @@
       }],
       "request": {
         "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": ""
-        },
         "url": {
           "raw": "https://postman-echo.com/get",
           "protocol": "https",
@@ -68,8 +63,7 @@
             "get"
           ]
         }
-      },
-      "response": []
+      }
     },
     {
       "name": "chai-postman",
@@ -145,11 +139,6 @@
       }],
       "request": {
         "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": ""
-        },
         "url": {
           "raw": "https://postman-echo.com/get",
           "protocol": "https",
@@ -161,8 +150,7 @@
             "get"
           ]
         }
-      },
-      "response": []
+      }
     },
     {
       "name": "pm api",
@@ -195,11 +183,6 @@
       }],
       "request": {
         "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": ""
-        },
         "url": {
           "raw": "https://postman-echo.com/get",
           "protocol": "https",
@@ -211,28 +194,6 @@
             "get"
           ]
         }
-      },
-      "response": []
-    }
-  ],
-  "event": [{
-      "listen": "prerequest",
-      "script": {
-        "id": "c825ef37-ad99-4543-a960-d1b43ec0ae88",
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "id": "46057da1-7417-4bfc-8346-e9416a77930e",
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
       }
     }
   ]
