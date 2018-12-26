@@ -139,10 +139,10 @@ module.exports = function (exit) {
             console.error(_.omit(err, ['stacktrace', 'stack']), { colors: true });
         }
 
-        // close echoServer
-        echoServer.close(function () {
-            // close redirectServer
-            redirectServer.close(function () {
+        // destroy echoServer
+        echoServer.destroy(function () {
+            // destroy redirectServer
+            redirectServer.destroy(function () {
                 // exit once both the local server are stopped
                 exit(err, results);
             });

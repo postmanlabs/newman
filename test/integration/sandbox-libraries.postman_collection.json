@@ -1,0 +1,200 @@
+{
+  "info": {
+    "_postman_id": "6ff067bf-fe1b-4acd-b519-bd8a1cceb911",
+    "name": "sandbox-libraries",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [{
+      "name": "AJV",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "3d39684d-ee0d-4ac7-8dd7-226fe87321bf",
+          "exec": [
+            "var Ajv = require('ajv'),",
+            "    schema = {",
+            "        \"properties\": {",
+            "            \"alpha\": {",
+            "                \"type\": \"boolean\"",
+            "            }",
+            "        }",
+            "    };",
+            "",
+            "pm.test(\"ajv.validate\", function() {",
+            "    var ajv = new Ajv({",
+            "        logger: false",
+            "    });",
+            "",
+            "    pm.expect(ajv.validate(schema, {",
+            "        alpha: true",
+            "    })).to.be.true;",
+            "    pm.expect(ajv.validate(schema, {",
+            "        alpha: 123",
+            "    })).to.be.false;",
+            "});",
+            "",
+            "pm.test(\"ajv.compile\", function() {",
+            "    var ajv = new Ajv({",
+            "            logger: false",
+            "        }),",
+            "        validate = ajv.compile(schema);",
+            "",
+            "    pm.expect(validate({",
+            "        alpha: true",
+            "    })).to.be.true;",
+            "    pm.expect(validate({",
+            "        alpha: 123",
+            "    })).to.be.false;",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "https://postman-echo.com/get",
+          "protocol": "https",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "get"
+          ]
+        }
+      }
+    },
+    {
+      "name": "chai-postman",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "feee8d53-6799-4d75-84a8-e87a379f32f8",
+          "exec": [
+            "var schema = {",
+            "    properties: {",
+            "        alpha: {",
+            "            type: 'boolean'",
+            "        }",
+            "    }",
+            "};",
+            "",
+            "pm.test(\"0: valid schema\", function() {",
+            "    pm.expect({",
+            "        alpha: true",
+            "    }).to.be.jsonSchema(schema);",
+            "    pm.expect('POSTMAN').to.be.jsonSchema({",
+            "        \"type\": \"string\"",
+            "    });",
+            "});",
+            "",
+            "pm.test(\"1: negated assertions\", function() {",
+            "    pm.expect({",
+            "        alpha: 123",
+            "    }).to.not.be.jsonSchema(schema);",
+            "    pm.expect(123).to.not.be.jsonSchema({",
+            "        \"type\": \"string\"",
+            "    });",
+            "});",
+            "",
+            "pm.test(\"2: incorrect assertions\", function() {",
+            "    pm.expect(function() {",
+            "        pm.expect({",
+            "            alpha: 123",
+            "        }).to.be.jsonSchema(schema);",
+            "    }).to.throw('expected data to satisfy schema but found following errors: \\ndata.alpha should be boolean');",
+            "});",
+            "",
+            "pm.test(\"3: incorrect negated assertions\", function() {",
+            "    pm.expect(function() {",
+            "        pm.expect({",
+            "            alpha: true",
+            "        }).to.not.be.jsonSchema(schema);",
+            "    }).to.throw('expected data to not satisfy schema');",
+            "});",
+            "",
+            "pm.test(\"4: pm.response.to\", function() {",
+            "    pm.response.to.have.jsonSchema({",
+            "        properties: {",
+            "            url: {",
+            "                type: 'string'",
+            "            }",
+            "        }",
+            "    });",
+            "});",
+            "",
+            "pm.test(\"5: pm.response.to.not\", function() {",
+            "    pm.response.to.not.have.jsonSchema({",
+            "        properties: {",
+            "            url: {",
+            "                type: 'number'",
+            "            }",
+            "        }",
+            "    });",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "https://postman-echo.com/get",
+          "protocol": "https",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "get"
+          ]
+        }
+      }
+    },
+    {
+      "name": "pm api",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "feee8d53-6799-4d75-84a8-e87a379f32f8",
+          "exec": [
+            "pm.test(\"pre-assert request\", function() {",
+            "    pm.expect(pm.request).to.have.property('to');",
+            "    pm.expect(pm.request.to).to.be.an('object');",
+            "    pm.request.to.be.ok;",
+            "    pm.request.to.not.be.a.postmanResponse;",
+            "    pm.request.to.not.have.header('Foo-Bar');",
+            "    pm.request.to.have.header('host');",
+            "    pm.request.to.be.a.postmanRequestOrResponse;",
+            "});",
+            "",
+            "pm.test(\"pre-assert response\", function() {",
+            "    pm.response.to.be.ok;",
+            "    pm.response.to.not.be.a.postmanRequest;",
+            "    pm.response.to.not.be.serverError;",
+            "    pm.response.to.not.have.statusCode(400);",
+            "    pm.response.to.have.statusCode(200);",
+            "    pm.response.to.have.statusReason('OK');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "https://postman-echo.com/get",
+          "protocol": "https",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "get"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 const net = require('net'),
-    http = require('http');
+    http = require('http'),
+    enableServerDestroy = require('server-destroy');
 
 /**
  * Echo raw request message to test
@@ -20,39 +21,40 @@ function createRawEchoServer () {
     var server;
 
     server = net.createServer(function (socket) {
-        // wait 1s for data
-        // @todo find better way to check data end
-        socket.setTimeout(1000);
-
         socket.on('data', function (chunk) {
-            !this.data && (this.data = '');
-            this.data += chunk.toString();
-        });
+            if (this.data === undefined) {
+                this.data = '';
 
-        socket.on('timeout', function () {
-            // Status Line
-            socket.write('HTTP/1.1 200 ok\r\n');
+                setTimeout(() => {
+                    // Status Line
+                    socket.write('HTTP/1.1 200 ok\r\n');
 
-            // Response Headers
-            socket.write('connection: close\r\n');
-            socket.write('content-type: text/plain\r\n');
-            socket.write('raw-request: ' + JSON.stringify(this.data) + '\r\n');
+                    // Response Headers
+                    socket.write('connection: close\r\n');
+                    socket.write('content-type: text/plain\r\n');
+                    socket.write('raw-request: ' + JSON.stringify(this.data) + '\r\n');
 
-            // CRLF
-            socket.write('\r\n');
+                    // CRLF
+                    socket.write('\r\n');
 
-            // Response Body
-            if (!this.data.startsWith('HEAD / HTTP/1.1')) {
-                socket.write(this.data);
+                    // Response Body
+                    if (!this.data.startsWith('HEAD / HTTP/1.1')) {
+                        socket.write(this.data);
+                    }
+
+                    socket.end();
+                }, 1000);
             }
 
-            socket.end();
+            this.data += chunk.toString();
         });
     });
 
     server.on('listening', function () {
         server.port = this.address().port;
     });
+
+    enableServerDestroy(server);
 
     return server;
 }
@@ -112,6 +114,8 @@ function createRedirectServer () {
     server.on('listening', function () {
         server.port = this.address().port;
     });
+
+    enableServerDestroy(server);
 
     return server;
 }
