@@ -1,4 +1,9 @@
 # Newman Changelog
+4.3.1:
+  date: 2018-12-26
+  fixed bugs:
+    - 'Added start timestamp, classname and failure message to JUnit reporter for Azure DevOps'
+
 4.3.0:
   date: 2018-12-26
   new features:
