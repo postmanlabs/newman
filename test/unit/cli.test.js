@@ -51,6 +51,7 @@ describe('cli parser', function () {
                         reporters: ['cli'],
                         delayRequest: 0,
                         globalVar: [],
+                        envVar: [],
                         folder: [],
                         color: 'auto',
                         timeout: 0,
