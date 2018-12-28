@@ -70,6 +70,23 @@ describe('CLI run options', function () {
         });
     });
 
+    it('should correctly work with environment variable overrides passed with --env-var', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var dummyVar=bar2', function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
+    it('should throw an error for missing --env-var values', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.equal('error: option `--env-var <value>\' argument missing\n');
+            done();
+        });
+    });
+
     it('should log a warning if the v1 collection format is used', function (done) {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/multi-level-folders-v1.postman_collection.json', function (code, stdout, stderr) {
