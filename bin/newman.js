@@ -41,6 +41,9 @@ program
     .option('--global-var <value>',
         'Allows the specification of global variables via the command line, in a key=value format',
         util.cast.memoizeKeyVal, [])
+    .option('--env-var <value>',
+        'Allows the specification of environment variables via the command line, in a key=value format',
+        util.cast.memoizeKeyVal, [])
     .option('--color <value>', 'Enable/Disable colored output. (auto|on|off)', util.cast.colorOptions, 'auto')
     .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
     .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer, 0)

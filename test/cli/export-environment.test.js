@@ -82,4 +82,44 @@ describe('newman run --export-environment', function () {
             done();
         });
     });
+
+    it('should override exported environment with those provided via --env-var', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var dummyVar=bar2 --export-environment out/test-environment.json', function (code) {
+            var environment;
+
+            try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }
+            catch (e) { console.error(e); }
+
+            expect(code, 'should have exit code of 0').to.eql(0);
+            expect(environment).to.be.ok;
+            expect(environment).to.have.property('_postman_exported_at');
+            expect(environment).to.have.property('values');
+            expect(environment.values).eql([
+                { key: 'dummyVar', value: 'bar2', type: 'any' }
+            ]);
+            expect(environment).to.have.property('_postman_variable_scope', 'environment');
+            done();
+        });
+    });
+
+    it('should override exported environment with those provided via --env-var even when run fails', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/overrides/failing-collection.json --env-var dummyVar=bar3 --export-environment out/test-environment.json', function (code) {
+            var environment;
+
+            try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }
+            catch (e) { console.error(e); }
+
+            expect(code, 'should not have exit code of 0').to.not.be.eql(0);
+            expect(environment).to.be.ok;
+            expect(environment).to.have.property('_postman_exported_at');
+            expect(environment).to.have.property('values');
+            expect(environment.values).eql([
+                { key: 'dummyVar', value: 'bar3', type: 'any' }
+            ]);
+            expect(environment).to.have.property('_postman_variable_scope', 'environment');
+            done();
+        });
+    });
 });
