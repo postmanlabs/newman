@@ -15,4 +15,4 @@ notifications:
 
 cache: npm
 
-install: npm install --prefer-offline
+install: npm ci --prefer-offline
