@@ -12,4 +12,7 @@ node_js:
 notifications:
   slack:
     secure: Fdl/sQMTl86jYN1r1CRRRQRgyFoslvrhkkfnM2JSdx4gODPgyg4nCPSKtU5j9wpSbbkq9A+YBeFv+Suh+xYNviegqa0AZbztydfFzVDS7xw43B/uR9Y4LwaP5Kis1WGuIOHawwFISNO3hTUei6aybKiKKlxvfqrARJaO01+Xxrg=
-cache: npm
+cache:
+  directories:
+    '$HOME/.npm'
+    node_modules
