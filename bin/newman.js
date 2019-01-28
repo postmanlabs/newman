@@ -80,10 +80,10 @@ program
         });
     });
 
-program.on('--help', function(){
-  console.log('')
-  console.log('To get available options for a command:');
-  console.log('  [command] -h');
+program.on('--help', function () {
+    console.info('');
+    console.info('To get available options for a command:');
+    console.info('  [command] -h');
 });
 
 // Warn on invalid command and then exits.
