@@ -80,6 +80,12 @@ program
         });
     });
 
+program.on('--help', function(){
+  console.log('')
+  console.log('To get available options for a command:');
+  console.log('  [command] -h');
+});
+
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {
     console.error(`error: invalid command \`${command}\`\n`);
