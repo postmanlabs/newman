@@ -1,0 +1,21 @@
+{
+  "info": {
+    "name": "Example Collection with a single GET request",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+
+  "item": [{
+    "name": "A simple GET request",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": ["tests['response code is 200'] = (responseCode.code === 200);"]
+      }
+    }],
+    "request": {
+      "url": "https://postman-echo.com/get?source=newman-sample-github-collection",
+      "method": "GET"
+    }
+  }]
+}
