@@ -19,7 +19,7 @@
 				}
 			],
 			"request": {
-				"url": "postman-echo.com/get",
+				"url": "https://postman-echo.com/get",
 				"method": "GET",
 				"header": [],
 				"body": {
