@@ -533,12 +533,20 @@ To use Newman in Docker check our [docker documentation](https://github.com/post
 
 ## Compatibility
 
+### NodeJS
+
 |      Newman       |    Node    |
 |:-----------------:|:----------:|
 |       v3.x        |  >= v4.x   |
 |       v4.x        |  >= v6.x   |
 
 The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
+
+### File Encoding
+
+Newman attempts to buest guess detect file encoding for the files that are provided as command line input. However, it
+mostly relies on NodeJS and underlying operating system to do the heavy lifting. Currently, `ASCII, ``UTF-8`, `UTF-16LE`
+and `ISO-8859-1` are the only ones that are detection assisted.
 
 [back to top](#table-of-contents)
 
