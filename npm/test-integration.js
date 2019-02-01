@@ -120,7 +120,8 @@ module.exports = function (exit) {
                     environment: test.environmentJSON,
                     globals: test.globalsJSON,
                     iterationData: test.dataCSV || test.dataJSON,
-                    abortOnFailure: true
+                    abortOnFailure: true,
+                    reporters: 'cli'
                 }, config.run), function (err, summary) {
                     err && (err.source = test); // store the meta in error
                     next(err, summary);
