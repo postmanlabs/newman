@@ -23,7 +23,7 @@ var fs = require('fs'),
      */
     SPEC_SOURCE_DIR = './test/integration';
 
-mocks.TURN_OFF_NOCK = false;
+mocks.TURN_OFF_NOCK = true;
 
 module.exports = function (exit) {
     // banner line
