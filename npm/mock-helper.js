@@ -1,33 +1,15 @@
-var nock = require('nock');
+var nock = require('nock'),
 
-// use it for library tests
-function mockAll () {
-    nock('https://postman-echo.com', { allowUnmocked: true })
-        .persist()
-        // .log(console.log)
-        .get(/\/get.*/)
-        .reply(200, function () {
-            return this.req.body;
-        });
-
-    nock('https://postman-echo.com')
-        .persist()
-        // .log(console.log)
-        .post(/\/post.*/)
-        .reply(200, function () {
-            return this.req.body;
-        });
-}
+    // this options set true, allows request with unmatched nock to go to the server
+    ALLOW_UNMOCKED = { allowUnmocked: true },
+    TURN_OFF_NOCK = false;
 
 function mockGETrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         .defaultReplyHeaders({
             'Content-Type': 'application/json; charset=utf-8'
         })
-        // .log(console.log)
         .get('/get')
         .query(true)
         .reply(200, function (uri) {
@@ -72,9 +54,7 @@ function mockGETrequest () {
 }
 
 function mockPOSTrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         .defaultReplyHeaders({
             'Content-Type': 'application/json; charset=utf-8'
@@ -88,7 +68,6 @@ function mockPOSTrequest () {
                     data: {},
                     form: {},
                     files: {}
-                    // url:this.req.path
                 },
                 i,
                 fileNames,
@@ -142,7 +121,6 @@ function mockPOSTrequest () {
                 if (!requestBody.includes(' ')) { // x-www-urlencoded
                     query = requestBody.split('&');
                     query.forEach((element) => {
-                    // console.log(element);
                         temp = element.split('=');
                         if (temp[1] && temp[1].includes('%5C')) {
                             tokens = temp[1].split('%');
@@ -173,7 +151,6 @@ function mockPOSTrequest () {
                 }
             }
             else if (typeof requestBody === 'object') {
-            // console.log(typeof requestBody);
                 reply.json = requestBody;
             }
 
@@ -182,11 +159,8 @@ function mockPOSTrequest () {
 }
 
 function mockPUTrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
-    // .log(console.log)
         .put('/put')
         .query(true)
         .reply(200, function (uri, requestBody) {
@@ -289,14 +263,11 @@ function mockPUTrequest () {
 }
 
 function mockPATCHrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         .defaultReplyHeaders({
             'Content-Type': 'application/json; charset=utf-8'
         })
-    // .log(console.log)
         .patch('/patch')
         .query(true)
         .reply(200, function (uri, requestBody) {
@@ -403,9 +374,7 @@ function mockPATCHrequest () {
 }
 
 function mockDELETErequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         .defaultReplyHeaders({
             'Content-Type': 'application/json; charset=utf-8'
@@ -519,11 +488,8 @@ function mockDELETErequest () {
 }
 
 function mockHEADrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock(/http:\/\/[^localhost].*/, allowUnmocked)
+    nock(/http:\/\/[^localhost].*/, ALLOW_UNMOCKED)
         .persist()
-    // .log(console.log)
         .head(/.*/)
         .query(true)
         .reply(function (uri, requestBody) {
@@ -533,7 +499,6 @@ function mockHEADrequest () {
                     data: {},
                     form: {},
                     files: {}
-                    // url:this.req.path
                 },
                 params, // url encoded params
                 temp,
@@ -542,7 +507,6 @@ function mockHEADrequest () {
                 key,
                 query,
                 fileNames = [];
-            // reply.url = 'https://'+reply.headers.host+uri;
 
             if (reply.headers['content-type'] === 'text/plain') {
                 reply.data = requestBody;
@@ -584,8 +548,6 @@ function mockHEADrequest () {
 
             // create form from requestBody
             if (typeof requestBody === 'string' || requestBody instanceof String) {
-                // var i, query, key, fileNames=[];
-
                 if (!requestBody.includes(' ')) { // x-www-urlencoded
                     query = requestBody.split('&');
 
@@ -627,9 +589,7 @@ function mockHEADrequest () {
 }
 
 function mockOPTIONSrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .options('/get')
@@ -637,9 +597,7 @@ function mockOPTIONSrequest () {
 }
 
 function mockDIGESTAUTHrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .get('/digest-auth')
@@ -657,9 +615,7 @@ function mockDIGESTAUTHrequest () {
 }
 
 function mockBASICAUTHrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .get('/basic-auth')
@@ -673,12 +629,11 @@ function mockBASICAUTHrequest () {
 }
 
 function mockOAUTH1request () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .get('/oauth1')
+        .query(true)
         .reply(function () {
             if (this.req.headers.authorization === undefined) {
                 return [401, {
@@ -695,9 +650,7 @@ function mockOAUTH1request () {
 }
 
 function mockHAWKAUTHrequest () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .get('/auth/hawk')
@@ -716,19 +669,15 @@ function mockHAWKAUTHrequest () {
 }
 
 function mockSTATUSendpoint () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
-        // .log(console.log)
         .get(/\/status\/.*/)
         .reply(function (uri) {
             var reply = {
-                    status: parseInt(uri.substr(-3), 10)
+                    // uri: /status/x
+                    status: parseInt(uri.substring(8, uri.length), 10)
                 },
                 headers = this.req.headers;
-            // reply['status']= parseInt(uri.substr(-3));
-            // console.log('status: ', reply.status);
 
             headers['Content-Type'] = 'application/json; charset=utf-8';
 
@@ -742,9 +691,7 @@ function mockTYPEendpoint () {
      *  /type/html
      *  /type/json
      */
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .get(/\/type.*/)
@@ -752,9 +699,7 @@ function mockTYPEendpoint () {
             var resHeader = {
                     'Content-Encoding': 'gzip',
                     Server: 'nginx',
-                    'set-cookie':
-                    // eslint-disable-next-line max-len
-                    'sails.sid=s%3A850YW181VqNmqTCqIdSWx4rHYpBLkSLB.RdSEXCBwH6WMieopQ4rUicXRsbNyH9wUcopZvz9mc1M; Path=/; HttpOnly',
+                    'set-cookie': 'sails.sid=xxxxxxxxxxxxxxxxxx; Path=/; HttpOnly',
                     Vary: 'Accept-Encoding',
                     'Content-Length': '109',
                     Connection: 'keep-alive'
@@ -793,9 +738,7 @@ function mockTYPEendpoint () {
 }
 
 function mockGZIPendpoint () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock('https://postman-echo.com', allowUnmocked)
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .get('/gzip')
@@ -810,11 +753,9 @@ function mockGZIPendpoint () {
                         accept: '*/*',
                         'accept-encoding': 'gzip, deflate',
                         'cache-control': 'no-cache',
-                        cookie:
-                        // eslint-disable-next-line max-len
-                        'sails.sid=s%3AzVZKZEAc1IvL61qZyqrR2MSRO49mI9bc.iVKWR9D0pzmWZf158wNUp6thKfAHKQRU4JTUxnKFurc; foo=bar',
+                        cookie: 'sails.sid=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx; foo=bar',
                         'postman-token': '1c51c9ac-e4b4-40c0-a821-9317d70d9dc1',
-                        'user-agent': 'PostmanRuntime/7.6.0',
+                        'user-agent': /PostmanRuntime\/.\..\../, // to match any version
                         'x-forwarded-port': '443'
                     },
                     method: 'GET'
@@ -825,9 +766,7 @@ function mockGZIPendpoint () {
 }
 
 function mockRedirects () {
-    var allowUnmocked = { allowUnmocked: true };
-
-    nock(/https:\/\/.*.com\//, allowUnmocked)
+    nock(/https:\/\/.*.com\//, ALLOW_UNMOCKED)
         .persist()
         // .log(console.log)
         .get(/\/redirect-to.*/)
@@ -841,12 +780,10 @@ function mockRedirects () {
                     accept: '*/*',
                     'accept-encoding': 'gzip, deflate',
                     'cache-control': 'no-cache',
-                    cookie:
-                    // eslint-disable-next-line max-len
-                    'sails.sid=s%3Amz8FY8zkbUSVOHUm1vV6dhz9yi7vpanU.zbJ%2FdhTOwNu%2BKelkJqM8LF1rODiONamyejECgbnEmig; foo=bar',
+                    cookie: 'sails.sid=xxxxxxxxxxxxxxxxxxxxx; foo=bar',
                     'postman-token': 'c4467e84-85cd-4ea1-bfa4-5d0ddf855025',
                     referer: 'https://postman-echo.com/redirect-to?url=https://postman-echo.com/get',
-                    'user-agent': 'PostmanRuntime/7.6.0',
+                    'user-agent': /PostmanRuntime\/.\..\../, // to match any version
                     'x-forwarded-port': '443'
                 },
                 url: 'https://postman-echo.com/get'
@@ -855,51 +792,61 @@ function mockRedirects () {
 }
 
 function mockDELAYrequest () {
-    nock('https://postman-echo.com')
+    nock('https://postman-echo.com', ALLOW_UNMOCKED)
         .persist()
         .get(/\/delay.*/)
         .query(true)
         .reply(200, function (uri) {
             var reply = { };
 
-            reply.delay = uri.substr(-1);
+            // uri: /delay/x
+            reply.delay = uri.substring(7, uri.length);
 
             return reply;
         }, {
             'Content-Type': 'application/json; charset=utf-8',
             Server: 'nginx',
-            'set-cookie':
-            // eslint-disable-next-line max-len
-            'sails.sid=s%3A3QB9NKdf_MZjNJaMXNPE-snq-154akMU.c1AJ4OkwgGsyIrGYNWZhuXMaddwrMHidJTWJQGOINlE; Path=/; HttpOnly',
+            'set-cookie': 'sails.sid=xxxxxxxxxxxxxxxxxx; Path=/; HttpOnly',
             Vary: 'Accept-Encoding',
             'Content-Length': '13',
             Connection: 'keep-alive'
         });
 }
 
-function unMockRequest () {
-    nock.cleanAll();
+function applyMocks () {
+    if (!TURN_OFF_NOCK) {
+        console.info('\nRequests from this script are being mocked!\n'.green);
+        mockGETrequest();
+        mockPOSTrequest();
+        mockPUTrequest();
+        mockPATCHrequest();
+        mockDELETErequest();
+        mockHEADrequest();
+        mockOPTIONSrequest();
+        mockDIGESTAUTHrequest();
+        mockBASICAUTHrequest();
+        mockOAUTH1request();
+        mockHAWKAUTHrequest();
+        mockTYPEendpoint();
+        mockGZIPendpoint();
+        mockSTATUSendpoint();
+        mockDELAYrequest();
+        mockRedirects();
+    }
+}
+
+function removeMocks () {
+    if (!TURN_OFF_NOCK) {
+        console.info('Mocks will be uninstalled...'.green);
+        nock.cleanAll();
+    }
 }
 
 module.exports = {
-    mockAll,
-    mockGETrequest,
-    mockPOSTrequest,
-    mockPUTrequest,
-    mockPATCHrequest,
-    mockDELETErequest,
-    mockHEADrequest,
-    mockOPTIONSrequest,
-    mockDIGESTAUTHrequest,
-    mockBASICAUTHrequest,
-    mockOAUTH1request,
-    mockHAWKAUTHrequest,
-    mockTYPEendpoint,
-    mockGZIPendpoint,
-    mockSTATUSendpoint,
-    mockDELAYrequest,
-    mockRedirects,
-    unMockRequest
+    TURN_OFF_NOCK,
+    ALLOW_UNMOCKED,
+    applyMocks,
+    removeMocks
 };
 
 /* ++++++++++++++++++

@@ -11,6 +11,7 @@ var fs = require('fs'),
 
     echoServer = require('./server').createRawEchoServer(),
     redirectServer = require('./server').createRedirectServer(),
+    mocks = require('./mock-helper'),
 
     LOCAL_TEST_ECHO_PORT = 4041,
     LOCAL_TEST_REDIRECT_PORT = 4042,
@@ -22,9 +23,14 @@ var fs = require('fs'),
      */
     SPEC_SOURCE_DIR = './test/integration';
 
+mocks.TURN_OFF_NOCK = false;
+
 module.exports = function (exit) {
     // banner line
     console.info('Running integration tests using local newman as node module...'.yellow.bold);
+
+    // install mocks on all requests
+    mocks.applyMocks();
 
     async.waterfall([
 
@@ -104,6 +110,7 @@ module.exports = function (exit) {
             async.mapLimit(suites, 10, function (test, next) {
                 console.info(` - ${test.name}`);
 
+                // if (test.name==='test/integration/timeout/timeout.postman_collection.json'){
                 // load configuration JSON object if it is provided. We do this since this is not part of newman
                 // standard API
                 var config = test.configJSON ? JSON.parse(fs.readFileSync(test.configJSON).toString()) : {};
@@ -118,6 +125,7 @@ module.exports = function (exit) {
                     err && (err.source = test); // store the meta in error
                     next(err, summary);
                 });
+                // }
             }, next);
         }
     ],
@@ -143,6 +151,8 @@ module.exports = function (exit) {
         echoServer.destroy(function () {
             // destroy redirectServer
             redirectServer.destroy(function () {
+                // remove all mocks
+                mocks.removeMocks();
                 // exit once both the local server are stopped
                 exit(err, results);
             });

@@ -6,6 +6,7 @@ var Mocha = require('mocha'),
     newman = require('../index'),
     expect = require('chai').expect,
     recursive = require('recursive-readdir'),
+    mocks = require('./mock-helper'),
 
     /**
      * The directory containing library test specs.
@@ -14,9 +15,13 @@ var Mocha = require('mocha'),
      */
     SPEC_SOURCE_DIR = './test/library';
 
+mocks.TURN_OFF_NOCK = false;
+
 module.exports = function (exit) {
     // banner line
     console.info('Running Library integration tests using mocha and shelljs...'.yellow.bold);
+
+    mocks.applyMocks();
 
     var mocha = new Mocha({ timeout: 60000 });
 
@@ -41,6 +46,7 @@ module.exports = function (exit) {
             // clear references and overrides
             delete global.expect;
             delete global.newman;
+            mocks.removeMocks();
             exit(err);
         });
         mocha = null; // cleanup
