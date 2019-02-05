@@ -80,6 +80,11 @@ program
         });
     });
 
+program.on('--help', function () {
+    console.info('\nTo get available options for a command:');
+    console.info('  newman [command] -h');
+});
+
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {
     console.error(`error: invalid command \`${command}\`\n`);
