@@ -81,9 +81,8 @@ program
     });
 
 program.on('--help', function () {
-    console.info('');
-    console.info('To get available options for a command:');
-    console.info('  [command] -h');
+    console.info('\nTo get available options for a command:');
+    console.info('  newman [command] -h');
 });
 
 // Warn on invalid command and then exits.
