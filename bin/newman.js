@@ -56,6 +56,7 @@ program
         'Specify the path to the Client SSL key (not needed for .pfx files)')
     .option('--ssl-client-passphrase <path>',
         'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
+    .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
         let options = util.commanderToObject(command),
 
@@ -79,6 +80,11 @@ program
             runError && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
+
+program.on('--help', function () {
+    console.info('\nTo get available options for a command:');
+    console.info('  newman [command] -h');
+});
 
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {

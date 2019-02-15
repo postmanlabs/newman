@@ -59,4 +59,27 @@ describe('utility helpers', function () {
             });
         });
     });
+
+    describe('beautifyTime', function () {
+        var timings = {
+                wait: 1.4010989999997037,
+                dns: 0.20460100000036618,
+                tcp: 43.05270100000007,
+                firstByte: 225.52159900000015,
+                download: 7.652700000000095,
+                total: 277.628099
+            },
+            beautifiedTimings = {
+                wait: '1ms',
+                dns: '204ns',
+                tcp: '43ms',
+                firstByte: '225ms',
+                download: '7ms',
+                total: '277ms'
+            };
+
+        it('should correctly beautify given timeings object', function () {
+            expect(util.beautifyTime(timings)).to.eql(beautifiedTimings);
+        });
+    });
 });
