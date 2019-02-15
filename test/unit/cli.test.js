@@ -162,7 +162,8 @@ describe('cli parser', function () {
                 '--ignore-redirects ' +
                 '--bail ' +
                 '--suppress-exit-code ' +
-                '-k').split(' '), 'run', function (err, opts) {
+                '-k ' +
+                '--verbose').split(' '), 'run', function (err, opts) {
                 expect(err).to.be.null;
 
                 expect(opts).to.be.ok;
@@ -193,6 +194,7 @@ describe('cli parser', function () {
 
                 expect(opts.bail, 'should have bail to be true').to.equal(true);
                 expect(opts.suppressExitCode, 'should have suppressExitCode to be true').to.equal(true);
+                expect(opts.verbose, 'should have verbose to be true').to.equal(true);
 
                 done();
             });
@@ -220,6 +222,7 @@ describe('cli parser', function () {
                 '--timeout-script 5000 ' +
                 '--ignore-redirects ' +
                 '-k ' +
+                '--verbose ' +
                 '--bail folder,failure ' +
                 '--global-var foo=bar --global-var alpha==beta= ' +
                 '--reporter-json-output ./omg.txt ' +
@@ -243,6 +246,7 @@ describe('cli parser', function () {
                 expect(opts.timeoutScript, 'should have timeoutScript of 5000').to.equal(5000);
                 expect(opts.ignoreRedirects, 'should have ignoreRedirects to be true').to.equal(true);
                 expect(opts.insecure, 'should have insecure to be true').to.equal(true);
+                expect(opts.verbose, 'should have verbose to be true').to.equal(true);
 
                 expect(opts.globalVar).to.eql([
                     { key: 'foo', value: 'bar' },
