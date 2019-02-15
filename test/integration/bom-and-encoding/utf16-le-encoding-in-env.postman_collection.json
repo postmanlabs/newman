@@ -1,8 +1,10 @@
-{
+﻿{
   "info": {
-    "name": "Example Collection with a single GET request",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    "name": "Sample Postman Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "description": "A sample collection to demonstrate collections as a set of related requests"
   },
+
   "item": [{
     "name": "A simple GET request",
     "event": [{
@@ -15,13 +17,13 @@
           "})",
           "pm.test('Response Body', function () {",
           "    var jsonData = pm.response.json();",
-          "    pm.expect(jsonData.args).to.have.property('var', 'alpha')",
+          "    pm.expect(jsonData.args).to.have.property('serviceHostName', 'localhost')",
           "});"
         ]
       }
     }],
     "request": {
-      "url": "https://postman-echo.com/get?var={{fo/o}}",
+      "url": "https://postman-echo.com/get?serviceHostName={{serviceHostName}}",
       "method": "GET"
     }
   }]

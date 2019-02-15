@@ -1,7 +1,6 @@
 master:
   fixed bugs:
     - '#1871 Trimmed incoming JSON string to remove byte order marks and other such artefacts.'
-
   new features:
     - 'Added automatic (best guess) encoding detection of UTF-16LE and ISO-8859-1'
 
