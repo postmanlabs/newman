@@ -544,8 +544,8 @@ The current Node version compatibility can also be seen from the `engines.node` 
 
 ### File Encoding
 
-Newman attempts to best guess detect file encoding for the files that are provided
-as a command line input. However, it mostly relies on NodeJS and underlying
+Newman attempts to detect file encoding for files that are provided as
+command line input. However, it mostly relies on NodeJS and the underlying
 operating system to do the heavy lifting. Currently, `ASCII`, `UTF-8`, `UTF-16LE`
 and `ISO-8859-1` are the only ones that are detection assisted.
 
