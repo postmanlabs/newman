@@ -2,12 +2,14 @@ var _ = require('lodash');
 
 describe('newman run --verbose', function () {
     var verboseStrings = [
+        'prepare',
         'wait',
         'dns-lookup',
         'tcp-handshake',
         'ssl-handshake',
         'transfer-start',
         'download',
+        'process',
         'average DNS lookup time:',
         'average first byte time:'
     ];
