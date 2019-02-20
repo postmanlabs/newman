@@ -41,6 +41,9 @@ program
     .option('--global-var <value>',
         'Allows the specification of global variables via the command line, in a key=value format',
         util.cast.memoizeKeyVal, [])
+    .option('--env-var <value>',
+        'Allows the specification of environment variables via the command line, in a key=value format',
+        util.cast.memoizeKeyVal, [])
     .option('--color <value>', 'Enable/Disable colored output. (auto|on|off)', util.cast.colorOptions, 'auto')
     .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
     .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer, 0)
@@ -53,6 +56,7 @@ program
         'Specify the path to the Client SSL key (not needed for .pfx files)')
     .option('--ssl-client-passphrase <path>',
         'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
+    .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
         let options = util.commanderToObject(command),
 
@@ -76,6 +80,11 @@ program
             runError && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
+
+program.on('--help', function () {
+    console.info('\nTo get available options for a command:');
+    console.info('  newman [command] -h');
+});
 
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {

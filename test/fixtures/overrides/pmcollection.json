@@ -1,0 +1,54 @@
+{
+	"info": {
+		"_postman_id": "64e7cd23-3037-42f5-b36e-51ea6fb5f973",
+		"name": "env var test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "--env-var test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad0b9fd8-b9a7-44d6-a46b-8344aee76b98",
+						"exec": [
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"bar2\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://postman-echo.com/get?key={{dummyVar}}",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{dummyVar}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
