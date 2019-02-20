@@ -34,11 +34,6 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "https://postman-echo.com/get",
 					"protocol": "https",
@@ -50,8 +45,7 @@
 						"get"
 					]
 				}
-			},
-			"response": []
+			}
 		}
 	]
 }
