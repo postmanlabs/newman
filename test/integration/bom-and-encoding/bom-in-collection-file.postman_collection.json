@@ -1,0 +1,58 @@
+﻿{
+  "info": {
+    "name": "Sample Postman Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "description": "A sample collection to demonstrate collections as a set of related requests"
+  },
+
+  "item": [{
+    "name": "A simple GET request",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('expect response be 200', function () {",
+          "    pm.response.to.be.ok",
+          "})",
+          "pm.test('expect response json contain args', function () {",
+          "    pm.expect(pm.response.json().args).to.have.property('source')",
+          "      .and.equal('newman-sample-github-collection')",
+          "})"
+        ]
+      }
+    }],
+    "request": {
+      "url": "https://postman-echo.com/get?source=newman-sample-github-collection",
+      "method": "GET"
+    }
+  }, {
+    "name": "A simple POST request",
+    "request": {
+      "url": "https://postman-echo.com/post",
+      "method": "POST",
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/plain"
+      }],
+      "body": {
+        "mode": "raw",
+        "raw": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
+      }
+    }
+  }, {
+    "name": "A simple POST request with JSON body",
+    "request": {
+      "url": "https://postman-echo.com/post",
+      "method": "POST",
+      "header": [{
+        "key": "Content-Type",
+        "value": "application/json"
+      }],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
+      }
+    }
+  }]
+}
