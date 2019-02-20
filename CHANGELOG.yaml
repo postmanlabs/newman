@@ -1,8 +1,15 @@
-master:
+4.4.0:
+  date: 2019-02-20
+  chores:
+    - Updated dependencies
   fixed bugs:
     - '#1871 Trimmed incoming JSON string to remove byte order marks and other such artefacts.'
+    - Contextual help messages for newman -h
+    - Fixed JUnit report generation for nested requests/tests
+    - Corrected disabled variable behaviour
   new features:
     - 'Added automatic (best guess) encoding detection of UTF-16LE and ISO-8859-1'
+    - Added --verbose flag for detailed CLI output
 
 4.3.1:
   date: 2018-12-26
