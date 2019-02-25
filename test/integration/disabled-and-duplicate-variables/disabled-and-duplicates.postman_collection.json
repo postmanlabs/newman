@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "72ec18aa-a3cb-450d-ae88-4b6b59f69939",
+		"name": "disabled-and-duplicates",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://postman-echo.com/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "47dc2d0e-2ada-400a-94a0-ed3fd1f4280c",
+						"exec": [
+							"pm.test('Disabled variable', function () {",
+							"    pm.expect(pm.environment.has('justDisabled')).to.be.false;",
+							"    pm.expect(pm.environment.get('justDisabled')).to.be.undefined;",
+							"});",
+							"",
+							"pm.test('1 Enabled and 1 Disabled variable', function () {",
+							"    pm.expect(pm.environment.has('oneDisabled')).to.be.true;",
+							"    pm.expect(pm.environment.get('oneDisabled')).to.equal('1');",
+							"});",
+							"",
+							"pm.test('Duplicate variable', function () {",
+							"    pm.expect(pm.environment.has('duplicate')).to.be.true;",
+							"    pm.expect(pm.environment.get('duplicate')).to.equal('2'); // last enabled",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"url": {
+					"raw": "https://postman-echo.com/get",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					]
+				}
+			}
+		}
+	]
+}
