@@ -52,7 +52,7 @@
     "mkdirp": "0.5.1",
     "postman-collection": "3.4.5",
     "postman-collection-transformer": "3.0.0",
-    "postman-request": "2.88.1-postman.7",
+    "postman-request": "2.88.1-postman.7.1",
     "postman-runtime": "7.10.0",
     "pretty-ms": "4.0.0",
     "semver": "5.6.0",
@@ -64,7 +64,7 @@
     "chai": "4.2.0",
     "dockerfile_lint": "0.3.3",
     "editorconfig": "0.15.2",
-    "eslint": "5.14.1",
+    "eslint": "5.15.0",
     "eslint-plugin-jsdoc": "4.1.1",
     "eslint-plugin-lodash": "5.0.1",
     "eslint-plugin-mocha": "5.3.0",
@@ -81,7 +81,7 @@
     "recursive-readdir": "2.2.2",
     "server-destroy": "1.0.1",
     "shelljs": "0.8.3",
-    "sinon": "7.2.5",
+    "sinon": "7.2.6",
     "xml2js": "0.4.19"
   },
   "engines": {
