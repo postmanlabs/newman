@@ -125,6 +125,7 @@ describe('JUnit reporter', function () {
                     expect(suite.$).to.not.be.empty;
                     expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(suite.testcase).to.not.be.empty;
+                    expect(suite['system-err']).to.not.be.empty;
 
                     expect(suite.$).to.have.property('tests', '2');
                     expect(suite.$).to.have.property('failures', '1');
