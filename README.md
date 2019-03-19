@@ -192,6 +192,9 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   Allows the specification of global variables via the command line, in a key=value format. Multiple CLI global variables
   can be added by using `--global-var` multiple times, like so: `--global-var "foo=bar" --global-var "alpha=beta"`.
 
+- `--verbose`<br />
+  Show detailed information of collection run and each request sent.
+
 ### SSL Client Certificates
 
 Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and an optional private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
