@@ -56,6 +56,8 @@ and integration tests. At present, the following sub tests can be run on a stand
 * `npm run test-lint`: Performs code style checks, flagging inconsistencies and other miscellaneous anomalies
 * `npm run test-unit`: Runs unit tests to verify the correctness of various methods used within the project
 * `npm run test-integration`: Checks Newman sanity with a sample requests categorized by collection
+* `npm run test-cli`: Runs CLI integration tests
+* `npm run test-library`: Runs library integration tests
 
 ## Repository
 

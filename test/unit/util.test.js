@@ -71,7 +71,7 @@ describe('utility helpers', function () {
             },
             beautifiedTimings = {
                 wait: '1ms',
-                dns: '204ns',
+                dns: '204µs',
                 tcp: '43ms',
                 firstByte: '225ms',
                 download: '7ms',
