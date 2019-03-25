@@ -1,3 +1,10 @@
+4.4.1:
+  date: 2019-03-25
+  chores:
+    - Updated dependencies
+  fixed bugs:
+    - '#1932 Removed classname from JUnit reports and add it to both passed and failed tests'
+
 4.4.0:
   date: 2019-02-20
   chores:
