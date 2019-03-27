@@ -31,7 +31,11 @@ function build_docker_image {
     echo -e "$BLUE Running docker image test for $DOCKER_REPO:$VERSION-$TAG, latest $NO_COLOUR";
 
     # Test
-    docker run -v ${PWD}/examples:/etc/newman -t ${DOCKER_REPO}:${VERSION}-${TAG} run "sample-collection.json";
+    if [[ ${TAG} == "alpine-sh" ]]; then
+        docker run -v ${PWD}/examples:/etc/newman -t ${DOCKER_REPO}:${VERSION}-${TAG} newman run "sample-collection.json";
+    else
+        docker run -v ${PWD}/examples:/etc/newman -t ${DOCKER_REPO}:${VERSION}-${TAG} run "sample-collection.json";
+    fi
 
     echo -e "$BLUE Pushing docker image for $DOCKER_REPO:$VERSION-$TAG $NO_COLOUR";
 
