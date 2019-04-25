@@ -23,7 +23,7 @@ program
     // eslint-disable-next-line max-len
     .option('--folder <path>', 'Specify folder to run from a collection. Can be specified multiple times to run multiple folders', util.cast.memoize, [])
     .option('-w, --working-dir <path>', 'Specify working directory that contains files needed for the collection run. Default is current directory.', process.cwd())
-    .option('--no-parentfileread', 'Don\'t allow reading files outside of working directory')
+    .option('--no-parent-file-read', 'Don\'t allow reading files outside of working directory')
     .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run.', util.cast.csvParse, ['cli'])
     .option('-n, --iteration-count <n>', 'Define the number of iterations to run.', util.cast.integer)
     .option('-d, --iteration-data <path>', 'Specify a data file to use for iterations (either json or csv).')
