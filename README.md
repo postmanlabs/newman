@@ -415,40 +415,46 @@ Older command line options are supported, but are deprecated in favour of the ne
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
 ### HTML Reporter
-Its an external reporter which can be installed via `npm install -g newman-reporter-html`.
-The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once HTML reporter is installed you can provide `--reporters html` as a CLI option.
+An external reporter, maintained by Postman, which can be installed via `npm install -g newman-reporter-html`. This reporter was part of the Newman project but was separated out into it's own project in V4.
+
+The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once the HTML reporter is installed you can provide `--reporters html` as a CLI option.
 
 [back to top](#table-of-contents)
 
 ## External Reporters
 
 ### Using External Reporters
-Newman also supports external reporters, provided that the reporter works with Newman's event sequence. Working examples on
+Newman also supports external reporters, provided that the reporter works with Newman's event sequence. Working examples of
 how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
-For instance, to use the [Newman HTML Reporter](https://github.com/postmanlabs/newman-reporter-html):
+
+For instance, to use the [Newman htmlextra Reporter](https://github.com/DannyDainton/newman-reporter-htmlextra):
 
 - Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.)<br/>
 ```console
-$ npm install -g newman-reporter-html
+$ npm install -g newman-reporter-htmlextra
 ```
 
 - Use the installed reporter, either via the CLI, or programmatic usage. Here, the `newman-reporter` prefix is **not** required while specifying the reporter name in the options.<br/>
 ```console
-$ newman run /path/to/collection.json -r cli,html
+$ newman run /path/to/collection.json -r cli,htmlextra
 ```
 ```javascript
 const newman = require('newman');
 
 newman.run({
     collection: '/path/to/collection.json',
-    reporters: ['cli', 'html']
+    reporters: ['cli', 'htmlextra']
 }, process.exit);
 ```
 
 #### Community Maintained Reporters
-- [HTML](https://github.com/postmanlabs/newman-reporter-html)
-- [TeamCity](https://github.com/leafle/newman-reporter-teamcity)
-- [JSON-Light](https://github.com/Paramagnetic/newman-reporter-json-light)
+- [htmlextra](https://github.com/DannyDainton/newman-reporter-htmlextra)
+- [csv](https://github.com/matt-ball/newman-reporter-csv)
+- [json-summary](https://github.com/spenceclark/newman-reporter-json-summary)
+- [teamcity](https://github.com/leafle/newman-reporter-teamcity)
+- [testrail](https://github.com/billylam/newman-reporter-testrail)
+- [statsd](https://github.com/gsorry/newman-reporter-statsd)
+- [confluence](https://github.com/OmbraDiFenice/newman-reporter-confluence)
 
 ### Creating Your Own Reporter
 A custom reporter is a Node module with a name of the form `newman-reporter-<name>`. To create a custom reporter:
@@ -460,8 +466,11 @@ function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
   // reporterOptions is an object of the reporter specific options. See usage examples below for more details.
   // collectionRunOptions is an object of all the collection run options: https://github.com/postmanlabs/newman#newmanrunoptions-object--callback-function--run-eventemitter
 }
+module.exports = CustomNewmanReporter
 ```
-3. Publish your reporter using `npm publish`, or use your reporter locally [see usage instructions](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
+3. To use your reporter locally, use the `npm pack` command to create a `.tgz` file. Once created, this can be installed using the `npm i -g newman-reporter-<name>.<version>.tgz` command.
+
+Once you're happy with your reporter, it can be published to `npm` using `npm publish`. This will then be made available for other people to download.
 
 Scoped reporter package names like `@myorg/newman-reporter-<name>` are also supported. Working reporter examples can be found in [lib/reporters](lib/reporters).
 
