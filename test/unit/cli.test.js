@@ -53,6 +53,8 @@ describe('cli parser', function () {
                         globalVar: [],
                         envVar: [],
                         folder: [],
+                        workingDir: process.cwd(),
+                        insecureFileRead: true,
                         color: 'auto',
                         timeout: 0,
                         timeoutRequest: 0,
