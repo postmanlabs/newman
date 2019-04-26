@@ -1,7 +1,7 @@
 master:
   new features:
     - Passed postman-fs instance to runtime
-    - Added --working-dir and --no-parent-file-read options
+    - Added --working-dir and --no-insecure-file-read options
 
 4.4.1:
   date: 2019-03-25

@@ -145,7 +145,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 - `-w <path>`, `--working-dir <path>`<br />
   The path to the directory containing files that are used in specified collection. Default is current directory.
 
-- `--no-parent-file-read`<br />
+- `--no-insecure-file-read`<br />
   Don't allow newman to read files outside of working directory while running a collection.
 
 - `--export-environment <path>`<br />
@@ -244,7 +244,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
 | options.folder            | The name or ID of the folder/folders (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.workingDir        | The path to the directory containing files that are used in specified collection.<br /><br />_Optional_<br />Type: `string`, Default value: current directory |
-| options.parentFileRead    | Allow newman to read files outside of working directory while running a collection.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
+| options.insecureFileRead  | Allow newman to read files outside of working directory while running a collection.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.timeout           | Specify the time (in milliseconds) to wait for the entire collection run to complete execution.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutScript     | Specify the time (in milliseconds) to wait for scripts to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
