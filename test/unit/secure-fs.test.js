@@ -24,6 +24,10 @@ describe('Postman Filesystem', function () {
     describe('posix resolver', function () {
         let fs;
 
+        before(function () {
+            process.platform === 'win32' && this.skip();
+        });
+
         describe('with default working dir', function () {
             before(function () {
                 fs = new SecureFs(POSIX_WORKING_DIR, false);
@@ -107,21 +111,21 @@ describe('Postman Filesystem', function () {
                 fs = new SecureFs(POSIX_WORKING_DIR, true);
             });
 
-            it.skip('should resolve a windows relative path', function (done) {
+            it('should resolve a windows relative path', function (done) {
                 fs.resolvePath('directory\\file.json', (err, path) => {
                     expect(err).to.not.be.ok;
 
-                    expect(path).to.eql(POSIX_WORKING_DIR + '/directory/file.json');
+                    expect(path).to.eql(POSIX_WORKING_DIR + '/directory\\file.json');
 
                     return done();
                 });
             });
 
-            it.skip('should resolve a windows absolute path', function (done) {
+            it('should resolve a windows absolute path', function (done) {
                 fs.resolvePath('C:\\Postman\\files\\directory\\file.json', (err, path) => {
                     expect(err).to.not.be.ok;
 
-                    expect(path).to.eql(POSIX_WORKING_DIR + '/directory/file.json');
+                    expect(path).to.eql(POSIX_WORKING_DIR + '/C:\\Postman\\files\\directory\\file.json');
 
                     return done();
                 });
@@ -133,19 +137,10 @@ describe('Postman Filesystem', function () {
      * The windows file system supports both / and \\ as valid path separators
      */
     describe('win32 resolver', function () {
-        const platform = process.platform,
-            pathSep = path.sep;
-
         let fs;
 
         before(function () {
-            Object.defineProperty(process, 'platform', { value: 'win32' });
-            Object.defineProperty(path, 'sep', { value: '\\' });
-        });
-
-        after(function () {
-            Object.defineProperty(process, 'platform', { value: platform });
-            Object.defineProperty(path, 'sep', { value: pathSep });
+            process.platform !== 'win32' && this.skip();
         });
 
         describe('with default working dir', function () {
