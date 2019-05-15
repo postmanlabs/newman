@@ -24,6 +24,7 @@ describe('newman run --working-dir --no-insecure-file-read', function () {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-file-outside.json --working-dir ${workingDir}`, function (code, stdout) {
             expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stdout).to.not.have.string('AssertionError');
             done();
         });
     });
