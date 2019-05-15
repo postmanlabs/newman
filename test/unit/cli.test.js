@@ -53,7 +53,6 @@ describe('cli parser', function () {
                         globalVar: [],
                         envVar: [],
                         folder: [],
-                        workingDir: process.cwd(),
                         insecureFileRead: true,
                         color: 'auto',
                         timeout: 0,
@@ -149,7 +148,7 @@ describe('cli parser', function () {
                 '-g myGlobals.json ' +
                 '-d path/to/csv.csv ' +
                 '--folder myFolder ' +
-                '-w /Users/postman ' +
+                '--working-dir /Users/postman ' +
                 '--no-insecure-file-read ' +
                 '--export-environment exported_env.json ' +
                 '--export-globals exported_glob.json ' +
@@ -214,7 +213,7 @@ describe('cli parser', function () {
                 '-d /path/to/csv.csv ' +
                 '--folder myFolder1 ' +
                 '--folder myFolder2 ' +
-                '-w /Users/postman ' +
+                '--working-dir /Users/postman ' +
                 '--no-insecure-file-read ' +
                 '--disable-unicode ' +
                 '--export-environment exported_env.json ' +
