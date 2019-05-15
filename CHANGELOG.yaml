@@ -1,6 +1,6 @@
 master:
   new features:
-    - Passed postman-fs instance to runtime
+    - Added support for the working directory using SecureFS
     - Added --working-dir and --no-insecure-file-read options
 
 4.4.1:
