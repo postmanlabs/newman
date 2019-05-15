@@ -13,8 +13,8 @@
         "exec": [
           "pm.test(\"file uploaded\", function () {",
           "   var jsonData = pm.response.json();",
-          "   pm.expect(jsonData.files).to.not.eql({ ",
-          "     \"test.json\": \"data:application/octet-stream;base64,eyJzb21lIjogImpzb24tc3RyaW5nIn0K\"",
+          "   pm.expect(jsonData.files).to.eql({ ",
+          "     \"outside.json\": \"data:application/octet-stream;base64,eyJzb21lIjogImpzb24tc3RyaW5nIn0K\"",
           "});});"
           ]
       }
@@ -28,7 +28,7 @@
           {
             "type": "file",
             "key": "somefile",
-            "src": "/root/dir/test.json"
+            "src": "../outside.json"
           }
         ]
       }
@@ -43,7 +43,7 @@
         "exec": [
           "pm.test(\"file uploaded\", function () {",
           "   var jsonData = pm.response.json();",
-          "    pm.expect(jsonData.data.trim && jsonData.data.trim()).to.not.eql(\"{\\\"some\\\": \\\"json-string\\\"}\");",
+          "    pm.expect(jsonData.data.trim && jsonData.data.trim()).to.eql(\"{\\\"some\\\": \\\"json-string\\\"}\");",
           "});"
           ]
       }
@@ -54,7 +54,7 @@
       "body": {
         "mode": "file",
         "file": {
-            "src": "/root/dir/test.json"
+            "src": "../outside.json"
         }
       }
     }

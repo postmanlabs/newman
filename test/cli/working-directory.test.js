@@ -1,9 +1,8 @@
 var path = require('path'),
 
-    dir = path.resolve(__dirname, '../fixtures/files'),
-    workingDir = dir + '/work-dir';
+    workingDir = path.resolve(__dirname, '../fixtures/files/work-dir');
 
-describe.only('newman run --working-dir --no-insecure-file-read', function () {
+describe('newman run --working-dir --no-insecure-file-read', function () {
     it('should resolve file present inside working directory', function (done) {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-file-inside.json --working-dir ${workingDir}`, function (code) {
@@ -12,24 +11,19 @@ describe.only('newman run --working-dir --no-insecure-file-read', function () {
         });
     });
 
-    it('should not resolve file present outside working directory with insecure file read disabled', function (done) {
+    it('should not resolve file present outside working directory with --no-insecure-file-read', function (done) {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-file-outside.json --working-dir ${workingDir} --no-insecure-file-read`, function (code, stdout) {
-            expect(code, 'should have exit code of 1').to.equal(0);
-            expect(stdout).to.have.string('PPERM');
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stdout).to.have.string('AssertionError');
             done();
         });
     });
 
-    it('should resolve file present outside working directory with insecure file read enabled', function (done) {
+    it('should resolve file present outside working directory by default', function (done) {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-file-outside.json --working-dir ${workingDir}`, function (code, stdout) {
-            expect(code, 'should have exit code of 1').to.equal(0);
-            expect(stdout).to.not.have.string('PPERM');
-
-            // As we cannot set an absolute path in the test, we are going to test for file not found
-            // to establish file was resolved
-            expect(stdout).to.have.string('no such file');
+            expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
     });
