@@ -142,6 +142,12 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   Run requests within a particular folder/folders in a collection. Multiple folders can be specified by using
   `--folder` multiple times, like so: `--folder f1 --folder f2`.
 
+- `--working-dir <path>`<br />
+  Set the path of the working directory to use while reading files with relative paths. Default to current directory.
+
+- `--no-insecure-file-read`<br />
+  Prevents reading of files situated outside of the working directory.
+
 - `--export-environment <path>`<br />
   The path to the file where Newman will output the final environment variables file before completing a run.
 
@@ -237,6 +243,8 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
 | options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
 | options.folder            | The name or ID of the folder/folders (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string\|array` |
+| options.workingDir        | The path of the directory to be used as working directory.<br /><br />_Optional_<br />Type: `string`, Default value: `Current Directory` |
+| options.insecureFileRead  | Allow reading files outside of working directory.<br /><br />_Optional_<br />Type: `boolean`, Default value: `true` |
 | options.timeout           | Specify the time (in milliseconds) to wait for the entire collection run to complete execution.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutScript     | Specify the time (in milliseconds) to wait for scripts to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
@@ -466,19 +474,19 @@ newman.run({
 }, process.exit);
 ```
 
-- [htmlextra](https://github.com/DannyDainton/newman-reporter-htmlextra) - 
+- [htmlextra](https://github.com/DannyDainton/newman-reporter-htmlextra) -
 This is an updated version of the standard HTML reporter containing a more in-depth data output and a few helpful extras
-- [csv](https://github.com/matt-ball/newman-reporter-csv) - 
-This reporter creates a `csv` file containing the high level summary of the Collection run  
-- [json-summary](https://github.com/spenceclark/newman-reporter-json-summary) - 
+- [csv](https://github.com/matt-ball/newman-reporter-csv) -
+This reporter creates a `csv` file containing the high level summary of the Collection run
+- [json-summary](https://github.com/spenceclark/newman-reporter-json-summary) -
 A Newman JSON Reporter that strips the results down to a minimum
-- [teamcity](https://github.com/leafle/newman-reporter-teamcity) - 
+- [teamcity](https://github.com/leafle/newman-reporter-teamcity) -
 A reporter built to be used with the [Team City](https://www.jetbrains.com/teamcity/) CI server
-- [testrail](https://github.com/billylam/newman-reporter-testrail) - 
+- [testrail](https://github.com/billylam/newman-reporter-testrail) -
 A reporter built for [Test Rail](https://www.gurock.com/testrail), the test case management tool
-- [statsd](https://github.com/gsorry/newman-reporter-statsd) - 
+- [statsd](https://github.com/gsorry/newman-reporter-statsd) -
 This reporter can be used to send the Collection run data to `statsd` and used on time series analytic tools like [Grafana](https://grafana.com/)
-- [confluence](https://github.com/OmbraDiFenice/newman-reporter-confluence) - 
+- [confluence](https://github.com/OmbraDiFenice/newman-reporter-confluence) -
 Confluence reporter for Newman that uploads a Newman report on a Confluence page
 
 ### Creating Your Own Reporter
