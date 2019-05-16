@@ -411,23 +411,25 @@ The built-in JUnit reporter can output a summary of the collection run to a JUni
 |-------------|-------------------|
 | `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
-Older command line options are supported, but are deprecated in favour of the newer v3 options and will soon be
+Older command line options are supported, but are deprecated in favor of the newer v3 options and will soon be
 discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
 
 ### HTML Reporter
-Its an external reporter which can be installed via `npm install -g newman-reporter-html`.
-The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once HTML reporter is installed you can provide `--reporters html` as a CLI option.
+An external reporter, maintained by Postman, which can be installed via `npm install -g newman-reporter-html`. This reporter was part of the Newman project but was separated out into it's own project in V4.
+
+The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once the HTML reporter is installed you can provide `--reporters html` as a CLI option.
 
 [back to top](#table-of-contents)
 
 ## External Reporters
 
 ### Using External Reporters
-Newman also supports external reporters, provided that the reporter works with Newman's event sequence. Working examples on
+Newman also supports external reporters, provided that the reporter works with Newman's event sequence. Working examples of
 how Newman reporters work can be found in [lib/reporters](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
+
 For instance, to use the [Newman HTML Reporter](https://github.com/postmanlabs/newman-reporter-html):
 
-- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.)<br/>
+- Install the reporter package. Note that the name of the package is of the form `newman-reporter-<name>`. The installation should be global if Newman is installed globally, local otherwise. (Remove `-g` flag from the command below for a local installation.)
 ```console
 $ npm install -g newman-reporter-html
 ```
@@ -446,9 +448,38 @@ newman.run({
 ```
 
 #### Community Maintained Reporters
-- [HTML](https://github.com/postmanlabs/newman-reporter-html)
-- [TeamCity](https://github.com/leafle/newman-reporter-teamcity)
-- [JSON-Light](https://github.com/Paramagnetic/newman-reporter-json-light)
+
+Several members of the Postman community have created custom reporters offering different option to output the data coming from Newman. Listed below is a selection of these but more can be found [here](https://www.npmjs.com/search?q=newman-reporter) on NPM.
+
+Once the custom reporter NPM package has been installed either globally or locally, this can be then used with Newman in the following ways:
+
+```console
+$ newman run /path/to/collection.json -r htmlextra,csv
+```
+
+```javascript
+const newman = require('newman');
+
+newman.run({
+    collection: '/path/to/collection.json',
+    reporters: ['htmlextra', 'csv']
+}, process.exit);
+```
+
+- [htmlextra](https://github.com/DannyDainton/newman-reporter-htmlextra) - 
+This is an updated version of the standard HTML reporter containing a more in-depth data output and a few helpful extras
+- [csv](https://github.com/matt-ball/newman-reporter-csv) - 
+This reporter creates a `csv` file containing the high level summary of the Collection run  
+- [json-summary](https://github.com/spenceclark/newman-reporter-json-summary) - 
+A Newman JSON Reporter that strips the results down to a minimum
+- [teamcity](https://github.com/leafle/newman-reporter-teamcity) - 
+A reporter built to be used with the [Team City](https://www.jetbrains.com/teamcity/) CI server
+- [testrail](https://github.com/billylam/newman-reporter-testrail) - 
+A reporter built for [Test Rail](https://www.gurock.com/testrail), the test case management tool
+- [statsd](https://github.com/gsorry/newman-reporter-statsd) - 
+This reporter can be used to send the Collection run data to `statsd` and used on time series analytic tools like [Grafana](https://grafana.com/)
+- [confluence](https://github.com/OmbraDiFenice/newman-reporter-confluence) - 
+Confluence reporter for Newman that uploads a Newman report on a Confluence page
 
 ### Creating Your Own Reporter
 A custom reporter is a Node module with a name of the form `newman-reporter-<name>`. To create a custom reporter:
@@ -460,8 +491,11 @@ function CustomNewmanReporter (emitter, reporterOptions, collectionRunOptions) {
   // reporterOptions is an object of the reporter specific options. See usage examples below for more details.
   // collectionRunOptions is an object of all the collection run options: https://github.com/postmanlabs/newman#newmanrunoptions-object--callback-function--run-eventemitter
 }
+module.exports = CustomNewmanReporter
 ```
-3. Publish your reporter using `npm publish`, or use your reporter locally [see usage instructions](https://github.com/postmanlabs/newman/tree/develop/lib/reporters).
+3. To use your reporter locally, use the `npm pack` command to create a `.tgz` file. Once created, this can be installed using the `npm i -g newman-reporter-<name>.<version>.tgz` command.
+
+Once you're happy with your reporter, it can be published to `npm` using `npm publish`. This will then be made available for other people to download.
 
 Scoped reporter package names like `@myorg/newman-reporter-<name>` are also supported. Working reporter examples can be found in [lib/reporters](lib/reporters).
 
