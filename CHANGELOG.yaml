@@ -1,3 +1,13 @@
+4.5.0:
+  date: 2019-05-16
+  new features:
+    - Added support for the working directory using SecureFS
+    - Added --working-dir and --no-insecure-file-read CLI options
+  fixed bugs:
+    - Fixed a bug that caused fetching collection from HTTPS URL crashes on Node v12
+  chores:
+    - Updated dependencies
+
 4.4.1:
   date: 2019-03-25
   chores:
@@ -10,10 +20,10 @@
   chores:
     - Updated dependencies
   fixed bugs:
-    - '#1871 Trimmed incoming JSON string to remove byte order marks and other such artefacts.'
+    - '#1871 Trimmed incoming JSON string to remove byte order marks and other such artifacts.'
     - Contextual help messages for newman -h
     - Fixed JUnit report generation for nested requests/tests
-    - Corrected disabled variable behaviour
+    - Corrected disabled variable behavior
   new features:
     - 'Added automatic (best guess) encoding detection of UTF-16LE and ISO-8859-1'
     - Added --verbose flag for detailed CLI output

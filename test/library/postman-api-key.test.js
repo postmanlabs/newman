@@ -60,7 +60,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
 
             expect(requestArg.url)
                 .to.equal('https://api.getpostman.com/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
@@ -90,7 +90,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
 
             expect(requestArg.url)
                 .to.equal('https://api.getpostman.com/environments/1234-931c1484-fd1e-4ceb-81d0-2aa102ca8b5f');
@@ -118,7 +118,7 @@ describe('newman.run postmanApiKey', function () {
             expect(err).to.be.null;
             sinon.assert.calledTwice(request.get);
 
-            expect(summary).to.be.an('object').with.keys(['collection', 'environment', 'globals', 'run']);
+            expect(summary).to.be.an('object').and.include.keys(['collection', 'environment', 'globals', 'run']);
 
             expect(summary.collection).to.include({ id: 'C1', name: 'Collection' });
             expect(summary.environment).to.include({ id: 'E1', name: 'Environment' });
@@ -151,7 +151,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
 
             expect(requestArg.url).to.equal('https://api.getpostman.com/collections?apikey=12345678');
 
@@ -174,7 +174,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').with.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
 
             expect(requestArg.url).to.equal('https://example.com/collection.json');
 

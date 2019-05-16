@@ -69,4 +69,20 @@ describe('options', function () {
             done();
         });
     });
+
+    it('should set current directory as workingDir if not given', function (done) {
+        options({}, function (err, result) {
+            expect(err).to.be.null;
+            expect(result).to.have.property('workingDir', process.cwd());
+            done();
+        });
+    });
+
+    it('should set insecureFileRead to true if not given', function (done) {
+        options({}, function (err, result) {
+            expect(err).to.be.null;
+            expect(result).to.have.property('insecureFileRead', true);
+            done();
+        });
+    });
 });

@@ -1,0 +1,62 @@
+{
+  "info": {
+    "name": "Example Collection with a single GET request",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+
+  "item": [{
+    "name": "A Form-data request",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"file uploaded\", function () {",
+          "   var jsonData = pm.response.json();",
+          "   pm.expect(jsonData.files).to.eql({ ",
+          "     \"test.json\": \"data:application/octet-stream;base64,eyJzb21lIjogImpzb24tc3RyaW5nIn0K\"",
+          "});});"
+          ]
+      }
+    }],
+    "request": {
+      "url": "https://postman-echo.com/post",
+      "method": "POST",
+      "body": {
+        "mode": "formdata",
+        "formdata": [
+          {
+            "type": "file",
+            "key": "somefile",
+            "src": "test.json"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "A Binary body request",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"file uploaded\", function () {",
+          "   var jsonData = pm.response.json();",
+          "    pm.expect(jsonData.data.trim()).to.eql(\"{\\\"some\\\": \\\"json-string\\\"}\");",
+          "});"
+          ]
+      }
+    }],
+    "request": {
+      "url": "https://postman-echo.com/post",
+      "method": "POST",
+      "body": {
+        "mode": "file",
+        "file": {
+            "src": "test.json"
+        }
+      }
+    }
+  }]
+}

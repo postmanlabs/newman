@@ -53,6 +53,7 @@ describe('cli parser', function () {
                         globalVar: [],
                         envVar: [],
                         folder: [],
+                        insecureFileRead: true,
                         color: 'auto',
                         timeout: 0,
                         timeoutRequest: 0,
@@ -147,6 +148,8 @@ describe('cli parser', function () {
                 '-g myGlobals.json ' +
                 '-d path/to/csv.csv ' +
                 '--folder myFolder ' +
+                '--working-dir /Users/postman ' +
+                '--no-insecure-file-read ' +
                 '--export-environment exported_env.json ' +
                 '--export-globals exported_glob.json ' +
                 '--postman-api-key POSTMAN_API_KEY ' +
@@ -170,6 +173,8 @@ describe('cli parser', function () {
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
                 expect(opts.folder).to.eql(['myFolder']);
+                expect(opts.workingDir).to.eql('/Users/postman');
+                expect(opts.insecureFileRead).to.be.false;
                 expect(opts.exportEnvironment).to.equal('exported_env.json');
                 expect(opts.iterationData).to.equal('path/to/csv.csv');
                 expect(opts.globals).to.equal('myGlobals.json');
@@ -208,6 +213,8 @@ describe('cli parser', function () {
                 '-d /path/to/csv.csv ' +
                 '--folder myFolder1 ' +
                 '--folder myFolder2 ' +
+                '--working-dir /Users/postman ' +
+                '--no-insecure-file-read ' +
                 '--disable-unicode ' +
                 '--export-environment exported_env.json ' +
                 '--export-globals exported_glob.json ' +
@@ -233,6 +240,8 @@ describe('cli parser', function () {
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
                 expect(opts.folder).to.eql(['myFolder1', 'myFolder2']);
+                expect(opts.workingDir).to.eql('/Users/postman');
+                expect(opts.insecureFileRead).to.be.false;
                 expect(opts.disableUnicode, 'should have disableUnicode to be true').to.equal(true);
 
                 expect(opts.exportEnvironment).to.equal('exported_env.json');
