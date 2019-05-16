@@ -1,7 +1,12 @@
-master:
+4.5.0:
+  date: 2019-05-16
   new features:
     - Added support for the working directory using SecureFS
     - Added --working-dir and --no-insecure-file-read CLI options
+  fixed bugs:
+    - Fixed a bug that caused fetching collection from HTTPS URL crashes on Node v12
+  chores:
+    - Updated dependencies
 
 4.4.1:
   date: 2019-03-25

@@ -1,6 +1,6 @@
 {
   "name": "newman",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "description": "Command-line companion utility for Postman",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
