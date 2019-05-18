@@ -83,6 +83,26 @@ program
         });
     });
 
+program
+    .command('request <url>')
+    .description('send a request')
+    .option('-X, --method <path>', 'request method')
+    .option('-H, --header <key:value>', 'request header', util.cast.memoize, [])
+    .action((url, command) => {
+        let options = util.commanderToObject(command);
+
+        options.url = url;
+
+        newman.request(options, function (err) {
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.friendly && console.error(`  ${err.friendly}\n`);
+                process.exit(1);
+            }
+        });
+    });
+
+
 program.on('--help', function () {
     console.info('\nTo get available options for a command:');
     console.info('  newman [command] -h');
