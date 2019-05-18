@@ -1,9 +1,10 @@
 var _ = require('lodash'),
     path = require('path'),
+    async = require('async'),
+    sinon = require('sinon'),
     sdk = require('postman-collection'),
-    async = require('async');
+    runtime = require('postman-runtime');
 
-/* global describe, it, expect */
 describe('run module', function () {
     var run = require('../../lib/run');
 
@@ -30,6 +31,36 @@ describe('run module', function () {
                 done();
             });
         }).to.not.throw();
+    });
+
+    // @todo enable when the v1 collection format support is dropped in Newman v5.
+    it.skip('should error out if v1 collection is passed', function (done) {
+        const v1Collection = {
+            id: 'a4f4a069-00a2-4f70-a792-513877241083',
+            name: 'C1',
+            order: ['3e5349fa-a259-4ac2-a920-b694e6f8c1e6'],
+            requests: [{
+                id: '3e5349fa-a259-4ac2-a920-b694e6f8c1e6',
+                name: 'R1',
+                collectionId: '5adbd3b7-80cb-43cc-bf1e-8578ab3c9b15',
+                method: 'GET',
+                url: 'https://postman-echo.com/get',
+                responses: [],
+                pathVariableData: [],
+                queryParams: [],
+                headerData: []
+            }]
+        };
+
+        run({
+            collection: v1Collection
+        }, function (err) {
+            expect(err).be.ok;
+            expect(err).to.have.property('message', 'Newman >= v5 does not support the v1 collection format');
+            expect(err).to.have.property('friendly',
+                'Use the Postman Native app to export collections in the v2 format');
+            done();
+        });
     });
 
     it('should start a run with empty collection as plain object', function (done) {
@@ -195,5 +226,51 @@ describe('run module', function () {
                 }).to.not.throw();
             }
         ], done);
+    });
+
+    describe('Runner.run options', function () {
+        before(function () {
+            // stub runtime.Runner and override `run` to return options argument as error to stop further execution.
+            sinon.stub(runtime, 'Runner').prototype.run = (collection, options, callback) => {
+                callback(options);
+            };
+        });
+
+        after(function () {
+            runtime.Runner.restore();
+        });
+
+        describe('entrypoint', function () {
+            it('should be undefined by default', function (done) {
+                run({ collection: {} }, function (options) {
+                    expect(options).to.have.property('entrypoint').to.be.undefined;
+                    done();
+                });
+            });
+
+            it('should handle options.folder passed as string correctly', function (done) {
+                run({ collection: {}, folder: 'f1' }, function (options) {
+                    expect(options).to.have.deep.property('entrypoint', { execute: 'f1' });
+                    done();
+                });
+            });
+
+            it('should use multipleIdOrName strategy if options.folder is passed as an array', function (done) {
+                run({ collection: {}, folder: ['f1', 'f2'] }, function (options) {
+                    expect(options).to.have.deep.property('entrypoint', {
+                        execute: ['f1', 'f2'],
+                        lookupStrategy: 'multipleIdOrName'
+                    });
+                    done();
+                });
+            });
+
+            it('should not use multipleIdOrName strategy if options.folder is a single item array', function (done) {
+                run({ collection: {}, folder: ['f1'] }, function (options) {
+                    expect(options).to.have.property('entrypoint').to.eql({ execute: 'f1' });
+                    done();
+                });
+            });
+        });
     });
 });

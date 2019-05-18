@@ -1,30 +1,20 @@
 var fs = require('fs'),
 
     _ = require('lodash'),
+    sh = require('shelljs'),
     parseXml = require('xml2js').parseString;
 
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('JUnit reporter', function () {
-    var outFile = 'out/newman-report.xml';
+    var outDir = 'out',
+        outFile = outDir + '/newman-report.xml';
 
-    beforeEach(function (done) {
-        fs.stat('out', function (err) {
-            if (err) {
-                return fs.mkdir('out', done);
-            }
-
-            done();
-        });
+    beforeEach(function () {
+        sh.test('-d', outDir) && sh.rm('-rf', outDir);
+        sh.mkdir('-p', outDir);
     });
 
-    afterEach(function (done) {
-        fs.stat(outFile, function (err) {
-            if (err) {
-                return done();
-            }
-
-            fs.unlink(outFile, done);
-        });
+    afterEach(function () {
+        sh.rm('-rf', outDir);
     });
 
     it('should correctly generate the JUnit report for a successful run', function (done) {
@@ -41,7 +31,8 @@ describe('JUnit reporter', function () {
                 parseXml(data, function (error, result) {
                     expect(error).to.not.be.ok;
 
-                    var suite = _.get(result.testsuites, 'testsuite.0');
+                    var testcase,
+                        suite = _.get(result.testsuites, 'testsuite.0');
 
                     expect(result.testsuites.$).to.not.be.empty;
                     expect(result.testsuites.$.time).to.match(/^\d+\.\d{3}$/);
@@ -49,7 +40,11 @@ describe('JUnit reporter', function () {
                     expect(suite).to.not.be.empty;
                     expect(suite.$).to.not.be.empty;
                     expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
-                    expect(suite.testcase).to.not.be.empty;
+
+                    testcase = suite.testcase[0];
+                    expect(testcase).to.not.be.empty;
+
+                    expect(testcase.$).to.have.property('classname', 'ExampleCollectionWithASingleGetRequest');
 
                     expect(suite.$).to.have.property('tests', '1');
                     expect(suite.$).to.have.property('failures', '0');
@@ -93,7 +88,7 @@ describe('JUnit reporter', function () {
                     testcase = suite.testcase[0];
                     expect(testcase).to.not.be.empty;
 
-                    expect(testcase.$).to.have.property('classname', 'JUnitXmlReporter.constructor');
+                    expect(testcase.$).to.have.property('classname', 'ExampleCollectionWithFailingTests');
                     expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(testcase.failure).to.not.be.empty;
                     expect(testcase.failure[0]._).to.not.be.empty;
@@ -130,6 +125,7 @@ describe('JUnit reporter', function () {
                     expect(suite.$).to.not.be.empty;
                     expect(suite.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(suite.testcase).to.not.be.empty;
+                    expect(suite['system-err']).to.not.be.empty;
 
                     expect(suite.$).to.have.property('tests', '2');
                     expect(suite.$).to.have.property('failures', '1');
@@ -138,7 +134,7 @@ describe('JUnit reporter', function () {
                     testcase = suite.testcase[0];
                     expect(testcase).to.not.be.empty;
 
-                    expect(testcase.$).to.have.property('classname', 'JUnitXmlReporter.constructor');
+                    expect(testcase.$).to.have.property('classname', 'AssertionErrorTest');
                     expect(testcase.$.time).to.match(/^\d+\.\d{3}$/);
                     expect(testcase.failure).to.not.be.empty;
                     expect(testcase.failure[0]._).to.not.be.empty;
@@ -147,6 +143,22 @@ describe('JUnit reporter', function () {
                     done();
                 });
             });
+        });
+    });
+
+    it('should correctly produce the JUnit report in a pre-existing directory', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/single-get-request.json',
+            reporters: ['junit'],
+            reporter: { junit: { export: outDir } }
+        }, function (err) {
+            expect(err).to.be.null;
+
+            var dir = fs.readdirSync(outDir),
+                file = dir[0];
+
+            expect(dir).to.have.length(1);
+            fs.stat(outDir + '/' + file, done);
         });
     });
 });

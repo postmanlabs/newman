@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "eb3db066-938a-4fe9-8d6d-d1d288b1c25c",
+		"name": "Nested request in test with failing test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Nested request test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "63864333-932a-49b1-8daf-2bfb98650ae6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"pm.sendRequest({",
+							"    url: 'https://postman-echo.com/get?key2=val2',",
+							"    method: 'GET'",
+							"}, (err, res) => {",
+							"    if (err) {",
+							"        console.log(err);",
+							"    } else {",
+							"        var resData = JSON.parse(res.stream.toString()).args;",
+							"",
+							"        pm.test('Nested request JSON response: \"key2\": \"val2\"', () => {",
+							"            pm.expect('val2').to.equal('wrongValue');",
+							"        });",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://postman-echo.com/get?foo1=bar1",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "foo1",
+							"value": "bar1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

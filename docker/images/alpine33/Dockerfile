@@ -1,7 +1,7 @@
 FROM alpine:3.3
-MAINTAINER Postman Labs <help@getpostman.com>
+LABEL maintainer="Postman Labs <help@getpostman.com>"
 
-ARG NODE_VERSION=8
+ARG NODE_VERSION=10
 ARG NEWMAN_VERSION
 
 # Set environment variables
@@ -13,7 +13,7 @@ RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
         exit 1; \
     fi && \
     # Add the latest Alpine Linux package to the repositories list
-    echo -e "http://nl.alpinelinux.org/alpine/v3.3/main\nhttp://nl.alpinelinux.org/alpine/v3.3/community" > /etc/apk/repositories && \
+    echo -e "https://nl.alpinelinux.org/alpine/v3.3/main/\nhttps://nl.alpinelinux.org/alpine/v3.3/community/" > /etc/apk/repositories && \
     # Update existing packages and install Node dependencies
     apk add --update --no-cache libgcc libstdc++ jq curl && \
     # Determine the complete Semver Node version for the provided Node major version in $NODE_VERSION

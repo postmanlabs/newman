@@ -1,51 +1,167 @@
 # Newman
 
-## Why?
+## Table of contents
+
+1. [Updating to the latest version](#updating-to-the-latest-version)
+2. [Migrating from V3 to V4](#migrating-from-v3-to-v4)
+3. [Migrating from V2 to V3](#migrating-from-v2-to-v3)
+
+## Updating to the latest version
+
+If you're updating from an older version of Newman, make sure you read the rest of this document, to understand the changes.
+
+#### 1. Update Newman
+```console
+$ npm update -g newman
+```
+
+#### 2. Check Installation
+```console
+$ newman --version          # Should show the latest version of Newman
+$ npm show newman version   # Should show the same version as of above
+```
+
+---
+
+## Migrating from V3 to V4
+
+Newman v4.0 drops support for Node v4 and deprecated v2 CLI options. Also, the inbuilt HTML reporter has been moved to a standalone reporter.
+
+### Upgrading Node.js
+Newman v4 requires Node.js >= v6. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+
+### Discontinued CLI Options
+Newman v4 drops support for all the deprecated v2 CLI options, check [V2 to V3 Migration Guide](#v2-to-v3-migration-guide).<br/>
+For the complete list of supported options, see the [README](README.md)
+
+#### --no-color
+This option is dropped because of the changes made to the `color` option. See the section below for more details.
+
+### Using `color` option
+The behaviour of this option is changed in both CLI and Library. Unlike Newman v3.x, this option alone can be used to enable
+or disable colored CLI output.
+
+#### CLI
+
+##### 1. Enabling colored output
+
+###### V3 command
+```console
+$ newman run collection.json --color
+```
+
+###### V4 equivalent
+```console
+$ newman run collection.json --color on
+```
+
+##### 2. Disabling colored output
+
+###### V3 command
+```console
+$ newman run collection.json --no-color
+```
+
+###### V4 equivalent
+```console
+$ newman run collection.json --color off
+```
+
+#### Library
+
+##### 1. Enabling colored output
+
+###### Using V3
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: true
+}, callback);
+```
+
+###### V4 equivalent
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: 'on'
+}, callback);
+```
+
+##### 2. Disabling colored output
+
+###### Using V3
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    noColor: true
+}, callback);
+```
+
+###### V4 equivalent
+```javascript
+newman.run({
+    collection: 'collection.json',
+    reporters: ['cli'],
+    color: 'off'
+}, callback);
+```
+
+**Note:**
+The default behaviour is to detect color support for the terminal and act accordingly.
+This behaviour can be modified by setting the color option to `on` or `off` respectively.
+
+### Using HTML Reporter
+The inbuilt HTML reporter has been moved to a standalone reporter. Install it with:
+```console
+$ npm install -g newman-reporter-html
+```
+Installation should be global if newman is installed globally, local otherwise. (Remove `-g` flag from the above command for a local installation.)
+
+The complete installation and usage guide is available here: https://github.com/postmanlabs/newman-reporter-html
+
+### Deprecated support for the v1 collection format
+Newman >= v4 deprecates support for the v1 collection format.<br/>
+Use the [Postman Native app](https://www.getpostman.com/apps) to export collections in the v2 format.
+
+### CSV auto parse
+A [fix][pr1609] has been made to avoid parsing numbers inside quotes.<br/>
+Example, `"000123"` will not be parsed to `123` like before.
+
+Fixes issues: [#1100][i1100], [#1215][i1215] & [#1346][i1346]
+
+### Default timeouts
+All timeouts now have the default value of infinity. [#1630](pr1630)
+
+[pr1609]: https://github.com/postmanlabs/newman/pull/1609
+[pr1630]: https://github.com/postmanlabs/newman/pull/1630
+[i1100]: https://github.com/postmanlabs/newman/issues/1100
+[i1215]: https://github.com/postmanlabs/newman/issues/1215
+[i1346]: https://github.com/postmanlabs/newman/issues/1346
+
+---
+
+## Migrating from V2 to V3
 
 Newman v3.0 is a complete rewrite of Newman from the ground up, which works well with other Node libraries, and
 allows flexibility for future features such as parallel collection runs, or performing parallel requests within the
 same run. Above all, Newman now uses [Postman Runtime](https://github.com/postmanlabs/postman-runtime/) in order to
 provide a consistent experience on Postman Apps and on CLI.
 
-## General overview of features
+### General overview of features
 
-0. Newman collection runs now happen with the `run` command. See sections below for more examples.
-1. More informative terminal output with colourful details of what went wrong, and most importantly, where it went
+1. Newman collection runs now happen with the `run` command. See sections below for more examples.
+2. More informative terminal output with colourful details of what went wrong, and most importantly, where it went
    wrong.
-2. Ability to load environment, globals, collections as well as iteration data from urls.
-3. Friendlier usage as a library. A lot of use-cases depend on the use of Newman as a Node library, and v3.0 is written
+3. Ability to load environment, globals, collections as well as iteration data from urls.
+4. Friendlier usage as a library. A lot of use-cases depend on the use of Newman as a Node library, and v3.0 is written
    with a library-first mindset.
-4. Internally things (by things, we usually mean code) have been better organised to allow faster implementation of
+5. Internally things (by things, we usually mean code) have been better organised to allow faster implementation of
    features.
 
-## Todo
-
-It is still a work in progress, so there are a few features that are pending
-implementation:
-
-1. Make generic and uncaught exceptions more readable in CLI
-
-## Updating to Newman v3 from older versions
-
-If you're updating from an existing version of Newman, make sure you read the rest of this document, to understand 
-the changes.
-
-##### 1. Remove the existing version of Newman
-```terminal
-$ npm uninstall -g newman
-```
-
-##### 2. Install Newman v3
-```terminal
-$ npm install -g newman  # Install newman globally
-```
-
-##### 3. Check Installation
-```terminal
-$ newman --version  # Should show the latest version of Newman
-```
-
-## Changes since v2.x
+### Changes since v2.x
 
 Migrating to Newman v3.x for most simple use cases is a trivial affair. We have taken care to support older CLI options.
 Which means, if you upgrade, it should just work! Having said that, we would soon discontinue the older CLI options and
@@ -81,7 +197,7 @@ This switch used to render exported JSON files in newman v2 in a pretty format. 
 format and as such, this switch is now not needed. If you want to use compressed export formats, run the exported files
 through some JSON minifier.
 
-## V2 to V3 migration guide:
+## V2 to V3 Migration Guide
 
 The following tables enumerate the options that have either been deprecated / discontinued, or renamed in Newman V3. The
 V3 equivalents provided in the second column are intended for use with the `run` command (described below), and will not
@@ -93,7 +209,7 @@ compatibility and will be removed in the next major Newman release. A status of 
 no longer supported, or is implemented by default.
 
 Options missing from the migration tables have been left as they were from Newman V2. For the complete list of supported
-options, see [README.md](README.md)
+options, see [README.md](https://github.com/postmanlabs/newman/blob/release/3.x/README.md)
 
 ### CLI
 

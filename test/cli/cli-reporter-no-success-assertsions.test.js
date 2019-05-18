@@ -1,6 +1,6 @@
-/* global describe, it, exec, expect */
 describe('CLI reporter no success assertions', function () {
     var noSuccessOutput = /response\s+code\s+is\s+200/;
+
     it('should produce normal output', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json',
             function (code, stdout, stderr) {

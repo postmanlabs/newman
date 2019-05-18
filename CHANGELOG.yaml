@@ -1,4 +1,131 @@
-# Newman Changelog
+4.5.0:
+  date: 2019-05-16
+  new features:
+    - Added support for the working directory using SecureFS
+    - Added --working-dir and --no-insecure-file-read CLI options
+  fixed bugs:
+    - Fixed a bug that caused fetching collection from HTTPS URL crashes on Node v12
+  chores:
+    - Updated dependencies
+
+4.4.1:
+  date: 2019-03-25
+  chores:
+    - Updated dependencies
+  fixed bugs:
+    - '#1932 Removed classname from JUnit reports and add it to both passed and failed tests'
+
+4.4.0:
+  date: 2019-02-20
+  chores:
+    - Updated dependencies
+  fixed bugs:
+    - '#1871 Trimmed incoming JSON string to remove byte order marks and other such artifacts.'
+    - Contextual help messages for newman -h
+    - Fixed JUnit report generation for nested requests/tests
+    - Corrected disabled variable behavior
+  new features:
+    - 'Added automatic (best guess) encoding detection of UTF-16LE and ISO-8859-1'
+    - Added --verbose flag for detailed CLI output
+
+4.3.1:
+  date: 2018-12-26
+  fixed bugs:
+    - 'Added start timestamp, classname and failure message to JUnit reporter for Azure DevOps'
+
+4.3.0:
+  date: 2018-12-26
+  new features:
+    - 'Added AJV to the script sandbox'
+  fixed bugs:
+    - 'Respected form data field ordering'
+    - 'Fixed a bug that caused requests to fail when the URL protocol is not in lowercase'
+
+4.2.3:
+  date: 2018-12-15
+  fixed bugs:
+    - '#1823 Added missing skipped flag to assertion information aggregator'
+
+4.2.2:
+  date: 2018-11-07
+  fixed bugs:
+    - '#1784 Updated postman-runtime to v7.4.2, which fixes a hawk security vulnerability'
+
+4.2.1:
+  date: 2018-11-04
+  fixed bugs:
+    - '#1779 Updated postman-runtime to v7.4.1'
+
+4.2.0:
+  date: 2018-11-03
+  new features:
+    - '#1776 Introduced the generic postman/newman Docker image, bumped Node version to 10'
+    - '#1731 Added support for custom HTTP verbs'
+  docs:
+    - '#1717 Updated Docker image documentation'
+  chores:
+    - '#1770 Shifted to Travis for Windows builds'
+    - '#1769 Added .gitattributes to enforce consistent line endings for .js files'
+    - '#1743 Updated CLI reporter left padding to account for commander v2.19 changes'
+    - 'Updated dependencies'
+
+4.1.0:
+  date: 2018-08-29
+  new features:
+    - '#1654 Added ability to select multiple folders for collection run'
+  chores:
+    - '#1687 Added `newmanVersion` in collection run options'
+    - '#1684 Fixed flaky tests'
+    - 'Updated Dependencies'
+
+4.0.2:
+  date: 2018-08-09
+  fixed bugs:
+    - '#1673 Fixed a bug that prevented request errors from showing up in CLI reports'
+
+4.0.1:
+  date: 2018-08-08
+  fixed bugs:
+    - '#1669 Deprecated support for the v1 Postman Collection format'
+    - '#1670 Throw proper error message for invalid --color values'
+
+4.0.0:
+  date: 2018-08-06
+  new features:
+    - '#1633 Added ability to run collection via Postman API UID reference'
+  breaking changes:
+    - '#1605 Dropped support for Node < v6'
+    - '#1610 Dropped support for v2 CLI options'
+    - '#1660 Dropped support for the v1 Postman Collection format'
+    - '#1616 Moved inbuilt HTML reporter to a standalone reporter: https://github.com/postmanlabs/newman-reporter-html'
+    - '#1653 Updated `color` option behaviour, dropped support for --no-color'
+  fixed bugs:
+    - '#1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes'
+    - '#1630 Updated default timeout values to Infinity'
+  chores:
+    - '#1623 Refactored Newman CLI'
+    - '#1608 Updated ESLint rules'
+    - '#1618 Reformatted README'
+    - 'Updated Dependencies'
+
+3.10.0:
+  date: 2018-07-04
+  new features:
+    - '#1596 Added --reporter-cli-no-banner option'
+    - '#1551 Bumped Alpine Docker image Node version to v8'
+    - '#1555 Added failure list to HTML reports'
+  fixed bugs:
+    - '#1612 Fixed JUnit reports for failed cases'
+    - '#1576 Accounted for cases where the export path is a pre-existing directory'
+    - '#1601 Reversed reporter lookup logic'
+    - '#1584 Improved timeout messaging in HTML reports'
+    - '#1594 Fixed a bug that caused reporter flags to break with `=`'
+    - '#1592 Added a link to the Alpine Docker image'
+    - '#1583 Capped JUnit timing precision to 3 decimal places'
+    - '#1563 Ensured that all exported variable files have a valid name'
+    - '#1578 Switched to cli-table3'
+    - '#1575 Fixed typo in directory collection runner example'
+    - '#1553 Fixed a bug that caused HTML reports to incorrectly duplicate requests across multiple iterations'
 
 3.9.4:
   date: 2018-05-25

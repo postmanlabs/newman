@@ -1,6 +1,5 @@
 var _ = require('lodash');
 
-/* global describe, it, expect */
 describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and average response time
     var Summary = require('../../lib/run/summary'),
@@ -14,22 +13,26 @@ describe('run summary', function () {
     it('should require only an EventEmitter during construction', function () {
         expect(function () {
             var summary = new Summary();
+
             expect(summary).not.be.ok;
         }).to.throw();
 
         expect(function () {
             var summary = new Summary(new EventEmitter());
+
             expect(summary).be.ok;
         }).to.not.throw();
 
         expect(function () {
             var summary = new Summary(new EventEmitter(), {});
+
             expect(summary).be.ok;
         }).to.not.throw();
     });
 
     it('should have the relevant top-level data structures', function () {
         var summary = new Summary(new EventEmitter());
+
         expect(_.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run'].sort());
     });
 
@@ -110,7 +113,6 @@ describe('run summary', function () {
     });
 
     describe('failure logging', function () {
-
         describe('surrogate (pseudo) event', function () {
             _.forEach(SURROGATE_EVENTS, function (eventName) {
                 var beforeEventName = _.camelCase(`before-${eventName}`),
@@ -197,7 +199,7 @@ describe('run summary', function () {
                 });
                 emitter = new EventEmitter();
                 summary = new Summary(emitter, {
-                    collection: collection
+                    collection
                 });
             });
 

@@ -52,6 +52,43 @@
         "description": ""
       },
       "response": []
+    },
+    {
+      "name": "with request body",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "088721b0-c2e6-47fa-85b0-8a4f79c71f82",
+          "type": "text/javascript",
+          "exec": [
+            "pm.test(\"Response Body\", function () {",
+            "    var response = pm.response.headers.get('raw-request');",
+            "    pm.expect(response).to.contain('HEAD / HTTP/1.1');",
+            "    pm.expect(response).to.contain('content-type: multipart/form-data');",
+            "    pm.expect(response).to.contain('Content-Disposition: form-data;');",
+            "    pm.expect(response).to.contain('FormDataValue');",
+            "});"
+          ]
+        }
+      }],
+      "request": {
+        "url": "http://localhost:4041",
+        "method": "HEAD",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [{
+            "key": "dataKey",
+            "value": "FormDataValue",
+            "type": "text"
+          }]
+        },
+        "description": ""
+      },
+      "response": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
     }
   ]
 }

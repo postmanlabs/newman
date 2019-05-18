@@ -1,0 +1,396 @@
+{
+  "info": {
+    "_postman_id": "5732ca26-4afb-4257-b793-f35ed4dcc46f",
+    "name": "protocol-profile-behavior",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [{
+      "name": "followRedirects",
+      "item": [{
+          "name": "followRedirects: true",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "540f949d-5861-4067-8211-b17d51fba726",
+              "exec": [
+                "const responseJSON = pm.response.json();",
+                "",
+                "pm.test(\"Status code is 200\", function () {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test(\"Response body sanity\", function () {",
+                "    pm.expect(responseJSON).to.have.property('url', '/');",
+                "    pm.expect(responseJSON).to.have.property('method', 'GET');",
+                "    pm.expect(responseJSON).to.have.property('data', '');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:4042/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "4042",
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "followRedirects: false",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "540f949d-5861-4067-8211-b17d51fba726",
+              "exec": [
+                "pm.test(\"Status code is 302\", function () {",
+                "    pm.response.to.have.status(302);",
+                "});",
+                "",
+                "pm.test(\"Location header is present\", function () {",
+                "    pm.response.to.have.header(\"location\");",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:4042/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "4042",
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "followRedirects": false
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": true
+      }
+    },
+    {
+      "name": "followOriginalHttpMethod",
+      "item": [{
+          "name": "followOriginalHttpMethod: true",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "540f949d-5861-4067-8211-b17d51fba726",
+              "exec": [
+                "const responseJSON = pm.response.json();",
+                "",
+                "pm.test(\"Status code is 200\", function () {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test(\"Response body sanity\", function () {",
+                "    pm.expect(responseJSON).to.have.property('url', '/');",
+                "    pm.expect(responseJSON).to.have.property('method', 'DELETE');",
+                "    pm.expect(responseJSON).to.have.property('data', '');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:4042/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "4042",
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "followOriginalHttpMethod: false",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "540f949d-5861-4067-8211-b17d51fba726",
+              "exec": [
+                "const responseJSON = pm.response.json();",
+                "",
+                "pm.test(\"Status code is 200\", function () {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test(\"Response body sanity\", function () {",
+                "    pm.expect(responseJSON).to.have.property('url', '/');",
+                "    pm.expect(responseJSON).to.have.property('method', 'GET');",
+                "    pm.expect(responseJSON).to.have.property('data', '');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:4042/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "4042",
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "followOriginalHttpMethod": false
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": true,
+        "followOriginalHttpMethod": true
+      }
+    },
+    {
+      "name": "removeRefererHeaderOnRedirect",
+      "item": [{
+          "name": "removeRefererHeaderOnRedirect: false",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "540f949d-5861-4067-8211-b17d51fba726",
+              "exec": [
+                "const responseJSON = pm.response.json();",
+                "",
+                "pm.test(\"Status code is 200\", function () {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test(\"Response body sanity\", function () {",
+                "    pm.expect(responseJSON).to.have.property('url', '/');",
+                "    pm.expect(responseJSON).to.have.property('method', 'GET');",
+                "    pm.expect(responseJSON).to.have.property('headers')",
+                "        .that.have.property('referer', 'http://localhost:4042/1');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:4042/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "4042",
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "followRedirects": true
+          }
+        },
+        {
+          "name": "removeRefererHeaderOnRedirect: true",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "540f949d-5861-4067-8211-b17d51fba726",
+              "exec": [
+                "const responseJSON = pm.response.json();",
+                "",
+                "pm.test(\"Status code is 200\", function () {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test(\"Response body sanity\", function () {",
+                "    pm.expect(responseJSON).to.have.property('url', '/');",
+                "    pm.expect(responseJSON).to.have.property('method', 'GET');",
+                "    pm.expect(responseJSON).to.have.property('headers')",
+                "        .that.not.have.property('referer');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:4042/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "4042",
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "removeRefererHeaderOnRedirect": true
+          }
+        },
+        {
+          "name": "removeRefererHeaderOnRedirect: true + initial referer",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "540f949d-5861-4067-8211-b17d51fba726",
+              "exec": [
+                "const responseJSON = pm.response.json();",
+                "",
+                "pm.test(\"Status code is 200\", function () {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test(\"Response body sanity\", function () {",
+                "    pm.expect(responseJSON).to.have.property('url', '/');",
+                "    pm.expect(responseJSON).to.have.property('method', 'GET');",
+                "    pm.expect(responseJSON).to.have.property('headers')",
+                "        .that.have.property('referer', 'INITIAL_REFERER');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [{
+              "key": "referer",
+              "value": "INITIAL_REFERER",
+              "type": "text"
+            }],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:4042/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "4042",
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "removeRefererHeaderOnRedirect": true
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "removeRefererHeaderOnRedirect": false
+      }
+    },
+    {
+      "name": "maxRedirects",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "id": "540f949d-5861-4067-8211-b17d51fba726",
+          "exec": [
+            "const responseJSON = pm.response.json();",
+            "",
+            "pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);",
+            "});",
+            "",
+            "pm.test(\"Response body sanity\", function () {",
+            "    pm.expect(responseJSON).to.have.property('url', '/');",
+            "    pm.expect(responseJSON).to.have.property('method', 'GET');",
+            "    pm.expect(responseJSON).to.have.property('data', '');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "localhost:4042/11",
+          "host": [
+            "localhost"
+          ],
+          "port": "4042",
+          "path": [
+            "11"
+          ]
+        }
+      },
+      "response": [],
+      "protocolProfileBehavior": {
+        "followRedirects": true,
+        "maxRedirects": 11
+      }
+    }
+  ],
+  "protocolProfileBehavior": {
+    "maxRedirects": 10,
+    "followRedirects": false,
+    "followOriginalHttpMethod": false,
+    "removeRefererHeaderOnRedirect": false
+  }
+}

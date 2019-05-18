@@ -1,12 +1,12 @@
-/* global describe, it, expect, newman */
-var runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
+var _ = require('lodash'),
+    runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
 
 describe('Newman run options', function () {
     var collection = 'test/fixtures/run/single-get-request.json';
 
     it('should work correctly without any extra options', function (done) {
         newman.run({
-            collection: collection
+            collection
         }, done);
     });
 
@@ -74,14 +74,18 @@ describe('Newman run options', function () {
             expect(err).to.not.be.ok;
             expect(summary.run.failures).to.be.empty;
 
-            var executions = summary.run.executions;
+            var executions = summary.run.executions,
+                response = executions[0].response.json(),
+                postmanToken = _.get(response, 'headers.postman-token');
 
             expect(executions, 'should have 3 executions').to.have.lengthOf(3);
-            expect(executions[0].response.json()).to.eql({
+            expect(response).to.eql({
                 args: { source: 'newman-sample-github-collection' },
                 headers: {
                     host: 'postman-echo.com',
                     accept: '*/*',
+                    'cache-control': 'no-cache',
+                    'postman-token': postmanToken,
                     'accept-encoding': 'gzip, deflate',
                     'user-agent': `PostmanRuntime/${runtimeVersion}`, // change this when runtime is bumped
                     'x-forwarded-port': '443',

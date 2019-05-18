@@ -1,4 +1,3 @@
-/* global describe, it, exec, expect */
 describe('CLI reporter failure details', function () {
     it('should correctly show complete details for the failure list', function (done) {
         // eslint-disable-next-line max-len

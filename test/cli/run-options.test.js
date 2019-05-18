@@ -1,13 +1,21 @@
 var newmanVersion = require('../../package.json').version;
 
-/* globals it, describe, exec, expect */
 describe('CLI run options', function () {
     it('should work correctly without any extra options', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', done);
     });
 
-    it('should display the current Newman version correctly', function (done) {
+    it('should display the current Newman version with `--version`', function (done) {
         exec('node ./bin/newman.js --version', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stdout).to.equal(`${newmanVersion}\n`);
+            expect(stderr).to.equal('');
+            done();
+        });
+    });
+
+    it('should display the current Newman version with `-v`', function (done) {
+        exec('node ./bin/newman.js -v', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stdout).to.equal(`${newmanVersion}\n`);
             expect(stderr).to.equal('');
@@ -57,7 +65,35 @@ describe('CLI run options', function () {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
-            expect(stderr).to.equal('\n  error: option `--global-var <value>\' argument missing\n\n');
+            expect(stderr).to.equal('error: option `--global-var <value>\' argument missing\n');
+            done();
+        });
+    });
+
+    it('should correctly work with environment variable overrides passed with --env-var', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var dummyVar=bar2', function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
+    it('should throw an error for missing --env-var values', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.equal('error: option `--env-var <value>\' argument missing\n');
+            done();
+        });
+    });
+
+    it('should log a warning if the v1 collection format is used', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/integration/multi-level-folders-v1.postman_collection.json', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stderr).to.equal('newman: Newman v4 deprecates support for the v1 collection format\n' +
+                '  Use the Postman Native app to export collections in the v2 format\n\n');
+
             done();
         });
     });

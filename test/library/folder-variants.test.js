@@ -1,65 +1,69 @@
-var fs = require('fs'),
-    path = require('path'),
-
-    _ = require('lodash');
-
-/* global beforeEach, afterEach, describe, it, expect, newman */
 describe('folder variants', function () {
-    var iterationProperty = 'run.stats.iterations.total',
-        collectionRunPath = path.join(__dirname, '..', '..', 'out', 'folder-variants-test.json');
-
-    beforeEach(function (done) {
-        fs.stat('out', function (err) {
-            if (err) { return fs.mkdir('out', done); }
-
-            done();
-        });
-    });
-
-    afterEach(function (done) {
-        fs.stat(collectionRunPath, function (err) {
-            if (err) { return done(); }
-
-            fs.unlink(collectionRunPath, done);
-        });
-    });
+    var collection = {
+        id: 'C1',
+        name: 'Collection C1',
+        item: [{
+            id: 'ID1',
+            name: 'R1',
+            request: 'https://postman-echo.com/get'
+        }, {
+            id: 'ID2',
+            name: 'R2',
+            request: 'https://postman-echo.com/get'
+        }, {
+            id: 'ID3',
+            name: 'R3',
+            request: 'https://postman-echo.com/get'
+        }]
+    };
 
     it('should run the specified request in case folder name is valid', function (done) {
         newman.run({
-            collection: 'test/fixtures/run/named-request.json',
-            folder: 'correct_name',
-            reporters: ['json'],
-            reporter: { json: { export: collectionRunPath } }
-        }, function (err) {
-            if (err) { return done(err); }
-
-            var collectionRun;
-
-            try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
-            catch (e) { console.error(e); }
-
-            expect(_.get(collectionRun, iterationProperty, 'should have 1 iteration')).to.equal(1);
+            collection: collection,
+            folder: 'R1'
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+            expect(summary.run.executions, 'should have 1 executions').to.have.lengthOf(1);
+            expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1']);
             done();
         });
     });
 
     it('should skip the collection run in case folder name is invalid', function (done) {
         newman.run({
-            collection: 'test/fixtures/run/named-request.json',
-            folder: 'incorrect_name',
-            reporters: ['json'],
-            reporter: { json: { export: collectionRunPath } }
-        }, function (err) {
-            if (err) { return done(err); }
-
-            var collectionRun;
-
-            try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
-            catch (e) { console.error(e); }
-
-            expect(_.get(collectionRun, iterationProperty), 'should have 0 iteration').to.equal(0);
+            collection: collection,
+            folder: 'R123'
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            expect(summary.run.stats.iterations.total, 'should have 0 iteration').to.equal(0);
+            expect(summary.run.executions, 'should have 0 executions').to.have.lengthOf(0);
             done();
         });
     });
 
+    it('should run the specified requests in case multiple folder names are passed', function (done) {
+        newman.run({
+            collection: collection,
+            folder: ['R1', 'R3']
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+            expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
+            expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1', 'R3']);
+            done();
+        });
+    });
+
+    it('should skip the collection run in case any of the folder name is invalid', function (done) {
+        newman.run({
+            collection: collection,
+            folder: ['R1', 'R123']
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            expect(summary.run.stats.iterations.total, 'should have 0 iteration').to.equal(0);
+            expect(summary.run.executions, 'should have 0 executions').to.have.lengthOf(0);
+            done();
+        });
+    });
 });

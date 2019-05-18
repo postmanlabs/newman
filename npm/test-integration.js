@@ -9,6 +9,12 @@ var fs = require('fs'),
     recursive = require('recursive-readdir'),
     newman = require(pathUtils.join(__dirname, '..', 'index')),
 
+    echoServer = require('./server').createRawEchoServer(),
+    redirectServer = require('./server').createRedirectServer(),
+
+    LOCAL_TEST_ECHO_PORT = 4041,
+    LOCAL_TEST_REDIRECT_PORT = 4042,
+
     /**
      * The source directory containing integration test collections and folders.
      *
@@ -61,6 +67,26 @@ module.exports = function (exit) {
         },
 
         /**
+         * Start local server used in collections
+         *   - echoServer = custom HTTP method, body with GET
+         *   - redirectServer = protocol profile behavior
+         *
+         * @param {Object} suites - An set of tests, arranged by test group names as keys.
+         * @param {Function} next - A callback function whose invocation marks the end of the integration test run.
+         * @returns {*}
+         */
+        function (suites, next) {
+            // start echoServer first
+            echoServer.listen(LOCAL_TEST_ECHO_PORT, function (err) {
+                if (err) { return next(err); }
+                // start redirectServer once echoServer is started
+                redirectServer.listen(LOCAL_TEST_REDIRECT_PORT, function (err) {
+                    next(err, suites);
+                });
+            });
+        },
+
+        /**
          * Execute each integration test suite using newman.
          *
          * @param {Object} suites - An set of tests, arranged by test group names as keys.
@@ -75,7 +101,7 @@ module.exports = function (exit) {
             console.info(`\nexecuting ${Object.keys(suites).length} tests in parallel (might take a while)...\n`);
 
             // run tests using the consolidated test set as a guide
-            async.map(suites, function (test, next) {
+            async.mapLimit(suites, 10, function (test, next) {
                 console.info(` - ${test.name}`);
 
                 // load configuration JSON object if it is provided. We do this since this is not part of newman
@@ -113,7 +139,14 @@ module.exports = function (exit) {
             console.error(_.omit(err, ['stacktrace', 'stack']), { colors: true });
         }
 
-        exit(err, results);
+        // destroy echoServer
+        echoServer.destroy(function () {
+            // destroy redirectServer
+            redirectServer.destroy(function () {
+                // exit once both the local server are stopped
+                exit(err, results);
+            });
+        });
     });
 };
 

@@ -1,11 +1,9 @@
-/* global describe, it, newman */
-
 describe('Cookie sanity', function () {
     var collection = 'test/integration/cookie-jar.postman_collection.json';
 
     it('should correctly persist cookies across requests in a run', function (done) {
         newman.run({
-            collection: collection
+            collection
         }, function (err, summary) {
             expect(err).to.be.null;
 

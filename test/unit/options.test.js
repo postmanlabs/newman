@@ -1,7 +1,6 @@
 var _ = require('lodash'),
     options = require('../../lib/run/options');
 
-/* global describe, it, expect */
 describe('options', function () {
     describe('JSON with spaces', function () {
         it('should be handled correctly for collections', function (done) {
@@ -58,6 +57,32 @@ describe('options', function () {
                 expect(result.iterationData).to.eql(data);
                 done();
             });
+        });
+    });
+
+    it('should have newmanVersion property by default', function (done) {
+        var newmanVersion = require('../../package.json').version;
+
+        options({}, function (err, result) {
+            expect(err).to.be.null;
+            expect(result).to.have.property('newmanVersion', newmanVersion);
+            done();
+        });
+    });
+
+    it('should set current directory as workingDir if not given', function (done) {
+        options({}, function (err, result) {
+            expect(err).to.be.null;
+            expect(result).to.have.property('workingDir', process.cwd());
+            done();
+        });
+    });
+
+    it('should set insecureFileRead to true if not given', function (done) {
+        options({}, function (err, result) {
+            expect(err).to.be.null;
+            expect(result).to.have.property('insecureFileRead', true);
+            done();
         });
     });
 });
