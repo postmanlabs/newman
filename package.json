@@ -39,7 +39,7 @@
   "author": "Postman Labs <help@getpostman.com> (=)",
   "license": "Apache-2.0",
   "dependencies": {
-    "async": "2.6.2",
+    "async": "3.0.1",
     "chardet": "0.7.0",
     "cli-progress": "2.1.1",
     "cli-table3": "0.5.1",
