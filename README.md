@@ -55,6 +55,12 @@ $ npm install -g newman
 ```
 This installs Newman globally on your system allowing you to run it from anywhere. If you want to install it locally, Just remove the `-g` flag.
 
+### Using package manager
+
+If you want to use a package manager:
+
+- [Homebrew](https://brew.sh/) users can use `brew install newman`.
+
 [back to top](#table-of-contents)
 
 ## Usage
