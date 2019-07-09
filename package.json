@@ -48,7 +48,7 @@
     "csv-parse": "4.0.1",
     "eventemitter3": "4.0.0",
     "filesize": "4.1.2",
-    "lodash": "4.17.11",
+    "lodash": "4.17.12",
     "mkdirp": "0.5.1",
     "postman-collection": "3.5.0",
     "postman-collection-transformer": "3.1.1",
