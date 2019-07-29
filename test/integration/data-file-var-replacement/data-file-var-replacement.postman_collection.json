@@ -14,7 +14,7 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "var data = JSON.parse(responseBody);\ntests[\"form data populated through env file\"] = (data.form.envFileKey===\"abhijit3\");\ntests[\"form-data populated through prScript\"] = (data.form.prScriptTest==iteration);"
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"form data populated through env file\"] = (data.form.envFileKey===\"sampleKey\");\ntests[\"form-data populated through prScript\"] = (data.form.prScriptTest==iteration);"
           }
         },
         {
