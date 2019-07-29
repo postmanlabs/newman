@@ -334,26 +334,43 @@ newman.run({
 All events receive two arguments (1) `error` and (2) `args`. **The list below describes the properties of the second
 argument object.**
 
-| Event     | Description   |
-|-----------|---------------|
-| start                     | The start of a collection run |
-| beforeIteration           | Before an iteration commences |
-| beforeItem                | Before an item execution begins (the set of prerequest->request->test) |
-| beforePrerequest          | Before `prerequest` script is execution starts |
-| prerequest                | After `prerequest` script execution completes |
-| beforeRequest             | Before an HTTP request is sent |
-| request                   | After response of the request is received |
-| beforeTest                | Before `test` script is execution starts |
-| test                      | After `test` script execution completes |
-| beforeScript              | Before any script (of type `test` or `prerequest`) is executed |
-| script                    | After any script (of type `test` or `prerequest`) is executed |
-| item                      | When an item (the whole set of prerequest->request->test) completes |
-| iteration                 | After an iteration completes |
-| assertion                 | This event is triggered for every test assertion done within `test` scripts |
-| console                   | Every time a `console` function is called from within any script, this event is propagated |
-| exception                 | When any asynchronous error happen in `scripts` this event is triggered |
-| beforeDone                | An event that is triggered prior to the completion of the run |
-| done                      | This event is emitted when a collection run has completed, with or without errors |
+| Event           | Arguments        | desc                                            |
+|-----------------|------------------|-------------------------------------------------|
+| start           |                  |                                                 |
+| beforeIteration |                  |                                                 |
+| beforeItem      |`item`            | Array containing the request.                   |
+| beforePrerequest|`events`          | The events before which this event is trigerred.|
+|                 |`item`            | Array containing the request to be sent.        |
+| prerequest      |`executions`      | Array storing information about the order of execution, request, response and assertions.   |
+|                 |`item`            | Array containing the request to be sent.        |
+| beforeRequest   |`request`         | The request that is to be sent.                 |
+|                 |`item`            | Array containing the request to be sent.        |
+| request         |`request`         | The request that is sent.                       |
+|                 |`response`        | The response received for the request.          |
+|                 |`item`            | The array that contains the individual requests.|
+|                 |`cookies`         | The cookies stored for the request.             |
+|                 |`history`         | Information about the last request sent.        |
+| beforeTest      |`events`          | Event before which this event is trigerred.     |
+|                 |`item`            | Array containing the request to be sent.        |
+| test            |`executions`      | Array storing detailed information about the order of execution, request, response and assertions.|
+|                 |`item`            | Array containing the request to be sent.            |
+| beforeScript    |`script`          | The user script to be run.                          |
+|                 |`event`           | Event before which this request is trigerred.       |
+|                 |`item`            | The Array that contains the request.                |
+| script          |`event`           | The event with which the script is associated with. |
+|                 |`script`          | The user script to be run.                          |
+|                 |`item`            | Array containing the request to be sent.            |
+| item            |`item`            | Array containing the request to be sent.            |
+| iteration       |                  | After an iteration completes.                       |
+| assertion       |                  | This event is triggered for every test assertion done within `test` scripts|
+| console         |`cursor`          | The run cursor instance.                                       |
+|                 |`level`           | The level of console logging [error, silent, etc].             |
+| exception       |`cursor`          | The run cursor instance.                                       |
+|                 |`err`             | An Error instance / null object.                               |
+| beforeDone      |                  | An event that is triggered prior to the completion of the run. |
+| done            |`cursor`          |The run cursor instance.                                  |
+|                 |`err`             | An error instance / null passed from the done event handler.|
+
 
 <!-- TODO: write about callback summary -->
 
