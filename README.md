@@ -336,8 +336,8 @@ argument object.**
 
 | Event           | Arguments        | desc                                            |
 |-----------------|------------------|-------------------------------------------------|
-| start           |                  | The start of a collection run                   |
-| beforeIteration |                  | Before an iteration commences                   |
+| start           |                  |                                                 |
+| beforeIteration |                  |                                                 |
 | beforeItem      |`item`            | Array containing the request.                   |
 | beforePrerequest|`events`          | The events before which this event is trigerred.|
 |                 |`item`            | Array containing the request to be sent.        |
@@ -363,10 +363,13 @@ argument object.**
 | item            |`item`            | Array containing the request to be sent.            |
 | iteration       |                  | After an iteration completes.                       |
 | assertion       |                  | This event is triggered for every test assertion done within `test` scripts|
-| console         |                  | Every time a `console` function is called from within any script, this event is propagated.  |
-| exception       |          | When any asynchronous error happen in `scripts` this event is triggered. |
-| beforeDone      |          | An event that is triggered prior to the completion of the run. |
-| done            |          | This event is emitted when a collection run has completed, with or without errors. |
+| console         |`cursor`          | The run cursor instance.                                       |
+|                 |`level`           | The level of console logging [error, silent, etc].             |
+| exception       |`cursor`          | The run cursor instance.                                       |
+|                 |`err`             | An Error instance / null object.                               |
+| beforeDone      |                  | An event that is triggered prior to the completion of the run. |
+| done            |`cursor`          |The run cursor instance.                                  |
+|                 |`err`             | An error instance / null passed from the done event handler.|
 
 <!-- TODO: write about callback summary -->
 
