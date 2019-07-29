@@ -361,15 +361,14 @@ argument object.**
 |                 |`script`          | The user script to be run.                          |
 |                 |`item`            | Array containing the request to be sent.            |
 | item            |`item`            | Array containing the request to be sent.            |
-| iteration       |                  | After an iteration completes.                       |
-| assertion       |                  | This event is triggered for every test assertion done within `test` scripts|
+| iteration       |                  |                                                     |
+| assertion       |                  |                                                     |
 | console         |`cursor`          | The run cursor instance.                                       |
 |                 |`level`           | The level of console logging [error, silent, etc].             |
 | exception       |`cursor`          | The run cursor instance.                                       |
-|                 |`err`             | An Error instance / null object.                               |
-| beforeDone      |                  | An event that is triggered prior to the completion of the run. |
-| done            |`cursor`          |The run cursor instance.                                  |
-|                 |`err`             | An error instance / null passed from the done event handler.|
+| beforeDone      |                  |                                                                |
+| done            |`cursor`          |The run cursor instance.                                        |
+
 
 <!-- TODO: write about callback summary -->
 
