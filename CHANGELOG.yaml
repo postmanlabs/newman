@@ -1,4 +1,5 @@
-master:
+4.5.3:
+  date: 2019-08-02
   chores:
     - Updated dependencies
 
