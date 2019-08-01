@@ -15,7 +15,7 @@
             "pm.test(\"Response Body: default\", function () {",
             "    var response = pm.response.text();",
             "    pm.expect(response).to.contain('GET / HTTP/1.1');",
-            "    pm.expect(response).to.not.contain('content-type');",
+            "    pm.expect(response).to.not.contain('Content-Type');",
             "});"
           ]
         }
@@ -48,7 +48,7 @@
             "pm.test(\"Response Body: form-data\", function () {",
             "    var response = pm.response.text();",
             "    pm.expect(response).to.contain('GET / HTTP/1.1');",
-            "    pm.expect(response).to.contain('content-type: multipart/form-data');",
+            "    pm.expect(response).to.contain('Content-Type: multipart/form-data');",
             "    pm.expect(response).to.contain('Content-Disposition: form-data; name=\"dataKey\"');",
             "});"
           ]
@@ -89,8 +89,8 @@
             "pm.test(\"Response Body: raw\", function () {",
             "    var response = pm.response.text();",
             "    pm.expect(response).to.contain('GET / HTTP/1.1');",
-            "    pm.expect(response).to.contain('content-type: application/json');",
-            "    pm.expect(response).to.contain('content-length: 16');",
+            "    pm.expect(response).to.contain('Content-Type: application/json');",
+            "    pm.expect(response).to.contain('Content-Length: 16');",
             "    pm.expect(response).to.contain('{ \"foo\": \"bar\" }');",
             "});"
           ]
@@ -99,7 +99,7 @@
       "request": {
         "method": "GET",
         "header": [{
-          "key": "content-type",
+          "key": "Content-Type",
           "value": "application/json"
         }],
         "body": {

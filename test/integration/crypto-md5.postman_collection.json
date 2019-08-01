@@ -14,14 +14,14 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "var data = JSON.parse(responseBody);\ntests[\"Your test name\"] = data.args.a === \"4ce26a583724d5689bf9333af8431483\";"
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"Your test name\"] = data.args.a === \"da9ebb087d8e926c503e4909d9203a04\";"
           }
         },
         {
           "listen": "prerequest",
           "script": {
             "type": "text/javascript",
-            "exec": "postman.setGlobalVariable(\"a\", CryptoJS.MD5(\"abhijit\").toString());"
+            "exec": "postman.setGlobalVariable(\"a\", CryptoJS.MD5(\"samplePayload\").toString());"
           }
         }
       ],

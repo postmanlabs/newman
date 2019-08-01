@@ -64,7 +64,7 @@
             "pm.test(\"Response Body\", function () {",
             "    var response = pm.response.headers.get('raw-request');",
             "    pm.expect(response).to.contain('HEAD / HTTP/1.1');",
-            "    pm.expect(response).to.contain('content-type: multipart/form-data');",
+            "    pm.expect(response).to.contain('Content-Type: multipart/form-data');",
             "    pm.expect(response).to.contain('Content-Disposition: form-data;');",
             "    pm.expect(response).to.contain('FormDataValue');",
             "});"
