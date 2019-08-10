@@ -198,6 +198,10 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   Allows the specification of global variables via the command line, in a key=value format. Multiple CLI global variables
   can be added by using `--global-var` multiple times, like so: `--global-var "foo=bar" --global-var "alpha=beta"`.
 
+- `--env-var "<environment-variable-name>=<environment-variable-value>"`<br />
+  Allows the specification of environment variables via the command line, in a key=value format. Multiple CLI environment variables
+  can be added by using `--env-var` multiple times, like so: `--env-var "foo=bar" --env-var "alpha=beta"`.
+
 - `--verbose`<br />
   Show detailed information of collection run and each request sent.
 
