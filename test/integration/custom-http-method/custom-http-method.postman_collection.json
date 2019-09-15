@@ -17,7 +17,7 @@
 							"pm.test(\"Response Body: form-data\", function () {",
 							"    var response = pm.response.text();",
 							"    pm.expect(response).to.contain('POSTMAN / HTTP/1.1');",
-							"    pm.expect(response).to.contain('content-type: multipart/form-data');",
+							"    pm.expect(response).to.contain('Content-Type: multipart/form-data');",
 							"    pm.expect(response).to.contain('Content-Disposition: form-data; name=\"dataKey\"');",
 							"    pm.expect(response).to.contain('Content-Disposition: form-data; name=\"dataFile\"');",
 							"});"
@@ -65,8 +65,8 @@
 							"pm.test(\"Response Body: raw\", function () {",
 							"    var response = pm.response.text();",
 							"    pm.expect(response).to.contain('POSTMAN / HTTP/1.1');",
-							"    pm.expect(response).to.contain('content-type: application/json');",
-							"    pm.expect(response).to.contain('content-length: 16');",
+							"    pm.expect(response).to.contain('Content-Type: application/json');",
+							"    pm.expect(response).to.contain('Content-Length: 16');",
 							"    pm.expect(response).to.contain('{ \"foo\": \"bar\" }');",
 							"});"
 						]
@@ -77,7 +77,7 @@
 				"method": "POSTMAN",
 				"header": [
 					{
-						"key": "content-type",
+						"key": "Content-Type",
 						"value": "application/json"
 					}
 				],
@@ -107,8 +107,8 @@
 							"pm.test(\"Response Body: body disabled\", function () {",
 							"    var response = pm.response.text();",
 							"    pm.expect(response).to.contain('POSTMAN / HTTP/1.1');",
-							"    pm.expect(response).to.not.contain('content-type');",
-							"    pm.expect(response).to.contain('content-length: 0');",
+							"    pm.expect(response).to.not.contain('Content-Type');",
+							"    pm.expect(response).to.contain('Content-Length: 0');",
 							"});"
 						]
 					}

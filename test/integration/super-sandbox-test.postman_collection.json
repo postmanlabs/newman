@@ -317,14 +317,14 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
-						"exec": "var jsonData = JSON.parse(responseBody);\n//tests[\"Recur. res. working\"] = jsonData.args.a == \"kane\";"
+						"exec": "var jsonData = JSON.parse(responseBody);\n//tests[\"Recur. res. working\"] = jsonData.args.a == \"sampleName\";"
 					}
 				},
 				{
 					"listen": "prerequest",
 					"script": {
 						"type": "text/javascript",
-						"exec": "postman.setGlobalVariable(\"name1\", \"kane\");\npostman.setGlobalVariable(\"i\", \"1\");"
+						"exec": "postman.setGlobalVariable(\"name1\", \"sampleName\");\npostman.setGlobalVariable(\"i\", \"1\");"
 					}
 				}
 			],
