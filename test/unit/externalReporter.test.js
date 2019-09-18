@@ -2,13 +2,15 @@ var sinon = require('sinon'),
     newman = require('../../');
 
 describe('External reporter', function () {
+    beforeEach(function () {
+        sinon.replace(console, 'warn', sinon.fake());
+    });
+
     afterEach(function () {
         sinon.restore();
     });
 
     it('warns when not found', function (done) {
-        sinon.replace(console, 'warn', sinon.fake());
-
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['unknownreporter']

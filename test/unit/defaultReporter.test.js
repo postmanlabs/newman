@@ -2,13 +2,15 @@ var sinon = require('sinon'),
     newman = require('../../');
 
 describe('Default reporter', function () {
+    beforeEach(function () {
+        sinon.replace(console, 'warn', sinon.fake());
+    });
+
     afterEach(function () {
         sinon.restore();
     });
 
     it('cli can be loaded', function (done) {
-        sinon.replace(console, 'warn', sinon.fake());
-
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['cli']
@@ -21,8 +23,6 @@ describe('Default reporter', function () {
     });
 
     it('json can be loaded', function (done) {
-        sinon.replace(console, 'warn', sinon.fake());
-
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['json']
@@ -35,8 +35,6 @@ describe('Default reporter', function () {
     });
 
     it('junit can be loaded', function (done) {
-        sinon.replace(console, 'warn', sinon.fake());
-
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['junit']
@@ -49,8 +47,6 @@ describe('Default reporter', function () {
     });
 
     it('progress can be loaded', function (done) {
-        sinon.replace(console, 'warn', sinon.fake());
-
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['progress']
@@ -63,8 +59,6 @@ describe('Default reporter', function () {
     });
 
     it('emojitrain can be loaded', function (done) {
-        sinon.replace(console, 'warn', sinon.fake());
-
         newman.run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['emojitrain']
