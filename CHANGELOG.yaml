@@ -1,3 +1,7 @@
+master:
+  fixed bugs:
+    - '#2062 Added warnings for "reporter not found" and "reporter could not be loaded"'
+
 4.5.4:
   date: 2019-08-14
   chores:
