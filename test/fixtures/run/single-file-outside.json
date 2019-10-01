@@ -43,7 +43,7 @@
         "exec": [
           "pm.test(\"file uploaded\", function () {",
           "   var jsonData = pm.response.json();",
-          "    pm.expect(jsonData.data.trim && jsonData.data.trim()).to.eql(\"{\\\"some\\\": \\\"json-string\\\"}\");",
+          "    pm.expect(jsonData.data).to.eql({ some: 'json-string' });",
           "});"
           ]
       }

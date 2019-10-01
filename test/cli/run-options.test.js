@@ -65,7 +65,7 @@ describe('CLI run options', function () {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
-            expect(stderr).to.equal('error: option `--global-var <value>\' argument missing\n');
+            expect(stderr).to.equal('error: option \'--global-var <value>\' argument missing\n');
             done();
         });
     });
@@ -82,7 +82,7 @@ describe('CLI run options', function () {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
-            expect(stderr).to.equal('error: option `--env-var <value>\' argument missing\n');
+            expect(stderr).to.equal('error: option \'--env-var <value>\' argument missing\n');
             done();
         });
     });
