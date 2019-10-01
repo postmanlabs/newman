@@ -124,7 +124,7 @@ describe('Newman run options', function () {
                 bail: ['folder']
             }, function (err) {
                 expect(err).to.be.ok;
-                expect(err.message).to.equal('getaddrinfo ENOTFOUND 123.random.z 123.random.z:443');
+                expect(err.message).to.include('getaddrinfo ENOTFOUND 123.random.z');
 
                 done();
             });
