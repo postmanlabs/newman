@@ -1,4 +1,4 @@
-master:
+4.5.5:
   fixed bugs:
     - Fixed a bug where runtime execution crashes on Node v12
     - '#2062 Added warnings for "reporter not found" and "reporter could not be loaded"'
