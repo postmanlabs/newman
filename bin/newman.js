@@ -86,7 +86,7 @@ program
 
 program.on('--help', function () {
     console.info('\nTo get available options for a command:');
-    console.info('  newman [command] -h');
+    console.info('  newman <command> -h');
 });
 
 // Warn on invalid command and then exits.
