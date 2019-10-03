@@ -11,7 +11,6 @@ const _ = require('lodash'),
 
 program
     .version(version, '-v, --version')
-    .usage('[command] [options]')
     .name('newman');
 
 // The `run` command allows you to specify a collection to be run with the provided options.
