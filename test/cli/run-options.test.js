@@ -23,6 +23,14 @@ describe('CLI run options', function () {
         });
     });
 
+    it('should display an error if no arguments are provided', function (done) {
+        exec('node ./bin/newman.js', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stderr).to.equal('error: no arguments provided\n\n');
+            done();
+        });
+    });
+
     it('should not work without a collection', function (done) {
         exec('node ./bin/newman.js run -e test/fixtures/run/simple-variables.json',
             function (code) {
