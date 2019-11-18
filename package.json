@@ -42,7 +42,7 @@
     "@postman/csv-parse": "4.0.2",
     "async": "3.1.0",
     "chardet": "0.8.0",
-    "cli-progress": "3.3.1",
+    "cli-progress": "3.4.0",
     "cli-table3": "0.5.1",
     "colors": "1.4.0",
     "commander": "4.0.1",
