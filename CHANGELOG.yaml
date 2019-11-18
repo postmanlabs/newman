@@ -1,3 +1,8 @@
+4.5.6:
+  date: 2019-11-18
+  chores:
+    - Updated dependencies
+
 4.5.5:
   fixed bugs:
     - Fixed a bug where runtime execution crashes on Node v12
