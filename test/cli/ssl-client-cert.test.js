@@ -1,8 +1,8 @@
 var fs = require('fs'),
     https = require('https');
 
-describe('SSL certificates', function () {
-    var server;
+describe('SSL Client certificates', function () {
+    var server, server2;
 
     before(function (done) {
         server = https.createServer({
@@ -23,7 +23,27 @@ describe('SSL certificates', function () {
             }
         });
 
-        server.listen(3000, done);
+        server2 = https.createServer({
+            key: fs.readFileSync('test/fixtures/ssl/server2.key', 'utf8'),
+            cert: fs.readFileSync('test/fixtures/ssl/server2.crt', 'utf8'),
+            ca: fs.readFileSync('test/fixtures/ssl/ca2.crt', 'utf8'),
+            passphrase: 'password',
+            requestCert: true,
+            rejectUnauthorized: false
+        }, function (req, res) {
+            if (req.client.authorized) {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('authorized\n');
+            }
+            else {
+                res.writeHead(401, { 'Content-Type': 'text/plain' });
+                res.end('unauthorized\n');
+            }
+        });
+
+        server.listen(3000);
+        server2.listen(3001);
+        done();
     });
 
     // @todo: add .pfx, .pem tests as well
@@ -43,7 +63,25 @@ describe('SSL certificates', function () {
         });
     });
 
+    it('should not work when both client certificate options are used', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/multiple-ssl-client-certs.json --ssl-client-certs test/fixtures/ssl/sslClientCerts.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
+            expect(code, 'should have exit code different than 0').to.not.equal(0);
+            done();
+        });
+    });
+
+    it('should work correctly with multiple client certificates', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/multiple-ssl-client-certs.json --verbose --ssl-client-certs ./test/fixtures/ssl/sslClientCerts.json -k', function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
     after(function (done) {
-        server.close(done);
+        server.close();
+        server2.close();
+        done();
     });
 });

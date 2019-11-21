@@ -219,6 +219,14 @@ Client certificates are an alternative to traditional authentication mechanisms.
 
 Newman supports SSL client certificates, via the following CLI options (available with Newman `v3` style `run` only):
 
+#### Use a ssl client certificates configuration file (supports multiple certificates per run)
+
+- --ssl-client-certs<br/>
+The path to the ssl client certs configuration file (json format). See [examples/multiple-ssl-client-certs.json](https://github.com/postmanlabs/newman/blob/develop/examples/multiple-ssl-client-certs.json)
+This option allows multiple ssl client certificiates and different ssl client certificate per url or hostname.
+This option and --ssl-client-cert, --ssl-client-key and --ssl-client-passphrase are exclusives.
+
+#### Pass one ssl client certificate
 - `--ssl-client-cert`<br/>
 The path to the public client certificate file.
 
