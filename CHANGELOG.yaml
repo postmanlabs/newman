@@ -1,4 +1,5 @@
-master:
+4.5.7:
+  date: 2019-12-06
   chores:
     - Updated dependencies
 
@@ -10,7 +11,9 @@ master:
 4.5.5:
   fixed bugs:
     - Fixed a bug where runtime execution crashes on Node v12
-    - '#2062 Added warnings for "reporter not found" and "reporter could not be loaded"'
+    - >-
+      GH-2062 Added warnings for "reporter not found" and "reporter could not be
+      loaded"
   chores:
     - Updated dependencies
 
@@ -40,7 +43,9 @@ master:
     - Added support for the working directory using SecureFS
     - Added --working-dir and --no-insecure-file-read CLI options
   fixed bugs:
-    - Fixed a bug that caused fetching collection from HTTPS URL crashes on Node v12
+    - >-
+      Fixed a bug that caused fetching collection from HTTPS URL crashes on Node
+      v12
   chores:
     - Updated dependencies
 
@@ -49,359 +54,445 @@ master:
   chores:
     - Updated dependencies
   fixed bugs:
-    - '#1932 Removed classname from JUnit reports and add it to both passed and failed tests'
+    - >-
+      GH-1932 Removed classname from JUnit reports and add it to both passed and
+      failed tests
 
 4.4.0:
   date: 2019-02-20
   chores:
     - Updated dependencies
   fixed bugs:
-    - '#1871 Trimmed incoming JSON string to remove byte order marks and other such artifacts.'
+    - >-
+      GH-1871 Trimmed incoming JSON string to remove byte order marks and other
+      such artifacts.
     - Contextual help messages for newman -h
     - Fixed JUnit report generation for nested requests/tests
     - Corrected disabled variable behavior
   new features:
-    - 'Added automatic (best guess) encoding detection of UTF-16LE and ISO-8859-1'
+    - Added automatic (best guess) encoding detection of UTF-16LE and ISO-8859-1
     - Added --verbose flag for detailed CLI output
 
 4.3.1:
   date: 2018-12-26
   fixed bugs:
-    - 'Added start timestamp, classname and failure message to JUnit reporter for Azure DevOps'
+    - >-
+      Added start timestamp, classname and failure message to JUnit reporter for
+      Azure DevOps
 
 4.3.0:
   date: 2018-12-26
   new features:
-    - 'Added AJV to the script sandbox'
+    - Added AJV to the script sandbox
   fixed bugs:
-    - 'Respected form data field ordering'
-    - 'Fixed a bug that caused requests to fail when the URL protocol is not in lowercase'
+    - Respected form data field ordering
+    - >-
+      Fixed a bug that caused requests to fail when the URL protocol is not in
+      lowercase
 
 4.2.3:
   date: 2018-12-15
   fixed bugs:
-    - '#1823 Added missing skipped flag to assertion information aggregator'
+    - GH-1823 Added missing skipped flag to assertion information aggregator
 
 4.2.2:
   date: 2018-11-07
   fixed bugs:
-    - '#1784 Updated postman-runtime to v7.4.2, which fixes a hawk security vulnerability'
+    - >-
+      GH-1784 Updated postman-runtime to v7.4.2, which fixes a hawk security
+      vulnerability
 
 4.2.1:
   date: 2018-11-04
   fixed bugs:
-    - '#1779 Updated postman-runtime to v7.4.1'
+    - GH-1779 Updated postman-runtime to v7.4.1
 
 4.2.0:
   date: 2018-11-03
   new features:
-    - '#1776 Introduced the generic postman/newman Docker image, bumped Node version to 10'
-    - '#1731 Added support for custom HTTP verbs'
+    - >-
+      GH-1776 Introduced the generic postman/newman Docker image, bumped Node
+      version to 10
+    - GH-1731 Added support for custom HTTP verbs
   docs:
-    - '#1717 Updated Docker image documentation'
+    - GH-1717 Updated Docker image documentation
   chores:
-    - '#1770 Shifted to Travis for Windows builds'
-    - '#1769 Added .gitattributes to enforce consistent line endings for .js files'
-    - '#1743 Updated CLI reporter left padding to account for commander v2.19 changes'
-    - 'Updated dependencies'
+    - GH-1770 Shifted to Travis for Windows builds
+    - >-
+      GH-1769 Added .gitattributes to enforce consistent line endings for .js
+      files
+    - >-
+      GH-1743 Updated CLI reporter left padding to account for commander v2.19
+      changes
+    - Updated dependencies
 
 4.1.0:
   date: 2018-08-29
   new features:
-    - '#1654 Added ability to select multiple folders for collection run'
+    - GH-1654 Added ability to select multiple folders for collection run
   chores:
-    - '#1687 Added `newmanVersion` in collection run options'
-    - '#1684 Fixed flaky tests'
-    - 'Updated Dependencies'
+    - GH-1687 Added `newmanVersion` in collection run options
+    - GH-1684 Fixed flaky tests
+    - Updated Dependencies
 
 4.0.2:
   date: 2018-08-09
   fixed bugs:
-    - '#1673 Fixed a bug that prevented request errors from showing up in CLI reports'
+    - >-
+      GH-1673 Fixed a bug that prevented request errors from showing up in CLI
+      reports
 
 4.0.1:
   date: 2018-08-08
   fixed bugs:
-    - '#1669 Deprecated support for the v1 Postman Collection format'
-    - '#1670 Throw proper error message for invalid --color values'
+    - GH-1669 Deprecated support for the v1 Postman Collection format
+    - GH-1670 Throw proper error message for invalid --color values
 
 4.0.0:
   date: 2018-08-06
   new features:
-    - '#1633 Added ability to run collection via Postman API UID reference'
+    - GH-1633 Added ability to run collection via Postman API UID reference
   breaking changes:
-    - '#1605 Dropped support for Node < v6'
-    - '#1610 Dropped support for v2 CLI options'
-    - '#1660 Dropped support for the v1 Postman Collection format'
-    - '#1616 Moved inbuilt HTML reporter to a standalone reporter: https://github.com/postmanlabs/newman-reporter-html'
-    - '#1653 Updated `color` option behaviour, dropped support for --no-color'
+    - GH-1605 Dropped support for Node < v6
+    - GH-1610 Dropped support for v2 CLI options
+    - GH-1660 Dropped support for the v1 Postman Collection format
+    - >-
+      GH-1616 Moved inbuilt HTML reporter to a standalone reporter:
+      https://github.com/postmanlabs/newman-reporter-html
+    - 'GH-1653 Updated `color` option behaviour, dropped support for --no-color'
   fixed bugs:
-    - '#1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes'
-    - '#1630 Updated default timeout values to Infinity'
+    - 'GH-1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes'
+    - GH-1630 Updated default timeout values to Infinity
   chores:
-    - '#1623 Refactored Newman CLI'
-    - '#1608 Updated ESLint rules'
-    - '#1618 Reformatted README'
-    - 'Updated Dependencies'
+    - GH-1623 Refactored Newman CLI
+    - GH-1608 Updated ESLint rules
+    - GH-1618 Reformatted README
+    - Updated Dependencies
 
 3.10.0:
   date: 2018-07-04
   new features:
-    - '#1596 Added --reporter-cli-no-banner option'
-    - '#1551 Bumped Alpine Docker image Node version to v8'
-    - '#1555 Added failure list to HTML reports'
+    - GH-1596 Added --reporter-cli-no-banner option
+    - GH-1551 Bumped Alpine Docker image Node version to v8
+    - GH-1555 Added failure list to HTML reports
   fixed bugs:
-    - '#1612 Fixed JUnit reports for failed cases'
-    - '#1576 Accounted for cases where the export path is a pre-existing directory'
-    - '#1601 Reversed reporter lookup logic'
-    - '#1584 Improved timeout messaging in HTML reports'
-    - '#1594 Fixed a bug that caused reporter flags to break with `=`'
-    - '#1592 Added a link to the Alpine Docker image'
-    - '#1583 Capped JUnit timing precision to 3 decimal places'
-    - '#1563 Ensured that all exported variable files have a valid name'
-    - '#1578 Switched to cli-table3'
-    - '#1575 Fixed typo in directory collection runner example'
-    - '#1553 Fixed a bug that caused HTML reports to incorrectly duplicate requests across multiple iterations'
+    - GH-1612 Fixed JUnit reports for failed cases
+    - >-
+      GH-1576 Accounted for cases where the export path is a pre-existing
+      directory
+    - GH-1601 Reversed reporter lookup logic
+    - GH-1584 Improved timeout messaging in HTML reports
+    - GH-1594 Fixed a bug that caused reporter flags to break with `=`
+    - GH-1592 Added a link to the Alpine Docker image
+    - GH-1583 Capped JUnit timing precision to 3 decimal places
+    - GH-1563 Ensured that all exported variable files have a valid name
+    - GH-1578 Switched to cli-table3
+    - GH-1575 Fixed typo in directory collection runner example
+    - >-
+      GH-1553 Fixed a bug that caused HTML reports to incorrectly duplicate
+      requests across multiple iterations
 
 3.9.4:
   date: 2018-05-25
   fixed bugs:
-    - 'Improved failure table reporting details #1390'
-    - 'Fixed no-assertions behaviour for the CLI reporter #1389'
-    - 'Corrected help text for missing arguments #1428'
-    - 'Added postpublish script for automated Docker image pushing #1397'
-    - 'Corrected Postman API reference link #1416'
-    - 'Switched to a YAML changelog 1448'
-    - 'Corrected error representation in JUnit reports #1443'
-    - 'Removed wait spinner from CLI output when --disable-unicode is present #1496'
-    - 'Added support for --no-success-assertions #1450'
-    - 'Made folder and request IDs unique in generated HTML reports #1528'
-    - 'Updated dependencies'
+    - GH-1390 Improved failure table reporting details
+    - GH-1389 Fixed no-assertions behavior for the CLI reporter
+    - GH-1428 Corrected help text for missing arguments
+    - GH-1397 Added postpublish script for automated Docker image pushing
+    - GH-1416 Corrected Postman API reference link
+    - Switched to a YAML changelog 1448
+    - GH-1443 Corrected error representation in JUnit reports
+    - >-
+      GH-1496 Removed wait spinner from CLI output when --disable-unicode is
+      present
+    - GH-1450 Added support for --no-success-assertions
+    - GH-1528 Made folder and request IDs unique in generated HTML reports
+    - Updated dependencies
 
 3.9.3:
   date: 2018-01-19
   fixed bugs:
-    - 'Updated dependencies'
-    - '#1385 Fixed minor formatting issues in the readme.'
-    - '#1368 Updated folder collection runner example to exclude package*.json files'
+    - Updated dependencies
+    - GH-1385 Fixed minor formatting issues in the readme.
+    - >-
+      GH-1368 Updated folder collection runner example to exclude package*.json
+      files
 
 3.9.2:
   date: 2018-01-11
   fixed bugs:
-    - 'Updated dependencies'
-    - '#1366 Replaced deprecated Slack community link in the readme with the shiny new Postman community'
-    - '#1350 Added setNextRequest information to the CLI reporter'
-    - '#1331 Fixed a bug that caused legacy arguments to be processed out of order'
+    - Updated dependencies
+    - >-
+      GH-1366 Replaced deprecated Slack community link in the readme with the
+      shiny new Postman community
+    - GH-1350 Added setNextRequest information to the CLI reporter
+    - >-
+      GH-1331 Fixed a bug that caused legacy arguments to be processed out of
+      order
 
 3.9.1:
   date: 2017-12-08
   fixed bugs:
-    - '#1326 Fixed folder option handling'
-    - '#1323 Updated documentation for --bail and options.bail'
-    - '#1325 Fixed typographical error in issue template'
+    - GH-1326 Fixed folder option handling
+    - GH-1323 Updated documentation for --bail and options.bail
+    - GH-1325 Fixed typographical error in issue template
 
 3.9.0:
   date: 2017-12-05
   new features:
-    - '#1320 Extended --bail`` to work with afolder` option'
-    - '#1298 Improved help text for incorrect usage'
-    - '#1292 Added a name field to all applicable errors'
-    - '#1278 Migrated from argparse to commander'
-    - '#1277 Added support for a global timeout option'
-    - '#1275 Migrated from istanbul to nyc'
-    - '#1273 Tests now run on Node v8 as well'
+    - GH-1320 Extended --bail`` to work with afolder` option
+    - GH-1298 Improved help text for incorrect usage
+    - GH-1292 Added a name field to all applicable errors
+    - GH-1278 Migrated from argparse to commander
+    - GH-1277 Added support for a global timeout option
+    - GH-1275 Migrated from istanbul to nyc
+    - GH-1273 Tests now run on Node v8 as well
 
 3.8.3:
   date: 2017-10-04
   fixed bugs:
-    - 'Updated dependencies'
-    - '#1227 Added timeout-script to extend default sandbox script execution timeouts'
-    - '#1206 Corrected failure table handle in non TTY environments'
-    - '#1218 Made JSON parsing more robust'
+    - Updated dependencies
+    - >-
+      GH-1227 Added timeout-script to extend default sandbox script execution
+      timeouts
+    - GH-1206 Corrected failure table handle in non TTY environments
+    - GH-1218 Made JSON parsing more robust
 
 3.8.2:
   date: 2017-09-18
   fixed bugs:
-    - 'Updated dependencies.'
-    - 'Fixed a bug that caused csv files with comma spaces to be processed incorrectly. #1202'
-    - 'Corrected programmatic iterationData usage in README. #1191'
-    - 'Fixed broken link in parallel-collection-runs.js #1197'
+    - Updated dependencies.
+    - >-
+      GH-1202 Fixed a bug that caused csv files with comma spaces to be
+      processed incorrectly.
+    - GH-1191 Corrected programmatic iterationData usage in README.
+    - GH-1197 Fixed broken link in parallel-collection-runs.js
 
 3.8.1:
   date: 2017-08-18
   fixed bugs:
-    - 'Updated postman-runtime to v6.2.6 #1173'
-    - 'Updated postman-collection to v2.1.1 #1172'
+    - GH-1173 Updated postman-runtime to v6.2.6
+    - GH-1172 Updated postman-collection to v2.1.1
 
 3.8.0:
   date: 2017-06-25
   new features:
-    - 'Added support for global variable specification via the CLI #1142'
+    - GH-1142 Added support for global variable specification via the CLI
 
 3.7.6:
   date: 2017-06-19
   fixed bugs:
-    - 'Bumped postman-runtime to v6.2.5, which contains a critical cookie handling bugfix.'
-    - 'Updated other dependencies.'
+    - >-
+      Bumped postman-runtime to v6.2.5, which contains a critical cookie
+      handling bugfix.
+    - Updated other dependencies.
 
 3.7.5:
   date: 2017-06-10
   fixed bugs:
-    - 'Bumped Collection SDK to v2.0.2, which contains ProxyConfig improvements. #1110'
-    - 'Ensured that failed fetches from resource URLs result in a non-zero exit code. #1115'
-    - 'Fixed a backward compatibility bug related to Buffer construction in the HTML reporter. #1105'
+    - >-
+      GH-1110 Bumped Collection SDK to v2.0.2, which contains ProxyConfig
+      improvements.
+    - >-
+      GH-1115 Ensured that failed fetches from resource URLs result in a
+      non-zero exit code.
+    - >-
+      GH-1105 Fixed a backward compatibility bug related to Buffer construction
+      in the HTML reporter.
 
 3.7.4:
   date: 2017-06-29
   fixed bugs:
-    - 'Corrected response.body reference in the HTML reporter #1099'
+    - GH-1099 Corrected response.body reference in the HTML reporter
 
 3.7.3:
   date: 2017-06-28
   fixed bugs:
-    - 'Updated dependencies.'
-    - 'Restored response.body in the data supplied to the HTML reporter template. #1098'
+    - Updated dependencies.
+    - >-
+      GH-1098 Restored response.body in the data supplied to the HTML reporter
+      template.
 
 3.7.2:
   date: 2017-06-23
   fixed bugs:
-    - 'Updated postman-runtime to v6.2.1, which contains a critical bugfix for authorization with variables'
+    - >-
+      Updated postman-runtime to v6.2.1, which contains a critical bugfix for
+      authorization with variables
 
 3.7.1:
   date: 2017-06-19
   fixed bugs:
-    - 'Updated postman-collection-transformer to v2.1.4 #1082'
+    - GH-1082 Updated postman-collection-transformer to v2.1.4
 
 3.7.0:
   date: 2017-06-19
   new features:
-    - 'Fixed a bug that caused empty results in response.json() / response.text() #1080.'
-    - 'Support for second generation scripting sandbox with support for limited require.'
-    - 'Addition of assertion functions on request and response.'
-    - 'Added momentjs to the sandbox.'
-    - 'Added support for authorization mechanisms and IO events.'
+    - >-
+      GH-1080 Fixed a bug that caused empty results in response.json() and
+      response.text()
+    - >-
+      Support for second generation scripting sandbox with support for limited
+      require.
+    - Addition of assertion functions on request and response.
+    - Added momentjs to the sandbox.
+    - Added support for authorization mechanisms and IO events.
 
 3.6.1:
   date: 2017-06-09
   fixed bugs:
-    - 'Updated dependencies'
-    - 'Ensured that stdout is flushed on process.exit in CLI mode #1026'
-    - 'Fixed type error for failed requests in the HTML reporter #1062'
-    - 'Updated JUnit reporter to add time attribute to testsuites and testcase elements #1039'
+    - Updated dependencies
+    - GH-1026 Ensured that stdout is flushed on process.exit in CLI mode
+    - GH-1062 Fixed type error for failed requests in the HTML reporter
+    - >-
+      GH-1039 Updated JUnit reporter to add time attribute to testsuites and
+      testcase elements
 
 3.6.0:
   date: 2017-03-12
   new features:
-    - 'Updated dependencies'
-    - 'Introduced all new pm.* API.'
+    - Updated dependencies
+    - Introduced all new pm.* API.
 
 3.5.2:
   date: 2017-03-17
   fixed bugs:
-    - 'Update postman-runtime to v5.0.0, which uses CertificateList for client side SSL'
+    - >-
+      Update postman-runtime to v5.0.0, which uses CertificateList for client
+      side SSL
 
 3.5.1:
   date: 2017-03-14
   fixed bugs:
-    - 'Fixed a bug which caused some test results to not be displayed (#949)'
-    - 'Merged aggregation partial into base HTML reporter template'
-    - 'Allowed options.iterationData to be specified as an array of objects in programmatic usage'
+    - GH-949 Fixed a bug which caused some test results to not be displayed
+    - Merged aggregation partial into base HTML reporter template
+    - >-
+      Allowed options.iterationData to be specified as an array of objects in
+      programmatic usage
 
 3.5.0:
   date: 2017-03-07
   new features:
     - 'Added support for multi level folders in the cli, html and junit reporters'
-    - 'Updated postman-collection to v1.0.0, which contains helper methods for dealing with multi-level folders'
-    - 'Updated many other non-critical packages'
+    - >-
+      Updated postman-collection to v1.0.0, which contains helper methods for
+      dealing with multi-level folders
+    - Updated many other non-critical packages
 
 3.4.3:
   date: 2017-01-31
   fixed bugs:
-    - 'Updated postman-runtime to v4.0.3, which contains fixed bugs for URL parameter encoding'
-    - 'Updated postman-collection to v0.5.11, which contains fixed bugs for UTF-8 encoded responses, and variables in URL hosts'
+    - >-
+      Updated postman-runtime to v4.0.3, which contains fixed bugs for URL
+      parameter encoding
+    - >-
+      Updated postman-collection to v0.5.11, which contains fixed bugs for UTF-8
+      encoded responses, and variables in URL hosts
 
 3.4.2:
   date: 2017-01-09
   fixed bugs:
-    - 'Fixed a bug in the CLI reporter for Newman programmatic usage (#859)'
+    - GH-859 Fixed a bug in the CLI reporter for Newman programmatic usage
 
 3.4.1:
   date: 2017-01-06
   fixed bugs:
-    - 'Fixed Buffer compatibility issue for Node v4'
-    - 'HTML reporter works correctly for failed requests'
+    - Fixed Buffer compatibility issue for Node v4
+    - HTML reporter works correctly for failed requests
 
 3.4.0:
   date: 2016-12-29
   new features:
-    - 'Updated postman-runtime to v4.0, which has a lot of memory usage improvements'
-    - 'HTML reporter now contains folder information'
-    - 'Added --color option to force colored output in non-TTY environments'
+    - >-
+      Updated postman-runtime to v4.0, which has a lot of memory usage
+      improvements
+    - HTML reporter now contains folder information
+    - Added --color option to force colored output in non-TTY environments
 
 3.3.1:
   date: 2016-12-14
   fixed bugs:
-    - 'Added more details to the HTML reporter'
-    - 'Updated postman-collection to the latest version which contains a bugfix for OAuth1 with realms'
-    - 'Updated postman-runtime which has a few fixes for browser based workflows'
+    - Added more details to the HTML reporter
+    - >-
+      Updated postman-collection to the latest version which contains a bugfix
+      for OAuth1 with realms
+    - Updated postman-runtime which has a few fixes for browser based workflows
 
 3.3.0:
   date: 2016-11-21
   new features:
-    - 'Added options to provide client-side SSL certificates on the command line'
-    - 'Updated the versions of postman-runtime and postman-collection libraries'
+    - Added options to provide client-side SSL certificates on the command line
+    - Updated the versions of postman-runtime and postman-collection libraries
 
 3.2.0:
   date: 2016-10-18
   new features:
-    - 'Ensure that environment exports are consistent with the app'
-    - 'Simplified the importing logic for environment and globals'
+    - Ensure that environment exports are consistent with the app
+    - Simplified the importing logic for environment and globals
 
 3.1.2:
   date: 2016-08-25
   fixed bugs:
-    - 'Updated postman-runtime, postman-collection and postman-collection-transformer dependencies'
+    - >-
+      Updated postman-runtime, postman-collection and
+      postman-collection-transformer dependencies
 
 3.1.1:
   date: 2016-08-25
   fixed bugs:
-    - 'Fixed a bug which caused HTML reporter statistics to be incorrect'
-    - 'Added an option --disable-unicode to forcibly disable unicode symbols in the output'
-    - 'File based options in newman.run (environments, data, globals) can now be specified as JSON objects as well'
-    - 'Updated to the latest version of Postman Runtime, which contains a number of memory optimizations'
-    - 'Specifying an iteration data file now results in the correct number of iteration runs'
+    - Fixed a bug which caused HTML reporter statistics to be incorrect
+    - >-
+      Added an option --disable-unicode to forcibly disable unicode symbols in
+      the output
+    - >-
+      File based options in newman.run (environments, data, globals) can now be
+      specified as JSON objects as well
+    - >-
+      Updated to the latest version of Postman Runtime, which contains a number
+      of memory optimizations
+    - >-
+      Specifying an iteration data file now results in the correct number of
+      iteration runs
 
 3.1.0:
   date: 2016-08-25
   new features:
-    - 'Fixed issue with environment and globals export format was using wrong property names (GH:553)'
-    - 'Fixed issue where --export-* CLI option did not work with no parameters'
-    - 'Added support for postman.getResponseCookie in the script sandbox'
-    - 'Prettified HTML report template'
-    - 'Added support for custom HTML report templates via --reporter-html-template flag'
-    - 'Added file upload support'
-    - 'Fixed a bug in the timeout request flag: #547'
-    - 'Updated runtime dependency to 2.4.4'
-    - 'Fixed a bug that caused incorrect iterationCount detection'
-    - 'Better error messages'
-    - 'Fixed a bug that caused incorrect exports of environment and global values'
-    - 'The export parameters now default to /newman/*'
-    - 'Added a new CLI option, --silent which ensures Newman does not write anything to the terminal'
+    - >-
+      GH-553 Fixed issue with environment and globals export format was using
+      wrong property names
+    - Fixed issue where --export-* CLI option did not work with no parameters
+    - Added support for postman.getResponseCookie in the script sandbox
+    - Prettified HTML report template
+    - >-
+      Added support for custom HTML report templates via
+      --reporter-html-template flag
+    - Added file upload support
+    - GH-547 Fixed a bug in the timeout request flag
+    - Updated runtime dependency to 2.4.4
+    - Fixed a bug that caused incorrect iterationCount detection
+    - Better error messages
+    - Fixed a bug that caused incorrect exports of environment and global values
+    - The export parameters now default to /newman/*
+    - >-
+      Added a new CLI option, --silent which ensures Newman does not write
+      anything to the terminal
 
 3.0.1:
   date: 2016-08-09
   fixed bugs:
-    - 'Updated Postman Runtime to v2.4.1'
-    - 'Newman now exits with a non-zero status code on test failures or errors'
+    - Updated Postman Runtime to v2.4.1
+    - Newman now exits with a non-zero status code on test failures or errors
 
 3.0.0:
   date: 2016-08-09
   fixed bugs:
-    - 'First stable release of Newman v3.0'
-    - 'Added ability to suppress exit code on failures'
-    - 'Renamed the "--stop-on-error" option to "--bail", which ensures that Newman stops on test failures or errors'
+    - First stable release of Newman v3.0
+    - Added ability to suppress exit code on failures
+    - >-
+      Renamed the "--stop-on-error" option to "--bail", which ensures that
+      Newman stops on test failures or errors
 
 3.0.0-rc.1:
   date: 2016-08-08
   initial release:
-    - 'Initial release of Newman v3. Migration Guide'
+    - Initial release of Newman v3. Migration Guide
