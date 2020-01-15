@@ -1,7 +1,7 @@
 var fs = require('fs'),
     https = require('https');
 
-describe('SSL Client certificates', function () {
+describe('SSL certificates', function () {
     var server;
 
     before(function (done) {
@@ -30,6 +30,14 @@ describe('SSL Client certificates', function () {
     it('should work correctly with standalone client certificates', function (done) {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
+    it('should work correctly with a trusted CA certificate provided', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password --ssl-extra-ca-cert test/fixtures/ssl/ca.crt', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
