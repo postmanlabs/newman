@@ -37,7 +37,7 @@ describe('SSL certificates', function () {
 
     it('should work correctly with a trusted CA certificate provided', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password --ssl-extra-ca-cert test/fixtures/ssl/ca.crt', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password --ssl-extra-ca-certs test/fixtures/ssl/ca.crt', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
