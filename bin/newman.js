@@ -52,7 +52,7 @@ program
     .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer, 0)
     .option('--ignore-redirects', 'If present, Newman will not follow HTTP Redirects.')
     .option('-k, --insecure', 'Disables SSL validations.')
-    .option('--ssl-client-certs <path>',
+    .option('--ssl-client-cert-list <path>',
         'Specify the path to the Client SSL certificates configuration file (json format).' +
         '\nThis option different ssl client certificate per url/hostname.' +
         '\nThis option and --ssl-client-cert, --ssl-client-key and --ssl-client-passphrase are exclusives.')

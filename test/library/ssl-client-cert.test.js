@@ -65,8 +65,8 @@ describe('SSL Client certificates', function () {
 
     it('should work correctly with multiple client certificates', function (done) {
         newman.run({
-            collection: 'test/fixtures/run/multiple-ssl-client-certs.json',
-            sslClientCerts: 'test/fixtures/ssl/sslClientCerts.json',
+            collection: 'test/fixtures/run/ssl-client-cert-list.json',
+            sslClientCertList: 'test/fixtures/ssl/sslClientCertList.json',
             insecure: true
         }, done);
     });

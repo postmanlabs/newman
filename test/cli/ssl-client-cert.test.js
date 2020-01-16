@@ -65,7 +65,7 @@ describe('SSL Client certificates', function () {
 
     it('should not work when both client certificate options are used', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/multiple-ssl-client-certs.json --ssl-client-certs test/fixtures/ssl/sslClientCerts.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json --ssl-client-cert-list test/fixtures/ssl/sslClientCertList.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
             expect(code, 'should have exit code different than 0').to.not.equal(0);
             done();
         });
@@ -73,7 +73,7 @@ describe('SSL Client certificates', function () {
 
     it('should work correctly with multiple client certificates', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/multiple-ssl-client-certs.json --verbose --ssl-client-certs ./test/fixtures/ssl/sslClientCerts.json -k', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json --verbose --ssl-client-cert-list ./test/fixtures/ssl/sslClientCertList.json -k', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
