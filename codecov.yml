@@ -25,13 +25,13 @@ coverage:
         target: 70
 
       # coverage status for cli tests
-      integration:
-        flags: integration
+      cli:
+        flags: cli
         target: 70
 
       # coverage status for library tests
-      integration:
-        flags: integration
+      library:
+        flags: library
         target: 70
 
 parsers:
