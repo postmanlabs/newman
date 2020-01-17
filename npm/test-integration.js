@@ -161,10 +161,10 @@ module.exports = function (exit) {
         nyc.writeCoverageFile();
         nyc.report();
         nyc.checkCoverage({
-            statements: 45,
-            branches: 27,
-            functions: 35,
-            lines: 45
+            statements: 50,
+            branches: 25,
+            functions: 50,
+            lines: 50
         });
 
         // destroy echoServer

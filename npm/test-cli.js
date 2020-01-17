@@ -64,10 +64,10 @@ module.exports = function (exit) {
             nyc.writeCoverageFile();
             nyc.report();
             nyc.checkCoverage({
-                statements: 85,
-                branches: 50,
-                functions: 100,
-                lines: 85
+                statements: 80,
+                branches: 65,
+                functions: 85,
+                lines: 80
             });
 
             exit(err || process.exitCode ? 1 : 0);
