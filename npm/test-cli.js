@@ -32,7 +32,6 @@ module.exports = function (exit) {
             tempDirectory: COV_REPORT_PATH
         });
 
-    nyc.clearCache();
     nyc.reset();
     nyc.wrap();
 
