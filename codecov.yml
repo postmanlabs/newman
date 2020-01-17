@@ -17,22 +17,22 @@ coverage:
       # coverage status for unit tests
       unit:
         flags: unit
-        target: 40
+        target: 75
 
       # coverage status for integration tests
       integration:
         flags: integration
-        target: 70
+        target: 50
 
       # coverage status for cli tests
       cli:
         flags: cli
-        target: 70
+        target: 80
 
       # coverage status for library tests
       library:
         flags: library
-        target: 70
+        target: 65
 
 parsers:
   javascript:
