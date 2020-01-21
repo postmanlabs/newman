@@ -1,3 +1,7 @@
+master:
+  chores:
+    - Added `nyc` and `codecov` for test coverage
+
 4.5.7:
   date: 2019-12-06
   chores:
