@@ -3,7 +3,6 @@
  * content of the file as well. Any change to package.json must be accompanied by valid test case in this spec-sheet.
  */
 var fs = require('fs'),
-    path = require('path'),
     _ = require('lodash'),
     yml = require('js-yaml'),
     semver = require('semver'),
@@ -72,46 +71,6 @@ describe('project repository', function () {
 
                     expect((/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g).test(fileContent),
                         `invalid or missing shebang in ${json.bin[scriptName]}`).to.be.ok;
-                });
-            });
-        });
-
-        describe('script definitions', function () {
-            it('should exist', function () {
-                expect(json.scripts).to.be.ok;
-                json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-                    var name = json.scripts[scriptName];
-
-                    name = name.replace(/^(node\s|\.\/)/, '');
-                    fs.stat(name, function (err) {
-                        var fileDetails = path.parse(name);
-
-                        expect(err).to.equal(null);
-                        expect(fileDetails.ext).to.match(/^\.(sh|js)$/);
-                    });
-                });
-            });
-
-            it('should have the hashbang defined', function () {
-                expect(json.scripts).to.be.ok;
-                json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-                    var fileDetails,
-                        name = json.scripts[scriptName].replace(/^(node\s|\.\/)/, '');
-
-                    fileDetails = path.parse(name);
-                    expect(fileDetails.ext).to.match(/^\.(sh|js)$/);
-
-                    fs.readFile(name, function (error, content) {
-                        expect(error).to.equal(null);
-                        if (fileDetails.ext === '.sh') {
-                            expect((/^#!\/bin\/bash[\r\n][\W\w]*$/g).test(content),
-                                `invalid or missing hashbang in ${name}`).to.be.ok;
-                        }
-                        else {
-                            expect((/^#!\/usr\/bin\/env\snode[\r\n][\W\w]*$/g).test(content),
-                                `invalid or missing hashbang in ${name}`).to.be.ok;
-                        }
-                    });
                 });
             });
         });

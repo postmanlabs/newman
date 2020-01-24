@@ -3,7 +3,7 @@
 <a href="https://www.getpostman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
 _Manage all of your organization's APIs in Postman, with the industry's most complete API development environment._
 
-# newman <sub>_the cli companion for postman_</sub>
+# newman <sub>_the cli companion for postman_</sub> [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=develop)](https://travis-ci.org/postmanlabs/newman) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman)
 
 Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
@@ -18,7 +18,7 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 3. [Command Line Options](#command-line-options)
     1. [newman-options](#newman-options)
     2. [newman-run](#newman-run-collection-file-source-options)
-    3. [SSL Client Certificates](#ssl-client-certificates)
+    3. [SSL](#ssl)
     4. [Configuring Proxy](#configuring-proxy)
 4. [API Reference](#api-reference)
     1. [newman run](#newmanrunoptions-object--callback-function--run-eventemitter)
@@ -211,7 +211,9 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 - `--verbose`<br />
   Show detailed information of collection run and each request sent.
 
-### SSL Client Certificates
+### SSL
+
+#### Client Certificates
 
 Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and an optional private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
 
@@ -225,6 +227,13 @@ The path to the private client key (optional).
 
 - `--ssl-client-passphrase`<br/>
 The secret passphrase used to protect the private client key (optional).
+
+#### Trusted CA
+
+When it is not wanted to use the `--insecure` option, additionally trusted CA certificates can be provided like this:
+
+- `--ssl-extra-ca-certs`<br/>
+The path to the file, that holds one or more trusted CA certificates in PEM format
 
 ### Configuring Proxy
 
@@ -269,6 +278,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
+| options.sslExtraCaCerts   | The path to the file, that holds one or more trusted CA certificates in PEM format.<br /><br />_Optional_<br />Type: `string` |
 | options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 
