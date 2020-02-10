@@ -508,6 +508,8 @@ A reporter built for [Test Rail](https://www.gurock.com/testrail), the test case
 This reporter can be used to send the Collection run data to `statsd` and used on time series analytic tools like [Grafana](https://grafana.com/)
 - [confluence](https://github.com/OmbraDiFenice/newman-reporter-confluence) -
 Confluence reporter for Newman that uploads a Newman report on a Confluence page
+- [influxdb](https://github.com/vs4vijay/newman-reporter-influxdb) -
+This reporter sends the test results information to InfluxDB which can be used from [Grafana](https://grafana.com/) to build dashboards
 
 ### Creating Your Own Reporter
 A custom reporter is a Node module with a name of the form `newman-reporter-<name>`. To create a custom reporter:
