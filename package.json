@@ -22,6 +22,9 @@
     "newman": "./bin/newman.js"
   },
   "preferGlobal": true,
+  "files": [
+		"*",
+	],
   "scripts": {
     "test": "npm run test-lint && npm run test-system && npm run test-unit && npm run test-integration && npm run test-cli && npm run test-library",
     "test-system": "node npm/test-system.js",
