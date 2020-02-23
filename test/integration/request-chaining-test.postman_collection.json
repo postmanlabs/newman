@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "Prelimiary request",
+			"name": "Preliminary request",
 			"event": [
 				{
 					"listen": "test",
