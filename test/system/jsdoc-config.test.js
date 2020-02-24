@@ -24,7 +24,7 @@ describe('JSDoc configuration', function () {
     });
 
     describe('tags', function () {
-        it('should allow unkown tags', function () {
+        it('should allow unknown tags', function () {
             expect(json.tags.allowUnknownTags).to.be.ok;
         });
 
