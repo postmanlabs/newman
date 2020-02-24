@@ -2,10 +2,10 @@ var fs = require('fs'),
     https = require('https');
 
 describe('SSL Client certificates', function () {
-    var server, server2;
+    var server1, server2, server3;
 
     before(function (done) {
-        server = https.createServer({
+        server1 = https.createServer({
             key: fs.readFileSync('test/fixtures/ssl/server.key', 'utf8'),
             cert: fs.readFileSync('test/fixtures/ssl/server.crt', 'utf8'),
             ca: fs.readFileSync('test/fixtures/ssl/ca.crt', 'utf8'),
@@ -41,8 +41,27 @@ describe('SSL Client certificates', function () {
             }
         });
 
-        server.listen(3000);
+        server3 = https.createServer({
+            key: fs.readFileSync('test/fixtures/ssl/server3.key', 'utf8'),
+            cert: fs.readFileSync('test/fixtures/ssl/server3.crt', 'utf8'),
+            ca: fs.readFileSync('test/fixtures/ssl/ca3.crt', 'utf8'),
+            passphrase: 'password',
+            requestCert: true,
+            rejectUnauthorized: false
+        }, function (req, res) {
+            if (req.client.authorized) {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('authorized\n');
+            }
+            else {
+                res.writeHead(401, { 'Content-Type': 'text/plain' });
+                res.end('unauthorized\n');
+            }
+        });
+
+        server1.listen(3000);
         server2.listen(3001);
+        server3.listen(3002);
         done();
     });
 
@@ -63,14 +82,6 @@ describe('SSL Client certificates', function () {
         });
     });
 
-    it('should not work when both client certificate options are used', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json --ssl-client-cert-list test/fixtures/ssl/sslClientCertList.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
-            expect(code, 'should have exit code different than 0').to.not.equal(0);
-            done();
-        });
-    });
-
     it('should work correctly with multiple client certificates', function (done) {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json --verbose --ssl-client-cert-list ./test/fixtures/ssl/sslClientCertList.json -k', function (code) {
@@ -79,9 +90,36 @@ describe('SSL Client certificates', function () {
         });
     });
 
+    it('should use certificate from list when both client certificates options are used', function (done) {
+        var cmd = 'node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json' +
+            ' --ssl-client-cert-list test/fixtures/ssl/sslClientCertList.json' +
+            ' --ssl-client-cert test/fixtures/ssl/client.crt' +
+            ' --ssl-client-key test/fixtures/ssl/client.key' +
+            ' --ssl-client-passphrase password -k';
+
+        exec(cmd, function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
+    it('should fallback to individual client cert when no cert from list match', function (done) {
+        var cmd = 'node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json' +
+            ' --ssl-client-cert-list test/fixtures/ssl/sslClientCertList.json' +
+            ' --ssl-client-cert test/fixtures/ssl/client.crt' +
+            ' --ssl-client-key test/fixtures/ssl/client.key' +
+            ' --ssl-client-passphrase password -k';
+
+        exec(cmd, function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
     after(function (done) {
-        server.close();
+        server1.close();
         server2.close();
+        server3.close();
         done();
     });
 });

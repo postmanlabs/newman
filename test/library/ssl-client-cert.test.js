@@ -2,10 +2,10 @@ var fs = require('fs'),
     https = require('https');
 
 describe('SSL Client certificates', function () {
-    var server, server2;
+    var server1, server2, server3;
 
     before(function (done) {
-        server = https.createServer({
+        server1 = https.createServer({
             key: fs.readFileSync('test/fixtures/ssl/server.key', 'utf8'),
             cert: fs.readFileSync('test/fixtures/ssl/server.crt', 'utf8'),
             ca: fs.readFileSync('test/fixtures/ssl/ca.crt', 'utf8'),
@@ -41,14 +41,34 @@ describe('SSL Client certificates', function () {
             }
         });
 
-        server.listen(3000);
+        server3 = https.createServer({
+            key: fs.readFileSync('test/fixtures/ssl/server3.key', 'utf8'),
+            cert: fs.readFileSync('test/fixtures/ssl/server3.crt', 'utf8'),
+            ca: fs.readFileSync('test/fixtures/ssl/ca2.crt', 'utf8'),
+            passphrase: 'password',
+            requestCert: true,
+            rejectUnauthorized: false
+        }, function (req, res) {
+            if (req.client.authorized) {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('authorized\n');
+            }
+            else {
+                res.writeHead(401, { 'Content-Type': 'text/plain' });
+                res.end('unauthorized\n');
+            }
+        });
+
+        server1.listen(3000);
         server2.listen(3001);
+        server3.listen(3002);
         done();
     });
 
     after(function (done) {
-        server.close();
+        server1.close();
         server2.close();
+        server3.close();
         done();
     });
 
@@ -67,6 +87,28 @@ describe('SSL Client certificates', function () {
         newman.run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
             sslClientCertList: 'test/fixtures/ssl/sslClientCertList.json',
+            insecure: true
+        }, done);
+    });
+
+    it('should give precedence to client cert list when both client cert options present', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/ssl-client-cert-list.json',
+            sslClientCertList: 'test/fixtures/ssl/sslClientCertList.json',
+            sslClientCert: 'test/fixtures/ssl/client.crt',
+            sslClientKey: 'test/fixtures/ssl/client.key',
+            sslClientPassphrase: 'password',
+            insecure: true
+        }, done);
+    });
+
+    it('should fallback to individual client cert when multiple client cert don\'t match', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/ssl-client-cert.json',
+            sslClientCertList: 'test/fixtures/ssl/sslClientCertList.json',
+            sslClientCert: 'test/fixtures/ssl/client.crt',
+            sslClientKey: 'test/fixtures/ssl/client.key',
+            sslClientPassphrase: 'password',
             insecure: true
         }, done);
     });
