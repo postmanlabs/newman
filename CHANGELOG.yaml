@@ -1,4 +1,5 @@
-master:
+4.6.0:
+  date: 2020-02-24
   new features:
     - >-
       GH-2235 Added a new option `--ssl-client-cert-list` to allow setting
