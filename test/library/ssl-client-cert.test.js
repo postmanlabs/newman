@@ -125,7 +125,7 @@ describe('SSL Client certificates', function () {
         }, function (err) {
             expect(err).to.exist;
             expect(err.message)
-                .to.equal('newman: unable to read the ssl client certificates file "invalid-cert-file.json".');
+                .to.equal('newman: unable to read the ssl client certificates file "invalid-cert-file.json"');
             done();
         });
     });
@@ -138,7 +138,7 @@ describe('SSL Client certificates', function () {
         }, function (err) {
             expect(err).to.exist;
             expect(err.message)
-                .to.equal('newman: unable to read the ssl client certificates file "./ssl-client-cert-test.js".');
+                .to.equal('newman: unable to read the ssl client certificates file "./ssl-client-cert-test.js"');
             done();
         });
     });
@@ -151,6 +151,32 @@ describe('SSL Client certificates', function () {
         }, function (err) {
             expect(err).to.exist;
             expect(err.message).to.equal('newman: expected ssl client certificates list to be an array.');
+            done();
+        });
+    });
+
+    it('should use list if list is an array', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/ssl-client-cert-list.json',
+            sslClientCertList: [{
+                name: 'client1',
+                matches: ['https://localhost:3001', 'https://localhost:3001/*'],
+                key: { src: './test/fixtures/ssl/client2.key' },
+                cert: { src: './test/fixtures/ssl/client2.crt' },
+                passphrase: 'password'
+            }],
+            insecure: true
+        }, done);
+    });
+
+    it('should bail if client certificate list file path is invalid', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/ssl-client-cert-list.json',
+            sslClientCertList: {},
+            insecure: true
+        }, function (err) {
+            expect(err).to.exist;
+            expect(err.message).to.equal('newman: path for ssl client certificates list file must be a string');
             done();
         });
     });
