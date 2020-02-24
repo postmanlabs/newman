@@ -55,7 +55,7 @@ program
     .option('--ssl-client-cert-list <path>',
         'Specify the path to the Client SSL certificates configuration file (json format).' +
         '\nThis option different ssl client certificate per url/hostname.' +
-        '\nThis option and --ssl-client-cert, --ssl-client-key and --ssl-client-passphrase are exclusives.')
+        '\nThis option takes precedence over --ssl-client-cert, --ssl-client-key and --ssl-client-passphrase options.')
     .option('--ssl-client-cert <path>',
         'Specify the path to the Client SSL certificate. Supports .cert and .pfx files.')
     .option('--ssl-client-key <path>',
