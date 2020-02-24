@@ -53,9 +53,8 @@ program
     .option('--ignore-redirects', 'If present, Newman will not follow HTTP Redirects.')
     .option('-k, --insecure', 'Disables SSL validations.')
     .option('--ssl-client-cert-list <path>',
-        'Specify the path to the Client SSL certificates configuration file (json format).' +
-        '\nThis option different ssl client certificate per url/hostname.' +
-        '\nThis option takes precedence over --ssl-client-cert, --ssl-client-key and --ssl-client-passphrase options.')
+        'Specify the path to the Client SSL certificates configuration file to set certificates' +
+        ' per URL/hostname (json).')
     .option('--ssl-client-cert <path>',
         'Specify the path to the Client SSL certificate. Supports .cert and .pfx files.')
     .option('--ssl-client-key <path>',

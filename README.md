@@ -219,14 +219,15 @@ Client certificates are an alternative to traditional authentication mechanisms.
 
 Newman supports SSL client certificates, via the following CLI options (available with Newman `v3` style `run` only):
 
-#### Use a ssl client certificates configuration file (supports multiple certificates per run)
+#### Using SSL client certificates configuration file (supports multiple certificates per run)
 
-- --ssl-client-cert-list<br/>
-The path to the ssl client certificate list configuration file (json format). See [examples/ssl-client-cert-list.json](https://github.com/postmanlabs/newman/blob/develop/examples/ssl-client-cert-list.json)
-This option allows multiple ssl client certificiates and different ssl client certificate per url or hostname.
-This option takes precedence over --ssl-client-cert, --ssl-client-key and --ssl-client-passphrase options. If there is no match for the URL in the list, these options are used as fallback.
+- `--ssl-client-cert-list`<br/>
+The path to the SSL client certificate list configuration file (JSON format). See [examples/ssl-client-cert-list.json](https://github.com/postmanlabs/newman/blob/develop/examples/ssl-client-cert-list.json).
 
-#### Pass one ssl client certificate
+This option allows setting different SSL client certificate according to URL or hostname.
+This option takes precedence over `--ssl-client-cert`, `--ssl-client-key` and `--ssl-client-passphrase` options. If there is no match for the URL in the list, these options are used as fallback.
+
+#### Using a single SSL client certificate
 - `--ssl-client-cert`<br/>
 The path to the public client certificate file.
 
@@ -283,6 +284,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.reporters         | Specify one reporter name as `string` or provide more than one reporter name as an `array`.<br /><br />Available reporters: `cli`, `json`, `junit`, `progress` and `emojitrain`.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.reporter          | Specify options for the reporter(s) declared in `options.reporters`. <br /> e.g. `reporter : { junit : { export : './xmlResults.xml' } }` <br /> e.g. `reporter : { html : { export : './htmlResults.html', template: './customTemplate.hbs' } }` <br /><br />_Optional_<br />Type: `object` |
 | options.color             | Enable or Disable colored CLI output.<br/><br/>Available options: `on`, `off` and `auto`<br /><br />_Optional_<br />Type: `string`, Default value: `auto` |
+| options.sslClientCertList | The path to the client certificate configuration list file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
