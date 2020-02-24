@@ -1,3 +1,16 @@
+4.6.0:
+  date: 2020-02-24
+  new features:
+    - >-
+      GH-2235 Added a new option `--ssl-client-cert-list` to allow setting
+      different certificates for different URLs in the collection
+    - >-
+      GH-2208 Added a new option `--ssl-extra-ca-certs` to extend well known
+      "root" CAs with the extra certificates in the file
+  chores:
+    - GH-2209 Added `nyc` and `codecov` for test coverage
+    - GH-2236 Updated dependencies
+
 4.5.7:
   date: 2019-12-06
   chores:

@@ -21,10 +21,10 @@ Thumbs.db
 # =======
 # Configuration pertaining to project specific repository structure.
 
-# - Prevent Sublime text IDE files from being commited to repository
+# - Prevent Sublime text IDE files from being committed to repository
 *.sublime-*
 
-# - Allow sublime text project file to be commited in the development directory.
+# - Allow sublime text project file to be committed in the development directory.
 !/develop/*.sublime-project
 
 # - Prevent CI output files from being Added

@@ -1,0 +1,68 @@
+{
+  "info": {
+    "_postman_id": "1f9d323c-5bb0-4885-87d0-ac5522f85d7d",
+    "name": "Client cert example",
+    "description": "A sample collection to demonstrate client SSL certificate handling",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "A simple GET request using client certificate 1 on server",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "f169c71e-6a6c-40d6-92bf-0e99e36d30dd",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3001",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001"
+        }
+      }
+    },
+    {
+      "name": "A simple GET request using client certificate 2 on server 2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "c7e8c76f-c590-4fec-94b9-6049e5eb5e59",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:3002",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "3002"
+        }
+      }
+    }
+  ]
+}

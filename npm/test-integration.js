@@ -8,9 +8,12 @@ var fs = require('fs'),
     async = require('async'),
     recursive = require('recursive-readdir'),
     newman = require(pathUtils.join(__dirname, '..', 'index')),
+    NYC = require('nyc'),
 
     echoServer = require('./server').createRawEchoServer(),
     redirectServer = require('./server').createRedirectServer(),
+
+    COV_REPORT_PATH = '.coverage',
 
     LOCAL_TEST_ECHO_PORT = 4041,
     LOCAL_TEST_REDIRECT_PORT = 4042,
@@ -25,6 +28,19 @@ var fs = require('fs'),
 module.exports = function (exit) {
     // banner line
     console.info('Running integration tests using local newman as node module...'.yellow.bold);
+
+    var nyc = new NYC({
+        hookRequire: true,
+        reporter: ['text', 'lcov', 'text-summary', 'json'],
+        reportDir: COV_REPORT_PATH,
+        tempDirectory: COV_REPORT_PATH
+    });
+
+    test('-d', COV_REPORT_PATH) && rm('-rf', COV_REPORT_PATH);
+    mkdir('-p', COV_REPORT_PATH);
+
+    nyc.reset();
+    nyc.wrap();
 
     async.waterfall([
 
@@ -100,6 +116,9 @@ module.exports = function (exit) {
 
             console.info(`\nexecuting ${Object.keys(suites).length} tests in parallel (might take a while)...\n`);
 
+            nyc.reset();
+            nyc.wrap();
+
             // run tests using the consolidated test set as a guide
             async.mapLimit(suites, 10, function (test, next) {
                 console.info(` - ${test.name}`);
@@ -139,12 +158,21 @@ module.exports = function (exit) {
             console.error(_.omit(err, ['stacktrace', 'stack']), { colors: true });
         }
 
+        nyc.writeCoverageFile();
+        nyc.report();
+        nyc.checkCoverage({
+            statements: 50,
+            branches: 25,
+            functions: 50,
+            lines: 50
+        });
+
         // destroy echoServer
         echoServer.destroy(function () {
             // destroy redirectServer
             redirectServer.destroy(function () {
                 // exit once both the local server are stopped
-                exit(err, results);
+                exit(err || process.exitCode ? 1 : 0, results);
             });
         });
     });

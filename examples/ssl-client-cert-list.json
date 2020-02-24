@@ -1,0 +1,16 @@
+[
+    {
+        "name": "domain1",
+        "matches": ["https://test.domain1.com/*", "https://www.domain1/*"],
+        "key": {"src": "./client.domain1.key"},
+        "cert": {"src": "./client.domain1.crt"},
+        "passphrase": "changeme"
+    },
+    {
+        "name": "domain2",
+        "matches": ["https://domain2.com/*"],
+        "key": {"src": "./client.domain2.key"},
+        "cert": {"src": "./client.domain2.crt"},
+        "passphrase": "changeme"
+    }
+]

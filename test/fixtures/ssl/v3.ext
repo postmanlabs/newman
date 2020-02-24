@@ -1,0 +1,4 @@
+basicConstraints=CA:FALSE
+nsComment = "OpenSSL Generated Certificate"
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
