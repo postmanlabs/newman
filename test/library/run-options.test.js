@@ -86,7 +86,7 @@ describe('Newman run options', function () {
                     accept: '*/*',
                     'cache-control': 'no-cache',
                     'postman-token': postmanToken,
-                    'accept-encoding': 'gzip, deflate',
+                    'accept-encoding': 'gzip, deflate, br',
                     'user-agent': `PostmanRuntime/${runtimeVersion}`, // change this when runtime is bumped
                     'x-forwarded-port': '443',
                     'x-forwarded-proto': 'https'
