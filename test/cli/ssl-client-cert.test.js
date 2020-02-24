@@ -126,7 +126,7 @@ describe('SSL Client certificates', function () {
         });
     });
 
-    it('should bail out if unable to parse client certificate list', function (done) {
+    it('should bail out if client certificate list file does not exist', function (done) {
         var cmd = 'node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json' +
             ' --ssl-client-cert-list invalid-cert-file.json' + // using an invalid cert list
             ' --ssl-client-cert test/fixtures/ssl/client.crt' +
@@ -139,7 +139,20 @@ describe('SSL Client certificates', function () {
         });
     });
 
-    it('should bail out if invalid client certificate list', function (done) {
+    it('should bail out if unable to parse client certificate list', function (done) {
+        var cmd = 'node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json' +
+            ' --ssl-client-cert-list test/cli/ssl-client-cert-test.js' + // using an invalid cert list
+            ' --ssl-client-cert test/fixtures/ssl/client.crt' +
+            ' --ssl-client-key test/fixtures/ssl/client.key' +
+            ' --ssl-client-passphrase password -k';
+
+        exec(cmd, function (code) {
+            expect(code, 'should not have exit code 0').to.not.equal(0);
+            done();
+        });
+    });
+
+    it('should bail out if client certificate list is not an array', function (done) {
         var cmd = 'node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json' +
             ' --ssl-client-cert-list test/fixtures/run/ssl-client-cert.json' + // using an invalid cert list
             ' --ssl-client-cert test/fixtures/ssl/client.crt' +

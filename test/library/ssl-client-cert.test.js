@@ -117,26 +117,40 @@ describe('SSL Client certificates', function () {
         }, done);
     });
 
-    it('should bail out if unable to parse client certificate list', function (done) {
+    it('should bail out if client certificate list file does not exist', function (done) {
         newman.run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
             sslClientCertList: 'invalid-cert-file.json', // using an invalid cert list
             insecure: true
         }, function (err) {
             expect(err).to.exist;
-            expect(err.message).to.equal('newman: unable to read the ssl client certificates file.');
+            expect(err.message)
+                .to.equal('newman: unable to read the ssl client certificates file "invalid-cert-file.json".');
             done();
         });
     });
 
-    it('should bail out if invalid client certificate list', function (done) {
+    it('should bail out if unable to parse client certificate list', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/ssl-client-cert-list.json',
+            sslClientCertList: './ssl-client-cert-test.js', // using an invalid cert list
+            insecure: true
+        }, function (err) {
+            expect(err).to.exist;
+            expect(err.message)
+                .to.equal('newman: unable to read the ssl client certificates file "./ssl-client-cert-test.js".');
+            done();
+        });
+    });
+
+    it('should bail out if client certificate list is not array', function (done) {
         newman.run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
             sslClientCertList: 'test/fixtures/run/ssl-client-cert.json', // using an invalid cert list
             insecure: true
         }, function (err) {
             expect(err).to.exist;
-            expect(err.message).to.equal('newman: expected type for ssl client certificates list to be array.');
+            expect(err.message).to.equal('newman: expected ssl client certificates list to be an array.');
             done();
         });
     });
