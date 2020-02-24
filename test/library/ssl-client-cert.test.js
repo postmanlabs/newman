@@ -89,7 +89,7 @@ describe('SSL Client certificates', function () {
     it('should work correctly with multiple client certificates', function (done) {
         newman.run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
-            sslClientCertList: 'test/fixtures/ssl/sslClientCertList.json',
+            sslClientCertList: 'test/fixtures/files/ssl-client-cert-config.json',
             insecure: true
         }, done);
     });
@@ -97,7 +97,7 @@ describe('SSL Client certificates', function () {
     it('should give precedence to client cert list when both client cert options present', function (done) {
         newman.run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
-            sslClientCertList: 'test/fixtures/ssl/sslClientCertList.json',
+            sslClientCertList: 'test/fixtures/files/ssl-client-cert-config.json',
             sslClientCert: 'test/fixtures/ssl/client.crt',
             sslClientKey: 'test/fixtures/ssl/client.key',
             sslClientPassphrase: 'password',
@@ -108,7 +108,7 @@ describe('SSL Client certificates', function () {
     it('should fallback to individual client cert when multiple client cert don\'t match', function (done) {
         newman.run({
             collection: 'test/fixtures/run/ssl-client-cert.json',
-            sslClientCertList: 'test/fixtures/ssl/sslClientCertList.json',
+            sslClientCertList: 'test/fixtures/files/ssl-client-cert-config.json',
             sslClientCert: 'test/fixtures/ssl/client.crt',
             sslClientKey: 'test/fixtures/ssl/client.key',
             sslClientPassphrase: 'password',
