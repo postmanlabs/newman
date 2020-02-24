@@ -219,6 +219,7 @@ Client certificates are an alternative to traditional authentication mechanisms.
 
 Newman supports SSL client certificates, via the following CLI options (available with Newman `v3` style `run` only):
 
+#### Using a single SSL client certificate
 - `--ssl-client-cert`<br/>
 The path to the public client certificate file.
 
@@ -227,6 +228,16 @@ The path to the private client key (optional).
 
 - `--ssl-client-passphrase`<br/>
 The secret passphrase used to protect the private client key (optional).
+
+
+#### Using SSL client certificates configuration file (supports multiple certificates per run)
+
+- `--ssl-client-cert-list`<br/>
+The path to the SSL client certificate list configuration file (JSON format). See [examples/ssl-client-cert-list.json](https://github.com/postmanlabs/newman/blob/develop/examples/ssl-client-cert-list.json).
+
+This option allows setting different SSL client certificate according to URL or hostname.
+This option takes precedence over `--ssl-client-cert`, `--ssl-client-key` and `--ssl-client-passphrase` options. If there is no match for the URL in the list, these options are used as fallback.
+
 
 #### Trusted CA
 
@@ -278,6 +289,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslClientCert     | The path to the public client certificate file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientKey      | The path to the private client key file.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
+| options.sslClientCertList | The path to the client certificate configuration list file. This option takes precedence over `sslClientCert`, `sslClientKey` and `sslClientPassphrase`. When there is no match in this configuration list, `sslClientCert` is used as fallback.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.sslExtraCaCerts   | The path to the file, that holds one or more trusted CA certificates in PEM format.<br /><br />_Optional_<br />Type: `string` |
 | options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |

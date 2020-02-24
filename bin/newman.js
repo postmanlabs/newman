@@ -52,11 +52,14 @@ program
     .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer, 0)
     .option('--ignore-redirects', 'If present, Newman will not follow HTTP Redirects.')
     .option('-k, --insecure', 'Disables SSL validations.')
+    .option('--ssl-client-cert-list <path>',
+        'Specify the path to the Client SSL certificates configuration file to set certificates' +
+        ' per URL/hostname (json).')
     .option('--ssl-client-cert <path>',
         'Specify the path to the Client SSL certificate. Supports .cert and .pfx files.')
     .option('--ssl-client-key <path>',
         'Specify the path to the Client SSL key (not needed for .pfx files)')
-    .option('--ssl-client-passphrase <path>',
+    .option('--ssl-client-passphrase <passphrase>',
         'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
     .option('--ssl-extra-ca-certs <path>',
         'Specify additionally trusted CA certificates')

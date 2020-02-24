@@ -1,4 +1,8 @@
 master:
+  new features:
+    - >-
+      Added a new option `--ssl-client-cert-list` to allow setting different
+      certificates for different URLs in the collection
   chores:
     - Added `nyc` and `codecov` for test coverage
 
