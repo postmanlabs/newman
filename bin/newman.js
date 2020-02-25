@@ -26,6 +26,7 @@ program
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
     .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run.', util.cast.csvParse, ['cli'])
     .option('-n, --iteration-count <n>', 'Define the number of iterations to run.', util.cast.integer)
+    // eslint-disable-next-line max-len
     .option('-d, --iteration-data <path>', 'Specify a data file to use for iterations (either json or csv).', util.cast.memoize, [])
     .option('--export-environment <path>', 'Exports the environment to a file after completing the run.')
     .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
@@ -106,7 +107,7 @@ program.on('command:*', (command) => {
  * @param {String[]} argv - Argument vector.
  * @param {?Function} callback - The callback function invoked on the completion of execution.
  */
-function run(argv, callback) {
+function run (argv, callback) {
     waterfall([
         (next) => {
             // cache original argv, required to parse nested options later.
