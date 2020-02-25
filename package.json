@@ -23,7 +23,11 @@
   },
   "preferGlobal": true,
   "files": [
-		"*",
+    "MIGRATION.md",
+    "bin/**/*",
+    "examples/**/*",
+    "index.js",
+    "lib/**/*"
 	],
   "scripts": {
     "test": "npm run test-lint && npm run test-system && npm run test-unit && npm run test-integration && npm run test-cli && npm run test-library",
