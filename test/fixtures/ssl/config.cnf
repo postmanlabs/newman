@@ -1,0 +1,20 @@
+[ req ]
+default_bits           = 1024
+days                   = 3650
+distinguished_name     = req_distinguished_name
+attributes             = req_attributes
+prompt                 = no
+output_password        = password
+
+[ req_distinguished_name ]
+C                      = IN
+ST                     = Karnataka
+L                      = Bengaluru
+O                      = Postdot Technologies Pvt Ltd
+OU                     = Postmanlabs
+CN                     = localhost
+emailAddress           = help@postman.com
+
+[ req_attributes ]
+challengePassword              = password challenge
+
