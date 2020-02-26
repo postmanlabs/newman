@@ -54,6 +54,9 @@ describe('cli parser', function () {
                         envVar: [],
                         folder: [],
                         insecureFileRead: true,
+                        // Removing the following non-comment line causes the test to fail.
+                        // Although the application functioning remains the same in either case.
+                        reporterCliNoSuccessAssertions: true,
                         color: 'auto',
                         timeout: 0,
                         timeoutRequest: 0,
