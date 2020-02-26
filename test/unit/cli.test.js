@@ -54,8 +54,8 @@ describe('cli parser', function () {
                         envVar: [],
                         folder: [],
                         insecureFileRead: true,
-                        // Removing the following non-comment line causes the test to fail.
-                        // Although the application functioning remains the same in either case.
+                        // Removing the following non-comment line causes the test to fail as
+                        // commander.js assigns default values for falgs containing "no"
                         reporterCliNoSuccessAssertions: true,
                         color: 'auto',
                         timeout: 0,
