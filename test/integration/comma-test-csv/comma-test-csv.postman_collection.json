@@ -1,47 +1,74 @@
 {
-  "variables": [],
-  "info": {
-    "name": "CSV files are being parsed correctly",
-    "_postman_id": "1b3aa71e-0a61-29a8-d90b-502f89e8c7bf",
-    "description": "A set of tests to check for the correctness of data passed from csv data files",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "r1",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "var res = JSON.parse(responseBody);",
-              "tests['Name with comma sent correctly'] = res.json.nameAndSurname === 'FirstName, LastName';",
-              "tests['Name without comma sent correctly'] = res.json.name === 'FirstName \"MiddleName\" LastName';",
-              "tests['Number with leading zeros in quotes should not get parsed'] = data.numberWithQuotes === '00123';",
-              "tests['Number without quotes should parse correctly'] = data.numberWithoutQuotes === 7890;",
-              "tests['Long Number in quotes should not get parsed'] = data.longNumber === '89111702272002019559';"
-            ]
-          }
-        }
-      ],
-      "request": {
-        "url": "https://postman-echo.com/post",
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "description": ""
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"nameAndSurname\": \"{{nameWithComma}}\",\n    \"name\": \"{{nameWithoutComma}}\"\n}"
-        },
-        "description": ""
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "ac876a75-22ac-40cf-8abe-27ad079b6a5d",
+		"name": "CSV parsing test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "r1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00c12c73-e93f-4ba8-815c-20f6e4b5d137",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8292797c-b676-4a41-966b-c2b92d607425",
+						"exec": [
+							"pm.test(\"CSV parsing tests\", function () {",
+							"    pm.expect(data.nameWithComma).to.eql('Abhijit, Kane');",
+							"    pm.expect(data.nameWithDoubleQuotes).to.eql('Abhijit \"KDOS\" Kane');",
+							"    pm.expect(data.numberWithQuotes).to.eql('00123');",
+							"    pm.expect(data.numberWithoutQuotes).to.eql(7890);",
+							"    pm.expect(data.negativeNumberWithoutQuotes).to.eql(-7890);",
+							"    pm.expect(data.nullValue).to.eql('');",
+							"    pm.expect(data.longNumber).to.eql('89111702272002019559');",
+							"    pm.expect(data.spaceAfterComma).to.eql('foo');",
+							"    pm.expect(data.spaceBeforeComma).to.eql('bar');",
+							"    pm.expect(data.nameWithUnescapedQuotes).to.eql('Abhijit \"KDOS\" Kane');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nameWithComma\": \"{{nameWithComma}}\",\n\t\"nameWithoutComma\": \"{{nameWithoutComma}}\",\n\t\"numberWithQuotes\": \"{{numberWithQuotes}}\",\n\t\"numberWithoutQuotes\": \"{{numberWithoutQuotes}}\",\n\t\"longNumber\": \"{{longNumber}}\",\n\t\"spaceAfterComma\": \"{{spaceAfterComma}}\",\n\t\"spaceBeforeComma\": \"{{spaceBeforeComma}}\"\n}"
+				},
+				"url": {
+					"raw": "postman-echo.com/get",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }
