@@ -145,8 +145,9 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   Specifies the number of times the collection has to be run when used in conjunction with iteration data file.
 
 - `--folder <name>`<br />
-  Run requests within a particular folder/folders in a collection. Multiple folders can be specified by using
-  `--folder` multiple times, like so: `--folder f1 --folder f2`.
+  Run requests within a particular folder/folders or specific reqeusts in a collection. Multiple folders or requests can be specified by using
+  --folder multiple times, like so: --folder f1 --folder f2 --folder r1 --folder r2.
+
 
 - `--working-dir <path>`<br />
   Set the path of the working directory to use while reading files with relative paths. Default to current directory.
