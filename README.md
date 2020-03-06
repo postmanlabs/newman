@@ -431,6 +431,7 @@ such a scenario.
 | `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 | `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
+| `--reporter-cli-clean-console`  | Prints the output of `console.log` (and other console calls) in a plain unwrapped way. |
 
 ### JSON Reporter
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the
