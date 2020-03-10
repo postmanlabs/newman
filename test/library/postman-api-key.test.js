@@ -134,7 +134,7 @@ describe('newman.run postmanApiKey', function () {
         newman.run({
             collection: '1234-588025f9-2497-46f7-b849-47f58b865807'
         }, function (err) {
-            expect(err).to.be.ok.that.match(/no such file or directory/);
+            expect(err).to.be.ok.that.match(/postmanApiKey not found/);
             sinon.assert.notCalled(request.get);
 
             done();
