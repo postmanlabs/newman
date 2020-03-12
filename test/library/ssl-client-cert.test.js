@@ -4,13 +4,14 @@ var fs = require('fs'),
     https = require('https');
 
 describe('SSL Client certificates', function () {
-    var server1, server2, server3;
+    var server1, server2, server3, server4;
 
     function createHttpsServerWithCerts (certs) {
         return https.createServer({
             key: fs.readFileSync(certs.key, 'utf8'),
             cert: fs.readFileSync(certs.cert, 'utf8'),
             ca: fs.readFileSync(certs.ca, 'utf8'),
+            pfx: fs.readFileSync(certs.pfx, 'utf-8'),
             passphrase: 'password',
             requestCert: true,
             rejectUnauthorized: false
@@ -45,6 +46,12 @@ describe('SSL Client certificates', function () {
             ca: 'test/fixtures/ssl/ca3.crt'
         });
 
+        server4 = createHttpsServerWithCerts({
+            pfx: 'test/fixtures/ssl/server4.pfx',
+            key: 'password',
+            ca: 'test/fixtures/ssl/ca4.crt'
+        });
+
         async.parallel([
             function (cb) {
                 server1.listen(3000, cb);
@@ -54,6 +61,9 @@ describe('SSL Client certificates', function () {
             },
             function (cb) {
                 server3.listen(3002, cb);
+            },
+            function (cb) {
+                server4.listen(3003, cb);
             }
         ], function (err) {
             done(err);
@@ -70,6 +80,9 @@ describe('SSL Client certificates', function () {
             },
             function (cb) {
                 server3.close(cb);
+            },
+            function (cb) {
+                server4.close(cb);
             }
         ], function (err) {
             done(err);
