@@ -494,7 +494,7 @@ Several members of the Postman community have created custom reporters offering 
 Once the custom reporter NPM package has been installed either globally or locally, this can be then used with Newman in the following ways:
 
 ```console
-$ newman run /path/to/collection.json -r htmlextra,csv
+$ newman run /path/to/collection.json -r htmlextra.csv
 ```
 
 ```javascript
