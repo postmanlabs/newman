@@ -45,7 +45,7 @@
     "cli-progress": "3.6.0",
     "cli-table3": "0.5.1",
     "colors": "1.4.0",
-    "commander": "4.1.1",
+    "commander": "5.0.0",
     "eventemitter3": "4.0.0",
     "filesize": "6.1.0",
     "lodash": "4.17.15",
