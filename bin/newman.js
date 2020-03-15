@@ -7,7 +7,9 @@ const _ = require('lodash'),
     program = require('commander'),
     version = require('../package.json').version,
     newman = require('../'),
-    util = require('./util');
+    util = require('./util'),
+    clc = require('cli-color'),
+    didYouMean = require('didyoumean');
 
 program
     .version(version, '-v, --version')
@@ -93,10 +95,27 @@ program.on('--help', function () {
     console.info('  newman <command> -h');
 });
 
-// Warn on invalid command and then exits.
-program.on('command:*', (command) => {
-    console.error(`error: invalid command \`${command}\`\n`);
+
+// Warn on invalid command, show suggestions if any then exits.
+program.on('command:*', (args) => {
+    var command = args[0],
+        commandNames = program.commands.map(function (cmd) {
+            return cmd._name;
+        });
+
+    const suggestCommands = (cmd, cmdList) => {
+        var suggestion = didYouMean(cmd, cmdList);
+
+        if (suggestion) {
+            console.error();
+            console.error('\n\nThe most similar command is \n \t' + clc.bold(suggestion));
+
+            return suggestion;
+        }
+    };
+
     program.help();
+    suggestCommands(command, commandNames);
 });
 
 /**
