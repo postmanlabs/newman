@@ -94,11 +94,13 @@ const newman = require('newman'); // require newman in your project
 newman.run({
     collection: require('./sample-collection.json'),
     reporters: 'cli'
-}, function (err) {
+}, function (err, data) {
 	if (err) { throw err; }
-    console.log('collection run complete!');
+    console.log(`collection run complete! Summary Run Data: ${data}`);
 });
 ```
+
+The collection may either be a URL or a path to a local JSON file.  If it is a URL, you must provide the `postmanApiKey` property.
 
 For the complete list of options, refer the [API Reference](#api-reference) section below.
 
@@ -267,6 +269,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | Parameter | Description   |
 |-----------|---------------|
 | options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
+| options.postmanApiKey       | The API Key.  Required if the `options.collection` is a URL. <br /><br />_Required -  `options.collection` URLs_<br />Type: `string` |
 | options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an instance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object\|string` [PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
 | options.environment       | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object\|string` |
 | options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object\|string` |
