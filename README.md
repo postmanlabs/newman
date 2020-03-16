@@ -96,7 +96,7 @@ newman.run({
     reporters: 'cli'
 }, function (err, data) {
 	if (err) { throw err; }
-    console.log(`collection run complete! Summary Run Data: ${data}`);
+    console.log('collection run complete! Summary Run Data', data);
 });
 ```
 
