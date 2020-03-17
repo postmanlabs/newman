@@ -228,4 +228,26 @@ describe('Newman run options', function () {
             });
         });
     });
+
+    describe('proxy environment', function () {
+        it('should work properly without proxy authtication', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/single-get-request.json'
+            }, function (err) {
+                expect(err).to.be.null;
+                done();
+            });
+        });
+
+        it('should run properly when in proxy enviromnent and proxy option is provided', function (done) {
+            newman.run({
+                collection: 'test/fixtures/run/single-get-request.json',
+                proxy: 'test:test'
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary).to.be.ok;
+                done();
+            });
+        });
+    });
 });

@@ -103,6 +103,23 @@ describe('cli parser', function () {
             });
         });
 
+        describe('--proxy', function () {
+            it('should run correctly without proxy', function (done) {
+                cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts).not.to.have.property('proxy');
+                    done();
+                });
+            });
+            it('should run correctly with proxy', function (done) {
+                cli('node newman.js run myCollection.json --proxy test:test'.split(' '), 'run', function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts).to.have.property('proxy');
+                    done();
+                });
+            });
+        });
+
         describe('--color', function () {
             it('should have color `auto` by default', function (done) {
                 cli('node newman.js run myCollection.json'.split(' '), 'run',
