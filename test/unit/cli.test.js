@@ -103,20 +103,40 @@ describe('cli parser', function () {
             });
         });
 
-        describe('--proxy', function () {
-            it('should run correctly without proxy', function (done) {
+        describe('--proxy-credentials', function () {
+            it('should not have default credentials set', function (done) {
                 cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts).not.to.have.property('proxy');
+                    expect(opts).not.to.have.property('proxyCredentials');
                     done();
                 });
             });
-            it('should run correctly with proxy', function (done) {
-                cli('node newman.js run myCollection.json --proxy test:test'.split(' '), 'run', function (err, opts) {
+            it('should have proxy credentials value as test:test', function (done) {
+                cli('node newman.js run myCollection.json --proxy-credentials test:test'.split(' '),
+                    'run', function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts).to.have.property('proxyCredentials');
+                        expect(opts.proxyCredentials).to.equal('test:test');
+                        done();
+                    });
+            });
+        });
+        describe('--proxy-url', function () {
+            it('should not have default proxy url set', function (done) {
+                cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
                     expect(err).to.be.null;
-                    expect(opts).to.have.property('proxy');
+                    expect(opts).not.to.have.property('proxyUrl');
                     done();
                 });
+            });
+            it('should have proxy url set as ip:port', function (done) {
+                cli('node newman.js run myCollection.json --proxy-url ip:port'.split(' '),
+                    'run', function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts).to.have.property('proxyUrl');
+                        expect(opts.proxyUrl).to.equal('ip:port');
+                        done();
+                    });
             });
         });
 
