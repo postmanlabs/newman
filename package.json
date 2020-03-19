@@ -82,7 +82,7 @@
     "server-destroy": "1.0.1",
     "shelljs": "0.8.3",
     "sinon": "7.5.0",
-    "xml2js": "0.4.22"
+    "xml2js": "0.4.23"
   },
   "engines": {
     "node": ">=6"
