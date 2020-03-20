@@ -63,10 +63,12 @@ program
         'Specify the Client SSL passphrase (optional, needed for passphrase protected keys).')
     .option('--ssl-extra-ca-certs <path>',
         'Specify additionally trusted CA certificates')
-    .option('--proxy-url <value>',
+    .option('--proxy-url <ip>',
         'Allows the specification of proxy credentians via commandline in ip:port form')
-    .option('--proxy-credentials <value>',
-        'Allows the specification of proxy credentians via commandline in username:password form')
+    .option('--proxy-username <username>',
+        'Allows the specification of proxy username')
+    .option('--proxy-password <password>',
+        'Allows the specification of proxy password')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
         let options = util.commanderToObject(command),

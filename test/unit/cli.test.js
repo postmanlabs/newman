@@ -102,25 +102,6 @@ describe('cli parser', function () {
                 });
             });
         });
-
-        describe('--proxy-credentials', function () {
-            it('should not have default credentials set', function (done) {
-                cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
-                    expect(err).to.be.null;
-                    expect(opts).not.to.have.property('proxyCredentials');
-                    done();
-                });
-            });
-            it('should have proxy credentials value as test:test', function (done) {
-                cli('node newman.js run myCollection.json --proxy-credentials test:test'.split(' '),
-                    'run', function (err, opts) {
-                        expect(err).to.be.null;
-                        expect(opts).to.have.property('proxyCredentials');
-                        expect(opts.proxyCredentials).to.equal('test:test');
-                        done();
-                    });
-            });
-        });
         describe('--proxy-url', function () {
             it('should not have default proxy url set', function (done) {
                 cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
@@ -130,11 +111,49 @@ describe('cli parser', function () {
                 });
             });
             it('should have proxy url set as ip:port', function (done) {
-                cli('node newman.js run myCollection.json --proxy-url ip:port'.split(' '),
+                cli('node newman.js run myCollection.json --proxy-url 127.0.0.0:1'.split(' '),
                     'run', function (err, opts) {
                         expect(err).to.be.null;
                         expect(opts).to.have.property('proxyUrl');
-                        expect(opts.proxyUrl).to.equal('ip:port');
+                        expect(opts.proxyUrl).to.equal('127.0.0.0:1');
+                        done();
+                    });
+            });
+        });
+
+        describe('--proxy-username', function () {
+            it('should not have default username set', function (done) {
+                cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts).not.to.have.property('proxyUsername');
+                    done();
+                });
+            });
+            it('should have proxy  value as username set ', function (done) {
+                cli('node newman.js run myCollection.json --proxy-username test'.split(' '),
+                    'run', function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts).to.have.property('proxyUsername');
+                        expect(opts.proxyUsername).to.equal('test');
+                        done();
+                    });
+            });
+        });
+
+        describe('--proxy-password', function () {
+            it('should not have default password set', function (done) {
+                cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts).not.to.have.property('proxyPassword');
+                    done();
+                });
+            });
+            it('should have proxy  value as username set ', function (done) {
+                cli('node newman.js run myCollection.json --proxy-password test'.split(' '),
+                    'run', function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts).to.have.property('proxyPassword');
+                        expect(opts.proxyPassword).to.equal('test');
                         done();
                     });
             });
