@@ -34,10 +34,11 @@ In order to contribute to this project, you should:
 4. Make sure everything is working by running `npm test`.
 5. Create a new feature branch from `develop` with `feature/your-feature-name`.
 6. Make the necessary changes in line with the objective(s) of the pull request
-7. Ensure that you have added unit and integration tests for any new features added / bugs fixed
-8. Run `npm test`. If any tests fail, resolve the issue with the code, and re-try
-9. Once the tests pass, commit and push. **Do not** alter the `version` in `package.json`
-10. Create a pull request to `develop`
+7. You can debug newman locally by running `node ./bin/newman <command-name>`.
+8. Ensure that you have added unit and integration tests for any new features added / bugs fixed
+9. Run `npm test`. If any tests fail, resolve the issue with the code, and re-try
+10. Once the tests pass, commit and push. **Do not** alter the `version` in `package.json`
+11. Create a pull request to `develop`
 
 ## NPM Command Reference
 
