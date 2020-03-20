@@ -35,7 +35,7 @@ describe('CLI proxy options', function () {
 
     it('should run correctly if url and username is provided', function (done) {
         // eslint-disable-next-line max-len
-        exec('node bin/newman.js run examples/sample-collection.json --proxy-url 127.0.0.0:1 --proxy-username test', function (code, stdout, stderr) {
+        exec('node bin/newman.js run examples/sample-collection.json --proxy-url ip:port --proxy-username test', function (code, stdout, stderr) {
             expect(stderr).not.to.be.ok;
             expect(stdout).to.include('Sample Postman Collection');
             done();
