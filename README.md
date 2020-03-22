@@ -426,8 +426,7 @@ such a scenario.
 |-------------|-------------------|
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
 
-| `--reporter-cli-show-timestamp` | This prints the local time for each request made. | 
-| `--reporter-cli-show-timestamp-utc` | This prints the UTC time of each request made. |
+| `--reporter-cli-show-timestamps` | This prints the local time for each request made. | 
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
