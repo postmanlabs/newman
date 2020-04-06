@@ -2,7 +2,6 @@ describe('cli parser', function () {
     var _ = require('lodash'),
         sinon = require('sinon'),
         newman = require('../../'),
-        commander = require('commander'),
         newmanCLI,
 
         /**
@@ -19,9 +18,6 @@ describe('cli parser', function () {
         };
 
     beforeEach(function () {
-        // removes all listeners assigned previously to avoid exceeding MaxListeners.
-        commander.removeAllListeners();
-
         // delete require cache to use program instance for consecutive runs.
         delete require.cache[require.resolve('../../bin/newman')];
         newmanCLI = require('../../bin/newman');
@@ -47,6 +43,8 @@ describe('cli parser', function () {
 
                     // explicitly match object to track addition/deletion of properties.
                     expect(opts).to.eql({
+                        args: ['collection.json'],
+                        rawArgs: null,
                         collection: 'collection.json',
                         reporters: ['cli'],
                         delayRequest: 0,

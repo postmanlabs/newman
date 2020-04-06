@@ -50,10 +50,6 @@ describe('project repository', function () {
                 expect(json.engines).to.eql({ node: '>=10' });
             });
 
-            it('should ignore applicable dependencies for GreenKeeper pull requests', function () {
-                expect(json.greenkeeper).to.eql({ ignore: ['eslint-plugin-jsdoc'] });
-            });
-
             it('should have a valid version string in form of <major>.<minor>.<revision>', function () {
                 expect(semver.valid(json.version), `version:${json.version} should be a valid semver`).to.not.be.null;
             });
