@@ -6,33 +6,33 @@ const TEST_TYPE = ((argv) => {
 
 function configOverrides (testType) {
     switch (testType) {
-        case 'unit':
+        case 'cli':
             return {
-                branches: 60,
-                lines: 75,
-                functions: 80,
-                statements: 75
-            };
-        case 'library':
-            return {
-                branches: 40,
-                lines: 60,
-                functions: 55,
-                statements: 55
+                statements: 80,
+                branches: 65,
+                functions: 85,
+                lines: 80
             };
         case 'integration':
             return {
+                statements: 40,
                 branches: 20,
-                lines: 40,
                 functions: 40,
-                statements: 40
+                lines: 40
             };
-        case 'cli':
+        case 'library':
             return {
-                branches: 65,
-                lines: 80,
-                functions: 80,
-                statements: 80
+                statements: 55,
+                branches: 40,
+                functions: 55,
+                lines: 55
+            };
+        case 'unit':
+            return {
+                statements: 70,
+                branches: 55,
+                functions: 75,
+                lines: 75
             };
         default:
             return {}
