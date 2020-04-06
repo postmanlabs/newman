@@ -156,8 +156,7 @@ describe('Newman run options', function () {
     });
 
     describe('script timeouts', function () {
-        // @todo: Unskip this when the underlying runtime behaviour has been fixed
-        it.skip('should be handled correctly when breached', function (done) {
+        it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 5
