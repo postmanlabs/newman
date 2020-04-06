@@ -59,6 +59,7 @@ openssl x509 -req -in $CLIENT.csr \
     -set_serial 1 \
     -outform pem \
     -extfile v3.ext \
+    -days 1095 \
     -sha256
 
 # verify that the certificate was generated correctly
