@@ -15,13 +15,13 @@ jobs:
       os: linux
       script:
         - npm run test-unit
-        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/*.json -F unit
+        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F unit
         - npm run test-integration
-        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/*.json -F integration
+        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F integration
         - npm run test-cli
-        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/*.json -F cli
+        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F cli
         - npm run test-library
-        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/*.json -F library
+        - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F library
 
 notifications:
   slack:
