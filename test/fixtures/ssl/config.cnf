@@ -7,13 +7,13 @@ prompt                 = no
 output_password        = password
 
 [ req_distinguished_name ]
-C                      = IN
-ST                     = Karnataka
-L                      = Bengaluru
-O                      = Postdot Technologies Pvt Ltd
-OU                     = Postmanlabs
-CN                     = localhost
-emailAddress           = help@postman.com
+C                      = US
+ST                     = CA
+L                      = SF
+O                      = Postman
+OU                     = postman@localhost
+CN                     = TestClient
+emailAddress           = do.not@email.me
 
 [ req_attributes ]
 challengePassword              = password challenge
