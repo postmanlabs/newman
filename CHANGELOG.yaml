@@ -1,4 +1,5 @@
-master:
+5.0.0:
+  date: 2020-04-08
   new features:
     - GH-2299 Uses next-generation URL processor
   breaking changes:
