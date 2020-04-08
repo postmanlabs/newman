@@ -10,30 +10,15 @@ require('colors');
 // set directories and files for test and coverage report
 var path = require('path'),
     expect = require('chai').expect,
-
-    NYC = require('nyc'),
     recursive = require('recursive-readdir'),
 
-    COV_REPORT_PATH = '.coverage',
     SPEC_SOURCE_DIR = path.join(__dirname, '..', 'test', 'unit');
 
 module.exports = function (exit) {
     // banner line
     console.info('Running unit tests using mocha...'.yellow.bold);
 
-    test('-d', COV_REPORT_PATH) && rm('-rf', COV_REPORT_PATH);
-    mkdir('-p', COV_REPORT_PATH);
-
-    var Mocha = require('mocha'),
-        nyc = new NYC({
-            hookRequire: true,
-            reporter: ['text', 'lcov', 'text-summary', 'json'],
-            reportDir: COV_REPORT_PATH,
-            tempDirectory: COV_REPORT_PATH
-        });
-
-    nyc.reset();
-    nyc.wrap();
+    var Mocha = require('mocha');
 
     // add all spec files to mocha
     recursive(SPEC_SOURCE_DIR, function (err, files) {
@@ -57,15 +42,6 @@ module.exports = function (exit) {
             delete global.expect;
 
             runError && console.error(runError.stack || runError);
-
-            nyc.writeCoverageFile();
-            nyc.report();
-            nyc.checkCoverage({
-                statements: 75,
-                branches: 55,
-                functions: 80,
-                lines: 75
-            });
 
             exit(runError || process.exitCode ? 1 : 0);
         });

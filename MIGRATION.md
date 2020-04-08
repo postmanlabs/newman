@@ -3,8 +3,9 @@
 ## Table of contents
 
 1. [Updating to the latest version](#updating-to-the-latest-version)
-2. [Migrating from V3 to V4](#migrating-from-v3-to-v4)
-3. [Migrating from V2 to V3](#migrating-from-v2-to-v3)
+2. [Migrating from V4 to V5](#migrating-from-v4-to-v5)
+3. [Migrating from V3 to V4](#migrating-from-v3-to-v4)
+4. [Migrating from V2 to V3](#migrating-from-v2-to-v3)
 
 ## Updating to the latest version
 
@@ -23,9 +24,47 @@ $ npm show newman version   # Should show the same version as of above
 
 ---
 
+## Migrating from V4 to V5
+
+Newman v5.0 drops support for Node v6 and v8. Also, the inbuilt URL and CSV processor are upgraded.
+
+### Upgrading Node.js
+Newman v5 requires Node.js >= v10. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+
+### Next-Generation URL Processor
+Newman v5 introduces an improved URL processing system that fixes several limitations of the present URL processor around the aspects of parsing and encoding.
+Know more about the changes in [this GitHub issue](https://github.com/postmanlabs/postman-app-support/issues/8154) and [this blog post](https://blog.postman.com/2020/04/06/introducing-the-next-generation-postman-url-processor/).
+
+### CSV parser
+The longstanding [disparity](https://github.com/postmanlabs/postman-app-support/issues/8024) between the Newman and Postman app's CSV parser is fixed.
+
+#### Changed escape character to double-quotes
+
+The default escape character is changed to `"` (double quote) from `\` (backslash).
+
+##### V4 CSV input
+```csv
+id, name
+"\"1\"", "foo \"bar\" baz"
+```
+
+##### V5 equivalent
+```csv
+id, name
+"""1""", "foo ""bar"" baz"
+```
+
+#### Relaxed parsing
+
+1. Preserve quotes inside unquoted field
+2. Discard inconsistent columns count
+3. Detect and exclude the byte order mark (BOM)
+
+---
+
 ## Migrating from V3 to V4
 
-Newman v4.0 drops support for Node v4 and deprecated v2 CLI options. Also, the inbuilt HTML reporter has been moved to a standalone reporter.
+Newman v4.0 drops support for Node v4 and dropped support for v2 CLI options. Also, the inbuilt HTML reporter has been moved to a standalone reporter.
 
 ### Upgrading Node.js
 Newman v4 requires Node.js >= v6. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
@@ -110,8 +149,8 @@ newman.run({
 ```
 
 **Note:**
-The default behaviour is to detect color support for the terminal and act accordingly.
-This behaviour can be modified by setting the color option to `on` or `off` respectively.
+The default behavior is to detect color support for the terminal and act accordingly.
+This behavior can be modified by setting the color option to `on` or `off` respectively.
 
 ### Using HTML Reporter
 The inbuilt HTML reporter has been moved to a standalone reporter. Install it with:

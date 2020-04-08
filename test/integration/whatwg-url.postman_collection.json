@@ -1,0 +1,1271 @@
+{
+  "info": {
+    "name": "whatwg-url",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [{
+      "name": "Parsing",
+      "item": [{
+          "name": "nested variables",
+          "event": [{
+              "listen": "prerequest",
+              "script": {
+                "id": "c53eca57-615d-457f-8f45-58b8151a4b91",
+                "exec": [
+                  "pm.variables.set(\"one\", \"1\");",
+                  "pm.variables.set(\"host.1\", \"postman-echo.com\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+                "exec": [
+                  "pm.test(\"Request URL\", function () {",
+                  "    const {url} =  pm.response.json();",
+                  "",
+                  "    pm.expect(url).to.equal('https://postman-echo.com/get');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://{{host.{{one}}}}/get",
+              "protocol": "https",
+              "host": [
+                "{{host",
+                "{{one}}}}"
+              ],
+              "path": [
+                "get"
+              ]
+            }
+          }
+        },
+        {
+          "name": "reserved chars in variables",
+          "event": [{
+              "listen": "prerequest",
+              "script": {
+                "id": "c53eca57-615d-457f-8f45-58b8151a4b91",
+                "exec": [
+                  "pm.variables.set(\"p://\", \"https\");",
+                  "pm.variables.set(\"@\", \"root\");",
+                  "pm.variables.set(\"###\", \"password\");",
+                  "pm.variables.set(\"host.name\", \"postman-echo.com\");",
+                  "pm.variables.set(\":p\", \"443\");",
+                  "pm.variables.set(\"f/o/o\", \"get\");",
+                  "pm.variables.set(\"?\", \"foo\");",
+                  "pm.variables.set(\"&\", \"bar\");",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+                "exec": [
+                  "pm.test(\"Request URL\", function () {",
+                  "    const {url} =  pm.response.json();",
+                  "",
+                  "    pm.expect(url).to.equal('https://postman-echo.com/get?foo=bar');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{p://}}://{{@}}:{{###}}@{{host.name}}:{{:p}}/{{f/o/o}}?{{?}}={{&}}",
+              "protocol": "{{p://}}",
+              "auth": {
+                "user": "{{@}}",
+                "password": "{{###}}"
+              },
+              "host": [
+                "{{host.name}}"
+              ],
+              "port": "{{:p}}",
+              "path": [
+                "{{f/o/o}}"
+              ],
+              "query": [{
+                "key": "{{?}}",
+                "value": "{{&}}"
+              }]
+            }
+          }
+        },
+        {
+          "name": "newlines",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?foo=%0Abar%0A');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?foo=\nbar\n",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                "key": "foo",
+                "value": "\nbar\n"
+              }]
+            }
+          }
+        },
+        {
+          "name": "\\\\ in path",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com\\\\get",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "",
+                "get"
+              ]
+            }
+          }
+        },
+        {
+          "name": "// in protocol",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https:\\\\postman-echo.com/get",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ]
+            }
+          }
+        },
+        {
+          "name": "multiple ???",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get???&hl=en&src=api&x=2&y=2&z=3&s=');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get???&hl=en&src=api&x=2&y=2&z=3&s=",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": "??",
+                  "value": null
+                },
+                {
+                  "key": "hl",
+                  "value": "en"
+                },
+                {
+                  "key": "src",
+                  "value": "api"
+                },
+                {
+                  "key": "x",
+                  "value": "2"
+                },
+                {
+                  "key": "y",
+                  "value": "2"
+                },
+                {
+                  "key": "z",
+                  "value": "3"
+                },
+                {
+                  "key": "s",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "multiple &&&",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?foo=bar&&&bar=baz');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?foo=bar&&&bar=baz",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": "foo",
+                  "value": "bar"
+                },
+                {
+                  "key": null,
+                  "value": null
+                },
+                {
+                  "key": null,
+                  "value": null
+                },
+                {
+                  "key": "bar",
+                  "value": "baz"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "multiple : and @ in auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url, headers: {authorization} } =  pm.response.json();",
+                "",
+                "    pm.expect(authorization).to.equal('Basic ' + Buffer.from('us@r:p@ssword').toString('base64'));",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://us@r:p@ssword@postman-echo.com/get",
+              "protocol": "https",
+              "auth": {
+                "user": "us@r",
+                "password": "p@ssword"
+              },
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ]
+            }
+          }
+        },
+        {
+          "name": "retain ? in empty query param",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                "key": null,
+                "value": null
+              }]
+            }
+          }
+        },
+        {
+          "name": "retain & in empty query params",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?&');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?&",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": null,
+                  "value": null
+                },
+                {
+                  "key": null,
+                  "value": null
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "retain && in empty query params",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?&&');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?&&",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": null,
+                  "value": null
+                },
+                {
+                  "key": null,
+                  "value": null
+                },
+                {
+                  "key": null,
+                  "value": null
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "retain &foo in query param",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?&foo');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?&foo",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": null,
+                  "value": null
+                },
+                {
+                  "key": "foo",
+                  "value": null
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "retain foo& in query param",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?foo&');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?foo&",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": "foo",
+                  "value": null
+                },
+                {
+                  "key": "",
+                  "value": null
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "params with & and #",
+          "event": [{
+              "listen": "prerequest",
+              "script": {
+                "id": "c53eca57-615d-457f-8f45-58b8151a4b91",
+                "exec": [
+                  "pm.variables.set(\"foo&bar\", \"1\");",
+                  "",
+                  "pm.variables.set(\"#foo#\", \"2\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+                "exec": [
+                  "pm.test(\"Request URL\", function () {",
+                  "    const {url} =  pm.response.json();",
+                  "",
+                  "    pm.expect(url).to.equal('https://postman-echo.com/get?q=%231%23&x%26y=2&b%23a%26r');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?q=%23{{foo&bar}}%23&x%26y={{#foo#}}&b%23a%26r=",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": "q",
+                  "value": "%23{{foo&bar}}%23"
+                },
+                {
+                  "key": "x%26y",
+                  "value": "{{#foo#}}"
+                },
+                {
+                  "key": "b#a&r",
+                  "value": null
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "disabled query param",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "69e16939-24c9-40ba-a3e2-9ff6f98668ff",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                "key": "foo",
+                "value": null,
+                "disabled": true
+              }]
+            }
+          }
+        },
+        {
+          "name": "params with empty key or value",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "7a927d59-4786-4ae4-80db-fe8bc841bb95",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?get&=bar&=&baz=&&');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://postman-echo.com/get?get&=bar&=&baz=&&",
+              "protocol": "https",
+              "host": [
+                "postman-echo",
+                "com"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [{
+                  "key": "get",
+                  "value": null
+                },
+                {
+                  "key": "",
+                  "value": "bar"
+                },
+                {
+                  "key": "",
+                  "value": ""
+                },
+                {
+                  "key": "baz",
+                  "value": ""
+                },
+                {
+                  "key": null,
+                  "value": null
+                },
+                {
+                  "key": "",
+                  "value": null
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Encoding",
+      "item": [{
+          "name": "IP shorthands",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "e56f053c-2462-4b34-a63d-af9011a87345",
+              "exec": [
+                "pm.test(\"Request Payload\", function () {",
+                "    const response = pm.response.text();",
+                "    ",
+                "    pm.expect(response).to.include('Host: 127.0.0.1:4041'); // should be 127.0.0.1",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "127.1:4041",
+              "host": [
+                "127",
+                "1"
+              ],
+              "port": "4041"
+            }
+          }
+        },
+        {
+          "name": "path encoding",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "4ea0fa54-dec1-4a87-b9ee-081209f38903",
+              "exec": [
+                "var encode = [' ', '\"', '<', '>', '`', '#', '?', '{', '}'],",
+                "    chars = [],",
+                "    char;",
+                "",
+                "for (var i = 32; i < 127; i++) {",
+                "    char = String.fromCharCode(i);",
+                "    if (char === '#' || char === '?' || char === '\\\\') {",
+                "        continue;",
+                "    }",
+                "",
+                "    chars.push(encode.includes(char) ? encodeURIComponent(char) : char);",
+                "}",
+                "",
+                "pm.test(\"Request Payload\", function() {",
+                "    const response = pm.response.text();",
+                "",
+                "    pm.expect(response).to.include(`GET /${chars.join('/')}`);",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4041/ /!/\"/$/%/&/'/(/)/*/+/,/-/.///0/1/2/3/4/5/6/7/8/9/:/;/</=/>/@/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/[/]/^/_/`/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/{/|/}/~",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4041",
+              "path": [
+                " ",
+                "!",
+                "\"",
+                "$",
+                "%",
+                "&",
+                "'",
+                "(",
+                ")",
+                "*",
+                "+",
+                ",",
+                "-",
+                ".",
+                "",
+                "",
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                ":",
+                ";",
+                "<",
+                "=",
+                ">",
+                "@",
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "G",
+                "H",
+                "I",
+                "J",
+                "K",
+                "L",
+                "M",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "R",
+                "S",
+                "T",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z",
+                "[",
+                "]",
+                "^",
+                "_",
+                "`",
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f",
+                "g",
+                "h",
+                "i",
+                "j",
+                "k",
+                "l",
+                "m",
+                "n",
+                "o",
+                "p",
+                "q",
+                "r",
+                "s",
+                "t",
+                "u",
+                "v",
+                "w",
+                "x",
+                "y",
+                "z",
+                "{",
+                "|",
+                "}",
+                "~"
+              ]
+            }
+          }
+        },
+        {
+          "name": "path unicode characters",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "4ea0fa54-dec1-4a87-b9ee-081209f38903",
+              "exec": [
+                "pm.test(\"Request Payload\", function() {",
+                "    const response = pm.response.text();",
+                "",
+                "    pm.expect(response).to.include('GET /%F0%9D%8C%86/%D0%B9/%E4%BD%A0/%E3%82%B9/%F0%9F%8D%AA');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4041/𝌆/й/你/ス/🍪",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4041",
+              "path": [
+                "𝌆",
+                "й",
+                "你",
+                "ス",
+                "🍪"
+              ]
+            }
+          }
+        },
+        {
+          "name": "path pre-encoded",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "4ea0fa54-dec1-4a87-b9ee-081209f38903",
+              "exec": [
+                "pm.test(\"Request Payload\", function() {",
+                "    const response = pm.response.text();",
+                "",
+                "    pm.expect(response).to.include('GET /foo/%2a/%F0%9F%8D%AA');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4041/foo/%2a/%F0%9F%8D%AA",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4041",
+              "path": [
+                "foo",
+                "%2a",
+                "%F0%9F%8D%AA"
+              ]
+            }
+          }
+        },
+        {
+          "name": "query unicode characters",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "4ea0fa54-dec1-4a87-b9ee-081209f38903",
+              "exec": [
+                "pm.test(\"Request Payload\", function() {",
+                "    const response = pm.response.text();",
+                "",
+                "    pm.expect(response).to.include('GET /?q=%F0%9D%8C%86%D0%B9%E4%BD%A0%E3%82%B9%F0%9F%8D%AA');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4041?q=𝌆й你ス🍪",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4041",
+              "query": [{
+                "key": "q",
+                "value": "𝌆й你ス🍪"
+              }]
+            }
+          }
+        },
+        {
+          "name": "query pre-encoded",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "4ea0fa54-dec1-4a87-b9ee-081209f38903",
+              "exec": [
+                "pm.test(\"Request Payload\", function() {",
+                "    const response = pm.response.text();",
+                "",
+                "    pm.expect(response).to.include('GET /?q=%F0%9F%8D%AA');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4041/?q=%F0%9F%8D%AA",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4041",
+              "path": [
+                ""
+              ],
+              "query": [{
+                "key": "q",
+                "value": "%F0%9F%8D%AA"
+              }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "On Redirect",
+      "item": [{
+          "name": "encoding",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "e7fd6405-21f0-4a2a-a207-91d8862846d6",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?q={abc}');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "protocolProfileBehavior": {
+            "followRedirects": true
+          },
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://httpbin.org/redirect-to?url=https://postman-echo.com/get?q={abc}",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "redirect-to"
+              ],
+              "query": [{
+                "key": "url",
+                "value": "https://postman-echo.com/get?q={abc}"
+              }]
+            }
+          }
+        },
+        {
+          "name": "with disable encoding",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "da3fbbaf-91c8-4986-896c-d1cf68a57c73",
+              "exec": [
+                "pm.test(\"Request URL\", function () {",
+                "    const {url} =  pm.response.json();",
+                "",
+                "    pm.expect(url).to.equal('https://postman-echo.com/get?q={\"abc\"}');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": true
+          },
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://httpbin.org/redirect-to?url=https://postman-echo.com/get?q={\"abc\"}",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "redirect-to"
+              ],
+              "query": [{
+                "key": "url",
+                "value": "https://postman-echo.com/get?q={\"abc\"}"
+              }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Disabled Encoding",
+      "item": [{
+          "name": "path encoding",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "4ea0fa54-dec1-4a87-b9ee-081209f38903",
+              "exec": [
+                "pm.test(\"Request Payload\", function() {",
+                "    const response = pm.response.text();",
+                "",
+                "    pm.expect(response).to.include('GET /!/\"/$/%/&/\\'/(/)/*/+/,/-/.///0/1/2/3/4/5/6/7/8/9/:/;/</=/>/@/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/[/]/^/_/`/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/{/|/}/~');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "protocolProfileBehavior": {
+            "disableUrlEncoding": true
+          },
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4041/!/\"/$/%/&/'/(/)/*/+/,/-/.///0/1/2/3/4/5/6/7/8/9/:/;/</=/>/@/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/[/]/^/_/`/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/{/|/}/~",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4041",
+              "path": [
+                "!",
+                "\"",
+                "$",
+                "%",
+                "&",
+                "'",
+                "(",
+                ")",
+                "*",
+                "+",
+                ",",
+                "-",
+                ".",
+                "",
+                "",
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                ":",
+                ";",
+                "<",
+                "=",
+                ">",
+                "@",
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "G",
+                "H",
+                "I",
+                "J",
+                "K",
+                "L",
+                "M",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "R",
+                "S",
+                "T",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z",
+                "[",
+                "]",
+                "^",
+                "_",
+                "`",
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f",
+                "g",
+                "h",
+                "i",
+                "j",
+                "k",
+                "l",
+                "m",
+                "n",
+                "o",
+                "p",
+                "q",
+                "r",
+                "s",
+                "t",
+                "u",
+                "v",
+                "w",
+                "x",
+                "y",
+                "z",
+                "{",
+                "|",
+                "}",
+                "~"
+              ]
+            }
+          }
+        },
+        {
+          "name": "query encoding",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "id": "4ea0fa54-dec1-4a87-b9ee-081209f38903",
+              "exec": [
+                "var encode = [' ', '\"', '#', '&', '\\'', '<', '=', '>'],",
+                "    chars = [],",
+                "    char;",
+                "",
+                "for (var i = 32; i < 127; i++) {",
+                "    char = String.fromCharCode(i);",
+                "    !encode.includes(char) && chars.push(char);",
+                "}",
+                "",
+                "pm.test(\"Request Payload\", function() {",
+                "    const response = pm.response.text();",
+                "",
+                "    pm.expect(response).to.include('GET /?q=\"\\'<=>!$%()*+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~');",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "protocolProfileBehavior": {
+            "disableUrlEncoding": true
+          },
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4041?q=\"'<=>!$%()*+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4041",
+              "query": [{
+                "key": "q",
+                "value": "\"'<=>!$%()*+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+              }]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [{
+    "listen": "test",
+    "script": {
+      "id": "0bee6b62-8946-41dc-a1c1-bf5113c46e32",
+      "type": "text/javascript",
+      "exec": [
+        "pm.test(`Status code is 200 for \"${pm.info.requestName}\"`, function () {",
+        "    pm.response.to.have.status(200);",
+        "});"
+      ]
+    }
+  }]
+}
