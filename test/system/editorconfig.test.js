@@ -6,6 +6,7 @@ var editorconfig = require('editorconfig'),
 
     /**
      * The width (in spaces) of tabs used for indentation throughout the project
+     *
      * @type {Number}
      */
     TAB_WIDTH = 4;
