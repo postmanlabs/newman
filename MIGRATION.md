@@ -26,12 +26,12 @@ $ npm show newman version   # Should show the same version as of above
 
 ## Migrating from V4 to V5
 
-Newman v5.0 drops support for outdated Node.js versions (still works on Node.js v8, but only v10 and above are officially supported). Also, the inbuilt URL and CSV processor are upgraded.
+Newman v5.0 drops support for Node v6 and v8. Also, the inbuilt URL and CSV processor are upgraded.
 
 ### Upgrading Node.js
 Newman v5 requires Node.js >= v10. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
-### Next-Generation Postman URL Processor
+### Next-Generation URL Processor
 Newman v5 introduces an improved URL processing system that fixes several limitations of the present URL processor around the aspects of parsing and encoding.
 Know more about the changes in [this GitHub issue](https://github.com/postmanlabs/postman-app-support/issues/8154) and [this blog post](https://blog.postman.com/2020/04/06/introducing-the-next-generation-postman-url-processor/).
 
