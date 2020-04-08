@@ -38,6 +38,20 @@ Thumbs.db
 *.REMOTE.*
 *.orig
 
-# Prevent unit test coverage reports from being added
+# - Prevent unit test coverage reports from being added
 .coverage
 .nyc_output
+
+# - Prevent config and test files from being added
+.git*
+npm/
+test/
+examples/
+.snyk
+.eslintrc
+.nycrc.js
+codecov.yml
+.travis.yml
+.dockerignore
+.editorconfig
+.jsdoc-config.json
