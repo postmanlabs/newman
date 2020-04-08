@@ -1,4 +1,4 @@
-### Newman v4 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v3-to-v4) and [changelog](https://github.com/postmanlabs/newman/blob/v4.0.0/CHANGELOG.yaml#L3) for more details.
+### Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) and [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
 
 <a href="https://www.getpostman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
 _Manage all of your organization's APIs in Postman, with the industry's most complete API development environment._
@@ -45,7 +45,7 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 
 ## Getting started
 
-To run Newman, ensure that you have Node.js >= v6. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+To run Newman, ensure that you have Node.js >= v10. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
 ### Installation
 The easiest way to install Newman is using NPM. If you have Node.js installed, it is most likely that you have NPM installed as well.
@@ -145,8 +145,9 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   Specifies the number of times the collection has to be run when used in conjunction with iteration data file.
 
 - `--folder <name>`<br />
-  Run requests within a particular folder/folders in a collection. Multiple folders can be specified by using
-  `--folder` multiple times, like so: `--folder f1 --folder f2`.
+  Run requests within a particular folder/folders or specific requests in a collection. Multiple folders or requests can be specified by using
+  --folder multiple times, like so: --folder f1 --folder f2 --folder r1 --folder r2.
+
 
 - `--working-dir <path>`<br />
   Set the path of the working directory to use while reading files with relative paths. Default to current directory.
@@ -217,7 +218,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 
 Client certificates are an alternative to traditional authentication mechanisms. These allow their users to make authenticated requests to a server, using a public certificate, and an optional private key that verifies certificate ownership. In some cases, the private key may also be protected by a secret passphrase, providing an additional layer of authentication security.
 
-Newman supports SSL client certificates, via the following CLI options (available with Newman `v3` style `run` only):
+Newman supports SSL client certificates, via the following CLI options:
 
 #### Using a single SSL client certificate
 - `--ssl-client-cert`<br/>
@@ -451,9 +452,6 @@ The built-in JUnit reporter can output a summary of the collection run to a JUni
 |-------------|-------------------|
 | `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
-Older command line options are supported, but are deprecated in favor of the newer v3 options and will soon be
-discontinued. For documentation on the older command options, refer to [README.md for Newman v2.X](https://github.com/postmanlabs/newman/blob/release/2.x/README.md).
-
 ### HTML Reporter
 An external reporter, maintained by Postman, which can be installed via `npm install -g newman-reporter-html`. This reporter was part of the Newman project but was separated out into it's own project in V4.
 
@@ -606,8 +604,8 @@ To use Newman in Docker check our [docker documentation](https://github.com/post
 
 ## Migration Guide
 
-- [Newman v3 to v4 Migration Guide](MIGRATION.md)
-- [Newman v3.x Documentation](https://github.com/postmanlabs/newman/blob/release/3.x/README.md)
+- [Newman v4 to v5 Migration Guide](MIGRATION.md)
+- [Newman v4.x Documentation](https://github.com/postmanlabs/newman/blob/release/4.x/README.md)
 
 
 ## Compatibility
@@ -618,6 +616,7 @@ To use Newman in Docker check our [docker documentation](https://github.com/post
 |:-----------------:|:----------:|
 |       v3.x        |  >= v4.x   |
 |       v4.x        |  >= v6.x   |
+|       v5.x        |  >= v10.x  |
 
 The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
 

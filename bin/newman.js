@@ -4,14 +4,16 @@ require('../lib/node-version-check'); // @note that this should not respect CLI 
 
 const _ = require('lodash'),
     waterfall = require('async/waterfall'),
-    program = require('commander'),
+    { Command } = require('commander'),
+    program = new Command(),
     version = require('../package.json').version,
     newman = require('../'),
     util = require('./util');
 
 program
-    .version(version, '-v, --version')
-    .name('newman');
+    .name('newman')
+    .addHelpCommand(false)
+    .version(version, '-v, --version');
 
 // The `run` command allows you to specify a collection to be run with the provided options.
 program

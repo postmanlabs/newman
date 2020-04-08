@@ -1,3 +1,19 @@
+5.0.0:
+  date: 2020-04-08
+  new features:
+    - GH-2299 Uses next-generation URL processor
+  breaking changes:
+    - GH-2297 Dropped support for Node < v10
+    - GH-2251 Changed escape character for CSV to double-quotes
+    - GH-2303 Trimmed incoming CSV string to remove byte order mark
+  chores:
+    - >-
+      GH-2308 Updated .npmignore to prevent the addition of tests and config
+      files in the published package
+    - GH-2301 Updated nyc configuration
+    - GH-2298 Updated ESLint rules
+    - GH-2298 Updated dependencies
+
 4.6.1:
   date: 2020-04-06
   chores:
