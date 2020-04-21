@@ -41,7 +41,7 @@
   "dependencies": {
     "async": "3.2.0",
     "chardet": "1.0.0",
-    "cli-progress": "3.7.0",
+    "cli-progress": "3.8.0",
     "cli-table3": "0.6.0",
     "colors": "1.4.0",
     "commander": "5.0.0",
