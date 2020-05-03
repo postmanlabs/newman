@@ -30,7 +30,7 @@ describe('Newman run options', function () {
             environment: 'test/fixtures/run/simple-variables.json'
         }, function (err) {
             expect(err).to.be.ok;
-            expect(err.message).to.eql('newman: expecting a collection to run');
+            expect(err.message).to.eql('expecting a collection to run');
             done();
         });
     });
@@ -38,7 +38,7 @@ describe('Newman run options', function () {
     it('should not work with empty options', function (done) {
         newman.run({}, function (err) {
             expect(err).to.be.ok;
-            expect(err.message).to.eql('newman: expecting a collection to run');
+            expect(err.message).to.eql('expecting a collection to run');
             done();
         });
     });
@@ -107,10 +107,23 @@ describe('Newman run options', function () {
             collection: 'https://api.getpostman.com/collections/my-collection-uuid?apikey=my-secret-api-key'
         }, function (err, summary) {
             expect(err).to.be.ok;
-            expect(err.message).to.equal('Invalid API Key. Every request requires a valid API Key to be sent.');
+            expect(err.message).to.equal('collection could not be loaded\n' +
+                '  Error fetching the collection from the provided URL. Ensure that the URL is valid.\n' +
+                '  Invalid API Key. Every request requires a valid API Key to be sent.');
+            expect(summary).to.not.be.ok;
 
-            // eslint-disable-next-line max-len
-            expect(err.help).to.equal('Error fetching the collection from the provided URL. Ensure that the URL is valid.');
+            done();
+        });
+    });
+
+    it('should correctly handle invalid iteration data', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/failed-request.json',
+            iterationData: 3.14
+        }, function (err, summary) {
+            expect(err).to.be.ok;
+            expect(err.message).to.include('iteration data could not be loaded\n' +
+                '  ENOENT: no such file or directory, open \'');
             expect(summary).to.not.be.ok;
 
             done();

@@ -16,7 +16,7 @@ describe('run module', function () {
         expect(function () {
             run(function (err) {
                 expect(err).to.be.ok;
-                expect(err.message).to.equal('newman: expecting a collection to run');
+                expect(err.message).to.equal('expecting a collection to run');
                 done();
             });
         }).to.not.throw();
@@ -26,7 +26,7 @@ describe('run module', function () {
         expect(function () {
             run({}, function (err) {
                 expect(err).be.ok;
-                expect(err && err.message).to.equal('newman: expecting a collection to run');
+                expect(err && err.message).to.equal('expecting a collection to run');
 
                 done();
             });
@@ -135,7 +135,7 @@ describe('run module', function () {
                         collection: null
                     }, function (err) {
                         expect(err).be.ok;
-                        expect(err && err.message).to.equal('newman: expecting a collection to run');
+                        expect(err && err.message).to.equal('expecting a collection to run');
                         next();
                     });
                 }).to.not.throw();
@@ -146,7 +146,7 @@ describe('run module', function () {
                         collection: 3.14
                     }, function (err) {
                         expect(err).be.ok;
-                        expect(err && err.message).to.equal('newman: collection could not be loaded');
+                        expect(err && err.message).to.equal('collection could not be loaded');
                         next();
                     });
                 }).to.not.throw();
@@ -157,7 +157,40 @@ describe('run module', function () {
                         collection: 'abcd'
                     }, function (err) {
                         expect(err).be.ok;
-                        expect(err && err.help).to.equal('unable to read data from file "abcd"');
+                        expect(err && err.message).to.include('collection could not be loaded\n' +
+                            '  unable to read data from file "abcd"\n' +
+                            '  ENOENT: no such file or directory, open \'');
+                        next();
+                    });
+                }).to.not.throw();
+            }
+        ], done);
+    });
+
+    it('should gracefully send error to callback on garbage iterationData', function (done) {
+        async.parallel([
+            function (next) {
+                expect(function () {
+                    run({
+                        collection: {},
+                        iterationData: 'xyz'
+                    }, function (err) {
+                        expect(err).be.ok;
+                        expect(err && err.message).to.include('iteration data could not be loaded\n' +
+                            '  ENOENT: no such file or directory, open \'');
+                        next();
+                    });
+                }).to.not.throw();
+            },
+            function (next) {
+                expect(function () {
+                    run({
+                        collection: {},
+                        iterationData: 'http://'
+                    }, function (err) {
+                        expect(err).be.ok;
+                        expect(err && err.message).to.equal('iteration data could not be loaded\n' +
+                            '  Invalid URI "http:///"');
                         next();
                     });
                 }).to.not.throw();

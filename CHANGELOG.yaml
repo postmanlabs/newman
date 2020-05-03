@@ -1,3 +1,7 @@
+master:
+  fixed bugs:
+    - GH-2335 Improved error messages on file load error
+
 5.0.0:
   date: 2020-04-08
   new features:
