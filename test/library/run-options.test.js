@@ -79,19 +79,17 @@ describe('Newman run options', function () {
                 postmanToken = _.get(response, 'headers.postman-token');
 
             expect(executions, 'should have 3 executions').to.have.lengthOf(3);
-            expect(response).to.eql({
-                args: { source: 'newman-sample-github-collection' },
-                headers: {
-                    host: 'postman-echo.com',
-                    accept: '*/*',
-                    'cache-control': 'no-cache',
-                    'postman-token': postmanToken,
-                    'accept-encoding': 'gzip, deflate, br',
-                    'user-agent': `PostmanRuntime/${runtimeVersion}`, // change this when runtime is bumped
-                    'x-forwarded-port': '443',
-                    'x-forwarded-proto': 'https'
-                },
-                url: 'https://postman-echo.com/get?source=newman-sample-github-collection'
+            expect(response).to.have.property('args')
+                .that.eql({ source: 'newman-sample-github-collection' });
+            expect(response).to.have.property('url')
+                .that.eql('https://postman-echo.com/get?source=newman-sample-github-collection');
+            expect(response).to.have.property('headers').that.include({
+                host: 'postman-echo.com',
+                accept: '*/*',
+                'cache-control': 'no-cache',
+                'postman-token': postmanToken,
+                'accept-encoding': 'gzip, deflate, br',
+                'user-agent': `PostmanRuntime/${runtimeVersion}` // change this when runtime is bumped
             });
             // eslint-disable-next-line max-len
             expect(executions[1].response.text()).to.equal('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
