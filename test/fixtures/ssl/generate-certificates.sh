@@ -25,6 +25,7 @@ fi
 # generate a certificate for the the CA
 openssl req -new -x509 -key $CA.key \
     -config config.cnf \
+    -days 9999 \
     -out $CA.crt
 
 # generate the server certificate signed by the CA
@@ -35,6 +36,7 @@ openssl x509 -req -in $SERVER.csr \
     -set_serial 1 \
     -outform pem \
     -extfile v3.ext \
+    -days 9999 \
     -sha256
 
 # verify that the certificate was generated correctly
@@ -59,7 +61,7 @@ openssl x509 -req -in $CLIENT.csr \
     -set_serial 1 \
     -outform pem \
     -extfile v3.ext \
-    -days 1095 \
+    -days 9999 \
     -sha256
 
 # verify that the certificate was generated correctly
