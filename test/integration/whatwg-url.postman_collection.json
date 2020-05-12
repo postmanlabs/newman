@@ -151,7 +151,7 @@
                 "pm.test(\"Request URL\", function () {",
                 "    const {url} =  pm.response.json();",
                 "",
-                "    pm.expect(url).to.equal('https://postman-echo.com/get');",
+                "    pm.expect(url).to.equal('https://httpbin.org/get');",
                 "});"
               ],
               "type": "text/javascript"
@@ -160,11 +160,11 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "https://postman-echo.com\\\\get",
+              "raw": "  ",
               "protocol": "https",
               "host": [
-                "postman-echo",
-                "com"
+                "httpbin",
+                "org"
               ],
               "path": [
                 "",
