@@ -257,6 +257,31 @@ Newman can also be configured to work with proxy settings via the following envi
 
 For more details on using these variables, [refer here](https://github.com/postmanlabs/postman-request/blob/master/README.md#controlling-proxy-behaviour-using-environment-variables).
 
+#### Socks proxy with agent
+
+Newman accepts agent option that allows caller to use other proxy implementations. E.g. socks proxy.
+
+```javascript
+const newman = require('newman'); // require newman in your project
+const SocksProxyAgent = require('socks-proxy-agent'); // require your particular agent implementation
+
+const proxyOptions = {
+        host: 'localhost',
+        port: '1080'
+    },
+    agent = new SocksProxyAgent(proxyOptions); // create agent instance
+
+// call newman.run to pass `options` object and wait for callback
+newman.run({
+    agent: agent,
+    collection: require('./sample-collection.json'),
+    reporters: 'cli'
+}, function (err) {
+	if (err) { throw err; }
+    console.log('collection run complete!');
+});
+```
+
 [back to top](#table-of-contents)
 
 ## API Reference
