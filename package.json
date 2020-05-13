@@ -45,7 +45,7 @@
     "cli-table3": "0.6.0",
     "colors": "1.4.0",
     "commander": "5.0.0",
-    "csv-parse": "4.8.8",
+    "csv-parse": "4.8.9",
     "eventemitter3": "4.0.0",
     "filesize": "6.1.0",
     "lodash": "4.17.15",
