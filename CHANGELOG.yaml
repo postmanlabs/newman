@@ -1,3 +1,10 @@
+5.0.1:
+  date: 2020-05-18
+  fixed bugs:
+    - GH-2335 Improved error messages on file load error
+  chores:
+    - GH-2354 Updated dependencies
+
 5.0.0:
   date: 2020-04-08
   new features:
