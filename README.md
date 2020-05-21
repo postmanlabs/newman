@@ -259,7 +259,7 @@ For more details on using these variables, [refer here](https://github.com/postm
 
 #### Socks proxy with agent
 
-Newman accepts agent option that allows caller to use other proxy implementations. E.g. socks proxy.
+Newman accepts request agent option that allows caller to use other proxy implementations. E.g. socks proxy.
 
 ```javascript
 const newman = require('newman'); // require newman in your project
@@ -269,11 +269,11 @@ const proxyOptions = {
         host: 'localhost',
         port: '1080'
     },
-    agent = new SocksProxyAgent(proxyOptions); // create agent instance
+    requestAgent = new SocksProxyAgent(proxyOptions); // create agent instance
 
 // call newman.run to pass `options` object and wait for callback
 newman.run({
-    agent: agent,
+    requestAgent: requestAgent,
     collection: require('./sample-collection.json'),
     reporters: 'cli'
 }, function (err) {
