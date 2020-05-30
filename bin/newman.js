@@ -24,6 +24,7 @@ program
     .option('-g, --globals <path>', 'Specify a URL or Path to a file containing Postman Globals.')
     // eslint-disable-next-line max-len
     .option('--folder <path>', 'Specify folder to run from a collection. Can be specified multiple times to run multiple folders', util.cast.memoize, [])
+    .option('-s, --request-list [requests]', 'Pass the list of requests that needs to be run', util.cast.csvParse)
     .option('--working-dir <path>', 'The path of the directory to be used as the working directory')
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
     .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run.', util.cast.csvParse, ['cli'])
