@@ -3,12 +3,13 @@
 require('../lib/node-version-check'); // @note that this should not respect CLI --silent
 
 const _ = require('lodash'),
-    waterfall = require('async/waterfall'),
     { Command } = require('commander'),
     program = new Command(),
     version = require('../package.json').version,
     newman = require('../'),
-    util = require('./util');
+    util = require('./util'),
+
+    RUN_COMMAND = 'run';
 
 program
     .name('newman')
@@ -106,41 +107,32 @@ program.on('command:*', (command) => {
  * callback is required when this is required as a module in tests.
  *
  * @param {String[]} argv - Argument vector.
- * @param {?Function} callback - The callback function invoked on the completion of execution.
+ * @param {Function} [callback] - The callback function invoked on the completion of execution.
  */
 function run (argv, callback) {
-    waterfall([
-        (next) => {
-            // cache original argv, required to parse nested options later.
-            program._originalArgs = argv;
-            // omit custom nested options, otherwise commander will throw unknown options error
-            next(null, util.omitNestedOptions(argv, '--reporter-'));
-        },
-        (args, next) => {
-            let error = null;
+    let error = null;
 
-            try {
-                program.parse(args);
-            }
-            catch (err) {
-                error = err;
-            }
-            next(error);
-        },
-        (next) => {
-            // throw error if no argument is provided.
-            next(program.args.length ? null : new Error('no arguments provided'));
-        }
-    ], (error) => {
-        // invoke callback if this is required as module, used in tests.
-        if (callback) { return callback(error); }
+    if (argv[2] === RUN_COMMAND) {
+        // omit custom nested options, otherwise commander will throw unknown options error
+        program._originalArgs = argv;
+        // cache original argv, required to parse nested options later.
+        argv = util.omitNestedOptions(argv, '--reporter-');
+    }
 
-        // in case of an error, log error message and print help message.
-        if (error) {
-            console.error(`error: ${error.message || error}\n`);
-            program.help();
-        }
-    });
+    try {
+        program.parse(argv);
+    }
+    catch (err) {
+        error = err;
+    }
+    // invoke callback if this is required as module, used in tests.
+    if (callback) { return callback(error); }
+
+    if (error) {
+        // log error message and print help message.
+        console.error(`error: ${error.message || error}\n`);
+        program.help();
+    }
 }
 
 // This hack has been added from https://github.com/nodejs/node/issues/6456#issue-151760275
