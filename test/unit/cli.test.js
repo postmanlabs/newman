@@ -299,4 +299,83 @@ describe('cli parser', function () {
                 });
         });
     });
+
+    describe('Login command', function () {
+        let spy;
+
+        before(function () {
+            // create a new spy
+            spy = sinon.spy();
+
+            // replace the function to be exported from the login module with the spy
+            require.cache[require.resolve('../../lib/login')] = {
+                exports: spy
+            };
+        });
+
+        after(function () {
+            // restore original `login` module.
+            delete require.cache[require.resolve('../../lib/login')];
+        });
+
+        it('should pass default options correctly', function (done) {
+            cli('node newman.js login'.split(' '), 'login', function (err) {
+                expect(err).to.be.null;
+                expect(spy.withArgs({ rawArgs: null, args: [], alias: 'default' }).calledOnce).to.be.true;
+                done();
+            });
+        });
+
+        it('should handle standard login command', function (done) {
+            cli('node newman.js login user'.split(' '), 'login', function (err) {
+                expect(err).to.be.null;
+                expect(spy.withArgs({ rawArgs: null, args: ['user'], alias: 'user' }).calledOnce).to.be.true;
+                done();
+            });
+        });
+
+        it('--passkey', function (done) {
+            cli('node newman.js login user --passkey'.split(' '), 'login', function (err) {
+                expect(err).to.be.null;
+                expect(spy.withArgs({ rawArgs: null, passkey: true, args: ['user'], alias: 'user' }).calledOnce)
+                    .to.be.true;
+                done();
+            });
+        });
+    });
+
+    describe('Logout command', function () {
+        let spy;
+
+        before(function () {
+            // create a new spy
+            spy = sinon.spy();
+
+            // replace the function to be exported from the login module with the spy
+            require.cache[require.resolve('../../lib/logout')] = {
+                exports: spy
+            };
+        });
+
+        after(function () {
+            // restore original `logout` module.
+            delete require.cache[require.resolve('../../lib/logout')];
+        });
+
+        it('should pass default alias correctly', function (done) {
+            cli('node newman.js logout'.split(' '), 'logout', function (err) {
+                expect(err).to.be.null;
+                expect(spy.withArgs('default').calledOnce).to.be.true;
+                done();
+            });
+        });
+
+        it('should handle standard logout command', function (done) {
+            cli('node newman.js logout user'.split(' '), 'logout', function (err) {
+                expect(err).to.be.null;
+                expect(spy.withArgs('user').calledOnce).to.be.true;
+                done();
+            });
+        });
+    });
 });
