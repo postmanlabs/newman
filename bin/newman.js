@@ -8,6 +8,7 @@ const _ = require('lodash'),
     version = require('../package.json').version,
     newman = require('../'),
     login = require('../lib/login'),
+    logout = require('../lib/logout'),
     util = require('./util'),
 
     RUN_COMMAND = 'run',
@@ -103,6 +104,22 @@ program
 
         options.alias = alias || DEFAULT_USER;
         login(options, (err) => {
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.help && console.error(err.help);
+                process.exit(1);
+            }
+        });
+    });
+
+program
+    .command('logout [alias]')
+    .description('Name of the user. If not specified, assumes default user.')
+    .usage('[alias]')
+    .action((alias) => {
+        alias = alias || DEFAULT_USER;
+
+        logout(alias, (err) => {
             if (err) {
                 console.error(`error: ${err.message || err}\n`);
                 err.help && console.error(err.help);
