@@ -1,3 +1,12 @@
+5.1.0:
+  date: 2020-06-09
+  new features:
+    - >-
+      GH-2392 Added a new `requestAgents` option to define custom requesting
+      agents
+  chores:
+    - Updated dependencies
+
 5.0.1:
   date: 2020-05-18
   fixed bugs:
