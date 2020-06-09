@@ -56,6 +56,30 @@ describe('newman.run cookieJar', function () {
         });
     });
 
+    it('should throw on path to invalid json', function (done) {
+        newman.run({
+            collection: collection,
+            cookieJar: collection
+        }, function (err) {
+            expect(err).to.be.ok;
+            expect(err).to.have.property('message',
+                'the file at ' + collection + ' does not contain valid JSON data.');
+            done();
+        });
+    });
+
+    it('should throw on passing invalid cookie jar', function (done) {
+        newman.run({
+            collection: collection,
+            cookieJar: {}
+        }, function (err) {
+            expect(err).to.be.ok;
+            expect(err).to.have.property('message',
+                'cookieJar must be a path to a JSON file or a CookieJar instance');
+            done();
+        });
+    });
+
     describe('export cookieJar', function () {
         var outDir = 'out',
             exportedCookieJarPath = path.join(__dirname, '..', '..', outDir, 'test-cookie-jar.json');
