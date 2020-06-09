@@ -67,6 +67,8 @@ program
         'Specify additionally trusted CA certificates')
     .option('--cookie-jar <path>',
         'Specify custom cookie jar file path')
+    .option('--export-cookie-jar <path>',
+        'Exports the cookie jar to a file after completing the run.')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
         let options = util.commanderToObject(command),
