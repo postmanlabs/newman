@@ -58,6 +58,18 @@ describe('options', function () {
                 done();
             });
         });
+
+        it('should be handled correctly for cookieJar', function (done) {
+            var data = require('../../test/fixtures/run/spaces/simple-cookie-jar.json');
+
+            options({
+                cookieJar: './test/fixtures/run/spaces/simple-cookie-jar.json'
+            }, function (err, result) {
+                expect(err).to.be.null;
+                expect(result.cookieJar.toJSON()).to.eql(data);
+                done();
+            });
+        });
     });
 
     it('should have newmanVersion property by default', function (done) {

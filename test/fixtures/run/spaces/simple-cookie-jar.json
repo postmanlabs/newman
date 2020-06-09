@@ -1,0 +1,8 @@
+{
+  "version": "tough-cookie@3.0.1",
+
+
+  "storeType": "MemoryCookieStore",
+  "rejectPublicSuffixes": true,
+  "cookies":[]
+}
