@@ -36,11 +36,12 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 7. [File Uploads](#file-uploads)
 8. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
 9. [Using Newman in Docker](#using-newman-in-docker)
-10. [Migration Guide](#migration-guide)
-11. [Compatibility](#compatibility)
-12. [Contributing](#contributing)
-13. [Community Support](#community-support)
-14. [License](#license)
+10. [Using Socks Proxy](#using-socks-proxy)
+11. [Migration Guide](#migration-guide)
+12. [Compatibility](#compatibility)
+13. [Contributing](#contributing)
+14. [Community Support](#community-support)
+15. [License](#license)
 
 
 ## Getting started
@@ -292,6 +293,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslClientPassphrase | The secret client key passphrase.<br /><br />_Optional_<br />Type: `string` |
 | options.sslClientCertList | The path to the client certificate configuration list file. This option takes precedence over `sslClientCert`, `sslClientKey` and `sslClientPassphrase`. When there is no match in this configuration list, `sslClientCert` is used as fallback.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.sslExtraCaCerts   | The path to the file, that holds one or more trusted CA certificates in PEM format.<br /><br />_Optional_<br />Type: `string` |
+| options.requestAgents     | Specify the custom requesting agents to be used when performing HTTP and HTTPS requests respectively. Example: [Using Socks Proxy](#using-socks-proxy)<br /><br />_Optional_<br />Type: `object` |
 | options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 
@@ -601,6 +603,28 @@ $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 ## Using Newman in Docker
 To use Newman in Docker check our [docker documentation](https://github.com/postmanlabs/newman/tree/develop/docker/).
 
+## Using Socks Proxy
+
+When using Newman as a library, you can pass a custom HTTP(S) agent which will be used for making the requests. Here's an example of how to setup socks proxy using a custom agent.
+
+```js
+const newman = require('newman');
+const SocksProxyAgent = require('socks-proxy-agent');
+const requestAgent = new SocksProxyAgent({ host: 'localhost', port: '1080' });
+
+newman.run({
+    collection: require('./sample-collection.json'),
+    requestAgents: {
+        http: requestAgent, // agent used for HTTP requests
+        https: requestAgent, // agent used for HTTPS requests
+    }
+}, function (err) {
+    if (err) { throw err; }
+    console.log('collection run complete!');
+});
+```
+
+[back to top](#table-of-contents)
 
 ## Migration Guide
 
