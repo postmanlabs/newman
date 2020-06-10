@@ -1,6 +1,6 @@
 ### Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) and [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
 
-<a href="https://www.getpostman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
+<a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
 _Manage all of your organization's APIs in Postman, with the industry's most complete API development environment._
 
 # newman <sub>_the cli companion for postman_</sub> [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=develop)](https://travis-ci.org/postmanlabs/newman) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman)
@@ -68,7 +68,7 @@ $ brew install newman
 
 ### Using Newman CLI
 The `newman run` command allows you to specify a collection to be run. You can easily export your Postman
-Collection as a json file from the [Postman App](https://www.getpostman.com/apps) and run it using Newman.
+Collection as a json file from the [Postman App](https://www.postman.com/downloads/) and run it using Newman.
 
 ```console
 $ newman run examples/sample-collection.json
@@ -132,7 +132,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 
 - `-e <source>`, `--environment <source>`<br />
   Specify an environment file path or URL. Environments provide a set of variables that one can use within collections.
-  [Read More](https://www.getpostman.com/docs/environments)
+  [Read More](https://learning.postman.com/docs/postman/variables-and-environments/managing-environments/)
 
 - `-g <source>`, `--globals <source>`<br />
   Specify the file path or URL for global variables. Global variables are similar to environment variables but have a lower
@@ -140,7 +140,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 
 - `-d <source>`, `--iteration-data <source>`<br />
   Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
-  [Read More](https://www.getpostman.com/docs/multiple_instances)
+  [Read More](https://learning.postman.com/docs/postman/collection-runs/working-with-data-files/)
 
 - `-n <number>`, `--iteration-count <number>`<br />
   Specifies the number of times the collection has to be run when used in conjunction with iteration data file.
@@ -515,7 +515,7 @@ A Newman JSON Reporter that strips the results down to a minimum
 - [teamcity](https://github.com/leafle/newman-reporter-teamcity) -
 A reporter built to be used with the [Team City](https://www.jetbrains.com/teamcity/) CI server
 - [testrail](https://github.com/billylam/newman-reporter-testrail) -
-A reporter built for [Test Rail](https://www.gurock.com/testrail), the test case management tool
+A reporter built for [Test Rail](https://www.gurock.com/testrail/), the test case management tool
 - [statsd](https://github.com/gsorry/newman-reporter-statsd) -
 This reporter can be used to send the Collection run data to `statsd` and used on time series analytic tools like [Grafana](https://grafana.com/)
 - [confluence](https://github.com/OmbraDiFenice/newman-reporter-confluence) -
@@ -601,7 +601,7 @@ $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
 [back to top](#table-of-contents)
 
 ## Using Newman in Docker
-To use Newman in Docker check our [docker documentation](https://github.com/postmanlabs/newman/tree/develop/docker/).
+To use Newman in Docker check our [docker documentation](https://learning.postman.com/docs/postman/collection-runs/newman-with-docker/).
 
 ## Using Socks Proxy
 
@@ -662,7 +662,7 @@ Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss p
 <img src="https://avatars1.githubusercontent.com/u/3220138?v=3&s=120" align="right" />
 If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.
 
-Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.getpostman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
+Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.postman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 
 
 ## License
