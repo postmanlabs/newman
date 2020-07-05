@@ -8,6 +8,7 @@ const _ = require('lodash'),
     version = require('../package.json').version,
     newman = require('../'),
     util = require('./util'),
+    login = require('../lib/login'),
 
     RUN_COMMAND = 'run';
 
@@ -88,6 +89,19 @@ program
                 err.friendly && console.error(`  ${err.friendly}\n`);
             }
             runError && !_.get(options, 'suppressExitCode') && process.exit(1);
+        });
+    });
+
+program
+    .command('login')
+    .description('Store the API-Key along with an alias to it, to reference it in the following commands.')
+    .action(() => {
+        login((err) => {
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.help && console.error(err.help);
+                process.exit(1);
+            }
         });
     });
 
