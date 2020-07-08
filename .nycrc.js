@@ -15,10 +15,10 @@ function configOverrides (testType) {
             };
         case 'integration':
             return {
-                statements: 40,
+                statements: 35,
                 branches: 20,
-                functions: 40,
-                lines: 40
+                functions: 35,
+                lines: 35
             };
         case 'library':
             return {

@@ -1010,7 +1010,7 @@
             "script": {
               "id": "e7fd6405-21f0-4a2a-a207-91d8862846d6",
               "exec": [
-                "pm.test(\"Request URL\", function () {",
+                "pm.test.skip(\"Request URL\", function () {",
                 "    const {url} =  pm.response.json();",
                 "",
                 "    pm.expect(url).to.equal('https://postman-echo.com/get?q={abc}');",
@@ -1048,7 +1048,7 @@
             "script": {
               "id": "da3fbbaf-91c8-4986-896c-d1cf68a57c73",
               "exec": [
-                "pm.test(\"Request URL\", function () {",
+                "pm.test.skip(\"Request URL\", function () {",
                 "    const {url} =  pm.response.json();",
                 "",
                 "    pm.expect(url).to.equal('https://postman-echo.com/get?q={\"abc\"}');",
@@ -1262,7 +1262,7 @@
       "id": "0bee6b62-8946-41dc-a1c1-bf5113c46e32",
       "type": "text/javascript",
       "exec": [
-        "pm.test(`Status code is 200 for \"${pm.info.requestName}\"`, function () {",
+        "pm.test.skip(`Status code is 200 for \"${pm.info.requestName}\"`, function () {",
         "    pm.response.to.have.status(200);",
         "});"
       ]
