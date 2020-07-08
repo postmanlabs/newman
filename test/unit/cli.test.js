@@ -299,4 +299,31 @@ describe('cli parser', function () {
                 });
         });
     });
+
+    describe('Login command', function () {
+        let spy;
+
+        before(function () {
+            // create a new spy
+            spy = sinon.spy();
+
+            // replace the function to be exported from the login module with the spy
+            require.cache[require.resolve('../../lib/login')] = {
+                exports: spy
+            };
+        });
+
+        after(function () {
+            // restore original `login` module.
+            delete require.cache[require.resolve('../../lib/login')];
+        });
+
+        it('should invoke the login function', function (done) {
+            cli('node newman.js login'.split(' '), 'login', function (err) {
+                expect(err).to.be.null;
+                expect(spy.calledOnce).to.be.true;
+                done();
+            });
+        });
+    });
 });
