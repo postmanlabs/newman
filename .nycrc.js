@@ -18,14 +18,16 @@ function configOverrides (testType) {
                 statements: 35,
                 branches: 20,
                 functions: 35,
-                lines: 35
+                lines: 35,
+                exclude: ['lib/crypt.js', 'lib/login']
             };
         case 'library':
             return {
                 statements: 55,
                 branches: 40,
                 functions: 55,
-                lines: 55
+                lines: 55,
+                exclude: ['lib/crypt.js', 'lib/login']
             };
         case 'unit':
             return {
