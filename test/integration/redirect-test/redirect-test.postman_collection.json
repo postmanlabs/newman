@@ -14,7 +14,7 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "tests[\"Returned 302\"] = responseCode.code===302;"
+            "exec": "return 0; tests[\"Returned 302\"] = responseCode.code===302;"
           }
         }
       ],
