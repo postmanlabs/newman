@@ -139,7 +139,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   precedence and can be overridden by environment variables having the same name.
 
 - `-d <source>`, `--iteration-data <source>`<br />
-  Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
+  Specify a data source file (JSON or CSV) to be used for iteration as a path to a file or as a URL.
   [Read More](https://learning.postman.com/docs/postman/collection-runs/working-with-data-files/)
 
 - `-n <number>`, `--iteration-count <number>`<br />
