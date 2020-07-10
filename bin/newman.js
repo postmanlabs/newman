@@ -4,11 +4,13 @@ require('../lib/node-version-check'); // @note that this should not respect CLI 
 
 const _ = require('lodash'),
     { Command } = require('commander'),
+    waterfall = require('async/waterfall'),
     program = new Command(),
     version = require('../package.json').version,
     newman = require('../'),
     util = require('./util'),
     login = require('../lib/login'),
+    config = require('../lib/config'),
 
     RUN_COMMAND = 'run';
 
@@ -70,19 +72,32 @@ program
         'Specify additionally trusted CA certificates')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
-        let options = util.commanderToObject(command),
+        let options;
 
-            // parse custom reporter options
-            reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
+        waterfall([
+            // get the configuration from various sources
+            (next) => { return config.get(command, { command: 'run' }, next); },
 
-        // Inject additional properties into the options object
-        options.collection = collection;
-        options.reporterOptions = reporterOptions._generic;
-        options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
-            acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
-        }, {});
+            // format the command-options
+            (command, next) => {
+                options = util.commanderToObject(command);
 
-        newman.run(options, function (err, summary) {
+                // parse custom reporter options
+                let reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
+
+                // Inject additional properties into the options object
+                options.collection = collection;
+                options.reporterOptions = reporterOptions._generic;
+                options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
+                    acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
+                }, {});
+
+                return next(null, options);
+            },
+
+            // start the run
+            newman.run
+        ], (err, summary) => {
             const runError = err || summary.run.error || summary.run.failures.length;
 
             if (err) {

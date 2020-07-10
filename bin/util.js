@@ -30,6 +30,8 @@ module.exports = {
          * @returns {String[]} - The array of argument values collected.
          */
         memoize: (val, memo) => {
+            !memo && (memo = []);
+
             memo.push(val);
 
             return memo;
@@ -45,6 +47,8 @@ module.exports = {
          * @returns {Array} - [{key, value}] - The object representation of the current CLI variable.
          */
         memoizeKeyVal: (val, memo) => {
+            !memo && (memo = []);
+
             let arg,
                 eqIndex = val.indexOf('=');
 
