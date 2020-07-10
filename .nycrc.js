@@ -19,7 +19,7 @@ function configOverrides (testType) {
                 branches: 20,
                 functions: 35,
                 lines: 35,
-                exclude: ['lib/crypt.js', 'lib/login']
+                exclude: ['lib/crypt.js', 'lib/login', 'lib/config']
             };
         case 'library':
             return {
@@ -27,7 +27,7 @@ function configOverrides (testType) {
                 branches: 40,
                 functions: 55,
                 lines: 55,
-                exclude: ['lib/crypt.js', 'lib/login']
+                exclude: ['lib/crypt.js', 'lib/login', 'lib/config']
             };
         case 'unit':
             return {
