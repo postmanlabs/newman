@@ -15,6 +15,13 @@ var path = require('path'),
     SPEC_SOURCE_DIR = path.join(__dirname, '..', 'test', 'unit');
 
 module.exports = function (exit) {
+    let isWin = (/^win/).test(process.platform),
+        outDir = path.join(__dirname, '..', 'out');
+
+    // change the home directory to make sure the home-rc-file doesn't interfere in tests
+    // eslint-disable-next-line no-process-env
+    process.env[isWin ? 'userprofile' : 'HOME'] = outDir;
+
     // banner line
     console.info('Running unit tests using mocha...'.yellow.bold);
 

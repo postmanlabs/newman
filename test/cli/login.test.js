@@ -1,5 +1,3 @@
-/* eslint-disable no-process-env */
-
 const _ = require('lodash'),
     // eslint-disable-next-line security/detect-child-process
     child = require('child_process'),
@@ -32,8 +30,6 @@ describe('Login command', function () {
     let outDir = join(__dirname, '..', '..', 'out'),
         configDir = join(outDir, '.postman'),
         rcFile = join(configDir, 'newmanrc'),
-        isWin = (/^win/).test(process.platform),
-        homeDir = process.env[isWin ? 'userprofile' : 'HOME'],
         proc,
         stdout,
         stderr,
@@ -75,16 +71,6 @@ describe('Login command', function () {
                 }
             });
         };
-
-    before(function () {
-        // change the home directory to alter the location of the rc file
-        process.env[isWin ? 'userprofile' : 'HOME'] = outDir;
-    });
-
-    after(function () {
-        // update the home directory back to its original value
-        process.env[isWin ? 'userprofile' : 'HOME'] = homeDir;
-    });
 
     beforeEach(function () {
         sh.test('-d', outDir) && sh.rm('-rf', outDir);
