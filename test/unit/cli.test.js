@@ -1,6 +1,8 @@
 describe('cli parser', function () {
     var _ = require('lodash'),
         sinon = require('sinon'),
+        fs = require('fs'),
+        join = require('path').join,
         newman = require('../../'),
         newmanCLI,
 
@@ -24,6 +26,9 @@ describe('cli parser', function () {
     });
 
     describe('Run Command', function () {
+        let outDir = join(__dirname, '..', '..', 'out'),
+            homeRCFile = join(outDir, '.postman', 'newmanrc');
+
         // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
         before(function () {
             sinon.stub(newman, 'run').callsFake((options) => {
@@ -34,6 +39,18 @@ describe('cli parser', function () {
         // restore original `newman.run` function.
         after(function () {
             newman.run.restore();
+        });
+
+        beforeEach(function () {
+            // stub `fs.readfile` to ignore file-read errors
+            sinon.stub(fs, 'readFile').callsFake((_file, cb) => {
+                return cb(null, Buffer.from('{}', 'utf-8'));
+            });
+        });
+
+        afterEach(function () {
+            // restore original `fs.readfile`
+            fs.readFile.restore();
         });
 
         it('should pass default options correctly', function (done) {
@@ -294,6 +311,72 @@ describe('cli parser', function () {
                     expect(err).to.be.null;
                     expect(opts).to.be.ok;
                     expect(opts.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
+
+                    done();
+                });
+        });
+
+        it('should load config settings from rc-file', function (done) {
+            let fileData = {
+                run: {
+                    reporters: ['cli', 'json'],
+                    environment: 'test-env',
+                    folder: ['folder1', 'folder2'],
+                    iterationCount: 5,
+                    envVar: [{ key: 'envVar1', value: '5' }],
+                    color: 'on'
+                }
+            };
+
+            fs.readFile.restore();
+            sinon.stub(fs, 'readFile').callsFake((file, cb) => {
+                if (file === homeRCFile) { return cb(null, Buffer.from(JSON.stringify(fileData), 'utf8')); }
+
+                return cb(null, Buffer.from('{}', 'utf-8'));
+            });
+
+            cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
+                expect(err).to.be.null;
+                expect(opts).to.be.ok;
+
+                _.forIn(fileData.run, (value, key) => {
+                    expect(opts[key]).to.eql(value);
+                });
+
+                done();
+            });
+        });
+
+        it('should merge options from all sources', function (done) {
+            let fileData = {
+                run: {
+                    reporters: ['cli', 'json'],
+                    environment: 'test-env',
+                    folder: ['folder1', 'folder2'],
+                    iterationCount: 5,
+                    envVar: [{ key: 'envVar1', value: '5' }]
+                }
+            };
+
+            fs.readFile.restore();
+            sinon.stub(fs, 'readFile').callsFake((file, cb) => {
+                if (file === homeRCFile) { return cb(null, Buffer.from(JSON.stringify(fileData), 'utf8')); }
+
+                return cb(null, Buffer.from('{}', 'utf-8'));
+            });
+
+            cli(('node newman.js run myCollection.json -g abc -r cli -e env-test --env-var foo=bar -n 6').split(' '),
+                'run', function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts).to.be.ok;
+
+                    expect(opts.reporters).to.eql(['cli']);
+                    expect(opts.environment).to.eql('env-test');
+                    expect(opts.folder).to.eql(['folder1', 'folder2']);
+                    expect(opts.iterationCount).to.eql(6);
+                    expect(opts.envVar).to.be.ok;
+                    expect(opts.envVar).to.eql([{ key: 'foo', value: 'bar' }]);
+                    expect(opts.globals).to.eql('abc');
 
                     done();
                 });
