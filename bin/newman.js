@@ -25,17 +25,18 @@ program
     .option('-e, --environment <path>', 'Specify a URL or Path to a Postman Environment.')
     .option('-g, --globals <path>', 'Specify a URL or Path to a file containing Postman Globals.')
     // eslint-disable-next-line max-len
-    .option('--folder <path>', 'Specify folder to run from a collection. Can be specified multiple times to run multiple folders', util.cast.memoize, [])
+    .option('--folder <path>', 'Specify folder to run from a collection. Can be specified multiple times to run multiple folders', util.cast.memoize)
     .option('--working-dir <path>', 'The path of the directory to be used as the working directory')
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
-    .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run.', util.cast.csvParse, ['cli'])
+    .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run. (default: ["cli"])',
+        util.cast.csvParse)
     .option('-n, --iteration-count <n>', 'Define the number of iterations to run.', util.cast.integer)
     .option('-d, --iteration-data <path>', 'Specify a data file to use for iterations (either json or csv).')
     .option('--export-environment <path>', 'Exports the environment to a file after completing the run.')
     .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
     .option('--export-collection <path>', 'Specify an output file to save the executed collection')
     .option('--postman-api-key <apiKey>', 'API Key used to load the resources from the Postman API.')
-    .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', util.cast.integer, 0)
+    .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', util.cast.integer)
     .option('--bail [modifiers]',
         'Specify whether or not to gracefully stop a collection run on encountering an error' +
         'and whether to end the run with an error based on the optional modifier.', util.cast.csvParse)
@@ -46,14 +47,14 @@ program
         'Forces unicode compliant symbols to be replaced by their plain text equivalents')
     .option('--global-var <value>',
         'Allows the specification of global variables via the command line, in a key=value format',
-        util.cast.memoizeKeyVal, [])
+        util.cast.memoizeKeyVal)
     .option('--env-var <value>',
         'Allows the specification of environment variables via the command line, in a key=value format',
-        util.cast.memoizeKeyVal, [])
-    .option('--color <value>', 'Enable/Disable colored output. (auto|on|off)', util.cast.colorOptions, 'auto')
-    .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
-    .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer, 0)
-    .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer, 0)
+        util.cast.memoizeKeyVal)
+    .option('--color <value>', 'Enable/Disable colored output. (auto|on|off) (default: "auto")', util.cast.colorOptions)
+    .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer)
+    .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer)
+    .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer)
     .option('--ignore-redirects', 'If present, Newman will not follow HTTP Redirects.')
     .option('-k, --insecure', 'Disables SSL validations.')
     .option('--ssl-client-cert-list <path>',
