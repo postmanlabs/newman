@@ -25,7 +25,7 @@ function configOverrides (testType) {
             return {
                 statements: 55,
                 branches: 40,
-                functions: 55,
+                functions: 54,
                 lines: 55,
                 exclude: ['lib/crypt.js', 'lib/login', 'lib/logout']
             };
