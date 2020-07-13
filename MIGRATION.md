@@ -163,7 +163,7 @@ The complete installation and usage guide is available here: https://github.com/
 
 ### Deprecated support for the v1 collection format
 Newman >= v4 deprecates support for the v1 collection format.<br/>
-Use the [Postman Native app](https://www.getpostman.com/apps) to export collections in the v2 format.
+Use the [Postman Native app](https://postman.com/downloads) to export collections in the v2 format.
 
 ### CSV auto parse
 A [fix][pr1609] has been made to avoid parsing numbers inside quotes.<br/>
@@ -212,8 +212,7 @@ qualities of the new Postman Runtime (jQuery deprecation, discontinuation of DOM
 usage changes across Newman V2 and V3, look at the table provided below.
 
 As such, if there is something specific that not working with respect to v2.x or any workaround that you were doing,
-we will be glad to chat and find out if they can still be done. Simply join the #newman channel on our [Slack
-Community](https://www.getpostman.com/slack-invite).
+we will be glad to chat and find out if they can still be done. You can find us on our [Community Forum](https://community.postman.com).
 
 ### HTML, XML and other outputs are now "reporters"
 Newman v3 adopts a "reporter" model and as such features that were previously part of Newman core has now been moved

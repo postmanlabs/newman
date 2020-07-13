@@ -660,7 +660,7 @@ Open an [issue](https://github.com/postmanlabs/newman/issues) first to discuss p
 ## Community Support
 
 <img src="https://avatars1.githubusercontent.com/u/3220138?v=3&s=120" align="right" />
-If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.getpostman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.
+If you are interested in talking to the Postman team and fellow Newman users, you can find us on our <a href="https://community.postman.com">Postman Community Forum</a>. Feel free to drop by and say hello. You'll find us posting about upcoming features and beta releases, answering technical support questions, and contemplating world peace.
 
 Sign in using your Postman account to participate in the discussions and don't forget to take advantage of the <a href="https://community.postman.com/search?q=newman">search bar</a> - the answer to your question might already be waiting for you! Don’t want to log in? Then lurk on the sidelines and absorb all the knowledge.
 
@@ -668,4 +668,4 @@ Sign in using your Postman account to participate in the discussions and don't f
 ## License
 This software is licensed under Apache-2.0. Copyright Postdot Technologies, Inc. See the [LICENSE.md](LICENSE.md) file for more information.
 
-[![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman/readme)](https://www.getpostman.com)
+[![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman/readme)](https://postman.com)

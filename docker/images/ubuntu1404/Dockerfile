@@ -1,5 +1,5 @@
 FROM ubuntu:14.04.2
-LABEL maintainer="Postman Labs <help@getpostman.com>"
+LABEL maintainer="Postman Labs <help@postman.com>"
 
 ARG NODE_VERSION=10
 ARG NEWMAN_VERSION
