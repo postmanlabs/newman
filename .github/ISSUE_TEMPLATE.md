@@ -1,6 +1,6 @@
 <!--
 Welcome to the Newman Issue tracker. Any feature requests / bug reports can be posted here.
-Any security-related bugs should be reported directly to security@getpostman.com
+Any security-related bugs should be reported directly to security@postman.com
 
 This issue reporting template should guide you to effectively report issues for fastest resolution. Please provide all relevant details in the list below.
 
@@ -29,11 +29,11 @@ Before proceeding, please consider the following:
 
 1. If this is a Postman Client App issue, go to https://github.com/postmanlabs/postman-app-support/issues/new
 
-2. Report security issues directly to security@getpostman.com. Please refrain from publicly disclosing any details about security issues in any form, until a fix has been rolled out.
+2. Report security issues directly to security@postman.com. Please refrain from publicly disclosing any details about security issues in any form, until a fix has been rolled out.
 
-3. For Postman Cloud / personal information related issues, send an email to: [help@getpostman.com](mailto:help@getpostman.com)
+3. For Postman Cloud / personal information related issues, send an email to: [help@postman.com](mailto:help@postman.com)
 
-4. Verify that you have checked the documentation at https://www.getpostman.com/docs/newman_intro, and searched through previously closed issues.
+4. Verify that you have checked the documentation at https://learning.postman.com/docs/running-collections/using-newman-cli, and searched through previously closed issues.
 
 5. Please ensure that all supporting files (collections or screenshots) do not contain any sensitive information.
 -->

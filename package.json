@@ -36,7 +36,7 @@
     "postpublish": "./npm/postpublish.sh",
     "publish-wiki": "node npm/publish-wiki.js"
   },
-  "author": "Postman Labs <help@getpostman.com> (=)",
+  "author": "Postman Labs <help@postman.com> (=)",
   "license": "Apache-2.0",
   "dependencies": {
     "async": "3.2.0",

@@ -1,5 +1,5 @@
 FROM node:10-alpine
-LABEL maintainer="Postman Labs <help@getpostman.com>"
+LABEL maintainer="Postman Labs <help@postman.com>"
 
 ARG NEWMAN_VERSION
 
