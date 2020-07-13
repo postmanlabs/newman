@@ -32,7 +32,7 @@ describe('project repository', function () {
             it('should have valid name, description and author', function () {
                 expect(json).to.have.property('name', 'newman');
                 expect(json).to.have.property('description', 'Command-line companion utility for Postman');
-                expect(json).to.have.property('author', 'Postman Labs <help@getpostman.com> (=)');
+                expect(json).to.have.property('author', 'Postman Labs <help@postman.com> (=)');
                 expect(json).to.have.property('license', 'Apache-2.0');
                 expect(json).to.have.property('homepage', 'https://github.com/postmanlabs/newman');
                 expect(json).to.have.property('bugs', 'https://github.com/postmanlabs/newman/issues');
