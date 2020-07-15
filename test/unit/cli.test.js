@@ -409,4 +409,31 @@ describe('cli parser', function () {
             });
         });
     });
+
+    describe('Logout command', function () {
+        let spy;
+
+        before(function () {
+            // create a new spy
+            spy = sinon.spy();
+
+            // replace the function to be exported from the logout module with the spy
+            require.cache[require.resolve('../../lib/logout')] = {
+                exports: spy
+            };
+        });
+
+        after(function () {
+            // restore original `logout` module.
+            delete require.cache[require.resolve('../../lib/logout')];
+        });
+
+        it('should invoke the logout function', function (done) {
+            cli('node newman.js logout'.split(' '), 'logout', function (err) {
+                expect(err).to.be.null;
+                expect(spy.calledOnce).to.be.true;
+                done();
+            });
+        });
+    });
 });
