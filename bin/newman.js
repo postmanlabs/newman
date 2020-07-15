@@ -9,6 +9,7 @@ const _ = require('lodash'),
     newman = require('../'),
     util = require('./util'),
     login = require('../lib/login'),
+    logout = require('../lib/logout'),
 
     RUN_COMMAND = 'run';
 
@@ -97,6 +98,18 @@ program
     .description('Store the API-Key along with an alias to it, to reference it in the following commands.')
     .action(() => {
         login((err) => {
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.help && console.error(err.help);
+                process.exit(1);
+            }
+        });
+    });
+
+program.command('logout')
+    .description('Dereference an API-Key from its alias.')
+    .action(() => {
+        logout((err) => {
             if (err) {
                 console.error(`error: ${err.message || err}\n`);
                 err.help && console.error(err.help);
