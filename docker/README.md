@@ -1,12 +1,12 @@
 <img src="https://s3.amazonaws.com/web-artefacts/cartoon-whale-8.gif+(400%C3%97225).png">
 
-# newman-docker 
+# newman-docker
 
 This repository contains docker images for Newman.
 
 <a href="https://github.com/postmanlabs/newman" target="_blank">Newman</a> is a command-line collection runner for
-<a href="https://getpostman.com" target="_blank">Postman</a>. It allows you to effortlessly run and test a
-<a href="https://www.getpostman.com/docs/collections" target="_blank">Postman Collections<a/> directly from the
+<a href="https://postman.com" target="_blank">Postman</a>. It allows you to effortlessly run and test a
+<a href="https://learning.postman.com/docs/sending-requests/intro-to-collections" target="_blank">Postman Collections<a/> directly from the
 command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous
 integration servers and build systems.
 
@@ -181,4 +181,4 @@ All official Newman Docker images will be shipped with the current Node LTS (Lon
 about the Node release schedule, see https://github.com/nodejs/Release#release-schedule. More details about individual
 Docker images can be found in their individual READMEs in this folder.
 
-[![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman-docker/readme)](https://www.getpostman.com)
+[![Analytics](https://ga-beacon.appspot.com/UA-43979731-9/newman-docker/readme)](https://postman.com)

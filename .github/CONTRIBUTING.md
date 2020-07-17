@@ -304,7 +304,7 @@ Build logs for this project can be accessed [here](https://travis-ci.org/postman
 ### Security
 
 Security concerns are always treated with high priority. Should you come across a security vulnerability, please report
-it via email to <security@getpostman.com>. While reporting a potential security vulnerability, include all relevant
+it via email to <security@postman.com>. While reporting a potential security vulnerability, include all relevant
 details, including but not limited to:
 
 1. The project version(s) involved
