@@ -20,6 +20,9 @@ program
     .addHelpCommand(false)
     .version(version, '-v, --version');
 
+// @note - Specify default options for commands in lib/config/defaults.js. This is done to give config-options from
+// rc-file and environment higher priority than default options.
+
 // The `run` command allows you to specify a collection to be run with the provided options.
 program
     .command('run <collection>')
