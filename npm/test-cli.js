@@ -4,6 +4,7 @@ require('colors');
 
 var Mocha = require('mocha'),
     expect = require('chai').expect,
+    join = require('path').join,
     recursive = require('recursive-readdir'),
 
     execOptions = { silent: true },
@@ -16,6 +17,13 @@ var Mocha = require('mocha'),
     SPEC_SOURCE_DIR = './test/cli';
 
 module.exports = function (exit) {
+    let isWin = (/^win/).test(process.platform),
+        outDir = join(__dirname, '..', 'out');
+
+    // change the home directory to make sure the home-rc-file doesn't interfere in tests
+    // eslint-disable-next-line no-process-env
+    process.env[isWin ? 'userprofile' : 'HOME'] = outDir;
+
     // banner line
     console.info('Running CLI integration tests using mocha and shelljs...'.yellow.bold);
 

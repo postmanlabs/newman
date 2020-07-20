@@ -4,11 +4,13 @@ require('../lib/node-version-check'); // @note that this should not respect CLI 
 
 const _ = require('lodash'),
     { Command } = require('commander'),
+    waterfall = require('async/waterfall'),
     program = new Command(),
     version = require('../package.json').version,
     newman = require('../'),
     util = require('./util'),
     login = require('../lib/login'),
+    config = require('../lib/config'),
     logout = require('../lib/logout'),
 
     RUN_COMMAND = 'run';
@@ -18,6 +20,9 @@ program
     .addHelpCommand(false)
     .version(version, '-v, --version');
 
+// @note - Specify default options for commands in lib/config/defaults.js. This is done to give config-options from
+// rc-file and environment higher priority than default options.
+
 // The `run` command allows you to specify a collection to be run with the provided options.
 program
     .command('run <collection>')
@@ -26,17 +31,18 @@ program
     .option('-e, --environment <path>', 'Specify a URL or Path to a Postman Environment.')
     .option('-g, --globals <path>', 'Specify a URL or Path to a file containing Postman Globals.')
     // eslint-disable-next-line max-len
-    .option('--folder <path>', 'Specify folder to run from a collection. Can be specified multiple times to run multiple folders', util.cast.memoize, [])
+    .option('--folder <path>', 'Specify folder to run from a collection. Can be specified multiple times to run multiple folders', util.cast.memoize)
     .option('--working-dir <path>', 'The path of the directory to be used as the working directory')
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
-    .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run.', util.cast.csvParse, ['cli'])
+    .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run. (default: ["cli"])',
+        util.cast.csvParse)
     .option('-n, --iteration-count <n>', 'Define the number of iterations to run.', util.cast.integer)
     .option('-d, --iteration-data <path>', 'Specify a data file to use for iterations (either json or csv).')
     .option('--export-environment <path>', 'Exports the environment to a file after completing the run.')
     .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
     .option('--export-collection <path>', 'Specify an output file to save the executed collection')
     .option('--postman-api-key <apiKey>', 'API Key used to load the resources from the Postman API.')
-    .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', util.cast.integer, 0)
+    .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', util.cast.integer)
     .option('--bail [modifiers]',
         'Specify whether or not to gracefully stop a collection run on encountering an error' +
         'and whether to end the run with an error based on the optional modifier.', util.cast.csvParse)
@@ -47,14 +53,14 @@ program
         'Forces unicode compliant symbols to be replaced by their plain text equivalents')
     .option('--global-var <value>',
         'Allows the specification of global variables via the command line, in a key=value format',
-        util.cast.memoizeKeyVal, [])
+        util.cast.memoizeKeyVal)
     .option('--env-var <value>',
         'Allows the specification of environment variables via the command line, in a key=value format',
-        util.cast.memoizeKeyVal, [])
-    .option('--color <value>', 'Enable/Disable colored output. (auto|on|off)', util.cast.colorOptions, 'auto')
-    .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer, 0)
-    .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer, 0)
-    .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer, 0)
+        util.cast.memoizeKeyVal)
+    .option('--color <value>', 'Enable/Disable colored output. (auto|on|off) (default: "auto")', util.cast.colorOptions)
+    .option('--timeout [n]', 'Specify a timeout for collection run (in milliseconds)', util.cast.integer)
+    .option('--timeout-request [n]', 'Specify a timeout for requests (in milliseconds).', util.cast.integer)
+    .option('--timeout-script [n]', 'Specify a timeout for script (in milliseconds).', util.cast.integer)
     .option('--ignore-redirects', 'If present, Newman will not follow HTTP Redirects.')
     .option('-k, --insecure', 'Disables SSL validations.')
     .option('--ssl-client-cert-list <path>',
@@ -70,19 +76,32 @@ program
         'Specify additionally trusted CA certificates')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
-        let options = util.commanderToObject(command),
+        let options;
 
-            // parse custom reporter options
-            reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
+        waterfall([
+            // get the configuration from various sources
+            (next) => { return config.get(command, { command: 'run' }, next); },
 
-        // Inject additional properties into the options object
-        options.collection = collection;
-        options.reporterOptions = reporterOptions._generic;
-        options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
-            acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
-        }, {});
+            // format the command-options
+            (command, next) => {
+                options = util.commanderToObject(command);
 
-        newman.run(options, function (err, summary) {
+                // parse custom reporter options
+                let reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
+
+                // Inject additional properties into the options object
+                options.collection = collection;
+                options.reporterOptions = reporterOptions._generic;
+                options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
+                    acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
+                }, {});
+
+                return next(null, options);
+            },
+
+            // start the run
+            newman.run
+        ], (err, summary) => {
             const runError = err || summary.run.error || summary.run.failures.length;
 
             if (err) {

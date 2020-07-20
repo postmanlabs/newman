@@ -1,4 +1,3 @@
-/* eslint-disable no-process-env */
 var fs = require('fs'),
     sh = require('shelljs'),
     sinon = require('sinon'),
@@ -15,13 +14,11 @@ describe('RC File Module', function () {
         homeRCFile = join(homeRCDir, 'newmanrc'),
         cwdRCFile = join(outDir, '.newmanrc'),
         isWin = (/^win/).test(process.platform),
-        homeDir = process.env[isWin ? 'userprofile' : 'HOME'],
         currentWorkingDir = process.cwd(),
         testData = { test: 123 };
 
     // all the tests take place assuming 'outDir' is the home directory and the current working directory
     before(function () {
-        process.env[isWin ? 'userprofile' : 'HOME'] = outDir; // the same variables are checked in os.homeDir() function
         !fs.existsSync(outDir) && fs.mkdirSync(outDir); // else the next step will throw an error
         process.chdir(outDir);
 
@@ -31,8 +28,6 @@ describe('RC File Module', function () {
     });
 
     after(function () {
-        // update the home, current working directory back to its original value
-        process.env[isWin ? 'userprofile' : 'HOME'] = homeDir;
         process.chdir(currentWorkingDir);
     });
 
