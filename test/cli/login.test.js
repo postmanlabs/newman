@@ -7,7 +7,6 @@ const _ = require('lodash'),
     join = require('path').join,
     fs = require('fs'),
     liquidJSON = require('liquid-json'),
-    colors = require('colors/safe'),
 
     TEST_ALIAS = 'testalias',
     DEFAULT_ALIAS = 'default',
@@ -16,13 +15,16 @@ const _ = require('lodash'),
     ENCRYPTED_API_KEY = 'decbcee5078b550b0cd7d0cd67e4ee70',
     PASSKEY = 'pass123',
 
+    LEFT_ARROW = '\u001b[D',
+    RIGHT_ARROW = '\u001b[C',
+
     // prompt messages imported from the module
     INPUT_PROMPTS = {
-        alias: 'Alias: (default) ',
-        overridePermission: 'The alias already exists.\nDo you want to override it? (Y/N): ',
-        postmanApiKey: 'Postman API-Key: ',
-        encrypted: 'Do you want to have a passkey for authentication? (Y/N): ',
-        passkey: 'Passkey: '
+        alias: 'Alias',
+        overridePermission: 'The alias already exists.\nDo you want to override it?',
+        postmanApiKey: 'Postman API-Key',
+        encrypted: 'Do you want to have a passkey for authentication?',
+        passkey: 'Passkey'
     },
 
     SUCCESS_MESSAGE = 'API-Key added successfully.',
@@ -39,6 +41,8 @@ describe('Login command', function () {
         stderr,
 
         spawn = (responses) => {
+            let n_responses = 0; // the number of responses fed to the program
+
             proc = child.spawn('node', ['./bin/newman.js', 'login'], {
                 stdio: ['pipe', 'pipe', 'pipe', 'ipc'] // to enable inter process communication through messages
             });
@@ -51,6 +55,12 @@ describe('Login command', function () {
                 expect(responses).to.have.property(prompt);
                 // '\r' stands for carriage return which indicates that the input is complete
                 proc.stdin.write(responses[prompt] + '\r');
+
+                n_responses++;
+
+                // if the number of responses fed equals total number of responses specified, end the stream
+                // else the program doesn't exit
+                if (n_responses === Object.keys(responses).length) { proc.stdin.end(); }
             });
 
             proc.stdout.on('data', (data) => {
@@ -62,17 +72,10 @@ describe('Login command', function () {
             });
         },
 
-        testStdout = (responses) => {
+        testStdoutPrompts = (responses) => {
             _.forIn(responses, (value, key) => {
-                if (key === 'passkey') {
-                    expect(stdout, 'should contain the prompt for passkey')
-                        .to.contain(colors.yellow.bold(INPUT_PROMPTS[key]));
-                    expect(stdout, 'should not contain the user input for passkey').to.not.contain(value);
-                }
-                else {
-                    expect(stdout, 'should contain the prompt and the user input for ' + key)
-                        .to.contain(colors.yellow.bold(INPUT_PROMPTS[key]) + value);
-                }
+                expect(stdout, 'should contain the prompt and the user input for ' + key)
+                    .to.contain(INPUT_PROMPTS[key]);
             });
         };
 
@@ -116,7 +119,7 @@ describe('Login command', function () {
         let responses = {
                 alias: TEST_ALIAS,
                 postmanApiKey: POSTMAN_API_KEY,
-                encrypted: 'n'
+                encrypted: ''
             },
             result = {
                 login: {
@@ -131,7 +134,9 @@ describe('Login command', function () {
         proc.on('close', (code) => {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
-            testStdout(responses);
+            testStdoutPrompts(responses);
+            expect(stdout, 'should contain the input for alias').to.contain(TEST_ALIAS);
+            expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
 
             fs.readFile(rcFile, (err, data) => {
                 expect(err).to.be.null;
@@ -146,7 +151,7 @@ describe('Login command', function () {
         let responses = {
                 alias: '',
                 postmanApiKey: POSTMAN_API_KEY,
-                encrypted: 'y',
+                encrypted: RIGHT_ARROW,
                 passkey: PASSKEY
             },
             result = {
@@ -162,7 +167,10 @@ describe('Login command', function () {
         proc.on('close', (code) => {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
-            testStdout(responses);
+            testStdoutPrompts(responses);
+            expect(stdout, 'should contain the input for alias').to.contain(DEFAULT_ALIAS);
+            expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
+            expect(stdout, 'should not contain the input for passkey').not.to.contain(PASSKEY);
 
             fs.readFile(rcFile, (err, data) => {
                 expect(err).to.be.null;
@@ -176,9 +184,9 @@ describe('Login command', function () {
     it('should work if the alias already exists', function (done) {
         let responses = {
                 alias: '',
-                overridePermission: 'y',
+                overridePermission: '',
                 postmanApiKey: POSTMAN_API_KEY,
-                encrypted: 'n'
+                encrypted: LEFT_ARROW
             },
             initialData = {
                 login: {
@@ -203,7 +211,9 @@ describe('Login command', function () {
         proc.on('close', (code) => {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
-            testStdout(responses);
+            testStdoutPrompts(responses);
+            expect(stdout, 'should contain the input for alias').to.contain(DEFAULT_ALIAS);
+            expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
 
             fs.readFile(rcFile, (err, data) => {
                 expect(err).to.be.null;
@@ -217,7 +227,7 @@ describe('Login command', function () {
     it('should exit if user denies permission to override', function (done) {
         let responses = {
                 alias: TEST_ALIAS,
-                overridePermission: 'n'
+                overridePermission: LEFT_ARROW
             },
             fileData = {
                 login: {
@@ -234,7 +244,7 @@ describe('Login command', function () {
 
         proc.on('close', (code) => {
             expect(code, 'should have exit code of 1').to.equal(1);
-            testStdout(responses);
+            testStdoutPrompts(responses);
             expect(stderr, 'should contain failure message').to.contain(ABORT_MESSAGE);
 
             done();

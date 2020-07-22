@@ -1,11 +1,8 @@
 /* eslint-disable no-process-env */
 const fs = require('fs'),
-    // eslint-disable-next-line security/detect-child-process
-    child = require('child_process'),
     liquidJSON = require('liquid-json'),
     sh = require('shelljs'),
     join = require('path').join,
-    colors = require('colors/safe'),
 
     DEFAULT = 'default',
     TEST_ALIAS = 'testalias',
@@ -15,8 +12,6 @@ const fs = require('fs'),
 
     ALIAS_INPUT_PROMPT = 'Select the alias',
     SUCCESS_MESSAGE = (alias) => { return `${alias} logged out successfully.`; },
-    ALIAS_OPTION = (alias) => { return `   ${alias}`; },
-    HIGHLIGHTED_ALIAS_OPTION = (alias) => { return ' * ' + colors.green(alias); },
     NO_ALIAS_AVAILABLE = 'No aliases are available.';
 
 describe('Logout command', function () {
@@ -94,8 +89,8 @@ describe('Logout command', function () {
         let initialData = {
                 login: {
                     _profiles: [
-                        { alias: TEST_ALIAS },
-                        { alias: DEFAULT }
+                        { alias: DEFAULT },
+                        { alias: TEST_ALIAS }
                     ]
                 }
             },
@@ -105,37 +100,17 @@ describe('Logout command', function () {
                         { alias: DEFAULT }
                     ]
                 }
-            },
-            stdout = '';
+            };
 
         fs.mkdirSync(configDir);
         fs.writeFileSync(rcFile, JSON.stringify(initialData, null, 2), { mode: 0o600 });
 
-        proc = child.spawn('node', ['./bin/newman.js', 'logout'], {
-            stdio: ['pipe', 'pipe', 'pipe', 'ipc'] // to enable inter process communication through messages
-        });
-
-        proc.stdout.on('data', (data) => {
-            stdout += data;
-        });
-
-        // navigate between the options and choose the required alias when prompted for
-        proc.on('message', () => {
-            expect(stdout, 'should contain the prompt for alias input').to.contain(ALIAS_INPUT_PROMPT);
-            expect(stdout, 'should highlight the current option').to.contain(HIGHLIGHTED_ALIAS_OPTION(DEFAULT));
-            expect(stdout, 'should include \'testalias\' in the list of options').to.contain(ALIAS_OPTION(TEST_ALIAS));
-
-            // go to the next option and press enter
-            proc.stdin.write(DOWN_ARROW + CARRIAGE_RETURN);
-            proc.stdin.end();
-        });
-
-        proc.on('close', (code) => {
+        proc = exec('node ./bin/newman.js logout', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stderr).to.be.empty;
             expect(stdout, 'should contain the prompt for alias input').to.contain(ALIAS_INPUT_PROMPT);
-            expect(stdout, 'should highlight the chosen option').to.contain(HIGHLIGHTED_ALIAS_OPTION(TEST_ALIAS));
-            expect(stdout, 'should not highlight the previous option').to.contain(HIGHLIGHTED_ALIAS_OPTION(DEFAULT));
-            expect(stdout, 'should include \'default\' in the list of options').to.contain(ALIAS_OPTION(DEFAULT));
+            expect(stdout, 'should highlight the chosen option').to.contain(TEST_ALIAS);
+            expect(stdout, 'should not include \'default\' alias').to.contain(DEFAULT);
             expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE(TEST_ALIAS));
 
             fs.readFile(rcFile, (err, data) => {
@@ -145,6 +120,10 @@ describe('Logout command', function () {
                 done();
             });
         });
+
+        // go to the next option and press enter
+        proc.stdin.write(DOWN_ARROW + CARRIAGE_RETURN);
+        proc.stdin.end();
     });
 
     it('should print an error if no aliases exist', function (done) {
