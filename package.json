@@ -70,7 +70,7 @@
     "eslint-plugin-mocha": "7.0.1",
     "eslint-plugin-security": "1.4.0",
     "js-yaml": "3.14.0",
-    "jsdoc": "3.6.4",
+    "jsdoc": "3.6.5",
     "jsdoc-to-markdown": "6.0.1",
     "mocha": "8.0.1",
     "nock": "13.0.2",
