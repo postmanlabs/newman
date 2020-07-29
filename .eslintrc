@@ -15,6 +15,9 @@
             "pragma": "_"
         }
     },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
     "rules": {
         // Possible Errors
         "for-direction": "error",
