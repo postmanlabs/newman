@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "chai": "4.2.0",
-    "dockerfile_lint": "0.3.3",
+    "dockerfile_lint": "0.3.4",
     "editorconfig": "0.15.3",
     "eslint": "7.4.0",
     "eslint-plugin-jsdoc": "29.1.4",
@@ -72,7 +72,7 @@
     "js-yaml": "3.14.0",
     "jsdoc": "3.6.4",
     "jsdoc-to-markdown": "6.0.1",
-    "mocha": "8.0.1",
+    "mocha": "8.1.0",
     "nock": "13.0.2",
     "nyc": "15.1.0",
     "packity": "0.3.2",
