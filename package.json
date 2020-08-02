@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "chai": "4.2.0",
-    "dockerfile_lint": "0.3.3",
+    "dockerfile_lint": "0.3.4",
     "editorconfig": "0.15.3",
     "eslint": "7.4.0",
     "eslint-plugin-jsdoc": "29.1.4",
