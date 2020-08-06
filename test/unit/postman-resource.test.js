@@ -53,6 +53,11 @@ describe('PostmanResource class', function () {
             .reply(() => {
                 return [responseCode, response];
             });
+
+        nock(POSTMAN_API_URL)
+            .persist()
+            .delete(/^\/collections\/.*/)
+            .reply(200, { collection: COLLECTION });
     });
 
     after(function () {
@@ -141,6 +146,33 @@ describe('PostmanResource class', function () {
                 done();
             });
         });
+
+        it('should use the cached data on repetitive calls', function (done) {
+            let postmanCollection = new PostmanResource('collection', `${POSTMAN_API_URL}/collections/1234`, '1234');
+
+            postmanCollection.get((err, collection) => {
+                expect(err).to.be.null;
+                expect(collection).to.eql(COLLECTION);
+
+                request_sandbox.assert.calledOnce(request.get);
+
+                let requestArg = request.get.firstCall.args[0];
+
+                expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+                expect(requestArg.url).to.equal(`${POSTMAN_API_URL}/collections/1234`);
+                expect(requestArg.json).to.equal(true);
+                expect(requestArg.headers).to.be.an('object')
+                    .that.has.property('X-Api-Key', '1234');
+
+                postmanCollection.get((err, collection) => {
+                    expect(err).to.be.null;
+                    expect(collection).to.eql(COLLECTION);
+
+                    request_sandbox.assert.calledOnce(request.get);
+                    done();
+                });
+            });
+        });
     });
 
     describe('update', function () {
@@ -157,6 +189,7 @@ describe('PostmanResource class', function () {
 
             postmanEnvironment.update(ENVIRONMENT, (err) => {
                 expect(err).to.be.null;
+                expect(postmanEnvironment.data, 'should update the cached data').to.eql(ENVIRONMENT);
 
                 request_sandbox.assert.calledOnce(request.put);
 
@@ -181,6 +214,7 @@ describe('PostmanResource class', function () {
 
             postmanCollection.update(COLLECTION, (err) => {
                 expect(err).to.be.null;
+                expect(postmanCollection.data, 'should update the cached data').to.eql(COLLECTION);
 
                 request_sandbox.assert.calledOnce(request.put);
 
@@ -230,6 +264,32 @@ describe('PostmanResource class', function () {
                 body = liquidJSON.parse(requestArg.body.trim());
                 expect(body).to.eql({ environment: ENVIRONMENT });
 
+                done();
+            });
+        });
+    });
+
+    describe('delete', function () {
+        beforeEach(function () {
+            // spy the `delete` function
+            request_sandbox.spy(request, 'delete');
+        });
+
+        it('should delete a resource from its ID', function (done) {
+            let postmanCollection = new PostmanResource('collection', `${SAMPLE_POSTMAN_ID}`, '1234');
+
+            postmanCollection.delete((err) => {
+                expect(err).to.be.null;
+
+                request_sandbox.assert.calledOnce(request.delete);
+
+                let requestArg = request.delete.firstCall.args[0];
+
+                expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+                expect(requestArg.url).to.equal(`${POSTMAN_API_URL}/collections/${SAMPLE_POSTMAN_ID}`);
+                expect(requestArg.json).to.equal(true);
+                expect(requestArg.headers).to.be.an('object')
+                    .that.has.property('X-Api-Key', '1234');
                 done();
             });
         });
