@@ -359,7 +359,7 @@ newman.run({
         "_postman_variable_scope": "environment",
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
-    }
+    },
     envVar: [ 
         { "key":"secret", "value":"secretValue" },
         { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
