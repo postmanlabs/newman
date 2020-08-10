@@ -340,6 +340,10 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:31:26.200Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
+    globalVar: [ 
+        { "key":"glboalSecret", "value":"globalSecretValue" },
+        { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
+    ],
     environment: {
         "id": "4454509f-00c3-fd32-d56c-ac1537f31415",
         "name": "test-env",
@@ -356,6 +360,10 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
     }
+    envVar: [ 
+        { "key":"secret", "value":"secretValue" },
+        { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
+    ],
 }).on('start', function (err, args) { // on start of run, log to console
     console.log('running a collection...');
 }).on('done', function (err, summary) {
