@@ -2,7 +2,8 @@
 require('shelljs/global');
 require('colors');
 
-var Mocha = require('mocha'),
+var _ = require('lodash'),
+    Mocha = require('mocha'),
     expect = require('chai').expect,
     join = require('path').join,
     recursive = require('recursive-readdir'),
@@ -23,6 +24,11 @@ module.exports = function (exit) {
     // change the home directory to make sure the home-rc-file doesn't interfere in tests
     // eslint-disable-next-line no-process-env
     process.env[isWin ? 'userprofile' : 'HOME'] = outDir;
+
+    // Used to indicate the child processes that their execution is during a test
+    // This slightly alters their logic to test some cases
+    // eslint-disable-next-line no-process-env
+    process.env.NEWMAN_TEST_ENV = 'cli';
 
     // banner line
     console.info('Running CLI integration tests using mocha and shelljs...'.yellow.bold);
@@ -46,8 +52,13 @@ module.exports = function (exit) {
 
         // start the mocha run
         global.expect = expect; // for easy reference
-        global.exec = function (cmd, done) { // override exec for it to become silent by default
-            return _exec(cmd, execOptions, done);
+        global.exec = function (cmd, options, done) { // override exec for it to become silent by default
+            if (!done && _.isFunction(options)) {
+                done = options;
+                options = {};
+            }
+
+            return _exec(cmd, { ...execOptions, ...options }, done);
         };
 
         mocha.run(function (err) {
