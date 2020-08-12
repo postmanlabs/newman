@@ -42,6 +42,7 @@ program
     .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
     .option('--export-collection <path>', 'Specify an output file to save the executed collection')
     .option('--postman-api-key <apiKey>', 'API Key used to load the resources from the Postman API.')
+    .option('--postman-api-key-alias <alias>', 'Specify the alias of the API Key to fetch remote resources using it.')
     .option('--delay-request [n]', 'Specify the extent of delay between requests (milliseconds)', util.cast.integer)
     .option('--bail [modifiers]',
         'Specify whether or not to gracefully stop a collection run on encountering an error' +
