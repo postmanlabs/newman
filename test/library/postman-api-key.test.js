@@ -41,7 +41,7 @@ describe('newman.run postmanApiKey', function () {
     });
 
     after(function () {
-        nock.restore();
+        nock.cleanAll();
     });
 
     beforeEach(function () {
@@ -62,7 +62,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
 
             expect(requestArg.url)
                 .to.equal('https://api.postman.com/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
@@ -91,7 +91,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
 
             expect(requestArg.url)
                 .to.equal('https://api.postman.com/collections/588025f9-2497-46f7-b849-47f58b865807');
@@ -121,7 +121,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
 
             expect(requestArg.url)
                 .to.equal('https://api.postman.com/environments/1234-931c1484-fd1e-4ceb-81d0-2aa102ca8b5f');
@@ -203,7 +203,7 @@ describe('newman.run postmanApiKey', function () {
 
             let requestArg = request.get.firstCall.args[0];
 
-            expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+            expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
 
             expect(requestArg.url).to.equal('https://api.postman.com/collections');
 
