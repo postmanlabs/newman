@@ -65,7 +65,7 @@
     "dockerfile_lint": "0.3.3",
     "editorconfig": "0.15.3",
     "eslint": "7.4.0",
-    "eslint-plugin-jsdoc": "29.1.4",
+    "eslint-plugin-jsdoc": "30.2.3",
     "eslint-plugin-lodash": "7.1.0",
     "eslint-plugin-mocha": "7.0.1",
     "eslint-plugin-security": "1.4.0",
