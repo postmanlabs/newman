@@ -38,6 +38,8 @@ program
         util.cast.csvParse)
     .option('-n, --iteration-count <n>', 'Define the number of iterations to run.', util.cast.integer)
     .option('-d, --iteration-data <path>', 'Specify a data file to use for iterations (either json or csv).')
+    .option('--sync-environment', 'Update the corresponding environment in Postman-Cloud with the ' +
+        'resultant environment')
     .option('--export-environment <path>', 'Exports the environment to a file after completing the run.')
     .option('--export-globals <path>', 'Specify an output file to dump Globals before exiting.')
     .option('--export-collection <path>', 'Specify an output file to save the executed collection')

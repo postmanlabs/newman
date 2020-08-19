@@ -85,9 +85,8 @@ describe('PostmanResource class', function () {
 
                 let requestArg = request.get.firstCall.args[0];
 
-                expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+                expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
                 expect(requestArg.url).to.equal(`${POSTMAN_API_URL}/collections/1234`);
-                expect(requestArg.json).to.equal(true);
                 expect(requestArg.headers).to.be.an('object')
                     .that.has.property('X-Api-Key', '1234');
                 done();
@@ -108,9 +107,8 @@ describe('PostmanResource class', function () {
 
                 let requestArg = request.get.firstCall.args[0];
 
-                expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+                expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
                 expect(requestArg.url).to.equal(`${POSTMAN_API_URL}/environments/${SAMPLE_POSTMAN_ID}`);
-                expect(requestArg.json).to.equal(true);
                 expect(requestArg.headers).to.be.an('object')
                     .that.has.property('X-Api-Key', '1234');
                 done();
@@ -137,9 +135,8 @@ describe('PostmanResource class', function () {
 
                 let requestArg = request.get.firstCall.args[0];
 
-                expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers', 'json']);
+                expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
                 expect(requestArg.url).to.equal(`https://api.postman.com/environments/${SAMPLE_POSTMAN_UID}`);
-                expect(requestArg.json).to.equal(true);
                 expect(requestArg.headers).to.be.an('object')
                     .that.has.property('X-Api-Key', '1234');
 
@@ -158,9 +155,8 @@ describe('PostmanResource class', function () {
 
                 let requestArg = request.get.firstCall.args[0];
 
-                expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+                expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
                 expect(requestArg.url).to.equal(`${POSTMAN_API_URL}/collections/1234`);
-                expect(requestArg.json).to.equal(true);
                 expect(requestArg.headers).to.be.an('object')
                     .that.has.property('X-Api-Key', '1234');
 
@@ -285,9 +281,8 @@ describe('PostmanResource class', function () {
 
                 let requestArg = request.delete.firstCall.args[0];
 
-                expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
+                expect(requestArg).to.be.an('object').and.include.keys(['url', 'headers']);
                 expect(requestArg.url).to.equal(`${POSTMAN_API_URL}/collections/${SAMPLE_POSTMAN_ID}`);
-                expect(requestArg.json).to.equal(true);
                 expect(requestArg.headers).to.be.an('object')
                     .that.has.property('X-Api-Key', '1234');
                 done();
