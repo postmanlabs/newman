@@ -35,13 +35,16 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
     2. [Creating Your Own Reporter](#creating-your-own-reporter)
 7. [File Uploads](#file-uploads)
 8. [Using Newman with the Postman API](#using-newman-with-the-postman-api)
-9. [Using Newman in Docker](#using-newman-in-docker)
-10. [Using Socks Proxy](#using-socks-proxy)
-11. [Migration Guide](#migration-guide)
-12. [Compatibility](#compatibility)
-13. [Contributing](#contributing)
-14. [Community Support](#community-support)
-15. [License](#license)
+9. [Configuration Setters](#configuration-setters-for-the-commands)
+    1. [Config Files](#config-files)
+    2. [Environment Variables](#environment-variables)
+10. [Using Newman in Docker](#using-newman-in-docker)
+11. [Using Socks Proxy](#using-socks-proxy)
+12. [Migration Guide](#migration-guide)
+13. [Compatibility](#compatibility)
+14. [Contributing](#contributing)
+15. [Community Support](#community-support)
+16. [License](#license)
 
 
 ## Getting started
@@ -597,6 +600,49 @@ $ newman run file-upload.postman_collection.json
 $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
     --environment "https://api.getpostman.com/environments/$uid?apikey=$apiKey"
 ```
+
+[back to top](#table-of-contents)
+
+## Configuration setters for the commands
+To avoid repeated use of options for a command, Newman provides us with configuration setters like config-file and environment-variables. These setters allow us to set default values for different options. In case of a clash, the environment variable will be given a higher preference.
+
+### Config files
+Config files allow the user to set default options using a JSON object as shown below.
+
+``` json
+{
+    "run": {
+        "bail": true,
+        "reporters": ["json"],
+        "iterationCount": 3,
+        "color": "off"
+    }
+}
+```
+
+Following is the list of files which Newman looks for (in increasing priority), before the run.
+
+1. `~/.postman/newmanrc` (in *nix-based systems) or `C:\Users\$user\.postman\newmanrc` (in Windows systems)
+2. `.newmanrc` file in the current working directory.
+
+### Environment variables
+Newman provides us with the following set of environment variables to configure the current shell session.
+
+1. `POSTMAN_API_KEY`: This variable is used to specify the Postman API Key to be used to access Postman-Cloud resources.
+2. `POSTMAN_API_KEY_ALIAS`: This variable is used to specify the default value of the `postman-api-key-alias` option in `run` command.
+
+For example, the Postman API Key to be used can be directly specified as follows.
+- In *nix-based systems
+    ``` console
+    $ export POSTMAN_API_KEY=$apikey
+    ```
+
+- In Windows systems
+    ``` console
+    $ set POSTMAN_API_KEY=$apikey
+    ```
+
+**Note**: Environment variables are a property of a single shell program. Hence, its value is retained only for the current shell session.
 
 [back to top](#table-of-contents)
 
