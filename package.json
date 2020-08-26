@@ -72,7 +72,7 @@
     "js-yaml": "3.14.0",
     "jsdoc": "3.6.4",
     "jsdoc-to-markdown": "6.0.1",
-    "mocha": "8.0.1",
+    "mocha": "8.1.2",
     "nock": "13.0.2",
     "nyc": "15.1.0",
     "packity": "0.3.2",
