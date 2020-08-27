@@ -8,10 +8,10 @@ function configOverrides (testType) {
     switch (testType) {
         case 'cli':
             return {
-                statements: 80,
-                branches: 65,
-                functions: 85,
-                lines: 80
+                statements: 82,
+                branches: 67,
+                functions: 86,
+                lines: 83
             };
         case 'integration':
             return {
@@ -19,23 +19,24 @@ function configOverrides (testType) {
                 branches: 20,
                 functions: 35,
                 lines: 35,
+                // since integration tests only test collection-runs
                 exclude: ['lib/crypt.js', 'lib/login', 'lib/config', 'lib/logout']
             };
         case 'library':
             return {
-                statements: 55,
+                statements: 57,
                 branches: 40,
-                functions: 54,
-                lines: 55,
+                functions: 56,
+                lines: 57,
+                // since these features are only for cli-run
                 exclude: ['lib/crypt.js', 'lib/login', 'lib/config', 'lib/logout']
             };
         case 'unit':
             return {
-                statements: 70,
-                branches: 55,
-                functions: 75,
-                lines: 75,
-                exclude: ['lib/logout']
+                statements: 72,
+                branches: 56,
+                functions: 74,
+                lines: 73
             };
         default:
             return {}
