@@ -8,24 +8,27 @@ const _ = require('lodash'),
 
     TEST_ALIAS = 'testalias',
     DEFAULT_ALIAS = 'default',
-    POSTMAN_API_KEY = '123456&',
-    ENCODED_API_KEY = '\u0018LF3!TlҀ',
-    ENCRYPTED_API_KEY = 'decbcee5078b550b0cd7d0cd67e4ee70',
+    POSTMAN_API_KEY = 'PMAK-01234567890123456789abcd-012345678901234567890123456789abcd',
+    ENCODED_API_KEY = '((Y4`1fC)Xn8LLh5ލgKDc2ަ\tHf4MFsAd`1fC)Xn8LLh5ލgKDc2',
+    ENCRYPTED_API_KEY = 'd51557f9fdc44cd954e93caaad92ffeca49d1f9ef1f34e76ff94e38294b6742b1462aed' +
+    '07b39f1e66184034fd19ce93a5bd2e2ab2050e28c32803f6d988e83f6c7b60dee29a1cbae5f1d2a881663056c',
     PASSKEY = 'pass123',
 
     LEFT_ARROW = '\u001b[D',
     RIGHT_ARROW = '\u001b[C',
+    DOWN_ARROW = '\u001b[B',
 
     // prompt messages imported from the module
     INPUT_PROMPTS = {
+        userAction: 'Default authentication details already exist.\nChoose an option to continue',
         alias: 'Alias',
         overridePermission: 'The alias already exists.\nDo you want to override it?',
-        postmanApiKey: 'Postman API-Key',
+        postmanApiKey: 'Postman API Key',
         encrypted: 'Do you want to have a passkey for authentication?',
         passkey: 'Passkey'
     },
 
-    SUCCESS_MESSAGE = 'API-Key added successfully.',
+    SUCCESS_MESSAGE = 'API Key added successfully.',
     ABORT_MESSAGE = 'Login aborted.';
 
 describe('Login command', function () {
@@ -101,16 +104,15 @@ describe('Login command', function () {
         });
     });
 
-    it('should work without a passkey', function (done) {
+    it('should store the data under `default` alias', function (done) {
         let responses = {
-                alias: TEST_ALIAS,
                 postmanApiKey: POSTMAN_API_KEY,
                 encrypted: ''
             },
             result = {
                 login: {
                     _profiles: [
-                        { alias: TEST_ALIAS, postmanApiKey: ENCODED_API_KEY, encrypted: false }
+                        { alias: DEFAULT_ALIAS, postmanApiKey: ENCODED_API_KEY, encrypted: false }
                     ]
                 }
             };
@@ -121,70 +123,35 @@ describe('Login command', function () {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
             testStdoutPrompts(responses);
-            expect(stdout, 'should contain the input for alias').to.contain(TEST_ALIAS);
             expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
 
             fs.readFile(rcFile, (err, data) => {
                 expect(err).to.be.null;
                 data = liquidJSON.parse(data.toString());
-                expect(data).to.eql(result);
+                expect(data).to.deep.equal(result);
                 done();
             });
         });
     });
 
-    it('should work with a passkey', function (done) {
-        let responses = {
-                alias: '',
-                postmanApiKey: POSTMAN_API_KEY,
-                encrypted: RIGHT_ARROW,
-                passkey: PASSKEY
-            },
-            result = {
-                login: {
-                    _profiles: [
-                        { alias: DEFAULT_ALIAS, postmanApiKey: ENCRYPTED_API_KEY, encrypted: true }
-                    ]
-                }
-            };
-
-        spawn(responses);
-
-        proc.on('close', (code) => {
-            expect(code, 'should have exit code of 0').to.equal(0);
-            expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
-            testStdoutPrompts(responses);
-            expect(stdout, 'should contain the input for alias').to.contain(DEFAULT_ALIAS);
-            expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
-            expect(stdout, 'should not contain the input for passkey').not.to.contain(PASSKEY);
-
-            fs.readFile(rcFile, (err, data) => {
-                expect(err).to.be.null;
-                data = liquidJSON.parse(data.toString());
-                expect(data).to.eql(result);
-                done();
-            });
-        });
-    });
-
-    it('should work if the alias already exists', function (done) {
-        let responses = {
-                alias: '',
-                overridePermission: '',
-                postmanApiKey: POSTMAN_API_KEY,
-                encrypted: LEFT_ARROW
-            },
-            initialData = {
+    it('should override the `default` alias if it exists', function (done) {
+        let initialData = {
                 login: {
                     _profiles: [
                         { alias: DEFAULT_ALIAS, postmanApiKey: '12345', encrypted: false }
                     ]
                 }
             },
+            responses = {
+                userAction: '',
+                postmanApiKey: POSTMAN_API_KEY,
+                encrypted: RIGHT_ARROW,
+                passkey: PASSKEY
+            },
             resultantData = {
                 login: {
                     _profiles: [
-                        { alias: DEFAULT_ALIAS, postmanApiKey: ENCODED_API_KEY, encrypted: false }
+                        { alias: DEFAULT_ALIAS, postmanApiKey: ENCRYPTED_API_KEY, encrypted: true }
                     ]
                 }
             };
@@ -198,8 +165,99 @@ describe('Login command', function () {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
             testStdoutPrompts(responses);
-            expect(stdout, 'should contain the input for alias').to.contain(DEFAULT_ALIAS);
             expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
+            expect(stdout, 'should not contain the input for passkey').not.to.contain(PASSKEY);
+
+            fs.readFile(rcFile, (err, data) => {
+                expect(err).to.be.null;
+                data = liquidJSON.parse(data.toString());
+                expect(data).to.eql(resultantData);
+                done();
+            });
+        });
+    });
+
+    it('should create a new alias', function (done) {
+        let initialData = {
+                login: {
+                    _profiles: [
+                        { alias: DEFAULT_ALIAS, postmanApiKey: '12345', encrypted: false }
+                    ]
+                }
+            },
+            responses = {
+                userAction: DOWN_ARROW,
+                alias: TEST_ALIAS,
+                postmanApiKey: POSTMAN_API_KEY,
+                encrypted: ''
+            },
+            resultantData = {
+                login: {
+                    _profiles: [
+                        { alias: DEFAULT_ALIAS, postmanApiKey: '12345', encrypted: false },
+                        { alias: TEST_ALIAS, postmanApiKey: ENCODED_API_KEY, encrypted: false }
+                    ]
+                }
+            };
+
+        fs.mkdirSync(configDir);
+        fs.writeFileSync(rcFile, JSON.stringify(initialData, null, 2), { mode: 0o600 });
+
+        spawn(responses);
+
+        proc.on('close', (code) => {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
+            testStdoutPrompts(responses);
+            expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
+
+            fs.readFile(rcFile, (err, data) => {
+                expect(err).to.be.null;
+                data = liquidJSON.parse(data.toString());
+                expect(data).to.eql(resultantData);
+                done();
+            });
+        });
+    });
+
+    it('should override an alias with user consent', function (done) {
+        let responses = {
+                userAction: DOWN_ARROW,
+                alias: TEST_ALIAS,
+                overridePermission: '',
+                postmanApiKey: POSTMAN_API_KEY,
+                encrypted: RIGHT_ARROW,
+                passkey: PASSKEY
+            },
+            initialData = {
+                login: {
+                    _profiles: [
+                        { alias: DEFAULT_ALIAS, postmanApiKey: '12345', encrypted: false },
+                        { alias: TEST_ALIAS, postmanApiKey: '12345', encrypted: false }
+                    ]
+                }
+            },
+            resultantData = {
+                login: {
+                    _profiles: [
+                        { alias: DEFAULT_ALIAS, postmanApiKey: '12345', encrypted: false },
+                        { alias: TEST_ALIAS, postmanApiKey: ENCRYPTED_API_KEY, encrypted: true }
+                    ]
+                }
+            };
+
+        fs.mkdirSync(configDir);
+        fs.writeFileSync(rcFile, JSON.stringify(initialData, null, 2), { mode: 0o600 });
+
+        spawn(responses);
+
+        proc.on('close', (code) => {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stdout, 'should contain the success message').to.contain(SUCCESS_MESSAGE);
+            testStdoutPrompts(responses);
+            expect(stdout, 'should contain the input for alias').to.contain(TEST_ALIAS);
+            expect(stdout, 'should contain the input for api key').to.contain(POSTMAN_API_KEY);
+            expect(stdout, 'should not contain the input for passkey').not.to.contain(PASSKEY);
 
             fs.readFile(rcFile, (err, data) => {
                 expect(err).to.be.null;
@@ -212,12 +270,14 @@ describe('Login command', function () {
 
     it('should exit if user denies permission to override', function (done) {
         let responses = {
+                userAction: DOWN_ARROW,
                 alias: TEST_ALIAS,
                 overridePermission: LEFT_ARROW
             },
             fileData = {
                 login: {
                     _profiles: [
+                        { alias: DEFAULT_ALIAS, postmanApiKey: '12345', encrypted: false },
                         { alias: TEST_ALIAS, postmanApiKey: '12345', encrypted: false }
                     ]
                 }
