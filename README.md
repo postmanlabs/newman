@@ -465,7 +465,7 @@ The built-in JUnit reporter can output a summary of the collection run to a JUni
 | `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
 ### HTML Reporter
-An external reporter, maintained by Postman, which can be installed via `npm install -g newman-reporter-html`. This reporter was part of the Newman project but was separated out into it's own project in V4.
+An external reporter, maintained by Postman, which can be installed via `npm install -g newman-reporter-html`. This reporter was part of the Newman project but was separated out into its own project in V4.
 
 The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once the HTML reporter is installed you can provide `--reporters html` as a CLI option.
 
