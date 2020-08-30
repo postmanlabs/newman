@@ -18,7 +18,7 @@ program
 // The `run` command allows you to specify a collection to be run with the provided options.
 program
     .command('run <collection>')
-    .description('URL or path to a Postman Collection')
+    .description('Initiate a Postman Collection run from a given URL or path')
     .usage('<collection> [options]')
     .option('-e, --environment <path>', 'Specify a URL or path to a Postman Environment')
     .option('-g, --globals <path>', 'Specify a URL or path to a file containing Postman Globals')
