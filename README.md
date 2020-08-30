@@ -183,6 +183,12 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 - `--delay-request`<br />
   Specify the extent of delay between requests (milliseconds).
 
+- `--cookie-jar <path>`<br />
+  Specify the file path for a JSON Cookie Jar. Uses [`tough-cookie`](https://github.com/salesforce/tough-cookie) to deserialize the file.
+
+- `--export-cookie-jar <path>`<br />
+  The path to the file where Newman will output the final cookie jar file before completing a run. Uses `tough-cookie`'s serialize method.
+
 - `--bail [optional modifiers]`<br />
   Specify whether or not to stop a collection run on encountering the first test script error.<br />
   Can optionally accept modifiers, currently include `folder` and `failure`.<br />
@@ -296,6 +302,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslClientCertList | The path to the client certificate configuration list file. This option takes precedence over `sslClientCert`, `sslClientKey` and `sslClientPassphrase`. When there is no match in this configuration list, `sslClientCert` is used as fallback.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.sslExtraCaCerts   | The path to the file, that holds one or more trusted CA certificates in PEM format.<br /><br />_Optional_<br />Type: `string` |
 | options.requestAgents     | Specify the custom requesting agents to be used when performing HTTP and HTTPS requests respectively. Example: [Using Socks Proxy](#using-socks-proxy)<br /><br />_Optional_<br />Type: `object` |
+| options.cookieJar     | One can optionally pass a CookieJar file path as `string` to this property and that will be deserialized using [`tough-cookie`](https://github.com/salesforce/tough-cookie). This property also accepts a `tough-cookie` CookieJar instance.<br /><br />_Optional_<br />Type: `object\|string` |
 | options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 

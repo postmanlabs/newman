@@ -148,6 +148,8 @@ describe('cli parser', function () {
                 '--folder myFolder ' +
                 '--working-dir /Users/postman ' +
                 '--no-insecure-file-read ' +
+                '--cookie-jar myCookie.json ' +
+                '--export-cookie-jar exported_cookie.json ' +
                 '--export-environment exported_env.json ' +
                 '--export-globals exported_glob.json ' +
                 '--postman-api-key POSTMAN_API_KEY ' +
@@ -172,6 +174,8 @@ describe('cli parser', function () {
                 expect(opts.environment).to.equal('myEnv.json');
                 expect(opts.folder).to.eql(['myFolder']);
                 expect(opts.workingDir).to.eql('/Users/postman');
+                expect(opts.cookieJar).to.eql('myCookie.json');
+                expect(opts.exportCookieJar).to.eql('exported_cookie.json');
                 expect(opts.insecureFileRead).to.be.false;
                 expect(opts.exportEnvironment).to.equal('exported_env.json');
                 expect(opts.iterationData).to.equal('path/to/csv.csv');
