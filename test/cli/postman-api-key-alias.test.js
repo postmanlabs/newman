@@ -178,7 +178,8 @@ describe('postman-api-key-alias option and environment variable', function () {
             (code, stdout, stderr) => {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
-                expect((stdout.match(/default/g) || []).length, 'should indicate the alias only once').to.equal(1);
+                expect((stdout.match(/Authenticating using stored API Key/g) || []).length,
+                    'should indicate the API Key used').to.equal(1);
                 expect(stdout, 'should prompt for the passkey').to.contain(PASSKEY_PROMPT);
                 expect(stdout, 'should not include the passkey provided').to.not.contain(PASSKEY);
                 expect(stdout, 'should contain the name of the collection').to.contain(TEST_COLLECTION);
@@ -230,7 +231,8 @@ describe('postman-api-key-alias option and environment variable', function () {
                 (code, stdout, stderr) => {
                     expect(code, 'should have exit code of 0').to.equal(0);
                     expect(stderr).to.be.empty;
-                    expect(stdout, 'should indicate the alias used').to.contain(DEFAULT_ALIAS);
+                    expect(stdout, 'should indicate that the stored API Key is used')
+                        .to.contain('Authenticating using stored API Key');
                     expect(stdout, 'should contain the name of the collection').to.contain(TEST_COLLECTION);
                     done();
                 });

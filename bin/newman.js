@@ -13,6 +13,8 @@ const _ = require('lodash'),
     config = require('../lib/config'),
     logout = require('../lib/logout'),
 
+    LOGIN_SUCCESS_MESSAGE = 'API Key added successfully.',
+    LOGOUT_SUCCESS_MESSAGE = 'API Key deleted successfully.',
     RUN_COMMAND = 'run';
 
 program
@@ -117,7 +119,7 @@ program
 
 program
     .command('login')
-    .description('Store the API-Key along with an alias to it, to reference it in the following commands.')
+    .description('Store Postman API Key to access Postman-Cloud resources in the following commands.')
     .action(() => {
         login((err) => {
             if (err) {
@@ -125,11 +127,13 @@ program
                 err.help && console.error(err.help);
                 process.exit(1);
             }
+
+            console.info(LOGIN_SUCCESS_MESSAGE);
         });
     });
 
 program.command('logout')
-    .description('Dereference an API-Key from its alias.')
+    .description('Delete a stored Postman API Key.')
     .action(() => {
         logout((err) => {
             if (err) {
@@ -137,6 +141,8 @@ program.command('logout')
                 err.help && console.error(err.help);
                 process.exit(1);
             }
+
+            console.info(LOGOUT_SUCCESS_MESSAGE);
         });
     });
 
