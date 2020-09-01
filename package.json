@@ -65,7 +65,7 @@
     "chai": "4.2.0",
     "dockerfile_lint": "0.3.4",
     "editorconfig": "0.15.3",
-    "eslint": "7.7.0",
+    "eslint": "7.8.0",
     "eslint-plugin-jsdoc": "30.3.0",
     "eslint-plugin-lodash": "7.1.0",
     "eslint-plugin-mocha": "8.0.0",
