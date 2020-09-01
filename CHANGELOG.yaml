@@ -1,4 +1,6 @@
 master:
+  new features:
+    - GH-2393 Added support for providing custom Cookie Jar
   chores:
     - Updated dependencies
 
