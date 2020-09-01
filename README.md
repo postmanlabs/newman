@@ -626,7 +626,7 @@ This command deletes the stored authentication details.
 $ newman logout
 ```
 
-To know more about newman-login and its advanced features, click [here](https://github.com/narayanpai1/newman/wiki/Using-Newman-with-the-Postman-API).
+To know more about newman-login and its advanced features, click [here](https://github.com/postmanlabs/newman/wiki/Using-Newman-with-the-Postman-API).
 
 [back to top](#table-of-contents)
 
