@@ -1,0 +1,16 @@
+{
+  "version": "tough-cookie@3.0.1",
+  "storeType": "MemoryCookieStore",
+  "rejectPublicSuffixes": true,
+  "cookies": [
+    {
+      "key": "foo2",
+      "value": "baz",
+      "domain": "postman-echo.com",
+      "path": "/",
+      "hostOnly": true,
+      "creation": "2020-06-09T16:57:46.999Z",
+      "lastAccessed": "2020-06-09T16:57:48.385Z"
+    }
+  ]
+}

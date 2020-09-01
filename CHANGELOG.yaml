@@ -1,3 +1,10 @@
+5.2.0:
+  date: 2020-09-01
+  new features:
+    - GH-2393 Added support for providing custom Cookie Jar
+  chores:
+    - Updated dependencies
+
 5.1.2:
   date: 2020-07-13
   chores:

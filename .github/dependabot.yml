@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "03:14"
+      timezone: Asia/Calcutta
+    rebase-strategy: "disabled"
+    open-pull-requests-limit: 10

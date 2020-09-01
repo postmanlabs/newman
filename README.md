@@ -139,7 +139,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   precedence and can be overridden by environment variables having the same name.
 
 - `-d <source>`, `--iteration-data <source>`<br />
-  Specify a data source file (CSV) to be used for iteration as a path to a file or as a URL.
+  Specify a data source file (JSON or CSV) to be used for iteration as a path to a file or as a URL.
   [Read More](https://learning.postman.com/docs/postman/collection-runs/working-with-data-files/)
 
 - `-n <number>`, `--iteration-count <number>`<br />
@@ -182,6 +182,12 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 
 - `--delay-request`<br />
   Specify the extent of delay between requests (milliseconds).
+
+- `--cookie-jar <path>`<br />
+  Specify the file path for a JSON Cookie Jar. Uses [`tough-cookie`](https://github.com/salesforce/tough-cookie) to deserialize the file.
+
+- `--export-cookie-jar <path>`<br />
+  The path to the file where Newman will output the final cookie jar file before completing a run. Uses `tough-cookie`'s serialize method.
 
 - `--bail [optional modifiers]`<br />
   Specify whether or not to stop a collection run on encountering the first test script error.<br />
@@ -271,7 +277,9 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options                   | This is a required argument and it contains all information pertaining to running a collection.<br /><br />_Required_<br />Type: `object` |
 | options.collection        | The collection is a required property of the `options` argument. It accepts an object representation of a Postman Collection which should resemble the schema mentioned at [https://schema.getpostman.com/](https://schema.getpostman.com/). The value of this property could also be an instance of Collection Object from the [Postman Collection SDK](https://github.com/postmanlabs/postman-collection).<br /><br />As `string`, one can provide a URL where the Collection JSON can be found (e.g. [Postman Cloud API](https://api.getpostman.com/) service) or path to a local JSON file.<br /><br />_Required_<br />Type: `object\|string` [PostmanCollection](https://github.com/postmanlabs/postman-collection/wiki#Collection) |
 | options.environment       | One can optionally pass an environment file path or URL as `string` to this property and that will be used to read Postman Environment Variables from. This property also accepts environment variables as an `object`. Environment files exported from Postman App can be directly used here.<br /><br />_Optional_<br />Type: `object\|string` |
+| options.envVar            | One can optionally pass environment variables as an array of key-value string object pairs. It will be used to read Postman Environment Variables as well as overwrite environment variables from `options.environments`. <br /><br />_Optional_<br />Type: `array\|object` |
 | options.globals           | Postman Global Variables can be optionally passed on to a collection run in form of path to a file or URL. It also accepts variables as an `object`.<br /><br />_Optional_<br />Type: `object\|string` |
+| options.globalVar         | One can optionally pass global environment variables as an array of key-value string object pairs. It will be used to read Postman Global Environment Variables as well as overwrite global environment variables from `options.globals`. <br /><br />_Optional_<br />Type: `array\|object` |
 | options.iterationCount    | Specify the number of iterations to run on the collection. This is usually accompanied by providing a data file reference as `options.iterationData`.<br /><br />_Optional_<br />Type: `number`, Default value: `1` |
 | options.iterationData     | Path to the JSON or CSV file or URL to be used as data source when running multiple iterations on a collection.<br /><br />_Optional_<br />Type: `string` |
 | options.folder            | The name or ID of the folder/folders (ItemGroup) in the collection which would be run instead of the entire collection.<br /><br />_Optional_<br />Type: `string\|array` |
@@ -294,6 +302,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslClientCertList | The path to the client certificate configuration list file. This option takes precedence over `sslClientCert`, `sslClientKey` and `sslClientPassphrase`. When there is no match in this configuration list, `sslClientCert` is used as fallback.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.sslExtraCaCerts   | The path to the file, that holds one or more trusted CA certificates in PEM format.<br /><br />_Optional_<br />Type: `string` |
 | options.requestAgents     | Specify the custom requesting agents to be used when performing HTTP and HTTPS requests respectively. Example: [Using Socks Proxy](#using-socks-proxy)<br /><br />_Optional_<br />Type: `object` |
+| options.cookieJar     | One can optionally pass a CookieJar file path as `string` to this property and that will be deserialized using [`tough-cookie`](https://github.com/salesforce/tough-cookie). This property also accepts a `tough-cookie` CookieJar instance.<br /><br />_Optional_<br />Type: `object\|string` |
 | options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 
@@ -338,6 +347,10 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:31:26.200Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
+    globalVar: [ 
+        { "key":"glboalSecret", "value":"globalSecretValue" },
+        { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
+    ],
     environment: {
         "id": "4454509f-00c3-fd32-d56c-ac1537f31415",
         "name": "test-env",
@@ -353,7 +366,11 @@ newman.run({
         "_postman_variable_scope": "environment",
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
-    }
+    },
+    envVar: [ 
+        { "key":"secret", "value":"secretValue" },
+        { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
+    ],
 }).on('start', function (err, args) { // on start of run, log to console
     console.log('running a collection...');
 }).on('done', function (err, summary) {
@@ -455,7 +472,7 @@ The built-in JUnit reporter can output a summary of the collection run to a JUni
 | `--reporter-junit-export <path>` | Specify a path where the output XML file will be written to disk. If not specified, the file will be written to `newman/` in the current working directory. If the specified path does not exist, it will be created. However, if the specified path is a pre-existing directory, the report will be generated in that directory. |
 
 ### HTML Reporter
-An external reporter, maintained by Postman, which can be installed via `npm install -g newman-reporter-html`. This reporter was part of the Newman project but was separated out into it's own project in V4.
+An external reporter, maintained by Postman, which can be installed via `npm install -g newman-reporter-html`. This reporter was part of the Newman project but was separated out into its own project in V4.
 
 The complete installation and usage guide is available at [newman-reporter-html](https://github.com/postmanlabs/newman-reporter-html#readme). Once the HTML reporter is installed you can provide `--reporters html` as a CLI option.
 
