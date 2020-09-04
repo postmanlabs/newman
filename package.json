@@ -57,7 +57,7 @@
     "pretty-ms": "7.0.0",
     "semver": "7.3.2",
     "serialised-error": "1.1.3",
-    "tough-cookie": "3.0.1",
+    "tough-cookie": "4.0.0",
     "word-wrap": "1.2.3",
     "xmlbuilder": "15.1.1"
   },
