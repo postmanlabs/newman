@@ -219,6 +219,10 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 - `--verbose`<br />
   Show detailed information of collection run and each request sent.
 
+### `newman envinfo`
+Displays all system and envnironment related information required for submitting bug reports.
+
+
 ### SSL
 
 #### Client Certificates
@@ -347,7 +351,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:31:26.200Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    globalVar: [ 
+    globalVar: [
         { "key":"glboalSecret", "value":"globalSecretValue" },
         { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
     ],
@@ -367,7 +371,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    envVar: [ 
+    envVar: [
         { "key":"secret", "value":"secretValue" },
         { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
     ],
