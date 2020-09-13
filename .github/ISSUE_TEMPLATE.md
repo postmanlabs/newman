@@ -7,7 +7,7 @@ This issue reporting template should guide you to effectively report issues for 
 Version and environment information:
 -->
  1. Newman Version (can be found via `newman -v`):
- 2. OS details (type, version, and architecture):
+ 2. Please paste the output of `newman envinfo`:
  3. Are you using Newman as a library, or via the CLI?
  3. Did you encounter this recently, or has this bug always been there:
  4. Expected behaviour:
