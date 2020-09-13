@@ -85,6 +85,14 @@ program
         });
     });
 
+// The `envinfo` command allows you to print system information required while reporting issues
+program.command('envinfo')
+    .description('Prints system and environment information required for reporting issues')
+    .action(() => {
+        newman.envinfo();
+    });
+
+
 program.on('--help', function () {
     console.info('\nTo get available options for a command:');
     console.info('  newman <command> -h');
