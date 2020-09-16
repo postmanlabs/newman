@@ -1,3 +1,7 @@
+master:
+    fixed bugs:
+     - GH-2509 Fix do not store memory heavy objects in summary - instead give options
+
 5.2.0:
   date: 2020-09-01
   new features:
