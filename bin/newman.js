@@ -60,6 +60,7 @@ program
     .option('--ssl-extra-ca-certs <path>', 'Specify additionally trusted CA certificates (PEM)')
     .option('--cookie-jar <path>', 'Specify the path to a custom cookie jar (serialized tough-cookie JSON) ')
     .option('--export-cookie-jar <path>', 'Exports the cookie jar to a file after completing the run')
+    .option('--skip-execution-response', 'Skips addition of response to the execution report generated')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
         let options = util.commanderToObject(command),
