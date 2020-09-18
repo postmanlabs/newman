@@ -48,6 +48,33 @@ describe('run summary', function () {
         expect(summary.run.transfers).to.be.an('object');
     });
 
+    it('should have empty executions array', function () {
+        var options = {
+                skipExecutions: true
+            },
+            summary = new Summary(new EventEmitter(), options),
+            executions = summary.run.executions;
+
+        expect(summary).to.have.property('run');
+        expect(_.keys(summary.run).sort())
+            .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
+        expect(executions, 'should have 0 executions').to.have.lengthOf(0);
+    });
+
+    it('should have empty executions array when cli reporter specified', function () {
+        var options = {
+                skipExecutions: false,
+                reporters: ['cli']
+            },
+            summary = new Summary(new EventEmitter(), options),
+            executions = summary.run.executions;
+
+        expect(summary).to.have.property('run');
+        expect(_.keys(summary.run).sort())
+            .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
+        expect(executions, 'should have 0 executions').to.have.lengthOf(0);
+    });
+
     describe('runtime event statistics', function () {
         it('should track relevant events', function () {
             var emitter = new EventEmitter(),
