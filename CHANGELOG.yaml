@@ -1,6 +1,7 @@
 master:
-    fixed bugs:
-     - GH-2509 Fix to not store memory heavy objects in summary instead give options
+    new features:
+     - >-
+        GH-2509 Added a new option `skip-executions-summary` in newman to skips addition of request,     response to summary executions report generated for specified reporter.
 
 5.2.0:
   date: 2020-09-01

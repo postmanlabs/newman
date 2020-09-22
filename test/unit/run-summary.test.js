@@ -1,4 +1,5 @@
 var _ = require('lodash');
+const { expect } = require('chai');
 
 describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and average response time
@@ -50,7 +51,7 @@ describe('run summary', function () {
 
     it('should have empty executions array', function () {
         var options = {
-                skipExecutions: true
+                skipExecutionsSummary: true
             },
             summary = new Summary(new EventEmitter(), options),
             executions = summary.run.executions;
@@ -58,12 +59,13 @@ describe('run summary', function () {
         expect(summary).to.have.property('run');
         expect(_.keys(summary.run).sort())
             .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
+        expect(executions).to.be.an('array');
         expect(executions, 'should have 0 executions').to.have.lengthOf(0);
     });
 
-    it('should have empty executions array when cli reporter specified', function () {
+    it('should have empty executions array when only cli reporter specified', function () {
         var options = {
-                skipExecutions: false,
+                skipExecutionsSummary: false,
                 reporters: ['cli']
             },
             summary = new Summary(new EventEmitter(), options),
@@ -72,6 +74,7 @@ describe('run summary', function () {
         expect(summary).to.have.property('run');
         expect(_.keys(summary.run).sort())
             .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
+        expect(executions).to.be.an('array');
         expect(executions, 'should have 0 executions').to.have.lengthOf(0);
     });
 
