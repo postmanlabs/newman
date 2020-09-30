@@ -51,7 +51,7 @@ describe('run summary', function () {
 
     it('should have empty executions array', function () {
         var options = {
-                skipExecutionsSummary: true
+                executionsSummary: true
             },
             summary = new Summary(new EventEmitter(), options),
             executions = summary.run.executions;
@@ -65,7 +65,7 @@ describe('run summary', function () {
 
     it('should have empty executions array when only cli reporter specified', function () {
         var options = {
-                skipExecutionsSummary: false,
+                executionsSummary: false,
                 reporters: ['cli']
             },
             summary = new Summary(new EventEmitter(), options),

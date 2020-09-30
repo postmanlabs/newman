@@ -18,7 +18,7 @@ describe('JSON reporter', function () {
 
     it('should correctly generate the json report with skip-executions option enabled', function (done) {
         // eslint-disable-next-line max-len
-        exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export ${outFile} --skip-executions-summary`,
+        exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export ${outFile} --no-executions-summary`,
             function (code) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 fs.readFile(outFile, function (err, data) {
