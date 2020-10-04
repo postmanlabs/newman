@@ -306,7 +306,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslExtraCaCerts   | The path to the file, that holds one or more trusted CA certificates in PEM format.<br /><br />_Optional_<br />Type: `string` |
 | options.requestAgents     | Specify the custom requesting agents to be used when performing HTTP and HTTPS requests respectively. Example: [Using Socks Proxy](#using-socks-proxy)<br /><br />_Optional_<br />Type: `object` |
 | options.cookieJar     | One can optionally pass a CookieJar file path as `string` to this property and that will be deserialized using [`tough-cookie`](https://github.com/salesforce/tough-cookie). This property also accepts a `tough-cookie` CookieJar instance.<br /><br />_Optional_<br />Type: `object\|string` |
-| options.executionsSummary     | Skips addition of request, response to summary executions report generated for specified reporter. <br /><br /><br />Optional<br />_This option is recomended to be used if response size for API is large or the API response is not required to be included in the summary report._ |
+| options.executionsSummary     | Skips addition of request, response to summary executions report generated for specified reporter. This option is recommended to be used if response size for API is large or the API response is not required to be included in the summary report. <br /><br />_Optional_<br /> Type: `boolean`, Default value: `true` |
 | options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
 
