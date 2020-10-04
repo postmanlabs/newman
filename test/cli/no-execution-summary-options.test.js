@@ -3,7 +3,7 @@ var fs = require('fs'),
     _ = require('lodash'),
     sh = require('shelljs');
 
-describe('JSON reporter', function () {
+describe('executionSummary option', function () {
     var outDir = 'out',
         outFile = outDir + '/newman-report.json';
 
@@ -16,7 +16,7 @@ describe('JSON reporter', function () {
         sh.rm('-rf', outDir);
     });
 
-    it('should correctly generate the json report with skip-executions option enabled', function (done) {
+    it('when executionsSummary option specified should not add executions in the result', function (done) {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export ${outFile} --no-executions-summary`,
             function (code) {
@@ -36,7 +36,7 @@ describe('JSON reporter', function () {
             });
     });
 
-    it('should correctly generate the json report with skip-executions option disabled', function (done) {
+    it('when executionsSummary option not specified should add executions in the result', function (done) {
         // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export ${outFile}`,
             function (code) {

@@ -51,7 +51,7 @@ describe('run summary', function () {
 
     it('should have empty executions array', function () {
         var options = {
-                executionsSummary: true
+                executionsSummary: false
             },
             summary = new Summary(new EventEmitter(), options),
             executions = summary.run.executions;
