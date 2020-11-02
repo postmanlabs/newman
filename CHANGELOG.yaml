@@ -1,4 +1,5 @@
-master:
+5.2.1:
+  date: 2020-11-02
   chores:
     - Updated dependencies
 
