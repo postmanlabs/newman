@@ -89,13 +89,6 @@ describe('project repository', function () {
                 expect(json.devDependencies).to.be.an('object');
             });
 
-            it('should point to a valid and precise (no * or ^) semver', function () {
-                json.devDependencies && Object.keys(json.devDependencies).forEach(function (item) {
-                    expect(semver.valid(json.devDependencies[item]),
-                        `${item}:${json.devDependencies[item]} should be a valid semver`).to.not.be.null;
-                });
-            });
-
             it('should not overlap devDependencies', function () {
                 var clean = [];
 
