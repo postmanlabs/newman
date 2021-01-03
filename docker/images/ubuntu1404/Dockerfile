@@ -34,7 +34,7 @@ WORKDIR /etc/newman
 # Set newman as the default container command
 # Now you can run the container via
 #
-# docker run -v /home/collections:/etc/newman -t postman/newman_ubuntu1404 -c YourCollection.json.postman_collection \
+# docker run -v /home/collections:/etc/newman -t postman/newman_ubuntu1404 run YourCollection.json.postman_collection \
 #                                                                          -e YourEnvironment.postman_environment \
 #                                                                          -H newman_report.html
 ENTRYPOINT ["newman"]
