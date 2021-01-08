@@ -70,7 +70,7 @@
     "eslint-plugin-lodash": "^7.1.0",
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-security": "^1.4.0",
-    "js-yaml": "^3.14.1",
+    "js-yaml": "^4.0.0",
     "jsdoc": "^3.6.6",
     "jsdoc-to-markdown": "^6.0.1",
     "mocha": "^8.2.1",
