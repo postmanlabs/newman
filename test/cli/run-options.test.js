@@ -107,6 +107,15 @@ describe('CLI run options', function () {
         });
     });
 
+    it('should work correctly with --exclude-folder option when specified', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/integration/exclude-folder-variant/exclude-folder-tests.postman_collection.json', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            expect(stderr).to.equal('');
+            done();
+        });
+    });
+
     describe('script timeouts', function () {
         it('should be handled correctly when breached', function (done) {
             // eslint-disable-next-line max-len
