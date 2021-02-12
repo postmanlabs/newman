@@ -50,6 +50,7 @@ describe('cli parser', function () {
                         delayRequest: 0,
                         globalVar: [],
                         envVar: [],
+                        excludeFolder: [],
                         folder: [],
                         insecureFileRead: true,
                         color: 'auto',
@@ -146,6 +147,7 @@ describe('cli parser', function () {
                 '-g myGlobals.json ' +
                 '-d path/to/csv.csv ' +
                 '--folder myFolder ' +
+                '--exclude-folder myExFolder ' +
                 '--working-dir /Users/postman ' +
                 '--no-insecure-file-read ' +
                 '--cookie-jar myCookie.json ' +
@@ -173,6 +175,7 @@ describe('cli parser', function () {
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
                 expect(opts.folder).to.eql(['myFolder']);
+                expect(opts.excludeFolder).to.eql(['myExFolder']);
                 expect(opts.workingDir).to.eql('/Users/postman');
                 expect(opts.cookieJar).to.eql('myCookie.json');
                 expect(opts.exportCookieJar).to.eql('exported_cookie.json');
@@ -215,6 +218,7 @@ describe('cli parser', function () {
                 '-d /path/to/csv.csv ' +
                 '--folder myFolder1 ' +
                 '--folder myFolder2 ' +
+                '--exclude-folder myExFolder ' +
                 '--working-dir /Users/postman ' +
                 '--no-insecure-file-read ' +
                 '--disable-unicode ' +
@@ -242,6 +246,7 @@ describe('cli parser', function () {
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
                 expect(opts.folder).to.eql(['myFolder1', 'myFolder2']);
+                expect(opts.excludeFolder).to.eql(['myExFolder']);
                 expect(opts.workingDir).to.eql('/Users/postman');
                 expect(opts.insecureFileRead).to.be.false;
                 expect(opts.disableUnicode, 'should have disableUnicode to be true').to.equal(true);
