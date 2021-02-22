@@ -11,7 +11,7 @@
   <br>
   <hr>
   <br>
-  <strong>Manage all of your organization's APIs in Postman, with the industry's most complete API development environment.</strong>
+  <strong align = "center">Manage all of your organization's APIs in Postman, with the industry's most complete API development environment.</strong>
 </p>
 
 <p align="center">
