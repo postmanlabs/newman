@@ -4,33 +4,32 @@
 </div>
 <br>
 <p align="center">
-  <a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
+  <a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a>
+  <br>
   <br>
   <i>Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line.<br>It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
   </i>
   <br>
+  </p>
+<br>
+
+  [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=develop)](https://travis-ci.com/postmanlabs/newman) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman) 
+![GitHub](https://img.shields.io/github/license/postmanlabs/newman)
   <hr>
+<br>
+
+  Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) & [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
+
+<hr>
+  <p>
   <br>
-  <strong align = "center">Manage all of your organization's APIs in Postman, with the industry's most complete API development environment.</strong>
+  <strong>Manage all of your organization's APIs in Postman, with the industry's most complete API development environment.</strong>
 </p>
+
 
 <p align="center">
   <a href="https://www.getpostman.com"><strong>www.getpostman.com</strong></a>
-  <br>
 </p>
-<br>
-
-
-
-[![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=develop)](https://travis-ci.com/postmanlabs/newman) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman) 
-![GitHub](https://img.shields.io/github/license/postmanlabs/newman)
-
-
-<hr>
-
-<br>
-
-Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) & [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
 
 <hr>
 
