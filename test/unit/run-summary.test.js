@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 var _ = require('lodash');
 
 describe('run summary', function () {
@@ -41,11 +42,12 @@ describe('run summary', function () {
 
         expect(summary).to.have.property('run');
         expect(_.keys(summary.run).sort())
-            .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
+            .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error', 'iterationData'].sort());
         expect(summary.run.failures).to.be.an('array');
         expect(summary.run.stats).to.be.an('object');
         expect(summary.run.timings).to.be.an('object');
         expect(summary.run.transfers).to.be.an('object');
+        expect(summary.run.iterationData).to.be.an('array');
     });
 
     describe('runtime event statistics', function () {
