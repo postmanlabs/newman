@@ -1,3 +1,5 @@
+const { expect } = require('chai');
+
 describe('cli parser', function () {
     var _ = require('lodash'),
         sinon = require('sinon'),
@@ -235,9 +237,9 @@ describe('cli parser', function () {
                 '--bail folder,failure ' +
                 '--global-var foo=bar --global-var alpha==beta= ' +
                 '--reporter-json-output ./omg.txt ' +
-                '--reporter-use everything').split(' '), 'run', function (err, opts) {
+                '--reporter-use everything ' +
+                '--reporter-cli-only-dots').split(' '), 'run', function (err, opts) {
                 expect(err).to.be.null;
-
                 expect(opts).to.be.ok;
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
@@ -273,6 +275,8 @@ describe('cli parser', function () {
                 expect(opts.reporters).to.contain('json');
                 expect(opts.reporters).to.not.contain('verbose');
                 expect(opts.reporters).to.not.contain('junit');
+                expect(opts.reporter.json.cliOnlyDots).to.equal(true);
+                expect(opts.reporterOptions.cliOnlyDots).to.equal(true);
 
                 // Generic reporter options
                 expect(opts.reporterOptions).to.be.ok;
@@ -298,6 +302,16 @@ describe('cli parser', function () {
                     expect(err).to.be.null;
                     expect(opts).to.be.ok;
                     expect(opts.reporter.cli.noBanner, 'should have noBanner to be true').to.equal(true);
+
+                    done();
+                });
+        });
+        it('should print one character for each request if --reporter-cli-only-dots is set', function (done) {
+            cli('node newman.js run myCollection.json --reporter-cli-only-dots'.split(' '), 'run',
+                function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts).to.be.ok;
+                    expect(opts.reporter.cli.onlyDots, 'should have onlyDots to be true').to.equal(true);
 
                     done();
                 });
