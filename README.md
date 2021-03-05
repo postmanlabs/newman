@@ -28,7 +28,7 @@
 
 
 <p align="center">
-  <a href="https://www.getpostman.com"><strong>www.getpostman.com</strong></a>
+  <a href="https://www.postman.com"><strong>www.postman.com</strong></a>
 </p>
 
 <hr>
