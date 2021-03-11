@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+
 require('../lib/node-version-check'); // @note that this should not respect CLI --silent
 
 const _ = require('lodash'),
@@ -95,6 +96,15 @@ program.on('command:*', (command) => {
     console.error(`error: invalid command \`${command}\`\n`);
     program.help();
 });
+
+program
+    .command('run-request <url>')
+    .usage('<url> [options]')
+    .option('-m,--method', 'Method of the request', 'GET')
+    .action((url, command) => {
+        console.info(url);
+        console.info(command);
+    });
 
 /**
  * Starts the script execution.
