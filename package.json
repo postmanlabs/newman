@@ -46,6 +46,8 @@
     "colors": "1.4.0",
     "commander": "6.2.1",
     "csv-parse": "4.14.2",
+    "curl": "^0.1.4",
+    "curl-to-postmanv2": "0.5.1",
     "eventemitter3": "4.0.7",
     "filesize": "6.1.0",
     "lodash": "4.17.20",

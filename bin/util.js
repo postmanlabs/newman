@@ -101,6 +101,31 @@ module.exports = {
         }, {});
     },
 
+/**
+     * Extract curl options in the provided options.
+     * Create curl  command from the options.
+     *
+     * @param {Object} options - Commander.Command Instance
+     * @param {String} url - Requested url
+     * @returns {String} - Curl command
+     */
+    createCurl: (options, url) => {
+        const curlOptions = _.reduce(options, (result, value, key) => {
+            // Exclude non curl options
+            const validProp = _.includes(['X', 'H', 'A', 'd'], key);
+
+            validProp && (result[key] = value);
+
+            return result;
+        }, {});
+
+        const headers = _.reduce(curlOptions.H, (result, value)  => {
+            return result + `-H '${value}' `
+        }, '');
+
+        return `curl -X ${curlOptions.X} ${url} ${headers}`;
+    },
+
     /**
      * Remove nested options having the provided prefix from `process.argv`.
      *
