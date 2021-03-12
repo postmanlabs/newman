@@ -35,8 +35,6 @@
 
 ## Table of contents
 
-
-  - [Table of contents](#table-of-contents)
   - [Getting started](#getting-started)
     - [Installation](#installation)
       - [Using Homebrew](#using-homebrew)
