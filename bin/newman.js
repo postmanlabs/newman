@@ -153,10 +153,11 @@ program
             runError && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
-program.on('--help', function () {
-    console.info('\nTo get available options for a command:');
-    console.info('  newman <command> -h');
-});
+
+program.addHelpText('after', `
+To get available options for a command:
+  newman <command> -h`);
+
 
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {
