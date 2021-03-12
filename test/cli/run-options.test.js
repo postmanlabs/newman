@@ -27,8 +27,8 @@ describe('CLI run options', function () {
     it('should display help message if no arguments are provided', function (done) {
         exec('node ./bin/newman.js', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
-            expect(stdout).to.match(/Usage: newman*/);
-            expect(stderr).to.equal('');
+            expect(stderr).to.match(/Usage: newman*/);
+            expect(stdout).to.equal('');
             done();
         });
     });
