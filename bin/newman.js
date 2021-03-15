@@ -34,6 +34,8 @@ program
     .option('--env-var <value>',
         'Allows the specification of environment variables via the command line, in a key=value format',
         util.cast.memoizeKeyVal, [])
+    .option('-s,--skip-iteration <value>',
+        'Option to specify the no. of iterations that must be skipped in the data file from the start.')
     .option('--export-environment <path>', 'Exports the final environment to a file after completing the run')
     .option('--export-globals <path>', 'Exports the final globals to a file after completing the run')
     .option('--export-collection <path>', 'Exports the executed collection to a file after completing the run')
