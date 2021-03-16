@@ -84,7 +84,15 @@ program
                     break;
                 }
 
-                reporters.push(reporterName);
+                if (reporterName.includes(',')) {
+                    reporterName.split(',').forEach((reporterName) => {
+                        reporters.push(reporterName);
+                    });
+                }
+                else {
+                    reporters.push(reporterName);
+                }
+
                 if (reporterName.slice(-1) !== ',') {
                     break;
                 }
