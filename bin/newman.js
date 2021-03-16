@@ -62,6 +62,49 @@ program
     .option('--export-cookie-jar <path>', 'Exports the cookie jar to a file after completing the run')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
+        // Process reporter arguments explicitly
+        const rawArgs = command.parent.args,
+            isReporterPresent = rawArgs.includes('-r') || rawArgs.includes('--reporter');
+
+        if (isReporterPresent) {
+            const reporters = ['cli'];
+            let reporterIndex = rawArgs.indexOf('-r'),
+                reporterIterator;
+
+            if (reporterIndex === -1) {
+                reporterIndex = rawArgs.indexOf('--reporter');
+            }
+
+            reporterIterator = reporterIndex + 1;
+
+            while (reporterIterator < rawArgs.length) {
+                const reporterName = rawArgs[reporterIterator];
+
+                if (reporterName.slice(0, 1) === '-') {
+                    break;
+                }
+
+                reporters.push(reporterName);
+                if (reporterName.slice(-1) !== ',') {
+                    break;
+                }
+
+                reporterIterator += 1;
+            }
+
+            // Trim all the reporter names for white spaces and commas
+            reporters.forEach((reporterName, reporterIndex, reporters) => {
+                let sanitizedReporterName = reporterName.trim();
+
+                if (sanitizedReporterName.slice(-1) === ',') {
+                    sanitizedReporterName = sanitizedReporterName.split(',').join('');
+                }
+
+                reporters[reporterIndex] = sanitizedReporterName;
+            });
+
+            command.reporters = reporters;
+        }
         let options = util.commanderToObject(command),
 
             // parse custom reporter options
