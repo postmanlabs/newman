@@ -86,7 +86,9 @@ program
 
                 if (reporterName.includes(',')) {
                     reporterName.split(',').forEach((reporterName) => {
-                        reporters.push(reporterName);
+                        if (reporterName.length) {
+                            reporters.push(reporterName);
+                        }
                     });
                 }
                 else {
@@ -117,7 +119,7 @@ program
 
             // parse custom reporter options
             reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
-
+            
         // Inject additional properties into the options object
         options.collection = collection;
         options.reporterOptions = reporterOptions._generic;
