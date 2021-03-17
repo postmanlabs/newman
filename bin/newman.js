@@ -85,9 +85,9 @@ program
         });
     });
 
-// program.addHelpText('after', `
-// To get available options for a command:
-//   newman <command> -h`);
+program.addHelpText('after', `
+To get available options for a command:
+  newman <command> -h`);
 
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {
