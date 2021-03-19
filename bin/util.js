@@ -1,5 +1,5 @@
 const _ = require('lodash'),
-    reporters = ['cli'];
+    reporters = [];
 
 
 module.exports = {
