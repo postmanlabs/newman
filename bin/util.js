@@ -85,7 +85,6 @@ module.exports = {
          * @returns {String[]} - [item1, item2] - The array representation of the passed parameters.
          */
         reporterParse: (list) => {
-            list.trim();
             if (list.includes(',')) {
                 list.split(',').forEach((name) => {
                     if (name.length) {
