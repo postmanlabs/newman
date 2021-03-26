@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 
+
 describe('CLI ', function () {
     it('should print the path of the report with a message when JSON or Junit reporters are used', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json',
