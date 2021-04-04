@@ -85,6 +85,62 @@ program
         });
     });
 
+// The `request` command allows you to run single request with the provided options.
+program
+    .command('request <url>')
+    .description('Run single request with provided options')
+    .usage('<url> [options]')
+    .option('-X, --request <method>', 
+        'Specify request method')
+    .option('-H, --header <header>', 
+        'Specify request header', util.cast.memoize,  [])
+    .option('-A, --user-agent <agent>', 
+        'Specify request user agent')
+    .option('-d, --data <data>',
+        'Sends the specified data to the server with type application/x-www-form-urlencoded or application/json')
+    .option('--data-raw <data>',
+        'Sends the specified data to the server in raw format')
+    .option('--data-urlencode <data>',
+        'Sends the specified data to the server with type application/x-www-form-urlencoded')
+    .option('--data-binary <data>',
+        'Sends the specified data as-is')
+    .option('-F, --form <name=content>',
+        'A single form-data field', util.cast.memoize, [])
+    .option('-G, --get',
+        'Forces the request to be sent as GET, with the --data parameters appended to the query string')
+    .option('-I, --head',
+        'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
+    .option('-T, --upload-file <file>',
+        'Forces the request to be sent as PUT with the specified local file to the server')
+    .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run', util.cast.csvParse, ['cli'])
+    .option('--color <value>', 'Enable/Disable colored output (auto|on|off)', util.cast.colorOptions, 'auto')
+    .option('--verbose', 'Show detailed information of collection run and each request sent')
+    .action((url, command) => {
+        let options = util.commanderToObject(command),
+
+            // parse custom reporter options
+            reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
+
+        const curl =  util.createCurl(options, url);
+
+        // Inject additional properties into the options object
+        options.curl = curl;
+        options.reporterOptions = reporterOptions._generic;
+        options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
+            acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
+        }, {});
+
+        newman.request(options, function (err, summary) {
+            const runError = err || summary.run.error || summary.run.failures.length;
+
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.friendly && console.error(`  ${err.friendly}\n`);
+            }
+            runError && !_.get(options, 'suppressExitCode') && process.exit(1);
+        });
+    });
+
 program.addHelpText('after', `
 To get available options for a command:
   newman <command> -h`);
