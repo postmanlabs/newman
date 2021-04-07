@@ -33,8 +33,7 @@ describe('folder variants', function () {
     it('should not preserve the order if not specified', function (done) {
         newman.run({
             collection: collection,
-            folder: ['R3', 'R1'],
-            preserveOrder: false
+            folder: ['R3', 'R1']
         }, function (err, summary) {
             expect(err).to.be.null;
             expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1', 'R3']);
