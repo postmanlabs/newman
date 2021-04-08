@@ -1,5 +1,5 @@
 /**
- * @fileOverview A sample script to demonstrate parallel collection runs using async.
+ * @fileOverview A sample script to demonstrate parallel collection runs using async. 
  */
 var path = require('path'), // ensures that the path is consistent, regardless of where the script is run from
 
