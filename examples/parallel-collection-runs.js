@@ -3,7 +3,7 @@
  */
 var path = require('path'), // ensures that the path is consistent, regardless of where the script is run from
 
-    async = require('async'), // https://npmjs.org/package/async
+    async = require('async'), // https://npmjs.org/package/async 
     newman = require('../'), // change to require('newman'), if using outside this repository
 
     /**
