@@ -25,7 +25,7 @@ var path = require('path'), // ensures that the path is consistent, regardless o
     parallelCollectionRun = function (done) {
         newman.run(options, done);
     };
-
+ 
 // Runs the Postman sample collection thrice, in parallel.
 async.parallel([
     parallelCollectionRun,
