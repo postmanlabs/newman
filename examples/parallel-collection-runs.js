@@ -10,7 +10,7 @@ var path = require('path'), // ensures that the path is consistent, regardless o
      * A set of collection run options for the paralle collection runs. For demonstrative purposes in this script, an
      * identical set of options has been used. However, different options can be used, so as to actually run different
      * collections, with their corresponding run options in parallel.
-     *
+     * 
      * @type {Object}
      */
     options = {
