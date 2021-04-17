@@ -117,7 +117,7 @@ describe('Newman run options', function () {
     it('should correctly handle invalid json iteration data', function (done) {
         newman.run({
             collection: 'test/fixtures/run/failed-request.json',
-            iterationData: 'test/integration/steph/steph.invalid_data.json'
+            iterationData: 'test/integration/steph/steph.invalid_json_data.json'
         }, function (err, summary) {
             expect(err).to.be.ok;
             expect(err.message).to.include('iteration data could not be loaded\n' +
@@ -131,7 +131,7 @@ describe('Newman run options', function () {
     it('should correctly handle invalid csv iteration data', function (done) {
         newman.run({
             collection: 'test/fixtures/run/failed-request.json',
-            iterationData: 'test/integration/steph/steph.invalid_data.csv'
+            iterationData: 'test/integration/steph/steph.invalid_csv_data.csv'
         }, function (err, summary) {
             expect(err).to.be.ok;
             expect(err.message).to.include('iteration data could not be loaded\n' +
