@@ -142,6 +142,20 @@ describe('Newman run options', function () {
         });
     });
 
+    it('should correctly handle invalid file types for iteration data', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/failed-request.json',
+            iterationData: 'test/integration/steph/steph.postman_data.txt'
+        }, function (err, summary) {
+            expect(err).to.be.ok;
+            expect(err.message).to.include('iteration data could not be loaded\n' +
+                ' Invalid file for iteration data. Only use .json/.csv files');
+            expect(summary).to.not.be.ok;
+
+            done();
+        });
+    });
+
     it('should correctly handle invalid iteration data', function (done) {
         newman.run({
             collection: 'test/fixtures/run/failed-request.json',
