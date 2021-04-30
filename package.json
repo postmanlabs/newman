@@ -52,7 +52,7 @@
     "mkdirp": "1.0.4",
     "postman-collection": "3.6.10",
     "postman-collection-transformer": "4.1.0",
-    "postman-request": "2.88.1-postman.29",
+    "postman-request": "2.88.1-postman.30",
     "postman-runtime": "7.27.0",
     "pretty-ms": "7.0.1",
     "semver": "7.3.5",
