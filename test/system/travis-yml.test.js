@@ -5,7 +5,7 @@ describe('travis.yml', function () {
         travisYAMLError;
 
     try {
-        travisYAML = yaml.safeLoad(fs.readFileSync('.travis.yml').toString());
+        travisYAML = yaml.load(fs.readFileSync('.travis.yml').toString());
     }
     catch (e) {
         travisYAMLError = e;
