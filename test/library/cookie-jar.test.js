@@ -13,12 +13,7 @@ describe('newman.run cookieJar', function () {
             collection
         }, function (err, summary) {
             expect(err).to.be.null;
-
-            expect(summary.run.executions[0].response.cookies.reference).to.be.empty;
-            expect(summary.run.executions[0].request.headers.get('cookie')).to.match(/foo=bar;/);
-
-            expect(summary.run.executions[1].response.cookies.reference).to.be.empty;
-            expect(summary.run.executions[1].request.headers.get('cookie')).to.match(/foo=bar;/);
+            expect(summary.run.failures).to.be.empty;
 
             done();
         });
@@ -46,11 +41,12 @@ describe('newman.run cookieJar', function () {
         }, function (err, summary) {
             expect(err).to.be.null;
 
-            expect(summary.run.executions[0].response.cookies.reference).to.be.empty;
-            // existing cookie
-            expect(summary.run.executions[0].request.headers.get('cookie')).to.match(/foo2=baz;/);
-            // new cookie
-            expect(summary.run.executions[0].request.headers.get('cookie')).to.match(/foo=bar;/);
+            expect(summary.run.executions[1].response.json()).to.eql({
+                cookies: {
+                    foo: 'bar', // new cookie
+                    foo2: 'baz' // existing cookie
+                }
+            });
 
             done();
         });
@@ -97,7 +93,7 @@ describe('newman.run cookieJar', function () {
             newman.run({
                 collection: collection,
                 exportCookieJar: exportedCookieJarPath
-            }, function (err, summary) {
+            }, function (err) {
                 expect(err).to.be.null;
 
                 var exportedCookieJar,
@@ -105,9 +101,6 @@ describe('newman.run cookieJar', function () {
 
                 try { exportedCookieJar = CookieJar.fromJSON(fs.readFileSync(exportedCookieJarPath).toString()); }
                 catch (e) { console.error(e); }
-
-                expect(summary.run.executions[0].response.cookies.reference).to.be.empty;
-                expect(summary.run.executions[0].request.headers.get('cookie')).to.match(/foo=bar;/);
 
                 expect(exportedCookieJar).to.be.ok;
 
