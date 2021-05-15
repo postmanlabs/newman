@@ -71,7 +71,7 @@
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-security": "^1.4.0",
     "js-yaml": "^4.1.0",
-    "jsdoc": "^3.6.6",
+    "jsdoc": "^3.6.7",
     "jsdoc-to-markdown": "^7.0.0",
     "mocha": "^8.2.1",
     "nock": "^13.0.5",
