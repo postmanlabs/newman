@@ -176,11 +176,11 @@ module.exports = {
          }
 
         const headers = _.reduce(curlOptions.header, (result, value)  => {
-            return result + `-H '${value}' `
+            return result + `-H '${value}'`
         }, '');
 
         const forms = _.reduce(curlOptions.form, (result, value)  => {
-            return result + `-F '${value}' `
+            return result + `-F '${value}'`
         }, '');
 
         const command = Object.keys(curlOptions).reduce((memo, optionName)  => {
@@ -195,7 +195,7 @@ module.exports = {
 
             return memo + ` ${curlOptionToString(option, value)}`;
 
-        }, 'curl ');
+        }, 'curl');
 
         return `${command} ${url} ${headers} ${forms}`;
         },

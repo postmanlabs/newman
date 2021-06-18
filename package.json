@@ -62,6 +62,7 @@
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "dockerfile_lint": "^0.3.4",
     "editorconfig": "^0.15.3",
