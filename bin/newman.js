@@ -106,9 +106,11 @@ program
         'Sends the specified data as-is')
     .option('-F, --form <name=content>',
         'A single form-data field', util.cast.memoize, [])
-    .option('-G, --get',
+    .option('-G, --GET',
         'Forces the request to be sent as GET, with the --data parameters appended to the query string')
-    .option('-I, --head',
+    .option('-g, --get',
+        'Forces the request to be sent as GET, with the --data parameters appended to the query string')
+        .option('-I, --head',
         'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
     .option('-T, --upload-file <file>',
         'Forces the request to be sent as PUT with the specified local file to the server')

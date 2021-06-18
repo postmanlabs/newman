@@ -32,7 +32,7 @@ describe('Curl Options', function () {
         });
     });
 
-    it('should not work without any options', function (done) {
+    it('should not work without the url', function (done) {
         exec('node ./bin/newman.js request', function (code) {
             expect(code, 'should have exit code of 1').to.equal(1);
             done();
@@ -40,7 +40,6 @@ describe('Curl Options', function () {
     });
 
     it('should correctly work with --request curl option', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js request -X GET http://www.google.com -r cli,json', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -72,7 +71,6 @@ describe('Curl Options', function () {
     });
 
     it('should correctly work with --head curl options', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js request -I https://postman-echo.com/post', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -80,7 +78,6 @@ describe('Curl Options', function () {
     });
 
     it('should correctly work with -G curl options', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js request -G https://google.com', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
