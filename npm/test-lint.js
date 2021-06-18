@@ -32,7 +32,7 @@ module.exports = function (exit) {
          * @returns {*}
          */
         function (next) {
-            next(null, (new ESLintCLIEngine({ fix: true })).executeOnFiles(LINT_SOURCE_DIRS));
+            next(null, (new ESLintCLIEngine()).executeOnFiles(LINT_SOURCE_DIRS));
         },
 
         /**
