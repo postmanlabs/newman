@@ -1,49 +1,48 @@
-const _ = require('lodash');
-
-const ALL_CURL_OPTIONS = {
-    userAgent: {
-        key: '--user-agent',
-        format: 'string'
-    },
-    data: {
-        key: '--data',
-        format: 'string'
-    },
-    dataRaw: {
-        key: '--data-raw',
-        format: 'string'
-    },
-    dataUrlencode: {
-        key: '--data-urlencode',
-        format: 'string'
-    },
-    dataBinary: {
-        key: '--data-binary',
-        format: 'string'
-    },
-    get: {
-        key: '--get',
-    },
-    header: {
-        key: '--header',
-        format: 'string'
-    },
-    form: {
-        key: '--form',
-        format: 'string'
-    },
-    request: {
-        key: '--request',
-        format: 'string'
-    },
-    head: {
-        key: '--head',
-    },
-    uploadFile: {
-        key: '--upload-file',
-        format: 'string'
-    }
-}
+const _ = require('lodash'),
+    ALL_CURL_OPTIONS = {
+        userAgent: {
+            key: '--user-agent',
+            format: 'string'
+        },
+        data: {
+            key: '--data',
+            format: 'string'
+        },
+        dataRaw: {
+            key: '--data-raw',
+            format: 'string'
+        },
+        dataUrlencode: {
+            key: '--data-urlencode',
+            format: 'string'
+        },
+        dataBinary: {
+            key: '--data-binary',
+            format: 'string'
+        },
+        get: {
+            key: '--get'
+        },
+        header: {
+            key: '--header',
+            format: 'string'
+        },
+        form: {
+            key: '--form',
+            format: 'string'
+        },
+        request: {
+            key: '--request',
+            format: 'string'
+        },
+        head: {
+            key: '--head'
+        },
+        uploadFile: {
+            key: '--upload-file',
+            format: 'string'
+        }
+    };
 
 module.exports = {
 
@@ -155,50 +154,47 @@ module.exports = {
      * @returns {String} - Curl command
      */
     createCurl: (options, url) => {
-
         // Get all curl option names
-        const allCurlOptions = Object.keys(ALL_CURL_OPTIONS);
-        
-        const curlOptions = _.reduce(options, (result, value, key) => {
-            // Exclude non curl options
-            const validProp = _.includes(allCurlOptions, key);
+        const allCurlOptions = Object.keys(ALL_CURL_OPTIONS),
+            curlOptions = _.reduce(options, (result, value, key) => {
+                // Exclude non curl options
+                const validProp = _.includes(allCurlOptions, key);
 
-            validProp && (result[key] = value);
+                validProp && (result[key] = value);
 
-            return result;
-        }, {});
+                return result;
+            }, {}),
 
-        const curlOptionToString = (option, value) => {
-            if(option.format) {
-                return `${option.key} '${value}'`;
-            }
-            return `${option.key}`;
-         }
+            curlOptionToString = (option, value) => {
+                if (option.format) {
+                    return `${option.key} '${value}'`;
+                }
 
-        const headers = _.reduce(curlOptions.header, (result, value)  => {
-            return result + `-H '${value}'`
-        }, '');
+                return `${option.key}`;
+            },
 
-        const forms = _.reduce(curlOptions.form, (result, value)  => {
-            return result + `-F '${value}'`
-        }, '');
+            headers = _.reduce(curlOptions.header, (result, value) => {
+                return result + `-H '${value}'`;
+            }, ''),
 
-        const command = Object.keys(curlOptions).reduce((memo, optionName)  => {
+            forms = _.reduce(curlOptions.form, (result, value) => {
+                return result + `-F '${value}'`;
+            }, ''),
 
-            // forms and headers are collected and added separately
-            if(optionName === 'header' || optionName === 'form') {
-                return memo;
-            }
+            command = Object.keys(curlOptions).reduce((memo, optionName) => {
+                // forms and headers are collected and added separately
+                if (optionName === 'header' || optionName === 'form') {
+                    return memo;
+                }
 
-            const option = ALL_CURL_OPTIONS[optionName];
-            const value = curlOptions[optionName]
+                const option = ALL_CURL_OPTIONS[optionName],
+                    value = curlOptions[optionName];
 
-            return memo + ` ${curlOptionToString(option, value)}`;
-
-        }, 'curl');
+                return memo + ` ${curlOptionToString(option, value)}`;
+            }, 'curl');
 
         return `${command} ${url} ${headers} ${forms}`;
-        },
+    },
 
     /**
      * Remove nested options having the provided prefix from `process.argv`.
