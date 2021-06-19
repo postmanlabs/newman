@@ -112,9 +112,6 @@ program
         'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
     .option('-T, --upload-file <file>',
         'Forces the request to be sent as PUT with the specified local file to the server')
-    .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run', util.cast.csvParse, ['cli'])
-    .option('--color <value>', 'Enable/Disable colored output (auto|on|off)', util.cast.colorOptions, 'auto')
-    .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action(() => {
     /* eslint-disable no-console */
         console.log('Newman Request is working!');
