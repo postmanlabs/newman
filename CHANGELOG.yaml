@@ -1,3 +1,8 @@
+5.2.3:
+  date: 2021-05-03
+  chores:
+    - Updated dependencies
+
 5.2.2:
   date: 2021-01-03
   chores:
@@ -236,9 +241,9 @@
     - >-
       GH-1616 Moved inbuilt HTML reporter to a standalone reporter:
       https://github.com/postmanlabs/newman-reporter-html
-    - 'GH-1653 Updated `color` option behaviour, dropped support for --no-color'
+    - GH-1653 Updated `color` option behaviour, dropped support for --no-color
   fixed bugs:
-    - 'GH-1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes'
+    - GH-1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes
     - GH-1630 Updated default timeout values to Infinity
   chores:
     - GH-1623 Refactored Newman CLI
@@ -450,7 +455,7 @@
 3.5.0:
   date: 2017-03-07
   new features:
-    - 'Added support for multi level folders in the cli, html and junit reporters'
+    - Added support for multi level folders in the cli, html and junit reporters
     - >-
       Updated postman-collection to v1.0.0, which contains helper methods for
       dealing with multi-level folders
