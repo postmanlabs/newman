@@ -40,31 +40,31 @@ describe('Curl Options', function () {
     });
 
     it('should correctly work with --request curl option', function (done) {
-        exec('node ./bin/newman.js request -X GET http://www.google.com -r cli,json', function (code) {
+        exec('node ./bin/newman.js request -X GET http://www.google.com', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
     });
 
     it('should correctly work with --request, --header curl options', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js request -X POST  https://postman-echo.com/post -H \'Content-Type: text/plain\'  -r progress', function (code) {
+        // eslint-disable-next-line max-len, quotes
+        exec("node ./bin/newman.js request -X POST  https://postman-echo.com/post -H 'Content-Type: text/plain'", function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
     });
 
     it('should correctly work with --form curl options', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js request -X POST -F \'username=davidwalsh\' -F \'password=something\' https://postman-echo.com/post', function (code) {
+        // eslint-disable-next-line max-len, quotes
+        exec("node ./bin/newman.js request -X POST -F 'username=davidwalsh' -F 'password=something' https://postman-echo.com/post", function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
     });
 
     it('should correctly work with --request, --header, --user-agent, --data curl options', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js request -X POST  https://postman-echo.com/post -d \'{"hello":"world"}\' -H \'Content-Type: text/json\' -H \'Scheme: https\' --user-agent \'mobile app\' -r cli,progress', function (code) {
+        // eslint-disable-next-line max-len, quotes
+        exec(`node ./bin/newman.js request -X POST  https://postman-echo.com/post -d '{"hello":"world"}' -H 'Content-Type: text/json' -H 'Scheme: https' --user-agent 'mobile app'`, function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
         });
