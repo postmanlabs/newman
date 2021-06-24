@@ -1,3 +1,7 @@
+master:
+  chores:
+    - Updated dependencies
+
 5.2.3:
   date: 2021-05-03
   chores:
