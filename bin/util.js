@@ -1,48 +1,5 @@
 const _ = require('lodash'),
-    ALL_CURL_OPTIONS = {
-        userAgent: {
-            key: '--user-agent',
-            format: 'string'
-        },
-        data: {
-            key: '--data',
-            format: 'string'
-        },
-        dataRaw: {
-            key: '--data-raw',
-            format: 'string'
-        },
-        dataUrlencode: {
-            key: '--data-urlencode',
-            format: 'string'
-        },
-        dataBinary: {
-            key: '--data-binary',
-            format: 'string'
-        },
-        get: {
-            key: '--get'
-        },
-        header: {
-            key: '--header',
-            format: 'string'
-        },
-        form: {
-            key: '--form',
-            format: 'string'
-        },
-        request: {
-            key: '--request',
-            format: 'string'
-        },
-        head: {
-            key: '--head'
-        },
-        uploadFile: {
-            key: '--upload-file',
-            format: 'string'
-        }
-    };
+    { ALL_CURL_OPTIONS } = require('./constant.js');
 
 module.exports = {
 
@@ -167,10 +124,10 @@ module.exports = {
 
             curlOptionToString = (option, value) => {
                 if (option.format) {
-                    return `${option.key} '${value}'`;
+                    return `${option.long} '${value}'`;
                 }
 
-                return `${option.key}`;
+                return `${option.long}`;
             },
 
             headers = _.reduce(curlOptions.header, (result, value) => {
