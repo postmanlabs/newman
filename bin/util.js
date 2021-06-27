@@ -1,4 +1,5 @@
-const _ = require('lodash');
+const _ = require('lodash'),
+    { ALL_CURL_OPTIONS } = require('./constants.js');
 
 module.exports = {
 
@@ -99,6 +100,57 @@ module.exports = {
 
             return result;
         }, {});
+    },
+
+    /**
+     * Extract curl options in the provided options.
+     * Create curl  command from the options.
+     *
+     * @param {Object} options - Commander.Command Instance
+     * @param {String} url - Requested url
+     * @returns {String} - Curl command
+     */
+    createCurl: (options, url) => {
+        // Get all curl option names
+        const allCurlOptions = Object.keys(ALL_CURL_OPTIONS),
+            curlOptions = _.reduce(options, (result, value, key) => {
+                // Exclude non curl options
+                const validProp = _.includes(allCurlOptions, key);
+
+                validProp && (result[key] = value);
+
+                return result;
+            }, {}),
+
+            curlOptionToString = (option, value) => {
+                if (option.format) {
+                    return `${option.long} '${value}'`;
+                }
+
+                return `${option.long}`;
+            },
+
+            headers = _.reduce(curlOptions.header, (result, value) => {
+                return result + `-H '${value}'`;
+            }, ''),
+
+            forms = _.reduce(curlOptions.form, (result, value) => {
+                return result + `-F '${value}'`;
+            }, ''),
+
+            command = Object.keys(curlOptions).reduce((memo, optionName) => {
+                // forms and headers are collected and added separately
+                if (optionName === 'header' || optionName === 'form') {
+                    return memo;
+                }
+
+                const option = ALL_CURL_OPTIONS[optionName],
+                    value = curlOptions[optionName];
+
+                return memo + ` ${curlOptionToString(option, value)}`;
+            }, 'curl');
+
+        return `${command} ${url} ${headers} ${forms}`;
     },
 
     /**
