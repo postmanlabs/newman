@@ -114,7 +114,7 @@ program
         'Forces the request to be sent as PUT with the specified local file to the server')
     .action((url, command) => {
         /* eslint-disable no-console */
-        console.log('Newman Request is working!');
+            console.log('Newman Request is working!');
         /* eslint-enable no-console */
         let options = util.commanderToObject(command);
 
