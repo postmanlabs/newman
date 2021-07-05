@@ -1,5 +1,5 @@
 const _ = require('lodash'),
-    { ALL_CURL_OPTIONS } = require('./constant.js');
+    { ALL_CURL_OPTIONS } = require('./constants.js');
 
 module.exports = {
 

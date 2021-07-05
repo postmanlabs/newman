@@ -120,6 +120,10 @@ program
         options.curl = curl;
 
         newman.request(options);
+
+        /* eslint-disable no-console */
+        console.log('Newman Request is working!');
+        /* eslint-enable no-console */
     });
 
 program.addHelpText('after', `
