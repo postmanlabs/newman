@@ -113,9 +113,9 @@ program
     .option('-T, --upload-file <file>',
         'Forces the request to be sent as PUT with the specified local file to the server')
     .action((url, command) => {
-        /* eslint-disable no-console */
-            console.log('Newman Request is working!');
-        /* eslint-enable no-console */
+    /* eslint-disable no-console */
+        console.log('Newman Request is working!');
+    /* eslint-enable no-console */
         let options = util.commanderToObject(command);
 
         const curl = util.createCurl(options, url);
