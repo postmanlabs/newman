@@ -112,10 +112,14 @@ program
         'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
     .option('-T, --upload-file <file>',
         'Forces the request to be sent as PUT with the specified local file to the server')
-    .action(() => {
-    /* eslint-disable no-console */
-        console.log('Newman Request is working!');
-    /* eslint-enable no-console */
+    .action((url, command) => {
+        let options = util.commanderToObject(command);
+
+        const curl = util.createCurl(options, url);
+
+        options.curl = curl;
+
+        newman.request(options);
     });
 
 program.addHelpText('after', `
