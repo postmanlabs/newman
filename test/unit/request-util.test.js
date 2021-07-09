@@ -12,10 +12,10 @@ describe('convert', function () {
                     body: {},
                     description: 'Generated from a curl request: \ncurl  --get http://google.com'
                 }
-            }
-            ] },
-        value = 'curl  --get http://google.com';
-
+            }]
+        },
+        value = 'curl  --get http://google.com',
+        value2 = 'curl --request';
 
     let mockCollection = new Collection();
 
@@ -24,10 +24,17 @@ describe('convert', function () {
         request: result.output[0] && result.output[0].data
     });
 
-    const actualCollection = util.convert(value);
-
     it('should convert curl command to Postman Collection', function () {
-        expect(actualCollection.items.name).to.eql(mockCollection.items.name);
-        expect(actualCollection.items.request).to.eql(mockCollection.items.request);
+        util.convertCurltoCollection(value, function (err, result) {
+            expect(err).to.be.null;
+            expect(result.items.name).to.eql(mockCollection.items.name);
+            expect(result.items.request).to.eql(mockCollection.items.request);
+        });
+    });
+
+    it('should throw an error for invalid curl command', function () {
+        util.convertCurltoCollection(value2, function (err, result) {
+            expect(err).to.equal('Error while parsing cURL: Could not identify the URL. Please use the --url option.');
+        });
     });
 });
