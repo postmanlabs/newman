@@ -113,13 +113,21 @@ program
     .option('-T, --upload-file <file>',
         'Forces the request to be sent as PUT with the specified local file to the server')
     .action((url, command) => {
-        let options = util.commanderToObject(command);
+        const options = util.commanderToObject(command),
 
-        const curl = util.createCurl(options, url);
+            curl = util.createCurl(options, url);
 
         options.curl = curl;
 
-        newman.request(options);
+        newman.request(options, function (err, summary) {
+            const runError = err || summary.run.error || summary.run.failures.length;
+
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.friendly && console.error(`  ${err.friendly}\n`);
+            }
+            runError && !_.get(options, 'suppressExitCode') && process.exit(1);
+        });
     });
 
 program.addHelpText('after', `
