@@ -33,7 +33,7 @@ describe('convert', function () {
     });
 
     it('should throw an error for invalid curl command', function () {
-        util.convertCurltoCollection(value2, function (err, result) {
+        util.convertCurltoCollection(value2, function (err, result) { // eslint-disable-line
             expect(err).to.equal('Error while parsing cURL: Could not identify the URL. Please use the --url option.');
         });
     });
