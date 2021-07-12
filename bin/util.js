@@ -111,10 +111,12 @@ module.exports = {
      * @returns {String} - Curl command
      */
     createCurl: (options, url) => {
-        // Get all curl option names
-        const allCurlOptions = Object.keys(ALL_CURL_OPTIONS),
+        const
+            // Get all curl option names
+            allCurlOptions = Object.keys(ALL_CURL_OPTIONS),
+
+            // Exclude non curl options
             curlOptions = _.reduce(options, (result, value, key) => {
-                // Exclude non curl options
                 const validProp = _.includes(allCurlOptions, key);
 
                 validProp && (result[key] = value);
@@ -122,35 +124,30 @@ module.exports = {
                 return result;
             }, {}),
 
-            curlOptionToString = (option, value) => {
-                if (option.format) {
-                    return `${option.long} '${value}'`;
+            // method to convert the user option object to string
+            curlOptionToString = (curlOption, userOptionValue) => {
+                if (curlOption.collectValues && userOptionValue.length > 0) {
+                    const optionsValue = userOptionValue.map((option) => {
+                        return `${curlOption.long} '${option}'`;
+                    }).join(' ');
+
+                    return optionsValue;
                 }
 
-                return `${option.long}`;
+                if (curlOption.format && userOptionValue.length > 0) {
+                    return `${curlOption.long} '${userOptionValue}'`;
+                }
+
+                return '';
             },
 
-            multipleFlags = Object.keys(curlOptions).reduce((memo, optionName) => {
-                const option = ALL_CURL_OPTIONS[optionName],
-                value = curlOptions[optionName];
-                if (option.collectValues && !!value && value.length > 0)
-                    return memo + ` ${option.long} '${value}'`;
+            userOptionsString = Object.entries(curlOptions).map(([optionName, optionValue]) => {
+                const curlOption = ALL_CURL_OPTIONS[optionName];
 
-                    return memo;
-            }, ''),
+                return curlOptionToString(curlOption, optionValue);
+            }).filter(Boolean).join(' ');
 
-            command = Object.keys(curlOptions).reduce((memo, optionName) => {
-                const option = ALL_CURL_OPTIONS[optionName],
-                    value = curlOptions[optionName];
-                // forms and headers are collected and added separately
-                if (option.collectValues) {
-                    return memo ;
-                }
-
-                return memo + ` ${curlOptionToString(option, value)}`;
-            }, 'curl');
-
-        return `${command} ${url} ${multipleFlags}`;
+        return `curl ${url} ${userOptionsString}`;
     },
 
     /**
