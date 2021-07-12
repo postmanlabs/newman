@@ -130,27 +130,27 @@ module.exports = {
                 return `${option.long}`;
             },
 
-            headers = _.reduce(curlOptions.header, (result, value) => {
-                return result + `-H '${value}'`;
-            }, ''),
+            multipleFlags = Object.keys(curlOptions).reduce((memo, optionName) => {
+                const option = ALL_CURL_OPTIONS[optionName],
+                value = curlOptions[optionName];
+                if (option.collectValues && !!value && value.length > 0)
+                    return memo + ` ${option.long} '${value}'`;
 
-            forms = _.reduce(curlOptions.form, (result, value) => {
-                return result + `-F '${value}'`;
+                    return memo;
             }, ''),
 
             command = Object.keys(curlOptions).reduce((memo, optionName) => {
-                // forms and headers are collected and added separately
-                if (optionName === 'header' || optionName === 'form') {
-                    return memo;
-                }
-
                 const option = ALL_CURL_OPTIONS[optionName],
                     value = curlOptions[optionName];
+                // forms and headers are collected and added separately
+                if (option.collectValues) {
+                    return memo ;
+                }
 
                 return memo + ` ${curlOptionToString(option, value)}`;
             }, 'curl');
 
-        return `${command} ${url} ${headers} ${forms}`;
+        return `${command} ${url} ${multipleFlags}`;
     },
 
     /**
