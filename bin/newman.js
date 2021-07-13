@@ -97,11 +97,12 @@ program
     .option('-A, --user-agent <agent>',
         'Specify request user agent')
     .option('-d, --data <data>',
-        'Sends the specified data to the server with type application/x-www-form-urlencoded or application/json')
+        // eslint-disable-next-line max-len
+        'Sends the specified data to the server with type application/x-www-form-urlencoded or application/json', util.cast.memoize, [])
     .option('--data-raw <data>',
-        'Sends the specified data to the server in raw format')
+        'Sends the specified data to the server in raw format', util.cast.memoize, [])
     .option('--data-urlencode <data>',
-        'Sends the specified data to the server with type application/x-www-form-urlencoded')
+        'Sends the specified data to the server with type application/x-www-form-urlencoded', util.cast.memoize, [])
     .option('--data-binary <data>',
         'Sends the specified data as-is')
     .option('-F, --form <name=content>',
@@ -111,7 +112,7 @@ program
     .option('-I, --head',
         'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
     .option('-T, --upload-file <file>',
-        'Forces the request to be sent as PUT with the specified local file to the server')
+        'Forces the request to be sent as PUT with the specified local file to the server', util.cast.memoize, [])
     .action((url, command) => {
         const options = util.commanderToObject(command),
 
