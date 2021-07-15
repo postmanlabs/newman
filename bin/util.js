@@ -125,7 +125,9 @@ module.exports = {
             }, {}),
 
             // method to convert the user option object to string
-            curlOptionToString = (curlOption, userOptionValue) => {
+            curlOptionToString = (curlOptionName, userOptionValue) => {
+                const curlOption = ALL_CURL_OPTIONS[curlOptionName];
+
                 if (curlOption.collectValues && userOptionValue.length > 0) {
                     const optionsValue = userOptionValue.map((option) => {
                         return `${curlOption.long} '${option}'`;
@@ -137,7 +139,8 @@ module.exports = {
                 if (curlOption.format && userOptionValue.length > 0) {
                     return `${curlOption.long} '${userOptionValue}'`;
                 }
-                else if (!curlOption.format) {
+
+                if (!curlOption.format) {
                     return `${curlOption.long}`;
                 }
 
@@ -145,9 +148,7 @@ module.exports = {
             },
 
             userOptionsString = Object.entries(curlOptions).map(([optionName, optionValue]) => {
-                const curlOption = ALL_CURL_OPTIONS[optionName];
-
-                return curlOptionToString(curlOption, optionValue);
+                return curlOptionToString(optionName, optionValue);
             }).filter(Boolean).join(' ');
 
         return `curl ${userOptionsString} ${url}`;

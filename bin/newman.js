@@ -120,14 +120,14 @@ program
 
         options.curl = curl;
 
-        newman.request(options, function (err, summary) {
-            const runError = err || summary.run.error || summary.run.failures.length;
+        newman.request(options, function (err) {
+            const requestError = err;
 
             if (err) {
                 console.error(`error: ${err.message || err}\n`);
                 err.friendly && console.error(`  ${err.friendly}\n`);
             }
-            runError && !_.get(options, 'suppressExitCode') && process.exit(1);
+            requestError && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
 
