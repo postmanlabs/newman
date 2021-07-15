@@ -116,18 +116,20 @@ program
     .action((url, command) => {
         const options = util.commanderToObject(command),
 
+            // convert the commander options object to a curl string
             curl = util.createCurl(options, url);
 
+        // Inject additional properties into the options object
         options.curl = curl;
 
         newman.request(options, function (err) {
-            const requestError = err;
+            const requestErr = err;
 
             if (err) {
                 console.error(`error: ${err.message || err}\n`);
                 err.friendly && console.error(`  ${err.friendly}\n`);
             }
-            requestError && !_.get(options, 'suppressExitCode') && process.exit(1);
+            requestErr && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
 
