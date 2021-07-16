@@ -113,6 +113,8 @@ program
         'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
     .option('-T, --upload-file <file>',
         'Forces the request to be sent as PUT with the specified local file to the server', util.cast.memoize, [])
+    .option('-x, --suppress-exit-code',
+        'Specify whether or not to override the default exit code for the current request')
     .action((url, command) => {
         const options = util.commanderToObject(command),
 
