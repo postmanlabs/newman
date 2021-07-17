@@ -1,7 +1,9 @@
 var util = require('../../lib/request/util.js'),
+    sinon = require('sinon'),
+    curl2postman = require('curl-to-postmanv2'),
     Collection = require('postman-collection').Collection;
 
-describe('convert', function () {
+describe('request util convertCurltoCollection', function () {
     var result = {
             result: true,
             output: [{ type: 'request',
@@ -22,6 +24,14 @@ describe('convert', function () {
     mockCollection.items.add({
         name: result.output[0] && result.output[0].data.name,
         request: result.output[0] && result.output[0].data
+    });
+
+    it('should throw an error for unexpected error from curl2postman module', function () {
+        sinon.stub(curl2postman, 'convert').yields(new Error('fake_crash'));
+        util.convertCurltoCollection(value, function (err, result) { // eslint-disable-line
+            expect(err.message).to.equal('fake_crash');
+            sinon.restore();
+        });
     });
 
     it('should convert curl command to Postman Collection', function () {
