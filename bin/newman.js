@@ -97,11 +97,12 @@ program
     .option('-A, --user-agent <agent>',
         'Specify request user agent')
     .option('-d, --data <data>',
-        'Sends the specified data to the server with type application/x-www-form-urlencoded or application/json')
+        // eslint-disable-next-line max-len
+        'Sends the specified data to the server with type application/x-www-form-urlencoded or application/json', util.cast.memoize, [])
     .option('--data-raw <data>',
-        'Sends the specified data to the server in raw format')
+        'Sends the specified data to the server in raw format', util.cast.memoize, [])
     .option('--data-urlencode <data>',
-        'Sends the specified data to the server with type application/x-www-form-urlencoded')
+        'Sends the specified data to the server with type application/x-www-form-urlencoded', util.cast.memoize, [])
     .option('--data-binary <data>',
         'Sends the specified data as-is')
     .option('-F, --form <name=content>',
@@ -111,11 +112,27 @@ program
     .option('-I, --head',
         'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
     .option('-T, --upload-file <file>',
-        'Forces the request to be sent as PUT with the specified local file to the server')
-    .action(() => {
-    /* eslint-disable no-console */
-        console.log('Newman Request is working!');
-    /* eslint-enable no-console */
+        'Forces the request to be sent as PUT with the specified local file to the server', util.cast.memoize, [])
+    .option('-x, --suppress-exit-code',
+        'Specify whether or not to override the default exit code for the current request')
+    .action((url, command) => {
+        const options = util.commanderToObject(command),
+
+            // convert the commander options object to a curl string
+            curl = util.createCurl(options, url);
+
+        // Inject additional properties into the options object
+        options.curl = curl;
+
+        newman.request(options, function (err) {
+            const requestErr = err;
+
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.friendly && console.error(`  ${err.friendly}\n`);
+            }
+            requestErr && !_.get(options, 'suppressExitCode') && process.exit(1);
+        });
     });
 
 program.addHelpText('after', `

@@ -1,4 +1,4 @@
-var newmanVersion = require('../../package.json').version;
+var newmanVersion = require('../../../package.json').version;
 
 describe('Curl Options', function () {
     it('should work correctly without any extra options', function (done) {
