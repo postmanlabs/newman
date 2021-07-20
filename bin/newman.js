@@ -121,6 +121,7 @@ program
 
             // parse custom reporter options
             reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters),
+
             // convert the commander options object to a curl string
             curl = util.createCurl(options, url);
 
@@ -130,6 +131,7 @@ program
         options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
             acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
         }, {});
+  
         newman.request(options, function (err) {
             const requestErr = err;
 
