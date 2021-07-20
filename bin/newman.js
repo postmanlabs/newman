@@ -131,7 +131,6 @@ program
         options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
             acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
         }, {});
-  
         newman.request(options, function (err) {
             const requestErr = err;
 
