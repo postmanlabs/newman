@@ -84,3 +84,27 @@ describe('Curl Options', function () {
         });
     });
 });
+
+describe('Reporter Options', function () {
+    it('should correctly work with cli reporter option', function (done) {
+        exec('node ./bin/newman.js request -G https://google.com -r cli', function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
+    it('should correctly work with progress reporter option', function (done) {
+        exec('node ./bin/newman.js request -G https://google.com -r progress', function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+
+    it('should correctly work with cli reporter option and --data curl option', function (done) {
+        // eslint-disable-next-line max-len, quotes
+        exec(`node ./bin/newman.js request -X POST 'https://postman-echo.com/post' -x -d 'name=admin' -d 'shoesize=12' -r cli`, function (code) {
+            expect(code, 'should have exit code of 0').to.equal(0);
+            done();
+        });
+    });
+});
