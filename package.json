@@ -50,7 +50,7 @@
     "filesize": "6.3.0",
     "lodash": "4.17.21",
     "mkdirp": "1.0.4",
-    "postman-collection": "4.0.0",
+    "postman-collection": "4.0.1",
     "postman-collection-transformer": "4.1.2",
     "postman-request": "2.88.1-postman.30",
     "postman-runtime": "7.28.2",
