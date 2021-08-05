@@ -44,9 +44,9 @@
     "cli-progress": "3.9.0",
     "cli-table3": "0.6.0",
     "colors": "1.4.0",
-    "curl-to-postmanv2": "0.5.1",
     "commander": "7.2.0",
     "csv-parse": "4.15.4",
+    "curl-to-postmanv2": "0.5.1",
     "eventemitter3": "4.0.7",
     "filesize": "6.3.0",
     "lodash": "4.17.21",
@@ -60,6 +60,7 @@
     "serialised-error": "1.1.3",
     "tough-cookie": "3.0.1",
     "word-wrap": "1.2.3",
+    "xml-formatter": "2.4.0",
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {

@@ -123,6 +123,7 @@ program
 
         // Inject additional properties into the options object
         options.curl = curl;
+        options.singleRequest = true;
 
         newman.request(options, function (err) {
             const requestErr = err;
