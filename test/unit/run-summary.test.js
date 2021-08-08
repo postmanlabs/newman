@@ -41,7 +41,7 @@ describe('run summary', function () {
 
         expect(summary).to.have.property('run');
         expect(_.keys(summary.run).sort())
-            .to.eql(['stats', 'timings', 'executions', 'transfers', 'failures', 'error'].sort());
+            .to.eql(['stats', 'timings', 'executions', 'transfers', 'timingPhases', 'verboseSession', 'failures', 'error'].sort());
         expect(summary.run.failures).to.be.an('array');
         expect(summary.run.stats).to.be.an('object');
         expect(summary.run.timings).to.be.an('object');
