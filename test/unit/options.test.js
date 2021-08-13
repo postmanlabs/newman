@@ -34,6 +34,16 @@ describe('options', function () {
             });
         });
 
+        it('should apply directly specified env variables to environment list', function (done) {
+            options({
+                envVar: [{ key: 'test', value: 'data' }]
+            }, function (err, result) {
+                expect(err).to.be.null;
+                expect(result).to.have.nested.property('environment.values.reference.test.value', 'data');
+                done();
+            });
+        });
+
         it('should be handled correctly for globals', function (done) {
             var globals = require('../../test/fixtures/run/spaces/simple-variables.json');
 
@@ -43,6 +53,16 @@ describe('options', function () {
                 expect(err).to.be.null;
 
                 expect(_.omit(result.globals.toJSON(), 'id')).to.eql(globals);
+                done();
+            });
+        });
+
+        it('should apply directly specified global variables to globals list', function (done) {
+            options({
+                globalVar: [{ key: 'test', value: 'data' }]
+            }, function (err, result) {
+                expect(err).to.be.null;
+                expect(result).to.have.nested.property('globals.values.reference.test.value', 'data');
                 done();
             });
         });
