@@ -1,4 +1,5 @@
 var _ = require('lodash'),
+    { VariableScope } = require('postman-collection'),
     options = require('../../lib/run/options');
 
 describe('options', function () {
@@ -40,7 +41,7 @@ describe('options', function () {
             }, function (err, result) {
                 expect(err).to.be.null;
                 expect(result).to.have.property('environment');
-                expect(result.environment).to.be.an.instanceof(sdk.VariableScope);
+                expect(result.environment).to.be.an.instanceof(VariableScope);
                 expect(result.environment.get('test')).to.equal('data');
                 done();
             });
@@ -64,7 +65,9 @@ describe('options', function () {
                 globalVar: [{ key: 'test', value: 'data' }]
             }, function (err, result) {
                 expect(err).to.be.null;
-                expect(result).to.have.nested.property('globals.values.reference.test.value', 'data');
+                expect(result).to.have.property('globals');
+                expect(result.globals).to.be.an.instanceof(VariableScope);
+                expect(result.globals.get('test')).to.equal('data');
                 done();
             });
         });
