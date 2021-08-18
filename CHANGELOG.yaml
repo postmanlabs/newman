@@ -1,8 +1,31 @@
 master:
-    new features:
-     - >-
-        GH-2509 Added a new option `no-executions-summary` in newman to skip addition of request,
-        response to summary executions report generated for specified reporter.
+  new features:
+    - >-
+      GH-2806 Exposed the runner on newman and the runtime run object in start
+      event
+    - >-
+      GH-2509 Added a new option `--no-executions-summary` to skip accumulation
+      of request-response in the summary object
+
+5.2.4:
+  date: 2021-06-24
+  chores:
+    - Updated dependencies
+
+5.2.3:
+  date: 2021-05-03
+  chores:
+    - Updated dependencies
+
+5.2.2:
+  date: 2021-01-03
+  chores:
+    - Updated dependencies
+
+5.2.1:
+  date: 2020-11-02
+  chores:
+    - Updated dependencies
 
 5.2.0:
   date: 2020-09-01
@@ -232,9 +255,9 @@ master:
     - >-
       GH-1616 Moved inbuilt HTML reporter to a standalone reporter:
       https://github.com/postmanlabs/newman-reporter-html
-    - 'GH-1653 Updated `color` option behaviour, dropped support for --no-color'
+    - GH-1653 Updated `color` option behaviour, dropped support for --no-color
   fixed bugs:
-    - 'GH-1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes'
+    - GH-1609 Fixed CSV auto parse, to avoid parsing numbers inside quotes
     - GH-1630 Updated default timeout values to Infinity
   chores:
     - GH-1623 Refactored Newman CLI
@@ -446,7 +469,7 @@ master:
 3.5.0:
   date: 2017-03-07
   new features:
-    - 'Added support for multi level folders in the cli, html and junit reporters'
+    - Added support for multi level folders in the cli, html and junit reporters
     - >-
       Updated postman-collection to v1.0.0, which contains helper methods for
       dealing with multi-level folders

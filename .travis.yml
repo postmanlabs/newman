@@ -11,8 +11,8 @@ node_js:
 jobs:
   include:
     - name: 'Coverage'
-      node_js: stable
       os: linux
+      node_js: '14'
       script:
         - npm run test-unit
         - bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F unit

@@ -3,7 +3,7 @@
 <a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
 _Manage all of your organization's APIs in Postman, with the industry's most complete API development environment._
 
-# newman <sub>_the cli companion for postman_</sub> [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=develop)](https://travis-ci.org/postmanlabs/newman) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman)
+# newman <sub>_the cli companion for postman_</sub> [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=develop)](https://travis-ci.com/postmanlabs/newman) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman)
 
 Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
@@ -450,6 +450,8 @@ such a scenario.
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
+
+| `--reporter-cli-show-timestamps` | This prints the local time for each request made. | 
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
