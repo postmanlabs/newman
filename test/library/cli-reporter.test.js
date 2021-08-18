@@ -1,6 +1,7 @@
 const Table = require('cli-table3'),
+    EventEmitter = require('eventemitter3'),
     PostmanCLIReporter = require('../../lib/reporters/cli'),
-    runSummary = require('../fixtures/reporters/cli/run-summary.json'),
+    runSummary = require('../fixtures/reporters/cli/singleRequest-run-summary.json'),
     runFailure = require('../fixtures/reporters/cli/run-failure.json');
 
 describe('PostmanCLIReporter', function () {
@@ -36,5 +37,33 @@ describe('PostmanCLIReporter', function () {
         const summarytable = PostmanCLIReporter.verboseSession(runSummary);
 
         expect(summarytable).to.eql({ addresses: {}, tls: {} });
+    });
+
+    describe('CLI reporter events', function () {
+        const options = {
+            header: [],
+            data: [],
+            dataRaw: [],
+            dataUrlencode: [],
+            form: [],
+            uploadFile: [],
+            reporters: ['cli'],
+            responseLimit: 10485760,
+            request: 'GET',
+            curl: 'curl --request \'GET\' https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn.io/get-xml',
+            singleRequest: true
+        };
+
+        it('should be listening on multiple events', function () {
+            const eventEmitter = new EventEmitter();
+
+            PostmanCLIReporter(eventEmitter, {}, options);
+
+            expect(Object.keys(eventEmitter._events)).to.eql([
+                'done', 'start', 'beforeIteration',
+                'test', 'beforeItem', 'beforeRequest',
+                'request', 'script', 'assertion', 'console'
+            ]);
+        });
     });
 });
