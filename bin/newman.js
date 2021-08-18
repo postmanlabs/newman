@@ -60,6 +60,8 @@ program
     .option('--ssl-extra-ca-certs <path>', 'Specify additionally trusted CA certificates (PEM)')
     .option('--cookie-jar <path>', 'Specify the path to a custom cookie jar (serialized tough-cookie JSON) ')
     .option('--export-cookie-jar <path>', 'Exports the cookie jar to a file after completing the run')
+    .option('--no-executions-summary',
+        'Skips addition of request, response to summary executions report generated')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .action((collection, command) => {
         let options = util.commanderToObject(command),
@@ -73,6 +75,9 @@ program
         options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
             acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
         }, {});
+
+        // @todo should we make this a Symbol to make it fool-proof?
+        options._isCli = true;
 
         newman.run(options, function (err, summary) {
             const runError = err || summary.run.error || summary.run.failures.length;

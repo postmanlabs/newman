@@ -43,6 +43,7 @@ describe('cli parser', function () {
 
                     // explicitly match object to track addition/deletion of properties.
                     expect(opts).to.eql({
+                        _isCli: true,
                         collection: 'collection.json',
                         reporters: ['cli'],
                         delayRequest: 0,
@@ -50,6 +51,7 @@ describe('cli parser', function () {
                         envVar: [],
                         folder: [],
                         insecureFileRead: true,
+                        executionsSummary: true,
                         color: 'auto',
                         timeout: 0,
                         timeoutRequest: 0,
