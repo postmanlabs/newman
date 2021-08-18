@@ -1,0 +1,108 @@
+[
+    {
+        "error": {
+            "errno": "ENOTFOUND",
+            "code": "ENOTFOUND",
+            "syscall": "getaddrinfo",
+            "hostname": "5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io",
+            "name": "Error",
+            "message": "getaddrinfo ENOTFOUND 5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io",
+            "stack": "Error: getaddrinfo ENOTFOUND 5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io\\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:64:26)",
+            "checksum": "a6948b9349755304b5282d9738c7f3c8",
+            "id": "7a7798f7-58ad-4786-99c0-f15483288e1e",
+            "timestamp": 1629318697860,
+            "stacktrace": [
+                {
+                    "fileName": "dns.js",
+                    "lineNumber": 64,
+                    "functionName": "GetAddrInfoReqWrap.onlookup [as oncomplete]",
+                    "typeName": "GetAddrInfoReqWrap",
+                    "methodName": "onlookup [as oncomplete]",
+                    "columnNumber": 26,
+                    "native": false
+                }
+            ]
+        },
+        "at": "request",
+        "source": {
+            "id": "148a2814-a782-449c-816f-8cdac1869af5",
+            "name": "https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io/get-xm",
+            "request": {
+                "name": "https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io/get-xm",
+                "description": {
+                    "content": "Generated from a curl request: \\ncurl --request 'GET' https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io/get-xm",
+                    "type": "text/plain"
+                },
+                "url": {
+                    "protocol": "https",
+                    "path": [
+                        "get-xm"
+                    ],
+                    "host": [
+                        "5a178277-8664-409c-8e93-d5ee2935d2cb",
+                        "mock",
+                        "pstmn1",
+                        "io"
+                    ],
+                    "query": [],
+                    "variable": []
+                },
+                "method": "GET",
+                "body": {}
+            },
+            "response": [],
+            "event": []
+        },
+        "parent": {
+            "item": [
+                {
+                    "id": "148a2814-a782-449c-816f-8cdac1869af5",
+                    "name": "https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io/get-xm",
+                    "request": {
+                        "name": "https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io/get-xm",
+                        "description": {
+                            "content": "Generated from a curl request: \\ncurl --request 'GET' https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn1.io/get-xm",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "protocol": "https",
+                            "path": [
+                                "get-xm"
+                            ],
+                            "host": [
+                                "5a178277-8664-409c-8e93-d5ee2935d2cb",
+                                "mock",
+                                "pstmn1",
+                                "io"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {}
+                    },
+                    "response": [],
+                    "event": []
+                }
+            ],
+            "event": [],
+            "variable": [],
+            "info": {
+                "_postman_id": "b5afed11-02ad-4568-97ce-cdec959e378e",
+                "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+            }
+        },
+        "cursor": {
+            "position": 0,
+            "iteration": 0,
+            "length": 1,
+            "cycles": 1,
+            "empty": false,
+            "eof": false,
+            "bof": true,
+            "cr": false,
+            "ref": "4dc013d6-6410-4f2d-88bf-1c0636bd52d7",
+            "httpRequestId": "57374b65-0203-40a1-9e64-95dd35a40bb0"
+        }
+    }
+]
