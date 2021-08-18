@@ -76,6 +76,9 @@ program
             acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
         }, {});
 
+        // @todo should we make this a Symbol to make it fool-proof?
+        options._isCli = true;
+
         newman.run(options, function (err, summary) {
             const runError = err || summary.run.error || summary.run.failures.length;
 
