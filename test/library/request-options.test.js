@@ -1,4 +1,7 @@
-const _ = require('lodash');
+const _ = require('lodash'),
+    sinon = require('sinon'),
+    runtime = require('postman-runtime'),
+    util = require('../../lib/request/util');
 
 describe('Newman request options', function () {
     const getRequestCurl = 'curl -X GET https://postman-echo.com/get',
@@ -27,8 +30,7 @@ describe('Newman request options', function () {
                 response = executions[0].response.json();
 
             expect(err).to.not.be.ok;
-            expect(response).to.have.property('url')
-                .that.eql('https://postman-echo.com/get');
+            expect(response).to.have.property('url').that.eql('https://postman-echo.com/get');
             expect(executions).to.have.lengthOf(1);
             done();
         });
@@ -93,5 +95,71 @@ describe('Newman request options', function () {
             expect(executions).to.have.lengthOf(1);
             done();
         });
+    });
+
+    describe('external reporters', function () {
+        beforeEach(function () {
+            sinon.replace(console, 'warn', sinon.fake());
+        });
+
+        afterEach(function () {
+            sinon.restore();
+        });
+
+        it('warns when not found for newman request', function (done) {
+            const options = _.merge({}, basicOptions, {
+                curl: getRequestCurl,
+                reporters: ['unknownreporter']
+            });
+
+            newman.request(options, function (err) {
+                expect(err).to.be.null;
+                expect(console.warn.called).to.be.true;
+                expect(console.warn.calledWith('newman: could not find "unknownreporter" reporter')).to.be.true;
+                expect(console.warn.calledWith('  please install reporter using npm\n')).to.be.true;
+
+                done();
+            });
+        });
+
+        it('warns with install command when known reporter is not found for newman request', function (done) {
+            const options = _.merge({}, basicOptions, {
+                curl: getRequestCurl,
+                reporters: ['html']
+            });
+
+            newman.request(options, function (err) {
+                expect(err).to.be.null;
+                expect(console.warn.called).to.be.true;
+                expect(console.warn.calledWith('newman: could not find "html" reporter')).to.be.true;
+                expect(console.warn.calledWith('  run `npm install newman-reporter-html`\n')).to.be.true;
+
+                done();
+            });
+        });
+    });
+
+    it('should throw an error for unexpected error from curl2postman module', function (done) {
+        sinon.stub(util, 'convertCurltoCollection').yields(new Error('fake-crash_curl2postman'));
+        expect(function () {
+            newman.request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
+                expect(err.message).to.equal('fake-crash_curl2postman');
+                sinon.restore();
+                done();
+            });
+        }).to.not.throw();
+    });
+
+    it('should throw an error for unexpected error from postman-runtime module', function (done) {
+        sinon.stub(runtime, 'Runner').prototype.run = (collection, options, callback) => {
+            callback(new Error('fake-crash_postman-runtime'));
+        };
+        expect(function () {
+            newman.request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
+                expect(err.message).to.equal('fake-crash_postman-runtime');
+                sinon.restore();
+                done();
+            });
+        }).to.not.throw();
     });
 });
