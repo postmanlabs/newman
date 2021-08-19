@@ -3,7 +3,16 @@ const _ = require('lodash'),
     runtime = require('postman-runtime'),
     util = require('../../lib/request/util');
 
+
 describe('Newman request options', function () {
+    beforeEach(function () {
+        sinon.replace(console, 'warn', sinon.fake());
+    });
+
+    afterEach(function () {
+        sinon.restore();
+    });
+
     const getRequestCurl = 'curl -X GET https://postman-echo.com/get',
         invalidUrl = 'curl -X GET https://123.random.z/get',
         basicOptions = { reporters: ['cli'], singleRequest: true };
@@ -98,14 +107,6 @@ describe('Newman request options', function () {
     });
 
     describe('external reporters', function () {
-        beforeEach(function () {
-            sinon.replace(console, 'warn', sinon.fake());
-        });
-
-        afterEach(function () {
-            sinon.restore();
-        });
-
         it('warns when not found for newman request', function (done) {
             const options = _.merge({}, basicOptions, {
                 curl: getRequestCurl,
@@ -137,6 +138,22 @@ describe('Newman request options', function () {
                 done();
             });
         });
+
+        it('warns when scoped reporter is not found for newman request', function (done) {
+            const options = _.merge({}, basicOptions, {
+                curl: getRequestCurl,
+                reporters: ['@company/reporter']
+            });
+
+            newman.request(options, function (err) {
+                expect(err).to.be.null;
+                expect(console.warn.called).to.be.true;
+                expect(console.warn.calledWith('newman: could not find "@company/reporter" reporter')).to.be.true;
+                expect(console.warn.calledWith('  please install reporter using npm\n')).to.be.true;
+
+                done();
+            });
+        });
     });
 
     it('should throw an error for unexpected error from curl2postman module', function (done) {
@@ -157,6 +174,26 @@ describe('Newman request options', function () {
         expect(function () {
             newman.request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
                 expect(err.message).to.equal('fake-crash_postman-runtime');
+                sinon.restore();
+                done();
+            });
+        }).to.not.throw();
+    });
+
+    it('should show warning that more than one dominant reporter can not exist', function (done) {
+        const PostmanJSONReporter = require('../../lib/reporters/json');
+
+        PostmanJSONReporter.prototype.dominant = true;
+
+        expect(function () {
+            newman.request({
+                curl: 'curl -X GET "https://postman-echo.com/get"',
+                reporters: ['cli', 'json'],
+                singleRequest: true
+            }, function (err) {
+                expect(err).to.be.null;
+                expect(console.warn.called).to.be.true;
+                expect(console.warn.calledWith('newman: cli, json reporters might not work well together.')).to.be.true;
                 sinon.restore();
                 done();
             });
