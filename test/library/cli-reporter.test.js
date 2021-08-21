@@ -1,6 +1,7 @@
 const Table = require('cli-table3'),
     EventEmitter = require('eventemitter3'),
-    PostmanCLIReporter = require('../../lib/reporters/cli'),
+    PostmanCLIReporter = require('../../lib/reporters/cli/cli-run'),
+    PostmanCLIRequestReporter = require('../../lib/reporters/cli/cli-request'),
     runSummary = require('../fixtures/reporters/cli/singleRequest-run-summary.json'),
     runFailure = require('../fixtures/reporters/cli/run-failure.json');
 
@@ -15,7 +16,7 @@ describe('PostmanCLIReporter', function () {
     });
 
     it('parseSingleRequestStatistics should give valid table instance', function () {
-        const summarytable = PostmanCLIReporter.parseSingleRequestStatistics(runSummary);
+        const summarytable = PostmanCLIRequestReporter.parseSingleRequestStatistics(runSummary);
 
         expect(summarytable).to.be.an.instanceof(Table);
     });
@@ -34,7 +35,7 @@ describe('PostmanCLIReporter', function () {
     });
 
     it('verboseSession should give a verbose object format', function () {
-        const summarytable = PostmanCLIReporter.verboseSession(runSummary);
+        const summarytable = PostmanCLIRequestReporter.verboseSession(runSummary);
 
         expect(summarytable).to.eql({ addresses: {}, tls: {} });
     });
