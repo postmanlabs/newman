@@ -9,7 +9,7 @@ const _ = require('lodash'),
     version = require('../package.json').version,
     newman = require('../'),
     util = require('./util');
-
+    //util2 = require('../lib/request/util')
 program
     .name('newman')
     .addHelpCommand(false)
@@ -119,14 +119,15 @@ program
     .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run', util.cast.csvParse, ['cli'])
     .option('--response-limit <integer>', 'Show the limit of response-size', 1024 * 1024 * 10) // 10 MB
     .action((url, command) => {
-        const options = util.commanderToObject(command),
+        const options = util.commanderToObject(command);
+        options.url = url;
 
             // convert the commander options object to a curl string
-            curl = util.createCurl(options, url);
+            //curl = util2.createCurl(options);
 
         // Inject additional properties into the options object
-        options.curl = curl;
-        options.singleRequest = true;
+        //options.curl = curl;
+        //options.singleRequest = true;
 
         newman.request(options, function (err) {
             const requestErr = err;
