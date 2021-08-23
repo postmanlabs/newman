@@ -21,7 +21,7 @@ describe('request module', function () {
 
     it('should start a request with only url', function (done) {
         expect(function () {
-            request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
+            request({ url: 'https://postman-echo.com/get', request: 'GET', responseLimit: 10485760 }, function (err) {
                 expect(err).to.eq(null);
                 done();
             });
@@ -31,7 +31,7 @@ describe('request module', function () {
     it('should throw an error for unexpected error from curl2postman module', function (done) {
         sinon.stub(util, 'convertCurltoCollection').yields(new Error('fake-crash_curl2postman'));
         expect(function () {
-            request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
+            request({ url: 'https://postman-echo.com/get', request: 'GET', responseLimit: 10485760 }, function (err) {
                 expect(err.message).to.equal('fake-crash_curl2postman');
                 sinon.restore();
                 done();
@@ -44,7 +44,7 @@ describe('request module', function () {
             callback(new Error('fake-crash_postman-runtime'));
         };
         expect(function () {
-            request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
+            request({ url: 'https://postman-echo.com/get', request: 'GET', responseLimit: 10485760 }, function (err) {
                 expect(err.message).to.equal('fake-crash_postman-runtime');
                 sinon.restore();
                 done();
