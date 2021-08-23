@@ -10,13 +10,6 @@ describe('PostmanCLIRequestReporter', function () {
         expect(summarytable).to.be.an.instanceof(Table);
     });
 
-    it('parseFailures should not give any row for no failuires', function () {
-        const summarytable = PostmanCLIRequestReporter.parseFailures([]);
-
-        expect(summarytable.length).to.eql(0);
-        expect(summarytable).to.be.an.instanceof(Table);
-    });
-
     it('verboseSession should give a verbose object format', function () {
         const summarytable = PostmanCLIRequestReporter.verboseSession(runSummary);
 

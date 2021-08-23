@@ -1,8 +1,7 @@
 const Table = require('cli-table3'),
     EventEmitter = require('eventemitter3'),
     PostmanCLIRunReporter = require('../../lib/reporters/cli/cli-run'),
-    runSummary = require('../fixtures/reporters/cli/singleRequest-run-summary.json'),
-    runFailure = require('../fixtures/reporters/cli/run-failure.json');
+    runSummary = require('../fixtures/reporters/cli/singleRequest-run-summary.json');
 
 describe('PostmanCLIRunReporter', function () {
     it('parseStatistics should give valid table instance', function () {
@@ -10,19 +9,6 @@ describe('PostmanCLIRunReporter', function () {
             runSummary.timings,
             runSummary.transfers,
             runSummary.options);
-
-        expect(summarytable).to.be.an.instanceof(Table);
-    });
-
-    it('parseFailures should not give any row for no failuires', function () {
-        const summarytable = PostmanCLIRunReporter.parseFailures([]);
-
-        expect(summarytable.length).to.eql(0);
-        expect(summarytable).to.be.an.instanceof(Table);
-    });
-
-    it('parseFailures should give a table for failuires', function () {
-        const summarytable = PostmanCLIRunReporter.parseFailures(runFailure);
 
         expect(summarytable).to.be.an.instanceof(Table);
     });
