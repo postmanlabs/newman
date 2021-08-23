@@ -13,12 +13,12 @@ describe('Newman request options', function () {
         sinon.restore();
     });
 
-    const getRequestCurl = 'curl -X GET https://postman-echo.com/get',
-        invalidUrl = 'curl -X GET https://123.random.z/get',
+    const getRequestCurl = 'https://postman-echo.com/get',
+        invalidUrl = 'https://123.random.z/get',
         basicOptions = { reporters: ['cli'], singleRequest: true };
 
     it('should work correctly without basic options', function (done) {
-        const options = _.merge({}, basicOptions, { curl: getRequestCurl });
+        const options = _.merge({}, basicOptions, { url: getRequestCurl });
 
         newman.request(options, done);
     });
@@ -32,7 +32,7 @@ describe('Newman request options', function () {
     });
 
     it('should execute correct response for correct url', function (done) {
-        const options = _.merge({}, basicOptions, { curl: getRequestCurl });
+        const options = _.merge({}, basicOptions, { url: getRequestCurl });
 
         newman.request(options, function (err, summary) {
             const executions = summary.run.executions,
@@ -46,7 +46,7 @@ describe('Newman request options', function () {
     });
 
     it('should not execute correct response for incorrect url', function (done) {
-        const options = _.merge({}, basicOptions, { curl: invalidUrl });
+        const options = _.merge({}, basicOptions, { url: invalidUrl });
 
         newman.request(options, function (err, summary) {
             expect(err).to.not.be.ok;
@@ -57,7 +57,7 @@ describe('Newman request options', function () {
 
     it('should work without any reporters', function (done) {
         const options = _.merge({}, basicOptions, {
-            curl: getRequestCurl,
+            url: getRequestCurl,
             reporters: []
         });
 
@@ -74,7 +74,7 @@ describe('Newman request options', function () {
 
     it('should work with string reporters', function (done) {
         const options = _.merge({}, basicOptions, {
-            curl: getRequestCurl,
+            url: getRequestCurl,
             reporters: 'cli'
         });
 
@@ -91,7 +91,7 @@ describe('Newman request options', function () {
 
     it('should work with non-cli reporters', function (done) {
         const options = _.merge({}, basicOptions, {
-            curl: getRequestCurl,
+            url: getRequestCurl,
             reporters: ['json', 'progress']
         });
 
@@ -109,7 +109,7 @@ describe('Newman request options', function () {
     describe('external reporters', function () {
         it('warns when not found for newman request', function (done) {
             const options = _.merge({}, basicOptions, {
-                curl: getRequestCurl,
+                url: getRequestCurl,
                 reporters: ['unknownreporter']
             });
 
@@ -125,7 +125,7 @@ describe('Newman request options', function () {
 
         it('warns with install command when known reporter is not found for newman request', function (done) {
             const options = _.merge({}, basicOptions, {
-                curl: getRequestCurl,
+                url: getRequestCurl,
                 reporters: ['html']
             });
 
@@ -141,7 +141,7 @@ describe('Newman request options', function () {
 
         it('warns when scoped reporter is not found for newman request', function (done) {
             const options = _.merge({}, basicOptions, {
-                curl: getRequestCurl,
+                url: getRequestCurl,
                 reporters: ['@company/reporter']
             });
 
@@ -159,7 +159,7 @@ describe('Newman request options', function () {
     it('should throw an error for unexpected error from curl2postman module', function (done) {
         sinon.stub(util, 'convertCurltoCollection').yields(new Error('fake-crash_curl2postman'));
         expect(function () {
-            newman.request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
+            newman.request({ url: 'https://postman-echo.com/get' }, function (err) {
                 expect(err.message).to.equal('fake-crash_curl2postman');
                 sinon.restore();
                 done();
@@ -172,7 +172,7 @@ describe('Newman request options', function () {
             callback(new Error('fake-crash_postman-runtime'));
         };
         expect(function () {
-            newman.request({ curl: 'curl -X GET "https://postman-echo.com/get"' }, function (err) {
+            newman.request({ url: 'https://postman-echo.com/get' }, function (err) {
                 expect(err.message).to.equal('fake-crash_postman-runtime');
                 sinon.restore();
                 done();
@@ -187,7 +187,7 @@ describe('Newman request options', function () {
 
         expect(function () {
             newman.request({
-                curl: 'curl -X GET "https://postman-echo.com/get"',
+                url: 'https://postman-echo.com/get',
                 reporters: ['cli', 'json'],
                 singleRequest: true
             }, function (err) {
