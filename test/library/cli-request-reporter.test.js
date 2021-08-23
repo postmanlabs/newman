@@ -1,20 +1,9 @@
 const Table = require('cli-table3'),
     EventEmitter = require('eventemitter3'),
-    PostmanCLIReporter = require('../../lib/reporters/cli/cli-run'),
     PostmanCLIRequestReporter = require('../../lib/reporters/cli/cli-request'),
-    runSummary = require('../fixtures/reporters/cli/singleRequest-run-summary.json'),
-    runFailure = require('../fixtures/reporters/cli/run-failure.json');
+    runSummary = require('../fixtures/reporters/cli/singleRequest-run-summary.json');
 
-describe('PostmanCLIReporter', function () {
-    it('parseStatistics should give valid table instance', function () {
-        const summarytable = PostmanCLIReporter.parseStatistics(runSummary.stats,
-            runSummary.timings,
-            runSummary.transfers,
-            runSummary.options);
-
-        expect(summarytable).to.be.an.instanceof(Table);
-    });
-
+describe('PostmanCLIRequestReporter', function () {
     it('parseSingleRequestStatistics should give valid table instance', function () {
         const summarytable = PostmanCLIRequestReporter.parseSingleRequestStatistics(runSummary);
 
@@ -22,15 +11,9 @@ describe('PostmanCLIReporter', function () {
     });
 
     it('parseFailures should not give any row for no failuires', function () {
-        const summarytable = PostmanCLIReporter.parseFailures([]);
+        const summarytable = PostmanCLIRequestReporter.parseFailures([]);
 
         expect(summarytable.length).to.eql(0);
-        expect(summarytable).to.be.an.instanceof(Table);
-    });
-
-    it('parseFailures should give a table for failuires', function () {
-        const summarytable = PostmanCLIReporter.parseFailures(runFailure);
-
         expect(summarytable).to.be.an.instanceof(Table);
     });
 
@@ -51,20 +34,16 @@ describe('PostmanCLIReporter', function () {
             reporters: ['cli'],
             responseLimit: 10485760,
             request: 'GET',
-            curl: 'curl --request \'GET\' https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn.io/get-xml',
+            url: 'https://5a178277-8664-409c-8e93-d5ee2935d2cb.mock.pstmn.io/get-xml',
             singleRequest: true
         };
 
         it('should be listening on multiple events', function () {
             const eventEmitter = new EventEmitter();
 
-            PostmanCLIReporter(eventEmitter, {}, options);
+            PostmanCLIRequestReporter(eventEmitter, {}, options);
 
-            expect(Object.keys(eventEmitter._events)).to.eql([
-                'done', 'start', 'beforeIteration',
-                'test', 'beforeItem', 'beforeRequest',
-                'request', 'script', 'assertion', 'console'
-            ]);
+            expect(Object.keys(eventEmitter._events)).to.eql(['done', 'start', 'beforeRequest', 'request']);
         });
     });
 });
