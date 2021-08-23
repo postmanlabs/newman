@@ -119,14 +119,9 @@ program
     .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run', util.cast.csvParse, ['cli'])
     .option('--response-limit <integer>', 'Show the limit of response-size', 1024 * 1024 * 10) // 10 MB
     .action((url, command) => {
-        const options = util.commanderToObject(command),
+        const options = util.commanderToObject(command);
 
-            // convert the commander options object to a curl string
-            curl = util.createCurl(options, url);
-
-        // Inject additional properties into the options object
-        options.curl = curl;
-        options.singleRequest = true;
+        options.url = url;
 
         newman.request(options, function (err) {
             const requestErr = err;

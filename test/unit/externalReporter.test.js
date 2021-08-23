@@ -25,7 +25,9 @@ describe('External reporter', function () {
 
     it('warns when not found for newman request', function (done) {
         newman.request({
-            curl: 'curl -X GET https://postman-echo.com/get',
+            request: 'GET',
+            url: 'https://postman-echo.com/get',
+            responseLimit: 10485760,
             reporters: ['unknownreporter'],
             singleRequest: true
         }, function (err) {

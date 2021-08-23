@@ -1,5 +1,4 @@
-const _ = require('lodash'),
-    { ALL_CURL_OPTIONS } = require('./constants.js');
+const _ = require('lodash');
 
 module.exports = {
 
@@ -100,58 +99,6 @@ module.exports = {
 
             return result;
         }, {});
-    },
-
-    /**
-     * Extract curl options in the provided options.
-     * Create curl  command from the options.
-     *
-     * @param {Object} options - Commander.Command Instance
-     * @param {String} url - Requested url
-     * @returns {String} - Curl command
-     */
-    createCurl: (options, url) => {
-        const
-            // Get all curl option names
-            allCurlOptions = Object.keys(ALL_CURL_OPTIONS),
-
-            // Exclude non curl options
-            curlOptions = _.reduce(options, (result, value, key) => {
-                const validProp = _.includes(allCurlOptions, key);
-
-                validProp && (result[key] = value);
-
-                return result;
-            }, {}),
-
-            // method to convert the user option object to string
-            curlOptionToString = (curlOptionName, userOptionValue) => {
-                const curlOption = ALL_CURL_OPTIONS[curlOptionName];
-
-                if (curlOption.collectValues && userOptionValue.length > 0) {
-                    const optionsValue = userOptionValue.map((option) => {
-                        return `${curlOption.long} '${option}'`;
-                    }).join(' ');
-
-                    return optionsValue;
-                }
-
-                if (curlOption.format && userOptionValue.length > 0) {
-                    return `${curlOption.long} '${userOptionValue}'`;
-                }
-
-                if (!curlOption.format) {
-                    return `${curlOption.long}`;
-                }
-
-                return '';
-            },
-
-            userOptionsString = Object.entries(curlOptions).map(([optionName, optionValue]) => {
-                return curlOptionToString(optionName, optionValue);
-            }).filter(Boolean).join(' ');
-
-        return `curl ${userOptionsString} ${url}`;
     },
 
     /**
