@@ -22,4 +22,20 @@ describe('External reporter', function () {
             done();
         });
     });
+
+    it('warns when not found for newman request', function (done) {
+        newman.request({
+            request: 'GET',
+            url: 'https://postman-echo.com/get',
+            responseLimit: 10485760,
+            reporters: ['unknownreporter'],
+            singleRequest: true
+        }, function (err) {
+            expect(err).to.be.null;
+            expect(console.warn.called).to.be.true;
+            expect(console.warn.calledWith('newman: could not find "unknownreporter" reporter')).to.be.true;
+
+            done();
+        });
+    });
 });

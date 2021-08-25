@@ -69,4 +69,74 @@ describe('Default reporter', function () {
             done();
         });
     });
+
+    it('cli can be loaded for newman request', function (done) {
+        newman.request({
+            request: 'GET',
+            url: 'https://postman-echo.com/get',
+            singleRequest: true,
+            reporters: ['cli']
+        }, function (err) {
+            expect(err).to.be.null;
+            expect(console.warn.called).to.be.false;
+
+            done();
+        });
+    });
+
+    it('json can be loaded for newman request', function (done) {
+        newman.request({
+            request: 'GET',
+            url: 'https://postman-echo.com/get',
+            singleRequest: true,
+            reporters: ['json']
+        }, function (err) {
+            expect(err).to.be.null;
+            expect(console.warn.called).to.be.false;
+
+            done();
+        });
+    });
+
+    it('junit can be loaded for newman request', function (done) {
+        newman.request({
+            request: 'GET',
+            url: 'https://postman-echo.com/get',
+            singleRequest: true,
+            reporters: ['junit']
+        }, function (err) {
+            expect(err).to.be.null;
+            expect(console.warn.called).to.be.false;
+
+            done();
+        });
+    });
+
+    it('progress can be loaded for newman request', function (done) {
+        newman.request({
+            request: 'GET',
+            url: 'https://postman-echo.com/get',
+            singleRequest: true,
+            reporters: ['progress']
+        }, function (err) {
+            expect(err).to.be.null;
+            expect(console.warn.called).to.be.false;
+
+            done();
+        });
+    });
+
+    it('emojitrain can be loaded for newman request', function (done) {
+        newman.request({
+            request: 'GET',
+            url: 'https://postman-echo.com/get',
+            singleRequest: true,
+            reporters: ['emojitrain']
+        }, function (err) {
+            expect(err).to.be.null;
+            expect(console.warn.called).to.be.false;
+
+            done();
+        });
+    });
 });

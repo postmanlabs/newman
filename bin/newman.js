@@ -85,6 +85,55 @@ program
         });
     });
 
+// The `request` command allows you to run single request with the provided options.
+program
+    .command('request <url>')
+    .description('Run single request with provided options')
+    .usage('<url> [options]')
+    .option('-X, --request <method>',
+        'Specify request method')
+    .option('-H, --header <header>',
+        'Specify request header', util.cast.memoize, [])
+    .option('-A, --user-agent <agent>',
+        'Specify request user agent')
+    .option('-d, --data <data>',
+        // eslint-disable-next-line max-len
+        'Sends the specified data to the server with type application/x-www-form-urlencoded or application/json', util.cast.memoize, [])
+    .option('--data-raw <data>',
+        'Sends the specified data to the server in raw format', util.cast.memoize, [])
+    .option('--data-urlencode <data>',
+        'Sends the specified data to the server with type application/x-www-form-urlencoded', util.cast.memoize, [])
+    .option('--data-binary <data>',
+        'Sends the specified data as-is')
+    .option('-F, --form <name=content>',
+        'A single form-data field', util.cast.memoize, [])
+    .option('-G, --get',
+        'Forces the request to be sent as GET, with the --data parameters appended to the query string')
+    .option('-I, --head',
+        'Forces the request to be sent as HEAD, with the --data parameters appended to the query string')
+    .option('-T, --upload-file <file>',
+        'Forces the request to be sent as PUT with the specified local file to the server', util.cast.memoize, [])
+    .option('-x, --suppress-exit-code',
+        'Specify whether or not to override the default exit code for the current request')
+    .option('--verbose', 'Show detailed information of collection run and each request sent')
+    .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run', util.cast.csvParse, ['cli'])
+    .option('--response-limit <integer>', 'Show the limit of response-size', 1024 * 1024 * 10) // 10 MB
+    .action((url, command) => {
+        const options = util.commanderToObject(command);
+
+        options.url = url;
+
+        newman.request(options, function (err) {
+            const requestErr = err;
+
+            if (err) {
+                console.error(`error: ${err.message || err}\n`);
+                err.friendly && console.error(`  ${err.friendly}\n`);
+            }
+            requestErr && !_.get(options, 'suppressExitCode') && process.exit(1);
+        });
+    });
+
 program.addHelpText('after', `
 To get available options for a command:
   newman <command> -h`);
