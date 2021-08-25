@@ -3,6 +3,8 @@ master:
     - >-
       GH-2806 Exposed the runner on newman and the runtime run object in start
       event
+  chores:
+    - Updated dependencies
 
 5.2.4:
   date: 2021-06-24
