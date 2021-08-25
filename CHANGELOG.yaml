@@ -7,6 +7,8 @@ master:
       Added ability to see request and responses in CLI reporter `--verbose`
       mode. Also added ability to see additional meta such as header count,
       cookie count and body mime-types in verbose mode.
+  chores:
+    - Updated dependencies
 
 5.2.4:
   date: 2021-06-24
