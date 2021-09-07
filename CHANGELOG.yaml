@@ -1,3 +1,16 @@
+5.3.0:
+  date: 2021-09-07
+  new features:
+    - >-
+      GH-2806 Exposed the runner on newman and the runtime run object in start
+      event
+    - >-
+      Added ability to see request and responses in CLI reporter `--verbose`
+      mode. Also added ability to see additional meta such as header count,
+      cookie count and body mime-types in verbose mode.
+  chores:
+    - Updated dependencies
+
 5.2.4:
   date: 2021-06-24
   chores:
