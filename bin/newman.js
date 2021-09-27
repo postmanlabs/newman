@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable function-paren-newline */
-/* eslint-disable quotes */
 
 require('../lib/node-version-check'); // @note that this should not respect CLI --silent
 
@@ -12,7 +10,10 @@ const _ = require('lodash'),
     newman = require('../'),
     util = require('./util');
 
-program.name('newman').addHelpCommand(false).version(version, '-v, --version');
+program
+    .name('newman')
+    .addHelpCommand(false)
+    .version(version, '-v, --version');
 
 // The `run` command allows you to specify a collection to be run with the provided options.
 program
@@ -27,8 +28,12 @@ program
     .option('--folder <path>',
         'Specify the folder to run from a collection. Can be specified multiple times to run multiple folders',
         util.cast.memoize, [])
-    .option('--global-var <value>', 'Allows the specification of global variables via the command line, in a key=value format', util.cast.memoizeKeyVal, [])
-    .option('--env-var <value>', 'Allows the specification of environment variables via the command line, in a key=value format', util.cast.memoizeKeyVal, [])
+    .option('--global-var <value>',
+        'Allows the specification of global variables via the command line, in a key=value format',
+        util.cast.memoizeKeyVal, [])
+    .option('--env-var <value>',
+        'Allows the specification of environment variables via the command line, in a key=value format',
+        util.cast.memoizeKeyVal, [])
     .option('--export-environment <path>', 'Exports the final environment to a file after completing the run')
     .option('--export-globals <path>', 'Exports the final globals to a file after completing the run')
     .option('--export-collection <path>', 'Exports the executed collection to a file after completing the run')
@@ -61,44 +66,32 @@ program
     .option('--publish-retry', 'Number of times newman can try to publish before safely erroring out.')
     .option('--publish-upload-timeout', 'Timeout for uploading newman runs to postman', util.cast.integer, 0)
     .action((collection, command) => {
-        // debugger;
         let options = util.commanderToObject(command),
             // parse custom reporter options
-            reporterOptions = util.parseNestedOptions(
-                program._originalArgs,
-                '--reporter-',
-                options.reporters
-            );
+            reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
 
         // Inject additional properties into the options object
         options.collection = collection;
         options.reporterOptions = reporterOptions._generic;
-        options.reporter = _.transform(
-            _.omit(reporterOptions, '_generic'),
-            (acc, value, key) => {
-                acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
-            },
-            {}
-        );
+        options.reporter = _.transform(_.omit(reporterOptions, '_generic'), (acc, value, key) => {
+            acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
+        }, {});
 
         newman.run(options, function (err, summary, newmanStatus) {
-            const runError =
-                err || summary.run.error || summary.run.failures.length;
+            const runError = err || summary.run.error || summary.run.failures.length;
 
             if (err) {
                 console.error(`error: ${err.message || err}\n`);
                 err.friendly && console.error(`  ${err.friendly}\n`);
             }
-            runError && !_.get(options, 'suppressExitCode') && process.exit(1);
+
+            runError && !newmanStatus.resultUploaded && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
 
-program.addHelpText(
-    'after',
-    `
+program.addHelpText('after', `
 To get available options for a command:
-  newman <command> -h`
-);
+  newman <command> -h`);
 
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {
@@ -114,55 +107,47 @@ program.on('command:*', (command) => {
  * @param {?Function} callback - The callback function invoked on the completion of execution.
  */
 function run (argv, callback) {
-    waterfall(
-        [
-            (next) => {
-                // cache original argv, required to parse nested options later.
-                program._originalArgs = argv;
-                // omit custom nested options, otherwise commander will throw unknown options error
-                next(null, util.omitNestedOptions(argv, '--reporter-'));
-            },
-            (args, next) => {
-                let error = null;
+    waterfall([
+        (next) => {
+            // cache original argv, required to parse nested options later.
+            program._originalArgs = argv;
+            // omit custom nested options, otherwise commander will throw unknown options error
+            next(null, util.omitNestedOptions(argv, '--reporter-'));
+        },
+        (args, next) => {
+            let error = null;
 
-                try {
-                    program.parse(args);
-                } catch (err) {
-                    error = err;
-                }
-                next(error);
-            },
-            (next) => {
-                // throw error if no argument is provided.
-                next(
-                    program.args.length ? null : new Error('no arguments provided')
-                );
+            try {
+                program.parse(args);
             }
-        ],
-        (error) => {
-            // invoke callback if this is required as module, used in tests.
-            if (callback) {
-                return callback(error);
+            catch (err) {
+                error = err;
             }
-
-            // in case of an error, log error message and print help message.
-            if (error) {
-                console.error(`error: ${error.message || error}\n`);
-                program.help();
-            }
+            next(error);
+        },
+        (next) => {
+            // throw error if no argument is provided.
+            next(program.args.length ? null : new Error('no arguments provided'));
         }
-    );
+    ], (error) => {
+        // invoke callback if this is required as module, used in tests.
+        if (callback) {
+            return callback(error);
+        }
+
+        // in case of an error, log error message and print help message.
+        if (error) {
+            console.error(`error: ${error.message || error}\n`);
+            program.help();
+        }
+    });
 }
 
 // This hack has been added from https://github.com/nodejs/node/issues/6456#issue-151760275
 // @todo: remove when https://github.com/nodejs/node/issues/6456 has been fixed
 Number(process.version[1]) >= 6 &&
     [process.stdout, process.stderr].forEach((s) => {
-        s &&
-            s.isTTY &&
-            s._handle &&
-            s._handle.setBlocking &&
-            s._handle.setBlocking(true);
+        s && s.isTTY && s._handle && s._handle.setBlocking && s._handle.setBlocking(true);
     });
 
 // Run this script if this is a direct stdin.
