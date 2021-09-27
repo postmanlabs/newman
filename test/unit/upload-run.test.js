@@ -13,10 +13,6 @@ describe.only('Upload Newman Runs to Postman', function () {
     });
 
     describe('_uploadWithRetry', function () {
-        beforeEach(function () {
-            sandbox.spy(request);
-        });
-
         afterEach(function () {
             sandbox.restore();
         });
@@ -107,7 +103,7 @@ describe.only('Upload Newman Runs to Postman', function () {
         });
 
         it('retries uploads when there is a network error(ECONNREFUSED) from client side', async function(){
-            const errorMessage = {message: 'ECONNREFUSED - Network Error'}
+            const errorMessage = {code: 'ECONNREFUSED' ,message: 'ECONNREFUSED - Network Error'}
             sandbox.stub(request, 'post').yields(errorMessage, { statusCode: 401 });
             const uploadToPostman = new uploadRunToPostman();
             const uploadSpy = sandbox.spy(uploadToPostman._upload());
