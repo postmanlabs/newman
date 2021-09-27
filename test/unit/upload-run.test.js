@@ -4,15 +4,12 @@ const uploadRunToPostman = require('../../lib/run/upload-run');
 let sandbox;
 
 describe.only('Upload Newman Runs to Postman', function () {
-    this.beforeEach(function() {
-        sandbox = require('sinon').createSandbox();
-    });
-
-    this.afterEach(function() {
-        sandbox.restore();
-    });
 
     describe('_uploadWithRetry', function () {
+        beforeEach(function() {
+            sandbox = require('sinon').createSandbox();
+        });
+
         afterEach(function () {
             sandbox.restore();
         });
@@ -138,28 +135,26 @@ describe.only('Upload Newman Runs to Postman', function () {
             const uploadConfig = {
                 postmanApiKey: 'randomAPIKey'
             },
-            PROCESS_EXIT_SUCCESS = 0,
             uploadToPostman = new uploadRunToPostman(uploadConfig),
             uploadRetrySpy = sandbox.spy(uploadToPostman._uploadWithRetry);
 
-            const exitCode = await uploadToPostman.start();
+            const uploadStatus = await uploadToPostman.start();
 
             assert.isTrue(uploadRetrySpy.notCalled, 'We cannot upload newman run if dont have publishWorkspace param');
-            assert.equal(exitCode, PROCESS_EXIT_SUCCESS, 'Newman should exit with a 0 if we dont have a publishWorkspace param');
+            assert.isFalse(uploadStatus, 'Newman should exit with a 0 if we dont have a publishWorkspace param');
         });
 
         it('doesn\'t upload if postman-api-key param is NOT present', async function(){
             const uploadConfig = {
                 publishWorkspace: 'randomWorkspaceID'
             },
-            PROCESS_EXIT_FAIL = 1,
             uploadToPostman = new uploadRunToPostman(uploadConfig),
             uploadRetrySpy = sandbox.spy(uploadToPostman._uploadWithRetry);
 
             const exitCode = await uploadToPostman.start();
 
             assert.isTrue(uploadRetrySpy.notCalled, 'We cannot upload newman run if dont have publishWorkspace param');
-            assert.equal(exitCode, PROCESS_EXIT_FAIL, 'Newman should exit with a 1 if we dont have a postmanApiKey param');
+            assert.isFalse(exitCode, 'Newman should exit with a 1 if we dont have a postmanApiKey param');
         });
 
     });
