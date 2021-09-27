@@ -141,7 +141,7 @@ describe.only('Upload Newman Runs to Postman', function () {
             const uploadStatus = await uploadToPostman.start();
 
             assert.isTrue(uploadRetrySpy.notCalled, 'We cannot upload newman run if dont have publishWorkspace param');
-            assert.isFalse(uploadStatus, 'Newman should exit with a 0 if we dont have a publishWorkspace param');
+            assert.isTrue(uploadStatus);
         });
 
         it('doesn\'t upload if postman-api-key param is NOT present', async function(){
