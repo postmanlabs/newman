@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM alpine
 LABEL maintainer="Postman Labs <help@postman.com>"
 
 ARG NEWMAN_VERSION
@@ -11,6 +11,8 @@ RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
         echo "\033[0;31mA valid semver Newman version is required in the NEWMAN_VERSION build-arg\033[0m"; \
         exit 1; \
     fi && \
+    # Install npm
+    apk add --update npm && \
     # Install Newman globally
     npm install --global newman@${NEWMAN_VERSION};
 
