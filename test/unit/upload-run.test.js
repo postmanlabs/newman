@@ -1,10 +1,7 @@
-// Replace all assert with expect;
-
-const { assert, expect } = require('chai');
+const { expect } = require('chai');
 const sinon = require('sinon');
 const request = require('postman-request');
 const {_upload, _uploadWithRetry, _buildRequestObject, _buildResponseObject, _buildPostmanUploadPayload} = require('../../lib/run/upload-run');
-const sdk  = require('postman-collection');
 let sandbox;
 
 describe.only('Upload Newman Runs to Postman', function () {
