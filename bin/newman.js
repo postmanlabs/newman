@@ -63,7 +63,7 @@ program
     .option('--verbose', 'Show detailed information of collection run and each request sent')
     .option('-p, --publish <workspace-id>', 'Publishes to given workspace')
     .option('--publish-skip-response',
-        'Skip responses (headers, body, etc) while uploading newman run to Postman')
+        'Skip responses (headers, body, etc) while uploading newman run to Postman', false)
     .option('--publish-retries', 'Number of times newman can try to publish before safely erroring out.',
         util.cast.integer, 3)
     .option('--publish-timeout', 'Timeout in seconds for uploading newman runs to postman',
