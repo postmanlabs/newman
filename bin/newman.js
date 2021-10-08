@@ -61,9 +61,15 @@ program
     .option('--cookie-jar <path>', 'Specify the path to a custom cookie jar (serialized tough-cookie JSON) ')
     .option('--export-cookie-jar <path>', 'Exports the cookie jar to a file after completing the run')
     .option('--verbose', 'Show detailed information of collection run and each request sent')
+    .option('-p, --publish <workspace-id>', 'Publishes to given workspace')
+    .option('--publish-skip-response',
+        'Skip responses (headers, body, etc) while uploading newman run to Postman', false)
+    .option('--publish-retries', 'Number of times newman can try to publish before safely erroring out.',
+        util.cast.integer, 3)
+    .option('--publish-timeout', 'Timeout in seconds for uploading newman runs to postman',
+        util.cast.integer, 60)
     .action((collection, command) => {
         let options = util.commanderToObject(command),
-
             // parse custom reporter options
             reporterOptions = util.parseNestedOptions(program._originalArgs, '--reporter-', options.reporters);
 
@@ -74,14 +80,15 @@ program
             acc[key] = _.assignIn(value, reporterOptions._generic); // overrides reporter options with _generic
         }, {});
 
-        newman.run(options, function (err, summary) {
+        newman.run(options, function (err, summary, newmanStatus) {
             const runError = err || summary.run.error || summary.run.failures.length;
 
             if (err) {
                 console.error(`error: ${err.message || err}\n`);
                 err.friendly && console.error(`  ${err.friendly}\n`);
             }
-            runError && !_.get(options, 'suppressExitCode') && process.exit(1);
+
+            (runError || !newmanStatus.resultUploaded) && !_.get(options, 'suppressExitCode') && process.exit(1);
         });
     });
 

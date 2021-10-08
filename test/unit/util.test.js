@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 var sdk = require('postman-collection'),
 
     util = require('../../lib/util');
@@ -93,6 +94,25 @@ describe('utility helpers', function () {
 
         it('should correctly beautify given timeings object', function () {
             expect(util.beautifyTime(timings)).to.eql(beautifiedTimings);
+        });
+    });
+
+    describe('extractResourceUID', function () {
+        it('returns empty string if resourceURL is empty', function() {
+            expect(util.extractResourceUID('')).to.eql('');
+        });
+
+        it('extracts resource URL from string', function () {
+            const collectionUID = 'uadsfdsf12434324324',
+                url = `https://api.getpostman.com/collections/${collectionUID}?apikey=asdfasas`;
+
+            expect(util.extractResourceUID(url)).to.eql(collectionUID);
+        });
+
+        it('returns empty string if resourceURL is not present in URL', function () {
+            const url = 'https://api.getpostman.com/collections';
+
+            expect(util.extractResourceUID(url)).to.eql('');
         });
     });
 });

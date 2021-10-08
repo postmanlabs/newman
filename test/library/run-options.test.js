@@ -239,4 +239,14 @@ describe('Newman run options', function () {
             });
         });
     });
+
+    describe('Newman Run Uploads', function () {
+        it('should upload Newman run to Postman if API Key and WorksSpaceID are correct', function() {
+        // @TODO
+        });
+
+        it('should NOT upload Newman run to Postman if API Key and WorkSpaceID are incorrect', function() {
+        // @TODO
+        });
+    });
 });
