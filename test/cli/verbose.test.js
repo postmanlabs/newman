@@ -1,6 +1,4 @@
-const { expect } = require('chai');
 var _ = require('lodash');
-const { exec } = require('shelljs');
 
 describe('newman run --verbose', function () {
     var verboseStrings = [
