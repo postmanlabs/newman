@@ -1,0 +1,47 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Basic form data test",
+    "_postman_id": "b6a53b01-d54e-8501-e7da-74affff4c7fc",
+    "description": "A set of tests to process piecewise form data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "https://postman-echo.com",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": "var data = JSON.parse(responseBody);\ntests[\"First name is: \" + data.form.first] = true;\ntests[\"last name is: \" + data.form.last] = true;"
+          }
+        }
+      ],
+      "request": {
+        "url": "https://postman-echo.com/post",
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "first",
+              "value": "{{first}}",
+              "type": "text",
+              "enabled": true
+            },
+            {
+              "key": "last",
+              "value": "{{last}}",
+              "type": "text",
+              "enabled": true
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
