@@ -139,8 +139,14 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   precedence and can be overridden by environment variables having the same name.
 
 - `-d <source>`, `--iteration-data <source>`<br />
-  Specify a data source file (JSON or CSV) to be used for iteration as a path to a file or as a URL.
+  Specify a data source file (JSON or CSV) to be used for iteration as a path to a file or as a URL. To run on a subset of the data use `--iteration-data-from` and `--iteration-data-to` to specify start and end points.
   [Read More](https://learning.postman.com/docs/postman/collection-runs/working-with-data-files/)
+
+- `--iteration-data-from <number>`<br />
+  Specify the index to start the iterations from when used in conjunction with iteration data file.
+
+- `--iteration-data-to <number>`<br />
+  Specify the index to end the iterations at when used in conjunction with iteration data file.
 
 - `-n <number>`, `--iteration-count <number>`<br />
   Specifies the number of times the collection has to be run when used in conjunction with iteration data file.
@@ -347,7 +353,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:31:26.200Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    globalVar: [ 
+    globalVar: [
         { "key":"glboalSecret", "value":"globalSecretValue" },
         { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
     ],
@@ -367,7 +373,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    envVar: [ 
+    envVar: [
         { "key":"secret", "value":"secretValue" },
         { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
     ],
@@ -446,7 +452,7 @@ such a scenario.
 |-------------|-------------------|
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
 
-| `--reporter-cli-show-timestamps` | This prints the local time for each request made. | 
+| `--reporter-cli-show-timestamps` | This prints the local time for each request made. |
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |

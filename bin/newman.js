@@ -25,6 +25,8 @@ program
     .option('-r, --reporters [reporters]', 'Specify the reporters to use for this run', util.cast.csvParse, ['cli'])
     .option('-n, --iteration-count <n>', 'Define the number of iterations to run', util.cast.integer)
     .option('-d, --iteration-data <path>', 'Specify a data file to use for iterations (either JSON or CSV)')
+    .option('--iteration-data-from <n>', 'Specify the index to start the iteration from', util.cast.integer)
+    .option('--iteration-data-to <n>', 'Specify the index to end the iteration at (inclusive)', util.cast.integer)
     .option('--folder <path>',
         'Specify the folder to run from a collection. Can be specified multiple times to run multiple folders',
         util.cast.memoize, [])
