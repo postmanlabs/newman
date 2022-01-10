@@ -76,7 +76,7 @@
     "mocha": "^9.1.3",
     "nock": "^13.2.1",
     "nyc": "^15.1.0",
-    "packity": "^0.3.2",
+    "packity": "^0.3.3",
     "parse-gitignore": "^1.0.1",
     "postman-jsdoc-theme": "^0.0.3",
     "recursive-readdir": "^2.2.2",
