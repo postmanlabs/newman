@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 var _ = require('lodash');
 
 describe('newman run --verbose', function () {
