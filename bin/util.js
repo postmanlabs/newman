@@ -20,21 +20,6 @@ module.exports = {
             return num.valueOf();
         },
 
-        /**
-         * Helper to coerce number like strings into integers.
-         * If supplied argument is infinite, return positive infinity
-         * Perform safety checks, and return the result.
-         *
-         * @param {String} arg - The stringified number argument or infinite.
-         * @returns {Number} - The supplied argument, casted to an integer or positive infinity.
-         */
-        integerOrInfinity: (arg) => {
-            if (arg === 'infinite') {
-                return Number.POSITIVE_INFINITY;
-            }
-
-            return module.exports.cast.integer(arg);
-        },
 
         /**
          * Helper for collecting argument passed multiple times.

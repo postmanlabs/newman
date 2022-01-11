@@ -50,7 +50,6 @@ program
     .option('--timeout [n]', 'Specify a timeout for collection run (milliseconds)', util.cast.integer, 0)
     .option('--timeout-request [n]', 'Specify a timeout for requests (milliseconds)', util.cast.integer, 0)
     .option('--timeout-script [n]', 'Specify a timeout for scripts (milliseconds)', util.cast.integer, 0)
-    .option('--output-size [n]', 'Specify the output size limit for CLI ( in  KB )', util.cast.integerOrInfinity, 2)
     .option('--working-dir <path>', 'Specify the path to the working directory')
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
     .option('-k, --insecure', 'Disables SSL validations')

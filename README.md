@@ -174,9 +174,6 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 - `--timeout-script <ms>`<br />
   Specify the time (in milliseconds) to wait for scripts to complete execution.
 
-- `--output-size <KB>`<br />
-  Specify the output size limit ( in KB ) when verbose flag is set. Specify `infinite` to remove any output size limit.
-
 - `-k`, `--insecure`<br />
   Disables SSL verification checks and allows self-signed SSL certificates.
 
@@ -291,7 +288,6 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.timeout           | Specify the time (in milliseconds) to wait for the entire collection run to complete execution.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutRequest    | Specify the time (in milliseconds) to wait for requests to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
 | options.timeoutScript     | Specify the time (in milliseconds) to wait for scripts to return a response.<br /><br />_Optional_<br />Type: `number`, Default value: `Infinity` |
-| options.outputSize     | Specify the output size limit ( in KB ) when verbose flag is set.<br /><br />For example, `outputSize = 2` sets the verbose output limit to 2KB or 2048 bytes.<br /><br />To remove any verbose output limit, pass `infinite` to `--output-size`. This would set `outputSize` to `Number. POSITIVE_INFINITY`<br /><br />_Optional_<br />Type: `number`, Default value: `2` |
 | options.delayRequest      | Specify the time (in milliseconds) to wait for between subsequent requests.<br /><br />_Optional_<br />Type: `number`, Default value: `0` |
 | options.ignoreRedirects   | This specifies whether newman would automatically follow 3xx responses from servers.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
 | options.insecure          | Disables SSL verification checks and allows self-signed SSL certificates.<br /><br />_Optional_<br />Type: `boolean`, Default value: `false` |
@@ -449,7 +445,6 @@ such a scenario.
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
-
 | `--reporter-cli-show-timestamps` | This prints the local time for each request made. |
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
@@ -457,6 +452,8 @@ such a scenario.
 | `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 | `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
+| `--reporter-cli-verbose-output-limit <size in any unit>` | Specify the truncation size of body in verbose CLI output for requests and responses |
+| `--reporter-cli-no-verbose-output-limit` | This removes any truncation size limit of body in verbose CLI output for requests and responses |
 
 ### JSON Reporter
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the

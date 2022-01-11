@@ -50,7 +50,6 @@ describe('cli parser', function () {
                         envVar: [],
                         folder: [],
                         insecureFileRead: true,
-                        outputSize: 2,
                         color: 'auto',
                         timeout: 0,
                         timeoutRequest: 0,
