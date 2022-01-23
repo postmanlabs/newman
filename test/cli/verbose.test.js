@@ -38,7 +38,7 @@ describe('newman run --verbose', function () {
         });
     });
 
-    it('should limit to 2KB with --verbose option only without setting verbose-output-limit', function (done) {
+    it('should limit to 2KB with --verbose option only without setting truncate-body-output', function (done) {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose', function (_code, stdout) {
             _.forEach(endTags, function (str) {
@@ -49,9 +49,9 @@ describe('newman run --verbose', function () {
         });
     });
 
-    it('should log the entire output --verbose option and --reporter-cli-no-verbose-output-limit set', function (done) {
+    it('should log the entire output when infinite is passed to --truncate-body-output', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-no-verbose-output-limit', function (_code, stdout) {
+        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output infinite', function (_code, stdout) {
             _.forEach(endTags, function (str) {
                 expect(stdout).to.contain(str);
             });
@@ -60,49 +60,54 @@ describe('newman run --verbose', function () {
         });
     });
 
-    it('should log more output when verbose-output-limit set to 4KB than 2KB', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-verbose-output-limit 4kb', function (_code, largeStdout) {
-            // eslint-disable-next-line max-len
-            exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-verbose-output-limit 2kb', function (_code, smallStdout) {
-                expect(largeStdout.length).to.be.greaterThan(smallStdout.length);
-                done();
-            });
-        });
-    });
-
     it('should display twice as much as verbose output when limit set to 2KB than 1KB', function (done) {
-        var output_response_start = '"args":{"continuousNumberArray":',
+        var output_response_start = '"args"',
             output_response_end = '(showing';
 
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/continuous-data.json --verbose --reporter-cli-verbose-output-limit 2kb', function (_code, largeStdout) {
+        exec('node ./bin/newman.js run test/fixtures/run/continuous-data.json --verbose --reporter-cli-truncate-body-output 2kb', function (_code, largeStdout) {
             // eslint-disable-next-line max-len
-            exec('node ./bin/newman.js run test/fixtures/run/continuous-data.json --verbose --reporter-cli-verbose-output-limit 1kb', function (_code, smallStdout) {
+            exec('node ./bin/newman.js run test/fixtures/run/continuous-data.json --verbose --reporter-cli-truncate-body-output 1kb', function (_code, smallStdout) {
                 // eslint-disable-next-line max-len
-                var largeStdoutResponseOnly = largeStdout.slice(largeStdout.indexOf(output_response_start), largeStdout.indexOf(output_response_end)),
+                var largeStdoutResponseOnly = largeStdout.slice(largeStdout.indexOf(output_response_start), largeStdout.lastIndexOf(output_response_end)),
                     // eslint-disable-next-line max-len
-                    smallStdoutResponseOnly = largeStdout.slice(smallStdout.indexOf(output_response_start), smallStdout.indexOf(output_response_end));
-
+                    smallStdoutResponseOnly = smallStdout.slice(smallStdout.indexOf(output_response_start), smallStdout.lastIndexOf(output_response_end));
 
                 /*
-                1000-1197 = ~200 characters
-                1000-1402 = ~400 characters
+                1000-1193 = 193 characters
+                1000-1398 = 398 ~= 193 * 2 characters
                 Thus setting output limit to 2kb ensure almost twice output size as compared to 1kb
                 */
-                expect(smallStdoutResponseOnly).to.contain('1197');
-                expect(largeStdoutResponseOnly).to.contain('1402');
+                expect(smallStdoutResponseOnly).to.contain('1193');
+                expect(largeStdoutResponseOnly).to.contain('1398');
                 expect(largeStdoutResponseOnly.length).to.be.greaterThan(smallStdoutResponseOnly.length);
+                // eslint-disable-next-line max-len
+                expect(Math.abs(largeStdoutResponseOnly.length - smallStdoutResponseOnly.length * 2)).to.be.lessThanOrEqual(1);
                 done();
             });
         });
     });
 
-    it('should display a warning and fallback to 2KB when invalid verbose-output-limit is passed', function (done) {
+    it('should display a warning and fallback to 2KB when invalid truncate-body-output is passed', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-verbose-output-limit postman', function (_code, stdout) {
+        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output postman', function (_code, stdout) {
             expect(stdout).to.contain('Invalid value');
             expect(stdout).to.contain('showing 2.05');
+            done();
+        });
+    });
+
+    it('should limit both request and response body output when truncate-body-output is passed', function (done) {
+        var output_response_start = '"args"';
+
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/continuous-data.json --verbose --reporter-cli-truncate-body-output 0.5kb', function (_code, stdout) {
+            var responseStartIndex = stdout.indexOf(output_response_start),
+                request = stdout.slice(0, responseStartIndex),
+                response = stdout.slice(0, responseStartIndex);
+
+            expect(request).to.contain('512B');
+            expect(response).to.contain('512B');
             done();
         });
     });

@@ -12,7 +12,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"const ARRAY_SIZE = 1000;",
+							"const ARRAY_SIZE = 1500;",
 							"const continuousNumberArray = Array(ARRAY_SIZE).fill().map((_element, index) => index + 1000);",
 							"pm.collectionVariables.set('continuousNumberArray', continuousNumberArray);"
 						],
@@ -38,23 +38,26 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"continuousNumberArray\": {{continuousNumberArray}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "https://postman-echo.com/get?continuousNumberArray={{continuousNumberArray}}",
+					"raw": "https://postman-echo.com/post",
 					"protocol": "https",
 					"host": [
 						"postman-echo",
 						"com"
 					],
 					"path": [
-						"get"
-					],
-					"query": [
-						{
-							"key": "continuousNumberArray",
-							"value": "{{continuousNumberArray}}"
-						}
+						"post"
 					]
 				}
 			},
