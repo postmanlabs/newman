@@ -20,6 +20,7 @@ module.exports = {
             return num.valueOf();
         },
 
+
         /**
          * Helper for collecting argument passed multiple times.
          *

@@ -347,7 +347,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:31:26.200Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    globalVar: [ 
+    globalVar: [
         { "key":"glboalSecret", "value":"globalSecretValue" },
         { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
     ],
@@ -367,7 +367,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    envVar: [ 
+    envVar: [
         { "key":"secret", "value":"secretValue" },
         { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
     ],
@@ -445,14 +445,14 @@ such a scenario.
 | CLI Option  | Description       |
 |-------------|-------------------|
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
-
-| `--reporter-cli-show-timestamps` | This prints the local time for each request made. | 
+| `--reporter-cli-show-timestamps` | This prints the local time for each request made. |
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
 | `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 | `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
+| `--reporter-cli-truncate-body-output <size in any unit>` | Specify the truncation size of body in verbose CLI output for requests and responses. You can pass inputs like `1KB`, `1024`, `2.5kb`, etc. By default, the truncation size is set to `2KB`. Pass `infinity` to remove any truncation size limit of verbose CLI output body. |
 
 ### JSON Reporter
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the

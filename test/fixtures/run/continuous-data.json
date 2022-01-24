@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "81f0e310-03a1-4897-bc07-f31bd863ec05",
+		"name": "Continuous Data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Continuous Data Test",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ARRAY_SIZE = 1500;",
+							"const continuousNumberArray = Array(ARRAY_SIZE).fill().map((_element, index) => index + 1000);",
+							"pm.collectionVariables.set('continuousNumberArray', continuousNumberArray);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string OK\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Body contains string continuousNumberArray\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"continuousNumberArray\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"continuousNumberArray\": {{continuousNumberArray}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/post",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "continuousNumberArray",
+			"value": ""
+		}
+	]
+}

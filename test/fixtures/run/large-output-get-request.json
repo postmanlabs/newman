@@ -1,0 +1,18 @@
+{
+	"info": {
+		"_postman_id": "6d0dfccd-5998-43bb-a0a5-f88065c8c5d1",
+		"name": "Large Output Test for --output-size Flag",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Postman Get Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://www.postman.com/"
+			},
+			"response": []
+		}
+	]
+}
