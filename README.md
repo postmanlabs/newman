@@ -452,7 +452,7 @@ such a scenario.
 | `--reporter-cli-no-success-assertions`  | This turns off the output for successful assertions as they happen. |
 | `--reporter-cli-no-console`     | This turns off the output of `console.log` (and other console calls) from collection's scripts. |
 | `--reporter-cli-no-banner`      | This turns off the `newman` banner shown at the beginning of each collection run. |
-| `--reporter-cli-truncate-body-output <size in any unit>` | Specify the truncation size of body in verbose CLI output for requests and responses. You can pass inputs like `1KB`, `1024`, `2.5kb`, etc. By default, the truncation size is set to `2KB`. Pass `infinite` to remove any truncation size limit of verbose CLI output body. |
+| `--reporter-cli-truncate-body-output <size in any unit>` | Specify the truncation size of body in verbose CLI output for requests and responses. You can pass inputs like `1KB`, `1024`, `2.5kb`, etc. By default, the truncation size is set to `2KB`. Pass `infinity` to remove any truncation size limit of verbose CLI output body. |
 
 ### JSON Reporter
 The built-in JSON reporter is useful in producing a comprehensive output of the run summary. It takes the path to the

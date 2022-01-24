@@ -49,9 +49,27 @@ describe('newman run --verbose', function () {
         });
     });
 
-    it('should log the entire output when infinite is passed to --truncate-body-output', function (done) {
+    it('should log the entire output when infinity is passed to --truncate-body-output', function (done) {
         // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output infinite', function (_code, stdout) {
+        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output infinity', function (_code, stdout) {
+            _.forEach(endTags, function (str) {
+                expect(stdout).to.contain(str);
+            });
+
+            done();
+        });
+    });
+
+    // eslint-disable-next-line max-len
+    it('should log the entire output when infinity is passed to --truncate-body-output without considering case', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output InFiNiTy', function (_code, stdout) {
+            _.forEach(endTags, function (str) {
+                expect(stdout).to.contain(str);
+            });
+        });
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output INFINITY', function (_code, stdout) {
             _.forEach(endTags, function (str) {
                 expect(stdout).to.contain(str);
             });
