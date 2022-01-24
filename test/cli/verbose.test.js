@@ -67,14 +67,14 @@ describe('newman run --verbose', function () {
             _.forEach(endTags, function (str) {
                 expect(stdout).to.contain(str);
             });
-        });
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output INFINITY', function (_code, stdout) {
-            _.forEach(endTags, function (str) {
-                expect(stdout).to.contain(str);
-            });
+            // eslint-disable-next-line max-len
+            exec('node ./bin/newman.js run test/fixtures/run/large-output-get-request.json --verbose --reporter-cli-truncate-body-output INFINITY', function (_code, stdout) {
+                _.forEach(endTags, function (str) {
+                    expect(stdout).to.contain(str);
+                });
 
-            done();
+                done();
+            });
         });
     });
 
