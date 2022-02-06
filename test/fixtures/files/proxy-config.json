@@ -1,0 +1,15 @@
+{
+    "proxies": [
+        { 
+            "match": "https://postman-echo.com/get?source=newman-sample-github-collection",
+            "host": "proxy.com",
+            "tunnel": true 
+         },
+        { 
+            "match": "http://postman-echo.com/type/html?source=newman-sample-github-collection",
+            "host": "proxy2.com",
+            "port":"8080",
+            "tunnel": true 
+         }
+]
+}

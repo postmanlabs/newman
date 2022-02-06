@@ -1,4 +1,6 @@
-[
+{
+    "proxies": [
+
     {
         "match": "https://example.com/*",
         "host": "proxy.com", 
@@ -19,4 +21,6 @@
         "username": "proxy_username",
         "password": "proxy_password"
     }
+    
 ]
+}
