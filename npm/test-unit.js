@@ -31,7 +31,7 @@ module.exports = function (exit) {
         var mocha = new Mocha({ timeout: 1000 * 60 });
 
         files.filter(function (file) { // extract all test files
-            return (file.substr(-8) === '.test.js');
+            return (file.substring(file.length - 8) === '.test.js');
         }).forEach(mocha.addFile.bind(mocha));
 
         // start the mocha run

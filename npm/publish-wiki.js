@@ -51,7 +51,7 @@ module.exports = function (exit) {
             sidebar = source.replace(/<a name="Collection"><\/a>[\s\S]+/g, '');
 
             // remove sidebar data from home
-            home = source.substr(sidebar.length);
+            home = source.substring(sidebar.length);
 
             // add timestamp to sidebar
             sidebar += '\n\n ' + (new Date()).toUTCString();

@@ -31,7 +31,7 @@ module.exports = function (exit) {
         var _exec = global.exec; // need to restore it later
 
         files.filter(function (file) {
-            return (file.substr(-8) === '.test.js');
+            return (file.substring(file.length - 8) === '.test.js');
         }).forEach(function (file) {
             mocha.addFile(file);
         });

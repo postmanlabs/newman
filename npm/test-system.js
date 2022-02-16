@@ -51,7 +51,7 @@ module.exports = function (exit) {
                 }
 
                 files.filter(function (file) {
-                    return (file.substr(-8) === '.test.js');
+                    return (file.substring(file.length - 8) === '.test.js');
                 }).forEach(function (file) {
                     mocha.addFile(file);
                 });
