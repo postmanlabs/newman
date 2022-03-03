@@ -1,3 +1,7 @@
+master:
+  chores:
+    - Updated dependencies
+
 5.3.1:
   date: 2022-01-10
   chores:
