@@ -1,4 +1,6 @@
 master:
+  fixed bugs:
+    - Allow the process to exit naturally in CLI mode
   chores:
     - Updated dependencies
 
