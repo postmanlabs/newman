@@ -1,3 +1,15 @@
+5.3.2:
+  date: 2022-03-03
+  fixed bugs:
+    - Allow the process to exit naturally in CLI mode
+  chores:
+    - Updated dependencies
+
+5.3.1:
+  date: 2022-01-10
+  chores:
+    - Updated dependencies
+
 5.3.0:
   date: 2021-09-07
   new features:

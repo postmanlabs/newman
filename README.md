@@ -606,7 +606,7 @@ $ newman run file-upload.postman_collection.json
 
 ## Using Newman with the Postman API
 
-1 [Generate an API key](https://app.getpostman.com/dashboard/integrations)<br/>
+1 [Generate an API key](https://learning.postman.com/docs/developer/intro-api/#generating-a-postman-api-key)<br/>
 2 Fetch a list of your collections from: `https://api.getpostman.com/collections?apikey=$apiKey`<br/>
 3 Get the collection link via it's `uid`: `https://api.getpostman.com/collections/$uid?apikey=$apiKey`<br/>
 4 Obtain the environment URI from: `https://api.getpostman.com/environments?apikey=$apiKey`<br/>
