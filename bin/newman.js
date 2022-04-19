@@ -81,7 +81,7 @@ program
                 console.error(`error: ${err.message || err}\n`);
                 err.friendly && console.error(`  ${err.friendly}\n`);
             }
-            runError && !_.get(options, 'suppressExitCode') && process.exit(1);
+            runError && !_.get(options, 'suppressExitCode') && (process.exitCode = 1);
         });
     });
 
