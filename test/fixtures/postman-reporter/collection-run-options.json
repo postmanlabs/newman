@@ -1,0 +1,32 @@
+{
+  "reporters": [ "postman-cloud" ],
+  "globalVar": [],
+  "envVar": [],
+  "color": "auto",
+  "delayRequest": 0,
+  "timeout": 0,
+  "timeoutRequest": 0,
+  "timeoutScript": 0,
+  "insecureFileRead": true,
+  "reporterOptions": {
+    "apiKey": "PMAK-qdqw",
+    "workspaceId": "qsqw"
+  },
+  "reporter": {
+    "postman-cloud": {
+      "apiKey": "PMAK-qdqw",
+      "workspaceId": "qsqw"
+    }
+  },
+  "newmanVersion": "5.3.2",
+  "workingDir": "",
+  "environment": {
+    "id": "0ee3f6cf-00f3-409a-81c2-eqwe12ewqdqw",
+    "values": {}
+  },
+  "collection":  {
+    "id": "0ee3f6cf-00f3-409a-81c2-8b1150613cbf",
+    "name": "Newman",
+    "items":  {}
+  }
+}
