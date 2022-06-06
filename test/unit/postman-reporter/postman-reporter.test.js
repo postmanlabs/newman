@@ -5,7 +5,6 @@ const sinon = require('sinon'),
 
     print = require('../../../lib/print'),
     upload = require('../../../lib/reporters/postman/helpers/upload-run'),
-    util = require('../../../lib/reporters/postman/helpers/util'),
 
     COLLECTION = {
         id: 'C1',
@@ -47,20 +46,12 @@ describe('Postman reporter', function () {
 
     it('should print informational message if api key is not found', function (done) {
         const collectionUID = '1234-588025f9-2497-46f7-b849-47f58b865807',
-            apiKey = '12345678',
+            apiKey = '',
             collectionPostmanURL = `https://api.getpostman.com/collections/${collectionUID}?apikey=${apiKey}`;
 
         nock('https://api.getpostman.com')
             .get(/^\/collections/)
             .reply(200, COLLECTION);
-
-        sinon.stub(util, 'parseCLIArguments').callsFake(() => {
-            return { collection: collectionUID };
-        });
-
-        sinon.stub(util, 'getAPIKeyFromCLIArguments').callsFake(() => {
-            return '';
-        });
 
         sinon.spy(print, 'lf');
 
@@ -89,14 +80,6 @@ describe('Postman reporter', function () {
 
         sinon.stub(upload, 'uploadRun').callsFake((_apiKey, _collectionRunOptions, _runSummary, callback) => {
             return callback(new Error('Error message'));
-        });
-
-        sinon.stub(util, 'parseCLIArguments').callsFake(() => {
-            return { collection: collectionUID };
-        });
-
-        sinon.stub(util, 'getAPIKeyFromCLIArguments').callsFake(() => {
-            return apiKey;
         });
 
         sinon.spy(print, 'lf');
@@ -137,14 +120,6 @@ describe('Postman reporter', function () {
             return callback(null, uploadRunResponse);
         });
 
-        sinon.stub(util, 'parseCLIArguments').callsFake(() => {
-            return { collection: collectionUID, environment: environmentUID };
-        });
-
-        sinon.stub(util, 'getAPIKeyFromCLIArguments').callsFake(() => {
-            return apiKey;
-        });
-
         sinon.spy(print, 'lf');
 
         newman.run({
@@ -179,14 +154,6 @@ describe('Postman reporter', function () {
 
         sinon.stub(upload, 'uploadRun').callsFake((_apiKey, _collectionRunOptions, _runSummary, callback) => {
             return callback(null, uploadRunResponse);
-        });
-
-        sinon.stub(util, 'parseCLIArguments').callsFake(() => {
-            return { collection: collectionUID };
-        });
-
-        sinon.stub(util, 'getAPIKeyFromCLIArguments').callsFake(() => {
-            return apiKey;
         });
 
         sinon.spy(print, 'lf');
