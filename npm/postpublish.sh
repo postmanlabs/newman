@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Bail out on the first error
-set -e;
+set -eo pipefail;
 
 LATEST="alpine";
 BLUE="\033[0;34m";
@@ -17,62 +17,67 @@ GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
 MAJOR=$(echo ${VERSION} | grep -oE "^\d+");
 MINOR=$(echo ${VERSION} | grep -oE "^\d+\.\d+");
 
-function build_docker_image {
-    local TAG=$(basename $1);
+function validate_docker_image {
+    local OS="$(basename $1)"
+    local IMAGE_NAME="newman-test-$OS";
 
     echo "";
 
-    echo -e "$BLUE Building $DOCKER_REPO:$VERSION-$TAG $NO_COLOUR";
+    echo -e "$BLUE Building Docker image (OS: $OS) for local image validation test $NO_COLOUR";
 
     docker build \
-        --no-cache --force-rm --squash -t ${DOCKER_REPO}:${VERSION}-${TAG} \
-        --file="docker/images/$TAG/Dockerfile" --build-arg NEWMAN_VERSION=${VERSION} .;
+        --no-cache \
+        --force-rm \
+        -t $IMAGE_NAME \
+        --file="docker/images/$OS/Dockerfile" \
+        --build-arg NEWMAN_VERSION=${VERSION} \
+        .;
 
-    echo -e "$BLUE Running docker image test for $DOCKER_REPO:$VERSION-$TAG, latest $NO_COLOUR";
+    echo -e "$BLUE Running Docker image (OS: $OS) test $NO_COLOUR";
 
     # Test
-    docker run -v ${PWD}/examples:/etc/newman -t ${DOCKER_REPO}:${VERSION}-${TAG} run "sample-collection.json";
+    docker run -v ${PWD}/examples:/etc/newman --rm -t $IMAGE_NAME run "sample-collection.json";
 
-    echo -e "$BLUE Pushing docker image for $DOCKER_REPO:$VERSION-$TAG $NO_COLOUR";
+    echo -e "$BLUE Removing Docker image (OS: $OS) from local Docker $NO_COLOUR";
+    docker rmi $IMAGE_NAME
+}
 
-    # Tag
+function build_docker_image {
+    local OS="$(basename $1)"
+
+    local TAGS=""
+
+    echo "";
+
     if [[ ${GIT_BRANCH} == "master" ]]; then
-        if [[ ${TAG} == "ubuntu1404" || ${TAG} == "alpine33" ]]; then
-            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}_${TAG}:latest;
-            docker push ${DOCKER_REPO}_${TAG}:latest;
-        else
-            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${TAG};
-            docker push ${DOCKER_REPO}:${TAG};
+        TAGS="$TAGS -t ${DOCKER_REPO}:${OS}"
 
-            if [[ ${TAG} == ${LATEST} ]]; then
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:latest;
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${VERSION};
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MINOR};
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MAJOR};
-
-                docker push ${DOCKER_REPO}:latest;
-                docker push ${DOCKER_REPO}:${VERSION};
-                docker push ${DOCKER_REPO}:${MINOR};
-                docker push ${DOCKER_REPO}:${MAJOR};
-            fi
+        if [[ ${OS} == ${LATEST} ]]; then
+            TAGS="$TAGS -t ${DOCKER_REPO}:latest";
+            TAGS="$TAGS -t ${DOCKER_REPO}:${VERSION}";
+            TAGS="$TAGS -t ${DOCKER_REPO}:${MINOR}";
+            TAGS="$TAGS -t ${DOCKER_REPO}:${MAJOR}";
         fi
     fi
 
-    if [[ ${TAG} == "ubuntu1404" || ${TAG} == "alpine33" ]]; then
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}_${TAG}:${VERSION};
-        docker push ${DOCKER_REPO}_${TAG}:${VERSION};
-    else
-        # Push
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${VERSION}-${TAG};
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MINOR}-${TAG};
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MAJOR}-${TAG};
+    TAGS="$TAGS -t ${DOCKER_REPO}:${VERSION}-${OS}";
+    TAGS="$TAGS -t ${DOCKER_REPO}:${MINOR}-${OS}";
+    TAGS="$TAGS -t ${DOCKER_REPO}:${MAJOR}-${OS}";
 
-        docker push ${DOCKER_REPO}:${VERSION}-${TAG};
-        docker push ${DOCKER_REPO}:${MINOR}-${TAG};
-        docker push ${DOCKER_REPO}:${MAJOR}-${TAG};
-    fi
+    echo -e "$BLUE Will now build and push multi-platform Docker image with tags $TAGS $NO_COLOUR";
+
+    docker buildx build \
+        --platform linux/amd64,linux/arm64 \
+        --no-cache \
+        --force-rm \
+        ${TAGS} \
+        --file="docker/images/$OS/Dockerfile" \
+        --build-arg NEWMAN_VERSION=${VERSION} \
+        --push \
+        .;
 }
 
 for image in ${IMAGES_BASE_PATH}/*; do
+    validate_docker_image ${image};
     build_docker_image ${image};
 done
