@@ -78,7 +78,7 @@
     "nock": "^13.2.4",
     "nyc": "^15.1.0",
     "packity": "^0.3.4",
-    "parse-gitignore": "^1.0.1",
+    "parse-gitignore": "^2.0.0",
     "postman-jsdoc-theme": "^0.0.3",
     "recursive-readdir": "^2.2.2",
     "server-destroy": "^1.0.1",
