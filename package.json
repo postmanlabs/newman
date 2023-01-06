@@ -51,7 +51,7 @@
     "liquid-json": "0.3.1",
     "lodash": "4.17.21",
     "mkdirp": "1.0.4",
-    "postman-collection": "4.1.1",
+    "postman-collection": "4.1.6",
     "postman-collection-transformer": "4.1.6",
     "postman-request": "2.88.1-postman.31",
     "postman-runtime": "7.29.0",
