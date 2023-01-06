@@ -56,7 +56,7 @@
     "postman-request": "2.88.1-postman.31",
     "postman-runtime": "7.29.0",
     "pretty-ms": "7.0.1",
-    "semver": "7.3.5",
+    "semver": "7.3.8",
     "serialised-error": "1.1.3",
     "tough-cookie": "3.0.1",
     "word-wrap": "1.2.3",
