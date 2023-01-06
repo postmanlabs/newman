@@ -42,7 +42,7 @@
     "async": "3.2.3",
     "chardet": "1.4.0",
     "cli-progress": "3.10.0",
-    "cli-table3": "0.6.1",
+    "cli-table3": "0.6.3",
     "colors": "1.4.0",
     "commander": "7.2.0",
     "csv-parse": "4.16.3",
