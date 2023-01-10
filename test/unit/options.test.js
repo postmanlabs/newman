@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 var _ = require('lodash'),
     { VariableScope } = require('postman-collection'),
     options = require('../../lib/run/options');
@@ -123,3 +124,30 @@ describe('options', function () {
         });
     });
 });
+
+describe('Option --item-from-folder', function () {
+    it('should be undefined by default', function (done) {
+        options({}, function (err, result) {
+            expect(err).to.be.null;
+            expect(result.itemFromFolder).to.be.undefined;
+            done();
+        });
+    });
+
+    it('should handle options.itemFromFolder passed as string correctly', function (done) {
+        options({ itemFromFolder: 'f1' }, function (err, result) {
+            expect(err).to.be.null;
+            expect(result.itemFromFolder).to.eql('f1');
+            done();
+        });
+    });
+
+    it('should use multipleIdOrName strategy if options.itemFromFolder is passed as an array', function (done) {
+        options({ itemFromFolder: ['f1', 'f2'] }, function (err, result) {
+            expect(err).to.be.null;
+            expect(result.itemFromFolder).to.eql(['f1', 'f2']);
+            done();
+        });
+    });
+});
+
