@@ -93,7 +93,7 @@ function createRedirectServer () {
         }
         // path: /status/<responseCode>
         else if ((/^\/status\/(\d{3})$/).test(req.url)) {
-            res.writeHead(parseInt(req.url.substr(-3), 10), { location: '/' });
+            res.writeHead(parseInt(req.url.substring(req.url.length - 3), 10), { location: '/' });
 
             return res.end();
         }
