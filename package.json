@@ -84,7 +84,7 @@
     "server-destroy": "^1.0.1",
     "shelljs": "^0.8.5",
     "sinon": "^13.0.1",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.5.0"
   },
   "engines": {
     "node": ">=10"
