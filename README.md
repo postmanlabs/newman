@@ -1,3 +1,5 @@
+2023-06-05 This repository has been archived
+
 ### Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) and [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
 
 <a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
