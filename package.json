@@ -83,7 +83,7 @@
     "recursive-readdir": "^2.2.2",
     "server-destroy": "^1.0.1",
     "shelljs": "^0.8.5",
-    "sinon": "^13.0.1",
+    "sinon": "^15.2.0",
     "xml2js": "^0.4.23"
   },
   "engines": {
