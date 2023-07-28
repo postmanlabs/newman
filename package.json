@@ -59,7 +59,7 @@
     "semver": "7.3.5",
     "serialised-error": "1.1.3",
     "tough-cookie": "3.0.1",
-    "word-wrap": "1.2.3",
+    "word-wrap": "1.2.5",
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
