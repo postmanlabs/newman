@@ -7,7 +7,7 @@ const _ = require('lodash'),
     runtime = require('postman-runtime');
 
 describe('run module', function () {
-    var run = require('../../lib/run');
+    var run = require('../../lib/commands/run');
 
     it('should export a function', function () {
         expect(run).to.be.a('function');

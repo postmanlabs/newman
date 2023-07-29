@@ -1,7 +1,7 @@
 const _ = require('lodash'),
     expect = require('chai').expect,
     { VariableScope } = require('postman-collection'),
-    options = require('../../lib/run/options');
+    options = require('../../lib/commands/run/options');
 
 describe('options', function () {
     describe('JSON with spaces', function () {
