@@ -348,7 +348,7 @@ newman.run({
         "_postman_exported_using": "Postman/4.8.0"
     },
     globalVar: [
-        { "key":"glboalSecret", "value":"globalSecretValue" },
+        { "key":"globalSecret", "value":"globalSecretValue" },
         { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
     ],
     environment: {
