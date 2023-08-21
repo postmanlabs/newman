@@ -1,6 +1,6 @@
 const sinon = require('sinon'),
     expect = require('chai').expect,
-    newman = require('../../');
+    { run } = require('../../lib/commands/run/collection-runner');
 
 describe('Default reporter', function () {
     beforeEach(function () {
@@ -12,7 +12,7 @@ describe('Default reporter', function () {
     });
 
     it('cli can be loaded', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['cli']
         }, function (err) {
@@ -24,7 +24,7 @@ describe('Default reporter', function () {
     });
 
     it('json can be loaded', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['json']
         }, function (err) {
@@ -36,7 +36,7 @@ describe('Default reporter', function () {
     });
 
     it('junit can be loaded', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['junit']
         }, function (err) {
@@ -48,7 +48,7 @@ describe('Default reporter', function () {
     });
 
     it('progress can be loaded', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['progress']
         }, function (err) {
@@ -60,7 +60,7 @@ describe('Default reporter', function () {
     });
 
     it('emojitrain can be loaded', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['emojitrain']
         }, function (err) {

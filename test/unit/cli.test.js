@@ -1,11 +1,15 @@
 const _ = require('lodash'),
-    sinon = require('sinon'),
     expect = require('chai').expect,
 
-    newman = require('../../');
-
 describe('cli parser', function () {
-    let newmanCLI,
+    var _ = require('lodash'),
+        sinon = require('sinon'),
+        { Command } = require('commander'),
+        newman = require('../../lib/commands/run/collection-runner'),
+        newmanCLI,
+        commands = {
+            run: require('../../lib/commands/run')
+        },
 
         /**
          * Wrap newmanCLI callback to extract options passed to sinon `newman` stub.
@@ -15,8 +19,10 @@ describe('cli parser', function () {
          * @param {Function} callback - The callback function invoked on the completion of commander parsing.
          */
         cli = (argv, command, callback) => {
-            newmanCLI(argv, (err) => {
-                callback(err, _.get(newman, [command, 'lastCall', 'returnValue']));
+            let program = newmanCLI.getProgram(Command, commands);
+
+            newmanCLI.run(argv, program, (err) => {
+                callback(err, _.get(commands, [command, 'action', 'lastCall', 'returnValue']));
             });
         };
 
@@ -27,16 +33,18 @@ describe('cli parser', function () {
     });
 
     describe('Run Command', function () {
-        // stub `newman.run`, directly return options passed to `newman.run` in newmanCLI.
+        // stub `run.action`, directly return options passed to `run.action` in newmanCLI.
         before(function () {
-            sinon.stub(newman, 'run').callsFake((options) => {
-                return options;
+            sinon.stub(commands.run, 'action').callsFake(function (collection, command, program) {
+                let opts = newman.optionCollector(program, collection, command);
+
+                return opts;
             });
         });
 
         // restore original `newman.run` function.
         after(function () {
-            newman.run.restore();
+            commands.run.action.restore();
         });
 
         it('should pass default options correctly', function (done) {
