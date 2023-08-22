@@ -3,10 +3,8 @@
 // This script is intended to execute all library tests.
 // ---------------------------------------------------------------------------------------------------------------------
 
-const path = require('path'),
-
-    colors = require('colors/safe'),
-    Mocha = require('mocha'),
+const Mocha = require('mocha'),
+    path = require('path'),
     recursive = require('recursive-readdir'),
 
     SPEC_SOURCE_DIR = path.join('test', 'library');

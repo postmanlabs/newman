@@ -10,7 +10,7 @@ const fs = require('fs'),
     async = require('async'),
     colors = require('colors/safe'),
     recursive = require('recursive-readdir'),
-    newman = require(path.join(__dirname, '..', 'index')),
+    newman = require('../lib/commands/run/collection-runner');
 
     echoServer = require('./server').createRawEchoServer(),
     redirectServer = require('./server').createRedirectServer(),
