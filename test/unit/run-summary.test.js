@@ -3,7 +3,7 @@ var _ = require('lodash');
 describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and average response time
     var Summary = require('../../lib/run/summary'),
-        EventEmitter = require('eventemitter3'),
+        EventEmitter = require('events'),
         sdk = require('postman-collection'),
 
         TRACKED_EVENTS = ['iteration', 'item', 'script', 'prerequest', 'request', 'test', 'assertion',

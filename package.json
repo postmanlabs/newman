@@ -46,7 +46,6 @@
     "colors": "1.4.0",
     "commander": "7.2.0",
     "csv-parse": "4.16.3",
-    "eventemitter3": "4.0.7",
     "filesize": "8.0.7",
     "liquid-json": "0.3.1",
     "lodash": "4.17.21",
