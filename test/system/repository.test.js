@@ -2,15 +2,16 @@
  * @fileOverview This test specs runs tests on the package.json file of repository. It has a set of strict tests on the
  * content of the file as well. Any change to package.json must be accompanied by valid test case in this spec-sheet.
  */
-var fs = require('fs'),
+const fs = require('fs'),
     _ = require('lodash'),
     yml = require('js-yaml'),
     semver = require('semver'),
+    expect = require('chai').expect,
     parseIgnore = require('parse-gitignore');
 
 describe('project repository', function () {
     describe('package.json', function () {
-        var content,
+        let content,
             json;
 
         try {
@@ -63,7 +64,7 @@ describe('project repository', function () {
 
             it('should have valid node shebang', function () {
                 json.bin && Object.keys(json.bin).forEach(function (scriptName) {
-                    var fileContent = fs.readFileSync(json.bin[scriptName]).toString();
+                    const fileContent = fs.readFileSync(json.bin[scriptName]).toString();
 
                     expect((/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g).test(fileContent),
                         `invalid or missing shebang in ${json.bin[scriptName]}`).to.be.ok;
@@ -90,7 +91,7 @@ describe('project repository', function () {
             });
 
             it('should not overlap devDependencies', function () {
-                var clean = [];
+                const clean = [];
 
                 json.devDependencies && Object.keys(json.devDependencies).forEach(function (item) {
                     !json.dependencies[item] && clean.push(item);
@@ -129,7 +130,7 @@ describe('project repository', function () {
     });
 
     describe('.ignore files', function () {
-        var gitignorePath = '.gitignore',
+        const gitignorePath = '.gitignore',
             npmignorePath = '.npmignore',
             npmignore = parseIgnore(fs.readFileSync(npmignorePath)).patterns,
             gitignore = parseIgnore(fs.readFileSync(gitignorePath)).patterns;
