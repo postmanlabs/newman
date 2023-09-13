@@ -1,6 +1,7 @@
-var fs = require('fs'),
+const fs = require('fs'),
     async = require('async'),
-    https = require('https');
+    https = require('https'),
+    expect = require('chai').expect;
 
 describe('SSL Client certificates', function () {
     var server1, server2, server3;

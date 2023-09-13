@@ -1,7 +1,9 @@
-var fs = require('fs');
+const fs = require('fs'),
+    expect = require('chai').expect;
+
 
 describe('CLI output', function () {
-    var coloredOutput = /\u001b\[/; // eslint-disable-line no-control-regex
+    const coloredOutput = /\u001b\[/; // eslint-disable-line no-control-regex
 
     describe('TTY', function () {
         it('should produce colored output without any options', function (done) {

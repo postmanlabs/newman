@@ -1,5 +1,7 @@
+const expect = require('chai').expect;
+
 describe('CLI reporter logging timestamp', function () {
-    var timeRegex = /([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]/;
+    const timeRegex = /([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]/;
 
     it('should log timestamp', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --reporter-cli-show-timestamps',
