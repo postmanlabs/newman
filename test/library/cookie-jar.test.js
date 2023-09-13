@@ -1,7 +1,7 @@
 var path = require('path'),
     fs = require('fs'),
     sh = require('shelljs'),
-    CookieJar = require('tough-cookie').CookieJar;
+    CookieJar = require('@postman/tough-cookie').CookieJar;
 
 describe('newman.run cookieJar', function () {
     var cookieJar = new CookieJar(),
