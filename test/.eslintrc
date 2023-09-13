@@ -4,19 +4,18 @@
     ],
     "env": {
         "mocha": true,
+        "browser": true,
         "node": true,
         "es6": true
     },
     "globals": {
-        "afterEach": true,
-        "beforeEach": true,
-        "describe": true,
-        "exec": true,
-        "expect": true,
-        "it": true,
-        "newman": true
+        "exec": true
     },
     "rules": {
+        // JSDoc
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-param-description": "off",
+
         // Mocha
         "mocha/handle-done-callback": "error",
         "mocha/max-top-level-suites": "error",
@@ -30,10 +29,10 @@
         "mocha/no-pending-tests": "error",
         "mocha/no-return-and-callback": "error",
         "mocha/no-sibling-hooks": "error",
-        "mocha/no-skipped-tests": "warn",
+        "mocha/no-skipped-tests": "off",
         "mocha/no-synchronous-tests": "off",
-        "mocha/no-top-level-hooks": "warn",
+        "mocha/no-top-level-hooks": "off",
         "mocha/valid-test-description": "off",
         "mocha/valid-suite-description": "off"
     }
-}
+  }
