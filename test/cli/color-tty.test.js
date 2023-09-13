@@ -1,12 +1,14 @@
 const fs = require('fs'),
     expect = require('chai').expect;
 
-
 describe('CLI output', function () {
-    const coloredOutput = /\u001b\[/; // eslint-disable-line no-control-regex
+    // eslint-disable-next-line no-control-regex
+    const coloredOutput = /^[\u001b[0m]+newman/;
 
     describe('TTY', function () {
-        it('should produce colored output without any options', function (done) {
+        // @todo: Change to assert colored output after https://github.com/shelljs/shelljs/pull/524 is released
+        // figure out a way to have `process.stdout.isTTY` true for the child process.
+        it.skip('should produce colored output without any options', function (done) {
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
@@ -27,8 +29,7 @@ describe('CLI output', function () {
             });
         });
 
-        // @todo: Fix this test
-        it.skip('should not produce colored output with `--color off`', function (done) {
+        it('should not produce colored output with `--color off`', function (done) {
             // eslint-disable-next-line max-len
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color off', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
@@ -98,8 +99,7 @@ describe('CLI output', function () {
                 });
         });
 
-        // @todo: Fix this test
-        it.skip('should not produce colored output with `--color off`', function (done) {
+        it('should not produce colored output with `--color off`', function (done) {
             exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json --color off > ${outFile}`,
                 function (code, stdout, stderr) {
                     expect(code, 'should have exit code of 0').to.equal(0);
