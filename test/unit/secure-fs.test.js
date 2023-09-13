@@ -1,4 +1,5 @@
-let path = require('path'),
+const path = require('path'),
+    expect = require('chai').expect,
     SecureFs = require('../../lib/run/secure-fs'),
 
     POSIX_WORKING_DIR = '/Postman/files',

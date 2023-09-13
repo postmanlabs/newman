@@ -1,4 +1,5 @@
-var _ = require('lodash');
+const _ = require('lodash'),
+    expect = require('chai').expect;
 
 describe('run summary', function () {
     // @todo add test for computation of timings, transfer sizes and average response time

@@ -1,4 +1,5 @@
-var sdk = require('postman-collection'),
+const sdk = require('postman-collection'),
+    expect = require('chai').expect,
 
     util = require('../../lib/util');
 
