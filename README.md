@@ -46,7 +46,7 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 
 ## Getting started
 
-To run Newman, ensure that you have Node.js >= v10. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+To run Newman, ensure that you have Node.js >= v16. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
 ### Installation
 The easiest way to install Newman is using NPM. If you have Node.js installed, it is most likely that you have NPM installed as well.
@@ -662,6 +662,7 @@ newman.run({
 |       v3.x        |  >= v4.x   |
 |       v4.x        |  >= v6.x   |
 |       v5.x        |  >= v10.x  |
+|       v6.x        |  >= v16.x  |
 
 The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
 

@@ -1,4 +1,6 @@
 unreleased:
+  breaking changes:
+    - GH-3145 Dropped support for Node < v16
   chores:
     - GH-3145 Migrate to GitHub Actions
 
