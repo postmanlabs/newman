@@ -1,4 +1,7 @@
-var _ = require('lodash'),
+const _ = require('lodash'),
+    expect = require('chai').expect,
+
+    newman = require('../../'),
     runtimeVersion = require('../../package.json').dependencies['postman-runtime'];
 
 describe('Newman run options', function () {

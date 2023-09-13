@@ -1,3 +1,7 @@
+const expect = require('chai').expect,
+
+    newman = require('../../');
+
 describe('folder variants', function () {
     var collection = {
         id: 'C1',

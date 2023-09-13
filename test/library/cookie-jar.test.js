@@ -1,7 +1,10 @@
-var path = require('path'),
+const path = require('path'),
     fs = require('fs'),
     sh = require('shelljs'),
-    CookieJar = require('@postman/tough-cookie').CookieJar;
+    expect = require('chai').expect,
+    CookieJar = require('@postman/tough-cookie').CookieJar,
+
+    newman = require('../../');
 
 describe('newman.run cookieJar', function () {
     var cookieJar = new CookieJar(),
