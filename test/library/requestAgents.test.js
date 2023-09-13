@@ -18,7 +18,7 @@ describe('newman.run requestAgents', function () {
         httpsAgentSpy.restore();
     });
 
-    it.skip('should accept custom requesting agents', function (done) {
+    it('should accept custom requesting agents', function (done) {
         newman.run({
             collection: {
                 name: 'Collection',

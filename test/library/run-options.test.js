@@ -195,11 +195,11 @@ describe('Newman run options', function () {
         it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeoutRequest: 500
+                timeoutRequest: 10
             }, function (err, summary) {
                 expect(err).to.be.null;
                 expect(summary.run.failures).to.be.an('array').that.has.lengthOf(1);
-                expect(summary.run.failures[0].error.message).to.equal('ETIMEDOUT');
+                expect(summary.run.failures[0].error.message).to.equal('ESOCKETTIMEDOUT');
                 done();
             });
         });
