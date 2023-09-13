@@ -47,11 +47,9 @@ Thumbs.db
 npm/
 test/
 examples/
-.snyk
+codecov.yml
 .eslintrc
 .nycrc.js
-codecov.yml
-.travis.yml
 .dockerignore
 .editorconfig
 .jsdoc-config.json
