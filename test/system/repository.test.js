@@ -131,8 +131,8 @@ describe('project repository', function () {
     describe('.ignore files', function () {
         var gitignorePath = '.gitignore',
             npmignorePath = '.npmignore',
-            npmignore = parseIgnore(fs.readFileSync(npmignorePath)),
-            gitignore = parseIgnore(fs.readFileSync(gitignorePath));
+            npmignore = parseIgnore(fs.readFileSync(npmignorePath)).patterns,
+            gitignore = parseIgnore(fs.readFileSync(gitignorePath)).patterns;
 
         describe(gitignorePath, function () {
             it('should exist', function (done) {

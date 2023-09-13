@@ -34,10 +34,10 @@ describe('folder variants', function () {
         newman.run({
             collection: collection,
             folder: 'R123'
-        }, function (err, summary) {
-            expect(err).to.be.null;
-            expect(summary.run.stats.iterations.total, 'should have 0 iteration').to.equal(0);
-            expect(summary.run.executions, 'should have 0 executions').to.have.lengthOf(0);
+        }, function (err) {
+            expect(err).to.be.ok;
+            expect(err.message)
+                .to.equal('runtime~extractRunnableItems: Unable to find a folder or request: "R123"');
             done();
         });
     });
@@ -59,10 +59,10 @@ describe('folder variants', function () {
         newman.run({
             collection: collection,
             folder: ['R1', 'R123']
-        }, function (err, summary) {
-            expect(err).to.be.null;
-            expect(summary.run.stats.iterations.total, 'should have 0 iteration').to.equal(0);
-            expect(summary.run.executions, 'should have 0 executions').to.have.lengthOf(0);
+        }, function (err) {
+            expect(err).to.be.ok;
+            expect(err.message)
+                .to.equal('runtime~extractRunnableItems: Invalid entrypoint');
             done();
         });
     });

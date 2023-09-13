@@ -159,7 +159,8 @@ describe('Newman run options', function () {
                 bail: ['folder', 'failure']
             }, function (err) {
                 expect(err).to.be.ok;
-                expect(err.message).to.equal('Unable to find a folder or request: invalidName');
+                expect(err.message)
+                    .to.equal('runtime~extractRunnableItems: Unable to find a folder or request: "invalidName"');
 
                 done();
             });
@@ -167,13 +168,12 @@ describe('Newman run options', function () {
     });
 
     describe('script timeouts', function () {
-        // @todo: Unskip this when the underlying runtime behaviour has been fixed
-        it.skip('should be handled correctly when breached', function (done) {
+        it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 5
             }, function (err, summary) {
-                expect(err.message).to.equal('Script execution timed out.');
+                expect(err.message).to.equal('Script execution timed out after 5ms');
                 expect(summary).to.be.ok;
                 done();
             });
@@ -192,14 +192,14 @@ describe('Newman run options', function () {
     });
 
     describe('request timeouts', function () {
-        // @todo: Unskip this when the underlying runtime behaviour has been fixed
-        it.skip('should be handled correctly when breached', function (done) {
+        it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutRequest: 500
             }, function (err, summary) {
-                expect(err.message).to.equal('ESOCKETTIMEDOUT');
-                expect(summary).to.be.ok;
+                expect(err).to.be.null;
+                expect(summary.run.failures).to.be.an('array').that.has.lengthOf(1);
+                expect(summary.run.failures[0].error.message).to.equal('ETIMEDOUT');
                 done();
             });
         });
