@@ -297,10 +297,6 @@ scripts (`pwd`) is always the repository root.
 The script associated with `npm test` will run all tests that ensures that your commit does not break anything in the
 repository. As such run `npm test` before you push
 
-### Accessing build log on CI server
-
-Build logs for this project can be accessed [here](https://travis-ci.org/postmanlabs/newman)
-
 ### Security
 
 Security concerns are always treated with high priority. Should you come across a security vulnerability, please report

@@ -2,6 +2,8 @@
   "name": "newman",
   "version": "5.3.2",
   "description": "Command-line companion utility for Postman",
+  "author": "Postman Labs <help@postman.com> (=)",
+  "license": "Apache-2.0",
   "homepage": "https://github.com/postmanlabs/newman",
   "bugs": "https://github.com/postmanlabs/newman/issues",
   "repository": {
@@ -23,21 +25,19 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "npm run test-lint && npm run test-system && npm run test-unit && npm run test-integration && npm run test-cli && npm run test-library",
-    "test-system": "node npm/test-system.js",
-    "test-lint": "node npm/test-lint.js",
-    "test-unit": "nyc --nycrc-path=.nycrc.js node npm/test-unit.js",
-    "test-integration": "nyc --nycrc-path=.nycrc.js node npm/test-integration.js",
-    "test-cli": "nyc --nycrc-path=.nycrc.js node npm/test-cli.js",
-    "test-library": "nyc --nycrc-path=.nycrc.js node npm/test-library.js",
     "build-docs": "node npm/build-docs.js",
     "build-wiki": "node npm/build-wiki.js",
     "publish-docs": "node npm/publish-docs.js",
+    "publish-wiki": "node npm/publish-wiki.js",
     "postpublish": "./npm/postpublish.sh",
-    "publish-wiki": "node npm/publish-wiki.js"
+    "test": "npm run test-lint && npm run test-system && npm run test-unit && npm run test-integration && npm run test-cli && npm run test-library",
+    "test-cli": "nyc --nycrc-path=.nycrc.js node npm/test-cli.js",
+    "test-integration": "nyc --nycrc-path=.nycrc.js node npm/test-integration.js",
+    "test-library": "nyc --nycrc-path=.nycrc.js node npm/test-library.js",
+    "test-lint": "node npm/test-lint.js",
+    "test-system": "node npm/test-system.js",
+    "test-unit": "nyc --nycrc-path=.nycrc.js node npm/test-unit.js"
   },
-  "author": "Postman Labs <help@postman.com> (=)",
-  "license": "Apache-2.0",
   "dependencies": {
     "async": "3.2.3",
     "chardet": "1.4.0",

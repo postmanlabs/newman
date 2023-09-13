@@ -1,3 +1,7 @@
+unreleased:
+  chores:
+    - GH-3145 Migrate to GitHub Actions
+
 5.3.2:
   date: 2022-03-03
   fixed bugs:
