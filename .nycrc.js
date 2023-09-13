@@ -1,8 +1,8 @@
 const TEST_TYPE = ((argv) => {
-        let match = argv[argv.length - 1].match(/npm\/test-(\w+).js/);
+    let match = argv[argv.length - 1].match(/npm\/test-(\w+).js/);
 
-        return match && match[1] || '';
-    })(process.argv);
+    return match && match[1] || '';
+})(process.argv);
 
 function configOverrides (testType) {
     switch (testType) {
@@ -15,10 +15,10 @@ function configOverrides (testType) {
             };
         case 'integration':
             return {
-                statements: 35,
+                statements: 40,
                 branches: 20,
-                functions: 35,
-                lines: 35
+                functions: 40,
+                lines: 40
             };
         case 'library':
             return {
@@ -31,7 +31,7 @@ function configOverrides (testType) {
             return {
                 statements: 70,
                 branches: 55,
-                functions: 75,
+                functions: 80,
                 lines: 70
             };
         default:
