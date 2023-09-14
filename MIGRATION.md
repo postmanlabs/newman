@@ -34,11 +34,16 @@ Newman v6 requires Node.js >= v16. [Install Node.js via package manager](https:/
 
 ### Latest Postman Runtime
 Newman v6 uses the latest version of the Postman Runtime dependencies. This brings in several improvements and bug fixes.
-Here are some of the notable changes:
+Here are some of the notable additions:
 * JWT authentication
 * NTLMv2 authentication
 * Promise execution in scripts
 * Stripping JSON comments in the raw mode body
+
+### Docker Images
+Newman v6 drops support for deprecated `postman/newman_alpine33` and `postman/newman_ubuntu1404` Docker images.
+
+The two available Docker images, `postman/newman:alpine` and `postman/newman:ubuntu` are upgraded to Node.js v16.
 
 ---
 
