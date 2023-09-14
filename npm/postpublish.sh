@@ -37,40 +37,30 @@ function build_docker_image {
 
     # Tag
     if [[ ${GIT_BRANCH} == "master" ]]; then
-        if [[ ${TAG} == "ubuntu1404" || ${TAG} == "alpine33" ]]; then
-            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}_${TAG}:latest;
-            docker push ${DOCKER_REPO}_${TAG}:latest;
-        else
-            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${TAG};
-            docker push ${DOCKER_REPO}:${TAG};
+        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${TAG};
+        docker push ${DOCKER_REPO}:${TAG};
 
-            if [[ ${TAG} == ${LATEST} ]]; then
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:latest;
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${VERSION};
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MINOR};
-                docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MAJOR};
+        if [[ ${TAG} == ${LATEST} ]]; then
+            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:latest;
+            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${VERSION};
+            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MINOR};
+            docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MAJOR};
 
-                docker push ${DOCKER_REPO}:latest;
-                docker push ${DOCKER_REPO}:${VERSION};
-                docker push ${DOCKER_REPO}:${MINOR};
-                docker push ${DOCKER_REPO}:${MAJOR};
-            fi
+            docker push ${DOCKER_REPO}:latest;
+            docker push ${DOCKER_REPO}:${VERSION};
+            docker push ${DOCKER_REPO}:${MINOR};
+            docker push ${DOCKER_REPO}:${MAJOR};
         fi
     fi
 
-    if [[ ${TAG} == "ubuntu1404" || ${TAG} == "alpine33" ]]; then
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}_${TAG}:${VERSION};
-        docker push ${DOCKER_REPO}_${TAG}:${VERSION};
-    else
-        # Push
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${VERSION}-${TAG};
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MINOR}-${TAG};
-        docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MAJOR}-${TAG};
+    # Push
+    docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${VERSION}-${TAG};
+    docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MINOR}-${TAG};
+    docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${MAJOR}-${TAG};
 
-        docker push ${DOCKER_REPO}:${VERSION}-${TAG};
-        docker push ${DOCKER_REPO}:${MINOR}-${TAG};
-        docker push ${DOCKER_REPO}:${MAJOR}-${TAG};
-    fi
+    docker push ${DOCKER_REPO}:${VERSION}-${TAG};
+    docker push ${DOCKER_REPO}:${MINOR}-${TAG};
+    docker push ${DOCKER_REPO}:${MAJOR}-${TAG};
 }
 
 for image in ${IMAGES_BASE_PATH}/*; do
