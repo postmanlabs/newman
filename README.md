@@ -381,8 +381,8 @@ newman.run({
 });
 ```
 
-All events receive two arguments (1) `error` and (2) `args`. **The list below describes the properties of the second
-argument object.**
+All events receive two arguments (1) `error` and (2) `args`. The list below describes the properties of the second
+argument object. [Learn more](https://github.com/postmanlabs/newman/wiki/Newman-Run-Events)
 
 | Event     | Description   |
 |-----------|---------------|
@@ -404,8 +404,6 @@ argument object.**
 | exception                 | When any asynchronous error happen in `scripts` this event is triggered |
 | beforeDone                | An event that is triggered prior to the completion of the run |
 | done                      | This event is emitted when a collection run has completed, with or without errors |
-
-<!-- TODO: write about callback summary -->
 
 [back to top](#table-of-contents)
 

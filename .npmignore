@@ -27,7 +27,7 @@ Thumbs.db
 # - Allow sublime text project file to be committed in the development directory.
 !/develop/*.sublime-project
 
-# - Prevent CI output files from being Added
+# - Prevent CI output files from being added
 /out/
 /newman/
 
@@ -38,7 +38,7 @@ Thumbs.db
 *.REMOTE.*
 *.orig
 
-# - Prevent unit test coverage reports from being added
+# - Prevent code coverage reports from being added
 .coverage
 .nyc_output
 
