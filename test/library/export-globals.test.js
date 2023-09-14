@@ -1,7 +1,10 @@
-var fs = require('fs'),
+const fs = require('fs'),
     path = require('path'),
 
-    sh = require('shelljs');
+    sh = require('shelljs'),
+    expect = require('chai').expect,
+
+    newman = require('../../');
 
 describe('newman.run exportGlobals', function () {
     var outDir = 'out',

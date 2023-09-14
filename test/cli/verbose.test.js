@@ -1,7 +1,8 @@
-var _ = require('lodash');
+const _ = require('lodash'),
+    expect = require('chai').expect;
 
 describe('newman run --verbose', function () {
-    var verboseStrings = [
+    const verboseStrings = [
         'prepare',
         'wait',
         'dns-lookup',

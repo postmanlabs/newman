@@ -1,3 +1,22 @@
+unreleased:
+  new features:
+    - |
+      GH-3146 Uses the latest Postman Runtime, which adds support for:
+        -> JWT authentication
+        -> NTLMv2 authentication
+        -> Promise execution in scripts
+        -> Stripping JSON comments in the raw mode body
+        -> ...and several improvements and bug fixes
+  fixed bugs:
+    - GH-3146 Fixed a bug where an invalid `folder` input used to exit silently
+  breaking changes:
+    - GH-3145 Dropped support for Node < v16
+    - GH-3148 Dropped support for deprecated docker images
+  chores:
+    - GH-3146 Updated dependencies
+    - GH-3146 Updated ESLint rules
+    - GH-3145 Migrate to GitHub Actions
+
 5.3.2:
   date: 2022-03-03
   fixed bugs:

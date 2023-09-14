@@ -1,4 +1,5 @@
-var sinon = require('sinon'),
+const sinon = require('sinon'),
+    expect = require('chai').expect,
     newman = require('../../');
 
 describe('Default reporter', function () {

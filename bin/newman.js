@@ -137,12 +137,6 @@ function run (argv, callback) {
     });
 }
 
-// This hack has been added from https://github.com/nodejs/node/issues/6456#issue-151760275
-// @todo: remove when https://github.com/nodejs/node/issues/6456 has been fixed
-(Number(process.version[1]) >= 6) && [process.stdout, process.stderr].forEach((s) => {
-    s && s.isTTY && s._handle && s._handle.setBlocking && s._handle.setBlocking(true);
-});
-
 // Run this script if this is a direct stdin.
 !module.parent && run(process.argv);
 

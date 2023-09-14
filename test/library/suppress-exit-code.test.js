@@ -1,3 +1,6 @@
+const expect = require('chai').expect,
+    newman = require('../../');
+
 describe('newman.run suppressExitCode', function () {
     it('should accept the suppressExitCode parameter', function (done) {
         newman.run({

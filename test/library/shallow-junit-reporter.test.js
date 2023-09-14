@@ -1,8 +1,11 @@
-var fs = require('fs'),
+const fs = require('fs'),
 
     _ = require('lodash'),
     sh = require('shelljs'),
-    parseXml = require('xml2js').parseString;
+    parseXml = require('xml2js').parseString,
+    expect = require('chai').expect,
+
+    newman = require('../../');
 
 describe('JUnit reporter', function () {
     var outDir = 'out',
