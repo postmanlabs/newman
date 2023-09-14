@@ -1,5 +1,3 @@
-### Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) and [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
-
 <a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
 _Manage all of your organization's APIs in Postman, with the industry's most complete API development environment._
 
@@ -649,8 +647,8 @@ newman.run({
 
 ## Migration Guide
 
-- [Newman v4 to v5 Migration Guide](MIGRATION.md)
-- [Newman v4.x Documentation](https://github.com/postmanlabs/newman/blob/release/4.x/README.md)
+- [Newman v5 to v6 Migration Guide](MIGRATION.md)
+- [Newman v5.x Documentation](https://github.com/postmanlabs/newman/blob/release/5.x/README.md)
 
 
 ## Compatibility
