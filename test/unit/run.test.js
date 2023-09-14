@@ -1,7 +1,8 @@
-var _ = require('lodash'),
+const _ = require('lodash'),
     path = require('path'),
     async = require('async'),
     sinon = require('sinon'),
+    expect = require('chai').expect,
     sdk = require('postman-collection'),
     runtime = require('postman-runtime');
 
@@ -33,7 +34,7 @@ describe('run module', function () {
         }).to.not.throw();
     });
 
-    // @todo enable when the v1 collection format support is dropped in Newman v5.
+    // @todo enable when the v1 collection format support is dropped in Newman v7?
     it.skip('should error out if v1 collection is passed', function (done) {
         const v1Collection = {
             id: 'a4f4a069-00a2-4f70-a792-513877241083',

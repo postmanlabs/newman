@@ -1,4 +1,5 @@
-var sdk = require('postman-collection'),
+const sdk = require('postman-collection'),
+    expect = require('chai').expect,
 
     util = require('../../lib/util');
 
@@ -66,9 +67,7 @@ describe('utility helpers', function () {
             expect(util.isInt('123.5')).to.be.false;
         });
 
-        // @todo some issue with the function or my understanding of it's usage
-        it.skip('should validate floating point', function () {
-            expect(util.isFloat('123')).to.be.false;
+        it('should validate floating point', function () {
             expect(util.isFloat('123.5')).to.be.true;
         });
     });

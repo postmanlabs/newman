@@ -1,7 +1,10 @@
 {
-  "version": "tough-cookie@3.0.1",
+  "version": "tough-cookie@4.1.3-postman.1",
   "storeType": "MemoryCookieStore",
+  "allowSpecialUseDomain": true,
   "rejectPublicSuffixes": true,
+  "enableLooseMode": false,
+  "prefixSecurity": "silent",
   "cookies": [
     {
       "key": "foo2",

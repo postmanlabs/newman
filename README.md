@@ -1,9 +1,7 @@
-### Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) and [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
-
 <a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
 _Manage all of your organization's APIs in Postman, with the industry's most complete API development environment._
 
-# newman <sub>_the cli companion for postman_</sub> [![Build Status](https://travis-ci.org/postmanlabs/newman.svg?branch=develop)](https://travis-ci.com/postmanlabs/newman) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman)
+# newman <sub>_the cli companion for postman_</sub> [![Build Status](https://github.com/postmanlabs/newman/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/postmanlabs/newman/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/postmanlabs/newman/branch/develop/graph/badge.svg)](https://codecov.io/gh/postmanlabs/newman)
 
 Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
@@ -46,7 +44,7 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 
 ## Getting started
 
-To run Newman, ensure that you have Node.js >= v10. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+To run Newman, ensure that you have Node.js >= v16. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
 ### Installation
 The easiest way to install Newman is using NPM. If you have Node.js installed, it is most likely that you have NPM installed as well.
@@ -125,7 +123,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   Show command line help, including a list of options, and sample use cases.
 
 - `-v`, `--version`<br />
-  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
+  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/main/package.json)
 
 
 ### `newman run <collection-file-source> [options]`
@@ -347,7 +345,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:31:26.200Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    globalVar: [ 
+    globalVar: [
         { "key":"glboalSecret", "value":"globalSecretValue" },
         { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
     ],
@@ -367,7 +365,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    envVar: [ 
+    envVar: [
         { "key":"secret", "value":"secretValue" },
         { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
     ],
@@ -383,8 +381,8 @@ newman.run({
 });
 ```
 
-All events receive two arguments (1) `error` and (2) `args`. **The list below describes the properties of the second
-argument object.**
+All events receive two arguments (1) `error` and (2) `args`. The list below describes the properties of the second
+argument object. [Learn more](https://github.com/postmanlabs/newman/wiki/Newman-Run-Events)
 
 | Event     | Description   |
 |-----------|---------------|
@@ -406,8 +404,6 @@ argument object.**
 | exception                 | When any asynchronous error happen in `scripts` this event is triggered |
 | beforeDone                | An event that is triggered prior to the completion of the run |
 | done                      | This event is emitted when a collection run has completed, with or without errors |
-
-<!-- TODO: write about callback summary -->
 
 [back to top](#table-of-contents)
 
@@ -446,7 +442,7 @@ such a scenario.
 |-------------|-------------------|
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
 
-| `--reporter-cli-show-timestamps` | This prints the local time for each request made. | 
+| `--reporter-cli-show-timestamps` | This prints the local time for each request made. |
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
@@ -525,6 +521,8 @@ newman.run({
 }, process.exit);
 ```
 
+- [allure](https://github.com/allure-framework/allure-js/tree/master/packages/newman-reporter-allure) -
+This reporter allow to create fully-featured allure reports that can allow you to have easy to understand HTML reports with features like historical data, link tests to the JIRA and all other benefits of using [allure framework](https://qameta.io/allure-report/).
 - [htmlextra](https://github.com/DannyDainton/newman-reporter-htmlextra) -
 This is an updated version of the standard HTML reporter containing a more in-depth data output and a few helpful extras
 - [csv](https://github.com/matt-ball/newman-reporter-csv) -
@@ -647,8 +645,8 @@ newman.run({
 
 ## Migration Guide
 
-- [Newman v4 to v5 Migration Guide](MIGRATION.md)
-- [Newman v4.x Documentation](https://github.com/postmanlabs/newman/blob/release/4.x/README.md)
+- [Newman v5 to v6 Migration Guide](MIGRATION.md)
+- [Newman v5.x Documentation](https://github.com/postmanlabs/newman/blob/release/5.x/README.md)
 
 
 ## Compatibility
@@ -660,6 +658,7 @@ newman.run({
 |       v3.x        |  >= v4.x   |
 |       v4.x        |  >= v6.x   |
 |       v5.x        |  >= v10.x  |
+|       v6.x        |  >= v16.x  |
 
 The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
 

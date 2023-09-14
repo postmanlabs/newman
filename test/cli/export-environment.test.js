@@ -1,7 +1,8 @@
-var fs = require('fs'),
+const fs = require('fs'),
     path = require('path'),
 
     sh = require('shelljs'),
+    expect = require('chai').expect,
 
     outDir = 'out',
     exportedEnvironmentPath = path.join(__dirname, '..', '..', outDir, 'test-environment.json');
