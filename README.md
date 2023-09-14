@@ -123,7 +123,7 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
   Show command line help, including a list of options, and sample use cases.
 
 - `-v`, `--version`<br />
-  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/master/package.json)
+  Displays the current Newman version, taken from [package.json](https://github.com/postmanlabs/newman/blob/main/package.json)
 
 
 ### `newman run <collection-file-source> [options]`

@@ -81,8 +81,8 @@ This repository uses standard `git-flow` branch management policy/strategy. If y
 refer  to [tutorial from Atlassian](https://www.atlassian.com/git/workflows#!workflow-gitflow) and more details at
 [http://nvie.com/posts/a-successful-git-branching-model/](http://nvie.com/posts/a-successful-git-branching-model).
 
-> Deletion of `master` and `develop`.
-> Rebasing on `master` is blocked.
+> Deletion of `main` and `develop`.
+> Rebasing on `main` is blocked.
 
 ## Preferred IDE
 It is advised to use an IDE that provides [EditorConfig](http://editorconfig.org) support via `.editorconfig` files,
@@ -245,7 +245,7 @@ file-name.postman_data.csv
 
 ## Guidelines for sending a Pull Request
 
-Commit to master branch and develop branch is locked. As such, `git-flow` for feature completion and release will not
+Commit to `main` branch and `develop` branch is locked. As such, `git-flow` for feature completion and release will not
 work. Thus, the last steps of feature completion in `git-flow` will happen as a Pull Request from website. Avoid
 changing the `version` field in `package.json` for feature pull requests, as `version` bumps are handled separately.
 

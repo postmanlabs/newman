@@ -36,7 +36,7 @@ function build_docker_image {
     echo -e "$BLUE Pushing docker image for $DOCKER_REPO:$VERSION-$TAG $NO_COLOUR";
 
     # Tag
-    if [[ ${GIT_BRANCH} == "master" ]]; then
+    if [[ ${GIT_BRANCH} == "main" ]]; then
         docker tag ${DOCKER_REPO}:${VERSION}-${TAG} ${DOCKER_REPO}:${TAG};
         docker push ${DOCKER_REPO}:${TAG};
 
