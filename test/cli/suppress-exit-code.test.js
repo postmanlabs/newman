@@ -1,3 +1,5 @@
+const expect = require('chai').expect;
+
 describe('newman run --suppress-exit-code', function () {
     it('should accept the --suppress-exit-code parameter', function (done) {
         // eslint-disable-next-line max-len

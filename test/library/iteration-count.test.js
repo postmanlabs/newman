@@ -1,7 +1,10 @@
 var fs = require('fs'),
     path = require('path'),
 
-    _ = require('lodash');
+    _ = require('lodash'),
+    expect = require('chai').expect,
+
+    newman = require('../../');
 
 describe('iterationCount vs iterationData.length conflicts', function () {
     var iterationProperty = 'run.stats.iterations.total',

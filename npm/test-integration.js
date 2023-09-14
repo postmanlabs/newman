@@ -1,13 +1,16 @@
 #!/usr/bin/env node
-require('shelljs/global');
-require('colors');
+// ---------------------------------------------------------------------------------------------------------------------
+// This script is intended to execute all integration tests.
+// ---------------------------------------------------------------------------------------------------------------------
 
-var fs = require('fs'),
+const fs = require('fs'),
+    path = require('path'),
+
     _ = require('lodash'),
-    pathUtils = require('path'),
     async = require('async'),
+    colors = require('colors/safe'),
     recursive = require('recursive-readdir'),
-    newman = require(pathUtils.join(__dirname, '..', 'index')),
+    newman = require(path.join(__dirname, '..', 'index')),
 
     echoServer = require('./server').createRawEchoServer(),
     redirectServer = require('./server').createRedirectServer(),
@@ -15,16 +18,11 @@ var fs = require('fs'),
     LOCAL_TEST_ECHO_PORT = 4041,
     LOCAL_TEST_REDIRECT_PORT = 4042,
 
-    /**
-     * The source directory containing integration test collections and folders.
-     *
-     * @type {String}
-     */
-    SPEC_SOURCE_DIR = './test/integration';
+    SPEC_SOURCE_DIR = path.join(__dirname, '..', 'test', 'integration');
 
 module.exports = function (exit) {
     // banner line
-    console.info('Running integration tests using local newman as node module...'.yellow.bold);
+    console.info(colors.yellow.bold('Running integration tests using local newman as node module...'));
 
     async.waterfall([
 
@@ -48,13 +46,13 @@ module.exports = function (exit) {
         function (files, next) {
             next(null, _.reduce(files, function (suites, path) {
                 // regex: [0:path, 1:test, 2:syntax, 3:skipped, 4: file-format]
-                var parts = path.match(/(.+)\.postman_([^.]+)(\.skip)?\.([^.]{3,})$/i);
+                const parts = path.match(/(.+)\.postman_([^.]+)(\.skip)?\.([^.]{3,})$/i);
 
                 if (!parts) { // if a spec file did not match the pattern, log warning and move on
-                    return (console.warn(` - ignored: ${path}`.gray), suites);
+                    return (console.warn(colors.gray(` - ignored: ${path}`)), suites);
                 }
                 else if (parts[3]) { // do not parse skipped files
-                    return (console.warn(` - skipped: ${path}`.cyan), suites);
+                    return (console.warn(colors.cyan(` - skipped: ${path}`)), suites);
                 }
 
                 // add the test to the tracking object
@@ -106,7 +104,7 @@ module.exports = function (exit) {
 
                 // load configuration JSON object if it is provided. We do this since this is not part of newman
                 // standard API
-                var config = test.configJSON ? JSON.parse(fs.readFileSync(test.configJSON).toString()) : {};
+                const config = test.configJSON ? JSON.parse(fs.readFileSync(test.configJSON).toString()) : {};
 
                 newman.run(_.merge({
                     collection: test.collectionJSON,
@@ -132,10 +130,10 @@ module.exports = function (exit) {
      */
     function (err, results) {
         if (!err) {
-            console.info(`\n${results.length} integrations ok!\n`.green);
+            console.info(colors.green(`\n${results.length} integrations ok!\n`));
         }
         else {
-            console.error('\nintegration test failed:'.red);
+            console.error(colors.red('\nintegration test failed:'));
             console.error(_.omit(err, ['stacktrace', 'stack']), { colors: true });
         }
 
@@ -151,4 +149,4 @@ module.exports = function (exit) {
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run
-!module.parent && module.exports(exit);
+!module.parent && module.exports(process.exit);

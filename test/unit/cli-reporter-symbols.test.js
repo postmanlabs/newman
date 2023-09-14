@@ -1,4 +1,5 @@
 const _ = require('lodash'),
+    expect = require('chai').expect,
 
     isDoubleByte = function (str) {
         for (var i = 0, n = str.length; i < n; i++) {

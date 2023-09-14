@@ -1,8 +1,11 @@
+const _ = require('lodash'),
+    sinon = require('sinon'),
+    expect = require('chai').expect,
+
+    newman = require('../../');
+
 describe('cli parser', function () {
-    var _ = require('lodash'),
-        sinon = require('sinon'),
-        newman = require('../../'),
-        newmanCLI,
+    let newmanCLI,
 
         /**
          * Wrap newmanCLI callback to extract options passed to sinon `newman` stub.

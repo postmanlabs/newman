@@ -1,6 +1,9 @@
-var sinon = require('sinon'),
+const sinon = require('sinon'),
     http = require('http'),
-    https = require('https');
+    https = require('https'),
+    expect = require('chai').expect,
+
+    newman = require('../../');
 
 describe('newman.run requestAgents', function () {
     let httpAgent = new http.Agent(),
@@ -18,7 +21,7 @@ describe('newman.run requestAgents', function () {
         httpsAgentSpy.restore();
     });
 
-    it.skip('should accept custom requesting agents', function (done) {
+    it('should accept custom requesting agents', function (done) {
         newman.run({
             collection: {
                 name: 'Collection',

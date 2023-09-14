@@ -2,6 +2,10 @@ const fs = require('fs'),
     nock = require('nock'),
     sinon = require('sinon'),
     request = require('postman-request'),
+    expect = require('chai').expect,
+
+    newman = require('../../'),
+
     COLLECTION = {
         id: 'C1',
         name: 'Collection',

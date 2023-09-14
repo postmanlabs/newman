@@ -2,6 +2,8 @@ var fs = require('fs'),
     path = require('path'),
 
     _ = require('lodash'),
+    expect = require('chai').expect,
+
 
     ITERATION_PROPERTY = 'run.stats.iterations.total',
 

@@ -1,7 +1,9 @@
-var fs = require('fs');
+const fs = require('fs'),
+    expect = require('chai').expect;
 
 describe('CLI output', function () {
-    var coloredOutput = /\u001b\[/; // eslint-disable-line no-control-regex
+    // eslint-disable-next-line no-control-regex
+    const coloredOutput = /^[\u001b[0m]+newman/;
 
     describe('TTY', function () {
         // @todo: Change to assert colored output after https://github.com/shelljs/shelljs/pull/524 is released
