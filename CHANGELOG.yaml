@@ -1,4 +1,5 @@
-unreleased:
+6.0.0:
+  date: 2023-09-15
   new features:
     - |
       GH-3146 Uses the latest Postman Runtime, which adds support for:
