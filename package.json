@@ -26,6 +26,7 @@
   "preferGlobal": true,
   "scripts": {
     "postpublish": "./npm/postpublish.sh",
+    "release": "node npm/create-release.js",
     "test": "npm run test-lint && npm run test-system && npm run test-unit && npm run test-integration && npm run test-cli && npm run test-library",
     "test-cli": "nyc --nycrc-path=.nycrc.js node npm/test-cli.js",
     "test-integration": "nyc --nycrc-path=.nycrc.js node npm/test-integration.js",
@@ -58,6 +59,7 @@
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
+    "@postman/shipit": "^0.4.0",
     "chai": "^4.3.8",
     "dependency-check": "^4.1.0",
     "dockerfile_lint": "^0.3.4",
