@@ -10,9 +10,9 @@ RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then
         exit 1; \
     fi
 
-RUN \
+RUN apt-get update; \
+
     # Download and import the Nodesource GPG key
-    apt-get update; \
     apt-get install -y ca-certificates curl gnupg; \
     mkdir -p /etc/apt/keyrings; \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \

@@ -25,7 +25,7 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "postpublish": "./npm/postpublish.sh",
+    "docker-publish": "./npm/docker-publish.sh",
     "release": "node npm/create-release.js",
     "test": "npm run test-lint && npm run test-system && npm run test-unit && npm run test-integration && npm run test-cli && npm run test-library",
     "test-cli": "nyc --nycrc-path=.nycrc.js node npm/test-cli.js",
