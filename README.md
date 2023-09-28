@@ -1,3 +1,12 @@
+# Genability Bugfix Fork of Postman's Newman
+This is a Genability fork of [Postman's Newman](https://github.com/postmanlabs/newman) to enable us to submit bugfixes.
+
+`releases/5.x` forked-fixes releases:
+- 5.3.3:
+  - PR#1: Include raw response body on json parse errors
+
+---
+
 ### Newman v5 has been released. Check the [migration guide](MIGRATION.md#migrating-from-v4-to-v5) and [changelog](https://github.com/postmanlabs/newman/blob/v5.0.0/CHANGELOG.yaml#L1) for more details.
 
 <a href="https://www.postman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
@@ -347,7 +356,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:31:26.200Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    globalVar: [ 
+    globalVar: [
         { "key":"glboalSecret", "value":"globalSecretValue" },
         { "key":"globalAnotherSecret", "value":`${process.env.GLOBAL_ANOTHER_SECRET}`}
     ],
@@ -367,7 +376,7 @@ newman.run({
         "_postman_exported_at": "2016-10-17T14:26:34.940Z",
         "_postman_exported_using": "Postman/4.8.0"
     },
-    envVar: [ 
+    envVar: [
         { "key":"secret", "value":"secretValue" },
         { "key":"anotherSecret", "value":`${process.env.ANOTHER_SECRET}`}
     ],
@@ -446,7 +455,7 @@ such a scenario.
 |-------------|-------------------|
 | `--reporter-cli-silent`         | The CLI reporter is internally disabled and you see no output to terminal. |
 
-| `--reporter-cli-show-timestamps` | This prints the local time for each request made. | 
+| `--reporter-cli-show-timestamps` | This prints the local time for each request made. |
 | `--reporter-cli-no-summary`     | The statistical summary table is not shown. |
 | `--reporter-cli-no-failures`    | This prevents the run failures from being separately printed. |
 | `--reporter-cli-no-assertions`  | This turns off the output for request-wise assertions as they happen. |
