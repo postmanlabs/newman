@@ -1,12 +1,12 @@
 {
   "name": "newman",
-  "version": "5.3.2",
-  "description": "Command-line companion utility for Postman",
-  "homepage": "https://github.com/postmanlabs/newman",
+  "version": "5.3.3",
+  "description": "Genability bugfix fork of Command-line companion utility for Postman",
+  "homepage": "https://github.com/Genability/newman-fixes",
   "bugs": "https://github.com/postmanlabs/newman/issues",
   "repository": {
     "type": "git",
-    "url": "git://github.com/postmanlabs/newman.git"
+    "url": "git://github.com/Genability/newman-fixes.git"
   },
   "keywords": [
     "newman",
