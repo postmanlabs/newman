@@ -1,52 +1,42 @@
 #!/usr/bin/env node
-require('shelljs/global');
-require('colors');
+// ---------------------------------------------------------------------------------------------------------------------
+// This script is intended to execute all library tests.
+// ---------------------------------------------------------------------------------------------------------------------
 
-var Mocha = require('mocha'),
-    newman = require('../index'),
-    expect = require('chai').expect,
+const path = require('path'),
+
+    colors = require('colors/safe'),
+    Mocha = require('mocha'),
     recursive = require('recursive-readdir'),
 
-    /**
-     * The directory containing library test specs.
-     *
-     * @type {String}
-     */
-    SPEC_SOURCE_DIR = './test/library';
+    SPEC_SOURCE_DIR = path.join('test', 'library');
 
 module.exports = function (exit) {
     // banner line
-    console.info('Running Library integration tests using mocha and shelljs...'.yellow.bold);
+    console.info(colors.yellow.bold('Running library tests using mocha on node...'));
 
-    var mocha = new Mocha({ timeout: 60000 });
-
-    recursive(SPEC_SOURCE_DIR, function (err, files) {
+    // add all spec files to mocha
+    recursive(SPEC_SOURCE_DIR, (err, files) => {
         if (err) {
             console.error(err);
 
             return exit(1);
         }
 
-        files.filter(function (file) {
+        const mocha = new Mocha({ timeout: 1000 * 60 });
+
+        files.filter((file) => { // extract all test files
             return (file.substr(-8) === '.test.js');
-        }).forEach(function (file) {
-            mocha.addFile(file);
-        });
+        }).forEach(mocha.addFile.bind(mocha));
 
         // start the mocha run
-        global.expect = expect; // for easy reference
-        global.newman = newman;
+        mocha.run((runError) => {
+            runError && console.error(runError.stack || runError);
 
-        mocha.run(function (err) {
-            // clear references and overrides
-            delete global.expect;
-            delete global.newman;
-
-            exit(err || process.exitCode ? 1 : 0);
+            exit(runError || process.exitCode ? 1 : 0);
         });
-        mocha = null; // cleanup
     });
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run
-!module.parent && module.exports(exit);
+!module.parent && module.exports(process.exit);

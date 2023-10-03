@@ -1,74 +1,51 @@
 #!/usr/bin/env node
-require('shelljs/global');
-require('colors');
+// ---------------------------------------------------------------------------------------------------------------------
+// This script is intended to execute all system tests.
+// ---------------------------------------------------------------------------------------------------------------------
 
-var async = require('async'),
-    packity = require('packity'),
-    expect = require('chai').expect,
+const path = require('path'),
+
     Mocha = require('mocha'),
+    colors = require('colors/safe'),
     recursive = require('recursive-readdir'),
+    { exec } = require('shelljs'),
 
-    /**
-     * The source directory for system test specs.
-     *
-     * @type {String}
-     */
-    SPEC_SOURCE_DIR = './test/system';
+    SPEC_SOURCE_DIR = path.join(__dirname, '..', 'test', 'system');
 
 module.exports = function (exit) {
     // banner line
-    console.info('\nRunning system tests...\n'.yellow.bold);
+    console.info(colors.yellow.bold('\nRunning system tests using mocha...'));
 
-    async.series([
+    // add all spec files to mocha
+    recursive(SPEC_SOURCE_DIR, (err, files) => {
+        if (err) {
+            console.error(err);
 
-        /**
-         * Enforces sanity checks on installed packages via packity.
-         *
-         * @param {Function} next - The callback function invoked when the package sanity check has concluded.
-         * @returns {*}
-         */
-        function (next) {
-            console.info('checking installed packages...\n');
-            packity({ path: '.' }, packity.cliReporter({}, next));
-        },
-
-        /**
-         * Runs system tests on SPEC_SOURCE_DIR using Mocha.
-         *
-         * @param {Function} next - The callback invoked to mark the completion of the test run.
-         * @returns {*}
-         */
-        function (next) {
-            console.info('\nrunning system specs using mocha...');
-
-            var mocha = new Mocha();
-
-            recursive(SPEC_SOURCE_DIR, function (err, files) {
-                if (err) {
-                    console.error(err);
-
-                    return exit(1);
-                }
-
-                files.filter(function (file) {
-                    return (file.substr(-8) === '.test.js');
-                }).forEach(function (file) {
-                    mocha.addFile(file);
-                });
-
-                // start the mocha run
-                global.expect = expect; // for easy reference
-
-                mocha.run(function (err) {
-                    // clear references and overrides
-                    delete global.expect;
-                    next(err);
-                });
-                mocha = null; // cleanup
-            });
+            return exit(1);
         }
-    ], exit);
+
+        const mocha = new Mocha({ timeout: 1000 * 60 });
+
+        files.filter((file) => { // extract all test files
+            return (file.substr(-8) === '.test.js');
+        }).forEach(mocha.addFile.bind(mocha));
+
+        // start the mocha run
+        mocha.run((runError) => {
+            if (runError) {
+                console.error(runError.stack || runError);
+
+                return exit(1);
+            }
+
+            // ensure all dependencies are okay
+            console.info(colors.yellow('checking package dependencies...\n'));
+            exec('dependency-check ./package.json --extra --no-dev --missing', (code) => {
+                exit(code ? 1 : 0);
+            });
+        });
+    });
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run
-!module.parent && module.exports(exit);
+!module.parent && module.exports(process.exit);

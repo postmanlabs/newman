@@ -1,4 +1,6 @@
-var newmanVersion = require('../../package.json').version;
+const expect = require('chai').expect,
+
+    newmanVersion = require('../../package.json').version;
 
 describe('CLI run options', function () {
     it('should work correctly without any extra options', function (done) {

@@ -1,15 +1,11 @@
 #!/usr/bin/env node
-require('shelljs/global');
-require('colors');
+// ---------------------------------------------------------------------------------------------------------------------
+// This script is intended to contain all actions pertaining to code style checking, linting and normalization.
+// ---------------------------------------------------------------------------------------------------------------------
 
-var async = require('async'),
-    ESLintCLIEngine = require('eslint').CLIEngine,
+const colors = require('colors/safe'),
+    { ESLint } = require('eslint'),
 
-    /**
-     * The list of source code files / directories to be linted.
-     *
-     * @type {Array}
-     */
     LINT_SOURCE_DIRS = [
         './lib',
         './bin',
@@ -19,42 +15,22 @@ var async = require('async'),
         './index.js'
     ];
 
-module.exports = function (exit) {
+module.exports = async function (exit) {
     // banner line
-    console.info('\nLinting files using eslint...'.yellow.bold);
+    console.info(colors.yellow.bold('\nLinting files using eslint...'));
 
-    async.waterfall([
+    const eslint = new ESLint(),
+        results = await eslint.lintFiles(LINT_SOURCE_DIRS),
+        errorReport = ESLint.getErrorResults(results),
+        formatter = await eslint.loadFormatter();
 
-        /**
-         * Instantiates an ESLint CLI engine and runs it in the scope defined within LINT_SOURCE_DIRS.
-         *
-         * @param {Function} next - The callback function whose invocation marks the end of the lint test run.
-         * @returns {*}
-         */
-        function (next) {
-            next(null, (new ESLintCLIEngine()).executeOnFiles(LINT_SOURCE_DIRS));
-        },
+    // log the result to CLI
+    console.info(formatter.format(results));
 
-        /**
-         * Processes a test report from the Lint test runner, and displays meaningful results.
-         *
-         * @param {Object} report - The overall test report for the current lint test.
-         * @param {Object} report.results - The set of test results for the current lint run.
-         * @param {Function} next - The callback whose invocation marks the completion of the post run tasks.
-         * @returns {*}
-         */
-        function (report, next) {
-            var errorReport = ESLintCLIEngine.getErrorResults(report.results);
+    (errorReport && !errorReport.length) && console.info(colors.green('eslint ok!'));
 
-            // log the result to CLI
-            console.info(ESLintCLIEngine.getFormatter()(report.results));
-            // log the success of the parser if it has no errors
-            (errorReport && !errorReport.length) && console.info('eslint ok!'.green);
-            // ensure that the exit code is non zero in case there was an error
-            next(Number(errorReport && errorReport.length) || 0);
-        }
-    ], exit);
+    exit(Number(errorReport && errorReport.length) || 0);
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run
-!module.parent && module.exports(exit);
+!module.parent && module.exports(process.exit);

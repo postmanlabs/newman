@@ -38,6 +38,6 @@ Thumbs.db
 *.REMOTE.*
 *.orig
 
-# Prevent unit test coverage reports from being added
+# - Prevent unit test coverage reports from being committed to the repository
 .coverage
 .nyc_output

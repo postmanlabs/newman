@@ -1,46 +1,36 @@
 #!/usr/bin/env node
-/* eslint-env node, es6 */
 // ---------------------------------------------------------------------------------------------------------------------
 // This script is intended to execute all unit tests.
 // ---------------------------------------------------------------------------------------------------------------------
 
-require('shelljs/global');
-require('colors');
+const path = require('path'),
 
-// set directories and files for test and coverage report
-var path = require('path'),
-    expect = require('chai').expect,
+    colors = require('colors/safe'),
+    Mocha = require('mocha'),
     recursive = require('recursive-readdir'),
 
-    SPEC_SOURCE_DIR = path.join(__dirname, '..', 'test', 'unit');
+    SPEC_SOURCE_DIR = path.join('test', 'unit');
 
 module.exports = function (exit) {
     // banner line
-    console.info('Running unit tests using mocha...'.yellow.bold);
-
-    var Mocha = require('mocha');
+    console.info(colors.yellow.bold('Running unit tests using mocha on node...'));
 
     // add all spec files to mocha
-    recursive(SPEC_SOURCE_DIR, function (err, files) {
+    recursive(SPEC_SOURCE_DIR, (err, files) => {
         if (err) {
             console.error(err);
 
             return exit(1);
         }
 
-        var mocha = new Mocha({ timeout: 1000 * 60 });
+        const mocha = new Mocha({ timeout: 1000 * 60 });
 
-        files.filter(function (file) { // extract all test files
+        files.filter((file) => { // extract all test files
             return (file.substr(-8) === '.test.js');
         }).forEach(mocha.addFile.bind(mocha));
 
         // start the mocha run
-        global.expect = expect; // for easy reference
-
-        mocha.run(function (runError) {
-            // clear references and overrides
-            delete global.expect;
-
+        mocha.run((runError) => {
             runError && console.error(runError.stack || runError);
 
             exit(runError || process.exitCode ? 1 : 0);
@@ -49,4 +39,4 @@ module.exports = function (exit) {
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run
-!module.parent && module.exports(exit);
+!module.parent && module.exports(process.exit);

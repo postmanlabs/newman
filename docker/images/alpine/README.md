@@ -1,6 +1,6 @@
 # newman:alpine
 
-This image runs newman on node v10 on Alpine
+This image runs newman on node v16 on Alpine
 
 Build the image:
 

@@ -1,4 +1,5 @@
-var path = require('path'),
+const path = require('path'),
+    expect = require('chai').expect,
 
     workingDir = path.resolve(__dirname, '../fixtures/files/work-dir');
 
