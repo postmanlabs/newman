@@ -2,8 +2,8 @@
 This is a Genability fork of [Postman's Newman](https://github.com/postmanlabs/newman) to enable us to submit bugfixes.
 
 `releases/5.x` forked-fixes releases:
-- 5.3.3:
-  - PR#1: Include raw response body on json parse errors
+- 5.3.4:
+  - PR#1: In case of JSON parse error, include headers
 
 ---
 

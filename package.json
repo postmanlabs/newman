@@ -1,6 +1,6 @@
 {
   "name": "@genability/newman-fixes",
-  "version": "5.3.3",
+  "version": "5.3.4",
   "description": "Genability bugfix fork of Command-line companion utility for Postman",
   "homepage": "https://github.com/Genability/newman-fixes",
   "bugs": "https://github.com/postmanlabs/newman/issues",
