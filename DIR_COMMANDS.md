@@ -21,12 +21,12 @@ the following workflow to make changes to it and push is upstream:
 
 There are a few challenges with the above workflow:
 
-* Collection file diffs are very hard to review in pull requests
-    * e.g. [PR containing payload
-      diffs](https://github.com/juspay/hyperswitch/pull/1948/files)
-    * e.g. test javascript code is maintained as an array of lines in the
-      collection JSON format which makes test changes hard to review
-* Developers cannot use their favourite editor to make changes, add/remove new tests
+1. Collection file diffs are very hard to review in pull requests
+    * Old format collection diff: https://github.com/juspay/hyperswitch/commit/7e29adb5c9dee8b03ef58ccbd85b07b106459380
+      ![Screenshot 2023-10-06 at 5 24 35 PM](https://github.com/knutties/newman/assets/77204/d4c67bb2-59fa-4938-be4a-68f8159584a1)
+    * New format collection diff: https://github.com/juspay/hyperswitch/pull/2117/files
+      ![Screenshot 2023-10-06 at 5 25 47 PM](https://github.com/knutties/newman/assets/77204/1c3798c6-84c0-4589-9e5e-ad067d62bb9f)
+1. Developers cannot use their favourite editor to make changes, add/remove new tests
 
 As a consequence of the above test maintenance suffers and tests often become stale.
 
