@@ -90,13 +90,13 @@ Options:
 
 Commands:
   dir-add-folder [options] <folder-path>                      Add a folder to directory based Postman collection in the given path
-  dir-add-test [options] <test-path>                          Add a test to directory based Postman collection in the given path
+  dir-add-request [options] <request-path>                          Add a test to directory based Postman collection in the given path
   dir-create [options] <collection-path>                      Create a directory based Postman collection in the given path
   dir-export [options] <postman-collection-file>              Convert a Postman collection file into its directory representation
   dir-export-import-test [options] <postman-collection-file>  Check if an export followed by import results in same collection
   dir-import [options] <collection-dir>                       Convert a Postman directory representation into a postman collection
   dir-remove-folder <folder-path>                             Remove test at given path from directory based Postman collection
-  dir-remove-test <test-path>                                 Remove test at given path from directory based Postman collection
+  dir-remove-request <request-path>                                 Remove test at given path from directory based Postman collection
   dir-run [options] <collection-dir>                          Runs the tests in collection-dir, with all the provided options
   run [options] <collection>                                  Initiate a Postman Collection run from a given URL or path
 
@@ -181,9 +181,9 @@ newman dir-add-folder examples/Sample\ Postman\ Collection/folder1
 ```
 
 
-### Add a test under a directory
+### Add a request under a directory
 ```
-newman dir-add-test examples/Sample\ Postman\ Collection/test4
+newman dir-add-request examples/Sample\ Postman\ Collection/test4
 ```
 
 This command adds the test to the end of the tests already present in the
@@ -196,7 +196,7 @@ can be changed by re-ordering the tests in this file.
 newman dir-remove-folder examples/Sample\ Postman\ Collection/folder1
 ```
 
-### Remove a test
+### Remove a request
 ```
-newman dir-remove-test examples/Sample\ Postman\ Collection/test4
+newman dir-remove-request examples/Sample\ Postman\ Collection/test4
 ```
