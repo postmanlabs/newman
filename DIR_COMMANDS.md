@@ -1,7 +1,5 @@
-This document introduces the user to the `dir-*` commands that are added in
-this fork to facilitate CLI based creation, maintenance and review of Postman collections.
+# Splitting Postman collection into directories - a better storage format
 
-## Challenges in maintaining Postman collection in code repositories
 Postman collections are created using the Postman UI application. These
 collections are represented as a [JSON
 file](https://learning.postman.com/collection-format/getting-started/structure-of-a-collection/)
@@ -28,7 +26,7 @@ There are a few challenges with the above workflow:
       ![Screenshot 2023-10-06 at 5 25 47 PM](https://github.com/knutties/newman/assets/77204/1c3798c6-84c0-4589-9e5e-ad067d62bb9f)
 1. Developers cannot use their favourite editor to make changes, add/remove new tests
 
-As a consequence of the above test maintenance suffers and tests often become stale.
+As a consequence of the above, test maintenance suffers and tests often become stale.
 
 ## Solution to the above challenges
 
@@ -68,6 +66,17 @@ examples/Sample Postman Collection
     └── response.json         # the response json
 ```
 
+### Next steps
+This concept of representing Postman collections as a directory opens up programmatic 
+pre-processing of test data before running tests.  This could include things like the following: 
+
+* Re-using same data across tests
+* Using other node libraries in testing code
+
+The instructions for using the tool are given below.  Please give it spin and let me know it you if it is useful.
+
+## Usage
+
 ### Installing newman from this fork
 
 One can install the newman executable in this fork using the command:
@@ -90,13 +99,13 @@ Options:
 
 Commands:
   dir-add-folder [options] <folder-path>                      Add a folder to directory based Postman collection in the given path
-  dir-add-request [options] <request-path>                          Add a test to directory based Postman collection in the given path
+  dir-add-request [options] <request-path>                    Add a request to directory based Postman collection in the given path
   dir-create [options] <collection-path>                      Create a directory based Postman collection in the given path
   dir-export [options] <postman-collection-file>              Convert a Postman collection file into its directory representation
   dir-export-import-test [options] <postman-collection-file>  Check if an export followed by import results in same collection
   dir-import [options] <collection-dir>                       Convert a Postman directory representation into a postman collection
   dir-remove-folder <folder-path>                             Remove test at given path from directory based Postman collection
-  dir-remove-request <request-path>                                 Remove test at given path from directory based Postman collection
+  dir-remove-request <request-path>                           Remove request at given path from directory based Postman collection
   dir-run [options] <collection-dir>                          Runs the tests in collection-dir, with all the provided options
   run [options] <collection>                                  Initiate a Postman Collection run from a given URL or path
 
