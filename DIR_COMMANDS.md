@@ -26,13 +26,13 @@ There are a few challenges with the above workflow:
       ![Screenshot 2023-10-06 at 5 25 47 PM](https://github.com/knutties/newman/assets/77204/1c3798c6-84c0-4589-9e5e-ad067d62bb9f)
 1. Developers cannot use their favourite editor to make changes, add/remove new tests
 
-As a consequence of the above, test maintenance suffers and tests often become stale.
+As a consequence of the above, collection maintenance suffers and often become stale.
 
 ## Solution to the above challenges
 
 The core reason for challenges presented above is the file format in which the
-Postman tests are maintained.  A single JSON file that encapsulates the entire
-test code and sequencing does not lend itself for easy reviewing and be an
+Postman requests are maintained.  A single JSON file that encapsulates the entire
+request code and sequencing does not lend itself for easy reviewing and be an
 all-editor friendly format.
 
 This fork of newman attempts to address the challenge by representing the
@@ -54,7 +54,7 @@ collection.
 ```
 examples/Sample Postman Collection
 ├── .info.json                # contains the info element from the top of collection json
-├── .meta.json                # contains the ordering of the test folders
+├── .meta.json                # contains the ordering of the request folders
 ├── .auth.json                # contains the auth element from the top of the collection json
 ├── .variable.json            # contains the variable element from the top of the collection json
 ├── .event.json               # contains the event element from the top of the collection json
@@ -68,10 +68,10 @@ examples/Sample Postman Collection
 
 ### Next steps
 This concept of representing Postman collections as a directory opens up programmatic
-pre-processing of test data before running tests.  This could include things like the following:
+pre-processing of request data before running the requests.  This could include things like the following:
 
-* Re-using same data across tests
-* Using other node libraries in testing code
+* Re-using same data across requests
+* Using other javascript libraries in testing code
 
 The instructions for using the tool are given below.  Please give it spin and let me know it you if it is useful.
 
@@ -86,7 +86,7 @@ npm install -g 'git+ssh://git@github.com:knutties/newman.git#feature/newman-dir'
 ```
 
 The following no-arg run shows the new commands added to newman to help manage Postman
-tests maintained as directories/files instead of a single json file.
+requests maintained as directories/files instead of a single json file.
 
 ```
 $ newman
@@ -102,11 +102,11 @@ Commands:
   dir-add-request [options] <request-path>                    Add a request to directory based Postman collection in the given path
   dir-create [options] <collection-path>                      Create a directory based Postman collection in the given path
   dir-export [options] <postman-collection-file>              Convert a Postman collection file into its directory representation
-  dir-export-import-test [options] <postman-collection-file>  Check if an export followed by import results in same collection
+  dir-export-import-check [options] <postman-collection-file> Check if an export followed by import results in same collection
   dir-import [options] <collection-dir>                       Convert a Postman directory representation into a postman collection
   dir-remove-folder <folder-path>                             Remove folder at given path from directory based Postman collection
   dir-remove-request <request-path>                           Remove request at given path from directory based Postman collection
-  dir-run [options] <collection-dir>                          Runs the tests in collection-dir, with all the provided options
+  dir-run [options] <collection-dir>                          Runs the requests in collection-dir, with all the provided options
   run [options] <collection>                                  Initiate a Postman Collection run from a given URL or path
 
     To get available options for a command:
@@ -135,7 +135,7 @@ newman dir-import examples/Sample\ Postman\ Collection/ -o examples/sample-colle
 This command is typically used to test the tool itself to ensure it can handle
 all collection json use-cases.
 ```
-newman dir-export-import-test examples/sample-collection.json
+newman dir-export-import-check examples/sample-collection.json
 ```
 
 ### Execute a Postman collection stored in the directory format
@@ -195,10 +195,10 @@ newman dir-add-folder examples/Sample\ Postman\ Collection/folder1
 newman dir-add-request examples/Sample\ Postman\ Collection/test4
 ```
 
-This command adds the test to the end of the tests already present in the
-folder.  The order of the tests is stored in a separate file called
-[.meta.json](examples/Sample%20Postman%20Collection/.meta.json).  The order of tests
-can be changed by re-ordering the tests in this file.
+This command adds the request to the end of the requests already present in the
+folder.  The order of the requests is stored in a separate file called
+[.meta.json](examples/Sample%20Postman%20Collection/.meta.json).  The order of requests
+can be changed by re-ordering the requests in this file.
 
 ### Remove a folder
 ```
