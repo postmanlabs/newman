@@ -67,8 +67,8 @@ examples/Sample Postman Collection
 ```
 
 ### Next steps
-This concept of representing Postman collections as a directory opens up programmatic 
-pre-processing of test data before running tests.  This could include things like the following: 
+This concept of representing Postman collections as a directory opens up programmatic
+pre-processing of test data before running tests.  This could include things like the following:
 
 * Re-using same data across tests
 * Using other node libraries in testing code
@@ -104,7 +104,7 @@ Commands:
   dir-export [options] <postman-collection-file>              Convert a Postman collection file into its directory representation
   dir-export-import-test [options] <postman-collection-file>  Check if an export followed by import results in same collection
   dir-import [options] <collection-dir>                       Convert a Postman directory representation into a postman collection
-  dir-remove-folder <folder-path>                             Remove test at given path from directory based Postman collection
+  dir-remove-folder <folder-path>                             Remove folder at given path from directory based Postman collection
   dir-remove-request <request-path>                           Remove request at given path from directory based Postman collection
   dir-run [options] <collection-dir>                          Runs the tests in collection-dir, with all the provided options
   run [options] <collection>                                  Initiate a Postman Collection run from a given URL or path
