@@ -1,5 +1,4 @@
-const _ = require('lodash'),
-    expect = require('chai').expect,
+const expect = require('chai').expect;
 
 describe('cli parser', function () {
     var _ = require('lodash'),
