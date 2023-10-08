@@ -1,7 +1,7 @@
 const path = require('path'),
     expect = require('chai').expect,
 
-    newman = require('../../'),
+    newman = require('../../lib/commands/run/collection-runner'),
     workingDir = path.resolve(__dirname, '../fixtures/files/work-dir');
 
 describe('newman.run workingDir', function () {

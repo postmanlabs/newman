@@ -1,5 +1,5 @@
 const expect = require('chai').expect,
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('newman.run suppressExitCode', function () {
     it('should accept the suppressExitCode parameter', function (done) {

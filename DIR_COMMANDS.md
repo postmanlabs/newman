@@ -100,7 +100,7 @@ Options:
 Commands:
   dir-add-folder [options] <folder-path>                      Add a folder to directory based Postman collection in the given path
   dir-add-request [options] <request-path>                    Add a request to directory based Postman collection in the given path
-  dir-create [options] <collection-path>                      Create a directory based Postman collection in the given path
+  dir-collection-create [options] <collection-path>           Create a directory based Postman collection in the given path
   dir-export [options] <postman-collection-file>              Convert a Postman collection file into its directory representation
   dir-export-import-check [options] <postman-collection-file> Check if an export followed by import results in same collection
   dir-import [options] <collection-dir>                       Convert a Postman directory representation into a postman collection
@@ -118,7 +118,7 @@ this fork of newman.
 
 ### Create a new directory based Postman collection
 ```
-newman dir-create new-dir-collection
+newman dir-collection-create new-dir-collection
 ```
 
 ### Generating directory representation for an existing collection

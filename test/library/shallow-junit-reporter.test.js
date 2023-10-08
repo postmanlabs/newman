@@ -5,7 +5,7 @@ const fs = require('fs'),
     parseXml = require('xml2js').parseString,
     expect = require('chai').expect,
 
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('JUnit reporter', function () {
     var outDir = 'out',

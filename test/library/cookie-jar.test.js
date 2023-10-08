@@ -4,7 +4,7 @@ const path = require('path'),
     expect = require('chai').expect,
     CookieJar = require('@postman/tough-cookie').CookieJar,
 
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('newman.run cookieJar', function () {
     var cookieJar = new CookieJar(),

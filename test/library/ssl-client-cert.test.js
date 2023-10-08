@@ -3,7 +3,7 @@ const fs = require('fs'),
     expect = require('chai').expect,
     https = require('https'),
 
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('SSL Client certificates', function () {
     var server1, server2, server3;

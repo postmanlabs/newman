@@ -4,7 +4,7 @@ const fs = require('fs'),
     request = require('postman-request'),
     expect = require('chai').expect,
 
-    newman = require('../../'),
+    newman = require('../../lib/commands/run/collection-runner'),
 
     COLLECTION = {
         id: 'C1',

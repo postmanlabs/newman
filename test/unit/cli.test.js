@@ -6,9 +6,7 @@ describe('cli parser', function () {
         { Command } = require('commander'),
         newman = require('../../lib/commands/run/collection-runner'),
         newmanCLI,
-        commands = {
-            run: require('../../lib/commands/run')
-        },
+        commands = require('../../lib/commands'),
 
         /**
          * Wrap newmanCLI callback to extract options passed to sinon `newman` stub.
