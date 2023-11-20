@@ -1,6 +1,6 @@
 const sinon = require('sinon'),
     expect = require('chai').expect,
-    newman = require('../../');
+    { run } = require('../../lib/commands/run/collection-runner');
 
 describe('External reporter', function () {
     beforeEach(function () {
@@ -12,7 +12,7 @@ describe('External reporter', function () {
     });
 
     it('warns when not found', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/single-get-request.json',
             reporters: ['unknownreporter']
         }, function (err) {

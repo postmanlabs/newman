@@ -44,6 +44,8 @@
     "colors": "1.4.0",
     "commander": "11.0.0",
     "csv-parse": "4.16.3",
+    "directory-tree": "3.5.1",
+    "eventemitter3": "4.0.7",
     "filesize": "10.0.12",
     "liquid-json": "0.3.1",
     "lodash": "4.17.21",

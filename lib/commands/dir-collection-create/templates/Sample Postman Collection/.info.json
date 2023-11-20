@@ -1,0 +1,7 @@
+{
+  "info": {
+    "name": "Sample Postman Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "description": "A sample collection to demonstrate collections as a set of related requests"
+  }
+}

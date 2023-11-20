@@ -4,7 +4,7 @@ var fs = require('fs'),
     _ = require('lodash'),
     expect = require('chai').expect,
 
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('iterationCount vs iterationData.length conflicts', function () {
     var iterationProperty = 'run.stats.iterations.total',

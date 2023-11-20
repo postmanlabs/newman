@@ -4,7 +4,7 @@ const fs = require('fs'),
     sh = require('shelljs'),
     expect = require('chai').expect,
 
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('newman.run exportEnvironment', function () {
     var outDir = 'out',

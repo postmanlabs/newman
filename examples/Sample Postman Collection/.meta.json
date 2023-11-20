@@ -1,0 +1,7 @@
+{
+  "childrenOrder": [
+    "A simple GET request",
+    "A simple POST request",
+    "A simple POST request with JSON body"
+  ]
+}

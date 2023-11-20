@@ -7,10 +7,12 @@ const _ = require('lodash'),
     runtime = require('postman-runtime');
 
 describe('run module', function () {
-    var run = require('../../lib/run');
+    var runCommand = require('../../lib/commands/run');
+    var { run } = require('../../lib/commands/run/collection-runner');
 
     it('should export a function', function () {
-        expect(run).to.be.a('function');
+        expect(runCommand).to.have.property('cliSetup');
+        expect(runCommand).to.have.property('action');
     });
 
     it('should start a run with no options and return error in callback', function (done) {

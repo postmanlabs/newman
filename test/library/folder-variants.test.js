@@ -1,6 +1,6 @@
 const expect = require('chai').expect,
 
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('folder variants', function () {
     var collection = {

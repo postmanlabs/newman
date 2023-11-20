@@ -3,7 +3,7 @@ const sinon = require('sinon'),
     https = require('https'),
     expect = require('chai').expect,
 
-    newman = require('../../');
+    newman = require('../../lib/commands/run/collection-runner');
 
 describe('newman.run requestAgents', function () {
     let httpAgent = new http.Agent(),

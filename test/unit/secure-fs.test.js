@@ -1,6 +1,6 @@
 const path = require('path'),
     expect = require('chai').expect,
-    SecureFs = require('../../lib/run/secure-fs'),
+    SecureFs = require('../../lib/commands/run/secure-fs'),
 
     POSIX_WORKING_DIR = '/Postman/files',
     WIN32_WORKING_DIR = 'C:\\Postman\\files';

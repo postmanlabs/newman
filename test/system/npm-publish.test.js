@@ -5,7 +5,9 @@ const expect = require('chai').expect,
 describe('npm publish', function () {
     const stdout = exec('npm pack --dry-run --json').toString(),
         packageInfo = JSON.parse(stdout.substring(stdout.indexOf('[')))[0],
-        packagedFiles = packageInfo.files.map(function (file) { return file.path; });
+        packagedFiles = packageInfo.files
+            .map(function (file) { return file.path; })
+            .filter(function (item) { return (item !== 'DIR_COMMANDS.md'); });
 
     it('should have a valid package name', function () {
         expect(packageInfo.name).to.equal('newman');

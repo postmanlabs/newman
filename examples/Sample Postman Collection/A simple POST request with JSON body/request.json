@@ -1,0 +1,16 @@
+{
+  "url": "https://postman-echo.com/post",
+  "method": "POST",
+  "header": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "body": {
+    "mode": "raw",
+    "raw_json_formatted": {
+      "text": "Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium..."
+    }
+  }
+}
