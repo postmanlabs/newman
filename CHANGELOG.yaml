@@ -8,6 +8,7 @@
         -> Promise execution in scripts
         -> Stripping JSON comments in the raw mode body
         -> ...and several improvements and bug fixes
+    - Multi-platform Docker images
   fixed bugs:
     - GH-3146 Fixed a bug where an invalid `folder` input used to exit silently
   breaking changes:
