@@ -51,7 +51,7 @@
     "postman-collection": "4.2.1",
     "postman-collection-transformer": "4.1.7",
     "postman-request": "2.88.1-postman.33",
-    "postman-runtime": "7.33.0",
+    "postman-runtime": "7.36.0",
     "pretty-ms": "7.0.1",
     "semver": "7.5.4",
     "serialised-error": "1.1.3",
