@@ -1,3 +1,11 @@
+unreleased:
+  new features:
+    - |
+      GH-3183 Uses the latest Postman Runtime and Postman Collection, which adds support for:
+        -> Skipping request execution through scripts using pm.execution.skipRequest()
+        -> Fetching execution location context through script using pm.execution.location, pm.execution.location.current
+        -> ASAP(Atlassian) authentication
+
 6.0.0:
   date: 2023-09-15
   new features:
