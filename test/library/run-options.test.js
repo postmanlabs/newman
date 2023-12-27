@@ -172,9 +172,7 @@ describe('Newman run options', function () {
 
     // @todo: failing on windows
     (process.platform.startsWith('win') ? describe.skip : describe)('script timeouts', function () {
-        // @todo: Failing in node v20.10.0 with multiple done() called.
-        // working fine until node v20.9.0
-        it.skip('should be handled correctly when breached', function (done) {
+        it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
                 timeoutScript: 5
