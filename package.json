@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@postman/shipit": "^0.4.0",
-    "chai": "^4.3.10",
+    "chai": "^5.0.0",
     "dependency-check": "^4.1.0",
     "dockerfile_lint": "^0.3.4",
     "editorconfig": "^2.0.0",
