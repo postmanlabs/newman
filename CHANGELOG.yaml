@@ -1,3 +1,7 @@
+unreleased:
+  chores:
+    - Updated dependencies
+
 6.1.0:
   date: 2023-12-27
   new features:
