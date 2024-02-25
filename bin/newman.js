@@ -43,6 +43,8 @@ program
         ' and whether to end the run with an error based on the optional modifier', util.cast.csvParse)
     .option('--ignore-redirects', 'Prevents Newman from automatically following 3XX redirect responses')
     .option('-x , --suppress-exit-code', 'Specify whether or not to override the default exit code for the current run')
+    .option('--suppress-request-errors [hostnames]', 'Specify the hostnames to be ignored on request errors',
+        util.cast.csvParse, [])
     .option('--silent', 'Prevents Newman from showing output to CLI')
     .option('--disable-unicode', 'Forces Unicode compliant symbols to be replaced by their plain text equivalents')
     .option('--color <value>', 'Enable/Disable colored output (auto|on|off)', util.cast.colorOptions, 'auto')
