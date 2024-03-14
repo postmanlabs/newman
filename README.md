@@ -522,7 +522,7 @@ newman.run({
 ```
 
 - [allure](https://github.com/allure-framework/allure-js/tree/master/packages/newman-reporter-allure) -
-This reporter allow to create fully-featured allure reports that can allow you to have easy to understand HTML reports with features like historical data, link tests to the JIRA and all other benefits of using [allure framework](https://qameta.io/allure-report/).
+This reporter allow to create fully-featured allure reports that can allow you to have easy to understand HTML reports with features like historical data, link tests to the JIRA and all other benefits of using [allure framework](https://allurereport.org/).
 - [htmlextra](https://github.com/DannyDainton/newman-reporter-htmlextra) -
 This is an updated version of the standard HTML reporter containing a more in-depth data output and a few helpful extras
 - [csv](https://github.com/matt-ball/newman-reporter-csv) -
