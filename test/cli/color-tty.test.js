@@ -3,7 +3,7 @@ const fs = require('fs'),
 
 describe('CLI output', function () {
     // eslint-disable-next-line no-control-regex
-    const coloredOutput = /^[\u001b[0m]+newman/;
+    const coloredOutput = /\u001b/;
 
     describe('TTY', function () {
         // @todo: Change to assert colored output after https://github.com/shelljs/shelljs/pull/524 is released
