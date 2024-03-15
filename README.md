@@ -412,10 +412,11 @@ argument object. [Learn more](https://github.com/postmanlabs/newman/wiki/Newman-
 ### Configuring Reporters
 
 - `-r <reporter-name>`, `--reporters <reporter-name>`<br />
-  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names. Available reporters are: `cli`, `json`, `junit`, `progress` and `emojitrain`.<br/><br/>
+  Specify one reporter name as `string` or provide more than one reporter name as a comma separated list of reporter names _(wrapped in single quotes)_. Available reporters are: `cli`, `json`, `junit`, `progress` and `emojitrain`.<br/><br/>
   Spaces should **not** be used between reporter names / commas whilst specifying a comma separated list of reporters. For instance:<br/><br/>
-  :white_check_mark: `-r cli,json,junit`<br/>
-  :x: `-r cli , json,junit`
+  :white_check_mark: `-r 'cli,json,junit'`<br/>
+  :x: `-r cli 'json, junit'`
+  :x: `-r cli 'json junit'`
 
 - `--reporter-{{reporter-name}}-{{reporter-option}}`<br />
   When multiple reporters are provided, if one needs to specifically override or provide an option to one reporter, this
