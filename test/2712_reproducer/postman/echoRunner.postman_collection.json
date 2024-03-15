@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "9a7ec086-b561-41d4-81a8-a8e8c4007869",
+		"name": "echoRunner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "echo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check uid % 50 > 7\", function () {",
+							"    pm.expect(data.uid % 50).to.be.above(7);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"queryString\": \"select SS_UID__C, ss_last_sync_timestamp__c from Subscription where SS_UID__C = '{{uid}}'\"}"
+				},
+				"url": {
+					"raw": "https://postman-echo.com/post",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,16 @@
+version: "3"
+services:
+  newman:
+    build: .
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=1024
+      - COLLECTION=${COLLECTION}
+      - ENV=${ENV}
+      - DATAFILE=${DATAFILE}
+      - ZUORA_CLIENT_ID=${ZUORA_CLIENT_ID}
+      - ZUORA_CLIENT_SECRET=${ZUORA_CLIENT_SECRET}
+      - LOG_LEVEL=${LOG_LEVEL}
+    command: node index.js -e $ENV -c $COLLECTION -d $DATAFILE

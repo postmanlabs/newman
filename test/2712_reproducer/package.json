@@ -1,0 +1,16 @@
+{
+  "name": "synctimestampvalidator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "figlet": "^1.5.2",
+    "newman": "^5.3.2",
+    "yargs": "^17.5.1"
+  }
+}
