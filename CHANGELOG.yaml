@@ -1,3 +1,26 @@
+6.1.2:
+  date: 2024-03-14
+  fixed bugs:
+    - GH-3212 Fixed a bug where `--color off` was not respected in summary table
+  chores:
+    - Updated dependencies
+
+6.1.1:
+  date: 2024-02-05
+  chores:
+    - Updated dependencies
+
+6.1.0:
+  date: 2023-12-27
+  new features:
+    - |
+      GH-3183 Uses the latest Postman Runtime, which adds support for:
+        -> Skipping request execution via pm.execution.skipRequest()
+        -> Fetching execution location via using pm.execution.location
+        -> Atlassian's ASAP authentication
+  chores:
+    - GH-3183 Updated dependencies
+
 6.0.0:
   date: 2023-09-15
   new features:
@@ -8,6 +31,7 @@
         -> Promise execution in scripts
         -> Stripping JSON comments in the raw mode body
         -> ...and several improvements and bug fixes
+    - Multi-platform Docker images
   fixed bugs:
     - GH-3146 Fixed a bug where an invalid `folder` input used to exit silently
   breaking changes:
