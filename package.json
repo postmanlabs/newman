@@ -72,7 +72,7 @@
     "js-yaml": "^4.1.0",
     "mocha": "^10.4.0",
     "nock": "^13.5.4",
-    "nyc": "^15.1.0",
+    "nyc": "^17.0.0",
     "parse-gitignore": "^2.0.0",
     "recursive-readdir": "^2.2.3",
     "server-destroy": "^1.0.1",
