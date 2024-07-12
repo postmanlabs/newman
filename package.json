@@ -44,7 +44,7 @@
     "colors": "1.4.0",
     "commander": "11.1.0",
     "csv-parse": "4.16.3",
-    "filesize": "10.1.2",
+    "filesize": "10.1.4",
     "liquid-json": "0.3.1",
     "lodash": "4.17.21",
     "mkdirp": "3.0.1",
