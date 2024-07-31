@@ -59,19 +59,19 @@ jobs:
             - name: Run unit tests
               run: |
                   npm run test-unit
-                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F unit
+                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F unit -t ${{ secrets.CODECOV_TOKEN }}
 
             - name: Run integration tests
               run: |
                   npm run test-integration
-                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F integration
+                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F integration -t ${{ secrets.CODECOV_TOKEN }}
 
             - name: Run CLI tests
               run: |
                   npm run test-cli
-                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F cli
+                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F cli -t ${{ secrets.CODECOV_TOKEN }}
 
             - name: Run library tests
               run: |
                   npm run test-library
-                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F library
+                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F library -t ${{ secrets.CODECOV_TOKEN }}
