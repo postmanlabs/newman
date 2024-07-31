@@ -145,10 +145,9 @@ describe('newman.run postmanApiKey', function () {
         });
     });
 
-    it('should not pass API Key header for Postman API URLs', function (done) {
+    it('should pass API Key header for Postman API URLs instead of apikey query parameter', function (done) {
         newman.run({
-            collection: 'https://api.getpostman.com/collections?apikey=12345678',
-            postmanApiKey: '12345678'
+            collection: 'https://api.getpostman.com/collections?apikey=12345678'
         }, function (err, summary) {
             expect(err).to.be.null;
             sinon.assert.calledOnce(request.get);
@@ -157,9 +156,9 @@ describe('newman.run postmanApiKey', function () {
 
             expect(requestArg).to.be.an('object').and.include.keys(['url', 'json', 'headers']);
 
-            expect(requestArg.url).to.equal('https://api.getpostman.com/collections?apikey=12345678');
+            expect(requestArg.url).to.equal('https://api.getpostman.com/collections');
 
-            expect(requestArg.headers).to.not.have.property('X-Api-Key');
+            expect(requestArg.headers).to.have.property('X-Api-Key');
 
             expect(summary.run.failures).to.be.empty;
             expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
