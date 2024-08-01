@@ -1,8 +1,9 @@
 unreleased:
-    chores:
-      - >-
+  chores:
+    - >-
         GH-3258 Converted the deprecated `apikey` parameter in Postman API urls
         to `x-api-key` header
+    - Updated dependencies
 
 6.1.3:
   date: 2024-06-10
