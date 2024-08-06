@@ -14,14 +14,41 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "tests[\"Content-Type is present\"] = responseHeaders.hasOwnProperty(\"Content-Type\");var data1 = JSON.parse(responseBody);\ntests[\"testGlobalSetFromPRScript\"] = data1.args.prsG === \"prsG\";\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG\";\n\ntests[\"testEnvSetFromPRScript\"] = data1.args.prsE === \"prsE\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";\n\npostman.setGlobalVariable(\"prsG\", \"prsG1\");\n\npostman.setEnvironmentVariable(\"prsE\", \"prsE1\");"
+            "exec": [
+              "pm.test(\"Content-Type is present\", () => {",
+              "    pm.expect(pm.response.headers.has(\"content-type\")).true;",
+              "})",
+              "var data1 = pm.response.json();",
+              "pm.test(\"testGlobalSetFromPRScript\", () => {",
+              "    pm.expect(data1.args.prsG).equal('prsG');",
+              "})",
+              "pm.test(\"Read global var correctly\", () => {",
+              "    pm.expect(pm.globals.get(\"prsG\")).equal('prsG');",
+              "})",
+              "pm.test(\"testEnvSetFromPRScript\", () => {",
+              "    pm.expect(data1.args.prsE).equal('prsE');",
+              "})",
+              "pm.test(\"Read env var correctly\", () => {",
+              "    pm.expect(pm.environment.get(\"prsE\")).equal('prsE');",
+              "})",
+              "pm.test(\"Read data var correctly\", () => {",
+              "    pm.expect(pm.variables.get(\"prsE\")).equal('prsE');",
+              "})",
+              "pm.globals.set(\"prsG\", \"prsG\");",
+              "pm.environment.set(\"prsE\", \"prsE\");"
+            ]
           }
         },
         {
           "listen": "prerequest",
           "script": {
             "type": "text/javascript",
-            "exec": "postman.setGlobalVariable(\"prsG\", \"prsG\");\npostman.setGlobalVariable(\"prsE\", \"prsEaRDDDROR\");\npostman.setEnvironmentVariable(\"prsE\", \"prsE\");\n"
+            "exec": [
+              "pm.globals.set(\"prsG\", \"prsG\");",
+              "pm.globals.set(\"prsE\", \"prsEaRDDDROR\");",
+              "pm.environment.set(\"prsE\", \"prsE\");",
+              ""
+            ]
           }
         }
       ],
@@ -44,7 +71,19 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "var data1 = JSON.parse(responseBody);\ntests[\"Read global var correctly\"] = globals.prsG === \"prsG1\";\ntests[\"Read env var correctly\"] = environment.prsE === \"prsE1\";\ntests[\"Read data var correctly\"] = data.dataVar === \"dataValue\";"
+            "exec": [
+              "var data1 = pm.response.json();",
+              "",
+              "pm.test(\"Read global var correctly\", () => {",
+              "    pm.expect(pm.globals.get(\"prsG\")).equal('prsG');",
+              "})",
+              "pm.test(\"Read env var correctly\", () => {",
+              "    pm.expect(pm.environment.get(\"prsE\")).equal('prsE');",
+              "})",
+              "pm.test(\"Read data var correctly\", () => {",
+              "    pm.expect(pm.variables.get(\"prsE\")).equal('prsE');",
+              "})"
+            ]
           }
         }
       ],

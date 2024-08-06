@@ -1,4 +1,6 @@
 unreleased:
+  new features:
+    - GH-3263 Added support for HTTP/2
   chores:
     - >-
         GH-3258 Converted the deprecated `apikey` parameter in Postman API urls

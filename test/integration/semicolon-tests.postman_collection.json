@@ -14,7 +14,14 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": "tests[\"Test1: Content-Type is 'application/json;  charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json; charset=utf-8\";\ntests[\"Test2: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json; charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n\n\ntests[\"Test3: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders[\"Content-Type\"] === \"application/json;\\ charset=utf-8\";\ntests[\"Test4: Content-Type is 'application/json; charset=utf-8'\"] = responseHeaders.hasOwnProperty(\"Content-Type\") && 'application/json;\\ charset=utf-8' === responseHeaders[\"Content-Type\"];\n\n"
+            "exec": [
+              "pm.test(\"Test1: Content-Type is 'application/json;  charset=utf-8'\", ()=>{",
+              "    pm.expect(pm.response.headers.get('Content-Type')).equal('application/json; charset=utf-8')    ",
+              "})",
+              "pm.test(\"Test2: Content-Type is 'application/json; charset=utf-8'\", ()=>{",
+              "    pm.expect(pm.response.headers.get('Content-type')).equal('application/json;\\ charset=utf-8')    ",
+              "})"
+            ]
           }
         }
       ],
