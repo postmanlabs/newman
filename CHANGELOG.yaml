@@ -1,4 +1,5 @@
-unreleased:
+6.2.1:
+  date: 2024-08-20
   fixed bugs:
     - Reverted GH-3263
 
