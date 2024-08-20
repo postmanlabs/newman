@@ -1,3 +1,7 @@
+unreleased:
+  fixed bugs:
+    - Reverted GH-3263
+
 6.2.0:
   date: 2024-08-16
   new features:
