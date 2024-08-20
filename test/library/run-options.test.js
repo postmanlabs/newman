@@ -225,7 +225,7 @@ describe('Newman run options', function () {
         it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeout: 100
+                timeout: 1000
             }, function (err, summary) {
                 expect(err.message).to.equal('callback timed out');
                 expect(summary).to.be.ok;

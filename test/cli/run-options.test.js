@@ -112,7 +112,7 @@ describe('CLI run options', function () {
     describe('script timeouts', function () {
         it('should be handled correctly when breached', function (done) {
             // eslint-disable-next-line max-len
-            exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 100', function (code) {
+            exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 5', function (code) {
                 // .to.be.(1) is not used as the windows exit code can be an arbitrary non-zero value
                 expect(code, 'should have non-zero exit code').to.be.above(0);
                 done();
@@ -121,7 +121,7 @@ describe('CLI run options', function () {
 
         it('should be handled correctly when not breached', function (done) {
             // eslint-disable-next-line max-len
-            exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 800', function (code) {
+            exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 500', function (code) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 done();
             });
