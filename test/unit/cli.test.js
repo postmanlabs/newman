@@ -48,6 +48,7 @@ describe('cli parser', function () {
                     expect(opts).to.eql({
                         collection: 'collection.json',
                         reporters: ['cli'],
+                        suppressRequestErrors: [],
                         delayRequest: 0,
                         globalVar: [],
                         envVar: [],

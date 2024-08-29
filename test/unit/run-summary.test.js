@@ -34,7 +34,8 @@ describe('run summary', function () {
     it('should have the relevant top-level data structures', function () {
         var summary = new Summary(new EventEmitter());
 
-        expect(_.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run'].sort());
+        expect(_.keys(summary).sort()).to.eql(['collection', 'environment', 'globals', 'run',
+            'suppressRequestErrors'].sort());
     });
 
     it('should have run related properties', function () {
