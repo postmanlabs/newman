@@ -70,4 +70,16 @@ describe('Default reporter', function () {
             done();
         });
     });
+
+    it('postman can be loaded', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/single-get-request.json',
+            reporters: ['postman']
+        }, function (err) {
+            expect(err).to.be.null;
+            expect(console.warn.called).to.be.false;
+
+            done();
+        });
+    });
 });
