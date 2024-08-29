@@ -75,6 +75,9 @@
   date: 2022-01-10
   chores:
     - Updated dependencies
+  new features:
+    - >-
+      Added support for proxy definitions 
 
 5.3.0:
   date: 2021-09-07

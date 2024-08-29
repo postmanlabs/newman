@@ -1,0 +1,26 @@
+{
+    "proxies": [
+
+    {
+        "match": "https://example.com/*",
+        "host": "proxy.com", 
+        "port": "8080",
+        "tunnel": true
+    },
+    {
+        "match": "http+https://example2.com/*",
+        "host": "proxy2.com"
+    },
+    {
+        "match": "http+https://example3.com/*",
+        "host": "proxy3.com",
+        "port": "8080",
+        "tunnel": true,
+        "disabled": false,
+        "authenticate": true,
+        "username": "proxy_username",
+        "password": "proxy_password"
+    }
+    
+]
+}
