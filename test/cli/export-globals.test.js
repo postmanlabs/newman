@@ -19,7 +19,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should export globals to a file', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
@@ -40,7 +40,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should export globals to a file even if collection is failing', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
             var globals;
 
@@ -61,7 +61,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should override exported globals with those provided via --global-var', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --global-var foo=bar --export-globals out/test-globals.json', function (code) {
             var globals;
 
@@ -83,7 +83,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('`newman run` should export globals to a file in a pre-existing directory', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out', function (code) {
             var globals,
                 dir = fs.readdirSync(outDir),
@@ -108,7 +108,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should export globals with a name when provided under --global-var', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json --global-var foo=bar --export-globals out/test-globals.json', function (code) {
             var globals;
 

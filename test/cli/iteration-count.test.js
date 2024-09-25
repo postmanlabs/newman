@@ -16,7 +16,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
     });
 
     it('should iterate exactly once when no options are specified', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export out/iteration-count-test.json', function (code) {
             var collectionRun;
 
@@ -30,7 +30,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
     });
 
     it('should iterate according to iterationData.length when specified', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json -d test/integration/steph/steph.postman_data.json -r json --reporter-json-export out/iteration-count-test.json', function (code) {
             var collectionRun;
 
@@ -44,7 +44,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
     });
 
     it('should iterate according to iterationCount when specified', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --iteration-count 3 -r json --reporter-json-export out/iteration-count-test.json', function (code) {
             var collectionRun;
 
@@ -58,7 +58,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
     });
 
     it('should iterate according to iterationCount when BOTH options are specified', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json -d test/integration/steph/steph.postman_data.json --iteration-count 3 -r json --reporter-json-export out/iteration-count-test.json', function (code) {
             var collectionRun;
 
