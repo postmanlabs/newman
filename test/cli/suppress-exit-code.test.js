@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 
 describe('newman run --suppress-exit-code', function () {
     it('should accept the --suppress-exit-code parameter', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --suppress-exit-code', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();

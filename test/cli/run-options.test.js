@@ -57,7 +57,7 @@ describe('CLI run options', function () {
     });
 
     it('should handle invalid collection URLs correctly', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run https://api.getpostman.com/collections/my-collection-uuid?apikey=my-secret-api-key', function (code) {
             expect(code, 'should have exit code of 1').to.equal(1);
             done();
@@ -65,7 +65,7 @@ describe('CLI run options', function () {
     });
 
     it('should correctly work with global variable overrides passed with --global-var', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var first=James --global-var last=Bond', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -73,7 +73,7 @@ describe('CLI run options', function () {
     });
 
     it('should throw an error for missing --global-var values', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
             expect(stderr).to.equal('error: option \'--global-var <value>\' argument missing\n');
@@ -82,7 +82,7 @@ describe('CLI run options', function () {
     });
 
     it('should correctly work with environment variable overrides passed with --env-var', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var dummyVar=bar2', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -90,7 +90,7 @@ describe('CLI run options', function () {
     });
 
     it('should throw an error for missing --env-var values', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
             expect(stderr).to.equal('error: option \'--env-var <value>\' argument missing\n');
@@ -99,7 +99,7 @@ describe('CLI run options', function () {
     });
 
     it('should log a warning if the v1 collection format is used', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/integration/multi-level-folders-v1.postman_collection.json', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 0').to.equal(0);
             expect(stderr).to.equal('newman: Newman v4 deprecates support for the v1 collection format\n' +
@@ -111,7 +111,7 @@ describe('CLI run options', function () {
 
     describe('script timeouts', function () {
         it('should be handled correctly when breached', function (done) {
-            // eslint-disable-next-line max-len
+            // eslint-disable-next-line @stylistic/js/max-len
             exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 5', function (code) {
                 // .to.be.(1) is not used as the windows exit code can be an arbitrary non-zero value
                 expect(code, 'should have non-zero exit code').to.be.above(0);
@@ -120,7 +120,7 @@ describe('CLI run options', function () {
         });
 
         it('should be handled correctly when not breached', function (done) {
-            // eslint-disable-next-line max-len
+            // eslint-disable-next-line @stylistic/js/max-len
             exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 500', function (code) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 done();

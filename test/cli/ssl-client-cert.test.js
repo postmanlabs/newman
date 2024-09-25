@@ -78,7 +78,7 @@ describe('SSL Client certificates', function () {
 
     // @todo: add .pfx, .pem tests as well
     it('should work correctly with standalone client certificates', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password -k', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -86,7 +86,7 @@ describe('SSL Client certificates', function () {
     });
 
     it('should work correctly with a trusted CA certificate provided', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert.json --ssl-client-cert test/fixtures/ssl/client.crt --ssl-client-key test/fixtures/ssl/client.key --ssl-client-passphrase password --ssl-extra-ca-certs test/fixtures/ssl/ca.crt', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -94,7 +94,7 @@ describe('SSL Client certificates', function () {
     });
 
     it('should work correctly with multiple client certificates', function (done) {
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/js/max-len
         exec('node ./bin/newman.js run test/fixtures/run/ssl-client-cert-list.json --verbose --ssl-client-cert-list ./test/fixtures/files/ssl-client-cert-config.json -k', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();

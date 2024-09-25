@@ -1,3 +1,11 @@
+unreleased:
+  breaking changes:
+    - GH-1605 Dropped support for Node < v18
+  chores:
+    - GH-1605 Updated dependencies
+    - GH-1605 Updated ESLint rules
+    - GH-1605 Run code coverage on latest Node version in CI
+
 6.2.1:
   date: 2024-08-20
   fixed bugs:
