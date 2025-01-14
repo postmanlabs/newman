@@ -1,33 +1,30 @@
+# Use Node 16 Alpine base image
 FROM node:16-alpine
 LABEL maintainer="Postman Labs <help@postman.com>"
 
+# Define build argument for Newman version
 ARG NEWMAN_VERSION
-
-# Set environment variables
+# Set environment variables for localization
 ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" ALPINE_NODE_REPO="oznu/alpine-node"
 
-# Bail out early if NODE_VERSION is not provided
+# Bail out early if NEWMAN_VERSION is not provided in a valid semver format
 RUN if [ ! $(echo $NEWMAN_VERSION | grep -oE "^[0-9]+\.[0-9]+\.[0-9]+$") ]; then \
         echo "\033[0;31mA valid semver Newman version is required in the NEWMAN_VERSION build-arg\033[0m"; \
         exit 1; \
     fi && \
-    # Install Newman globally
-    npm install --global newman@${NEWMAN_VERSION};
+    # Install Newman globally with the specified version
+    npm install --global newman@${NEWMAN_VERSION} && \
+    # Update deprecated packages to avoid warnings
+    npm install --global highlight.js@latest gulp-header@latest urix@latest resolve-url@latest && \
+    # Install newman-reporter-htmlextra if needed
+    npm install --global newman-reporter-htmlextra@latest
 
-# Set workdir to /etc/newman
-# When running the image, mount the directory containing your collection to this location
-#
-# docker run -v <path to collections directory>:/etc/newman ...
-#
-# In case you mount your collections directory to a different location, you will need to give absolute paths to any
-# collection, environment files you want to pass to newman, and if you want newman reports to be saved to your disk.
-# Or you can change the workdir by using the -w or --workdir flag
+# Set work directory for the Newman collection
 WORKDIR /etc/newman
 
 # Set newman as the default container command
-# Now you can run the container via
-#
-# docker run -v /home/collections:/etc/newman -t postman/newman_alpine run YourCollection.json.postman_collection \
-#                                                                        -e YourEnvironment.postman_environment \
-#                                                                        -H newman_report.html
 ENTRYPOINT ["newman"]
+
+# Verify that newman and required dependencies are correctly installed
+RUN newman --version && \
+    npm list -g highlight.js gulp-header urix resolve-url newman-reporter-htmlextra

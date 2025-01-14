@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Example Collection with a single GET request" tests="1" time="0.241">
+  <testsuite name="A simple GET request" id="31d79286-1d3c-4d5d-99b1-9116058d16ea" timestamp="2025-01-14T19:28:20.500Z" tests="1" failures="0" errors="0" time="0.241">
+    <testcase name="response code is 200" time="0.241" classname="ASimpleGetRequest"/>
+  </testsuite>
+</testsuites>

@@ -21,7 +21,7 @@ jobs:
             fail-fast: false
             matrix:
                 node-version: [16, 18]
-                os: [ubuntu-latest, windows-latest]
+                os: [ubuntu-latest, windows-latest, linux/arm64]
 
         steps:
             - name: Checkout repository
@@ -74,4 +74,7 @@ jobs:
             - name: Run library tests
               run: |
                   npm run test-library
-                  bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F library -t ${{ secrets.CODECOV_TOKEN }}
+                  - name: Run library tests
+                    run: |
+                        npm run test-library
+                        bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F library -t ${{ secrets.CODECOV_TOKEN }}
