@@ -113,6 +113,8 @@ $ newman run examples/sample-collection.json -r cli,json
 
 For more details on [Reporters](#reporters) and writing your own [External Reporters](#external-reporters) refer to their corresponding sections below.
 
+In case of the warning 'could not find ... reporter' when using multiple reporters, use quotes e.g. `-r 'cli,json'`
+
 [back to top](#table-of-contents)
 
 ## Command Line Options
