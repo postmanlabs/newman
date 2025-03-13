@@ -4,10 +4,12 @@
   - [NPM Command Reference](#npm-command-reference)
       - [`npm install`](#npm-install)
       - [`npm test`](#npm-test)
-      - [`npm run test-system`](#npm-run-test-system)
-      - [`npm run test-lint`](#npm-run-test-lint)
-      - [`npm run test-unit`](#npm-run-test-unit)
-      - [`npm run test-integration`](#npm-run-test-integration)
+      - [`npm run test-system`](#npm-test)
+      - [`npm run test-lint`](#npm-test)
+      - [`npm run test-unit`](#npm-test)
+      - [`npm run test-integration`](#npm-test)
+      - [`npm run test-cli`](#npm-test)
+      - [`npm run test-library`](#npm-test)
   - [Repository](#repository)
       - [Structure](#structure)
       - [Branching and Tagging Policy](#branching-and-tagging-policy)
@@ -21,7 +23,6 @@
   - [Documentation guidelines](#documentation-guidelines)
   - [The CI Platform](#the-ci-platform)
       - [Ensuring your commits will not fail build](#ensuring-your-commits-will-not-fail-build)
-      - [Accessing build log on CI server](#accessing-build-log-on-ci-server)
   - [Security](#security)
 
 ## Getting Started Quick
@@ -208,7 +209,7 @@ For instance:
     });
 ```
 
-The resulting sentence derived by combining the descriptions in the `describe` and `it` blocks are:
+The resulting sentences derived by combining the descriptions in the `describe` and `it` blocks are:
 
 **Logic tests** should throw an error if parameters are missing
 **Logic tests** should pass when valid values are provided
