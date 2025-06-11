@@ -67,7 +67,7 @@
     "eslint": "^8.56.0",
     "eslint-plugin-jsdoc": "^46.9.1",
     "eslint-plugin-lodash": "^7.4.0",
-    "eslint-plugin-mocha": "^10.5.0",
+    "eslint-plugin-mocha": "^11.1.0",
     "eslint-plugin-security": "^2.1.1",
     "js-yaml": "^4.1.0",
     "mocha": "^10.7.3",
