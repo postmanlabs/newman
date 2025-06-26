@@ -59,7 +59,7 @@
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
-    "@postman/shipit": "^0.2.0",
+    "@postman/shipit": "^0.4.0",
     "chai": "^5.2.0",
     "dependency-check": "^4.1.0",
     "dockerfile_lint": "^0.0.9",
