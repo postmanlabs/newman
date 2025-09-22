@@ -7,7 +7,7 @@ trigger:
 - develop
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: AAT-Fortify
 
 steps:
 - task: NodeTool@0
