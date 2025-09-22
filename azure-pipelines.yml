@@ -7,7 +7,9 @@ trigger:
 - develop
 
 pool:
-  vmImage: 'AAT-Fortify'
+  name: 'AAT-Fortify'
+  demands:
+    - Agent.Name -equals az0919w006
 
 steps:
 - task: NodeTool@0
