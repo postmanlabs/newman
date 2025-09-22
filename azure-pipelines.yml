@@ -31,4 +31,4 @@ steps:
     applicationIdentifierType: 'byId'
     applicationVersionId: '32599'
     autoDetectBuildTool: true
-    excludeArgs: 'Src\\test\\'
+    excludeArgs: '**\test\**\*'
