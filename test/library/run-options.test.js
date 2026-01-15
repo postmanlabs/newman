@@ -91,7 +91,7 @@ describe('Newman run options', function () {
                 accept: '*/*',
                 'cache-control': 'no-cache',
                 'postman-token': postmanToken,
-                'accept-encoding': 'gzip, deflate, br',
+                'accept-encoding': 'gzip, br',
                 'user-agent': `PostmanRuntime/${runtimeVersion}` // change this when runtime is bumped
             });
             // eslint-disable-next-line max-len

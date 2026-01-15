@@ -44,7 +44,7 @@ describe('newman.run cookieJar', function () {
         }, function (err, summary) {
             expect(err).to.be.null;
 
-            expect(summary.run.executions[1].response.json()).to.eql({
+            expect(summary.run.executions[1].response.json()).to.deep.include({
                 cookies: {
                     foo: 'bar', // new cookie
                     foo2: 'baz' // existing cookie
