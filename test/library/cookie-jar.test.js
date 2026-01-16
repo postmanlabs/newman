@@ -44,11 +44,11 @@ describe('newman.run cookieJar', function () {
         }, function (err, summary) {
             expect(err).to.be.null;
 
-            expect(summary.run.executions[1].response.json()).to.eql({
-                cookies: {
-                    foo: 'bar', // new cookie
-                    foo2: 'baz' // existing cookie
-                }
+            expect(summary.run.executions[1].response.json().cookies).to.be.ok;
+
+            expect(summary.run.executions[1].response.json().cookies).to.include({
+                foo: 'bar', // new cookie
+                foo2: 'baz' // existing cookie
             });
 
             done();

@@ -1,3 +1,8 @@
+6.2.2:
+  date: 2026-01-16
+  chores:
+    - Update dependencies
+
 6.2.1:
   date: 2024-08-20
   fixed bugs:
