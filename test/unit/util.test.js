@@ -94,4 +94,100 @@ describe('utility helpers', function () {
             expect(util.beautifyTime(timings)).to.eql(beautifiedTimings);
         });
     });
+
+    describe('extractCollectionId', function () {
+        it('should return empty string for a non string input', function () {
+            const result = util.extractCollectionId(123);
+
+            expect(result).to.eql('');
+        });
+
+        it('should return empty string if no match found', function () {
+            const result = util.extractCollectionId('https://www.google.com');
+
+            expect(result).to.eql('');
+        });
+
+        it('should return the extracted collection id from valid getpostman link', function () {
+            const collectionId = '123-c178add4-0d98-4333-bd6b-56c3cb0d410f',
+                postmanApiKey = 'PMAK-1234',
+                resourceURL = `https://api.getpostman.com/collections/${collectionId}?apikey=${postmanApiKey}`,
+                result = util.extractCollectionId(resourceURL);
+
+            expect(result).to.eql(collectionId);
+        });
+
+        it('should return the extracted collection id from valid postman link', function () {
+            const collectionId = '123-c178add4-0d98-4333-bd6b-56c3cb0d410f',
+                postmanApiKey = 'PMAK-1234',
+                resourceURL = `https://api.postman.com/collections/${collectionId}?apikey=${postmanApiKey}`,
+                result = util.extractCollectionId(resourceURL);
+
+            expect(result).to.eql(collectionId);
+        });
+    });
+
+    describe('extractEnvironmentId', function () {
+        it('should return empty string for a non string input', function () {
+            const result = util.extractEnvironmentId(123);
+
+            expect(result).to.eql('');
+        });
+
+        it('should return empty string if no match found', function () {
+            const result = util.extractEnvironmentId('https://www.google.com');
+
+            expect(result).to.eql('');
+        });
+
+        it('should return the extracted environment id from valid getpostman link', function () {
+            const environmentId = '123-c178add4-0d98-4333-bd6b-56c3cb0d410f',
+                postmanApiKey = 'PMAK-1234',
+                resourceURL = `https://api.getpostman.com/environments/${environmentId}?apikey=${postmanApiKey}`,
+                result = util.extractEnvironmentId(resourceURL);
+
+            expect(result).to.eql(environmentId);
+        });
+
+        it('should return the extracted environment id from valid postman link', function () {
+            const environmentId = '123-c178add4-0d98-4333-bd6b-56c3cb0d410f',
+                postmanApiKey = 'PMAK-1234',
+                resourceURL = `https://api.postman.com/environments/${environmentId}?apikey=${postmanApiKey}`,
+                result = util.extractEnvironmentId(resourceURL);
+
+            expect(result).to.eql(environmentId);
+        });
+    });
+
+    describe('extractPostmanApiKey', function () {
+        it('should return empty string for a non string input', function () {
+            const result = util.extractPostmanApiKey(123);
+
+            expect(result).to.eql('');
+        });
+
+        it('should return empty string if no match found', function () {
+            const result = util.extractPostmanApiKey('https://www.google.com');
+
+            expect(result).to.eql('');
+        });
+
+        it('should return the extracted postman api key from valid collection getpostman link', function () {
+            const collectionId = '123-c178add4-0d98-4333-bd6b-56c3cb0d410f',
+                postmanApiKey = 'PMAK-1234',
+                resourceURL = `https://api.getpostman.com/collections/${collectionId}?apikey=${postmanApiKey}`,
+                result = util.extractPostmanApiKey(resourceURL);
+
+            expect(result).to.eql(postmanApiKey);
+        });
+
+        it('should return the extracted postman api key from valid collection postman link', function () {
+            const collectionId = '123-c178add4-0d98-4333-bd6b-56c3cb0d410f',
+                postmanApiKey = 'PMAK-1234',
+                resourceURL = `https://api.postman.com/collections/${collectionId}?apikey=${postmanApiKey}`,
+                result = util.extractPostmanApiKey(resourceURL);
+
+            expect(result).to.eql(postmanApiKey);
+        });
+    });
 });
