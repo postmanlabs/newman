@@ -30,9 +30,24 @@ module.exports = function (exit) {
             return (file.substr(-8) === '.test.js');
         }).forEach(mocha.addFile.bind(mocha));
 
-        // override exec for it to become silent by default
+        // override exec for it to become silent by default and filter deprecation warnings
         global.exec = function (cmd, done) {
-            return exec(cmd, { silent: true }, done);
+            return exec(cmd, { silent: true }, function (code, stdout, stderr) {
+                // Filter out Node.js deprecation warnings from stderr (e.g., DEP0040 punycode warning in Node 22)
+                // This prevents test failures when Node emits deprecation warnings
+                const filteredStderr = stderr.split('\n')
+                    .filter((line) => {
+                        // Filter out deprecation warning lines and the follow-up trace hint
+                        return !line.match(/^\(node:\d+\) \[DEP\d+\] DeprecationWarning:/) &&
+                               !line.match(/^\(Use `node --trace-deprecation/);
+                    })
+                    .join('\n');
+
+                // Call the original callback with filtered stderr
+                if (done) {
+                    done(code, stdout, filteredStderr);
+                }
+            });
         };
 
         // start the mocha run

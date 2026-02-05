@@ -1,0 +1,121 @@
+{
+  "info": {
+    "name": "HTTP/2 Explicit Test",
+    "description": "Explicit HTTP/2 test with protocolVersion: 'http2' forced via config - verifies HTTP/2 protocol is actually used",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "HTTP/2 GET with Protocol Verification",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('GET request succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has body', function () {",
+              "    pm.expect(pm.response.text()).to.be.a('string').and.not.be.empty;",
+              "});",
+              "",
+              "// Verify HTTP/2 is being used by checking for :status pseudo-header",
+              "// HTTP/2 uses pseudo-headers like :status, :method, :path (RFC 7540)",
+              "// HTTP/1.1 does not have these pseudo-headers",
+              "pm.test('Using HTTP/2 protocol', function () {",
+              "    const statusHeader = pm.response.headers.one(':status');",
+              "    pm.expect(statusHeader, 'Expected :status pseudo-header which indicates HTTP/2').to.exist;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://postman-echo.com/get?test=http2",
+        "description": "Basic GET request with HTTP/2 protocol verification"
+      }
+    },
+    {
+      "name": "HTTP/2 POST with Protocol Verification",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('POST request succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response contains posted data', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.data).to.equal('test data for HTTP/2');",
+              "});",
+              "",
+              "pm.test('Using HTTP/2 protocol', function () {",
+              "    const statusHeader = pm.response.headers.one(':status');",
+              "    pm.expect(statusHeader, 'Expected :status pseudo-header which indicates HTTP/2').to.exist;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "test data for HTTP/2"
+        },
+        "url": "https://postman-echo.com/post",
+        "description": "POST request with HTTP/2 protocol verification"
+      }
+    },
+    {
+      "name": "HTTP/2 with Custom Headers",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Request with custom headers succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Custom headers were sent', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.headers['x-custom-header']).to.equal('http2-test');",
+              "});",
+              "",
+              "pm.test('Using HTTP/2 protocol', function () {",
+              "    const statusHeader = pm.response.headers.one(':status');",
+              "    pm.expect(statusHeader, 'Expected :status pseudo-header which indicates HTTP/2').to.exist;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Custom-Header",
+            "value": "http2-test"
+          }
+        ],
+        "url": "https://postman-echo.com/headers",
+        "description": "Test HTTP/2 with custom headers and protocol verification"
+      }
+    }
+  ]
+}
