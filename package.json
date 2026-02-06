@@ -82,10 +82,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "overrides": {
-    "postman-request": "2.88.1-postman.48",
-    "node-forge": "1.3.3",
-    "jose": "5.10.0"
   }
 }
