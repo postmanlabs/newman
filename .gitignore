@@ -41,3 +41,6 @@ Thumbs.db
 # - Prevent unit test coverage reports from being committed to the repository
 .coverage
 .nyc_output
+
+# - Prevent files related to the Claude AI assistant from being committed to the repository
+.claude

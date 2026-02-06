@@ -32,6 +32,16 @@ module.exports = function (exit) {
 
         // override exec for it to become silent by default and filter deprecation warnings
         global.exec = function (cmd, done) {
+            // Validate command starts with expected executables to prevent command injection
+            const allowedPrefixes = ['node ', 'newman ', './bin/newman'],
+                isAllowed = allowedPrefixes.some((prefix) => { return cmd.trim().startsWith(prefix); });
+
+            if (!isAllowed) {
+                const err = new Error(`Command not allowed: ${cmd}`);
+
+                return done ? done(1, '', err.message) : undefined;
+            }
+
             return exec(cmd, { silent: true }, function (code, stdout, stderr) {
                 // Filter out Node.js deprecation warnings from stderr (e.g., DEP0040 punycode warning in Node 22)
                 // This prevents test failures when Node emits deprecation warnings

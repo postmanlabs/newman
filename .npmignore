@@ -53,3 +53,6 @@ codecov.yml
 .dockerignore
 .editorconfig
 .jsdoc-config.json
+
+# - Prevent files related to the Claude AI assistant from being committed to the repository
+.claude
