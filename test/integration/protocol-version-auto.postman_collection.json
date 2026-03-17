@@ -1,0 +1,201 @@
+{
+  "info": {
+    "name": "ProtocolVersion auto Smoke Test",
+    "description": "Smoke test using protocolVersion: 'auto' - catches catastrophic failures like the Node 22 undici bug in 6.2.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "ProtocolVersion auto GET Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('GET request succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has body', function () {",
+              "    pm.expect(pm.response.text()).to.be.a('string').and.not.be.empty;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://postman-echo.com/get?test=http2",
+        "description": "Basic GET request to test ProtocolVersion auto compatibility"
+      }
+    },
+    {
+      "name": "ProtocolVersion auto POST Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('POST request succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response contains posted data', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.data).to.equal('test data for ProtocolVersion auto');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "test data for ProtocolVersion auto"
+        },
+        "url": "https://postman-echo.com/post",
+        "description": "POST request to test ProtocolVersion auto with body"
+      }
+    },
+    {
+      "name": "ProtocolVersion auto with Headers",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Request with custom headers succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Custom headers were sent', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.headers['x-custom-header']).to.equal('http2-test');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Custom-Header",
+            "value": "http2-test"
+          }
+        ],
+        "url": "https://postman-echo.com/headers",
+        "description": "Test ProtocolVersion auto with custom headers"
+      }
+    },
+    {
+      "name": "ProtocolVersion auto Response Streaming",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Streaming request succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has expected size', function () {",
+              "    pm.expect(pm.response.text().length).to.be.greaterThan(0);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://postman-echo.com/stream/3",
+        "description": "Test ProtocolVersion auto with streaming response"
+      }
+    },
+    {
+      "name": "ProtocolVersion auto with Redirects",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Redirect was followed successfully', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://postman-echo.com/redirect-to?url=https://postman-echo.com/get",
+        "description": "Test ProtocolVersion auto with redirects"
+      }
+    },
+    {
+      "name": "ProtocolVersion auto Different Status Codes",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('404 status code received correctly', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://postman-echo.com/status/404",
+        "description": "Test ProtocolVersion auto with different status codes"
+      }
+    },
+    {
+      "name": "ProtocolVersion auto JSON Response",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('JSON response parsed successfully', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('object');",
+              "});",
+              "",
+              "pm.test('Response has expected structure', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.slideshow).to.be.an('object');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://httpbin.org/json",
+        "description": "Test ProtocolVersion auto with JSON response parsing"
+      }
+    }
+  ]
+}
