@@ -80,6 +80,53 @@ describe('folder variants', function () {
             }]
         },
 
+        // Collection with three top-level folders each containing one nested sub-folder.
+        // Mirrors the user-reported scenario:
+        //   App-A-Acc folder > 1.1 Acc folder > R1
+        //   App-B-Acc folder > 2.1 Acc folder > R2
+        //   App-C-Acc folder > 3.1 Acc folder > R3
+        multiParentNestedCollection = {
+            id: 'C5',
+            name: 'Collection C5',
+            item: [{
+                id: 'C5.AppA',
+                name: 'App-A-Acc folder',
+                item: [{
+                    id: 'C5.AppA.Sub',
+                    name: '1.1 Acc folder',
+                    item: [{
+                        id: 'C5.AppA.Sub.R1',
+                        name: 'R1',
+                        request: 'https://postman-echo.com/get'
+                    }]
+                }]
+            }, {
+                id: 'C5.AppB',
+                name: 'App-B-Acc folder',
+                item: [{
+                    id: 'C5.AppB.Sub',
+                    name: '2.1 Acc folder',
+                    item: [{
+                        id: 'C5.AppB.Sub.R2',
+                        name: 'R2',
+                        request: 'https://postman-echo.com/get'
+                    }]
+                }]
+            }, {
+                id: 'C5.AppC',
+                name: 'App-C-Acc folder',
+                item: [{
+                    id: 'C5.AppC.Sub',
+                    name: '3.1 Acc folder',
+                    item: [{
+                        id: 'C5.AppC.Sub.R3',
+                        name: 'R3',
+                        request: 'https://postman-echo.com/get'
+                    }]
+                }]
+            }]
+        },
+
         // Collection with deeply nested folder structure:
         // F1
         //   F2
@@ -206,6 +253,19 @@ describe('folder variants', function () {
                 expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
                 expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
                 expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1', 'R2']);
+                done();
+            });
+        });
+
+        it('should run nested folders from different parent folders when specified as an array', function (done) {
+            newman.run({
+                collection: multiParentNestedCollection,
+                folder: ['2.1 Acc folder', '3.1 Acc folder']
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R2', 'R3']);
                 done();
             });
         });
