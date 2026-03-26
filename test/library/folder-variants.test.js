@@ -53,6 +53,33 @@ describe('folder variants', function () {
             }]
         },
 
+        // Collection with parent + intermediate folder + deeply nested subfolder structure:
+        // Parent
+        //   Intermediate
+        //     DeepNested
+        //       R1
+        parentAndDeepNestedCollection = {
+            id: 'C4',
+            name: 'Collection C4',
+            item: [{
+                id: 'C4.Parent',
+                name: 'Parent',
+                item: [{
+                    id: 'C4.Intermediate',
+                    name: 'Intermediate',
+                    item: [{
+                        id: 'C4.DeepNested',
+                        name: 'DeepNested',
+                        item: [{
+                            id: 'C4.DeepNested.R1',
+                            name: 'R1',
+                            request: 'https://postman-echo.com/get'
+                        }]
+                    }]
+                }]
+            }]
+        },
+
         // Collection with deeply nested folder structure:
         // F1
         //   F2
@@ -179,6 +206,32 @@ describe('folder variants', function () {
                 expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
                 expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
                 expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1', 'R2']);
+                done();
+            });
+        });
+
+        it('should not run requests twice when a parent and its descendant folder are both specified', function (done) {
+            newman.run({
+                collection: parentAndDeepNestedCollection,
+                folder: ['Parent', 'DeepNested']
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 1 execution (not 2)').to.have.lengthOf(1);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1']);
+                done();
+            });
+        });
+
+        it('should not run requests twice when parent and multiple nested descendants are specified', function (done) {
+            newman.run({
+                collection: parentAndDeepNestedCollection,
+                folder: ['Parent', 'Intermediate', 'DeepNested']
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 1 execution (not 3)').to.have.lengthOf(1);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1']);
                 done();
             });
         });
