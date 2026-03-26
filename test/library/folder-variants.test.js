@@ -4,22 +4,81 @@ const expect = require('chai').expect,
 
 describe('folder variants', function () {
     var collection = {
-        id: 'C1',
-        name: 'Collection C1',
-        item: [{
-            id: 'ID1',
-            name: 'R1',
-            request: 'https://postman-echo.com/get'
-        }, {
-            id: 'ID2',
-            name: 'R2',
-            request: 'https://postman-echo.com/get'
-        }, {
-            id: 'ID3',
-            name: 'R3',
-            request: 'https://postman-echo.com/get'
-        }]
-    };
+            id: 'C1',
+            name: 'Collection C1',
+            item: [{
+                id: 'ID1',
+                name: 'R1',
+                request: 'https://postman-echo.com/get'
+            }, {
+                id: 'ID2',
+                name: 'R2',
+                request: 'https://postman-echo.com/get'
+            }, {
+                id: 'ID3',
+                name: 'R3',
+                request: 'https://postman-echo.com/get'
+            }]
+        },
+
+        // Collection with nested folder structure:
+        // 1. Hello
+        //   1.1 Hello1
+        //     R1
+        //   1.2 Hello2
+        //     R2
+        nestedCollection = {
+            id: 'C2',
+            name: 'Collection C2',
+            item: [{
+                id: 'F1',
+                name: '1. Hello',
+                item: [{
+                    id: 'F1.1',
+                    name: '1.1 Hello1',
+                    item: [{
+                        id: 'F1.1.R1',
+                        name: 'R1',
+                        request: 'https://postman-echo.com/get'
+                    }]
+                }, {
+                    id: 'F1.2',
+                    name: '1.2 Hello2',
+                    item: [{
+                        id: 'F1.2.R2',
+                        name: 'R2',
+                        request: 'https://postman-echo.com/get'
+                    }]
+                }]
+            }]
+        },
+
+        // Collection with deeply nested folder structure:
+        // F1
+        //   F2
+        //     F3
+        //       R1
+        deeplyNestedCollection = {
+            id: 'C3',
+            name: 'Collection C3',
+            item: [{
+                id: 'DF1',
+                name: 'F1',
+                item: [{
+                    id: 'DF2',
+                    name: 'F2',
+                    item: [{
+                        id: 'DF3',
+                        name: 'F3',
+                        item: [{
+                            id: 'DF3.R1',
+                            name: 'R1',
+                            request: 'https://postman-echo.com/get'
+                        }]
+                    }]
+                }]
+            }]
+        };
 
     it('should run the specified request in case folder name is valid', function (done) {
         newman.run({
@@ -68,6 +127,85 @@ describe('folder variants', function () {
             expect(err.message)
                 .to.equal('runtime~extractRunnableItems: Invalid entrypoint');
             done();
+        });
+    });
+
+    describe('nested folders', function () {
+        it('should run a nested folder when specified by name as a string', function (done) {
+            newman.run({
+                collection: nestedCollection,
+                folder: '1.2 Hello2'
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R2']);
+                done();
+            });
+        });
+
+        it('should run a nested folder when specified by name as a single-item array', function (done) {
+            newman.run({
+                collection: nestedCollection,
+                folder: ['1.2 Hello2']
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R2']);
+                done();
+            });
+        });
+
+        it('should run all requests when parent folder is specified', function (done) {
+            newman.run({
+                collection: nestedCollection,
+                folder: '1. Hello'
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1', 'R2']);
+                done();
+            });
+        });
+
+        it('should run multiple nested folders when specified as an array', function (done) {
+            newman.run({
+                collection: nestedCollection,
+                folder: ['1.1 Hello1', '1.2 Hello2']
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1', 'R2']);
+                done();
+            });
+        });
+
+        it('should skip the collection run when a nested folder name is invalid', function (done) {
+            newman.run({
+                collection: nestedCollection,
+                folder: 'InvalidFolder'
+            }, function (err) {
+                expect(err).to.be.ok;
+                expect(err.message)
+                    .to.equal('runtime~extractRunnableItems: Unable to find a folder or request: "InvalidFolder"');
+                done();
+            });
+        });
+
+        it('should run a deeply nested folder when specified by name', function (done) {
+            newman.run({
+                collection: deeplyNestedCollection,
+                folder: 'F3'
+            }, function (err, summary) {
+                expect(err).to.be.null;
+                expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+                expect(summary.run.executions, 'should have 1 execution').to.have.lengthOf(1);
+                expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1']);
+                done();
+            });
         });
     });
 });
