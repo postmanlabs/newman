@@ -199,7 +199,7 @@ describe('folder variants', function () {
         }, function (err) {
             expect(err).to.be.ok;
             expect(err.message)
-                .to.equal('runtime~extractRunnableItems: Invalid entrypoint');
+                .to.equal('Unable to find a folder or request: "R123"');
             done();
         });
     });
@@ -304,6 +304,18 @@ describe('folder variants', function () {
                 expect(err).to.be.ok;
                 expect(err.message)
                     .to.equal('runtime~extractRunnableItems: Unable to find a folder or request: "InvalidFolder"');
+                done();
+            });
+        });
+
+        it('should provide a descriptive error when one folder in an array does not exist', function (done) {
+            newman.run({
+                collection: nestedCollection,
+                folder: ['1.2 Hello2', '1.2. Hello2']
+            }, function (err) {
+                expect(err).to.be.ok;
+                expect(err.message)
+                    .to.equal('Unable to find a folder or request: "1.2. Hello2"');
                 done();
             });
         });

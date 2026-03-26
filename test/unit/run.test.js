@@ -290,7 +290,15 @@ describe('run module', function () {
             });
 
             it('should use multipleIdOrName strategy if options.folder is passed as an array', function (done) {
-                run({ collection: {}, folder: ['f1', 'f2'] }, function (options) {
+                run({
+                    collection: {
+                        item: [
+                            { name: 'f1', request: 'https://postman-echo.com/get' },
+                            { name: 'f2', request: 'https://postman-echo.com/get' }
+                        ]
+                    },
+                    folder: ['f1', 'f2']
+                }, function (options) {
                     expect(options).to.have.deep.property('entrypoint', {
                         execute: ['f1', 'f2'],
                         lookupStrategy: 'multipleIdOrName'
