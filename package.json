@@ -62,7 +62,7 @@
     "@postman/shipit": "^0.4.0",
     "chai": "^4.4.1",
     "dependency-check": "^4.1.0",
-    "dockerfile_lint": "^0.3.4",
+    "dockerfile_lint": "github:projectatomic/dockerfile_lint#pull/152/head",
     "editorconfig": "^3.0.2",
     "eslint": "^8.57.1",
     "eslint-plugin-jsdoc": "^46.9.1",
@@ -85,6 +85,9 @@
     "npm": "11.x.x"
   },
   "overrides": {
+    "@postman/shipit": {
+      "@postman/yankee": "github:postmanlabs/yankee#pull/5/head"
+    },
     "eslint": {
       "flatted": "^3.4.2"
     },
