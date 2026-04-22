@@ -99,7 +99,12 @@
       "serialize-javascript": "^7.0.5"
     },
     "postman-runtime": {
-      "flatted": "^3.4.2"
+      "flatted": "^3.4.2",
+      "postman-sandbox": {
+        "uvm": {
+          "flatted": "^3.4.2"
+        }
+      }
     }
   }
 }
