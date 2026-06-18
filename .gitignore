@@ -41,3 +41,6 @@ Thumbs.db
 # - Prevent unit test coverage reports from being committed to the repository
 .coverage
 .nyc_output
+
+# - Prevent Nix build output symlink from being committed
+result
