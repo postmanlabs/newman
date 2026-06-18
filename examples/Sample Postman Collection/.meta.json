@@ -2,6 +2,8 @@
   "childrenOrder": [
     "A simple GET request",
     "A simple POST request",
-    "A simple POST request with JSON body"
+    "A simple POST request with JSON body",
+    "A simple POST request with CSV body",
+    "A simple POST request with unquoted variables"
   ]
 }

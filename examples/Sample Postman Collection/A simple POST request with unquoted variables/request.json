@@ -1,0 +1,17 @@
+{
+  "url": "https://postman-echo.com/post",
+  "method": "POST",
+  "header": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "body": {
+    "mode": "raw",
+    "raw_json_formatted": {
+      "amount": "__UQ__{{amount}}",
+      "currency": "INR"
+    }
+  }
+}

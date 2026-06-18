@@ -1,0 +1,18 @@
+{
+  "url": "https://postman-echo.com/post",
+  "method": "POST",
+  "header": [
+    {
+      "key": "Content-Type",
+      "value": "text/csv"
+    }
+  ],
+  "body": {
+    "mode": "raw",
+    "raw_csv_formatted": [
+      "name,age,city",
+      "Alice,30,Mumbai",
+      "Bob,25,Delhi"
+    ]
+  }
+}
