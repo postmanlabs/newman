@@ -54,5 +54,33 @@
         "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
       }
     }
+  }, {
+    "name": "A simple POST request with CSV body",
+    "request": {
+      "url": "https://postman-echo.com/post",
+      "method": "POST",
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/csv"
+      }],
+      "body": {
+        "mode": "raw",
+        "raw": "name,age,city\nAlice,30,Mumbai\nBob,25,Delhi"
+      }
+    }
+  }, {
+    "name": "A simple POST request with unquoted variables",
+    "request": {
+      "url": "https://postman-echo.com/post",
+      "method": "POST",
+      "header": [{
+        "key": "Content-Type",
+        "value": "application/json"
+      }],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"amount\":{{amount}},\"currency\":\"INR\"}"
+      }
+    }
   }]
 }

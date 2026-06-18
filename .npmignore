@@ -42,8 +42,10 @@ Thumbs.db
 .coverage
 .nyc_output
 
-# - Prevent Nix build output symlink from being committed
+# - Prevent Nix files from being published
 result
+flake.nix
+flake.lock
 
 # - Prevent config and test files from being added
 .git*

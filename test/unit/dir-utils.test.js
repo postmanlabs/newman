@@ -89,6 +89,33 @@ describe('dir-utils tests', function () {
         done();
     });
 
+    it('should convert collection with -q flag to directory tree and back', function (done) {
+        const dir = dirUtils.createTempDir(),
+            collectionJSON = JSON.parse(fs.readFileSync('examples/sample-collection.json')),
+            currentDir = process.cwd();
+
+        process.chdir(dir);
+        dirUtils.traverse(collectionJSON, [], { quoteUnquotedVars: true });
+        process.chdir(currentDir);
+
+        let recreatedCollectionJSON = dirUtils.dirTreeToCollectionJson(path.join(dir, 'Sample Postman Collection'));
+
+        expect(recreatedCollectionJSON).to.deep.equal(JSON.parse(fs.readFileSync('examples/sample-collection.json')));
+
+        fs.rmSync(dir, { recursive: true, force: true });
+        done();
+    });
+
+    it('should pretty-print JSON body with -p flag on import', function (done) {
+        const collectionDir = 'examples/Sample Postman Collection',
+            result = dirUtils.dirTreeToCollectionJson(collectionDir, { prettyPrintBody: true }),
+            jsonBodyItem = result.item.find((item) => { return item.name === 'A simple POST request with JSON body'; });
+
+        expect(jsonBodyItem.request.body.raw).to.contain('\n');
+        expect(jsonBodyItem.request.body.raw).to.equal(JSON.stringify(JSON.parse(jsonBodyItem.request.body.raw), null, 4));
+        done();
+    });
+
     it('should create and remove postman folders under an collection', function (done) {
         dirUtils.createPostmanFolder('examples/Sample Postman Collection/foo');
         dirUtils.removePostmanFolder('examples/Sample Postman Collection/foo');
