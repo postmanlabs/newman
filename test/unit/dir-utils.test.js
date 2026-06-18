@@ -111,8 +111,10 @@ describe('dir-utils tests', function () {
             result = dirUtils.dirTreeToCollectionJson(collectionDir, { prettyPrintBody: true }),
             jsonBodyItem = result.item.find((item) => { return item.name === 'A simple POST request with JSON body'; });
 
-        expect(jsonBodyItem.request.body.raw).to.contain('\n');
-        expect(jsonBodyItem.request.body.raw).to.equal(JSON.stringify(JSON.parse(jsonBodyItem.request.body.raw), null, 4));
+        let rawBody = jsonBodyItem.request.body.raw;
+
+        expect(rawBody).to.contain('\n');
+        expect(rawBody).to.equal(JSON.stringify(JSON.parse(rawBody), null, 4));
         done();
     });
 
