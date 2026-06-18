@@ -42,6 +42,9 @@ Thumbs.db
 .coverage
 .nyc_output
 
+# - Prevent Nix build output symlink from being committed
+result
+
 # - Prevent config and test files from being added
 .git*
 npm/
