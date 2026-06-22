@@ -82,5 +82,19 @@
         "raw": "{\"amount\":{{amount}},\"currency\":\"INR\"}"
       }
     }
+  }, {
+    "name": "A simple POST request with unquoted array variables",
+    "request": {
+      "url": "https://postman-echo.com/post",
+      "method": "POST",
+      "header": [{
+        "key": "Content-Type",
+        "value": "application/json"
+      }],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"items\":[{{itemsJson}}],\"tags\":[{{tag1}},{{tag2}}]}"
+      }
+    }
   }]
 }

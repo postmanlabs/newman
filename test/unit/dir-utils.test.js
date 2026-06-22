@@ -118,6 +118,24 @@ describe('dir-utils tests', function () {
         done();
     });
 
+    it('should quote unquoted array variables with -q flag', function (done) {
+        const dir = dirUtils.createTempDir(),
+            collectionJSON = JSON.parse(fs.readFileSync('examples/sample-collection.json')),
+            currentDir = process.cwd();
+
+        process.chdir(dir);
+        dirUtils.traverse(collectionJSON, [], { quoteUnquotedVars: true });
+        process.chdir(currentDir);
+
+        let collDir = path.join(dir, 'Sample Postman Collection'),
+            recreatedCollectionJSON = dirUtils.dirTreeToCollectionJson(collDir);
+
+        expect(recreatedCollectionJSON).to.deep.equal(JSON.parse(fs.readFileSync('examples/sample-collection.json')));
+
+        fs.rmSync(dir, { recursive: true, force: true });
+        done();
+    });
+
     it('should create and remove postman folders under an collection', function (done) {
         dirUtils.createPostmanFolder('examples/Sample Postman Collection/foo');
         dirUtils.removePostmanFolder('examples/Sample Postman Collection/foo');
