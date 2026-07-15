@@ -52,6 +52,8 @@ program
     .option('--timeout-script [n]', 'Specify a timeout for scripts (milliseconds)', util.cast.integer, 0)
     .option('--working-dir <path>', 'Specify the path to the working directory')
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
+    .option('--no-rc-file',
+        'Prevents Newman from loading the .newmanrc configuration file from the current working directory')
     .option('-k, --insecure', 'Disables SSL validations')
     .option('--ssl-client-cert-list <path>', 'Specify the path to a client certificates configurations (JSON)')
     .option('--ssl-client-cert <path>', 'Specify the path to a client certificate (PEM)')

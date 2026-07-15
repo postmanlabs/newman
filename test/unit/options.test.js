@@ -123,4 +123,33 @@ describe('options', function () {
             done();
         });
     });
+
+    describe('.newmanrc reporter loading', function () {
+        var cwd;
+
+        beforeEach(function () {
+            cwd = process.cwd();
+            process.chdir('./test/fixtures/newmanrc-injection');
+        });
+
+        afterEach(function () {
+            process.chdir(cwd);
+        });
+
+        it('should load reporters from .newmanrc in the working directory by default', function (done) {
+            options({}, function (err, result) {
+                expect(err).to.be.null;
+                expect(result.reporters).to.include('rc-injected-reporter');
+                done();
+            });
+        });
+
+        it('should not load .newmanrc reporters when rc file loading is disabled', function (done) {
+            options({ rcFile: false }, function (err, result) {
+                expect(err).to.be.null;
+                expect(result.reporters || []).to.not.include('rc-injected-reporter');
+                done();
+            });
+        });
+    });
 });
