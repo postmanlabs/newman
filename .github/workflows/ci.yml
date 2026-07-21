@@ -75,3 +75,40 @@ jobs:
               run: |
                   npm run test-library
                   bash <(curl -s https://codecov.io/bash) -c -Z -f .coverage/coverage-final.json -F library -t ${{ secrets.CODECOV_TOKEN }}
+
+    # Dedicated job for the incremental (patch) coverage gate.
+    # The check name is literally `unit-test` (no `name:` override) so the
+    # coverage PR-comment action can match it via `jobName: unit-test`.
+    # It has no `needs` on slow jobs and runs a single fast test suite so the
+    # matching check appears on the PR head SHA well within the action's poll window.
+    unit-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Use Node.js 18
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  cache: "npm"
+
+            - name: Install
+              run: npm ci
+
+            # `tee` captures the nyc text report into coverage.txt while preserving
+            # the suite's exit code so a genuine test failure still fails the job.
+            - name: Run unit tests
+              run: npm run test-unit | tee coverage.txt && exit ${PIPESTATUS[0]}
+
+            - name: Upload unit coverage summary artifact
+              if: ${{ always() }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: coverage-summary-unit
+                  path: |
+                      .coverage/coverage-summary.json
+                      .coverage/lcov.info
+                      coverage.txt
+                  if-no-files-found: error

@@ -45,6 +45,6 @@ module.exports = {
     'report-dir': '.coverage',
     'temp-dir': '.nyc_output',
     include: ['lib/**/*.js', 'bin/**/*.js'],
-    reporter: ['lcov', 'json', 'text', 'text-summary'],
+    reporter: ['lcov', 'json', 'json-summary', 'text', 'text-summary'],
     ...configOverrides(TEST_TYPE),
 };
