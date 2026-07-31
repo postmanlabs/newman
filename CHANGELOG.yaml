@@ -1,8 +1,11 @@
 unreleased:
+  new features:
+    - Uses the latest Postman Runtime with several improvements and bug fixes
   breaking changes:
     - Dropped support for Node < v22
   chores:
     - Upgraded Docker images to Node.js v22
+    - Updated dependencies
 
 6.2.2:
   date: 2026-01-16

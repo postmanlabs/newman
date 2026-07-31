@@ -28,10 +28,13 @@ $ npm show newman version   # Should show the same version as of above
 
 ## Migrating from V6 to V7
 
-Newman v7.0 requires Node.js v22 or higher.
+Newman v7.0 requires Node.js v22 or higher. Also, the runtime dependencies are upgraded to their latest versions.
 
 ### Upgrading Node.js
 Newman v7 requires Node.js >= v22. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+
+### Latest Postman Runtime
+Newman v7 uses the latest version of the Postman Runtime dependencies. This brings in several improvements and bug fixes.
 
 ### Docker Images
 The two available Docker images, `postman/newman:alpine` and `postman/newman:ubuntu` are upgraded to Node.js v22.

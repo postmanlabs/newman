@@ -1,0 +1,25 @@
+{
+  "info": {
+    "name": "Collection with a test script that blocks the sandbox well beyond any script timeout",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+
+  "item": [{
+    "name": "A request whose test script busy-waits for 5 seconds",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "var now = Date.now(),",
+          "    later = now + 5000;",
+          "while(Date.now() < later);"
+        ]
+      }
+    }],
+    "request": {
+      "url": "https://postman-echo.com/get",
+      "method": "GET"
+    }
+  }]
+}

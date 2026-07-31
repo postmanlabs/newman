@@ -1,4 +1,5 @@
 const _ = require('lodash'),
+    http = require('http'),
     expect = require('chai').expect,
 
     newman = require('../../'),
@@ -172,14 +173,17 @@ describe('Newman run options', function () {
 
     // @todo: failing on windows
     (process.platform.startsWith('win') ? describe.skip : describe)('script timeouts', function () {
-        // @todo: failing since Node.js v20.10.0
-        it.skip('should be handled correctly when breached', function (done) {
+        // the sandbox is torn down only after `timeoutScript` + 500ms, so this collection blocks well past that
+        it('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/timeout/timeout.postman_collection.json',
+                collection: 'test/fixtures/run/blocking-script.json',
                 timeoutScript: 5
             }, function (err, summary) {
-                expect(err.message).to.equal('Script execution timed out after 5ms');
+                expect(err).to.be.null;
                 expect(summary).to.be.ok;
+                expect(summary.run.failures).to.be.an('array').that.has.lengthOf(1);
+                expect(summary.run.failures[0].error.message).to.equal('sandbox not responding');
+                expect(summary.run.stats.testScripts).to.deep.include({ failed: 1 });
                 done();
             });
         });
@@ -197,10 +201,40 @@ describe('Newman run options', function () {
     });
 
     describe('request timeouts', function () {
+        // a local server keeps DNS and TLS setup out of the timeout, which otherwise makes the error flaky
+        const RESPONSE_DELAY = 1000;
+
+        let server,
+            url;
+
+        before(function (done) {
+            server = http.createServer(function (req, res) {
+                const timer = setTimeout(function () {
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    res.end('ok');
+                }, RESPONSE_DELAY);
+
+                // the requester destroys the socket once the timeout is breached, so drop the pending response
+                res.on('close', function () {
+                    clearTimeout(timer);
+                });
+            });
+
+            server.listen(0, function () {
+                url = `http://localhost:${server.address().port}/`;
+                done();
+            });
+        });
+
+        after(function (done) {
+            server.closeAllConnections();
+            server.close(done);
+        });
+
         it('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeoutRequest: 10
+                collection: { item: [{ request: { url: url, method: 'GET' } }] },
+                timeoutRequest: RESPONSE_DELAY / 4
             }, function (err, summary) {
                 expect(err).to.be.null;
                 expect(summary.run.failures).to.be.an('array').that.has.lengthOf(1);
@@ -211,11 +245,12 @@ describe('Newman run options', function () {
 
         it('should be handled correctly when not breached', function (done) {
             newman.run({
-                collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeoutRequest: 5000
+                collection: { item: [{ request: { url: url, method: 'GET' } }] },
+                timeoutRequest: RESPONSE_DELAY * 5
             }, function (err, summary) {
                 expect(err).to.be.null;
                 expect(summary).to.be.ok;
+                expect(summary.run.failures).to.be.an('array').that.is.empty;
                 done();
             });
         });

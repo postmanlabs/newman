@@ -110,9 +110,9 @@ describe('CLI run options', function () {
     });
 
     describe('script timeouts', function () {
+        // the sandbox is torn down only after `timeoutScript` + 500ms, so this collection blocks well past that
         it('should be handled correctly when breached', function (done) {
-            // eslint-disable-next-line max-len
-            exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 5', function (code) {
+            exec('node ./bin/newman.js run test/fixtures/run/blocking-script.json --timeout-script 5', function (code) {
                 // .to.be.(1) is not used as the windows exit code can be an arbitrary non-zero value
                 expect(code, 'should have non-zero exit code').to.be.above(0);
                 done();
