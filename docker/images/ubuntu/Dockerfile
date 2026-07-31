@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 LABEL maintainer="Postman Labs <help@postman.com>"
 
-ARG NODE_MAJOR=16
+ARG NODE_MAJOR=22
 ARG NEWMAN_VERSION
 
 # Bail out early if NEWMAN_VERSION is not provided

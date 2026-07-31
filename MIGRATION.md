@@ -3,10 +3,11 @@
 ## Table of contents
 
 1. [Updating to the latest version](#updating-to-the-latest-version)
-2. [Migrating from V5 to V6](#migrating-from-v5-to-v6)
-3. [Migrating from V4 to V5](#migrating-from-v4-to-v5)
-4. [Migrating from V3 to V4](#migrating-from-v3-to-v4)
-5. [Migrating from V2 to V3](#migrating-from-v2-to-v3)
+2. [Migrating from V6 to V7](#migrating-from-v6-to-v7)
+3. [Migrating from V5 to V6](#migrating-from-v5-to-v6)
+4. [Migrating from V4 to V5](#migrating-from-v4-to-v5)
+5. [Migrating from V3 to V4](#migrating-from-v3-to-v4)
+6. [Migrating from V2 to V3](#migrating-from-v2-to-v3)
 
 ## Updating to the latest version
 
@@ -22,6 +23,18 @@ $ npm update -g newman
 $ newman --version          # Should show the latest version of Newman
 $ npm show newman version   # Should show the same version as of above
 ```
+
+---
+
+## Migrating from V6 to V7
+
+Newman v7.0 requires Node.js v22 or higher.
+
+### Upgrading Node.js
+Newman v7 requires Node.js >= v22. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+
+### Docker Images
+The two available Docker images, `postman/newman:alpine` and `postman/newman:ubuntu` are upgraded to Node.js v22.
 
 ---
 

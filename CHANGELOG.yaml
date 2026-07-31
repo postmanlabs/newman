@@ -1,3 +1,9 @@
+unreleased:
+  breaking changes:
+    - Dropped support for Node < v22
+  chores:
+    - Upgraded Docker images to Node.js v22
+
 6.2.2:
   date: 2026-01-16
   chores:

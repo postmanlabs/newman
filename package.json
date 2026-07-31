@@ -81,7 +81,7 @@
     "xml2js": "^0.6.2"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=22"
   },
   "overrides": {
     "postman-request": "2.88.1-postman.48",
