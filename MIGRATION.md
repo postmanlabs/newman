@@ -88,7 +88,7 @@ has no effect otherwise.
 Newman v7 uses the latest version of the Postman Runtime dependencies. This brings in several improvements and bug fixes.
 
 ### Docker Images
-The two available Docker images, `postman/newman:alpine` and `postman/newman:ubuntu` are upgraded to Node.js v22.
+The two available Docker images, `postman/newman:alpine` and `postman/newman:ubuntu` are upgraded to Node.js v24.
 
 ---
 

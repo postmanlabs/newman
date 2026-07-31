@@ -7,7 +7,7 @@ unreleased:
     - Dropped support for the v1 Postman Collection format, deprecated since v4
     - Requests now use HTTP/2 when the server supports it
   chores:
-    - Upgraded Docker images to Node.js v22
+    - Upgraded Docker images to Node.js v24
     - Migrated to ESLint v9 flat config
     - Updated dependencies
 
