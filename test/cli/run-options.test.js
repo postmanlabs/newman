@@ -49,6 +49,44 @@ describe('CLI run options', function () {
         });
     });
 
+    it('should not work with more than one collection', function (done) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json' +
+            ' test/fixtures/run/undefined-test-checks.json', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.match(/too many arguments for 'run'/);
+            done();
+        });
+    });
+
+    it('should not work with an unknown command', function (done) {
+        exec('node ./bin/newman.js rnu test/fixtures/run/single-get-request.json',
+            function (code, stdout, stderr) {
+                expect(code, 'should have exit code of 1').to.equal(1);
+                expect(stderr).to.match(/unknown command 'rnu'/);
+                done();
+            });
+    });
+
+    it('should not work with an out of range option value', function (done) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --timeout -5',
+            function (code, stdout, stderr) {
+                expect(code, 'should have exit code of 1').to.equal(1);
+                expect(stderr).to.match(/The value must be a positive integer/);
+                expect(stdout).to.equal('');
+                done();
+            });
+    });
+
+    it('should not work with an unsupported option value', function (done) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color nope',
+            function (code, stdout, stderr) {
+                expect(code, 'should have exit code of 1').to.equal(1);
+                expect(stderr).to.match(/invalid value `nope` for --color/);
+                expect(stdout).to.equal('');
+                done();
+            });
+    });
+
     it('should fail a collection run with undefined test cases', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/undefined-test-checks.json', function (code) {
             expect(code, 'should have exit code of 1').to.equal(1);

@@ -31,7 +31,7 @@ $ npm show newman version   # Should show the same version as of above
 Newman v7.0 requires Node.js v22 or higher. Also, the runtime dependencies are upgraded to their latest versions.
 
 ### Upgrading Node.js
-Newman v7 requires Node.js >= v22. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+Newman v7 requires Node.js >= v22.12. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
 ### Collection format
 Newman v7 drops support for the v1 collection format, which has been deprecated since Newman v4.
@@ -54,6 +54,35 @@ $ npx postman-collection-transformer convert \
     --input-version 1.0.0 \
     --output ./v2-collection.json \
     --output-version 2.1.0
+```
+
+### CLI argument parsing
+Newman v7 uses a newer version of the CLI argument parser, which rejects some input that was previously
+accepted or silently ignored.
+
+Passing more than one collection to `newman run` is now an error. Previously the extra paths were
+silently discarded and only the first collection was run:
+
+```console
+$ newman run first-collection.json second-collection.json
+error: too many arguments for 'run'. Expected 1 argument but got 2: first-collection.json, second-collection.json.
+```
+
+Run each collection separately, or use `--folder` to pick what to run from a single collection.
+
+An unknown command now exits with code `1` instead of `0`, so mistyped commands no longer pass silently in CI:
+
+```console
+$ newman rnu collection.json
+error: unknown command 'rnu'
+```
+
+An invalid option value also exits with code `1` instead of `0`. Previously the error was printed but the
+process still reported success, which meant a typo in a CI script could go unnoticed:
+
+```console
+$ newman run collection.json --timeout -5
+error: The value must be a positive integer.
 ```
 
 ### HTTP/2

@@ -6,6 +6,9 @@ unreleased:
     - Dropped support for Node < v22
     - Dropped support for the v1 Postman Collection format, deprecated since v4
     - Requests now use HTTP/2 when the server supports it
+    - Passing more than one collection to `newman run` is now an error instead of silently running the first
+    - An unknown command now exits with code 1 instead of 0
+    - An invalid option value now exits with code 1 instead of 0
   chores:
     - Upgraded Docker images to Node.js v24
     - Migrated to ESLint v9 flat config
