@@ -1,5 +1,4 @@
 const expect = require('chai').expect,
-    // eslint-disable-next-line security/detect-child-process
     exec = require('child_process').execSync;
 
 describe('npm publish', function () {

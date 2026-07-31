@@ -8,6 +8,7 @@ unreleased:
     - Requests now use HTTP/2 when the server supports it
   chores:
     - Upgraded Docker images to Node.js v22
+    - Migrated to ESLint v9 flat config
     - Updated dependencies
 
 6.2.2:

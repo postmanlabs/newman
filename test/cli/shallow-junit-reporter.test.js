@@ -137,7 +137,6 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly produce the JUnit report in a pre-existing directory', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r junit --reporter-junit-export out',
             function (code) {
                 expect(code).to.equal(0);
