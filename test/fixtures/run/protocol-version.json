@@ -1,0 +1,14 @@
+{
+  "info": {
+    "name": "Collection with a single request to a configurable host",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+
+  "item": [{
+    "name": "A GET request to {{url}}",
+    "request": {
+      "url": "{{url}}",
+      "method": "GET"
+    }
+  }]
+}

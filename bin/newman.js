@@ -52,6 +52,9 @@ program
     .option('--timeout-script [n]', 'Specify a timeout for scripts (milliseconds)', util.cast.integer, 0)
     .option('--working-dir <path>', 'Specify the path to the working directory')
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
+    .option('--protocol-version <value>',
+        'Specify the HTTP protocol version to be used for requests (auto|http1|http2), default: auto',
+        util.cast.protocolVersionOptions)
     .option('-k, --insecure', 'Disables SSL validations')
     .option('--ssl-client-cert-list <path>', 'Specify the path to a client certificates configurations (JSON)')
     .option('--ssl-client-cert <path>', 'Specify the path to a client certificate (PEM)')

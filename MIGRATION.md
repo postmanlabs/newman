@@ -56,6 +56,34 @@ $ npx postman-collection-transformer convert \
     --output-version 2.1.0
 ```
 
+### HTTP/2
+Newman v7 adds support for HTTP/2. Requests are now sent over HTTP/2 when the server negotiates it over TLS, and
+over HTTP/1.1 otherwise. Since HTTP/1.1 was the only protocol used until now, this is the one behaviour change to
+be aware of when upgrading.
+
+If a request needs to stay on HTTP/1.1, the protocol can be pinned with the new `--protocol-version` option, which
+accepts `http1`, `http2` and `auto` *(default)*. Note that `http2` forces HTTP/2, so a request to a server that does
+not offer it will fail. Prefer `auto` unless you need to pin the protocol.
+
+```console
+$ newman run sample-collection.json --protocol-version http1
+```
+
+The equivalent option is available when running Newman as a library:
+
+```javascript
+newman.run({
+    collection: require('./sample-collection.json'),
+    protocolVersion: 'http1'
+}, function (err) {
+    err && console.error(err);
+});
+```
+
+Runs that pass custom agents through the `requestAgents` option continue to use HTTP/1.1. Such agents are only
+used for HTTP/2 when they are keyed by protocol version (`http1`, `http2` or `auto`), so `--protocol-version http2`
+has no effect otherwise.
+
 ### Latest Postman Runtime
 Newman v7 uses the latest version of the Postman Runtime dependencies. This brings in several improvements and bug fixes.
 
