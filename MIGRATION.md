@@ -33,6 +33,29 @@ Newman v7.0 requires Node.js v22 or higher. Also, the runtime dependencies are u
 ### Upgrading Node.js
 Newman v7 requires Node.js >= v22. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
+### Collection format
+Newman v7 drops support for the v1 collection format, which has been deprecated since Newman v4.
+Previously, a v1 collection was converted to v2 on the fly and the run continued with a warning. It is
+now rejected before the run starts, and the run exits with code `1`:
+
+```console
+$ newman run v1-collection.json
+error: Newman >= v7 does not support the v1 collection format
+
+  Use the Postman app to export collections in the v2 format
+```
+
+Export your collections in the v2 format from the Postman app, or convert them ahead of time using
+[postman-collection-transformer](https://github.com/postmanlabs/postman-collection-transformer):
+
+```console
+$ npx postman-collection-transformer convert \
+    --input ./v1-collection.json \
+    --input-version 1.0.0 \
+    --output ./v2-collection.json \
+    --output-version 2.1.0
+```
+
 ### Latest Postman Runtime
 Newman v7 uses the latest version of the Postman Runtime dependencies. This brings in several improvements and bug fixes.
 

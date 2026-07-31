@@ -98,12 +98,11 @@ describe('CLI run options', function () {
         });
     });
 
-    it('should log a warning if the v1 collection format is used', function (done) {
-        // eslint-disable-next-line max-len
-        exec('node ./bin/newman.js run test/integration/multi-level-folders-v1.postman_collection.json', function (code, stdout, stderr) {
-            expect(code, 'should have exit code of 0').to.equal(0);
-            expect(stderr).to.equal('newman: Newman v4 deprecates support for the v1 collection format\n' +
-                '  Use the Postman Native app to export collections in the v2 format\n\n');
+    it('should error out if the v1 collection format is used', function (done) {
+        exec('node ./bin/newman.js run test/fixtures/run/multi-level-folders-v1.json', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.equal('error: Newman >= v7 does not support the v1 collection format\n\n' +
+                '  Use the Postman app to export collections in the v2 format\n\n');
 
             done();
         });

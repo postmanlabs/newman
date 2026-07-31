@@ -3,6 +3,7 @@ unreleased:
     - Uses the latest Postman Runtime with several improvements and bug fixes
   breaking changes:
     - Dropped support for Node < v22
+    - Dropped support for the v1 Postman Collection format, deprecated since v4
   chores:
     - Upgraded Docker images to Node.js v22
     - Updated dependencies
