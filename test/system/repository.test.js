@@ -160,13 +160,13 @@ describe('project repository', function () {
         });
     });
 
-    describe('eslint.config.js', function () {
+    describe('eslint.config.mjs', function () {
         it('should exist', function (done) {
-            fs.stat('./eslint.config.js', done);
+            fs.stat('./eslint.config.mjs', done);
         });
 
         it('should have readable content', function () {
-            expect(fs.readFileSync('./eslint.config.js').toString()).to.be.ok;
+            expect(fs.readFileSync('./eslint.config.mjs').toString()).to.be.ok;
         });
     });
 

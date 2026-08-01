@@ -11,7 +11,7 @@ unreleased:
     - An invalid option value now exits with code 1 instead of 0
   chores:
     - Upgraded Docker images to Node.js v24
-    - Migrated to ESLint v9 flat config
+    - Migrated to ESLint v10 flat config
     - Updated dependencies
 
 6.2.2:

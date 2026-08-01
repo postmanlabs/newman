@@ -1,18 +1,10 @@
-const globals = require('globals'),
+import globals from 'globals';
+import jsdoc from 'eslint-plugin-jsdoc';
+import lodash from 'eslint-plugin-lodash';
+import mocha from 'eslint-plugin-mocha';
+import security from 'eslint-plugin-security';
 
-    // plugins transpiled from ESM expose themselves on `default` under CommonJS, so unwrap those
-    plugin = function (name) {
-        const module_ = require(name);
-
-        return module_ && module_.rules ? module_ : module_.default;
-    },
-
-    jsdoc = plugin('eslint-plugin-jsdoc'),
-    lodash = plugin('eslint-plugin-lodash'),
-    mocha = plugin('eslint-plugin-mocha'),
-    security = plugin('eslint-plugin-security');
-
-module.exports = [
+export default [
     {
         files: ['**/*.js'],
 
