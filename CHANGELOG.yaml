@@ -3,7 +3,7 @@ unreleased:
     - Added support for HTTP/2 via the new `--protocol-version` option
     - Uses the latest Postman Runtime with several improvements and bug fixes
   breaking changes:
-    - Dropped support for Node < v22
+    - Dropped support for Node < v22.13
     - Dropped support for the v1 Postman Collection format, deprecated since v4
     - Requests now use HTTP/2 when the server supports it
     - Passing more than one collection to `newman run` is now an error instead of silently running the first

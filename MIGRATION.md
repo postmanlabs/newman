@@ -31,7 +31,7 @@ $ npm show newman version   # Should show the same version as of above
 Newman v7.0 requires Node.js v22 or higher. Also, the runtime dependencies are upgraded to their latest versions.
 
 ### Upgrading Node.js
-Newman v7 requires Node.js >= v22.12. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+Newman v7 requires Node.js >= v22.13. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
 ### Collection format
 Newman v7 drops support for the v1 collection format, which has been deprecated since Newman v4.
