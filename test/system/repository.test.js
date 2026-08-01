@@ -186,7 +186,7 @@ describe('project repository', function () {
         });
 
         it('should have readable content', function () {
-            expect(yml.load(fs.readFileSync('./CHANGELOG.yaml')), 'not a valid yaml').to.be.ok;
+            expect(yml.load(fs.readFileSync('./CHANGELOG.yaml').toString()), 'not a valid yaml').to.be.ok;
         });
     });
 });
