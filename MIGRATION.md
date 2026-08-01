@@ -85,6 +85,36 @@ $ newman run collection.json --timeout -5
 error: The value must be a positive integer.
 ```
 
+### CSV iteration data
+Newman v7 uses a newer version of the CSV parser. Two changes affect how `-d data.csv` files are read.
+
+Unquoted values are now trimmed of every character JavaScript's `String.prototype.trim()` treats as whitespace,
+rather than just spaces and tabs. In practice this means a non-breaking space (`U+00A0`), which spreadsheet
+exports frequently introduce, is now stripped:
+
+| CSV field         | v6 value             | v7 value |
+|-------------------|----------------------|----------|
+| `<NBSP>hello`     | `" hello"`      | `"hello"` |
+| `　hello`          | `"　hello"`      | `"hello"` |
+
+Quote the field to preserve the padding, since quoted values are never trimmed or type-cast:
+
+```csv
+name,padded
+hello," hello "
+```
+
+Column names that look numeric are also handled differently. Previously such a file failed to load
+outright; it now loads, and the column name is used verbatim:
+
+```csv
+00123,name
+alpha,beta
+```
+
+`pm.iterationData.get('00123')` returns `alpha`. Note the leading zeros are preserved — the column name is
+no longer type-cast.
+
 ### HTTP/2
 Newman v7 adds support for HTTP/2. Requests are now sent over HTTP/2 when the server negotiates it over TLS, and
 over HTTP/1.1 otherwise. Since HTTP/1.1 was the only protocol used until now, this is the one behaviour change to

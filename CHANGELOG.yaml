@@ -9,6 +9,9 @@ unreleased:
     - Passing more than one collection to `newman run` is now an error instead of silently running the first
     - An unknown command now exits with code 1 instead of 0
     - An invalid option value now exits with code 1 instead of 0
+    - Unquoted CSV iteration data values are now trimmed of all Unicode whitespace, such as non-breaking spaces
+  fixed bugs:
+    - CSV iteration data with numeric-looking column names, such as `00123`, now loads instead of failing
   chores:
     - Upgraded Docker images to Node.js v24
     - Migrated to ESLint v10 flat config
