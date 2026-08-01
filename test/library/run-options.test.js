@@ -95,9 +95,7 @@ describe('Newman run options', function () {
                 'accept-encoding': 'gzip, br',
                 'user-agent': `PostmanRuntime/${runtimeVersion}` // change this when runtime is bumped
             });
-            // eslint-disable-next-line max-len
             expect(executions[1].response.text()).to.equal('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
-            // eslint-disable-next-line max-len
             expect(executions[2].response.text()).to.eql('<?xml version="1.0" encoding="utf-8"?><food><key>Homestyle Breakfast</key><value>950</value></food>');
 
             done();

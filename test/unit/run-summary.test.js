@@ -75,6 +75,7 @@ describe('run summary', function () {
                     };
                     tracker = summary.run.stats[eventName + 's'];
                 });
+
                 afterEach(function () {
                     emitter = null;
                     summary = null;

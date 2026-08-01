@@ -19,7 +19,6 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly generate the junit report for a successful run', function (done) {
-        // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r junit --reporter-junit-export ${outFile}`,
             function (code) {
                 expect(code, 'should have exit code of 0').to.equal(0);
@@ -55,7 +54,6 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly generate the junit report for a failed run', function (done) {
-        // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-request-failing.json -r junit --reporter-junit-export ${outFile}`,
             function (code) {
                 expect(code, 'should have exit code of 1').to.equal(1);
@@ -98,7 +96,6 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly produce the junit report for a run with TypeError', function (done) {
-        // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/newman-report-test.json -r junit --reporter-junit-export ${outFile}`,
             function (code) {
                 expect(code, 'should have exit code of 1').to.equal(1);
@@ -150,7 +147,6 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly handle the `--reporter-junit-export=` argument', function (done) {
-        // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/single-get-request.json -r junit --reporter-junit-export=${outFile}`,
             function (code) {
                 expect(code, 'should have exit code of 0').to.equal(0);
@@ -159,7 +155,6 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly generate the junit report for a run with nested requests', function (done) {
-        // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/nested-requests-report-test.json -r junit --reporter-junit-export ${outFile}`,
             function (code) {
                 expect(code, 'should have exit code of 0').to.equal(0);
@@ -195,7 +190,6 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly generate the junit report for a failed run with nested requests', function (done) {
-        // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run test/fixtures/run/nested-requests-fail-report-test.json -r junit --reporter-junit-export ${outFile}`,
             function (code) {
                 expect(code, 'should have exit code of 0').to.equal(1);

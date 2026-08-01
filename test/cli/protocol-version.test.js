@@ -12,7 +12,6 @@ describe('newman run --protocol-version', function () {
     function run (args, callback) {
         httpVersions = [];
 
-        // eslint-disable-next-line max-len
         exec(`node ./bin/newman.js run ${COLLECTION} --env-var url=https://localhost:${server.address().port}/ -k ${args}`,
             function (code, stdout, stderr) {
                 callback(code, stderr, httpVersions[0]);

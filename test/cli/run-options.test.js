@@ -95,7 +95,6 @@ describe('CLI run options', function () {
     });
 
     it('should handle invalid collection URLs correctly', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run https://api.getpostman.com/collections/my-collection-uuid?apikey=my-secret-api-key', function (code) {
             expect(code, 'should have exit code of 1').to.equal(1);
             done();
@@ -103,7 +102,6 @@ describe('CLI run options', function () {
     });
 
     it('should correctly work with global variable overrides passed with --global-var', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var first=James --global-var last=Bond', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -111,7 +109,6 @@ describe('CLI run options', function () {
     });
 
     it('should throw an error for missing --global-var values', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json --global-var', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
             expect(stderr).to.equal('error: option \'--global-var <value>\' argument missing\n');
@@ -120,7 +117,6 @@ describe('CLI run options', function () {
     });
 
     it('should correctly work with environment variable overrides passed with --env-var', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var dummyVar=bar2', function (code) {
             expect(code, 'should have exit code of 0').to.equal(0);
             done();
@@ -128,7 +124,6 @@ describe('CLI run options', function () {
     });
 
     it('should throw an error for missing --env-var values', function (done) {
-        // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var', function (code, stdout, stderr) {
             expect(code, 'should have exit code of 1').to.equal(1);
             expect(stderr).to.equal('error: option \'--env-var <value>\' argument missing\n');
@@ -157,7 +152,6 @@ describe('CLI run options', function () {
         });
 
         it('should be handled correctly when not breached', function (done) {
-            // eslint-disable-next-line max-len
             exec('node ./bin/newman.js run test/integration/timeout/timeout.postman_collection.json --timeout-script 500', function (code) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 done();

@@ -4,7 +4,8 @@
  * in parallel.
  */
 var newman = require('../'), // require('newman')
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 fs.readdir('./examples', function (err, files) {
     if (err) { throw err; }
@@ -19,7 +20,7 @@ fs.readdir('./examples', function (err, files) {
         newman.run({
             // we load collection using require. for better validation and handling
             // JSON.parse could be used
-            collection: require(`${__dirname}/${file}`)
+            collection: require(path.join(__dirname, file))
         }, function (err) {
             // finally, when the collection executes, print the status
             console.info(`${file}: ${err ? err.name : 'ok'}!`);

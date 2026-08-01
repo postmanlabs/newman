@@ -15,6 +15,7 @@ unreleased:
   chores:
     - Upgraded Docker images to Node.js v24
     - Migrated to ESLint v10 flat config
+    - Refreshed the ESLint rule set, formatting rules now come from `@stylistic` and Node.js rules from `eslint-plugin-n`
     - Updated dependencies
 
 6.2.2:

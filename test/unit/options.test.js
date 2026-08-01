@@ -16,7 +16,6 @@ describe('options', function () {
                 // remove undefined properties
                 result = JSON.parse(JSON.stringify(result.collection.toJSON()));
                 expect(_.omit(result,
-                    // eslint-disable-next-line max-len
                     ['event', 'info._postman_id', 'variable', 'item.0.id', 'item.0.response', 'item.0.event.0.script.id']))
                     .to.eql(collection);
                 done();

@@ -19,7 +19,6 @@ describe('CLI output', function () {
         });
 
         it('should produce colored output with `--color on`', function (done) {
-            // eslint-disable-next-line max-len
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color on', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
@@ -30,7 +29,6 @@ describe('CLI output', function () {
         });
 
         it('should not produce colored output with `--color off`', function (done) {
-            // eslint-disable-next-line max-len
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color off', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
