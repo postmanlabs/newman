@@ -1,4 +1,6 @@
-const path = require('path'),
+const fs = require('fs'),
+    os = require('os'),
+    path = require('path'),
     expect = require('chai').expect,
     SecureFs = require('../../lib/run/secure-fs'),
 
@@ -130,6 +132,76 @@ describe('Postman Filesystem', function () {
 
                     return done();
                 });
+            });
+        });
+    });
+
+    describe('readFile', function () {
+        // this is what postman-runtime actually calls (fileResolver.readFile) to load certificate
+        // and form-data file contents, so it must be routed through the same sandbox as resolvePath.
+        let workingDir,
+            outsideDir,
+            insideFile,
+            outsideFile;
+
+        before(function () {
+            workingDir = fs.mkdtempSync(path.join(os.tmpdir(), 'newman-secure-fs-inside-'));
+            outsideDir = fs.mkdtempSync(path.join(os.tmpdir(), 'newman-secure-fs-outside-'));
+
+            insideFile = path.join(workingDir, 'allowed.txt');
+            outsideFile = path.join(outsideDir, 'secret.txt');
+
+            fs.writeFileSync(insideFile, 'inside-content');
+            fs.writeFileSync(outsideFile, 'outside-secret');
+        });
+
+        after(function () {
+            fs.rmSync(workingDir, { recursive: true, force: true });
+            fs.rmSync(outsideDir, { recursive: true, force: true });
+        });
+
+        it('should read a file within the working directory', function (done) {
+            const secureFs = new SecureFs(workingDir, false);
+
+            secureFs.readFile(insideFile, (err, data) => {
+                expect(err).to.not.be.ok;
+                expect(data.toString()).to.eql('inside-content');
+
+                return done();
+            });
+        });
+
+        it('should not read a file outside the working directory by default', function (done) {
+            const secureFs = new SecureFs(workingDir, false);
+
+            secureFs.readFile(outsideFile, (err, data) => {
+                expect(err).to.be.ok;
+                expect(err.message).to.eql('PPERM: insecure file access outside working directory');
+                expect(data).to.not.be.ok;
+
+                return done();
+            });
+        });
+
+        it('should read a file outside the working directory when insecureFileRead is true', function (done) {
+            const secureFs = new SecureFs(workingDir, true);
+
+            secureFs.readFile(outsideFile, (err, data) => {
+                expect(err).to.not.be.ok;
+                expect(data.toString()).to.eql('outside-secret');
+
+                return done();
+            });
+        });
+
+        it('should support the (path, options, callback) signature', function (done) {
+            const secureFs = new SecureFs(workingDir, false);
+
+            secureFs.readFile(insideFile, 'utf8', (err, data) => {
+                expect(err).to.not.be.ok;
+                expect(data).to.eql('inside-content');
+
+                return done();
             });
         });
     });
