@@ -98,6 +98,41 @@ describe('CLI run options', function () {
         });
     });
 
+    it('should exit with a non-zero code for an invalid --iteration-count value', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -n -5', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.match(/The value must be a positive integer\./);
+            done();
+        });
+    });
+
+    it('should exit with a non-zero code for an invalid --timeout value', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --timeout abc', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.match(/The value must be a positive integer\./);
+            done();
+        });
+    });
+
+    it('should exit with a non-zero code for an invalid --color value', function (done) {
+        // eslint-disable-next-line max-len
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color purple', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.match(/invalid value `purple` for --color/);
+            done();
+        });
+    });
+
+    it('should exit with a non-zero code for an invalid (sub)command', function (done) {
+        exec('node ./bin/newman.js frobnicate', function (code, stdout, stderr) {
+            expect(code, 'should have exit code of 1').to.equal(1);
+            expect(stderr).to.match(/error: invalid command `frobnicate`/);
+            done();
+        });
+    });
+
     it('should log a warning if the v1 collection format is used', function (done) {
         // eslint-disable-next-line max-len
         exec('node ./bin/newman.js run test/integration/multi-level-folders-v1.postman_collection.json', function (code, stdout, stderr) {
