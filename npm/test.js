@@ -22,6 +22,12 @@ const path = require('path'),
     WINDOWS = process.platform === 'win32',
     NPM = WINDOWS ? 'npm.cmd' : 'npm',
 
+    // quiets a dependency's DEP0044 warning; appended, not assigned, so nyc's NODE_OPTIONS coverage hook survives
+    SUITE_ENV = {
+        ...process.env,
+        NODE_OPTIONS: [process.env.NODE_OPTIONS, '--no-deprecation'].filter(Boolean).join(' ')
+    },
+
     // in the order they run. `networked` marks the runners that accept `--live`; lint and system tests never open a
     // socket.
     SUITES = [
@@ -56,7 +62,7 @@ module.exports = function (exit) {
         // npm needs the `--` separator before a script's own arguments, or it consumes them itself
         args = live && suite.networked ? ['run', suite.script, '--', LIVE_FLAG] : ['run', suite.script];
 
-        child = spawn(NPM, args, { stdio: 'inherit', shell: WINDOWS });
+        child = spawn(NPM, args, { stdio: 'inherit', shell: WINDOWS, env: SUITE_ENV });
 
         child.on('error', function (spawnError) {
             console.error(colors.red(`\ncould not run \`${NPM} ${args.join(' ')}\`: ${spawnError.message}`));

@@ -18,6 +18,8 @@ const intercept = require('./intercept'),
     LIVE_FLAG = '--live',
 
     POLICY_ENV = 'NEWMAN_TEST_NET',
+    NODE_OPTIONS_ENV = 'NODE_OPTIONS',
+    NO_DEPRECATION_FLAG = '--no-deprecation',
 
     USAGE = 'expected no arguments or a single `' + LIVE_FLAG + '`, got: ';
 
@@ -55,12 +57,19 @@ function parseArgs (argv) {
  * @returns {*}
  */
 function startForRunner (options, callback) {
-    var saved = [POLICY_ENV, servers.PORTS_ENV].map(function (name) {
+    var saved = [POLICY_ENV, servers.PORTS_ENV, NODE_OPTIONS_ENV].map(function (name) {
         return { name: name, had: Object.hasOwn(process.env, name), value: process.env[name] };
     });
 
+    // a dependency's own deprecated API use (e.g. a bare `require('punycode')`) can print a Node deprecation
+    // warning on some Node versions; suppressed here so a passing run stays quiet. `noDeprecation` covers this
+    // process's own in-process `newman.run()` calls; the `NODE_OPTIONS` flag covers a forked Mocha worker or a
+    // spawned `node ./bin/newman.js` child, neither of which inherits this process's in-memory flag.
+    process.noDeprecation = true;
+    process.env[NODE_OPTIONS_ENV] = [process.env[NODE_OPTIONS_ENV], NO_DEPRECATION_FLAG].filter(Boolean).join(' ');
+
     /**
-     * Puts both variables back the way they were, deleting one that was unset rather than writing `'undefined'`
+     * Puts every saved variable back the way it was, deleting one that was unset rather than writing `'undefined'`
      * into it.
      *
      * @returns {undefined} nothing.

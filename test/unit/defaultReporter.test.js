@@ -5,6 +5,12 @@ const sinon = require('sinon'),
 describe('Default reporter', function () {
     beforeEach(function () {
         sinon.replace(console, 'warn', sinon.fake());
+
+        // stub the sinks reporters print through, rather than `silent: true`, which would skip registering the
+        // reporter's event listeners altogether and drop this suite's coverage of them
+        sinon.replace(process.stdout, 'write', sinon.fake());
+        sinon.replace(process.stderr, 'write', sinon.fake());
+        sinon.replace(console, 'info', sinon.fake());
     });
 
     afterEach(function () {
