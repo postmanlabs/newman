@@ -22,10 +22,10 @@ const path = require('path'),
     WINDOWS = process.platform === 'win32',
     NPM = WINDOWS ? 'npm.cmd' : 'npm',
 
-    // quiets a dependency's DEP0044 warning; appended, not assigned, so nyc's NODE_OPTIONS coverage hook survives
+    // quiets Node's process warnings (deprecations, MaxListenersExceededWarning, etc.); appended so nyc's hook survives
     SUITE_ENV = {
         ...process.env,
-        NODE_OPTIONS: [process.env.NODE_OPTIONS, '--no-deprecation'].filter(Boolean).join(' ')
+        NODE_OPTIONS: [process.env.NODE_OPTIONS, '--no-warnings'].filter(Boolean).join(' ')
     },
 
     // in the order they run. `networked` marks the runners that accept `--live`; lint and system tests never open a
