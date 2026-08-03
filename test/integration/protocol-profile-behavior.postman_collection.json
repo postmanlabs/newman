@@ -36,11 +36,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:4042/1",
+              "raw": "localhost:{{redirectPort}}/1",
               "host": [
                 "localhost"
               ],
-              "port": "4042",
+              "port": "{{redirectPort}}",
               "path": [
                 "1"
               ]
@@ -74,11 +74,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:4042/1",
+              "raw": "localhost:{{redirectPort}}/1",
               "host": [
                 "localhost"
               ],
-              "port": "4042",
+              "port": "{{redirectPort}}",
               "path": [
                 "1"
               ]
@@ -126,11 +126,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:4042/1",
+              "raw": "localhost:{{redirectPort}}/1",
               "host": [
                 "localhost"
               ],
-              "port": "4042",
+              "port": "{{redirectPort}}",
               "path": [
                 "1"
               ]
@@ -168,11 +168,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:4042/1",
+              "raw": "localhost:{{redirectPort}}/1",
               "host": [
                 "localhost"
               ],
-              "port": "4042",
+              "port": "{{redirectPort}}",
               "path": [
                 "1"
               ]
@@ -208,7 +208,7 @@
                 "    pm.expect(responseJSON).to.have.property('url', '/');",
                 "    pm.expect(responseJSON).to.have.property('method', 'GET');",
                 "    pm.expect(responseJSON).to.have.property('headers')",
-                "        .that.have.property('referer', 'http://localhost:4042/1');",
+                "        .that.have.property('referer', 'http://localhost:' + pm.environment.get('redirectPort') + '/1');",
                 "});"
               ],
               "type": "text/javascript"
@@ -222,11 +222,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:4042/1",
+              "raw": "localhost:{{redirectPort}}/1",
               "host": [
                 "localhost"
               ],
-              "port": "4042",
+              "port": "{{redirectPort}}",
               "path": [
                 "1"
               ]
@@ -268,11 +268,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:4042/1",
+              "raw": "localhost:{{redirectPort}}/1",
               "host": [
                 "localhost"
               ],
-              "port": "4042",
+              "port": "{{redirectPort}}",
               "path": [
                 "1"
               ]
@@ -319,11 +319,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:4042/1",
+              "raw": "localhost:{{redirectPort}}/1",
               "host": [
                 "localhost"
               ],
-              "port": "4042",
+              "port": "{{redirectPort}}",
               "path": [
                 "1"
               ]
@@ -370,11 +370,11 @@
           "raw": ""
         },
         "url": {
-          "raw": "localhost:4042/11",
+          "raw": "localhost:{{redirectPort}}/11",
           "host": [
             "localhost"
           ],
-          "port": "4042",
+          "port": "{{redirectPort}}",
           "path": [
             "11"
           ]
