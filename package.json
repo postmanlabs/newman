@@ -27,11 +27,12 @@
   "scripts": {
     "docker-publish": "./npm/docker-publish.sh",
     "release": "node npm/create-release.js",
-    "test": "npm run test-lint && npm run test-system && npm run test-unit && npm run test-integration && npm run test-cli && npm run test-library",
+    "test": "node npm/test.js",
     "test-cli": "nyc --nycrc-path=.nycrc.js node npm/test-cli.js",
     "test-integration": "nyc --nycrc-path=.nycrc.js node npm/test-integration.js",
     "test-library": "nyc --nycrc-path=.nycrc.js node npm/test-library.js",
     "test-lint": "node npm/test-lint.js",
+    "test-live": "node npm/test.js --live",
     "test-system": "node npm/test-system.js",
     "test-unit": "nyc --nycrc-path=.nycrc.js node npm/test-unit.js"
   },
