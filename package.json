@@ -69,6 +69,7 @@
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-mocha": "^10.5.0",
     "eslint-plugin-security": "^2.1.1",
+    "hawk": "^9.0.2",
     "js-yaml": "^4.1.0",
     "mocha": "^10.7.3",
     "nock": "^13.5.4",
