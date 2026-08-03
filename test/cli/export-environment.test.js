@@ -4,7 +4,7 @@ const fs = require('fs'),
     sh = require('shelljs'),
     expect = require('chai').expect,
 
-    outDir = 'out',
+    outDir = 'out/cli-export-environment',
     exportedEnvironmentPath = path.join(__dirname, '..', '..', outDir, 'test-environment.json');
 
 describe('newman run --export-environment', function () {
@@ -18,7 +18,7 @@ describe('newman run --export-environment', function () {
     });
 
     it('should export environment to a file', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -e test/fixtures/run/simple-variables.json --export-environment out/test-environment.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -e test/fixtures/run/simple-variables.json --export-environment out/cli-export-environment/test-environment.json', function (code) {
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }
@@ -38,7 +38,7 @@ describe('newman run --export-environment', function () {
     });
 
     it('should export environment to a file even if collection is failing', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -e test/fixtures/run/simple-variables.json --export-environment out/test-environment.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -e test/fixtures/run/simple-variables.json --export-environment out/cli-export-environment/test-environment.json', function (code) {
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }
@@ -58,7 +58,7 @@ describe('newman run --export-environment', function () {
     });
 
     it('`newman run` should export environment to a file in a pre-existing directory', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -e test/fixtures/run/simple-variables.json --export-environment out', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -e test/fixtures/run/simple-variables.json --export-environment out/cli-export-environment', function (code) {
             var environment,
                 dir = fs.readdirSync(outDir),
                 file = dir[0];
@@ -82,7 +82,7 @@ describe('newman run --export-environment', function () {
     });
 
     it('should override exported environment with those provided via --env-var', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var dummyVar=bar2 --export-environment out/test-environment.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/overrides/pmcollection.json --env-var dummyVar=bar2 --export-environment out/cli-export-environment/test-environment.json', function (code) {
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }
@@ -101,7 +101,7 @@ describe('newman run --export-environment', function () {
     });
 
     it('should override exported environment with those provided via --env-var even when run fails', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/overrides/failing-collection.json --env-var dummyVar=bar3 --export-environment out/test-environment.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/overrides/failing-collection.json --env-var dummyVar=bar3 --export-environment out/cli-export-environment/test-environment.json', function (code) {
             var environment;
 
             try { environment = JSON.parse(fs.readFileSync(exportedEnvironmentPath).toString()); }

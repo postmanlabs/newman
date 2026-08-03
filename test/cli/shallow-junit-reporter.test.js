@@ -6,7 +6,7 @@ const fs = require('fs'),
     parseXml = require('xml2js').parseString;
 
 describe('JUnit reporter', function () {
-    var outDir = 'out',
+    var outDir = 'out/cli-shallow-junit-reporter',
         outFile = outDir + '/newman-report.xml';
 
     beforeEach(function () {
@@ -134,7 +134,7 @@ describe('JUnit reporter', function () {
     });
 
     it('should correctly produce the JUnit report in a pre-existing directory', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r junit --reporter-junit-export out',
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r junit --reporter-junit-export out/cli-shallow-junit-reporter',
             function (code) {
                 expect(code).to.equal(0);
 

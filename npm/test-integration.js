@@ -12,17 +12,31 @@ const fs = require('fs'),
     recursive = require('recursive-readdir'),
     newman = require(path.join(__dirname, '..', 'index')),
 
-    echoServer = require('./server').createRawEchoServer(),
-    redirectServer = require('./server').createRedirectServer(),
-
-    LOCAL_TEST_ECHO_PORT = 4041,
-    LOCAL_TEST_REDIRECT_PORT = 4042,
+    servers = require(path.join(__dirname, '..', 'test', 'fixtures', 'servers')),
+    runner = require(path.join(__dirname, '..', 'test', 'fixtures', 'servers', 'runner')),
 
     SPEC_SOURCE_DIR = path.join(__dirname, '..', 'test', 'integration');
 
 module.exports = function (exit) {
+    var live,
+
+        // replaced by the runner's own teardown once the fixture servers are up; until then there is nothing to
+        // take down
+        cleanup = function (done) {
+            return done();
+        };
+
     // banner line
     console.info(colors.yellow.bold('Running integration tests using local newman as node module...'));
+
+    try {
+        live = runner.parseArgs(process.argv.slice(2)).live;
+    }
+    catch (parseError) {
+        console.error(colors.red(parseError.message));
+
+        return exit(1);
+    }
 
     async.waterfall([
 
@@ -65,22 +79,24 @@ module.exports = function (exit) {
         },
 
         /**
-         * Start local server used in collections
-         *   - echoServer = custom HTTP method, body with GET
-         *   - redirectServer = protocol profile behavior
+         * Start the local servers the collections use, and install the network policy built from their real ports
+         *   - raw-echo    = custom HTTP method, body with GET
+         *   - redirect    = protocol profile behavior
+         *   - echo        = every mapped public host, served locally
+         *   - client-cert = the mutual-TLS servers, unused here
+         *
+         * Under `--live` the same servers start but no policy is installed, so every non-local collection URL
+         * reaches its real public service.
          *
          * @param {Object} suites - An set of tests, arranged by test group names as keys.
          * @param {Function} next - A callback function whose invocation marks the end of the integration test run.
          * @returns {*}
          */
         function (suites, next) {
-            // start echoServer first
-            echoServer.listen(LOCAL_TEST_ECHO_PORT, function (err) {
-                if (err) { return next(err); }
-                // start redirectServer once echoServer is started
-                redirectServer.listen(LOCAL_TEST_REDIRECT_PORT, function (err) {
-                    next(err, suites);
-                });
+            runner.startForRunner({ block: !live }, function (err, teardown) {
+                teardown && (cleanup = teardown);
+
+                next(err, suites);
             });
         },
 
@@ -104,15 +120,24 @@ module.exports = function (exit) {
 
                 // load configuration JSON object if it is provided. We do this since this is not part of newman
                 // standard API
-                const config = test.configJSON ? JSON.parse(fs.readFileSync(test.configJSON).toString()) : {};
+                const config = test.configJSON ? JSON.parse(fs.readFileSync(test.configJSON).toString()) : {},
 
-                newman.run(_.merge({
-                    collection: test.collectionJSON,
-                    environment: test.environmentJSON,
-                    globals: test.globalsJSON,
-                    iterationData: test.dataCSV || test.dataJSON,
-                    abortOnFailure: true
-                }, config.run), function (err, summary) {
+                    // the fixture servers bind ephemeral ports, so the collections name them through variables.
+                    // Applied after the merge, not inside it: `_.merge` combines arrays by index, which would
+                    // interleave a `config.run.envVar` with these rather than keep both.
+                    options = _.merge({
+                        collection: test.collectionJSON,
+                        environment: test.environmentJSON,
+                        globals: test.globalsJSON,
+                        iterationData: test.dataCSV || test.dataJSON,
+                        abortOnFailure: true
+                    }, config.run);
+
+                options.envVar = _.map(servers.ports(), function (value, key) {
+                    return { key, value };
+                }).concat(options.envVar || []);
+
+                newman.run(options, function (err, summary) {
                     err && (err.source = test); // store the meta in error
                     next(err, summary);
                 });
@@ -137,13 +162,13 @@ module.exports = function (exit) {
             console.error(_.omit(err, ['stacktrace', 'stack']), { colors: true });
         }
 
-        // destroy echoServer
-        echoServer.destroy(function () {
-            // destroy redirectServer
-            redirectServer.destroy(function () {
-                // exit once both the local server are stopped
-                exit(err || process.exitCode ? 1 : 0, results);
-            });
+        // drop the interception seams, then stop the local fixture servers
+        cleanup(function (cleanupError) {
+            // report a cleanup failure, but never let it mask the test result
+            cleanupError && console.error(cleanupError.stack || cleanupError);
+
+            // exit once all the local servers are stopped
+            exit(err || process.exitCode ? 1 : 0, results);
         });
     });
 };

@@ -92,9 +92,13 @@ describe('Newman run options', function () {
                 accept: '*/*',
                 'cache-control': 'no-cache',
                 'postman-token': postmanToken,
-                'accept-encoding': 'gzip, br',
                 'user-agent': `PostmanRuntime/${runtimeVersion}` // change this when runtime is bumped
             });
+
+            // `gzip, deflate, br` is what Newman puts on the wire and what the local fixture echoes back verbatim.
+            // Under `--live` the public service's CDN normalises Accept-Encoding and echoes `gzip, br`, so both
+            // shapes have to be accepted.
+            expect(response.headers['accept-encoding']).to.be.oneOf(['gzip, deflate, br', 'gzip, br']);
             expect(executions[1].response.text()).to.equal('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
             expect(executions[2].response.text()).to.eql('<?xml version="1.0" encoding="utf-8"?><food><key>Homestyle Breakfast</key><value>950</value></food>');
 
@@ -200,7 +204,7 @@ describe('Newman run options', function () {
 
     describe('request timeouts', function () {
         // a local server keeps DNS and TLS setup out of the timeout, which otherwise makes the error flaky
-        const RESPONSE_DELAY = 1000;
+        const RESPONSE_DELAY = 200;
 
         let server,
             url;
@@ -258,7 +262,7 @@ describe('Newman run options', function () {
         it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeout: 1000
+                timeout: 400
             }, function (err, summary) {
                 expect(err.message).to.equal('callback timed out');
                 expect(summary).to.be.ok;

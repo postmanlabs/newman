@@ -80,7 +80,7 @@ describe('newman.run cookieJar', function () {
     });
 
     describe('export cookieJar', function () {
-        var outDir = 'out',
+        var outDir = 'out/library-cookie-jar',
             exportedCookieJarPath = path.join(__dirname, '..', '..', outDir, 'test-cookie-jar.json');
 
         beforeEach(function () {

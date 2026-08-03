@@ -7,7 +7,7 @@ const fs = require('fs'),
     newman = require('../../');
 
 describe('newman.run exportGlobals', function () {
-    var outDir = 'out',
+    var outDir = 'out/library-export-globals',
         globals = 'test/fixtures/run/simple-variables.json',
         exportedGlobalsPath = path.join(__dirname, '..', '..', outDir, 'test-globals.json');
 

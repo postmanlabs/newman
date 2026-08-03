@@ -7,16 +7,21 @@ var fs = require('fs'),
 
     ITERATION_PROPERTY = 'run.stats.iterations.total',
 
-    collectionRunPath = path.join(__dirname, '..', '..', 'out', 'iteration-count-test.json');
+    collectionRunPath = path.join(__dirname, '..', '..', 'out', 'cli-iteration-count', 'iteration-count-test.json');
 
 describe('iterationCount vs iterationData.length conflicts', function () {
+    // owns its output directory rather than sharing `out/`, which a parallel worker could delete or read from
+    before(function () {
+        fs.mkdirSync(path.dirname(collectionRunPath), { recursive: true });
+    });
+
     afterEach(function () {
         try { fs.unlinkSync(collectionRunPath); }
         catch (e) { console.error(e); }
     });
 
     it('should iterate exactly once when no options are specified', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export out/iteration-count-test.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -r json --reporter-json-export out/cli-iteration-count/iteration-count-test.json', function (code) {
             var collectionRun;
 
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
@@ -29,7 +34,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
     });
 
     it('should iterate according to iterationData.length when specified', function (done) {
-        exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json -d test/integration/steph/steph.postman_data.json -r json --reporter-json-export out/iteration-count-test.json', function (code) {
+        exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json -d test/integration/steph/steph.postman_data.json -r json --reporter-json-export out/cli-iteration-count/iteration-count-test.json', function (code) {
             var collectionRun;
 
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
@@ -42,7 +47,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
     });
 
     it('should iterate according to iterationCount when specified', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --iteration-count 3 -r json --reporter-json-export out/iteration-count-test.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --iteration-count 3 -r json --reporter-json-export out/cli-iteration-count/iteration-count-test.json', function (code) {
             var collectionRun;
 
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }
@@ -55,7 +60,7 @@ describe('iterationCount vs iterationData.length conflicts', function () {
     });
 
     it('should iterate according to iterationCount when BOTH options are specified', function (done) {
-        exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json -d test/integration/steph/steph.postman_data.json --iteration-count 3 -r json --reporter-json-export out/iteration-count-test.json', function (code) {
+        exec('node ./bin/newman.js run test/integration/steph/steph.postman_collection.json -d test/integration/steph/steph.postman_data.json --iteration-count 3 -r json --reporter-json-export out/cli-iteration-count/iteration-count-test.json', function (code) {
             var collectionRun;
 
             try { collectionRun = JSON.parse(fs.readFileSync(collectionRunPath).toString()); }

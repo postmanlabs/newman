@@ -8,14 +8,12 @@ var fs = require('fs'),
 
 describe('iterationCount vs iterationData.length conflicts', function () {
     var iterationProperty = 'run.stats.iterations.total',
-        collectionRunPath = path.join(__dirname, '..', '..', 'out', 'iteration-count-test.json');
+        collectionRunPath = path.join(__dirname, '..', '..', 'out', 'library-iteration-count', 'iteration-count-test.json');
 
+    // owns its output directory rather than sharing `out/`, which a parallel worker could delete or read from.
+    // `recursive` also makes the create race-free.
     beforeEach(function (done) {
-        fs.stat('out', function (err) {
-            if (err) { return fs.mkdir('out', done); }
-
-            done();
-        });
+        fs.mkdir(path.dirname(collectionRunPath), { recursive: true }, done);
     });
 
     afterEach(function (done) {

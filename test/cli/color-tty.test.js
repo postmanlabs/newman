@@ -41,16 +41,11 @@ describe('CLI output', function () {
 
     describe('noTTY', function () {
         var encoding = 'utf-8',
-            outFile = 'out/color-tty-test.txt';
+            outFile = 'out/cli-color-tty/color-tty-test.txt';
 
+        // `recursive` rather than stat-then-mkdir, which races with another worker creating the same directory
         beforeEach(function (done) {
-            fs.stat('out', function (err) {
-                if (err) {
-                    return fs.mkdir('out', done);
-                }
-
-                done();
-            });
+            fs.mkdir('out/cli-color-tty', { recursive: true }, done);
         });
 
         afterEach(function (done) {

@@ -8,7 +8,7 @@ const fs = require('fs'),
     newman = require('../../');
 
 describe('JUnit reporter', function () {
-    var outDir = 'out',
+    var outDir = 'out/library-shallow-junit-reporter',
         outFile = outDir + '/newman-report.xml';
 
     beforeEach(function () {

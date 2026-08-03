@@ -5,8 +5,8 @@ const fs = require('fs'),
     expect = require('chai').expect,
 
 
-    outDir = 'out',
-    exportedGlobalsPath = path.join(__dirname, '..', '..', 'out', 'test-globals.json');
+    outDir = 'out/cli-export-globals',
+    exportedGlobalsPath = path.join(__dirname, '..', '..', outDir, 'test-globals.json');
 
 describe('newman run --export-globals', function () {
     beforeEach(function () {
@@ -19,7 +19,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should export globals to a file', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out/cli-export-globals/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
@@ -39,7 +39,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should export globals to a file even if collection is failing', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --export-globals out/cli-export-globals/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
@@ -59,7 +59,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should override exported globals with those provided via --global-var', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --global-var foo=bar --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json -g test/fixtures/run/simple-variables.json --global-var foo=bar --export-globals out/cli-export-globals/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
@@ -80,7 +80,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('`newman run` should export globals to a file in a pre-existing directory', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json -g test/fixtures/run/simple-variables.json --export-globals out/cli-export-globals', function (code) {
             var globals,
                 dir = fs.readdirSync(outDir),
                 file = dir[0];
@@ -104,7 +104,7 @@ describe('newman run --export-globals', function () {
     });
 
     it('should export globals with a name when provided under --global-var', function (done) {
-        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json --global-var foo=bar --export-globals out/test-globals.json', function (code) {
+        exec('node ./bin/newman.js run test/fixtures/run/single-request-failing.json --global-var foo=bar --export-globals out/cli-export-globals/test-globals.json', function (code) {
             var globals;
 
             try { globals = JSON.parse(fs.readFileSync(exportedGlobalsPath).toString()); }
