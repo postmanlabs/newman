@@ -1,4 +1,4 @@
-/* eslint-disable n/no-process-env */
+/* eslint-disable no-process-env */
 // Regression test for the blocking half of the network guard. Nothing else in the suite would notice if blocking
 // stopped working, so this asserts the `EHERMETIC` code and message specifically, not merely that the request failed.
 //

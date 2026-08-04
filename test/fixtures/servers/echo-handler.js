@@ -36,6 +36,7 @@ const zlib = require('zlib'),
     HAWK_AUTH_ALGORITHM = 'sha256',
     HAWK_AUTH_USER = 'Postman',
 
+    // eslint-disable-next-line max-len
     OAUTH2_ACCESS_TOKEN = 'vp7jxTwqgczoFHs0uIdOvv4VdBWmvCkbVbNBCuaTQ3JZplPS40BaNV47HD1zt7MztQPILJvqYsOs6PfJpFYBgwbaE3CVEKOj',
     OAUTH2_USER_ID = '631643',
     OAUTH2_USER_NAME = 'Postman',
@@ -78,7 +79,7 @@ function decodeSafe (value) {
     try {
         return decodeURIComponent(value);
     }
-    catch {
+    catch (e) {
         return value;
     }
 }
@@ -317,7 +318,7 @@ function buildEchoPayload (context, body) {
             payload.json = JSON.parse(payload.data);
             payload.data = payload.json;
         }
-        catch {
+        catch (e) {
             payload.json = null;
         }
     }
@@ -394,7 +395,7 @@ function hawkServerHeader (error) {
     try {
         return Hawk.server.header(error.credentials, error.artifacts);
     }
-    catch {
+    catch (e) {
         return '';
     }
 }

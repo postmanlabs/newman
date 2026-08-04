@@ -98,6 +98,7 @@ describe('Newman run options', function () {
             // Under `--live` the public service's CDN normalises Accept-Encoding and echoes `gzip, br`, so both
             // shapes have to be accepted.
             expect(response.headers['accept-encoding']).to.be.oneOf(['gzip, deflate, br', 'gzip, br']);
+            // eslint-disable-next-line max-len
             expect(executions[1].response.text()).to.equal('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
             // eslint-disable-next-line max-len
             expect(executions[2].response.text()).to.eql('<?xml version="1.0" encoding="utf-8"?><food><key>Homestyle Breakfast</key><value>950</value></food>');

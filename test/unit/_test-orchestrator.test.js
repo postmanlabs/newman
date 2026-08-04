@@ -1,4 +1,4 @@
-/* eslint-disable n/no-process-env */
+/* eslint-disable no-process-env */
 // Tests for `npm/test.js`, the full-suite orchestrator. None of this spawns a real suite: a throw-away directory
 // holding a fake `npm`/`npm.cmd` is prepended to the child's `PATH`, and the fake only logs its argv and exits. Every
 // `npm_*` variable is stripped too, so the orchestrator cannot follow one back to the real npm.

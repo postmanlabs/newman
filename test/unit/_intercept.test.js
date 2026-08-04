@@ -1,4 +1,4 @@
-/* eslint-disable n/no-process-env */
+/* eslint-disable no-process-env */
 const fs = require('fs'),
     http = require('http'),
     net = require('net'),

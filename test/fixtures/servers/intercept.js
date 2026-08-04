@@ -1,4 +1,4 @@
-/* eslint-disable n/no-process-env */
+/* eslint-disable no-process-env */
 // Socket level interception for the hermetic test suite. `install(policy)` replaces
 // `net.Socket.prototype.connect` and `tls.connect` so that, while a test runner is active:
 //

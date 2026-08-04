@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* eslint-disable n/no-process-env */
+/* eslint-disable no-process-env */
 // ---------------------------------------------------------------------------------------------------------------------
 // This script is intended to execute the entire test suite, one runner at a time, and is what `npm test` runs.
 //

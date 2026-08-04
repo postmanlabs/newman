@@ -1,4 +1,4 @@
-/* eslint-disable n/no-process-env */
+/* eslint-disable no-process-env */
 // Shared startup and teardown for every `npm/test-*.js` runner. A runner has exactly two invocations:
 //
 //   - default: the fixture servers start, the policy built from their real ports is installed here and handed to

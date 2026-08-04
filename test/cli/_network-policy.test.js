@@ -31,6 +31,7 @@ describe('network policy hand-off to a CLI child', function () {
         catch (e) { console.error(e); }
     });
 
+    // eslint-disable-next-line max-len
     it('should reach the local Echo fixture, not the real service, through the policy inherited via NODE_OPTIONS', function (done) {
         exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json ' +
             '-r json --reporter-json-export out/cli-network-policy/network-policy-test.json', function (code) {
