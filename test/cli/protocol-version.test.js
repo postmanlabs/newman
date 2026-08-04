@@ -1,6 +1,7 @@
 const fs = require('fs'),
     http2 = require('http2'),
     expect = require('chai').expect,
+    enableServerDestroy = require('server-destroy'),
 
     COLLECTION = 'test/fixtures/run/protocol-version.json';
 
@@ -30,11 +31,12 @@ describe('newman run --protocol-version', function () {
             res.end('{}');
         });
 
+        enableServerDestroy(server);
         server.listen(0, done);
     });
 
     after(function (done) {
-        server.close(done);
+        server.destroy(done);
     });
 
     it('should default to auto and negotiate HTTP/2 when the option is absent', function (done) {

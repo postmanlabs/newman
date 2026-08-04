@@ -3,6 +3,7 @@ const fs = require('fs'),
     http2 = require('http2'),
     https = require('https'),
     expect = require('chai').expect,
+    enableServerDestroy = require('server-destroy'),
 
     newman = require('../../'),
 
@@ -50,6 +51,10 @@ describe('newman.run protocolVersion', function () {
         http1Server = https.createServer(tlsOptions(), handler);
         plainServer = http.createServer(handler);
 
+        enableServerDestroy(alpnServer);
+        enableServerDestroy(http1Server);
+        enableServerDestroy(plainServer);
+
         alpnServer.listen(0, function () {
             http1Server.listen(0, function () {
                 plainServer.listen(0, done);
@@ -58,9 +63,9 @@ describe('newman.run protocolVersion', function () {
     });
 
     after(function (done) {
-        alpnServer.close(function () {
-            http1Server.close(function () {
-                plainServer.close(done);
+        alpnServer.destroy(function () {
+            http1Server.destroy(function () {
+                plainServer.destroy(done);
             });
         });
     });
