@@ -80,6 +80,14 @@ module.exports = {
             }
 
             return value;
+        },
+
+        protocolVersionOptions: (value) => {
+            if (!(/^(auto|http1|http2)$/).test(value)) {
+                throw new Error(`invalid value \`${value}\` for --protocol-version. Expected: auto|http1|http2`);
+            }
+
+            return value;
         }
     },
 

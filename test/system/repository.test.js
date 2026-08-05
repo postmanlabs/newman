@@ -48,7 +48,7 @@ describe('project repository', function () {
                 expect(json.keywords).to.eql(['newman', 'postman', 'api', 'testing', 'ci', 'rest-client', 'rest']);
 
                 expect(json).to.have.property('engines');
-                expect(json.engines).to.eql({ node: '>=16' });
+                expect(json.engines).to.eql({ node: '>=22.13.0' });
             });
 
             it('should have a valid version string in form of <major>.<minor>.<revision>', function () {
@@ -160,13 +160,13 @@ describe('project repository', function () {
         });
     });
 
-    describe('.eslintrc', function () {
+    describe('eslint.config.mjs', function () {
         it('should exist', function (done) {
-            fs.stat('./.eslintrc', done);
+            fs.stat('./eslint.config.mjs', done);
         });
 
         it('should have readable content', function () {
-            expect(fs.readFileSync('./.eslintrc').toString()).to.be.ok;
+            expect(fs.readFileSync('./eslint.config.mjs').toString()).to.be.ok;
         });
     });
 
@@ -186,7 +186,7 @@ describe('project repository', function () {
         });
 
         it('should have readable content', function () {
-            expect(yml.load(fs.readFileSync('./CHANGELOG.yaml')), 'not a valid yaml').to.be.ok;
+            expect(yml.load(fs.readFileSync('./CHANGELOG.yaml').toString()), 'not a valid yaml').to.be.ok;
         });
     });
 });

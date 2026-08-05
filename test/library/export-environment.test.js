@@ -7,7 +7,7 @@ const fs = require('fs'),
     newman = require('../../');
 
 describe('newman.run exportEnvironment', function () {
-    var outDir = 'out',
+    var outDir = 'out/library-export-environment',
         environment = 'test/fixtures/run/simple-variables.json',
         exportedEnvironmentPath = path.join(__dirname, '..', '..', outDir, 'test-environment.json');
 

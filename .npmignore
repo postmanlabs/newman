@@ -48,7 +48,7 @@ npm/
 test/
 examples/
 codecov.yml
-.eslintrc
+eslint.config.mjs
 .nycrc.js
 .dockerignore
 .editorconfig

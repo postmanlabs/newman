@@ -16,7 +16,6 @@ describe('options', function () {
                 // remove undefined properties
                 result = JSON.parse(JSON.stringify(result.collection.toJSON()));
                 expect(_.omit(result,
-                    // eslint-disable-next-line max-len
                     ['event', 'info._postman_id', 'variable', 'item.0.id', 'item.0.response', 'item.0.event.0.script.id']))
                     .to.eql(collection);
                 done();
@@ -93,6 +92,58 @@ describe('options', function () {
             }, function (err, result) {
                 expect(err).to.be.null;
                 expect(result.cookieJar.toJSON()).to.eql(data);
+                done();
+            });
+        });
+    });
+
+    describe('CSV iteration data', function () {
+        it('should use column names verbatim even when they look numeric', function (done) {
+            options({
+                iterationData: './test/fixtures/run/numeric-header.postman_data.csv'
+            }, function (err, result) {
+                expect(err).to.be.null;
+                expect(result.iterationData).to.have.lengthOf(1);
+
+                // casting these would rename the variable, e.g. `00123` to `123`
+                expect(Object.keys(result.iterationData[0]))
+                    .to.have.members(['00123', '1e3', '3.14', '-1', 'name']);
+                expect(_.values(result.iterationData[0]))
+                    .to.eql(['alpha', 'beta', 'gamma', 'delta', 'epsilon']);
+                done();
+            });
+        });
+
+        it('should still cast numeric values in non-header rows', function (done) {
+            options({
+                iterationData: './test/fixtures/run/comma-test.postman_data.csv'
+            }, function (err, result) {
+                expect(err).to.be.null;
+                expect(result.iterationData).to.eql([{
+                    plain: 42,
+                    negative: -7,
+                    float: 3.5,
+                    quoted: '00123',
+                    text: 'foo'
+                }]);
+                done();
+            });
+        });
+
+        it('should trim every character JavaScript treats as whitespace', function (done) {
+            options({
+                iterationData: './test/fixtures/run/whitespace-padded.postman_data.csv'
+            }, function (err, result) {
+                const nbsp = String.fromCodePoint(0x00A0);
+
+                expect(err).to.be.null;
+                expect(result.iterationData).to.eql([{
+                    plain: 'spaces',
+                    nbsp: 'nb',
+                    fullwidth: 'fw',
+                    // quoted values are never trimmed, which is the escape hatch for padded data
+                    quoted: `${nbsp}kept${nbsp}`
+                }]);
                 done();
             });
         });

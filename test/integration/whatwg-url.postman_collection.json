@@ -710,7 +710,7 @@
                 "pm.test(\"Request Payload\", function () {",
                 "    const response = pm.response.text();",
                 "    ",
-                "    pm.expect(response).to.include('Host: 127.0.0.1:4041'); // should be 127.0.0.1",
+                "    pm.expect(response).to.include('Host: 127.0.0.1:' + pm.environment.get('rawEchoPort')); // should be 127.0.0.1",
                 "});"
               ],
               "type": "text/javascript"
@@ -719,12 +719,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "127.1:4041",
+              "raw": "127.1:{{rawEchoPort}}",
               "host": [
                 "127",
                 "1"
               ],
-              "port": "4041"
+              "port": "{{rawEchoPort}}"
             }
           }
         },
@@ -760,12 +760,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:4041/ /!/\"/$/%/&/'/(/)/*/+/,/-/.///0/1/2/3/4/5/6/7/8/9/:/;/</=/>/@/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/[/]/^/_/`/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/{/|/}/~",
+              "raw": "http://localhost:{{rawEchoPort}}/ /!/\"/$/%/&/'/(/)/*/+/,/-/.///0/1/2/3/4/5/6/7/8/9/:/;/</=/>/@/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/[/]/^/_/`/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/{/|/}/~",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "4041",
+              "port": "{{rawEchoPort}}",
               "path": [
                 " ",
                 "!",
@@ -883,12 +883,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:4041/𝌆/й/你/ス/🍪",
+              "raw": "http://localhost:{{rawEchoPort}}/𝌆/й/你/ス/🍪",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "4041",
+              "port": "{{rawEchoPort}}",
               "path": [
                 "𝌆",
                 "й",
@@ -918,12 +918,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:4041/foo/%2a/%F0%9F%8D%AA",
+              "raw": "http://localhost:{{rawEchoPort}}/foo/%2a/%F0%9F%8D%AA",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "4041",
+              "port": "{{rawEchoPort}}",
               "path": [
                 "foo",
                 "%2a",
@@ -951,12 +951,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:4041?q=𝌆й你ス🍪",
+              "raw": "http://localhost:{{rawEchoPort}}?q=𝌆й你ス🍪",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "4041",
+              "port": "{{rawEchoPort}}",
               "query": [{
                 "key": "q",
                 "value": "𝌆й你ス🍪"
@@ -983,12 +983,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:4041/?q=%F0%9F%8D%AA",
+              "raw": "http://localhost:{{rawEchoPort}}/?q=%F0%9F%8D%AA",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "4041",
+              "port": "{{rawEchoPort}}",
               "path": [
                 ""
               ],
@@ -1106,12 +1106,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:4041/!/\"/$/%/&/'/(/)/*/+/,/-/.///0/1/2/3/4/5/6/7/8/9/:/;/</=/>/@/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/[/]/^/_/`/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/{/|/}/~",
+              "raw": "http://localhost:{{rawEchoPort}}/!/\"/$/%/&/'/(/)/*/+/,/-/.///0/1/2/3/4/5/6/7/8/9/:/;/</=/>/@/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/[/]/^/_/`/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/{/|/}/~",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "4041",
+              "port": "{{rawEchoPort}}",
               "path": [
                 "!",
                 "\"",
@@ -1240,12 +1240,12 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:4041?q=\"'<=>!$%()*+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+              "raw": "http://localhost:{{rawEchoPort}}?q=\"'<=>!$%()*+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "4041",
+              "port": "{{rawEchoPort}}",
               "query": [{
                 "key": "q",
                 "value": "\"'<=>!$%()*+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"

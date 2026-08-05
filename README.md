@@ -44,7 +44,7 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 
 ## Getting started
 
-To run Newman, ensure that you have Node.js >= v16. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+To run Newman, ensure that you have Node.js >= v22. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
 
 ### Installation
 The easiest way to install Newman is using NPM. If you have Node.js installed, it is most likely that you have NPM installed as well.
@@ -171,6 +171,11 @@ For more details on [Reporters](#reporters) and writing your own [External Repor
 
 - `--timeout-script <ms>`<br />
   Specify the time (in milliseconds) to wait for scripts to complete execution.
+
+- `--protocol-version <value>`<br />
+  Specify the HTTP protocol version to be used for requests. The value can be any of the three: `http1`, `http2` or `auto`*(default)*.<br/>
+  With `auto`, Newman uses HTTP/2 when the server negotiates it over TLS, and HTTP/1.1 otherwise.
+  Note that `http2` forces HTTP/2, so a request to a server that does not offer it will fail.
 
 - `-k`, `--insecure`<br />
   Disables SSL verification checks and allows self-signed SSL certificates.
@@ -300,6 +305,7 @@ return of the `newman.run` function is a run instance, which emits run events th
 | options.sslClientCertList | The path to the client certificate configuration list file. This option takes precedence over `sslClientCert`, `sslClientKey` and `sslClientPassphrase`. When there is no match in this configuration list, `sslClientCert` is used as fallback.<br /><br />_Optional_<br />Type: `string\|array` |
 | options.sslExtraCaCerts   | The path to the file, that holds one or more trusted CA certificates in PEM format.<br /><br />_Optional_<br />Type: `string` |
 | options.requestAgents     | Specify the custom requesting agents to be used when performing HTTP and HTTPS requests respectively. Example: [Using Socks Proxy](#using-socks-proxy)<br /><br />_Optional_<br />Type: `object` |
+| options.protocolVersion   | The HTTP protocol version to be used for requests. With `auto`, HTTP/2 is used when the server negotiates it over TLS and HTTP/1.1 is used otherwise.<br/><br/>Available options: `http1`, `http2` and `auto`<br /><br />_Optional_<br />Type: `string`, Default value: `auto` |
 | options.cookieJar     | One can optionally pass a CookieJar file path as `string` to this property and that will be deserialized using [`tough-cookie`](https://github.com/salesforce/tough-cookie). This property also accepts a `tough-cookie` CookieJar instance.<br /><br />_Optional_<br />Type: `object\|string` |
 | options.newmanVersion     | The Newman version used for the collection run.<br /><br />_This will be set by Newman_ |
 | callback                  | Upon completion of the run, this callback is executed with the `error`, `summary` argument.<br /><br />_Required_<br />Type: `function` |
@@ -655,10 +661,9 @@ newman.run({
 
 |      Newman       |    Node    |
 |:-----------------:|:----------:|
-|       v3.x        |  >= v4.x   |
-|       v4.x        |  >= v6.x   |
 |       v5.x        |  >= v10.x  |
 |       v6.x        |  >= v16.x  |
+|       v7.x        |  >= v22.x  |
 
 The current Node version compatibility can also be seen from the `engines.node` property in [package.json](https://github.com/postmanlabs/newman/blob/develop/package.json)
 

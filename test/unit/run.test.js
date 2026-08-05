@@ -34,8 +34,7 @@ describe('run module', function () {
         }).to.not.throw();
     });
 
-    // @todo enable when the v1 collection format support is dropped in Newman v7?
-    it.skip('should error out if v1 collection is passed', function (done) {
+    it('should error out if v1 collection is passed', function (done) {
         const v1Collection = {
             id: 'a4f4a069-00a2-4f70-a792-513877241083',
             name: 'C1',
@@ -57,9 +56,9 @@ describe('run module', function () {
             collection: v1Collection
         }, function (err) {
             expect(err).be.ok;
-            expect(err).to.have.property('message', 'Newman >= v5 does not support the v1 collection format');
+            expect(err).to.have.property('message', 'Newman >= v7 does not support the v1 collection format');
             expect(err).to.have.property('friendly',
-                'Use the Postman Native app to export collections in the v2 format');
+                'Use the Postman app to export collections in the v2 format');
             done();
         });
     });

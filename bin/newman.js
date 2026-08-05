@@ -12,7 +12,7 @@ const _ = require('lodash'),
 
 program
     .name('newman')
-    .addHelpCommand(false)
+    .helpCommand(false)
     .version(version, '-v, --version');
 
 // The `run` command allows you to specify a collection to be run with the provided options.
@@ -52,6 +52,9 @@ program
     .option('--timeout-script [n]', 'Specify a timeout for scripts (milliseconds)', util.cast.integer, 0)
     .option('--working-dir <path>', 'Specify the path to the working directory')
     .option('--no-insecure-file-read', 'Prevents reading the files situated outside of the working directory')
+    .option('--protocol-version <value>',
+        'Specify the HTTP protocol version to be used for requests (auto|http1|http2), default: auto',
+        util.cast.protocolVersionOptions)
     .option('-k, --insecure', 'Disables SSL validations')
     .option('--ssl-client-cert-list <path>', 'Specify the path to a client certificates configurations (JSON)')
     .option('--ssl-client-cert <path>', 'Specify the path to a client certificate (PEM)')
@@ -89,12 +92,6 @@ program.addHelpText('after', `
 To get available options for a command:
   newman <command> -h`);
 
-// Warn on invalid command and then exits.
-program.on('command:*', (command) => {
-    console.error(`error: invalid command \`${command}\`\n`);
-    program.help();
-});
-
 /**
  * Starts the script execution.
  * callback is required when this is required as a module in tests.
@@ -129,10 +126,10 @@ function run (argv, callback) {
         // invoke callback if this is required as module, used in tests.
         if (callback) { return callback(error); }
 
-        // in case of an error, log error message and print help message.
+        // in case of an error, log error message and print help message, exiting with a non-zero code.
         if (error) {
             console.error(`error: ${error.message || error}\n`);
-            program.help();
+            program.help({ error: true });
         }
     });
 }

@@ -1,4 +1,5 @@
 const _ = require('lodash'),
+    http = require('http'),
     expect = require('chai').expect,
 
     newman = require('../../'),
@@ -91,12 +92,14 @@ describe('Newman run options', function () {
                 accept: '*/*',
                 'cache-control': 'no-cache',
                 'postman-token': postmanToken,
-                'accept-encoding': 'gzip, br',
                 'user-agent': `PostmanRuntime/${runtimeVersion}` // change this when runtime is bumped
             });
-            // eslint-disable-next-line max-len
+
+            // `gzip, deflate, br` is what Newman puts on the wire and what the local fixture echoes back verbatim.
+            // Under `--live` the public service's CDN normalises Accept-Encoding and echoes `gzip, br`, so both
+            // shapes have to be accepted.
+            expect(response.headers['accept-encoding']).to.be.oneOf(['gzip, deflate, br', 'gzip, br']);
             expect(executions[1].response.text()).to.equal('<!DOCTYPE html><html><head><title>Hello World!</title></head><body><h1>Hello World!</h1></body></html>');
-            // eslint-disable-next-line max-len
             expect(executions[2].response.text()).to.eql('<?xml version="1.0" encoding="utf-8"?><food><key>Homestyle Breakfast</key><value>950</value></food>');
 
             done();
@@ -172,14 +175,17 @@ describe('Newman run options', function () {
 
     // @todo: failing on windows
     (process.platform.startsWith('win') ? describe.skip : describe)('script timeouts', function () {
-        // @todo: failing since Node.js v20.10.0
-        it.skip('should be handled correctly when breached', function (done) {
+        // the sandbox is torn down only after `timeoutScript` + 500ms, so this collection blocks well past that
+        it('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/timeout/timeout.postman_collection.json',
+                collection: 'test/fixtures/run/blocking-script.json',
                 timeoutScript: 5
             }, function (err, summary) {
-                expect(err.message).to.equal('Script execution timed out after 5ms');
+                expect(err).to.be.null;
                 expect(summary).to.be.ok;
+                expect(summary.run.failures).to.be.an('array').that.has.lengthOf(1);
+                expect(summary.run.failures[0].error.message).to.equal('sandbox not responding');
+                expect(summary.run.stats.testScripts).to.deep.include({ failed: 1 });
                 done();
             });
         });
@@ -197,10 +203,40 @@ describe('Newman run options', function () {
     });
 
     describe('request timeouts', function () {
+        // a local server keeps DNS and TLS setup out of the timeout, which otherwise makes the error flaky
+        const RESPONSE_DELAY = 200;
+
+        let server,
+            url;
+
+        before(function (done) {
+            server = http.createServer(function (req, res) {
+                const timer = setTimeout(function () {
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    res.end('ok');
+                }, RESPONSE_DELAY);
+
+                // the requester destroys the socket once the timeout is breached, so drop the pending response
+                res.on('close', function () {
+                    clearTimeout(timer);
+                });
+            });
+
+            server.listen(0, function () {
+                url = `http://localhost:${server.address().port}/`;
+                done();
+            });
+        });
+
+        after(function (done) {
+            server.closeAllConnections();
+            server.close(done);
+        });
+
         it('should be handled correctly when breached', function (done) {
             newman.run({
-                collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeoutRequest: 10
+                collection: { item: [{ request: { url: url, method: 'GET' } }] },
+                timeoutRequest: RESPONSE_DELAY / 4
             }, function (err, summary) {
                 expect(err).to.be.null;
                 expect(summary.run.failures).to.be.an('array').that.has.lengthOf(1);
@@ -211,11 +247,12 @@ describe('Newman run options', function () {
 
         it('should be handled correctly when not breached', function (done) {
             newman.run({
-                collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeoutRequest: 5000
+                collection: { item: [{ request: { url: url, method: 'GET' } }] },
+                timeoutRequest: RESPONSE_DELAY * 5
             }, function (err, summary) {
                 expect(err).to.be.null;
                 expect(summary).to.be.ok;
+                expect(summary.run.failures).to.be.an('array').that.is.empty;
                 done();
             });
         });
@@ -225,7 +262,7 @@ describe('Newman run options', function () {
         it('should be handled correctly when breached', function (done) {
             newman.run({
                 collection: 'test/integration/timeout/timeout.postman_collection.json',
-                timeout: 1000
+                timeout: 400
             }, function (err, summary) {
                 expect(err.message).to.equal('callback timed out');
                 expect(summary).to.be.ok;

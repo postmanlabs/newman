@@ -3,10 +3,11 @@
 ## Table of contents
 
 1. [Updating to the latest version](#updating-to-the-latest-version)
-2. [Migrating from V5 to V6](#migrating-from-v5-to-v6)
-3. [Migrating from V4 to V5](#migrating-from-v4-to-v5)
-4. [Migrating from V3 to V4](#migrating-from-v3-to-v4)
-5. [Migrating from V2 to V3](#migrating-from-v2-to-v3)
+2. [Migrating from V6 to V7](#migrating-from-v6-to-v7)
+3. [Migrating from V5 to V6](#migrating-from-v5-to-v6)
+4. [Migrating from V4 to V5](#migrating-from-v4-to-v5)
+5. [Migrating from V3 to V4](#migrating-from-v3-to-v4)
+6. [Migrating from V2 to V3](#migrating-from-v2-to-v3)
 
 ## Updating to the latest version
 
@@ -22,6 +23,131 @@ $ npm update -g newman
 $ newman --version          # Should show the latest version of Newman
 $ npm show newman version   # Should show the same version as of above
 ```
+
+---
+
+## Migrating from V6 to V7
+
+Newman v7.0 requires Node.js v22 or higher. Also, the runtime dependencies are upgraded to their latest versions.
+
+### Upgrading Node.js
+Newman v7 requires Node.js >= v22.13. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).
+
+### Collection format
+Newman v7 drops support for the v1 collection format, which has been deprecated since Newman v4.
+Previously, a v1 collection was converted to v2 on the fly and the run continued with a warning. It is
+now rejected before the run starts, and the run exits with code `1`:
+
+```console
+$ newman run v1-collection.json
+error: Newman >= v7 does not support the v1 collection format
+
+  Use the Postman app to export collections in the v2 format
+```
+
+Export your collections in the v2 format from the Postman app, or convert them ahead of time using
+[postman-collection-transformer](https://github.com/postmanlabs/postman-collection-transformer):
+
+```console
+$ npx postman-collection-transformer convert \
+    --input ./v1-collection.json \
+    --input-version 1.0.0 \
+    --output ./v2-collection.json \
+    --output-version 2.1.0
+```
+
+### CLI argument parsing
+Newman v7 uses a newer version of the CLI argument parser, which rejects some input that was previously
+accepted or silently ignored.
+
+Passing more than one collection to `newman run` is now an error. Previously the extra paths were
+silently discarded and only the first collection was run:
+
+```console
+$ newman run first-collection.json second-collection.json
+error: too many arguments for 'run'. Expected 1 argument but got 2: first-collection.json, second-collection.json.
+```
+
+Run each collection separately, or use `--folder` to pick what to run from a single collection.
+
+An unknown command now exits with code `1` instead of `0`, so mistyped commands no longer pass silently in CI:
+
+```console
+$ newman rnu collection.json
+error: unknown command 'rnu'
+```
+
+An invalid option value also exits with code `1` instead of `0`. Previously the error was printed but the
+process still reported success, which meant a typo in a CI script could go unnoticed:
+
+```console
+$ newman run collection.json --timeout -5
+error: The value must be a positive integer.
+```
+
+### CSV iteration data
+Newman v7 uses a newer version of the CSV parser. Two changes affect how `-d data.csv` files are read.
+
+Unquoted values are now trimmed of every character JavaScript's `String.prototype.trim()` treats as whitespace,
+rather than just spaces and tabs. In practice this means a non-breaking space (`U+00A0`), which spreadsheet
+exports frequently introduce, is now stripped:
+
+| CSV field         | v6 value             | v7 value |
+|-------------------|----------------------|----------|
+| `<NBSP>hello`     | `" hello"`      | `"hello"` |
+| `　hello`          | `"　hello"`      | `"hello"` |
+
+Quote the field to preserve the padding, since quoted values are never trimmed or type-cast:
+
+```csv
+name,padded
+hello," hello "
+```
+
+Column names that look numeric are also handled differently. Previously such a file failed to load
+outright; it now loads, and the column name is used verbatim:
+
+```csv
+00123,name
+alpha,beta
+```
+
+`pm.iterationData.get('00123')` returns `alpha`. Note the leading zeros are preserved — the column name is
+no longer type-cast.
+
+### HTTP/2
+Newman v7 adds support for HTTP/2. Requests are now sent over HTTP/2 when the server negotiates it over TLS, and
+over HTTP/1.1 otherwise. Since HTTP/1.1 was the only protocol used until now, this is the one behaviour change to
+be aware of when upgrading.
+
+If a request needs to stay on HTTP/1.1, the protocol can be pinned with the new `--protocol-version` option, which
+accepts `http1`, `http2` and `auto` *(default)*. Note that `http2` forces HTTP/2, so a request to a server that does
+not offer it will fail. Prefer `auto` unless you need to pin the protocol.
+
+```console
+$ newman run sample-collection.json --protocol-version http1
+```
+
+The equivalent option is available when running Newman as a library:
+
+```javascript
+newman.run({
+    collection: require('./sample-collection.json'),
+    protocolVersion: 'http1'
+}, function (err) {
+    err && console.error(err);
+});
+```
+
+Runs that pass custom agents through the `requestAgents` option continue to use HTTP/1.1. Such agents are only
+used for HTTP/2 when they are keyed by protocol version (`http1`, `http2` or `auto`), so `--protocol-version http2`
+has no effect otherwise.
+
+### Latest Postman Runtime
+Newman v7 uses the latest version of the Postman Runtime dependencies. This brings in several improvements and bug fixes.
+
+### Docker Images
+The two available Docker images, `postman/newman:alpine` and `postman/newman:ubuntu` are upgraded to Node.js v24.
 
 ---
 
