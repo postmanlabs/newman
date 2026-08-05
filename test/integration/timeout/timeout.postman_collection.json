@@ -12,7 +12,7 @@
       }
     }],
     "request": {
-      "url": "https://postman-echo.com/delay/1",
+      "url": "https://postman-echo.com/delay/2",
       "method": "GET"
     }
   }]

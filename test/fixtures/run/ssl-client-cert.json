@@ -26,12 +26,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://localhost:{{mtlsServer1Port}}",
+          "raw": "https://localhost:3000",
           "protocol": "https",
           "host": [
             "localhost"
           ],
-          "port": "{{mtlsServer1Port}}"
+          "port": "3000"
         }
       }
     }

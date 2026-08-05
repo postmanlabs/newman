@@ -59,7 +59,6 @@ and integration tests. At present, the following sub tests can be run on a stand
 * `npm run test-integration`: Checks Newman sanity with a sample requests categorized by collection
 * `npm run test-cli`: Runs CLI integration tests
 * `npm run test-library`: Runs library integration tests
-* `npm run test-live`: Runs the networked suites against the real public services, never a merge gate (see below)
 
 ## Repository
 
@@ -84,43 +83,6 @@ refer  to [tutorial from Atlassian](https://www.atlassian.com/git/workflows#!wor
 
 > Deletion of `main` and `develop`.
 > Rebasing on `main` is blocked.
-
-### Fixture servers
-
-Fixture servers live in `test/fixtures/servers/` and stand in for the external services the tests depend on. The
-test runners intercept outbound connections below the HTTP layer and route the hostnames they know to these local
-servers, so the suite does not need the public internet. An unrecognised host is refused with `EHERMETIC` rather than
-dialled, and an unimplemented endpoint answers `501` rather than falling through to the real service.
-
-Adding a host the tests can reach takes two changes together:
-
-1. Implement the request handler in the fixture server.
-2. Add the host to the policy map in `test/fixtures/servers/index.js`.
-
-**No fixture server binds a fixed port.** Every one of them listens on `127.0.0.1:0` and publishes what the OS gave
-it, so two suites cannot collide. A fixture that needs a local server therefore names its port through a variable
-rather than a literal: `{{rawEchoPort}}`, `{{redirectPort}}`, `{{mtlsServerNPort}}`. Adding a server means publishing
-its port in `ports()` in `test/fixtures/servers/index.js`; the integration runner passes them all to every collection
-as `envVar`, and `servers.ports()` reads them back in a spec.
-
-Two things to keep in mind when writing one:
-
-- `servers.ports()` works in a Mocha worker only because the runner publishes the values through
-  `NEWMAN_TEST_PORTS`. A worker has its own module instances, in which no server ever started.
-- A `{{variable}}` is resolved in a request URL but **not** inside a `script.exec` body, which is plain JavaScript.
-  An assertion that needs the port must read it with `pm.environment.get(...)`.
-
-Do not add unit tests for the fixture servers themselves; they are test scaffolding, and the collections that
-exercise them are the test. An endpoint no collection reaches should be deleted rather than covered.
-
-`npm run test-live`, and `npm run test-<suite> -- --live`, skip the interception and let the fixture URLs reach their
-real public services. Run either locally whenever you change a fixture server, to check it still matches the service
-it imitates. The one public request the default hermetic suite makes is `https://expired.badssl.com`, which checks
-that Newman handles an expired certificate.
-
-A spec that can only pass hermetically should skip itself rather than fail the live run.
-`test/cli/_network-policy.test.js` guards on `intercept.installed()` for that reason: with no policy installed there is
-no hand-off to test.
 
 ## Preferred IDE
 It is advised to use an IDE that provides [EditorConfig](http://editorconfig.org) support via `.editorconfig` files,

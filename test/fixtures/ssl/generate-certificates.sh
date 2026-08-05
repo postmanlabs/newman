@@ -5,7 +5,6 @@
 SERVER='server3'
 CA='ca3'
 CLIENT='client3'
-ECHO='echo'
 
 # generate a private key for the server
 if [[ ! -f "$SERVER.key" ]]; then
@@ -67,30 +66,3 @@ openssl x509 -req -in $CLIENT.csr \
 
 # verify that the certificate was generated correctly
 openssl verify -CAfile $CA.crt $CLIENT.crt
-
-# generate a private key for the echo fixture server
-if [[ ! -f "$ECHO.key" ]]; then
-    openssl genrsa -out $ECHO.key 2048
-fi
-
-# generate a CSR with the private key for the echo fixture server
-openssl req -new -key $ECHO.key \
-    -config config.cnf \
-    -days 9999 \
-    -out $ECHO.csr
-
-# generate the echo fixture certificate signed by the existing root CA
-# (ca.key is passphrase-protected with 'password', see SSL.md)
-openssl x509 -req -in $ECHO.csr \
-    -CA ca.crt \
-    -CAkey ca.key \
-    -passin pass:password \
-    -out $ECHO.crt \
-    -set_serial 3 \
-    -outform pem \
-    -extfile echo-v3.ext \
-    -days 9999 \
-    -sha256
-
-# verify that the certificate was generated correctly
-openssl verify -CAfile ca.crt $ECHO.crt

@@ -26,12 +26,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://localhost:{{mtlsServer2Port}}",
+          "raw": "https://localhost:3001",
           "protocol": "https",
           "host": [
             "localhost"
           ],
-          "port": "{{mtlsServer2Port}}"
+          "port": "3001"
         }
       }
     },
@@ -55,12 +55,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://localhost:{{mtlsServer3Port}}",
+          "raw": "https://localhost:3002",
           "protocol": "https",
           "host": [
             "localhost"
           ],
-          "port": "{{mtlsServer3Port}}"
+          "port": "3002"
         }
       }
     }

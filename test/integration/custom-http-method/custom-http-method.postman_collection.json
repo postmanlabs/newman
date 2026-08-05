@@ -44,11 +44,11 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:{{rawEchoPort}}",
+					"raw": "localhost:4041",
 					"host": [
 						"localhost"
 					],
-					"port": "{{rawEchoPort}}"
+					"port": "4041"
 				}
 			},
 			"response": []
@@ -86,11 +86,11 @@
 					"raw": "{ \"foo\": \"bar\" }"
 				},
 				"url": {
-					"raw": "localhost:{{rawEchoPort}}",
+					"raw": "localhost:4041",
 					"host": [
 						"localhost"
 					],
-					"port": "{{rawEchoPort}}"
+					"port": "4041"
 				}
 			},
 			"response": []
@@ -123,11 +123,11 @@
 					"raw": "foo=bar"
 				},
 				"url": {
-					"raw": "localhost:{{rawEchoPort}}",
+					"raw": "localhost:4041",
 					"host": [
 						"localhost"
 					],
-					"port": "{{rawEchoPort}}"
+					"port": "4041"
 				}
 			},
 			"response": []
