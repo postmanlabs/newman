@@ -71,6 +71,7 @@
     "eslint-plugin-n": "^18.2.2",
     "eslint-plugin-security": "^4.0.1",
     "globals": "^17.8.0",
+    "hawk": "^9.0.2",
     "js-yaml": "^5.2.2",
     "mocha": "^11.7.6",
     "nock": "^14.0.17",

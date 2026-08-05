@@ -1,86 +1,44 @@
-const fs = require('fs'),
-    async = require('async'),
-    expect = require('chai').expect,
-    https = require('https'),
+// The three mutual-TLS servers live in `test/fixtures/servers/client-cert.js`, started by the runner on ephemeral
+// ports, so this spec only has to hand each run the ports as variables. The collections name them through
+// `{{mtlsServerNPort}}`; the `--ssl-client-cert-list` config cannot, since Newman resolves no variables inside it, so
+// `resolveCertList()`/`writeCertList()` substitute them.
 
-    newman = require('../../');
+const path = require('path'),
+    expect = require('chai').expect,
+
+    newman = require('../../'),
+    servers = require('../fixtures/servers'),
+    clientCert = require('../fixtures/servers/client-cert'),
+
+    // owns its own scratch directory, so a parallel worker cannot delete it mid-test
+    CERT_LIST_FILE = path.join(__dirname, '..', '..', 'out', 'library-ssl-client-cert', 'cert-list.json');
 
 describe('SSL Client certificates', function () {
-    var server1, server2, server3;
+    var certListFile;
 
-    function createHttpsServerWithCerts (certs) {
-        return https.createServer({
-            key: fs.readFileSync(certs.key, 'utf8'),
-            cert: fs.readFileSync(certs.cert, 'utf8'),
-            ca: fs.readFileSync(certs.ca, 'utf8'),
-            passphrase: 'password',
-            requestCert: true,
-            rejectUnauthorized: false
-        }, function (req, res) {
-            if (req.client.authorized) {
-                res.writeHead(200, { 'Content-Type': 'text/plain' });
-                res.end('authorized\n');
-            }
-            else {
-                res.writeHead(401, { 'Content-Type': 'text/plain' });
-                res.end('unauthorized\n');
-            }
-        });
+    before(function () {
+        certListFile = clientCert.writeCertList(CERT_LIST_FILE, servers.ports());
+    });
+
+    /**
+     * Runs a collection with the fixture server ports supplied as environment variables.
+     *
+     * @param {Object} options - `newman.run` options.
+     * @param {Function} done - Mocha's callback.
+     * @returns {*}
+     */
+    function run (options, done) {
+        return newman.run({
+            ...options,
+            envVar: Object.entries(servers.ports()).map(function (entry) {
+                return { key: entry[0], value: entry[1] };
+            })
+        }, done);
     }
-
-    before(function (done) {
-        server1 = createHttpsServerWithCerts({
-            key: 'test/fixtures/ssl/server.key',
-            cert: 'test/fixtures/ssl/server.crt',
-            ca: 'test/fixtures/ssl/ca.crt'
-        });
-
-        server2 = createHttpsServerWithCerts({
-            key: 'test/fixtures/ssl/server2.key',
-            cert: 'test/fixtures/ssl/server2.crt',
-            ca: 'test/fixtures/ssl/ca2.crt'
-        });
-
-        server3 = createHttpsServerWithCerts({
-            key: 'test/fixtures/ssl/server3.key',
-            cert: 'test/fixtures/ssl/server3.crt',
-            ca: 'test/fixtures/ssl/ca3.crt'
-        });
-
-        async.parallel([
-            function (cb) {
-                server1.listen(3000, cb);
-            },
-            function (cb) {
-                server2.listen(3001, cb);
-            },
-            function (cb) {
-                server3.listen(3002, cb);
-            }
-        ], function (err) {
-            done(err);
-        });
-    });
-
-    after(function (done) {
-        async.parallel([
-            function (cb) {
-                server1.close(cb);
-            },
-            function (cb) {
-                server2.close(cb);
-            },
-            function (cb) {
-                server3.close(cb);
-            }
-        ], function (err) {
-            done(err);
-        });
-    });
 
     // @todo: add .pfx, .pem tests as well
     it('should work correctly with standalone client certificates', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert.json',
             sslClientCert: 'test/fixtures/ssl/client.crt',
             sslClientKey: 'test/fixtures/ssl/client.key',
@@ -90,17 +48,17 @@ describe('SSL Client certificates', function () {
     });
 
     it('should work correctly with multiple client certificates', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
-            sslClientCertList: 'test/fixtures/files/ssl-client-cert-config.json',
+            sslClientCertList: certListFile,
             insecure: true
         }, done);
     });
 
     it('should give precedence to client cert list when both client cert options present', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
-            sslClientCertList: 'test/fixtures/files/ssl-client-cert-config.json',
+            sslClientCertList: certListFile,
             sslClientCert: 'test/fixtures/ssl/client.crt',
             sslClientKey: 'test/fixtures/ssl/client.key',
             sslClientPassphrase: 'password',
@@ -109,9 +67,9 @@ describe('SSL Client certificates', function () {
     });
 
     it('should fallback to individual client cert when multiple client cert don\'t match', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert.json',
-            sslClientCertList: 'test/fixtures/files/ssl-client-cert-config.json',
+            sslClientCertList: certListFile,
             sslClientCert: 'test/fixtures/ssl/client.crt',
             sslClientKey: 'test/fixtures/ssl/client.key',
             sslClientPassphrase: 'password',
@@ -120,7 +78,7 @@ describe('SSL Client certificates', function () {
     });
 
     it('should bail out if client certificate list file does not exist', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
             sslClientCertList: 'invalid-cert-file.json', // using an invalid cert list
             insecure: true
@@ -133,7 +91,7 @@ describe('SSL Client certificates', function () {
     });
 
     it('should bail out if unable to parse client certificate list', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
             sslClientCertList: './ssl-client-cert-test.js', // using an invalid cert list
             insecure: true
@@ -146,7 +104,7 @@ describe('SSL Client certificates', function () {
     });
 
     it('should bail out if client certificate list is not array', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
             sslClientCertList: 'test/fixtures/run/ssl-client-cert.json', // using an invalid cert list
             insecure: true
@@ -158,21 +116,17 @@ describe('SSL Client certificates', function () {
     });
 
     it('should use list if list is an array', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
-            sslClientCertList: [{
-                name: 'client1',
-                matches: ['https://localhost:3001', 'https://localhost:3001/*'],
-                key: { src: './test/fixtures/ssl/client2.key' },
-                cert: { src: './test/fixtures/ssl/client2.crt' },
-                passphrase: 'password'
-            }],
+
+            // the resolved list, passed as an array rather than a path - the other half of the option's contract
+            sslClientCertList: clientCert.resolveCertList(servers.ports()).slice(0, 1),
             insecure: true
         }, done);
     });
 
     it('should bail if client certificate list file path is invalid', function (done) {
-        newman.run({
+        run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
             sslClientCertList: {},
             insecure: true

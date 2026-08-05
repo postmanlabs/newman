@@ -1,14 +1,14 @@
 [
     {
         "name": "client1",
-        "matches": ["https://localhost:3001", "https://localhost:3001/*"],
+        "matches": ["https://localhost:{{mtlsServer2Port}}", "https://localhost:{{mtlsServer2Port}}/*"],
         "key": {"src": "./test/fixtures/ssl/client2.key"},
         "cert": {"src": "./test/fixtures/ssl/client2.crt"},
         "passphrase": "password"
     },
     {
         "name": "client2",
-        "matches": ["https://localhost:3002", "https://localhost:3002/*"],
+        "matches": ["https://localhost:{{mtlsServer3Port}}", "https://localhost:{{mtlsServer3Port}}/*"],
         "key": {"src": "./test/fixtures/ssl/client3.key"},
         "cert": {"src": "./test/fixtures/ssl/client3.crt"},
         "passphrase": "password"
