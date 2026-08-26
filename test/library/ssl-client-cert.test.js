@@ -190,8 +190,8 @@ describe('SSL Client certificates', function () {
         fsExtra.writeJsonSync(certListPath, [{
             name: 'tilde-client',
             matches: ['https://localhost:3001', 'https://localhost:3001/*'],
-            key: { src: `~/.newman-test-ssl-certs/client2.key` },
-            cert: { src: `~/.newman-test-ssl-certs/client2.crt` },
+            key: { src: '~/.newman-test-ssl-certs/client2.key' },
+            cert: { src: '~/.newman-test-ssl-certs/client2.crt' },
             passphrase: 'password'
         }]);
 
