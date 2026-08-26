@@ -23,7 +23,7 @@ For newman-docker to be able to use collections and environment files saved on t
   - You can pass the full path to your collection and environment files to newman. For instance, if you mount to `/etc/newman`,
 
 ```terminal
-docker --volume="/home/postman/collection:/etc/newman" -t postman/newman:alpine run JSONBlobCoreAPI.json.postman_collection" -r json --reporter-json-export newman-report.json
+docker --volume="/home/postman/collection:/etc/newman" -t postman/newman:alpine run JSONBlobCoreAPI.json.postman_collection -r json --reporter-json-export newman-report.json
 ```
   - You can change the working directory while running the image to the location you mounted to, using the `-w` or `--workdir` flag.
 
