@@ -615,6 +615,26 @@ $ newman run "https://api.getpostman.com/collections/$uid?apikey=$apiKey" \
     --environment "https://api.getpostman.com/environments/$uid?apikey=$apiKey"
 ```
 
+Alternatively, pass the resource `uid` directly and let Newman resolve it, sending the key
+as an `X-Api-Key` header rather than a query parameter:
+```console
+$ newman run $collectionUid --environment $environmentUid --postman-api-key $apiKey
+```
+
+### Self-hosted Postman deployments
+
+By default Newman resolves `uid`s against the public Postman API. To target a self-hosted
+deployment, set a base URL — via the `--postman-api-base-url` option or the
+`POSTMAN_API_BASE_URL` environment variable:
+
+```console
+$ newman run $collectionUid --postman-api-key $apiKey \
+    --postman-api-base-url https://api.postman.example.com
+```
+
+The API key is only ever sent to the public Postman API hosts or to the host configured
+this way — never to any other host named on the command line.
+
 [back to top](#table-of-contents)
 
 ## Using Newman in Docker

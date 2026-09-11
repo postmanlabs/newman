@@ -1,3 +1,10 @@
+unreleased:
+  new features:
+    - >-
+      Added `--postman-api-base-url` (and the `postmanApiBaseUrl` run option /
+      `POSTMAN_API_BASE_URL` environment variable) so Postman API resources can be
+      resolved against a self-hosted Postman deployment
+
 6.2.2:
   date: 2026-01-16
   chores:
