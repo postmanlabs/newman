@@ -38,6 +38,9 @@ program
     .option('--export-globals <path>', 'Exports the final globals to a file after completing the run')
     .option('--export-collection <path>', 'Exports the executed collection to a file after completing the run')
     .option('--postman-api-key <apiKey>', 'API Key used to load the resources from the Postman API')
+    .option('--postman-api-base-url <url>',
+        'Base URL of the Postman API, for self-hosted deployments. ' +
+        'Defaults to $POSTMAN_API_BASE_URL, then the public Postman API')
     .option('--bail [modifiers]',
         'Specify whether or not to gracefully stop a collection run on encountering an error' +
         ' and whether to end the run with an error based on the optional modifier', util.cast.csvParse)

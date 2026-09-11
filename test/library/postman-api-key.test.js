@@ -50,6 +50,21 @@ describe('newman.run postmanApiKey', function () {
             .persist()
             .get('/collection.json?apikey=12345678')
             .reply(200, COLLECTION);
+
+        nock('https://api.self-hosted.example.com')
+            .persist()
+            .get(/^\/collections/)
+            .reply(200, COLLECTION);
+
+        nock('https://api.self-hosted.example.com')
+            .persist()
+            .get(/^\/environments/)
+            .reply(200, VARIABLE);
+
+        nock('https://untrusted.example.com')
+            .persist()
+            .get(/^\/collections/)
+            .reply(200, COLLECTION);
     });
 
     after(function () {
@@ -261,6 +276,187 @@ describe('newman.run postmanApiKey', function () {
 
                 done();
             });
+        });
+    });
+});
+
+describe('newman.run postmanApiBaseUrl', function () {
+    const SELF_HOSTED = 'https://api.self-hosted.example.com';
+
+    before(function () {
+        // the preceding suite calls nock.restore(), which detaches the http interceptor
+        !nock.isActive() && nock.activate();
+
+        nock('https://api.postman.com')
+            .persist()
+            .get(/^\/collections/)
+            .reply(200, COLLECTION);
+
+        nock(SELF_HOSTED)
+            .persist()
+            .get(/^\/collections/)
+            .reply(200, COLLECTION);
+
+        nock(SELF_HOSTED)
+            .persist()
+            .get(/^\/environments/)
+            .reply(200, VARIABLE);
+
+        nock('https://untrusted.example.com')
+            .persist()
+            .get(/^\/collections/)
+            .reply(200, COLLECTION);
+    });
+
+    after(function () {
+        nock.restore();
+        // eslint-disable-next-line no-process-env
+        delete process.env.POSTMAN_API_BASE_URL;
+    });
+
+    beforeEach(function () {
+        sinon.spy(request, 'get');
+        // eslint-disable-next-line no-process-env
+        delete process.env.POSTMAN_API_BASE_URL;
+    });
+
+    afterEach(function () {
+        request.get.restore();
+        // eslint-disable-next-line no-process-env
+        delete process.env.POSTMAN_API_BASE_URL;
+    });
+
+    it('should resolve a collection UID against the configured base URL', function (done) {
+        newman.run({
+            collection: '1234-588025f9-2497-46f7-b849-47f58b865807',
+            postmanApiKey: '12345678',
+            postmanApiBaseUrl: SELF_HOSTED
+        }, function (err) {
+            expect(err).to.be.null;
+
+            const requestArg = request.get.firstCall.args[0];
+
+            expect(requestArg.url)
+                .to.equal(SELF_HOSTED + '/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
+            expect(requestArg.headers).to.have.property('X-Api-Key', '12345678');
+
+            done();
+        });
+    });
+
+    it('should resolve an environment UID against the configured base URL', function (done) {
+        newman.run({
+            collection: 'test/fixtures/run/single-get-request.json',
+            environment: '1234-931c1484-fd1e-4ceb-81d0-2aa102ca8b5f',
+            postmanApiKey: '12345678',
+            postmanApiBaseUrl: SELF_HOSTED
+        }, function (err) {
+            expect(err).to.be.null;
+
+            const requestArg = request.get.firstCall.args[0];
+
+            expect(requestArg.url)
+                .to.equal(SELF_HOSTED + '/environments/1234-931c1484-fd1e-4ceb-81d0-2aa102ca8b5f');
+            expect(requestArg.headers).to.have.property('X-Api-Key', '12345678');
+
+            done();
+        });
+    });
+
+    it('should honour the POSTMAN_API_BASE_URL environment variable', function (done) {
+        // eslint-disable-next-line no-process-env
+        process.env.POSTMAN_API_BASE_URL = SELF_HOSTED;
+
+        newman.run({
+            collection: '1234-588025f9-2497-46f7-b849-47f58b865807',
+            postmanApiKey: '12345678'
+        }, function (err) {
+            expect(err).to.be.null;
+
+            const requestArg = request.get.firstCall.args[0];
+
+            expect(requestArg.url)
+                .to.equal(SELF_HOSTED + '/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
+            expect(requestArg.headers).to.have.property('X-Api-Key', '12345678');
+
+            done();
+        });
+    });
+
+    it('should let the run option take precedence over the environment variable', function (done) {
+        // eslint-disable-next-line no-process-env
+        process.env.POSTMAN_API_BASE_URL = 'https://api.postman.com';
+
+        newman.run({
+            collection: '1234-588025f9-2497-46f7-b849-47f58b865807',
+            postmanApiKey: '12345678',
+            postmanApiBaseUrl: SELF_HOSTED
+        }, function (err) {
+            expect(err).to.be.null;
+
+            expect(request.get.firstCall.args[0].url)
+                .to.equal(SELF_HOSTED + '/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
+
+            done();
+        });
+    });
+
+    it('should tolerate a trailing slash on the configured base URL', function (done) {
+        newman.run({
+            collection: '1234-588025f9-2497-46f7-b849-47f58b865807',
+            postmanApiKey: '12345678',
+            postmanApiBaseUrl: SELF_HOSTED + '/'
+        }, function (err) {
+            expect(err).to.be.null;
+
+            expect(request.get.firstCall.args[0].url)
+                .to.equal(SELF_HOSTED + '/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
+
+            done();
+        });
+    });
+
+    it('should send the API key when fetching a full URL on the configured host', function (done) {
+        newman.run({
+            collection: SELF_HOSTED + '/collections/C1',
+            postmanApiKey: '12345678',
+            postmanApiBaseUrl: SELF_HOSTED
+        }, function (err) {
+            expect(err).to.be.null;
+
+            expect(request.get.firstCall.args[0].headers)
+                .to.have.property('X-Api-Key', '12345678');
+
+            done();
+        });
+    });
+
+    it('should NOT send the API key to a host that is not configured', function (done) {
+        newman.run({
+            collection: 'https://untrusted.example.com/collections/C1',
+            postmanApiKey: '12345678',
+            postmanApiBaseUrl: SELF_HOSTED
+        }, function (err) {
+            expect(err).to.be.null;
+
+            expect(request.get.firstCall.args[0].headers)
+                .to.not.have.property('X-Api-Key');
+
+            done();
+        });
+    });
+
+    it('should default to the public API when no override is set', function (done) {
+        newman.run({
+            collection: '1234-588025f9-2497-46f7-b849-47f58b865807',
+            postmanApiKey: '12345678'
+        }, function (err) {
+            expect(err).to.be.null;
+
+            expect(request.get.firstCall.args[0].url)
+                .to.equal('https://api.postman.com/collections/1234-588025f9-2497-46f7-b849-47f58b865807');
+
+            done();
         });
     });
 });
