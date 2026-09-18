@@ -17,6 +17,7 @@ jobs:
     tests:
         name: Tests
         runs-on: ${{ matrix.os }}
+        timeout-minutes: 11
         strategy:
             fail-fast: false
             matrix:
@@ -42,6 +43,7 @@ jobs:
     coverage:
         name: Coverage
         runs-on: ubuntu-latest
+        timeout-minutes: 11
 
         steps:
             - name: Checkout repository
