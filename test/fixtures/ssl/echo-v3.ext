@@ -1,0 +1,5 @@
+basicConstraints=CA:FALSE
+nsComment = "OpenSSL Generated Certificate"
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+subjectAltName=DNS:postman-echo.com,DNS:httpbin.org,DNS:api.getpostman.com,DNS:api.postman.com

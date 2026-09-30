@@ -1,5 +1,6 @@
 const TEST_TYPE = ((argv) => {
-    let match = argv[argv.length - 1].match(/npm\/test-(\w+).js/);
+    let scriptArg = argv.find((arg) => { return (/npm\/test-(\w+)\.js$/).test(arg); }),
+        match = scriptArg && scriptArg.match(/npm\/test-(\w+)\.js$/);
 
     return match && match[1] || '';
 })(process.argv);
@@ -35,7 +36,7 @@ function configOverrides (testType) {
                 lines: 70
             };
         default:
-            return {}
+            return {};
     }
 }
 
@@ -46,5 +47,5 @@ module.exports = {
     'temp-dir': '.nyc_output',
     include: ['lib/**/*.js', 'bin/**/*.js'],
     reporter: ['lcov', 'json', 'text', 'text-summary'],
-    ...configOverrides(TEST_TYPE),
+    ...configOverrides(TEST_TYPE)
 };

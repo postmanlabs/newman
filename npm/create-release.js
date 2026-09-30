@@ -23,8 +23,7 @@ shipit({
     // make sure that following dependencies are up to date
     dependencyList: [
         '@postman/tough-cookie', 'liquid-json', 'postman-collection',
-        'postman-collection-transformer', 'postman-request', 'postman-runtime',
-        'serialised-error'
+        'postman-request', 'postman-runtime', 'serialised-error'
     ]
 }).then((version) => {
     console.info('🚀', version);

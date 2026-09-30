@@ -42,11 +42,11 @@
           }]
         },
         "url": {
-          "raw": "localhost:4042/status/307",
+          "raw": "localhost:{{redirectPort}}/status/307",
           "host": [
             "localhost"
           ],
-          "port": "4042",
+          "port": "{{redirectPort}}",
           "path": [
             "status",
             "307"
@@ -86,11 +86,11 @@
           "raw": "POSTMAN"
         },
         "url": {
-          "raw": "localhost:4042/status/307",
+          "raw": "localhost:{{redirectPort}}/status/307",
           "host": [
             "localhost"
           ],
-          "port": "4042",
+          "port": "{{redirectPort}}",
           "path": [
             "status",
             "307"
@@ -137,11 +137,11 @@
           }]
         },
         "url": {
-          "raw": "localhost:4042/status/308",
+          "raw": "localhost:{{redirectPort}}/status/308",
           "host": [
             "localhost"
           ],
-          "port": "4042",
+          "port": "{{redirectPort}}",
           "path": [
             "status",
             "308"
@@ -181,11 +181,11 @@
           "raw": "POSTMAN"
         },
         "url": {
-          "raw": "localhost:4042/status/308",
+          "raw": "localhost:{{redirectPort}}/status/308",
           "host": [
             "localhost"
           ],
-          "port": "4042",
+          "port": "{{redirectPort}}",
           "path": [
             "status",
             "308"

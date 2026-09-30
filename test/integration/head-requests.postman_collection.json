@@ -8,7 +8,7 @@
   },
   "item": [
     {
-      "name": "google",
+      "name": "over http",
       "event": [
         {
           "listen": "test",
@@ -19,7 +19,7 @@
         }
       ],
       "request": {
-        "url": "http://google.com",
+        "url": "http://localhost:{{redirectPort}}/",
         "method": "HEAD",
         "header": [],
         "body": {
@@ -31,7 +31,7 @@
       "response": []
     },
     {
-      "name": "github",
+      "name": "over https",
       "event": [
         {
           "listen": "test",
@@ -42,7 +42,7 @@
         }
       ],
       "request": {
-        "url": "http://github.com",
+        "url": "https://postman-echo.com/get",
         "method": "HEAD",
         "header": [],
         "body": {
@@ -72,7 +72,7 @@
         }
       }],
       "request": {
-        "url": "http://localhost:4041",
+        "url": "http://localhost:{{rawEchoPort}}",
         "method": "HEAD",
         "header": [],
         "body": {
