@@ -92,7 +92,7 @@ To get available options for a command:
 // Warn on invalid command and then exits.
 program.on('command:*', (command) => {
     console.error(`error: invalid command \`${command}\`\n`);
-    program.help();
+    program.help({ error: true });
 });
 
 /**
@@ -132,7 +132,7 @@ function run (argv, callback) {
         // in case of an error, log error message and print help message.
         if (error) {
             console.error(`error: ${error.message || error}\n`);
-            program.help();
+            program.help({ error: true });
         }
     });
 }
