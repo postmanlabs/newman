@@ -10,6 +10,8 @@ This repository contains docker images for Newman.
 command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous
 integration servers and build systems.
 
+> **Do more with the Postman CLI.** The Postman CLI brings the power of Postman’s API platform directly to your terminal. It lets you run collections, automate tests, integrate API checks into CI/CD pipelines, and enforce quality gates — all with a single, lightweight command-line tool. <a href="https://learning.postman.com/docs/postman-cli/postman-cli-installation/" target="_blank">Get started</a>.
+
 **New to Docker?** Docker allows you to package an application with all of its dependencies into a standardised unit for
 software development. Visit
 <a href="https://www.docker.com/whatisdocker" target="_blank">https://www.docker.com/whatisdocker</a> to read more about

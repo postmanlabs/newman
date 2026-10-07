@@ -1,5 +1,9 @@
 # Contributing to Postman Newman
 
+> ## Do more with the Postman CLI
+>
+> The Postman CLI brings the power of Postman’s API platform directly to your terminal. It lets you run collections, automate tests, integrate API checks into CI/CD pipelines, and enforce quality gates — all with a single, lightweight command-line tool. If you are proposing something new for the command line, open an issue first and we will point you to the right place. [Documentation](https://learning.postman.com/docs/postman-cli/postman-cli-overview/)
+
   - [Getting Started Quick](#getting-started-quick)
   - [NPM Command Reference](#npm-command-reference)
       - [`npm install`](#npm-install)
