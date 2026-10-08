@@ -13,7 +13,7 @@ const editorconfig = require('editorconfig'),
     TAB_WIDTH = 4;
 
 describe('.editorconfig', function () {
-    const config = editorconfig.parseSync('.editorconfig'); // eslint-disable-line no-sync
+    const config = editorconfig.parseSync('.editorconfig');
 
     it('should have a tab_width of 4', function () {
         expect(config.tab_width).to.equal(TAB_WIDTH);

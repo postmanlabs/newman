@@ -140,6 +140,53 @@ describe('cli parser', function () {
             });
         });
 
+        describe('protocol version', function () {
+            it('should not be set when the option is absent', function (done) {
+                cli('node newman.js run myCollection.json'.split(' '), 'run', function (err, opts) {
+                    expect(err).to.be.null;
+                    expect(opts).to.not.have.property('protocolVersion');
+                    done();
+                });
+            });
+
+            it('should accept `--protocol-version auto`', function (done) {
+                cli('node newman.js run myCollection.json --protocol-version auto'.split(' '), 'run',
+                    function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts.protocolVersion).to.equal('auto');
+                        done();
+                    });
+            });
+
+            it('should accept `--protocol-version http1`', function (done) {
+                cli('node newman.js run myCollection.json --protocol-version http1'.split(' '), 'run',
+                    function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts.protocolVersion).to.equal('http1');
+                        done();
+                    });
+            });
+
+            it('should accept `--protocol-version http2`', function (done) {
+                cli('node newman.js run myCollection.json --protocol-version http2'.split(' '), 'run',
+                    function (err, opts) {
+                        expect(err).to.be.null;
+                        expect(opts.protocolVersion).to.equal('http2');
+                        done();
+                    });
+            });
+
+            it('should throw an error for invalid --protocol-version values', function (done) {
+                cli('node newman.js run myCollection.json --protocol-version http3'.split(' '), 'run',
+                    function (err) {
+                        expect(err).to.have.property('message',
+                            'invalid value `http3` for --protocol-version. Expected: auto|http1|http2');
+
+                        done();
+                    });
+            });
+        });
+
         it('should load all arguments (except reporters)', function (done) {
             cli(('node newman.js run ' +
                 'myCollection.json ' +
@@ -278,8 +325,8 @@ describe('cli parser', function () {
                 // Generic reporter options
                 expect(opts.reporterOptions).to.be.ok;
                 expect(opts.reporterOptions.use).to.equal('everything');
-                expect(opts.reporterOptions.cliNoSuccessAssertions
-                    , 'should have cliNoSuccessAssertions to be true').to.equal(true);
+                expect(opts.reporterOptions.cliNoSuccessAssertions,
+                    'should have cliNoSuccessAssertions to be true').to.equal(true);
 
                 // Individual reporter options
                 expect(opts.reporter).to.be.ok;

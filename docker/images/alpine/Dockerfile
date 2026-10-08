@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:24-alpine
 LABEL maintainer="Postman Labs <help@postman.com>"
 
 ARG NEWMAN_VERSION

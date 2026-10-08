@@ -19,7 +19,6 @@ describe('CLI output', function () {
         });
 
         it('should produce colored output with `--color on`', function (done) {
-            // eslint-disable-next-line max-len
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color on', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
@@ -30,7 +29,6 @@ describe('CLI output', function () {
         });
 
         it('should not produce colored output with `--color off`', function (done) {
-            // eslint-disable-next-line max-len
             exec('node ./bin/newman.js run test/fixtures/run/single-get-request.json --color off', function (code, stdout, stderr) {
                 expect(code, 'should have exit code of 0').to.equal(0);
                 expect(stderr).to.be.empty;
@@ -43,16 +41,11 @@ describe('CLI output', function () {
 
     describe('noTTY', function () {
         var encoding = 'utf-8',
-            outFile = 'out/color-tty-test.txt';
+            outFile = 'out/cli-color-tty/color-tty-test.txt';
 
+        // `recursive` rather than stat-then-mkdir, which races with another worker creating the same directory
         beforeEach(function (done) {
-            fs.stat('out', function (err) {
-                if (err) {
-                    return fs.mkdir('out', done);
-                }
-
-                done();
-            });
+            fs.mkdir('out/cli-color-tty', { recursive: true }, done);
         });
 
         afterEach(function (done) {
