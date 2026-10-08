@@ -1,9 +1,5 @@
 # Contributing to Postman Newman
 
-> ## Newman is in maintenance mode
->
-> Newman remains available for existing workflows, but active development is limited to essential maintenance. As such, contributions are limited to maintenance as well (e.g. critical bug fixes, security patches, and dependency updates); new features are not being accepted. For new command-line and CI/CD workflows, we recommend using the [Postman CLI](https://learning.postman.com/docs/postman-cli/postman-cli-installation/), which supports the latest Postman features and ongoing platform integration.
-
   - [Getting Started Quick](#getting-started-quick)
   - [NPM Command Reference](#npm-command-reference)
       - [`npm install`](#npm-install)
