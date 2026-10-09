@@ -1,3 +1,7 @@
+unreleased:
+  chores:
+    - Introduce Postman CLI as the more powerful option for command-line and CI/CD work in README
+
 6.2.2:
   date: 2026-01-16
   chores:
