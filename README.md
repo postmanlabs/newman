@@ -5,6 +5,14 @@ _Manage all of your organization's APIs in Postman, with the industry's most com
 
 Newman is a command-line collection runner for Postman. It allows you to effortlessly run and test a Postman collection directly from the command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
 
+**Do more with the Postman CLI.** The Postman CLI brings the power of Postman’s API platform directly to your terminal. It lets you run collections, automate tests, integrate API checks into CI/CD pipelines, and enforce quality gates — all with a single, lightweight command-line tool.
+
+```console
+$ npm install -g postman-cli
+```
+
+See the [installation guide](https://learning.postman.com/docs/postman-cli/postman-cli-installation/) for all install options.
+
 
 ## Table of contents
 
