@@ -6,7 +6,7 @@
         "type": "text/javascript",
         "exec": [
           "var now = Date.now(),",
-          "    later = now + 300;",
+          "    later = now + 700;",
           "while(Date.now() < later);"
         ]
       }
