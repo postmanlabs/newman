@@ -171,6 +171,40 @@ describe('SSL Client certificates', function () {
         }, done);
     });
 
+    it('should expand tilde in client cert and key paths inside cert list', function (done) {
+        // copy the fixture certificates into a directory under the user home,
+        // so that a `~/...` path resolves to real files
+        var osHomeDir = require('os').homedir(),
+            path = require('path'),
+            fsExtra = require('../../test/.fs-extra-shim')(),
+            fixtureCertsDir = path.join(osHomeDir, '.newman-test-ssl-certs'),
+            certListPath;
+
+        fsExtra.ensureDirSync(fixtureCertsDir);
+        ['client2.key', 'client2.crt'].forEach(function (file) {
+            fsExtra.copySync(path.join('test/fixtures/ssl', file),
+                path.join(fixtureCertsDir, file));
+        });
+
+        certListPath = path.join(fixtureCertsDir, 'cert-list.json');
+        fsExtra.writeJsonSync(certListPath, [{
+            name: 'tilde-client',
+            matches: ['https://localhost:3001', 'https://localhost:3001/*'],
+            key: { src: '~/.newman-test-ssl-certs/client2.key' },
+            cert: { src: '~/.newman-test-ssl-certs/client2.crt' },
+            passphrase: 'password'
+        }]);
+
+        newman.run({
+            collection: 'test/fixtures/run/ssl-client-cert-list.json',
+            sslClientCertList: certListPath,
+            insecure: true
+        }, function (err) {
+            fsExtra.removeSync(fixtureCertsDir);
+            done(err);
+        });
+    });
+
     it('should bail if client certificate list file path is invalid', function (done) {
         newman.run({
             collection: 'test/fixtures/run/ssl-client-cert-list.json',
