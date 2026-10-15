@@ -114,5 +114,22 @@ describe('CLI output', function () {
                     });
                 });
         });
+
+        it('should not produce colored output in the failures table with `--color off`', function (done) {
+            exec(`node ./bin/newman.js run test/fixtures/run/single-request-failing.json --color off > ${outFile}`,
+                function (code, stdout, stderr) {
+                    expect(code, 'should have exit code of 1').to.equal(1);
+                    expect(stderr).to.be.empty;
+                    expect(stdout).to.be.empty;
+
+                    fs.readFile(outFile, encoding, function (err, data) {
+                        if (err) { return done(err); }
+
+                        expect(data).to.include('failure');
+                        expect(data).to.not.match(coloredOutput);
+                        done();
+                    });
+                });
+        });
     });
 });
