@@ -1,6 +1,6 @@
 # newman:ubuntu
 
-This image runs newman on node v16 on Ubuntu 22.04
+This image runs newman on node v24 on Ubuntu 24.04
 
 Build the image,
 
