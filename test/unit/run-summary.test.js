@@ -269,5 +269,54 @@ describe('run summary', function () {
                 });
             });
         });
+
+        describe('transfer size tracking', function () {
+            var emitter,
+                collection,
+                summary;
+
+            beforeEach(function () {
+                collection = new sdk.Collection({
+                    item: [{ id: 'i1', request: 'http://localhost/1' }]
+                });
+                emitter = new EventEmitter();
+                summary = new Summary(emitter, { collection });
+            });
+
+            afterEach(function () {
+                collection = null;
+                emitter = null;
+                summary = null;
+            });
+
+            it('should sum both body and header sizes into responseTotal', function () {
+                var item = collection.items.one('i1');
+
+                emitter.emit('request', null, {
+                    item: item,
+                    response: { size () { return { body: 270, headers: 793 }; } },
+                    cursor: { ref: '1', iteration: 0 }
+                });
+
+                expect(summary.run.transfers.responseTotal).to.equal(1063);
+            });
+
+            it('should accumulate responseTotal across multiple requests', function () {
+                var item = collection.items.one('i1');
+
+                emitter.emit('request', null, {
+                    item: item,
+                    response: { size () { return { body: 100, headers: 50 }; } },
+                    cursor: { ref: '1', iteration: 0 }
+                });
+                emitter.emit('request', null, {
+                    item: item,
+                    response: { size () { return { body: 200, headers: 25 }; } },
+                    cursor: { ref: '2', iteration: 1 }
+                });
+
+                expect(summary.run.transfers.responseTotal).to.equal(375);
+            });
+        });
     });
 });
