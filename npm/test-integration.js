@@ -5,6 +5,7 @@
 
 const fs = require('fs'),
     path = require('path'),
+    os = require('os'),
 
     _ = require('lodash'),
     async = require('async'),
@@ -117,6 +118,51 @@ module.exports = function (exit) {
                     next(err, summary);
                 });
             }, next);
+        },
+
+        /**
+         * Exercise streamed JSON report serialization and export without relying on a network service.
+         *
+         * @param {Array} results - The integration run summaries.
+         * @param {Function} next - A callback function that marks completion of the reporter integration check.
+         * @returns {*}
+         */
+        function (results, next) {
+            fs.mkdtemp(path.join(os.tmpdir(), 'newman-json-reporter-'), function (err, tempDir) {
+                var reportPath;
+
+                if (err) { return next(err); }
+
+                reportPath = path.join(tempDir, 'report.json');
+                newman.run({
+                    collection: {
+                        info: {
+                            name: 'JSON reporter integration',
+                            schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json'
+                        },
+                        item: []
+                    },
+                    reporters: ['json'],
+                    reporter: { json: { export: reportPath } }
+                }, function (runErr) {
+                    fs.readFile(reportPath, function (readErr, report) {
+                        var reportErr = readErr;
+
+                        if (!reportErr) {
+                            try {
+                                JSON.parse(report.toString());
+                            }
+                            catch (parseErr) {
+                                reportErr = parseErr;
+                            }
+                        }
+
+                        fs.rm(tempDir, { force: true, recursive: true }, function (cleanupErr) {
+                            next(runErr || reportErr || cleanupErr, results);
+                        });
+                    });
+                });
+            });
         }
     ],
 
