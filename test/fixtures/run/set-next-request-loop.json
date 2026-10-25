@@ -1,0 +1,20 @@
+{
+  "info": {
+    "name": "Example Collection that re-queues itself with setNextRequest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [{
+    "name": "Poll Self",
+    "event": [{
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": ["pm.execution.setNextRequest(pm.info.requestName);"]
+      }
+    }],
+    "request": {
+      "url": "https://postman-echo.com/delay/2",
+      "method": "GET"
+    }
+  }]
+}
