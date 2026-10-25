@@ -243,5 +243,32 @@ describe('Newman run options', function () {
                 done();
             });
         });
+
+        it('should not keep executing the collection once the timeout is breached', function (done) {
+            var timedOut = false,
+                itemsAfterTimeout = 0;
+
+            newman.run({
+                collection: 'test/fixtures/run/set-next-request-loop.json',
+                timeout: 1500,
+                reporters: []
+            }, function (err, summary) {
+                expect(err, 'should have timed out').to.be.ok;
+                expect(err.message).to.equal('callback timed out');
+                expect(summary).to.be.ok;
+
+                timedOut = true;
+
+                // the request in flight when the deadline passed needs ~2s more to complete, and would then
+                // re-queue the item that looped with setNextRequest. wait for more than one cycle to ensure
+                // that nothing further is scheduled.
+                setTimeout(function () {
+                    expect(itemsAfterTimeout, 'should not complete items after the run timed out').to.equal(0);
+                    done();
+                }, 5000);
+            }).on('item', function () {
+                timedOut && (itemsAfterTimeout += 1);
+            });
+        });
     });
 });
