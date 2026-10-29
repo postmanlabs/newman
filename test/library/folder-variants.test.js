@@ -59,6 +59,33 @@ describe('folder variants', function () {
         });
     });
 
+    it('should run the specified requests in collection order in case preserveOrder is not true', function (done) {
+        newman.run({
+            collection: collection,
+            folder: ['R3', 'R1']
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+            expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
+            expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R1', 'R3']);
+            done();
+        });
+    });
+
+    it('should run the specified requests in given order in case preserveOrder is true', function (done) {
+        newman.run({
+            collection: collection,
+            folder: ['R3', 'R1'],
+            preserveOrder: true
+        }, function (err, summary) {
+            expect(err).to.be.null;
+            expect(summary.run.stats.iterations.total, 'should have 1 iteration').to.equal(1);
+            expect(summary.run.executions, 'should have 2 executions').to.have.lengthOf(2);
+            expect(summary.run.executions.map((e) => { return e.item.name; })).to.eql(['R3', 'R1']);
+            done();
+        });
+    });
+
     it('should skip the collection run in case any of the folder name is invalid', function (done) {
         newman.run({
             collection: collection,

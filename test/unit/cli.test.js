@@ -147,6 +147,7 @@ describe('cli parser', function () {
                 '-g myGlobals.json ' +
                 '-d path/to/csv.csv ' +
                 '--folder myFolder ' +
+                '--preserve-order ' +
                 '--working-dir /Users/postman ' +
                 '--no-insecure-file-read ' +
                 '--cookie-jar myCookie.json ' +
@@ -174,6 +175,7 @@ describe('cli parser', function () {
                 expect(opts.collection).to.equal('myCollection.json');
                 expect(opts.environment).to.equal('myEnv.json');
                 expect(opts.folder).to.eql(['myFolder']);
+                expect(opts.preserveOrder, 'should have preserveOrder to be true').to.equal(true);
                 expect(opts.workingDir).to.eql('/Users/postman');
                 expect(opts.cookieJar).to.eql('myCookie.json');
                 expect(opts.exportCookieJar).to.eql('exported_cookie.json');
