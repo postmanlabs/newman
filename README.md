@@ -547,6 +547,8 @@ This reporter can be used to send the Collection run data to `statsd` and used o
 Confluence reporter for Newman that uploads a Newman report on a Confluence page
 - [influxdb](https://github.com/vs4vijay/newman-reporter-influxdb) -
 This reporter sends the test results information to InfluxDB which can be used from [Grafana](https://grafana.com/) to build dashboards
+- [qase](https://github.com/qase-tms/qase-javascript/tree/main/qase-newman) -
+A reporter that sends Collection run results to [Qase](https://qase.io), the test case management tool
 
 ### Creating Your Own Reporter
 A custom reporter is a Node module with a name of the form `newman-reporter-<name>`. To create a custom reporter:
