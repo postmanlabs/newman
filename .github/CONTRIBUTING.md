@@ -133,7 +133,6 @@ It's also a good idea to use the imperative present tense in these messages. In 
 "I added tests for" or "Adding tests for," use "Add tests for."
 
 You should see if your commit message answers the following questions:
-Answer the following questions:
 
 1. **Why is this change necessary?**
 2. **How does it address the issue?**
