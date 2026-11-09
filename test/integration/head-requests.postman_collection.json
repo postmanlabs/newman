@@ -42,7 +42,7 @@
         }
       ],
       "request": {
-        "url": "http://github.com",
+        "url": "https://github.com",
         "method": "HEAD",
         "header": [],
         "body": {
