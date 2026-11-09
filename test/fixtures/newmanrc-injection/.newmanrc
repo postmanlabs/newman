@@ -1,0 +1,3 @@
+{
+    "reporters": ["cli", "rc-injected-reporter"]
+}
