@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@postman/tough-cookie": "4.1.3-postman.1",
-    "async": "3.2.5",
+    "async": "3.2.6",
     "chardet": "2.0.0",
     "cli-progress": "3.12.0",
     "cli-table3": "0.6.5",
